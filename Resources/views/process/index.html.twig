@@ -1,19 +1,19 @@
 {% extends 'main/index.html.twig' %}
 
-{% block title %}Process index{% endblock %}
+{% block title %}{{ 'process.index.title'|trans }}{% endblock %}
 
 {% block content %}
   <div class="row">
     <div class="col">
-      <h1 class="h2">{{ 'process.index.title' }}</h1>
+      <h1 class="h2">{{ 'process.index.title'|trans }}</h1>
       <table class="table">
         <thead>
         <tr>
-          <th>Id</th>
-          <th>Case Number</th>
-          <th>Client CPR</th>
-          <th>Case Worker</th>
-          <th>actions</th>
+          <th>{{ 'process.table.id'|trans }}</th>
+          <th>{{ 'process.table.case_number'|trans }}</th>
+          <th>{{ 'process.table.client_cpr'|trans }}</th>
+          <th>{{ 'process.table.case_worker'|trans }}</th>
+          <th>{{ 'common.table.actions'|trans }}</th>
         </tr>
         </thead>
         <tbody>
@@ -24,19 +24,19 @@
             <td>{{ process.clientCPR }}</td>
             <td>{{ process.caseWorker }}</td>
             <td>
-              <a href="{{ path('process_show', {'id': process.id}) }}">show</a>
-              <a href="{{ path('process_edit', {'id': process.id}) }}">edit</a>
+              <a href="{{ path('process_show', {'id': process.id}) }}">{{ 'common.actions.show'|trans }}</a>
+              <a href="{{ path('process_edit', {'id': process.id}) }}">{{ 'common.actions.edit'|trans }}</a>
             </td>
           </tr>
         {% else %}
           <tr>
-            <td colspan="2">no records found</td>
+            <td colspan="2">{{ 'common.no_records_found'|trans }}</td>
           </tr>
         {% endfor %}
         </tbody>
       </table>
 
-      <a href="{{ path('process_new') }}">Create new</a>
+      <a href="{{ path('process_new') }}">{{ 'common.actions.create'|trans }}</a>
 
     </div>
   </div>

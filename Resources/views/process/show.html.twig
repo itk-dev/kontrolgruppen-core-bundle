@@ -1,6 +1,6 @@
 {% extends 'main/index.html.twig' %}
 
-{% block title %}Process{% endblock %}
+{% block title %}{{ 'process.show.title'|trans }}{% endblock %}
 
 {% block content %}
   <div class="row">
@@ -10,39 +10,39 @@
       <table class="table">
         <tbody>
         <tr>
-          <th>Id</th>
+          <th>{{ 'process.table.id'|trans }}</th>
           <td>{{ process.id }}</td>
         </tr>
         <tr>
-          <th>Client CPR</th>
+          <th>{{ 'process.table.client_cpr'|trans }}</th>
           <td>{{ process.clientCPR }}</td>
         </tr>
         <tr>
-          <th>Caseworker</th>
+          <th>{{ 'process.table.case_worker'|trans }}</th>
           <td>{{ process.caseWorker }}</td>
         </tr>
         <tr>
-          <th>Created at</th>
+          <th>{{ 'common.table.created_at'|trans }}</th>
           <td>{{ process.createdAt|date('Y-m-d') }}</td>
         </tr>
         <tr>
-          <th>Updated at</th>
+          <th>{{ 'common.table.updated_at'|trans }}</th>
           <td>{{ process.updatedAt|date('Y-m-d') }}</td>
         </tr>
         <tr>
-          <th>Created by</th>
+          <th>{{ 'common.table.created_by'|trans }}</th>
           <td>{{ process.createdBy }}</td>
         </tr>
         <tr>
-          <th>Updated by</th>
+          <th>{{ 'common.table.updated_by'|trans }}</th>
           <td>{{ process.createdBy }}</td>
         </tr>
         </tbody>
       </table>
 
-      <a href="{{ path('process_index') }}">back to list</a>
+      <a href="{{ path('process_index') }}">{{ 'common.back_to_list'|trans }}</a>
 
-      <a href="{{ path('process_edit', {'id': process.id}) }}">edit</a>
+      <a href="{{ path('process_edit', {'id': process.id}) }}">{{ 'common.actions.edit'|trans }}</a>
 
       {{ include('process/_delete_form.html.twig') }}
     </div>
