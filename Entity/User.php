@@ -1,6 +1,6 @@
 <?php
 
-namespace Kontrolgruppen\Core\Entity;
+namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,7 +21,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kontrolgruppen\Core\Entity\Process", mappedBy="caseWorker")
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", mappedBy="caseWorker")
      */
     private $processes;
 

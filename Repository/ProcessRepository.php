@@ -1,8 +1,8 @@
 <?php
 
-namespace Kontrolgruppen\Core\Repository;
+namespace Kontrolgruppen\CoreBundle\Repository;
 
-use Kontrolgruppen\Core\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\Process;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 

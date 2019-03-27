@@ -1,0 +1,50 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}Process{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col">
+      <h1>Process</h1>
+
+      <table class="table">
+        <tbody>
+        <tr>
+          <th>Id</th>
+          <td>{{ process.id }}</td>
+        </tr>
+        <tr>
+          <th>Client CPR</th>
+          <td>{{ process.clientCPR }}</td>
+        </tr>
+        <tr>
+          <th>Caseworker</th>
+          <td>{{ process.caseWorker }}</td>
+        </tr>
+        <tr>
+          <th>Created at</th>
+          <td>{{ process.createdAt|date('Y-m-d') }}</td>
+        </tr>
+        <tr>
+          <th>Updated at</th>
+          <td>{{ process.updatedAt|date('Y-m-d') }}</td>
+        </tr>
+        <tr>
+          <th>Created by</th>
+          <td>{{ process.createdBy }}</td>
+        </tr>
+        <tr>
+          <th>Updated by</th>
+          <td>{{ process.createdBy }}</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <a href="{{ path('process_index') }}">back to list</a>
+
+      <a href="{{ path('process_edit', {'id': process.id}) }}">edit</a>
+
+      {{ include('process/_delete_form.html.twig') }}
+    </div>
+  </div>
+{% endblock %}

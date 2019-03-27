@@ -1,10 +1,10 @@
 <?php
 
-namespace Kontrolgruppen\Core\Controller;
+namespace Kontrolgruppen\CoreBundle\Controller;
 
-use Kontrolgruppen\Core\Entity\Process;
-use Kontrolgruppen\Core\Form\ProcessType;
-use Kontrolgruppen\Core\Repository\ProcessRepository;
+use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Form\ProcessType;
+use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

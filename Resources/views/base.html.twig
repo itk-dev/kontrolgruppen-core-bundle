@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}{{ 'base.title'|trans }}{% endblock %}</title>
+  {% block stylesheets %}
+    {{ encore_entry_link_tags('core') }}
+  {% endblock %}
+</head>
+<body {% block body_attributes %}{% endblock %}>
+{% block body %}{% endblock %}
+{% block javascripts %}
+  {{ encore_entry_script_tags('core') }}
+{% endblock %}
+</body>
+</html>

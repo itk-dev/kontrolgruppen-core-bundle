@@ -3,14 +3,14 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    Kontrolgruppen\Core\:
-        resource: '../*'
-        exclude: '../{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+    Kontrolgruppen\CoreBundle\:
+        resource: '../../*'
+        exclude: '../../{DependencyInjection,Entity,Migrations,Tests,Kernel.php,assets,node_modules}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Controller\:
-        resource: '../Controller'
+    Kontrolgruppen\CoreBundle\Controller\:
+        resource: '../../Controller'
         tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed
