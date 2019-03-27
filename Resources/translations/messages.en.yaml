@@ -1,0 +1,7 @@
+base:
+    title: 'Supervision Group'
+
+navigation:
+    main:
+        search: Search
+        sign_out: Sign out

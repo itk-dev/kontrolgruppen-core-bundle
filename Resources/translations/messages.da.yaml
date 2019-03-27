@@ -1,0 +1,7 @@
+base:
+    title: Kontrolgruppen
+
+navigation:
+    main:
+        search: Søg
+        sign_out: Log ud
