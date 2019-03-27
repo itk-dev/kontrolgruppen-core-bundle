@@ -22,20 +22,20 @@
           <td>{{ process.caseWorker }}</td>
         </tr>
         <tr>
-          <th>{{ 'common.table.created_at'|trans }}</th>
-          <td>{{ process.createdAt|date('Y-m-d') }}</td>
-        </tr>
-        <tr>
-          <th>{{ 'common.table.updated_at'|trans }}</th>
-          <td>{{ process.updatedAt|date('Y-m-d') }}</td>
-        </tr>
-        <tr>
           <th>{{ 'common.table.created_by'|trans }}</th>
           <td>{{ process.createdBy }}</td>
         </tr>
         <tr>
+          <th>{{ 'common.table.created_at'|trans }}</th>
+          <td>{{ process.createdAt|date('Y-m-d') }}</td>
+        </tr>
+        <tr>
           <th>{{ 'common.table.updated_by'|trans }}</th>
           <td>{{ process.createdBy }}</td>
+        </tr>
+        <tr>
+          <th>{{ 'common.table.updated_at'|trans }}</th>
+          <td>{{ process.updatedAt|date('Y-m-d') }}</td>
         </tr>
         </tbody>
       </table>

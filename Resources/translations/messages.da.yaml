@@ -1,14 +1,19 @@
 common:
     actions:
-        show: Vis
-        edit: Rediger
         create: Opret ny
         confirm:
             delete: Er du sikker på at du vil slette dette?
+        delete: Slet
+        edit: Rediger
+        show: Vis
     back_to_list: Tilbage til liste
     no_records_found: Ingen indgange fundet
     table:
         actions: Handlinger
+        created_at: Oprettet
+        updated_at: Opdateret
+        created_by: Oprettet af
+        updated_by: Opdateret af
     title: Kontrolgruppen
 
 navigation:
