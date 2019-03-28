@@ -14,6 +14,8 @@
           <th>{{ 'process.table.client_cpr'|trans }}</th>
           <th>{{ 'process.table.case_worker'|trans }}</th>
           <th>{{ 'process.table.channel'|trans }}</th>
+          <th>{{ 'process.table.case_type'|trans }}</th>
+          <th>{{ 'process.table.service'|trans }}</th>
           <th>{{ 'common.table.actions'|trans }}</th>
         </tr>
         </thead>
@@ -25,6 +27,8 @@
             <td>{{ process.clientCPR }}</td>
             <td>{{ process.caseWorker }}</td>
             <td>{{ process.channel }}</td>
+            <td>{{ process.caseType }}</td>
+            <td>{{ process.service }}</td>
             <td>
               <a href="{{ path('process_show', {'id': process.id}) }}">{{ 'common.actions.show'|trans }}</a>
               <a href="{{ path('process_edit', {'id': process.id}) }}">{{ 'common.actions.edit'|trans }}</a>

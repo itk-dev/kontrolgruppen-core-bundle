@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('case_type_delete', {'id': case_type.id}) }}" onsubmit="return confirm({{ "'" ~ ('common.actions.confirm.delete'|trans) ~ "'" }});">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ case_type.id) }}">
+    <button class="btn">{{ 'common.actions.delete'|trans }}</button>
+</form>

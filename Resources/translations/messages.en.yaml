@@ -1,4 +1,18 @@
-channel:
+case_type:
+    edit:
+        title: Edit case type
+    index:
+        title: Case types
+    menu_title: Case types
+    new:
+        title: Create new case type
+    show:
+        title: Case type
+    table:
+        id: ID
+        name: Name
+
+case type:
     edit:
         title: Edit channel
     index:
@@ -48,10 +62,12 @@ process:
         title: Case
     table:
         case_number: Case Number
+        case_type: Case Type
         case_worker: Case Worker
         channel: Channel
         client_cpr: Client CPR
         id: ID
+        service: Service
 
 quick_link:
     edit:

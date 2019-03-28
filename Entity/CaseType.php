@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 
 /**
- * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ServiceRepository")
+ * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\CaseTypeRepository")
  */
-class Service
+class CaseType
 {
     /**
      * @ORM\Id()
@@ -25,13 +25,13 @@ class Service
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", mappedBy="service")
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", mappedBy="caseType")
      */
-    private $process;
+    private $cases;
 
     public function __construct()
     {
-        $this->process = new ArrayCollection();
+        $this->cases = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -54,28 +54,28 @@ class Service
     /**
      * @return Collection|Process[]
      */
-    public function getProcess(): Collection
+    public function getCases(): Collection
     {
-        return $this->process;
+        return $this->cases;
     }
 
-    public function addProcess(Process $process): self
+    public function addCase(Process $case): self
     {
-        if (!$this->process->contains($process)) {
-            $this->process[] = $process;
-            $process->setService($this);
+        if (!$this->cases->contains($case)) {
+            $this->cases[] = $case;
+            $case->setCaseType($this);
         }
 
         return $this;
     }
 
-    public function removeProcess(Process $process): self
+    public function removeCase(Process $case): self
     {
-        if ($this->process->contains($process)) {
-            $this->process->removeElement($process);
+        if ($this->cases->contains($case)) {
+            $this->cases->removeElement($case);
             // set the owning side to null (unless already changed)
-            if ($process->getService() === $this) {
-                $process->setService(null);
+            if ($case->getCaseType() === $this) {
+                $case->setCaseType(null);
             }
         }
 

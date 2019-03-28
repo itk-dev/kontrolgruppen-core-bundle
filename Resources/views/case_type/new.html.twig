@@ -1,0 +1,11 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'case_type.new.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'case_type.new.title'|trans }}</h1>
+
+    {{ include('case_type/_form.html.twig') }}
+
+    <a href="{{ path('case_type_index') }}">{{ 'common.back_to_list'|trans }}</a>
+{% endblock %}

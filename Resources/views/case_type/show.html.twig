@@ -1,0 +1,26 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'case_type.show.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'case_type.show.title'|trans }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'case_type.table.id'|trans }}</th>
+                <td>{{ case_type.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'case_type.table.name'|trans }}</th>
+                <td>{{ case_type.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('case_type_index') }}">{{ 'common.back_to_list'|trans }}</a>
+
+    <a href="{{ path('case_type_edit', {'id': case_type.id}) }}">{{ 'common.actions.edit'|trans }}</a>
+
+    {{ include('case_type/_delete_form.html.twig') }}
+{% endblock %}

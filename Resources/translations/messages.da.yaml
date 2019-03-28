@@ -1,3 +1,17 @@
+case_type:
+    edit:
+        title: Rediger sagstype
+    index:
+        title: Sagstyper
+    menu_title: Sagstyper
+    new:
+        title: Opret sagstype
+    show:
+        title: Sagstype
+    table:
+        id: ID
+        name: Navn
+
 channel:
     edit:
         title: Rediger kanal
@@ -48,10 +62,12 @@ process:
         title: Sag
     table:
         case_number: Sagsnummer
+        case_type: Sagstype
         case_worker: Sagsbehandler
         channel: Kanal
         client_cpr: Klient CPR
         id: ID
+        service: Ydelse
 
 quick_link:
     edit:

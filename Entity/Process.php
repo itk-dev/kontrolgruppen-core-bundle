@@ -2,7 +2,6 @@
 
 namespace Kontrolgruppen\CoreBundle\Entity;
 
-use Kontrolgruppen\CoreBundle\Entity\Service;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -46,6 +45,11 @@ class Process
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="process")
      */
     private $service;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\CaseType", inversedBy="cases")
+     */
+    private $caseType;
 
     public function getId(): ?int
     {
@@ -108,6 +112,18 @@ class Process
     public function setService(?Service $service): self
     {
         $this->service = $service;
+
+        return $this;
+    }
+
+    public function getCaseType(): ?CaseType
+    {
+        return $this->caseType;
+    }
+
+    public function setCaseType(?CaseType $caseType): self
+    {
+        $this->caseType = $caseType;
 
         return $this;
     }
