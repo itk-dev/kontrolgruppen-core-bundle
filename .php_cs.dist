@@ -5,7 +5,7 @@ $finder = PhpCsFixer\Finder::create()
 ;
 
 $header =<<<'HEADER'
-This file is part of aakb/kontrolgruppen.
+This file is part of aakb/kontrolgruppen-core-bundle.
 
 (c) 2019 ITK Development
 
