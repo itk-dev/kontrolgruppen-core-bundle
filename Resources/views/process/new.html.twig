@@ -1,0 +1,15 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'process.new.title'|trans }}{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col">
+      <h1>{{ 'process.new.title'|trans }}</h1>
+
+      {{ include('process/_form.html.twig') }}
+
+      <a href="{{ path('process_index') }}">back to list</a>
+    </div>
+  </div>
+{% endblock %}

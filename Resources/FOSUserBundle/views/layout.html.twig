@@ -1,0 +1,17 @@
+{% extends '@KontrolgruppenCoreBundle/base.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block sidebar null %}
+{% block body_id 'fos-user' %}
+
+{% block body_attributes %}class="text-center"{% endblock %}
+
+{% block body %}
+  {% block fos_user_content %}{% endblock %}
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('core_login') }}
+{% endblock %}

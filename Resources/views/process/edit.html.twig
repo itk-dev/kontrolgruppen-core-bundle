@@ -1,0 +1,17 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'process.edit.title'|trans }}{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col">
+      <h1>{{ 'process.edit.title'|trans }}</h1>
+
+      {{ include('process/_form.html.twig', {'button_label': 'Update'}) }}
+
+      <a href="{{ path('process_index') }}">{{ 'common.back_to_list'|trans }}</a>
+
+      {{ include('process/_delete_form.html.twig') }}
+    </div>
+  </div>
+{% endblock %}

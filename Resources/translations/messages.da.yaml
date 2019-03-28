@@ -1,0 +1,35 @@
+common:
+    actions:
+        create: Opret ny
+        confirm:
+            delete: Er du sikker på at du vil slette dette?
+        delete: Slet
+        edit: Rediger
+        show: Vis
+    back_to_list: Tilbage til liste
+    no_records_found: Ingen indgange fundet
+    table:
+        actions: Handlinger
+        created_at: Oprettet
+        updated_at: Opdateret
+        created_by: Oprettet af
+        updated_by: Opdateret af
+    title: Kontrolgruppen
+
+navigation:
+    main:
+        search: Søg
+        sign_out: Log ud
+
+process:
+    edit:
+        title: Rediger sag
+    index:
+        title: Sager
+    new:
+        title: Opret sag
+    table:
+        id: ID
+        case_number: Sagsnummer
+        client_cpr: Klient CPR
+        case_worker: Sagsbehandler

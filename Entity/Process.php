@@ -1,13 +1,13 @@
 <?php
 
-namespace Kontrolgruppen\Core\Entity;
+namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * @ORM\Entity(repositoryClass="Kontrolgruppen\Core\Repository\ProcessRepository")
+ * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ProcessRepository")
  */
 class Process
 {
@@ -22,7 +22,7 @@ class Process
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\Core\Entity\User", inversedBy="processes")
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\User", inversedBy="processes")
      */
     private $caseWorker;
 

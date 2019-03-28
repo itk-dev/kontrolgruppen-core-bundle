@@ -1,6 +1,6 @@
 <?php
 
-namespace Kontrolgruppen\Core\Controller;
+namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,7 +12,7 @@ class MainController extends AbstractController
      */
     public function index()
     {
-        return $this->render('main/index.html.twig', []);
+        return $this->render('@KontrolgruppenCoreBundle/main/index.html.twig', []);
     }
 
     /**

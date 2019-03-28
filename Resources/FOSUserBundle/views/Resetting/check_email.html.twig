@@ -1,0 +1,16 @@
+{% extends "@FOSUser/layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block page_title 'resetting.request.submit'|trans %}
+
+{% block fos_user_content %}
+  <p class="alert alert-info">
+    {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+
+    {# { 'resetting.check_email'|trans({'%email%': email}) } #}
+  </p>
+
+  <div class="form-group">
+    <a href="{{ path('fos_user_security_login') }}">{{ 'Back to sign in' | trans }}</a>
+  </div>
+{% endblock %}

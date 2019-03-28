@@ -1,8 +1,8 @@
 <?php
 
-namespace Kontrolgruppen\Core\Form;
+namespace Kontrolgruppen\CoreBundle\Form;
 
-use Kontrolgruppen\Core\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\Process;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
