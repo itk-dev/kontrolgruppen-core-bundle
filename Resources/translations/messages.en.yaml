@@ -1,3 +1,16 @@
+channel:
+    edit:
+        title: Edit channel
+    index:
+        title: Channels
+    new:
+        title: Create new channel
+    show:
+        title: Channel
+    table:
+        id: ID
+        name: Name
+
 common:
     actions:
         create: Create new
