@@ -1,3 +1,16 @@
+channel:
+    edit:
+        title: Rediger kanal
+    index:
+        title: Kanaler
+    new:
+        title: Opret kanal
+    show:
+        title: Kanal
+    table:
+        id: ID
+        name: Navn
+
 common:
     actions:
         create: Opret ny
