@@ -39,6 +39,11 @@ class BaseController extends AbstractController
                 'path' => '/channel/',
                 'active' => $this->startsWith($path, '/channel/') != FALSE
             ],
+            'service' => [
+                'name' => 'Service',
+                'path' => '/service/',
+                'active' => $this->startsWith($path, '/service/') != FALSE
+            ],
             'quickLinks' => [
                 'name' => 'Quick Links',
                 'path' => '/quick_link/',

@@ -2,6 +2,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Entity;
 
+use Kontrolgruppen\CoreBundle\Entity\Service;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -40,6 +41,11 @@ class Process
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Channel", inversedBy="processes")
      */
     private $channel;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="process")
+     */
+    private $service;
 
     public function getId(): ?int
     {
@@ -90,6 +96,18 @@ class Process
     public function setChannel(?Channel $channel): self
     {
         $this->channel = $channel;
+
+        return $this;
+    }
+
+    public function getService(): ?Service
+    {
+        return $this->service;
+    }
+
+    public function setService(?Service $service): self
+    {
+        $this->service = $service;
 
         return $this;
     }
