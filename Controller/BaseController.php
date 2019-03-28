@@ -5,14 +5,17 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Kontrolgruppen\CoreBundle\Entity\QuickLink;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BaseController extends AbstractController
 {
     protected $requestStack;
+    protected $translator;
 
-    public function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack, TranslatorInterface $translator)
     {
         $this->requestStack = $requestStack;
+        $this->translator = $translator;
     }
 
     public function baseRender($view, $parameters = null) {
@@ -30,22 +33,22 @@ class BaseController extends AbstractController
         // Set main menu items
         $menuItems = [
             'process' => [
-                'name' => 'Process',
+                'name' => $this->translator->trans('process.menu_title'),
                 'path' => '/process/',
                 'active' => $this->startsWith($path, '/process/') != FALSE
             ],
             'channel' => [
-                'name' => 'Channel',
+                'name' => $this->translator->trans('channel.menu_title'),
                 'path' => '/channel/',
                 'active' => $this->startsWith($path, '/channel/') != FALSE
             ],
             'service' => [
-                'name' => 'Service',
+                'name' => $this->translator->trans('service.menu_title'),
                 'path' => '/service/',
                 'active' => $this->startsWith($path, '/service/') != FALSE
             ],
             'quickLinks' => [
-                'name' => 'Quick Links',
+                'name' => $this->translator->trans('quick_link.menu_title'),
                 'path' => '/quick_link/',
                 'active' => $this->startsWith($path, '/quick_link/') != FALSE
             ]

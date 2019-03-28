@@ -64,3 +64,16 @@ quick_link:
         href: Link
         id: ID
         name: Navn
+
+service:
+    edit:
+        title: Rediger ydelse
+    index:
+        title: Ydelser
+    new:
+        title: Opret ydelse
+    show:
+        title: Ydelse
+    table:
+        id: ID
+        name: Navn

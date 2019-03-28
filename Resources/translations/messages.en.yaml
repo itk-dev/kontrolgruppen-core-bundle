@@ -64,3 +64,16 @@ quick_link:
         href: Link
         id: ID
         name: Name
+
+service:
+    edit:
+        title: Edit service
+    index:
+        title: Services
+    new:
+        title: Create new service
+    show:
+        title: Service
+    table:
+        id: ID
+        name: Name
