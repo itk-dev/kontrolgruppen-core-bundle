@@ -6,8 +6,19 @@
   <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">{{ 'common.title'|trans }}</a>
     {% block navigation_main %}
-      <input class="form-control form-control-dark w-100" type="text" placeholder="{{ 'navigation.main.search'|trans }}"
+      <input class="form-control form-control-dark w-50" type="text" placeholder="{{ 'navigation.main.search'|trans }}"
              aria-label="{{ 'navigation.main.search'|trans }}">
+
+      <div class="dropdown">
+        <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">
+          {{ 'navigation.main.quick_links'|trans }}
+        </button>
+        <div class="dropdown-menu">
+          {% for quickLink in quickLinks %}
+            <a class="dropdown-item" href="{{ quickLink.href }}" target="_blank">{{ quickLink.name }}</a>
+          {% endfor %}
+        </div>
+      </div>
 
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -22,6 +33,16 @@
       <nav class="col-md-2 d-none d-md-block bg-light sidebar">
         <div class="sidebar-sticky">
           {% block navigation_sidebar %}
+          <ul class="nav flex-column">
+            {% for menuItem in menuItems %}
+            <li class="nav-item">
+              <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
+                <span data-feather="home"></span>
+                {{ menuItem.name }} <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
           {% endblock %}
         </div>
       </nav>

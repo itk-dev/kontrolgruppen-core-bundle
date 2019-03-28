@@ -1,0 +1,37 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'quick_link.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'quick_link.index.title'|trans }}</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ 'quick_link.table.id'|trans }}</th>
+                <th>{{ 'quick_link.table.name'|trans }}</th>
+                <th>{{ 'quick_link.table.href'|trans }}</th>
+                <th>{{ 'common.table.actions'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for quick_link in quick_links %}
+            <tr>
+                <td>{{ quick_link.id }}</td>
+                <td>{{ quick_link.name }}</td>
+                <td>{{ quick_link.href }}</td>
+                <td>
+                    <a href="{{ path('quick_link_show', {'id': quick_link.id}) }}">show</a>
+                    <a href="{{ path('quick_link_edit', {'id': quick_link.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">{{ 'common.no_records_found'|trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('quick_link_new') }}">{{ 'common.actions.create'|trans }}</a>
+{% endblock %}

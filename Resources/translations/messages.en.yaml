@@ -20,6 +20,7 @@ navigation:
     main:
         search: Search
         sign_out: Sign out
+        quick_links: Links
 
 process:
     edit:
@@ -28,8 +29,24 @@ process:
         title: Cases
     new:
         title: Create new case
+    show:
+        title: Case
     table:
-        id: ID
         case_number: Case Number
-        client_cpr: Client CPR
         case_worker: Case Worker
+        client_cpr: Client CPR
+        id: ID
+
+quick_link:
+    edit:
+        title: Edit link
+    index:
+        title: Lings
+    new:
+        title: Create new link
+    show:
+        title: Link
+    table:
+        href: Link
+        id: ID
+        name: Name

@@ -5,7 +5,6 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,14 +12,14 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/process")
  */
-class ProcessController extends AbstractController
+class ProcessController extends BaseController
 {
     /**
      * @Route("/", name="process_index", methods={"GET"})
      */
     public function index(ProcessRepository $processRepository): Response
     {
-        return $this->render('process/index.html.twig', [
+        return $this->baseRender('process/index.html.twig', [
             'processes' => $processRepository->findAll(),
         ]);
     }
@@ -48,7 +47,7 @@ class ProcessController extends AbstractController
             return $this->redirectToRoute('process_index');
         }
 
-        return $this->render('process/new.html.twig', [
+        return $this->baseRender('process/new.html.twig', [
             'process' => $process,
             'form' => $form->createView(),
         ]);
@@ -59,7 +58,7 @@ class ProcessController extends AbstractController
      */
     public function show(Process $process): Response
     {
-        return $this->render('process/show.html.twig', [
+        return $this->baseRender('process/show.html.twig', [
             'process' => $process,
         ]);
     }
@@ -80,7 +79,7 @@ class ProcessController extends AbstractController
             ]);
         }
 
-        return $this->render('process/edit.html.twig', [
+        return $this->baseRender('process/edit.html.twig', [
             'process' => $process,
             'form' => $form->createView(),
         ]);

@@ -20,6 +20,7 @@ navigation:
     main:
         search: Søg
         sign_out: Log ud
+        quick_links: Genveje
 
 process:
     edit:
@@ -28,8 +29,24 @@ process:
         title: Sager
     new:
         title: Opret sag
+    show:
+        title: Sag
     table:
-        id: ID
         case_number: Sagsnummer
-        client_cpr: Klient CPR
         case_worker: Sagsbehandler
+        client_cpr: Klient CPR
+        id: ID
+
+quick_link:
+    edit:
+        title: Rediger genvej
+    index:
+        title: Genveje
+    new:
+        title: Opret genvej
+    show:
+        title: Genvej
+    table:
+        href: Link
+        id: ID
+        name: Navn
