@@ -3,6 +3,7 @@ channel:
         title: Rediger kanal
     index:
         title: Kanaler
+    menu_title: Kanaler
     new:
         title: Opret kanal
     show:
@@ -40,6 +41,7 @@ process:
         title: Rediger sag
     index:
         title: Sager
+    menu_title: Sager
     new:
         title: Opret sag
     show:
@@ -56,6 +58,7 @@ quick_link:
         title: Rediger genvej
     index:
         title: Genveje
+    menu_title: Genveje
     new:
         title: Opret genvej
     show:
@@ -70,6 +73,7 @@ service:
         title: Rediger ydelse
     index:
         title: Ydelser
+    menu_title: Ydelser
     new:
         title: Opret ydelse
     show:

@@ -3,6 +3,7 @@ channel:
         title: Edit channel
     index:
         title: Channels
+    menu_title: Channels
     new:
         title: Create new channel
     show:
@@ -40,6 +41,7 @@ process:
         title: Edit case
     index:
         title: Cases
+    menu_title: Cases
     new:
         title: Create new case
     show:
@@ -56,6 +58,7 @@ quick_link:
         title: Edit link
     index:
         title: Lings
+    menu_title: Links
     new:
         title: Create new link
     show:
@@ -70,6 +73,7 @@ service:
         title: Edit service
     index:
         title: Services
+    menu_title: Services
     new:
         title: Create new service
     show:
