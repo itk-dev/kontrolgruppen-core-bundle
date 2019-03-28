@@ -34,6 +34,7 @@ process:
     table:
         case_number: Sagsnummer
         case_worker: Sagsbehandler
+        channel: Kanal
         client_cpr: Klient CPR
         id: ID
 

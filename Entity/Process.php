@@ -36,6 +36,11 @@ class Process
      */
     private $clientCPR;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Channel", inversedBy="processes")
+     */
+    private $channel;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -73,6 +78,18 @@ class Process
     public function setClientCPR(string $clientCPR): self
     {
         $this->clientCPR = $clientCPR;
+
+        return $this;
+    }
+
+    public function getChannel(): ?Channel
+    {
+        return $this->channel;
+    }
+
+    public function setChannel(?Channel $channel): self
+    {
+        $this->channel = $channel;
 
         return $this;
     }

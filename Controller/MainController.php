@@ -11,7 +11,7 @@ class MainController extends BaseController
      */
     public function index()
     {
-        return $this->baseRender('@KontrolgruppenCoreBundle/main/index.html.twig');
+        return $this->baseRender('main/index.html.twig');
     }
 
     /**
@@ -19,6 +19,6 @@ class MainController extends BaseController
      */
     public function test()
     {
-        return $this->baseRender('@KontrolgruppenCoreBundle/main/test.html.twig', []);
+        return $this->baseRender('main/test.html.twig', []);
     }
 }

@@ -34,6 +34,7 @@ process:
     table:
         case_number: Case Number
         case_worker: Case Worker
+        channel: Channel
         client_cpr: Client CPR
         id: ID
 
