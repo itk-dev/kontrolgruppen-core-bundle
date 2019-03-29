@@ -49,6 +49,7 @@ navigation:
         search: Søg
         sign_out: Log ud
         quick_links: Genveje
+        new_process: Ny sag
 
 process:
     edit:

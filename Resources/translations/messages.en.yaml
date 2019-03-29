@@ -49,6 +49,7 @@ navigation:
         search: Search
         sign_out: Sign out
         quick_links: Links
+        new_process: New case
 
 process:
     edit:

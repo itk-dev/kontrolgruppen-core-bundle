@@ -9,7 +9,7 @@
       <input class="form-control form-control-dark w-50" type="text" placeholder="{{ 'navigation.main.search'|trans }}"
              aria-label="{{ 'navigation.main.search'|trans }}">
 
-      <div class="dropdown">
+      <div class="dropdown w-auto">
         <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">
           {{ 'navigation.main.quick_links'|trans }}
         </button>
@@ -20,9 +20,11 @@
         </div>
       </div>
 
-      <ul class="navbar-nav px-3">
+      <a class="btn btn-info btn-sm w-auto" href="{{ path('process_new') }}" role="button">{{ 'navigation.main.new_process'|trans }}</a>
+
+      <ul class="navbar-nav px-3 w-auto">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="/logout">{{ 'navigation.main.sign_out'|trans }}</a>
+          <a class="nav-link" href="{{ path('fos_user_security_logout') }}">{{ 'navigation.main.sign_out'|trans }}</a>
         </li>
       </ul>
     {% endblock %}
