@@ -4,7 +4,7 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 
-class MainController extends BaseController
+class DashboardController extends BaseController
 {
     /**
      * @Route("", name="main")
@@ -12,13 +12,5 @@ class MainController extends BaseController
     public function index()
     {
         return $this->baseRender('main/index.html.twig');
-    }
-
-    /**
-     * @Route("/test", name="test")
-     */
-    public function test()
-    {
-        return $this->baseRender('main/test.html.twig', []);
     }
 }
