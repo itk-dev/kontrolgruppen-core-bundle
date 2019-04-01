@@ -11,16 +11,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/process/status")
+ * @Route("/process_status")
  */
-class ProcessStatusController extends AbstractController
+class ProcessStatusController extends BaseController
 {
     /**
      * @Route("/", name="process_status_index", methods={"GET"})
      */
     public function index(ProcessStatusRepository $processStatusRepository): Response
     {
-        return $this->render('process_status/index.html.twig', [
+        return $this->baseRender('process_status/index.html.twig', [
             'process_statuses' => $processStatusRepository->findAll(),
         ]);
     }
@@ -35,6 +35,11 @@ class ProcessStatusController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $processStatus->setCreatedAt(new \DateTime());
+            $processStatus->setUpdatedAt(new \DateTime());
+            $processStatus->setCreatedBy($this->getUser());
+            $processStatus->setUpdatedBy($this->getUser());
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($processStatus);
             $entityManager->flush();
@@ -42,7 +47,7 @@ class ProcessStatusController extends AbstractController
             return $this->redirectToRoute('process_status_index');
         }
 
-        return $this->render('process_status/new.html.twig', [
+        return $this->baseRender('process_status/new.html.twig', [
             'process_status' => $processStatus,
             'form' => $form->createView(),
         ]);
@@ -53,7 +58,7 @@ class ProcessStatusController extends AbstractController
      */
     public function show(ProcessStatus $processStatus): Response
     {
-        return $this->render('process_status/show.html.twig', [
+        return $this->baseRender('process_status/show.html.twig', [
             'process_status' => $processStatus,
         ]);
     }
@@ -74,7 +79,7 @@ class ProcessStatusController extends AbstractController
             ]);
         }
 
-        return $this->render('process_status/edit.html.twig', [
+        return $this->baseRender('process_status/edit.html.twig', [
             'process_status' => $processStatus,
             'form' => $form->createView(),
         ]);

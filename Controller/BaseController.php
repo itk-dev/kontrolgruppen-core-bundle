@@ -37,6 +37,11 @@ class BaseController extends AbstractController
                 'path' => '/process/',
                 'active' => $this->startsWith($path, '/process/') != FALSE
             ],
+            'process_status' => [
+                'name' => $this->translator->trans('process_status.menu_title'),
+                'path' => '/process_status/',
+                'active' => $this->startsWith($path, '/process_status/') != FALSE
+            ],
             'process_type' => [
                 'name' => $this->translator->trans('process_type.menu_title'),
                 'path' => '/process_type/',

@@ -2,26 +2,13 @@
 
 namespace Kontrolgruppen\CoreBundle\Entity;
 
-use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Blameable\Traits\BlameableEntity;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ProcessRepository")
  */
-class Process
+class Process extends AbstractEntity
 {
-    use BlameableEntity;
-    use TimestampableEntity;
-
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\User", inversedBy="processes")
      */
@@ -56,11 +43,6 @@ class Process
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessStatus", inversedBy="processes")
      */
     private $processStatus;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getCaseWorker(): ?User
     {
