@@ -11,5 +11,4 @@ const $ = require('jquery');
 require('bootstrap');
 
 // any CSS you require will output into a single css file (app.css in this case)
-require('../css/app.scss');
-require('../css/dashboard.css');
+require('../css/core.scss');
