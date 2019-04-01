@@ -1,0 +1,26 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'channel.show.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'channel.show.title'|trans }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'channel.table.id'|trans }}</th>
+                <td>{{ channel.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'channel.table.name'|trans }}</th>
+                <td>{{ channel.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('channel_index') }}">{{ 'common.back_to_list'|trans }}</a>
+
+    <a href="{{ path('channel_edit', {'id': channel.id}) }}">{{ 'common.actions.edit'|trans }}</a>
+
+    {{ include('channel/_delete_form.html.twig') }}
+{% endblock %}

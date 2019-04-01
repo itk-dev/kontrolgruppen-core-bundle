@@ -1,3 +1,45 @@
+process_type:
+    edit:
+        title: Rediger sagstype
+    index:
+        title: Sagstyper
+    menu_title: Sagstyper
+    new:
+        title: Opret sagstype
+    show:
+        title: Sagstype
+    table:
+        id: ID
+        name: Navn
+
+process_status:
+    edit:
+        title: Rediger sagsstatus
+    index:
+        title: Sagsstatuser
+    menu_title: Sagsstatuser
+    new:
+        title: Opret sagsstatus
+    show:
+        title: Sagsstatus
+    table:
+        id: ID
+        name: Navn
+
+channel:
+    edit:
+        title: Rediger kanal
+    index:
+        title: Kanaler
+    menu_title: Kanaler
+    new:
+        title: Opret kanal
+    show:
+        title: Kanal
+    table:
+        id: ID
+        name: Navn
+
 common:
     actions:
         create: Opret ny
@@ -20,16 +62,53 @@ navigation:
     main:
         search: Søg
         sign_out: Log ud
+        quick_links: Genveje
+        new_process: Ny sag
 
 process:
     edit:
         title: Rediger sag
     index:
         title: Sager
+    menu_title: Sager
     new:
         title: Opret sag
+    show:
+        title: Sag
+    table:
+        case_number: Sagsnummer
+        process_type: Sagstype
+        case_worker: Sagsbehandler
+        channel: Kanal
+        client_cpr: Klient CPR
+        id: ID
+        service: Ydelse
+
+quick_link:
+    edit:
+        title: Rediger genvej
+    index:
+        title: Genveje
+    menu_title: Genveje
+    new:
+        title: Opret genvej
+    show:
+        title: Genvej
+    table:
+        href: Link
+        id: ID
+        name: Navn
+
+service:
+    edit:
+        title: Rediger ydelse
+    index:
+        title: Ydelser
+    menu_title: Ydelser
+    new:
+        title: Opret ydelse
+    show:
+        title: Ydelse
     table:
         id: ID
-        case_number: Sagsnummer
-        client_cpr: Klient CPR
-        case_worker: Sagsbehandler
+        name: Navn

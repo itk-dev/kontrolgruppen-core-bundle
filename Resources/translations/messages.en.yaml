@@ -1,3 +1,45 @@
+process_type:
+    edit:
+        title: Edit case type
+    index:
+        title: Case types
+    menu_title: Case types
+    new:
+        title: Create new case type
+    show:
+        title: Case type
+    table:
+        id: ID
+        name: Name
+
+process_status:
+    edit:
+        title: Edit case status
+    index:
+        title: Case statuses
+    menu_title: Case statuses
+    new:
+        title: Create new case status
+    show:
+        title: Case status
+    table:
+        id: ID
+        name: Name
+
+channel:
+    edit:
+        title: Edit channel
+    index:
+        title: Channels
+    menu_title: Channels
+    new:
+        title: Create new channel
+    show:
+        title: Channel
+    table:
+        id: ID
+        name: Name
+
 common:
     actions:
         create: Create new
@@ -20,16 +62,53 @@ navigation:
     main:
         search: Search
         sign_out: Sign out
+        quick_links: Links
+        new_process: New case
 
 process:
     edit:
         title: Edit case
     index:
         title: Cases
+    menu_title: Cases
     new:
         title: Create new case
+    show:
+        title: Case
+    table:
+        case_number: Case Number
+        process_type: Case Type
+        case_worker: Case Worker
+        channel: Channel
+        client_cpr: Client CPR
+        id: ID
+        service: Service
+
+quick_link:
+    edit:
+        title: Edit link
+    index:
+        title: Lings
+    menu_title: Links
+    new:
+        title: Create new link
+    show:
+        title: Link
+    table:
+        href: Link
+        id: ID
+        name: Name
+
+service:
+    edit:
+        title: Edit service
+    index:
+        title: Services
+    menu_title: Services
+    new:
+        title: Create new service
+    show:
+        title: Service
     table:
         id: ID
-        case_number: Case Number
-        client_cpr: Client CPR
-        case_worker: Case Worker
+        name: Name

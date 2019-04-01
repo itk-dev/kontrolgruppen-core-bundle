@@ -1,0 +1,30 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'quick_link.show.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'quick_link.show.title'|trans }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'quick_link.table.id'|trans }}</th>
+                <td>{{ quick_link.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'quick_link.table.name'|trans }}</th>
+                <td>{{ quick_link.name }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'quick_link.table.href'|trans }}</th>
+                <td>{{ quick_link.href }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('quick_link_index') }}">{{ 'common.back_to_list'|trans }}</a>
+
+    <a href="{{ path('quick_link_edit', {'id': quick_link.id}) }}">{{ 'common.actions.edit'|trans }}</a>
+
+    {{ include('quick_link/_delete_form.html.twig') }}
+{% endblock %}

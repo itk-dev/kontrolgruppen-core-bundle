@@ -1,0 +1,35 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'service.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'service.index.title'|trans }}</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>{{ 'service.table.id'|trans }}</th>
+            <th>{{ 'service.table.name'|trans }}</th>
+            <th>{{ 'common.table.actions'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for service in services %}
+            <tr>
+                <td>{{ service.id }}</td>
+                <td>{{ service.name }}</td>
+                <td>
+                    <a href="{{ path('service_show', {'id': service.id}) }}">show</a>
+                    <a href="{{ path('service_edit', {'id': service.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">{{ 'common.no_records_found'|trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('service_new') }}">{{ 'common.actions.create'|trans }}</a>
+{% endblock %}

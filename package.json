@@ -1,0 +1,30 @@
+{
+  "name": "core-bundle",
+  "version": "1.0.0",
+  "main": "Resources/assets/js/app.js",
+  "repository": "git@github.com:aakb/kontrolgruppen-core-bundle.git",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.5",
+    "babel-preset-env": "^1.7.0",
+    "bootstrap": "^4.3.1",
+    "css-loader": "^2.1.1",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "jquery": "^3.3.1",
+    "mini-css-extract-plugin": "^0.5.0",
+    "node-sass": "^4.11.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "popper.js": "^1.14.7",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "uglifyjs-webpack-plugin": "^2.1.2",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  },
+  "scripts": {
+    "build": "webpack --mode=production",
+    "watch": "webpack --mode=production --watch"
+  }
+}

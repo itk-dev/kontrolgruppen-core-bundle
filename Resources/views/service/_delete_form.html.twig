@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('service_delete', {'id': service.id}) }}" onsubmit="return confirm({{ "'" ~ ('common.actions.confirm.delete'|trans) ~ "'" }});">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ service.id) }}">
+    <button class="btn">{{ 'common.actions.delete'|trans }}</button>
+</form>
