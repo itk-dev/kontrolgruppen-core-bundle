@@ -35,6 +35,11 @@ class ServiceController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $service->setCreatedAt(new \DateTime());
+            $service->setUpdatedAt(new \DateTime());
+            $service->setCreatedBy($this->getUser());
+            $service->setUpdatedBy($this->getUser());
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($service);
             $entityManager->flush();

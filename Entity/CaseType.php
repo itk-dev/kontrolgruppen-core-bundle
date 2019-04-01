@@ -5,25 +5,12 @@ namespace Kontrolgruppen\CoreBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Kontrolgruppen\CoreBundle\Entity\Process;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\CaseTypeRepository")
  */
-class CaseType
+class CaseType extends AbstractTaxonomy
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
-
     /**
      * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", mappedBy="caseType")
      */
@@ -32,23 +19,6 @@ class CaseType
     public function __construct()
     {
         $this->cases = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     /**
@@ -80,13 +50,5 @@ class CaseType
         }
 
         return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function __toString()
-    {
-        return $this->getName();
     }
 }

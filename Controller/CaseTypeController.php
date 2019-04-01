@@ -35,6 +35,11 @@ class CaseTypeController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $caseType->setCreatedAt(new \DateTime());
+            $caseType->setUpdatedAt(new \DateTime());
+            $caseType->setCreatedBy($this->getUser());
+            $caseType->setUpdatedBy($this->getUser());
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($caseType);
             $entityManager->flush();

@@ -34,6 +34,11 @@ class ChannelController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $channel->setCreatedAt(new \DateTime());
+            $channel->setUpdatedAt(new \DateTime());
+            $channel->setCreatedBy($this->getUser());
+            $channel->setUpdatedBy($this->getUser());
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($channel);
             $entityManager->flush();

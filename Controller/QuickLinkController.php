@@ -34,6 +34,11 @@ class QuickLinkController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $quickLink->setCreatedAt(new \DateTime());
+            $quickLink->setUpdatedAt(new \DateTime());
+            $quickLink->setCreatedBy($this->getUser());
+            $quickLink->setUpdatedBy($this->getUser());
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($quickLink);
             $entityManager->flush();
