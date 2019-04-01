@@ -1,4 +1,4 @@
-case_type:
+process_type:
     edit:
         title: Edit case type
     index:
@@ -12,7 +12,21 @@ case_type:
         id: ID
         name: Name
 
-case type:
+process_status:
+    edit:
+        title: Edit case status
+    index:
+        title: Case statuses
+    menu_title: Case statuses
+    new:
+        title: Create new case status
+    show:
+        title: Case status
+    table:
+        id: ID
+        name: Name
+
+channel:
     edit:
         title: Edit channel
     index:
@@ -63,7 +77,7 @@ process:
         title: Case
     table:
         case_number: Case Number
-        case_type: Case Type
+        process_type: Case Type
         case_worker: Case Worker
         channel: Channel
         client_cpr: Client CPR

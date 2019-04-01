@@ -1,4 +1,4 @@
-case_type:
+process_type:
     edit:
         title: Rediger sagstype
     index:
@@ -8,6 +8,20 @@ case_type:
         title: Opret sagstype
     show:
         title: Sagstype
+    table:
+        id: ID
+        name: Navn
+
+process_status:
+    edit:
+        title: Rediger sagsstatus
+    index:
+        title: Sagsstatuser
+    menu_title: Sagsstatuser
+    new:
+        title: Opret sagsstatus
+    show:
+        title: Sagsstatus
     table:
         id: ID
         name: Navn
@@ -63,7 +77,7 @@ process:
         title: Sag
     table:
         case_number: Sagsnummer
-        case_type: Sagstype
+        process_type: Sagstype
         case_worker: Sagsbehandler
         channel: Kanal
         client_cpr: Klient CPR

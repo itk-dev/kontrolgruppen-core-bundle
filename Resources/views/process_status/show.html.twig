@@ -1,0 +1,26 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'process_status.show.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'process_status.show.title'|trans }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'process_status.table.id'|trans }}</th>
+                <td>{{ process_status.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'process_status.table.name'|trans }}</th>
+                <td>{{ process_status.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('process_status_index') }}">{{ 'common.back_to_list'|trans }}</a>
+
+    <a href="{{ path('process_status_edit', {'id': process_status.id}) }}">{{ 'common.actions.edit'|trans }}</a>
+
+    {{ include('process_status/_delete_form.html.twig') }}
+{% endblock %}

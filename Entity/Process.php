@@ -2,6 +2,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Entity;
 
+use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -47,9 +48,14 @@ class Process
     private $service;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\CaseType", inversedBy="cases")
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessType", inversedBy="process_type")
      */
-    private $caseType;
+    private $processType;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessStatus", inversedBy="processes")
+     */
+    private $processStatus;
 
     public function getId(): ?int
     {
@@ -116,14 +122,26 @@ class Process
         return $this;
     }
 
-    public function getCaseType(): ?CaseType
+    public function getProcessType(): ?ProcessType
     {
-        return $this->caseType;
+        return $this->processType;
     }
 
-    public function setCaseType(?CaseType $caseType): self
+    public function setProcessType(?ProcessType $processType): self
     {
-        $this->caseType = $caseType;
+        $this->processType = $processType;
+
+        return $this;
+    }
+
+    public function getProcessStatus(): ?ProcessStatus
+    {
+        return $this->processStatus;
+    }
+
+    public function setProcessStatus(?ProcessStatus $processStatus): self
+    {
+        $this->processStatus = $processStatus;
 
         return $this;
     }

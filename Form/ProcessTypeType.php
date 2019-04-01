@@ -2,12 +2,12 @@
 
 namespace Kontrolgruppen\CoreBundle\Form;
 
-use Kontrolgruppen\CoreBundle\Entity\CaseType;
+use Kontrolgruppen\CoreBundle\Entity\ProcessType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CaseTypeType extends AbstractType
+class ProcessTypeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -19,7 +19,7 @@ class CaseTypeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => CaseType::class,
+            'data_class' => ProcessType::class,
         ]);
     }
 }
