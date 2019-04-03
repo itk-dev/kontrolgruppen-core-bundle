@@ -1,6 +1,8 @@
 channel:
     edit:
         title: Edit channel
+    form:
+        name: Name
     index:
         title: Channels
     menu_title: Channels
@@ -26,8 +28,8 @@ common:
     table:
         actions: Actions
         created_at: Created at
-        updated_at: Updated at
         created_by: Created by
+        updated_at: Updated at
         updated_by: Updated by
     title: 'Supervision Group'
 
@@ -45,6 +47,12 @@ navigation:
 process:
     edit:
         title: Edit case
+    form:
+        case_worker: Case Worker
+        channel: Channel
+        client_cpr: Client CPR
+        process_type: Case Type
+        service: Service
     index:
         title: Cases
     menu_title: Cases
@@ -54,16 +62,18 @@ process:
         title: Case
     table:
         case_number: Case Number
-        process_type: Case Type
         case_worker: Case Worker
         channel: Channel
         client_cpr: Client CPR
         id: ID
+        process_type: Case Type
         service: Service
 
 process_status:
     edit:
         title: Edit case status
+    form:
+        name: Name
     index:
         title: Case statuses
     menu_title: Case statuses
@@ -79,6 +89,9 @@ process_status:
 process_type:
     edit:
         title: Edit case type
+    form:
+        name: Name
+        process_statuses: Case Statuses
     index:
         title: Case types
     menu_title: Case types
@@ -94,6 +107,9 @@ process_type:
 quick_link:
     edit:
         title: Edit link
+    form:
+        name: Name
+        href: Link
     index:
         title: Lings
     menu_title: Links
@@ -109,6 +125,8 @@ quick_link:
 service:
     edit:
         title: Edit service
+    form:
+        name: Name
     index:
         title: Services
     menu_title: Services

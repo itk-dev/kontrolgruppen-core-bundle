@@ -1,6 +1,8 @@
 channel:
     edit:
         title: Rediger kanal
+    form:
+        name: Navn
     index:
         title: Kanaler
     menu_title: Kanaler
@@ -26,8 +28,8 @@ common:
     table:
         actions: Handlinger
         created_at: Oprettet
-        updated_at: Opdateret
         created_by: Oprettet af
+        updated_at: Opdateret
         updated_by: Opdateret af
     title: Kontrolgruppen
 
@@ -45,6 +47,12 @@ navigation:
 process:
     edit:
         title: Rediger sag
+    form:
+        case_worker: Sagbehandler
+        channel: Kanal
+        client_cpr: Klient CPR
+        process_type: Sagstype
+        service: Ydelse
     index:
         title: Sager
     menu_title: Sager
@@ -54,16 +62,18 @@ process:
         title: Sag
     table:
         case_number: Sagsnummer
-        process_type: Sagstype
         case_worker: Sagsbehandler
         channel: Kanal
         client_cpr: Klient CPR
         id: ID
+        process_type: Sagstype
         service: Ydelse
 
 process_status:
     edit:
         title: Rediger sagsstatus
+    form:
+        name: Navn
     index:
         title: Sagsstatuser
     menu_title: Sagsstatuser
@@ -79,6 +89,9 @@ process_status:
 process_type:
     edit:
         title: Rediger sagstype
+    form:
+        name: Navn
+        process_statuses: Sagsstatuser
     index:
         title: Sagstyper
     menu_title: Sagstyper
@@ -94,6 +107,9 @@ process_type:
 quick_link:
     edit:
         title: Rediger genvej
+    form:
+        name: Navn
+        href: Link
     index:
         title: Genveje
     menu_title: Genveje
@@ -109,6 +125,8 @@ quick_link:
 service:
     edit:
         title: Rediger ydelse
+    form:
+        name: Navn
     index:
         title: Ydelser
     menu_title: Ydelser
@@ -119,5 +137,3 @@ service:
     table:
         id: ID
         name: Navn
-
-Update: Gem

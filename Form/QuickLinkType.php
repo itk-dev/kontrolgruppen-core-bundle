@@ -12,8 +12,12 @@ class QuickLinkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('href')
+            ->add('name', null, [
+                'label' => 'quick_link.form.name',
+            ])
+            ->add('href', null, [
+                'label' => 'quick_link.form.href',
+            ])
         ;
     }
 

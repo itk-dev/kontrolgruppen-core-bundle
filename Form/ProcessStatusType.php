@@ -12,8 +12,12 @@ class ProcessStatusType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('processTypes')
+            ->add('name', null, [
+                'label' => 'process_status.form.name',
+            ])
+            ->add('processTypes', null, [
+                'label' => 'process_status.form.process_types',
+            ])
         ;
     }
 
