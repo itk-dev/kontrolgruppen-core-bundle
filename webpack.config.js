@@ -5,7 +5,8 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
   entry: {
-    'core': './Resources/assets/js/core.js'
+    'core': './Resources/assets/js/core.js',
+    'login': './Resources/assets/js/login.js'
   },
   output: {
     path: path.resolve('./Resources/public/build'),
@@ -24,8 +25,8 @@ module.exports = {
         ]
       },
       {
-        test: /\.js$/,
-        exclude: /(node_modules)/,
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
           options: {
