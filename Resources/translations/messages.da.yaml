@@ -1,33 +1,3 @@
-process_type:
-    edit:
-        title: Rediger sagstype
-    index:
-        title: Sagstyper
-    menu_title: Sagstyper
-    new:
-        title: Opret sagstype
-    show:
-        title: Sagstype
-    table:
-        id: ID
-        name: Navn
-        process_statuses: Tilkoblede sagsstatuser
-
-process_status:
-    edit:
-        title: Rediger sagsstatus
-    index:
-        title: Sagsstatuser
-    menu_title: Sagsstatuser
-    new:
-        title: Opret sagsstatus
-    show:
-        title: Sagsstatus
-    table:
-        id: ID
-        name: Navn
-        process_types: Tilkoblede sagstyper
-
 channel:
     edit:
         title: Rediger kanal
@@ -49,6 +19,7 @@ common:
             delete: Er du sikker på at du vil slette dette?
         delete: Slet
         edit: Rediger
+        save: Gem
         show: Vis
     back_to_list: Tilbage til liste
     no_records_found: Ingen indgange fundet
@@ -59,6 +30,10 @@ common:
         created_by: Oprettet af
         updated_by: Opdateret af
     title: Kontrolgruppen
+
+dashboard:
+    index:
+        title: Dashboard
 
 navigation:
     main:
@@ -85,6 +60,36 @@ process:
         client_cpr: Klient CPR
         id: ID
         service: Ydelse
+
+process_status:
+    edit:
+        title: Rediger sagsstatus
+    index:
+        title: Sagsstatuser
+    menu_title: Sagsstatuser
+    new:
+        title: Opret sagsstatus
+    show:
+        title: Sagsstatus
+    table:
+        id: ID
+        name: Navn
+        process_types: Tilkoblede sagstyper
+
+process_type:
+    edit:
+        title: Rediger sagstype
+    index:
+        title: Sagstyper
+    menu_title: Sagstyper
+    new:
+        title: Opret sagstype
+    show:
+        title: Sagstype
+    table:
+        id: ID
+        name: Navn
+        process_statuses: Tilkoblede sagsstatuser
 
 quick_link:
     edit:
@@ -114,3 +119,5 @@ service:
     table:
         id: ID
         name: Navn
+
+Update: Gem
