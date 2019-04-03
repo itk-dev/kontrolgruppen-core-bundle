@@ -10,6 +10,7 @@
             <tr>
                 <th>{{ 'process_type.table.id'|trans }}</th>
                 <th>{{ 'process_type.table.name'|trans }}</th>
+                <th>{{ 'process_type.table.process_statuses'|trans }}</th>
                 <th>{{ 'common.table.actions'|trans }}</th>
             </tr>
         </thead>
@@ -18,6 +19,11 @@
             <tr>
                 <td>{{ process_type.id }}</td>
                 <td>{{ process_type.name }}</td>
+                <td>
+                    {% for processStatus in process_type.processStatuses %}
+                      {{ processStatus }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
                 <td>
                     <a href="{{ path('process_type_show', {'id': process_type.id}) }}">{{ 'common.actions.show'|trans }}</a>
                     <a href="{{ path('process_type_edit', {'id': process_type.id}) }}">{{ 'common.actions.edit'|trans }}</a>

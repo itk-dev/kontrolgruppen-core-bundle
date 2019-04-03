@@ -13,6 +13,7 @@ class ProcessTypeType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('processStatuses')
         ;
     }
 

@@ -16,9 +16,15 @@ class ProcessType extends AbstractTaxonomy
      */
     private $process_type;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessStatus", inversedBy="processTypes")
+     */
+    private $processStatuses;
+
     public function __construct()
     {
         $this->process_type = new ArrayCollection();
+        $this->processStatuses = new ArrayCollection();
     }
 
     /**
@@ -47,6 +53,32 @@ class ProcessType extends AbstractTaxonomy
             if ($case->getProcessType() === $this) {
                 $case->setProcessType(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProcessStatus[]
+     */
+    public function getProcessStatuses(): Collection
+    {
+        return $this->processStatuses;
+    }
+
+    public function addProcessStatus(ProcessStatus $processStatus): self
+    {
+        if (!$this->processStatuses->contains($processStatus)) {
+            $this->processStatuses[] = $processStatus;
+        }
+
+        return $this;
+    }
+
+    public function removeProcessStatus(ProcessStatus $processStatus): self
+    {
+        if ($this->processStatuses->contains($processStatus)) {
+            $this->processStatuses->removeElement($processStatus);
         }
 
         return $this;

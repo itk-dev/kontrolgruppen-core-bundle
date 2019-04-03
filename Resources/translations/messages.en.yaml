@@ -11,6 +11,7 @@ process_type:
     table:
         id: ID
         name: Name
+        process_statuses: Attached case statuses
 
 process_status:
     edit:
@@ -25,6 +26,7 @@ process_status:
     table:
         id: ID
         name: Name
+        process_types: Attached case types
 
 channel:
     edit:
