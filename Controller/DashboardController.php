@@ -11,6 +11,6 @@ class DashboardController extends BaseController
      */
     public function index()
     {
-        return $this->baseRender('main/index.html.twig');
+        return $this->render('main/index.html.twig');
     }
 }

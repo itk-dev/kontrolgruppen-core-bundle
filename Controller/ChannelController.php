@@ -19,7 +19,7 @@ class ChannelController extends BaseController
      */
     public function index(ChannelRepository $channelRepository): Response
     {
-        return $this->baseRender('channel/index.html.twig', [
+        return $this->render('channel/index.html.twig', [
             'channels' => $channelRepository->findAll(),
         ]);
     }
@@ -34,10 +34,8 @@ class ChannelController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $channel->setCreatedAt(new \DateTime());
-            $channel->setUpdatedAt(new \DateTime());
-            $channel->setCreatedBy($this->getUser());
-            $channel->setUpdatedBy($this->getUser());
+            $this->setCreatedValues($channel);
+            $this->setUpdatedValues($channel);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($channel);
@@ -46,7 +44,7 @@ class ChannelController extends BaseController
             return $this->redirectToRoute('channel_index');
         }
 
-        return $this->baseRender('channel/new.html.twig', [
+        return $this->render('channel/new.html.twig', [
             'channel' => $channel,
             'form' => $form->createView(),
         ]);
@@ -57,7 +55,7 @@ class ChannelController extends BaseController
      */
     public function show(Channel $channel): Response
     {
-        return $this->baseRender('channel/show.html.twig', [
+        return $this->render('channel/show.html.twig', [
             'channel' => $channel,
         ]);
     }
@@ -71,6 +69,8 @@ class ChannelController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->setUpdatedValues($channel);
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('channel_index', [
@@ -78,7 +78,7 @@ class ChannelController extends BaseController
             ]);
         }
 
-        return $this->baseRender('channel/edit.html.twig', [
+        return $this->render('channel/edit.html.twig', [
             'channel' => $channel,
             'form' => $form->createView(),
         ]);

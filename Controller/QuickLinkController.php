@@ -19,7 +19,7 @@ class QuickLinkController extends BaseController
      */
     public function index(QuickLinkRepository $quickLinkRepository): Response
     {
-        return $this->baseRender('quick_link/index.html.twig', [
+        return $this->render('quick_link/index.html.twig', [
             'quick_links' => $quickLinkRepository->findAll(),
         ]);
     }
@@ -34,10 +34,8 @@ class QuickLinkController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $quickLink->setCreatedAt(new \DateTime());
-            $quickLink->setUpdatedAt(new \DateTime());
-            $quickLink->setCreatedBy($this->getUser());
-            $quickLink->setUpdatedBy($this->getUser());
+            $this->setCreatedValues($quickLink);
+            $this->setUpdatedValues($quickLink);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($quickLink);
@@ -46,7 +44,7 @@ class QuickLinkController extends BaseController
             return $this->redirectToRoute('quick_link_index');
         }
 
-        return $this->baseRender('quick_link/new.html.twig', [
+        return $this->render('quick_link/new.html.twig', [
             'quick_link' => $quickLink,
             'form' => $form->createView(),
         ]);
@@ -57,7 +55,7 @@ class QuickLinkController extends BaseController
      */
     public function show(QuickLink $quickLink): Response
     {
-        return $this->baseRender('quick_link/show.html.twig', [
+        return $this->render('quick_link/show.html.twig', [
             'quick_link' => $quickLink,
         ]);
     }
@@ -71,6 +69,8 @@ class QuickLinkController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->setUpdatedValues($quickLink);
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('quick_link_index', [
@@ -78,7 +78,7 @@ class QuickLinkController extends BaseController
             ]);
         }
 
-        return $this->baseRender('quick_link/edit.html.twig', [
+        return $this->render('quick_link/edit.html.twig', [
             'quick_link' => $quickLink,
             'form' => $form->createView(),
         ]);

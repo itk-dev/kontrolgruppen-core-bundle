@@ -20,7 +20,7 @@ class ServiceController extends BaseController
      */
     public function index(ServiceRepository $serviceRepository): Response
     {
-        return $this->baseRender('service/index.html.twig', [
+        return $this->render('service/index.html.twig', [
             'services' => $serviceRepository->findAll(),
         ]);
     }
@@ -35,10 +35,8 @@ class ServiceController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $service->setCreatedAt(new \DateTime());
-            $service->setUpdatedAt(new \DateTime());
-            $service->setCreatedBy($this->getUser());
-            $service->setUpdatedBy($this->getUser());
+            $this->setCreatedValues($service);
+            $this->setUpdatedValues($service);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($service);
@@ -47,7 +45,7 @@ class ServiceController extends BaseController
             return $this->redirectToRoute('service_index');
         }
 
-        return $this->baseRender('service/new.html.twig', [
+        return $this->render('service/new.html.twig', [
             'service' => $service,
             'form' => $form->createView(),
         ]);
@@ -58,7 +56,7 @@ class ServiceController extends BaseController
      */
     public function show(Service $service): Response
     {
-        return $this->baseRender('service/show.html.twig', [
+        return $this->render('service/show.html.twig', [
             'service' => $service,
         ]);
     }
@@ -72,6 +70,8 @@ class ServiceController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->setUpdatedValues($service);
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('service_index', [
@@ -79,7 +79,7 @@ class ServiceController extends BaseController
             ]);
         }
 
-        return $this->baseRender('service/edit.html.twig', [
+        return $this->render('service/edit.html.twig', [
             'service' => $service,
             'form' => $form->createView(),
         ]);

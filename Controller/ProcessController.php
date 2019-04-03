@@ -19,7 +19,7 @@ class ProcessController extends BaseController
      */
     public function index(ProcessRepository $processRepository): Response
     {
-        return $this->baseRender('process/index.html.twig', [
+        return $this->render('process/index.html.twig', [
             'processes' => $processRepository->findAll(),
         ]);
     }
@@ -35,10 +35,8 @@ class ProcessController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $process->setCaseNumber($this->getNewCaseNumber());
-            $process->setCreatedAt(new \DateTime());
-            $process->setUpdatedAt(new \DateTime());
-            $process->setCreatedBy($this->getUser());
-            $process->setUpdatedBy($this->getUser());
+            $this->setCreatedValues($process);
+            $this->setUpdatedValues($process);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($process);
@@ -47,7 +45,7 @@ class ProcessController extends BaseController
             return $this->redirectToRoute('process_index');
         }
 
-        return $this->baseRender('process/new.html.twig', [
+        return $this->render('process/new.html.twig', [
             'process' => $process,
             'form' => $form->createView(),
         ]);
@@ -58,7 +56,7 @@ class ProcessController extends BaseController
      */
     public function show(Process $process): Response
     {
-        return $this->baseRender('process/show.html.twig', [
+        return $this->render('process/show.html.twig', [
             'process' => $process,
         ]);
     }
@@ -72,6 +70,8 @@ class ProcessController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->setUpdatedValues($process);
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('process_index', [
@@ -79,7 +79,7 @@ class ProcessController extends BaseController
             ]);
         }
 
-        return $this->baseRender('process/edit.html.twig', [
+        return $this->render('process/edit.html.twig', [
             'process' => $process,
             'form' => $form->createView(),
         ]);

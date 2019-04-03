@@ -2,10 +2,13 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Doctrine\ORM\Mapping\Entity;
+use Kontrolgruppen\CoreBundle\Entity\AbstractEntity;
 use Kontrolgruppen\CoreBundle\Entity\QuickLink;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class BaseController extends AbstractController
 {
@@ -18,9 +21,13 @@ class BaseController extends AbstractController
         $this->translator = $translator;
     }
 
-    public function baseRender($view, $parameters = null) {
-        $parameters = $parameters ?: [];
-
+    /**
+     * @param string $view
+     * @param array $parameters
+     * @param \Symfony\Component\HttpFoundation\Response|null $response
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function render(string $view, array $parameters = [], Response $response = NULL): Response {
         // Set quickLinks
         $quickLinks = $this->getDoctrine()->getRepository(QuickLink::class)->findAll();
         $parameters['quickLinks'] = $quickLinks;
@@ -65,7 +72,19 @@ class BaseController extends AbstractController
         ];
         $parameters['menuItems'] = $menuItems;
 
-        return $this->render($view, $parameters);
+        return parent::render($view, $parameters, $response);
+    }
+
+    protected function setUpdatedValues(AbstractEntity &$entity)
+    {
+        $entity->setUpdatedAt(new \DateTime());
+        $entity->setUpdatedBy($this->getUser());
+    }
+
+    protected function setCreatedValues(AbstractEntity &$entity)
+    {
+        $entity->setCreatedAt(new \DateTime());
+        $entity->setCreatedBy($this->getUser());
     }
 
     private function startsWith($haystack, $needle)
