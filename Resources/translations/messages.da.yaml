@@ -49,8 +49,11 @@ process:
         title: Rediger sag
     form:
         case_worker: Sagbehandler
+        change_process_status:
+            save: Skift status
         channel: Kanal
         client_cpr: Klient CPR
+        process_status: Sagsstatus
         process_type: Sagstype
         service: Ydelse
     index:

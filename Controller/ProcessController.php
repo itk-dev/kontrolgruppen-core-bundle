@@ -8,6 +8,7 @@ use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * @Route("/process")
@@ -52,12 +53,28 @@ class ProcessController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="process_show", methods={"GET"})
+     * @Route("/{id}", name="process_show", methods={"GET", "POST"})
      */
-    public function show(Process $process): Response
+    public function show(Request $request, Process $process): Response
     {
+        $form = $this->createFormBuilder($process)
+            ->add('processStatus', null, [
+                'label' => 'process.form.process_status',
+            ])
+            ->add('save', SubmitType::class, ['label' => 'process.form.change_process_status.save'])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->setUpdatedValues($process);
+
+            $this->getDoctrine()->getManager()->flush();
+        }
+
         return $this->render('process/show.html.twig', [
             'process' => $process,
+            'process_type_form' => $form->createView()
         ]);
     }
 
