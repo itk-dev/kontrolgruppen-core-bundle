@@ -3,43 +3,77 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-  <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/">{{ 'common.title'|trans }}</a>
-    {% block navigation_main %}
-      <input class="form-control form-control-dark w-50" type="text" placeholder="{{ 'navigation.main.search'|trans }}"
-             aria-label="{{ 'navigation.main.search'|trans }}">
+  <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow navbar-expand-lg">
 
-      <div class="dropdown w-auto">
-        <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">
-          {{ 'navigation.main.quick_links'|trans }}
-        </button>
-        <div class="dropdown-menu">
-          {% for quickLink in quickLinks %}
-            <a class="dropdown-item" href="{{ quickLink.href }}" target="_blank">{{ quickLink.name }}</a>
-          {% endfor %}
-        </div>
+    <a class="navbar-brand col-auto col-sm-3 col-md-2 col-lg-2 mr-0" href="/">
+      <i class="fas fa-house-damage text-white mr-sm-3" title="{{ 'common.title'|trans }}"></i>
+      <span class="d-none d-md-inline">{{ 'common.title'|trans }}</span>
+    </a>
+    {% block navigation_main %}
+      <input class="form-control form-control-dark w-50 rounded-pill" type="text" placeholder="{{ 'navigation.main.search'|trans }}"
+             aria-label="{{ 'navigation.main.search'|trans }}">
+      <button class="navbar-toggler mr-1" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+
+        <ul class="navbar-nav ml-0 ml-lg-auto p-3 p-lg-0">
+
+          <li class="nav-item dropdown mr-0 mr-sm-3 mb-3 mb-lg-0">
+            <a class="btn btn-sm btn-light dropdown-toggle btn-block" href="#" id="navbarQuicklinksDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ 'navigation.main.quick_links'|trans }}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarQuicklinksDropdown">
+              {% for quickLink in quickLinks %}
+                <a class="dropdown-item" href="{{ quickLink.href }}" target="_blank">{{ quickLink.name }}</a>
+              {% endfor %}
+            </div>
+          </li>
+
+          <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
+            <a class="btn btn-sm btn-success btn-block" href="{{ path('process_new') }}">{{ 'navigation.main.new_process'|trans }}</a>
+          </li>
+          <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
+            <a class="btn btn-sm btn-outline-danger btn-block" href="{{ path('fos_user_security_logout') }}">{{ 'navigation.main.sign_out'|trans }}</a>
+          </li>
+        </ul>
+
       </div>
 
-      <a class="btn btn-info btn-sm w-auto" href="{{ path('process_new') }}" role="button">{{ 'navigation.main.new_process'|trans }}</a>
 
-      <ul class="navbar-nav px-3 w-auto">
-        <li class="nav-item text-nowrap">
-          <a class="nav-link" href="{{ path('fos_user_security_logout') }}">{{ 'navigation.main.sign_out'|trans }}</a>
-        </li>
-      </ul>
     {% endblock %}
   </nav>
 
-  <div class="container-fluid">
+  <div class="container-fluid main-container">
     <div class="row">
-      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-        <div class="sidebar-sticky">
-          {% block navigation_sidebar %}
+
+      <nav class="globalmenu d-none d-md-block bg-dark pt-3">
+        {% set globalMenuItems = {
+            dashboard:    { name: "dashboard", icon: "fa-tachometer-alt", tooltip: "Cases in progress", path: "#" },
+            cases: { name: "Cases", icon: "fa-tasks", tooltip: "All cases", path: "#" },
+            my_page:     { name: "My page", icon: "fa-id-card", tooltip: "Your profile", path: "#" },
+            users:     { name: "Users", icon: "fa-users-cog", tooltip: "All user", path: "#" }
+        } %}
+        {% block globalmenu_sidebar %}
           <ul class="nav flex-column">
+            {% for globalMenuItem in globalMenuItems %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ globalMenuItem.path }}" data-toggle="tooltip" data-placement="right" title="{{ globalMenuItem.tooltip }}">
+                  <i class="fas {{ globalMenuItem.icon }} text-light" ></i><span class="sr-only">{{ globalMenuItem.name }}</span>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endblock %}
+      </nav>
+
+      <nav class="col-auto d-none d-md-block bg-light">
+        <div class="sidebar-sticky pt-3">
+          {% block navigation_sidebar %}
+          <ul class="nav flex-column nav-pills">
             {% for menuItem in menuItems %}
             <li class="nav-item">
               <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
-                <span data-feather="home"></span>
                 {{ menuItem.name }} <span class="sr-only">(current)</span>
               </a>
             </li>
@@ -49,7 +83,7 @@
         </div>
       </nav>
 
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <main role="main" class="col-auto">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
           <div class="row">
             <div class="col">
