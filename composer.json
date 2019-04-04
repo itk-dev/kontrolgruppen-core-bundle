@@ -38,6 +38,9 @@
         ]
     },
     "require-dev": {
-        "phan/phan": "^1.2"
+        "allocine/twigcs": "^3.1",
+        "friendsofphp/php-cs-fixer": "^2.14",
+        "phan/phan": "^1.2",
+        "squizlabs/php_codesniffer": "^3.4"
     }
 }
