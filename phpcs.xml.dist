@@ -4,6 +4,9 @@
 
 	<file>./</file>
 
+  <exclude-pattern>Resources/*</exclude-pattern>
+  <exclude-pattern>Vendor/*</exclude-pattern>
+
 	<!-- Do not print warnings -->
 	<arg value="n"/>
 
