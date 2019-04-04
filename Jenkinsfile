@@ -18,7 +18,7 @@ pipeline {
                 }
                 stage('PHP7 compatibility') {
                     steps {
-                        sh 'vendor/bin/phan --allow-polyfill-parser'
+                        sh 'vendor/bin/phan --allow-polyfill-parser --directory .'
                         
                     }
                 }

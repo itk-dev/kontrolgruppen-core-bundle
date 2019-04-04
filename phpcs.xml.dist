@@ -2,8 +2,7 @@
 <ruleset name="PHP_CodeSniffer">
 	<description>The coding standard.</description>
 
-	<file>src/</file>
-	<file>tests/</file>
+	<file>./</file>
 
 	<!-- Do not print warnings -->
 	<arg value="n"/>
