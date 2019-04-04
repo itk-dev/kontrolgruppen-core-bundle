@@ -34,9 +34,6 @@ class QuickLinkController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->setCreatedValues($quickLink);
-            $this->setUpdatedValues($quickLink);
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($quickLink);
             $entityManager->flush();
@@ -69,8 +66,6 @@ class QuickLinkController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->setUpdatedValues($quickLink);
-
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('quick_link_index', [

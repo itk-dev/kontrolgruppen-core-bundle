@@ -2,8 +2,6 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
-use Doctrine\ORM\Mapping\Entity;
-use Kontrolgruppen\CoreBundle\Entity\AbstractEntity;
 use Kontrolgruppen\CoreBundle\Entity\QuickLink;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -75,18 +73,13 @@ class BaseController extends AbstractController
         return parent::render($view, $parameters, $response);
     }
 
-    protected function setUpdatedValues(AbstractEntity &$entity)
-    {
-        $entity->setUpdatedAt(new \DateTime());
-        $entity->setUpdatedBy($this->getUser());
-    }
-
-    protected function setCreatedValues(AbstractEntity &$entity)
-    {
-        $entity->setCreatedAt(new \DateTime());
-        $entity->setCreatedBy($this->getUser());
-    }
-
+    /**
+     * Tests if the haystack starts with the needle.
+     *
+     * @param $haystack
+     * @param $needle
+     * @return bool
+     */
     private function startsWith($haystack, $needle)
     {
         $length = strlen($needle);

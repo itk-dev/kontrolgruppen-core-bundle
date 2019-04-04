@@ -35,9 +35,6 @@ class ProcessTypeController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->setCreatedValues($processType);
-            $this->setUpdatedValues($processType);
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($processType);
             $entityManager->flush();
@@ -70,8 +67,6 @@ class ProcessTypeController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->setUpdatedValues($processType);
-
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('process_type_index', [

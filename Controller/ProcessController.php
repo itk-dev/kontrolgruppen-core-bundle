@@ -3,12 +3,16 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Form\ProcessStatusType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 /**
  * @Route("/process")
@@ -36,8 +40,6 @@ class ProcessController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $process->setCaseNumber($this->getNewCaseNumber());
-            $this->setCreatedValues($process);
-            $this->setUpdatedValues($process);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($process);
@@ -87,8 +89,6 @@ class ProcessController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->setUpdatedValues($process);
-
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('process_index', [

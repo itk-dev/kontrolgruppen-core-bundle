@@ -34,9 +34,6 @@ class ChannelController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->setCreatedValues($channel);
-            $this->setUpdatedValues($channel);
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($channel);
             $entityManager->flush();
@@ -69,8 +66,6 @@ class ChannelController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->setUpdatedValues($channel);
-
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('channel_index', [

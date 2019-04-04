@@ -3,6 +3,7 @@ channel:
         title: Rediger kanal
     form:
         name: Navn
+        update: Gem
     index:
         title: Kanaler
     menu_title: Kanaler
@@ -56,6 +57,7 @@ process:
         process_status: Sagsstatus
         process_type: Sagstype
         service: Ydelse
+        update: Gem
     index:
         title: Sager
     menu_title: Sager
@@ -77,6 +79,7 @@ process_status:
         title: Rediger sagsstatus
     form:
         name: Navn
+        update: Gem
     index:
         title: Sagsstatuser
     menu_title: Sagsstatuser
@@ -95,6 +98,7 @@ process_type:
     form:
         name: Navn
         process_statuses: Sagsstatuser
+        update: Gem
     index:
         title: Sagstyper
     menu_title: Sagstyper
@@ -113,6 +117,7 @@ quick_link:
     form:
         name: Navn
         href: Link
+        update: Gem
     index:
         title: Genveje
     menu_title: Genveje
@@ -130,6 +135,7 @@ service:
         title: Rediger ydelse
     form:
         name: Navn
+        update: Gem
     index:
         title: Ydelser
     menu_title: Ydelser

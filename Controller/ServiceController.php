@@ -35,9 +35,6 @@ class ServiceController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->setCreatedValues($service);
-            $this->setUpdatedValues($service);
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($service);
             $entityManager->flush();
@@ -70,8 +67,6 @@ class ServiceController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->setUpdatedValues($service);
-
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('service_index', [

@@ -35,9 +35,6 @@ class ProcessStatusController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->setCreatedValues($processStatus);
-            $this->setUpdatedValues($processStatus);
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($processStatus);
             $entityManager->flush();
@@ -70,8 +67,6 @@ class ProcessStatusController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->setUpdatedValues($processStatus);
-
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('process_status_index', [
