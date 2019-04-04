@@ -36,5 +36,8 @@
             "@apply-coding-standards/php-cs-fixer",
             "@apply-coding-standards/phpcs"
         ]
+    },
+    "require-dev": {
+        "phan/phan": "^1.2"
     }
 }
