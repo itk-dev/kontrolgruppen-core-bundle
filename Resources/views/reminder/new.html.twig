@@ -1,0 +1,11 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'reminder.new.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'reminder.new.title'|trans }}</h1>
+
+    {{ include('reminder/_form.html.twig') }}
+
+    <a href="{{ path('reminder_index', {process: process.id}) }}">{{ 'common.back_to_list'|trans }}</a>
+{% endblock %}

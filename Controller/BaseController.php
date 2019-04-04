@@ -20,6 +20,10 @@ class BaseController extends AbstractController
     }
 
     /**
+     * Render view.
+     *
+     * Attaches menu and quick links.
+     *
      * @param string $view
      * @param array $parameters
      * @param \Symfony\Component\HttpFoundation\Response|null $response
@@ -69,6 +73,20 @@ class BaseController extends AbstractController
             ]
         ];
         $parameters['menuItems'] = $menuItems;
+
+        $subMenuItems = [];
+
+        if (preg_match('/\/process\/.+/', $path) != FALSE) {
+            $process = $request->get('process');
+
+            $subMenuItems['reminders'] = [
+                'name' => $this->translator->trans('reminder.menu_title'),
+                'path' => '/process/'.$process->getId().'/reminder',
+                'active' => preg_match('/\/process\/\d+\/reminder\/.*/', $path) != FALSE
+            ];
+        }
+
+        $parameters['subMenuItems'] = $subMenuItems;
 
         return parent::render($view, $parameters, $response);
     }

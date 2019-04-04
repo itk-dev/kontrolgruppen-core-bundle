@@ -59,6 +59,7 @@ class ProcessController extends BaseController
      */
     public function show(Request $request, Process $process): Response
     {
+        // @TODO: Limit the available process statuses based on selected process type.
         $form = $this->createFormBuilder($process)
             ->add('processStatus', null, [
                 'label' => 'process.form.process_status',
