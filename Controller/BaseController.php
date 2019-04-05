@@ -29,11 +29,12 @@ class BaseController extends AbstractController
      * @param array $parameters
      * @param \Symfony\Component\HttpFoundation\Response|null $response
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function render(string $view, array $parameters = [], Response $response = NULL): Response {
         // Set reminders
-        $reminders = $this->getDoctrine()->getRepository(Reminder::class)->findActiveUserReminders($this->getUser());
-        $parameters['activeUserReminders'] = $reminders;
+        $numberOfReminders = $this->getDoctrine()->getRepository(Reminder::class)->findNumberOfActiveUserReminders($this->getUser());
+        $parameters['activeUserReminders'] = $numberOfReminders;
 
         // Set quickLinks
         $quickLinks = $this->getDoctrine()->getRepository(QuickLink::class)->findAll();
@@ -46,6 +47,11 @@ class BaseController extends AbstractController
 
         // Set main menu items
         $menuItems = [
+            'dashboard' => [
+                'name' => $this->translator->trans('dashboard.menu_title'),
+                'path' => '/',
+                'active' => FALSE,
+            ],
             'process' => [
                 'name' => $this->translator->trans('process.menu_title'),
                 'path' => '/process/',

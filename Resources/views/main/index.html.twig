@@ -24,7 +24,7 @@
 
       <a class="btn {% if activeUserReminders|length > 0 %}btn-warning{% else %}btn-secondary{% endif %} btn-sm"
          href="{{ path('user_reminder_index') }}" role="button">
-        {{ 'navigation.main.remainders.number_of_reminders'|trans({'%numberOfReminders%': activeUserReminders|length}) }}
+        {{ 'navigation.main.remainders.number_of_reminders'|trans({'%numberOfReminders%': activeUserReminders}) }}
       </a>
 
       <ul class="navbar-nav px-3 w-auto">

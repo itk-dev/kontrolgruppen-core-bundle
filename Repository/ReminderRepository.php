@@ -20,6 +20,12 @@ class ReminderRepository extends ServiceEntityRepository
         parent::__construct($registry, Reminder::class);
     }
 
+    /**
+     * Find all reminders for user.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\User $user
+     * @return mixed
+     */
     public function findAllUserReminders(User $user)
     {
         $qb = $this->createQueryBuilder('reminder')
@@ -31,12 +37,18 @@ class ReminderRepository extends ServiceEntityRepository
         return $qb->execute();
     }
 
+    /**
+     * Find active reminders for user.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\User $user
+     * @return mixed
+     */
     public function findActiveUserReminders(User $user)
     {
         $qb = $this->createQueryBuilder('reminder');
         $expr = $qb->expr();
         $qb = $qb
-            ->select('reminder', 'process')
+            ->select('reminder')
             ->leftJoin('reminder.process', 'process')->addSelect("process")
             ->where('process.caseWorker = :user')
             ->setParameter('user', $user)
@@ -49,5 +61,32 @@ class ReminderRepository extends ServiceEntityRepository
             ->getQuery();
 
         return $qb->execute();
+    }
+
+    /**
+     * Count the number of active reminders for user.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\User $user
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findNumberOfActiveUserReminders(User $user)
+    {
+        $qb = $this->createQueryBuilder('reminder');
+        $expr = $qb->expr();
+        $qb = $qb
+            ->select('count(reminder) as c')
+            ->leftJoin('reminder.process', 'process')
+            ->where('process.caseWorker = :user')
+            ->setParameter('user', $user)
+            ->andWhere($expr->orX(
+                $expr->isNull('reminder.finished'),
+                $expr->neq('reminder.finished', true))
+            )
+            ->andWhere('reminder.date < :now')
+            ->setParameter('now', new \DateTime())
+            ->getQuery();
+
+        return $qb->getSingleScalarResult();
     }
 }
