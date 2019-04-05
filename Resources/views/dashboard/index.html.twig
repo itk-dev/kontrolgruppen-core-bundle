@@ -5,4 +5,20 @@
 {% block content %}
     <h1>{{ 'dashboard.index.title'|trans }}</h1>
 
+    <h3>{{ 'dashboard.reminders.title'|trans }} ({{ reminders|length }})</h3>
+
+    {% include '@KontrolgruppenCore/reminder/_reminder_list.html.twig' with {reminders: reminders, limit: 2} %}
+
+    <h3>{{ 'dashboard.not_assigned_title' }}</h3>
+
+    @TODO
+
+    <h3>{{ 'dashboard.not_visited_title' }}</h3>
+
+    @TODO
+
+    <h3>{{ 'dashboard.my_processes_title' }}</h3>
+
+    @TODO
+
 {% endblock %}

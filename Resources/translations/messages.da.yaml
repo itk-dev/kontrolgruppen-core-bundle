@@ -40,6 +40,8 @@ common:
 dashboard:
     index:
         title: Dashboard
+    reminders:
+        title: Påmindelser
 
 navigation:
     main:
