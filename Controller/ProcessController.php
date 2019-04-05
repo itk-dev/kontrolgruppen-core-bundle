@@ -70,8 +70,6 @@ class ProcessController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->setUpdatedValues($process);
-
             $this->getDoctrine()->getManager()->flush();
         }
 

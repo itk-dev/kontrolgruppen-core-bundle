@@ -3,6 +3,7 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\QuickLink;
+use Kontrolgruppen\CoreBundle\Entity\Reminder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -30,6 +31,10 @@ class BaseController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function render(string $view, array $parameters = [], Response $response = NULL): Response {
+        // Set reminders
+        $reminders = $this->getDoctrine()->getRepository(Reminder::class)->findActiveUserReminders($this->getUser());
+        $parameters['activeUserReminders'] = $reminders;
+
         // Set quickLinks
         $quickLinks = $this->getDoctrine()->getRepository(QuickLink::class)->findAll();
         $parameters['quickLinks'] = $quickLinks;

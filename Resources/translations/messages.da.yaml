@@ -47,6 +47,8 @@ navigation:
         sign_out: Log ud
         quick_links: Genveje
         new_process: Ny sag
+        remainders:
+            number_of_reminders: '%numberOfReminders% påmindelser'
 
 process:
     edit:
