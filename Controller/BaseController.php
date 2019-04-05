@@ -84,11 +84,13 @@ class BaseController extends AbstractController
         if (preg_match('/\/process\/.+/', $path) != FALSE) {
             $process = $request->get('process');
 
-            $subMenuItems['reminders'] = [
-                'name' => $this->translator->trans('reminder.menu_title'),
-                'path' => '/process/'.$process->getId().'/reminder',
-                'active' => preg_match('/\/process\/\d+\/reminder\/.*/', $path) != FALSE
-            ];
+            if (isset($process) && $process->getId() != null) {
+                $subMenuItems['reminders'] = [
+                    'name' => $this->translator->trans('reminder.menu_title'),
+                    'path' => '/process/'.$process->getId().'/reminder',
+                    'active' => preg_match('/\/process\/\d+\/reminder\/.*/', $path) != FALSE
+                ];
+            }
         }
 
         $parameters['subMenuItems'] = $subMenuItems;

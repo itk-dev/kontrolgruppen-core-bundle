@@ -20,7 +20,7 @@ class ServiceController extends BaseController
      */
     public function index(ServiceRepository $serviceRepository): Response
     {
-        return $this->render('service/index.html.twig', [
+        return $this->render('@KontrolgruppenCore/service/index.html.twig', [
             'services' => $serviceRepository->findAll(),
         ]);
     }
@@ -42,7 +42,7 @@ class ServiceController extends BaseController
             return $this->redirectToRoute('service_index');
         }
 
-        return $this->render('service/new.html.twig', [
+        return $this->render('@KontrolgruppenCore/service/new.html.twig', [
             'service' => $service,
             'form' => $form->createView(),
         ]);
@@ -53,7 +53,7 @@ class ServiceController extends BaseController
      */
     public function show(Service $service): Response
     {
-        return $this->render('service/show.html.twig', [
+        return $this->render('@KontrolgruppenCore/service/show.html.twig', [
             'service' => $service,
         ]);
     }
@@ -74,7 +74,7 @@ class ServiceController extends BaseController
             ]);
         }
 
-        return $this->render('service/edit.html.twig', [
+        return $this->render('@KontrolgruppenCore/service/edit.html.twig', [
             'service' => $service,
             'form' => $form->createView(),
         ]);

@@ -20,7 +20,7 @@ class ProcessTypeController extends BaseController
      */
     public function index(ProcessTypeRepository $processTypeRepository): Response
     {
-        return $this->render('process_type/index.html.twig', [
+        return $this->render('@KontrolgruppenCore/process_type/index.html.twig', [
             'process_types' => $processTypeRepository->findAll(),
         ]);
     }
@@ -42,7 +42,7 @@ class ProcessTypeController extends BaseController
             return $this->redirectToRoute('process_type_index');
         }
 
-        return $this->render('process_type/new.html.twig', [
+        return $this->render('@KontrolgruppenCore/process_type/new.html.twig', [
             'process_type' => $processType,
             'form' => $form->createView(),
         ]);
@@ -53,7 +53,7 @@ class ProcessTypeController extends BaseController
      */
     public function show(ProcessType $processType): Response
     {
-        return $this->render('process_type/show.html.twig', [
+        return $this->render('@KontrolgruppenCore/process_type/show.html.twig', [
             'process_type' => $processType,
         ]);
     }
@@ -74,7 +74,7 @@ class ProcessTypeController extends BaseController
             ]);
         }
 
-        return $this->render('process_type/edit.html.twig', [
+        return $this->render('@KontrolgruppenCore/process_type/edit.html.twig', [
             'process_type' => $processType,
             'form' => $form->createView(),
         ]);

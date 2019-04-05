@@ -20,7 +20,7 @@ class ProcessReminderController extends BaseController
      */
     public function index(ReminderRepository $reminderRepository, Process $process): Response
     {
-        return $this->render('reminder/index.html.twig', [
+        return $this->render('@KontrolgruppenCore/reminder/index.html.twig', [
             'reminders' => $process->getReminders(),
             'process' => $process,
         ]);
@@ -44,7 +44,7 @@ class ProcessReminderController extends BaseController
             return $this->redirectToRoute('reminder_index', ['process' => $process->getId()]);
         }
 
-        return $this->render('reminder/new.html.twig', [
+        return $this->render('@KontrolgruppenCore/reminder/new.html.twig', [
             'reminder' => $reminder,
             'process' => $process,
             'form' => $form->createView(),
@@ -56,7 +56,7 @@ class ProcessReminderController extends BaseController
      */
     public function show(Reminder $reminder, Process $process): Response
     {
-        return $this->render('reminder/show.html.twig', [
+        return $this->render('@KontrolgruppenCore/reminder/show.html.twig', [
             'reminder' => $reminder,
             'process' => $process,
         ]);
@@ -85,7 +85,7 @@ class ProcessReminderController extends BaseController
             ]);
         }
 
-        return $this->render('reminder/edit.html.twig', [
+        return $this->render('@KontrolgruppenCore/reminder/edit.html.twig', [
             'reminder' => $reminder,
             'process' => $process,
             'form' => $form->createView(),

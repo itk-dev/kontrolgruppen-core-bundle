@@ -51,6 +51,8 @@ navigation:
             number_of_reminders: '%numberOfReminders% påmindelser'
 
 process:
+    actions:
+        reminders: Påmindelser
     edit:
         title: Rediger sag
     form:
@@ -147,6 +149,7 @@ reminder:
         update: Gem
     index:
         title: Påmindelser
+    menu_title: Påmindelser
     new:
         title: Opret påmindelse
     table:

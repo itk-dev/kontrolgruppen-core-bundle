@@ -24,7 +24,7 @@ class ProcessController extends BaseController
      */
     public function index(ProcessRepository $processRepository): Response
     {
-        return $this->render('process/index.html.twig', [
+        return $this->render('@KontrolgruppenCore/process/index.html.twig', [
             'processes' => $processRepository->findAll(),
         ]);
     }
@@ -48,7 +48,7 @@ class ProcessController extends BaseController
             return $this->redirectToRoute('process_index');
         }
 
-        return $this->render('process/new.html.twig', [
+        return $this->render('@KontrolgruppenCore/process/new.html.twig', [
             'process' => $process,
             'form' => $form->createView(),
         ]);
@@ -73,7 +73,7 @@ class ProcessController extends BaseController
             $this->getDoctrine()->getManager()->flush();
         }
 
-        return $this->render('process/show.html.twig', [
+        return $this->render('@KontrolgruppenCore/process/show.html.twig', [
             'process' => $process,
             'process_type_form' => $form->createView()
         ]);
@@ -95,7 +95,7 @@ class ProcessController extends BaseController
             ]);
         }
 
-        return $this->render('process/edit.html.twig', [
+        return $this->render('@KontrolgruppenCore/process/edit.html.twig', [
             'process' => $process,
             'form' => $form->createView(),
         ]);

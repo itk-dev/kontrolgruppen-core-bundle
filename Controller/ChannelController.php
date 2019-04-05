@@ -19,7 +19,7 @@ class ChannelController extends BaseController
      */
     public function index(ChannelRepository $channelRepository): Response
     {
-        return $this->render('channel/index.html.twig', [
+        return $this->render('@KontrolgruppenCore/channel/index.html.twig', [
             'channels' => $channelRepository->findAll(),
         ]);
     }
@@ -41,7 +41,7 @@ class ChannelController extends BaseController
             return $this->redirectToRoute('channel_index');
         }
 
-        return $this->render('channel/new.html.twig', [
+        return $this->render('@KontrolgruppenCore/channel/new.html.twig', [
             'channel' => $channel,
             'form' => $form->createView(),
         ]);
@@ -52,7 +52,7 @@ class ChannelController extends BaseController
      */
     public function show(Channel $channel): Response
     {
-        return $this->render('channel/show.html.twig', [
+        return $this->render('@KontrolgruppenCore/channel/show.html.twig', [
             'channel' => $channel,
         ]);
     }
@@ -73,7 +73,7 @@ class ChannelController extends BaseController
             ]);
         }
 
-        return $this->render('channel/edit.html.twig', [
+        return $this->render('@KontrolgruppenCore/channel/edit.html.twig', [
             'channel' => $channel,
             'form' => $form->createView(),
         ]);

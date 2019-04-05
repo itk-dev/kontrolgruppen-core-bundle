@@ -33,15 +33,19 @@ class ReminderRepository extends ServiceEntityRepository
 
     public function findActiveUserReminders(User $user)
     {
-        $now = new \DateTime();
-
-        $qb = $this->createQueryBuilder('reminder')
-            ->where(':user = process.caseWorker')
-            ->andWhere('reminder.date < :now')
-            ->andWhere('reminder.finished != true')
+        $qb = $this->createQueryBuilder('reminder');
+        $expr = $qb->expr();
+        $qb = $qb
+            ->select('reminder', 'process')
             ->leftJoin('reminder.process', 'process')->addSelect("process")
+            ->where('process.caseWorker = :user')
             ->setParameter('user', $user)
-            ->setParameter('now', $now)
+            ->andWhere($expr->orX(
+                $expr->isNull('reminder.finished'),
+                $expr->neq('reminder.finished', true))
+            )
+            ->andWhere('reminder.date < :now')
+            ->setParameter('now', new \DateTime())
             ->getQuery();
 
         return $qb->execute();

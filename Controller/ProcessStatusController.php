@@ -20,7 +20,7 @@ class ProcessStatusController extends BaseController
      */
     public function index(ProcessStatusRepository $processStatusRepository): Response
     {
-        return $this->render('process_status/index.html.twig', [
+        return $this->render('@KontrolgruppenCore/process_status/index.html.twig', [
             'process_statuses' => $processStatusRepository->findAll(),
         ]);
     }
@@ -42,7 +42,7 @@ class ProcessStatusController extends BaseController
             return $this->redirectToRoute('process_status_index');
         }
 
-        return $this->render('process_status/new.html.twig', [
+        return $this->render('@KontrolgruppenCore/process_status/new.html.twig', [
             'process_status' => $processStatus,
             'form' => $form->createView(),
         ]);
@@ -53,7 +53,7 @@ class ProcessStatusController extends BaseController
      */
     public function show(ProcessStatus $processStatus): Response
     {
-        return $this->render('process_status/show.html.twig', [
+        return $this->render('@KontrolgruppenCore/process_status/show.html.twig', [
             'process_status' => $processStatus,
         ]);
     }
@@ -74,7 +74,7 @@ class ProcessStatusController extends BaseController
             ]);
         }
 
-        return $this->render('process_status/edit.html.twig', [
+        return $this->render('@KontrolgruppenCore/process_status/edit.html.twig', [
             'process_status' => $processStatus,
             'form' => $form->createView(),
         ]);

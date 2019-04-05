@@ -20,9 +20,12 @@
         </div>
       </div>
 
-      <a class="btn btn-info btn-sm w-auto" href="{{ path('process_new') }}" role="button">{{ 'navigation.main.new_process'|trans }}</a>
+      <a class="btn btn-primary btn-sm w-auto" href="{{ path('process_new') }}" role="button">{{ 'navigation.main.new_process'|trans }}</a>
 
-      <a class="btn btn-warning btn-sm" href="{{ path('user_reminder_index') }}" role="button">{{ 'navigation.main.remainders.number_of_reminders'|trans({'%numberOfReminders%': activeUserReminders|length}) }}</a>
+      <a class="btn {% if activeUserReminders|length > 0 %}btn-warning{% else %}btn-secondary{% endif %} btn-sm"
+         href="{{ path('user_reminder_index') }}" role="button">
+        {{ 'navigation.main.remainders.number_of_reminders'|trans({'%numberOfReminders%': activeUserReminders|length}) }}
+      </a>
 
       <ul class="navbar-nav px-3 w-auto">
         <li class="nav-item text-nowrap">

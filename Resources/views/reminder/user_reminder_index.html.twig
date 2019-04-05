@@ -9,6 +9,8 @@
     <thead>
     <tr>
       <th>{{ 'reminder.table.id'|trans }}</th>
+      <th>{{ 'process.table.case_number'|trans }}</th>
+      <th>{{ 'process.table.process_type'|trans }}</th>
       <th>{{ 'reminder.table.message'|trans }}</th>
       <th>{{ 'reminder.table.date'|trans }}</th>
       <th>{{ 'reminder.table.finished'|trans }}</th>
@@ -19,6 +21,8 @@
     {% for reminder in reminders %}
       <tr class="{% if not reminder.finished and reminder.date|date('Y-m-d') < "now"|date('Y-m-d') %}bg-warning{% endif %}">
         <td>{{ reminder.id }}</td>
+        <td><a href="{{ path('process_show', {id: reminder.process.id}) }}">{{ reminder.process.caseNumber }}</a></td>
+        <td>{{ reminder.process.processType }}</td>
         <td>{{ reminder.message }}</td>
         <td>{{ reminder.date ? reminder.date|date('Y-m-d H:i:s') : '' }}</td>
         <td>{{ (reminder.finished ? 'common.boolean.true' : 'common.boolean.false')|trans }}</td>

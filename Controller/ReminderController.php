@@ -20,7 +20,7 @@ class ReminderController extends BaseController
      */
     public function index(ReminderRepository $reminderRepository): Response
     {
-        return $this->render('reminder/index.html.twig', [
+        return $this->render('@KontrolgruppenCore/reminder/user_reminder_index.html.twig', [
             'reminders' => $reminderRepository->findAllUserReminders($this->getUser()),
         ]);
     }
