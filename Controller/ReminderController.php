@@ -21,6 +21,16 @@ class ReminderController extends BaseController
     public function index(ReminderRepository $reminderRepository): Response
     {
         return $this->render('@KontrolgruppenCore/reminder/user_reminder_index.html.twig', [
+            'reminders' => $reminderRepository->findActiveUserReminders($this->getUser()),
+        ]);
+    }
+
+    /**
+     * @Route("/all", name="user_reminder_all", methods={"GET"})
+     */
+    public function all(ReminderRepository $reminderRepository): Response
+    {
+        return $this->render('@KontrolgruppenCore/reminder/user_reminder_index.html.twig', [
             'reminders' => $reminderRepository->findAllUserReminders($this->getUser()),
         ]);
     }
