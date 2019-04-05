@@ -3,7 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-  <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow navbar-expand-lg">
+  <nav class="navbar navbar-dark fixed-top bg-dark p-0 shadow navbar-expand-lg">
 
     <a class="navbar-brand col-auto col-sm-3 col-md-2 col-lg-2 mr-0" href="/">
       <i class="fas fa-house-damage text-white mr-sm-3" title="{{ 'common.title'|trans }}"></i>
@@ -30,6 +30,28 @@
             </div>
           </li>
 
+          {% block globalmenu_mobile %}
+            {% for globalMenuItem in globalMenuItems %}
+              <li class="nav-item d-lg-none">
+                <a class="nav-link" href="{{ globalMenuItem.path }}">
+                  <i class="fas {{ globalMenuItem.icon }} text-light mr-3 mr-lg-none" ></i>{{ globalMenuItem.name }}
+                </a>
+              </li>
+            {% endfor %}
+          {% endblock %}
+
+          {% if menuItems %}
+            {% block navigation_mobile %}
+              {% for menuItem in menuItems %}
+                <li class="nav-item d-lg-none">
+                  <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
+                    {{ menuItem.name }} <span class="sr-only">(current)</span>
+                  </a>
+                </li>
+              {% endfor %}
+            {% endblock %}
+          {% endif %}
+
           <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
             <a class="btn btn-sm btn-success btn-block" href="{{ path('process_new') }}">{{ 'navigation.main.new_process'|trans }}</a>
           </li>
@@ -47,13 +69,7 @@
   <div class="container-fluid main-container">
     <div class="row">
 
-      <nav class="globalmenu d-none d-md-block bg-dark pt-3">
-        {% set globalMenuItems = {
-            dashboard:    { name: "dashboard", icon: "fa-tachometer-alt", tooltip: "Cases in progress", path: "#" },
-            cases: { name: "Cases", icon: "fa-tasks", tooltip: "All cases", path: "#" },
-            my_page:     { name: "My page", icon: "fa-id-card", tooltip: "Your profile", path: "#" },
-            users:     { name: "Users", icon: "fa-users-cog", tooltip: "All user", path: "#" }
-        } %}
+      <nav class="globalmenu d-none d-lg-block bg-dark pt-3">
         {% block globalmenu_sidebar %}
           <ul class="nav flex-column">
             {% for globalMenuItem in globalMenuItems %}
@@ -67,21 +83,24 @@
         {% endblock %}
       </nav>
 
-      <nav class="col-auto d-none d-md-block bg-light">
-        <div class="sidebar-sticky pt-3">
-          {% block navigation_sidebar %}
-          <ul class="nav flex-column nav-pills">
-            {% for menuItem in menuItems %}
-            <li class="nav-item">
-              <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
-                {{ menuItem.name }} <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            {% endfor %}
-          </ul>
-          {% endblock %}
-        </div>
-      </nav>
+
+      {% if menuItems %}
+        <nav class="col-auto d-none d-lg-block bg-light">
+          <div class="sidebar-sticky pt-3">
+            {% block navigation_sidebar %}
+            <ul class="nav flex-column nav-pills">
+              {% for menuItem in menuItems %}
+              <li class="nav-item">
+                <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
+                  {{ menuItem.name }} <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+            {% endblock %}
+          </div>
+        </nav>
+      {% endif %}
 
       <main role="main" class="col-auto">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">

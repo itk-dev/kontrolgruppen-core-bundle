@@ -1,0 +1,15 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'settings.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'settings.index.title'|trans }}</h1>
+{% endblock %}
+
+{% set menuItems = {
+    process_type:    { name: 'process_type.menu_title'|trans, path: "/process_type/", active: false },
+    process_status: { name: 'process_status.menu_title'|trans, path: "/process_status/", active: false  },
+    channel:     { name: 'channel.menu_title'|trans, path: "/channel/", active: false  },
+    service:     { name: 'service.menu_title'|trans, path: "/service/", active: false  },
+    quickLinks:     { name: 'quickLinks.menu_title'|trans, path: "/quick_link/", active: false  }
+} %}

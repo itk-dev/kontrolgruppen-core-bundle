@@ -37,6 +37,7 @@ common:
 dashboard:
     index:
         title: Dashboard
+    menu_title: Dashboard
 
 navigation:
     main:
@@ -73,6 +74,7 @@ process:
         id: ID
         process_type: Sagstype
         service: Ydelse
+    tooltip: Liste med alle sager
 
 process_status:
     edit:
@@ -146,3 +148,8 @@ service:
     table:
         id: ID
         name: Navn
+
+settings:
+    index:
+      title: Indstillinger
+    tooltip: Opret og tilpas systemet indstilliger

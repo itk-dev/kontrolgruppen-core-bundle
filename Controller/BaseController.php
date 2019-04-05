@@ -35,38 +35,47 @@ class BaseController extends AbstractController
         $path = $request->getPathInfo();
         $parameters['path'] = $path;
 
-        // Set main menu items
+        // Set global menu items
+        $globalMenuItems = [
+          'dashboard' => [
+              'name' => $this->translator->trans('dashboard.menu_title'),
+              'path' => '/',
+              'active' => $this->startsWith($path, '/') != FALSE,
+              'icon' => 'fa-tachometer-alt',
+              'tooltip' => $this->translator->trans('dashboard.tooltip')
+          ],
+          'process' => [
+            'name' => $this->translator->trans('process.menu_title'),
+            'path' => '/process/',
+            'active' => $this->startsWith($path, '/process/') != FALSE,
+            'icon' => 'fa-tasks',
+            'tooltip' => $this->translator->trans('process.tooltip')
+          ],
+          'my_page' => [
+            'name' => $this->translator->trans('my_page.menu_title'),
+            'path' => '/profile/',
+            'active' => $this->startsWith($path, '/profile/') != FALSE,
+            'icon' => 'fa-id-card',
+            'tooltip' => $this->translator->trans('my_page.menu_title')
+          ],
+          'users' => [
+            'name' => $this->translator->trans('users.menu_title'),
+            'path' => '/users/',
+            'active' => $this->startsWith($path, '/users/') != FALSE,
+            'icon' => 'fa-users-cog',
+            'tooltip' => $this->translator->trans('users.tooltip')
+          ],
+          'settings' => [
+            'name' => $this->translator->trans('settings.menu_title'),
+            'path' => '/settings/',
+            'active' => $this->startsWith($path, '/settings/') != FALSE,
+            'icon' => 'fa-cog',
+            'tooltip' => $this->translator->trans('settings.tooltip')
+          ],
+        ];
+        $parameters['globalMenuItems'] = $globalMenuItems;
+
         $menuItems = [
-            'process' => [
-                'name' => $this->translator->trans('process.menu_title'),
-                'path' => '/process/',
-                'active' => $this->startsWith($path, '/process/') != FALSE
-            ],
-            'process_type' => [
-                'name' => $this->translator->trans('process_type.menu_title'),
-                'path' => '/process_type/',
-                'active' => $this->startsWith($path, '/process_type/') != FALSE
-            ],
-            'process_status' => [
-                'name' => $this->translator->trans('process_status.menu_title'),
-                'path' => '/process_status/',
-                'active' => $this->startsWith($path, '/process_status/') != FALSE
-            ],
-            'channel' => [
-                'name' => $this->translator->trans('channel.menu_title'),
-                'path' => '/channel/',
-                'active' => $this->startsWith($path, '/channel/') != FALSE
-            ],
-            'service' => [
-                'name' => $this->translator->trans('service.menu_title'),
-                'path' => '/service/',
-                'active' => $this->startsWith($path, '/service/') != FALSE
-            ],
-            'quickLinks' => [
-                'name' => $this->translator->trans('quick_link.menu_title'),
-                'path' => '/quick_link/',
-                'active' => $this->startsWith($path, '/quick_link/') != FALSE
-            ]
         ];
         $parameters['menuItems'] = $menuItems;
 

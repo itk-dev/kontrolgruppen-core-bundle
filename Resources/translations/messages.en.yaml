@@ -37,6 +37,7 @@ common:
 dashboard:
     index:
         title: Dashboard
+    menu_title: Dashboard
 
 navigation:
     main:
@@ -73,6 +74,7 @@ process:
         id: ID
         process_type: Case Type
         service: Service
+    tooltip: Lists all cases
 
 process_status:
     edit:
@@ -146,3 +148,8 @@ service:
     table:
         id: ID
         name: Name
+
+settings:
+    index:
+      title: Settings
+    tooltip: Create and change the system configuration
