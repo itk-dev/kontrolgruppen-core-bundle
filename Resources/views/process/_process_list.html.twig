@@ -1,0 +1,40 @@
+{% block process_list %}
+  {% set max_iterations = limit is defined ? min(processes|length, limit) : processes|length %}
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>{{ 'process.table.id'|trans }}</th>
+      <th>{{ 'process.table.case_number'|trans }}</th>
+      <th>{{ 'process.table.client_cpr'|trans }}</th>
+      <th>{{ 'process.table.case_worker'|trans }}</th>
+      <th>{{ 'process.table.channel'|trans }}</th>
+      <th>{{ 'process.table.process_type'|trans }}</th>
+      <th>{{ 'process.table.service'|trans }}</th>
+      <th>{{ 'common.table.actions'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for process in processes %}
+      <tr>
+        <td>{{ process.id }}</td>
+        <td>{{ process.caseNumber }}</td>
+        <td>{{ process.clientCPR }}</td>
+        <td>{{ process.caseWorker }}</td>
+        <td>{{ process.channel }}</td>
+        <td>{{ process.processType }}</td>
+        <td>{{ process.service }}</td>
+        <td>
+          <a href="{{ path('process_show', {'id': process.id}) }}">{{ 'common.actions.show'|trans }}</a>
+          <a href="{{ path('process_edit', {'id': process.id}) }}">{{ 'common.actions.edit'|trans }}</a>
+          <a href="{{ path('reminder_index', {'process': process.id}) }}">{{ 'process.actions.reminders'|trans }}</a>
+        </td>
+      </tr>
+    {% else %}
+      <tr>
+        <td colspan="2">{{ 'common.no_records_found'|trans }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
