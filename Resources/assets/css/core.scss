@@ -15,6 +15,14 @@
 
 .globalmenu {
   height: calc(100vh - 48px);
+  .nav {
+    &-link {
+      color: $white;
+      &.active {
+        color: $primary;
+      }
+    }
+  }
 }
 
 /*
