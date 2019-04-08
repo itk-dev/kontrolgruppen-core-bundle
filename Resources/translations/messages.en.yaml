@@ -38,6 +38,7 @@ dashboard:
     index:
         title: Dashboard
     menu_title: Dashboard
+    tooltip: 'Your overview'
 
 navigation:
     main:
@@ -153,3 +154,13 @@ settings:
     index:
       title: Settings
     tooltip: Create and change the system configuration
+
+my_page:
+    index:
+      title: My profile
+    tooltip: Information about you
+
+users:
+    index:
+      title: Users
+    tooltip: List of users

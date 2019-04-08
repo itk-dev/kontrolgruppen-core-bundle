@@ -38,6 +38,7 @@ dashboard:
     index:
         title: Dashboard
     menu_title: Dashboard
+    tooltip: 'Din oversigt'
 
 navigation:
     main:
