@@ -1,11 +1,18 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Service;
 use Kontrolgruppen\CoreBundle\Form\ServiceType;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,7 +27,7 @@ class ServiceController extends BaseController
      */
     public function index(ServiceRepository $serviceRepository): Response
     {
-        return $this->render('service/index.html.twig', [
+        return $this->render('@KontrolgruppenCore/service/index.html.twig', [
             'services' => $serviceRepository->findAll(),
         ]);
     }
@@ -42,7 +49,7 @@ class ServiceController extends BaseController
             return $this->redirectToRoute('service_index');
         }
 
-        return $this->render('service/new.html.twig', [
+        return $this->render('@KontrolgruppenCore/service/new.html.twig', [
             'service' => $service,
             'form' => $form->createView(),
         ]);
@@ -53,7 +60,7 @@ class ServiceController extends BaseController
      */
     public function show(Service $service): Response
     {
-        return $this->render('service/show.html.twig', [
+        return $this->render('@KontrolgruppenCore/service/show.html.twig', [
             'service' => $service,
         ]);
     }
@@ -74,7 +81,7 @@ class ServiceController extends BaseController
             ]);
         }
 
-        return $this->render('service/edit.html.twig', [
+        return $this->render('@KontrolgruppenCore/service/edit.html.twig', [
             'service' => $service,
             'form' => $form->createView(),
         ]);

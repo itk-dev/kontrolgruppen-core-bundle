@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -7,7 +15,6 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
-
 
 class KontrolgruppenCoreExtension extends Extension implements PrependExtensionInterface
 {
@@ -27,13 +34,13 @@ class KontrolgruppenCoreExtension extends Extension implements PrependExtensionI
     {
         $container->loadFromExtension(
             'twig',
-            array(
+            [
                 'default_path' => '%kernel.project_dir%/vendor/kontrolgruppen/core-bundle/Resources/views',
-                'paths' => array(
+                'paths' => [
                     '%kernel.project_dir%/vendor/kontrolgruppen/core-bundle/Resources/FOSUserBundle/views' => 'FOSUser',
                     '%kernel.project_dir%/vendor/kontrolgruppen/core-bundle/Resources/views' => 'KontrolgruppenCoreBundle',
-                ),
-            )
+                ],
+            ]
         );
     }
 }

@@ -25,6 +25,9 @@ common:
         save: Gem
         show: Vis
     back_to_list: Tilbage til liste
+    boolean:
+        'true': Ja
+        'false': Nej
     no_records_found: Ingen indgange fundet
     table:
         actions: Handlinger
@@ -39,6 +42,8 @@ dashboard:
         title: Dashboard
     menu_title: Dashboard
     tooltip: 'Din oversigt'
+    reminders:
+        title: Påmindelser
 
 navigation:
     main:
@@ -46,8 +51,12 @@ navigation:
         sign_out: Log ud
         quick_links: Genveje
         new_process: Ny sag
+        remainders:
+            number_of_reminders: '%numberOfReminders% påmindelser'
 
 process:
+    actions:
+        reminders: Påmindelser
     edit:
         title: Rediger sag
     form:
@@ -74,6 +83,8 @@ process:
         client_cpr: Klient CPR
         id: ID
         process_type: Sagstype
+        reminders: Påmindelser
+        reminders_open: '%numberOfReminders% påmindelser, se alle'
         service: Ydelse
     tooltip: Liste med alle sager
 
@@ -132,6 +143,25 @@ quick_link:
         href: Link
         id: ID
         name: Navn
+
+reminder:
+    edit:
+        title: Rediger påmindelse
+    form:
+        date: Dato
+        finished: Afsluttet
+        message: Besked
+        update: Gem
+    index:
+        title: Påmindelser
+    menu_title: Påmindelser
+    new:
+        title: Opret påmindelse
+    table:
+        id: ID
+        message: Besked
+        date: Dato
+        finished: Afsluttet
 
 service:
     edit:

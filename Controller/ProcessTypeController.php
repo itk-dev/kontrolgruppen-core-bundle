@@ -1,11 +1,18 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\ProcessType;
 use Kontrolgruppen\CoreBundle\Form\ProcessTypeType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessTypeRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,7 +27,7 @@ class ProcessTypeController extends BaseController
      */
     public function index(ProcessTypeRepository $processTypeRepository): Response
     {
-        return $this->render('process_type/index.html.twig', [
+        return $this->render('@KontrolgruppenCore/process_type/index.html.twig', [
             'process_types' => $processTypeRepository->findAll(),
         ]);
     }
@@ -42,7 +49,7 @@ class ProcessTypeController extends BaseController
             return $this->redirectToRoute('process_type_index');
         }
 
-        return $this->render('process_type/new.html.twig', [
+        return $this->render('@KontrolgruppenCore/process_type/new.html.twig', [
             'process_type' => $processType,
             'form' => $form->createView(),
         ]);
@@ -53,7 +60,7 @@ class ProcessTypeController extends BaseController
      */
     public function show(ProcessType $processType): Response
     {
-        return $this->render('process_type/show.html.twig', [
+        return $this->render('@KontrolgruppenCore/process_type/show.html.twig', [
             'process_type' => $processType,
         ]);
     }
@@ -74,7 +81,7 @@ class ProcessTypeController extends BaseController
             ]);
         }
 
-        return $this->render('process_type/edit.html.twig', [
+        return $this->render('@KontrolgruppenCore/process_type/edit.html.twig', [
             'process_type' => $processType,
             'form' => $form->createView(),
         ]);

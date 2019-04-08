@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
@@ -21,13 +29,13 @@ class ProcessRepository extends ServiceEntityRepository
 
     public function findAllFromYear($year)
     {
-        $from = new \DateTime($year."-01-01 00:00:00");
-        $to   = new \DateTime($year."-12-31 23:59:59");
+        $from = new \DateTime($year.'-01-01 00:00:00');
+        $to = new \DateTime($year.'-12-31 23:59:59');
 
-        $qb = $this->createQueryBuilder("e");
+        $qb = $this->createQueryBuilder('e');
         $qb
             ->andWhere('e.createdAt BETWEEN :from AND :to')
-            ->setParameter('from', $from )
+            ->setParameter('from', $from)
             ->setParameter('to', $to)
         ;
         $result = $qb->getQuery()->getResult();
