@@ -22,25 +22,25 @@ class Service extends AbstractTaxonomy
     /**
      * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", mappedBy="service")
      */
-    private $process;
+    private $processes;
 
     public function __construct()
     {
-        $this->process = new ArrayCollection();
+        $this->processes = new ArrayCollection();
     }
 
     /**
      * @return Collection|Process[]
      */
-    public function getProcess(): Collection
+    public function getProcesses(): Collection
     {
-        return $this->process;
+        return $this->processes;
     }
 
     public function addProcess(Process $process): self
     {
-        if (!$this->process->contains($process)) {
-            $this->process[] = $process;
+        if (!$this->processes->contains($process)) {
+            $this->processes[] = $process;
             $process->setService($this);
         }
 
@@ -49,8 +49,8 @@ class Service extends AbstractTaxonomy
 
     public function removeProcess(Process $process): self
     {
-        if ($this->process->contains($process)) {
-            $this->process->removeElement($process);
+        if ($this->processes->contains($process)) {
+            $this->processes->removeElement($process);
             // set the owning side to null (unless already changed)
             if ($process->getService() === $this) {
                 $process->setService(null);

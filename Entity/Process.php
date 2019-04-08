@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Entity;
 
+use Kontrolgruppen\CoreBundle\Entity\Reminder;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -40,12 +41,12 @@ class Process extends AbstractEntity
     private $channel;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="process")
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="processes")
      */
     private $service;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessType", inversedBy="process_type")
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessType", inversedBy="processes")
      */
     private $processType;
 
