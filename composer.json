@@ -20,7 +20,7 @@
             "phpcs --standard=phpcs.xml.dist"
         ],
         "check-coding-standards/twigcs": [
-            "twigcs lint templates"
+            "twigcs lint Resources/"
         ],
         "check-coding-standards": [
             "@check-coding-standards/php-cs-fixer",
