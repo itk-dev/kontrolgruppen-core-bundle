@@ -51,21 +51,17 @@
   <div class="container-fluid main-container">
     <div class="row">
       <nav class="globalmenu d-none d-md-block bg-dark pt-3">
-        {% set globalMenuItems = {
-            dashboard:    { name: "dashboard", icon: "fa-tachometer-alt", tooltip: "Cases in progress", path: "#" },
-            cases: { name: "Cases", icon: "fa-tasks", tooltip: "All cases", path: "#" },
-            my_page:     { name: "My page", icon: "fa-id-card", tooltip: "Your profile", path: "#" },
-            users:     { name: "Users", icon: "fa-users-cog", tooltip: "All user", path: "#" }
-        } %}
         {% block globalmenu_sidebar %}
           <ul class="nav flex-column">
-            {% for globalMenuItem in globalMenuItems %}
-              <li class="nav-item">
-                <a class="nav-link" href="{{ globalMenuItem.path }}" data-toggle="tooltip" data-placement="right" title="{{ globalMenuItem.tooltip }}">
-                  <i class="fas {{ globalMenuItem.icon }} text-light" ></i><span class="sr-only">{{ globalMenuItem.name }}</span>
-                </a>
-              </li>
-            {% endfor %}
+            {% if globalMenuItems is defined %}
+              {% for globalMenuItem in globalMenuItems %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ globalMenuItem.path }}" data-toggle="tooltip" data-placement="right" title="{{ globalMenuItem.tooltip }}">
+                    <i class="fas {{ globalMenuItem.icon }} text-light" ></i><span class="sr-only">{{ globalMenuItem.name }}</span>
+                  </a>
+                </li>
+              {% endfor %}
+            {% endif %}
           </ul>
         {% endblock %}
       </nav>
@@ -73,27 +69,16 @@
       <nav class="col-auto d-none d-md-block bg-light">
         <div class="sidebar-sticky pt-3">
           {% block navigation_sidebar %}
-            <h3>Main menu</h3>
             <ul class="nav flex-column nav-pills">
-              {% for menuItem in menuItems %}
-              <li class="nav-item">
-                <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
-                  {{ menuItem.name }} <span class="sr-only">(current)</span>
-                </a>
-              </li>
-              {% endfor %}
-            </ul>
-
-            <h3>Sub menu</h3>
-            <ul class="nav flex-column">
-              {% for menuItem in subMenuItems %}
+              {% if menuItems is defined %}
+                {% for menuItem in menuItems %}
                 <li class="nav-item">
                   <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
-                    <span data-feather="home"></span>
                     {{ menuItem.name }} <span class="sr-only">(current)</span>
                   </a>
                 </li>
-              {% endfor %}
+                {% endfor %}
+              {% endif %}
             </ul>
           {% endblock %}
         </div>

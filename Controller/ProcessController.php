@@ -25,6 +25,7 @@ class ProcessController extends BaseController
     public function index(ProcessRepository $processRepository): Response
     {
         return $this->render('@KontrolgruppenCore/process/index.html.twig', [
+            'menuItems' => $this->createMenuItems($this->requestStack->getCurrentRequest()->getPathInfo(), null),
             'processes' => $processRepository->findAll(),
         ]);
     }
@@ -49,6 +50,7 @@ class ProcessController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/process/new.html.twig', [
+            'menuItems' => $this->createMenuItems($this->requestStack->getCurrentRequest()->getPathInfo(), $process),
             'process' => $process,
             'form' => $form->createView(),
         ]);
@@ -74,6 +76,7 @@ class ProcessController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/process/show.html.twig', [
+            'menuItems' => $this->createMenuItems($this->requestStack->getCurrentRequest()->getPathInfo(), $process),
             'process' => $process,
             'process_type_form' => $form->createView()
         ]);
@@ -96,6 +99,7 @@ class ProcessController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/process/edit.html.twig', [
+            'menuItems' => $this->createMenuItems($this->requestStack->getCurrentRequest()->getPathInfo(), $process),
             'process' => $process,
             'form' => $form->createView(),
         ]);
@@ -113,6 +117,30 @@ class ProcessController extends BaseController
         }
 
         return $this->redirectToRoute('process_index');
+    }
+
+    /**
+     * Create menu items for process views.
+     *
+     * @param $path
+     * @param $process
+     * @return array
+     */
+    private function createMenuItems($path, $process) {
+        if (isset($process) && $process->getId() != null) {
+            return [
+                (object) [
+                    'name' => $this->translator->trans('reminder.menu_title'),
+                    'path' => '/process/'.$process->getId().'/reminder',
+                    'active' => preg_match(
+                            '/\/process\/\d+\/reminder\/.*/',
+                            $path
+                        ) != false,
+                ]
+            ];
+        }
+
+        return [];
     }
 
     /**
