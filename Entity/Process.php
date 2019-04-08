@@ -1,7 +1,17 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,12 +40,12 @@ class Process extends AbstractEntity
     private $channel;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="process")
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="processes")
      */
     private $service;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessType", inversedBy="process_type")
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessType", inversedBy="processes")
      */
     private $processType;
 
@@ -43,6 +53,16 @@ class Process extends AbstractEntity
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessStatus", inversedBy="processes")
      */
     private $processStatus;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Reminder", mappedBy="process", orphanRemoval=true)
+     */
+    private $reminders;
+
+    public function __construct()
+    {
+        $this->reminders = new ArrayCollection();
+    }
 
     public function getCaseWorker(): ?User
     {
@@ -124,6 +144,37 @@ class Process extends AbstractEntity
     public function setProcessStatus(?ProcessStatus $processStatus): self
     {
         $this->processStatus = $processStatus;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reminder[]
+     */
+    public function getReminders(): Collection
+    {
+        return $this->reminders;
+    }
+
+    public function addReminder(Reminder $reminder): self
+    {
+        if (!$this->reminders->contains($reminder)) {
+            $this->reminders[] = $reminder;
+            $reminder->setProcess($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReminder(Reminder $reminder): self
+    {
+        if ($this->reminders->contains($reminder)) {
+            $this->reminders->removeElement($reminder);
+            // set the owning side to null (unless already changed)
+            if ($reminder->getProcess() === $this) {
+                $reminder->setProcess(null);
+            }
+        }
 
         return $this;
     }

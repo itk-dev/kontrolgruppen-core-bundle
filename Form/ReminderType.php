@@ -10,18 +10,21 @@
 
 namespace Kontrolgruppen\CoreBundle\Form;
 
-use Kontrolgruppen\CoreBundle\Entity\Service;
+use Kontrolgruppen\CoreBundle\Entity\Reminder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ServiceType extends AbstractType
+class ReminderType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null, [
-                'label' => 'service.form.name',
+            ->add('message', null, [
+                'label' => 'reminder.form.message',
+            ])
+            ->add('date', null, [
+                'label' => 'reminder.form.date',
             ])
         ;
     }
@@ -29,7 +32,7 @@ class ServiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Service::class,
+            'data_class' => Reminder::class,
         ]);
     }
 }

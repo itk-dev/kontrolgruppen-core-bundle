@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\QuickLink;
@@ -19,7 +27,7 @@ class QuickLinkController extends BaseController
      */
     public function index(QuickLinkRepository $quickLinkRepository): Response
     {
-        return $this->render('quick_link/index.html.twig', [
+        return $this->render('@KontrolgruppenCore/quick_link/index.html.twig', [
             'quick_links' => $quickLinkRepository->findAll(),
         ]);
     }
@@ -41,7 +49,7 @@ class QuickLinkController extends BaseController
             return $this->redirectToRoute('quick_link_index');
         }
 
-        return $this->render('quick_link/new.html.twig', [
+        return $this->render('@KontrolgruppenCore/quick_link/new.html.twig', [
             'quick_link' => $quickLink,
             'form' => $form->createView(),
         ]);
@@ -52,7 +60,7 @@ class QuickLinkController extends BaseController
      */
     public function show(QuickLink $quickLink): Response
     {
-        return $this->render('quick_link/show.html.twig', [
+        return $this->render('@KontrolgruppenCore/quick_link/show.html.twig', [
             'quick_link' => $quickLink,
         ]);
     }
@@ -73,7 +81,7 @@ class QuickLinkController extends BaseController
             ]);
         }
 
-        return $this->render('quick_link/edit.html.twig', [
+        return $this->render('@KontrolgruppenCore/quick_link/edit.html.twig', [
             'quick_link' => $quickLink,
             'form' => $form->createView(),
         ]);

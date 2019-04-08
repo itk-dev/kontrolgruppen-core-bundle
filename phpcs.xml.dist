@@ -6,6 +6,7 @@
 
   <exclude-pattern>Resources/*</exclude-pattern>
   <exclude-pattern>Vendor/*</exclude-pattern>
+  <exclude-pattern>./webpack.config.js</exclude-pattern>
 
 	<!-- Do not print warnings -->
 	<arg value="n"/>

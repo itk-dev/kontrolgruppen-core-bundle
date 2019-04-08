@@ -1,18 +1,22 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Form\ProcessStatusType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 /**
  * @Route("/process")
@@ -24,7 +28,8 @@ class ProcessController extends BaseController
      */
     public function index(ProcessRepository $processRepository): Response
     {
-        return $this->render('process/index.html.twig', [
+        return $this->render('@KontrolgruppenCore/process/index.html.twig', [
+            'menuItems' => $this->createMenuItems($this->requestStack->getCurrentRequest()->getPathInfo(), null),
             'processes' => $processRepository->findAll(),
         ]);
     }
@@ -48,7 +53,8 @@ class ProcessController extends BaseController
             return $this->redirectToRoute('process_index');
         }
 
-        return $this->render('process/new.html.twig', [
+        return $this->render('@KontrolgruppenCore/process/new.html.twig', [
+            'menuItems' => $this->createMenuItems($this->requestStack->getCurrentRequest()->getPathInfo(), $process),
             'process' => $process,
             'form' => $form->createView(),
         ]);
@@ -59,6 +65,7 @@ class ProcessController extends BaseController
      */
     public function show(Request $request, Process $process): Response
     {
+        // @TODO: Limit the available process statuses based on selected process type.
         $form = $this->createFormBuilder($process)
             ->add('processStatus', null, [
                 'label' => 'process.form.process_status',
@@ -69,14 +76,13 @@ class ProcessController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->setUpdatedValues($process);
-
             $this->getDoctrine()->getManager()->flush();
         }
 
-        return $this->render('process/show.html.twig', [
+        return $this->render('@KontrolgruppenCore/process/show.html.twig', [
+            'menuItems' => $this->createMenuItems($this->requestStack->getCurrentRequest()->getPathInfo(), $process),
             'process' => $process,
-            'process_type_form' => $form->createView()
+            'process_type_form' => $form->createView(),
         ]);
     }
 
@@ -96,7 +102,8 @@ class ProcessController extends BaseController
             ]);
         }
 
-        return $this->render('process/edit.html.twig', [
+        return $this->render('@KontrolgruppenCore/process/edit.html.twig', [
+            'menuItems' => $this->createMenuItems($this->requestStack->getCurrentRequest()->getPathInfo(), $process),
             'process' => $process,
             'form' => $form->createView(),
         ]);
@@ -117,16 +124,42 @@ class ProcessController extends BaseController
     }
 
     /**
+     * Create menu items for process views.
+     *
+     * @param $path
+     * @param $process
+     *
+     * @return array
+     */
+    private function createMenuItems($path, $process)
+    {
+        if (isset($process) && null !== $process->getId()) {
+            return [
+                (object) [
+                    'name' => $this->translator->trans('reminder.menu_title'),
+                    'path' => '/process/'.$process->getId().'/reminder',
+                    'active' => false !== preg_match(
+                        '/\/process\/\d+\/reminder\/.*/',
+                        $path
+                    ),
+                ],
+            ];
+        }
+
+        return [];
+    }
+
+    /**
      * Generate a new case number.
      *
      * @TODO: Move to service.
      *
-     * @return string Case number of format YY-XXXX where YY is the year and XXXX an increasing counter.
+     * @return string case number of format YY-XXXX where YY is the year and XXXX an increasing counter
      */
     private function getNewCaseNumber()
     {
         $casesInYear = $this->getDoctrine()->getRepository(Process::class)->findAllFromYear(date('Y'));
-        $caseNumber = str_pad(count($casesInYear) + 1, 5, "0", STR_PAD_LEFT);
+        $caseNumber = str_pad(\count($casesInYear) + 1, 5, '0', STR_PAD_LEFT);
 
         return date('y').'-'.$caseNumber;
     }

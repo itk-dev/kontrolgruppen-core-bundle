@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
@@ -20,7 +28,8 @@ class ProcessStatusRepository extends ServiceEntityRepository
         parent::__construct($registry, ProcessStatus::class);
     }
 
-    public function getAvailableForProcess(Process $process) {
+    public function getAvailableForProcess(Process $process)
+    {
         $qb = $this->createQueryBuilder('p')
             ->where(':process MEMBER OF p.processes ')
             ->setParameter('process', $process)

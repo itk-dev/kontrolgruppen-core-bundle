@@ -34,35 +34,34 @@
             <a class="btn btn-sm btn-success btn-block" href="{{ path('process_new') }}">{{ 'navigation.main.new_process'|trans }}</a>
           </li>
           <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
+            <a class="btn {% if activeUserReminders|length > 0 %}btn-warning{% else %}btn-secondary{% endif %} btn-sm btn-block"
+               href="{{ path('user_reminder_index') }}" role="button">
+              {{ 'navigation.main.remainders.number_of_reminders'|trans({'%numberOfReminders%': activeUserReminders}) }}
+            </a>
+          </li>
+          <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
             <a class="btn btn-sm btn-outline-danger btn-block" href="{{ path('fos_user_security_logout') }}">{{ 'navigation.main.sign_out'|trans }}</a>
           </li>
         </ul>
 
       </div>
-
-
     {% endblock %}
   </nav>
 
   <div class="container-fluid main-container">
     <div class="row">
-
       <nav class="globalmenu d-none d-md-block bg-dark pt-3">
-        {% set globalMenuItems = {
-            dashboard:    { name: "dashboard", icon: "fa-tachometer-alt", tooltip: "Cases in progress", path: "#" },
-            cases: { name: "Cases", icon: "fa-tasks", tooltip: "All cases", path: "#" },
-            my_page:     { name: "My page", icon: "fa-id-card", tooltip: "Your profile", path: "#" },
-            users:     { name: "Users", icon: "fa-users-cog", tooltip: "All user", path: "#" }
-        } %}
         {% block globalmenu_sidebar %}
           <ul class="nav flex-column">
-            {% for globalMenuItem in globalMenuItems %}
-              <li class="nav-item">
-                <a class="nav-link" href="{{ globalMenuItem.path }}" data-toggle="tooltip" data-placement="right" title="{{ globalMenuItem.tooltip }}">
-                  <i class="fas {{ globalMenuItem.icon }} text-light" ></i><span class="sr-only">{{ globalMenuItem.name }}</span>
-                </a>
-              </li>
-            {% endfor %}
+            {% if globalMenuItems is defined %}
+              {% for globalMenuItem in globalMenuItems %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ globalMenuItem.path }}" data-toggle="tooltip" data-placement="right" title="{{ globalMenuItem.tooltip }}">
+                    <i class="fas {{ globalMenuItem.icon }} text-light" ></i><span class="sr-only">{{ globalMenuItem.name }}</span>
+                  </a>
+                </li>
+              {% endfor %}
+            {% endif %}
           </ul>
         {% endblock %}
       </nav>
@@ -70,15 +69,17 @@
       <nav class="col-auto d-none d-md-block bg-light">
         <div class="sidebar-sticky pt-3">
           {% block navigation_sidebar %}
-          <ul class="nav flex-column nav-pills">
-            {% for menuItem in menuItems %}
-            <li class="nav-item">
-              <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
-                {{ menuItem.name }} <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            {% endfor %}
-          </ul>
+            <ul class="nav flex-column nav-pills">
+              {% if menuItems is defined %}
+                {% for menuItem in menuItems %}
+                <li class="nav-item">
+                  <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
+                    {{ menuItem.name }} <span class="sr-only">(current)</span>
+                  </a>
+                </li>
+                {% endfor %}
+              {% endif %}
+            </ul>
           {% endblock %}
         </div>
       </nav>

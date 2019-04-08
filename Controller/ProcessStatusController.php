@@ -1,11 +1,18 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Kontrolgruppen\CoreBundle\Form\ProcessStatusType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,7 +27,7 @@ class ProcessStatusController extends BaseController
      */
     public function index(ProcessStatusRepository $processStatusRepository): Response
     {
-        return $this->render('process_status/index.html.twig', [
+        return $this->render('@KontrolgruppenCore/process_status/index.html.twig', [
             'process_statuses' => $processStatusRepository->findAll(),
         ]);
     }
@@ -42,7 +49,7 @@ class ProcessStatusController extends BaseController
             return $this->redirectToRoute('process_status_index');
         }
 
-        return $this->render('process_status/new.html.twig', [
+        return $this->render('@KontrolgruppenCore/process_status/new.html.twig', [
             'process_status' => $processStatus,
             'form' => $form->createView(),
         ]);
@@ -53,7 +60,7 @@ class ProcessStatusController extends BaseController
      */
     public function show(ProcessStatus $processStatus): Response
     {
-        return $this->render('process_status/show.html.twig', [
+        return $this->render('@KontrolgruppenCore/process_status/show.html.twig', [
             'process_status' => $processStatus,
         ]);
     }
@@ -74,7 +81,7 @@ class ProcessStatusController extends BaseController
             ]);
         }
 
-        return $this->render('process_status/edit.html.twig', [
+        return $this->render('@KontrolgruppenCore/process_status/edit.html.twig', [
             'process_status' => $processStatus,
             'form' => $form->createView(),
         ]);

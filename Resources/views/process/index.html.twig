@@ -31,6 +31,7 @@
         <td>
           <a href="{{ path('process_show', {'id': process.id}) }}">{{ 'common.actions.show'|trans }}</a>
           <a href="{{ path('process_edit', {'id': process.id}) }}">{{ 'common.actions.edit'|trans }}</a>
+          <a href="{{ path('reminder_index', {'process': process.id}) }}">{{ 'process.actions.reminders'|trans }}</a>
         </td>
       </tr>
     {% else %}

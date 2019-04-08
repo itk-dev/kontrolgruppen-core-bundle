@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,7 +22,7 @@ class ProcessType extends AbstractTaxonomy
     /**
      * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", mappedBy="processType")
      */
-    private $process_type;
+    private $processes;
 
     /**
      * @ORM\ManyToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessStatus", inversedBy="processTypes")
@@ -23,35 +31,35 @@ class ProcessType extends AbstractTaxonomy
 
     public function __construct()
     {
-        $this->process_type = new ArrayCollection();
+        $this->processes = new ArrayCollection();
         $this->processStatuses = new ArrayCollection();
     }
 
     /**
      * @return Collection|Process[]
      */
-    public function getProcess_type(): Collection
+    public function getProcesses(): Collection
     {
-        return $this->process_type;
+        return $this->processes;
     }
 
-    public function addCase(Process $case): self
+    public function addProcess(Process $process): self
     {
-        if (!$this->process_type->contains($case)) {
-            $this->process_type[] = $case;
-            $case->setProcessType($this);
+        if (!$this->processes->contains($process)) {
+            $this->processes[] = $process;
+            $process->setProcessType($this);
         }
 
         return $this;
     }
 
-    public function removeCase(Process $case): self
+    public function removeProcess(Process $process): self
     {
-        if ($this->process_type->contains($case)) {
-            $this->process_type->removeElement($case);
+        if ($this->processes->contains($process)) {
+            $this->processes->removeElement($process);
             // set the owning side to null (unless already changed)
-            if ($case->getProcessType() === $this) {
-                $case->setProcessType(null);
+            if ($process->getProcessType() === $this) {
+                $process->setProcessType(null);
             }
         }
 

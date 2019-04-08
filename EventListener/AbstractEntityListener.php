@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\EventListener;
 
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
@@ -8,8 +16,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Doctrine\ORM\Events;
 
 /**
- * Class AbstractEntityListener
- * @package Kontrolgruppen\CoreBundle\EventListener
+ * Class AbstractEntityListener.
  */
 class AbstractEntityListener
 {
