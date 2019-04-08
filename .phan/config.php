@@ -16,7 +16,7 @@ return [
     'whitelist_issue_types' => [
        'PhanCompatiblePHP7',
        'PhanDeprecatedFunctionInternal',
-	   'PhanInvalidConstantFQSEN',
+       'PhanInvalidConstantFQSEN',
     ],
     'exclude_analysis_directory_list' => [
         'vendor/',

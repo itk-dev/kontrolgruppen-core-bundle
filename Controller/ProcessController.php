@@ -1,18 +1,22 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Form\ProcessStatusType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 /**
  * @Route("/process")
@@ -78,7 +82,7 @@ class ProcessController extends BaseController
         return $this->render('@KontrolgruppenCore/process/show.html.twig', [
             'menuItems' => $this->createMenuItems($this->requestStack->getCurrentRequest()->getPathInfo(), $process),
             'process' => $process,
-            'process_type_form' => $form->createView()
+            'process_type_form' => $form->createView(),
         ]);
     }
 
@@ -124,19 +128,21 @@ class ProcessController extends BaseController
      *
      * @param $path
      * @param $process
+     *
      * @return array
      */
-    private function createMenuItems($path, $process) {
-        if (isset($process) && $process->getId() != null) {
+    private function createMenuItems($path, $process)
+    {
+        if (isset($process) && null !== $process->getId()) {
             return [
                 (object) [
                     'name' => $this->translator->trans('reminder.menu_title'),
                     'path' => '/process/'.$process->getId().'/reminder',
-                    'active' => preg_match(
-                            '/\/process\/\d+\/reminder\/.*/',
-                            $path
-                        ) != false,
-                ]
+                    'active' => false !== preg_match(
+                        '/\/process\/\d+\/reminder\/.*/',
+                        $path
+                    ),
+                ],
             ];
         }
 
@@ -148,12 +154,12 @@ class ProcessController extends BaseController
      *
      * @TODO: Move to service.
      *
-     * @return string Case number of format YY-XXXX where YY is the year and XXXX an increasing counter.
+     * @return string case number of format YY-XXXX where YY is the year and XXXX an increasing counter
      */
     private function getNewCaseNumber()
     {
         $casesInYear = $this->getDoctrine()->getRepository(Process::class)->findAllFromYear(date('Y'));
-        $caseNumber = str_pad(count($casesInYear) + 1, 5, "0", STR_PAD_LEFT);
+        $caseNumber = str_pad(\count($casesInYear) + 1, 5, '0', STR_PAD_LEFT);
 
         return date('y').'-'.$caseNumber;
     }

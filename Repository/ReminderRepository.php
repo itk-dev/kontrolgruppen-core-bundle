@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Kontrolgruppen\CoreBundle\Entity\Reminder;
@@ -24,6 +32,7 @@ class ReminderRepository extends ServiceEntityRepository
      * Find all reminders for user.
      *
      * @param \Kontrolgruppen\CoreBundle\Entity\User $user
+     *
      * @return mixed
      */
     public function findAllUserReminders(User $user)
@@ -41,6 +50,7 @@ class ReminderRepository extends ServiceEntityRepository
      * Find active reminders for user.
      *
      * @param \Kontrolgruppen\CoreBundle\Entity\User $user
+     *
      * @return mixed
      */
     public function findActiveUserReminders(User $user)
@@ -49,12 +59,14 @@ class ReminderRepository extends ServiceEntityRepository
         $expr = $qb->expr();
         $qb = $qb
             ->select('reminder')
-            ->leftJoin('reminder.process', 'process')->addSelect("process")
+            ->leftJoin('reminder.process', 'process')->addSelect('process')
             ->where('process.caseWorker = :user')
             ->setParameter('user', $user)
-            ->andWhere($expr->orX(
-                $expr->isNull('reminder.finished'),
-                $expr->neq('reminder.finished', true))
+            ->andWhere(
+                $expr->orX(
+                    $expr->isNull('reminder.finished'),
+                    $expr->neq('reminder.finished', true)
+                )
             )
             ->andWhere('reminder.date < :now')
             ->setParameter('now', new \DateTime())
@@ -67,7 +79,9 @@ class ReminderRepository extends ServiceEntityRepository
      * Count the number of active reminders for user.
      *
      * @param \Kontrolgruppen\CoreBundle\Entity\User $user
+     *
      * @return mixed
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function findNumberOfActiveUserReminders(User $user)
@@ -79,9 +93,11 @@ class ReminderRepository extends ServiceEntityRepository
             ->leftJoin('reminder.process', 'process')
             ->where('process.caseWorker = :user')
             ->setParameter('user', $user)
-            ->andWhere($expr->orX(
-                $expr->isNull('reminder.finished'),
-                $expr->neq('reminder.finished', true))
+            ->andWhere(
+                $expr->orX(
+                    $expr->isNull('reminder.finished'),
+                    $expr->neq('reminder.finished', true)
+                )
             )
             ->andWhere('reminder.date < :now')
             ->setParameter('now', new \DateTime())
