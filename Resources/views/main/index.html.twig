@@ -74,8 +74,8 @@
           <ul class="nav flex-column">
             {% for globalMenuItem in globalMenuItems %}
               <li class="nav-item">
-                <a class="nav-link" href="{{ globalMenuItem.path }}" data-toggle="tooltip" data-placement="right" title="{{ globalMenuItem.tooltip }}">
-                  <i class="fas {{ globalMenuItem.icon }} text-light" ></i><span class="sr-only">{{ globalMenuItem.name }}</span>
+                <a class="nav-link {{ globalMenuItem.active ? ' active' : '' }}" href="{{ globalMenuItem.path }}" data-toggle="tooltip" data-placement="right" title="{{ globalMenuItem.tooltip }}">
+                  <i class="fas {{ globalMenuItem.icon }}" ></i><span class="sr-only">{{ globalMenuItem.name }}</span>
                 </a>
               </li>
             {% endfor %}
