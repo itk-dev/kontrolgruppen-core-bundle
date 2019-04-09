@@ -1,10 +1,22 @@
+/*
+ * Include variables and bootstrap
+ */
+@import "_variables";
 @import "~bootstrap/scss/bootstrap";
 
-@import "dashboard";
+/*
+* Include partials
+*/
+@import "_dashboard";
+
+
+/*
+ * Push down content behind navbar
+ */
 
 @include media-breakpoint-up(md) {
   .main-container {
-    margin-top: 48px;
+    margin-top: $navbarHeight;
   }
 }
 
@@ -14,7 +26,11 @@
  */
 
 .globalmenu {
-  height: calc(100vh - 48px);
+  position: relative;
+  top: 0;
+  height: calc(100vh - #{$navbarHeight});
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   .nav {
     &-link {
       color: $white;
@@ -37,13 +53,13 @@
 .sidebar-sticky {
   position: relative;
   top: 0;
-  height: calc(100vh - 48px);
+  height: calc(100vh - #{$navbarHeight});
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
 
 @supports ((position: -webkit-sticky) or (position: sticky)) {
-  .sidebar-sticky {
+  .sidebar-sticky, .globalmenu {
     position: -webkit-sticky;
     position: sticky;
   }
@@ -62,6 +78,7 @@
   padding-top: .75rem;
   padding-bottom: .75rem;
   font-size: 1rem;
+  font-family: $h1-font-family;
 }
 
 .navbar .form-control {
@@ -82,5 +99,5 @@
 
 h1 {
   font-weight: 100;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: $h1-font-family;
 }
