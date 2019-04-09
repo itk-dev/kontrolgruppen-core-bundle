@@ -15,7 +15,7 @@
     </tr>
     </thead>
     <tbody>
-    {% for process in processes %}
+    {% for process in processes|slice(0, max_iterations) %}
       <tr>
         <td>{{ process.id }}</td>
         <td>{{ process.caseNumber }}</td>
