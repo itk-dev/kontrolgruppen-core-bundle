@@ -5,18 +5,20 @@
 {% block content %}
     <h1>{{ 'process_type.show.title'|trans }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>{{ 'process_type.table.id'|trans }}</th>
-                <td>{{ process_type.id }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'process_type.table.name'|trans }}</th>
-                <td>{{ process_type.name }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-borderless thead-light">
+            <tbody>
+                <tr>
+                    <th>{{ 'process_type.table.id'|trans }}</th>
+                    <td>{{ process_type.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'process_type.table.name'|trans }}</th>
+                    <td>{{ process_type.name }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <a href="{{ path('process_type_index') }}">{{ 'common.back_to_list'|trans }}</a>
 

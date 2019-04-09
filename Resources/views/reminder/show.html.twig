@@ -5,26 +5,28 @@
 {% block content %}
     <h1>{{ 'reminder.show.title'|trans }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>{{ 'reminder.table.id'|trans }}</th>
-                <td>{{ reminder.id }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'reminder.table.message'|trans }}</th>
-                <td>{{ reminder.message }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'reminder.table.date'|trans }}</th>
-                <td>{{ reminder.date ? reminder.date|date('d/m Y H:i') : '' }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'reminder.table.finished'|trans }}</th>
-                <td>{{ (reminder.finished ? 'common.boolean.true' : 'common.boolean.false')|trans }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-borderless thead-light">
+            <tbody>
+                <tr>
+                    <th>{{ 'reminder.table.id'|trans }}</th>
+                    <td>{{ reminder.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'reminder.table.message'|trans }}</th>
+                    <td>{{ reminder.message }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'reminder.table.date'|trans }}</th>
+                    <td>{{ reminder.date ? reminder.date|date('d/m Y H:i') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'reminder.table.finished'|trans }}</th>
+                    <td>{{ (reminder.finished ? 'common.boolean.true' : 'common.boolean.false')|trans }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <a href="{{ path('reminder_index') }}">{{ 'common.back_to_list'|trans }}</a>
 
