@@ -1,0 +1,26 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'journal_entry.show.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'journal_entry.show.title'|trans }}</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>{{ 'journal_entry.table.id'|trans }}</th>
+            <td>{{ journalEntry.id }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'journal_entry.table.name'|trans }}</th>
+            <td>{{ journalEntry.name }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('journal_entry_index', {'process': process.id}) }}">{{ 'common.back_to_list'|trans }}</a>
+
+    <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}">{{ 'common.actions.edit'|trans }}</a>
+
+  {{ include('journal_entry/_delete_form.html.twig') }}
+{% endblock %}

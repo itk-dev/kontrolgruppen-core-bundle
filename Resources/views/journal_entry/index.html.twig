@@ -1,0 +1,35 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'journal_entry.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'journal_entry.index.title'|trans }}</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>{{ 'journal_entry.table.id'|trans }}</th>
+            <th>{{ 'journal_entry.table.name'|trans }}</th>
+            <th>{{ 'common.table.actions'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for journalEntry in journalEntries %}
+            <tr>
+                <td>{{ journalEntry.id }}</td>
+                <td>{{ journalEntry.name }}</td>
+                <td>
+                    <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}">show</a>
+                    <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">{{ 'common.no_records_found'|trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('journal_entry_new', {'process': process.id}) }}">{{ 'common.actions.create'|trans }}</a>
+{% endblock %}
