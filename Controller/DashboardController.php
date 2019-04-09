@@ -14,6 +14,9 @@ use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ReminderRepository;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class DashboardController.
+ */
 class DashboardController extends BaseController
 {
     /**
@@ -24,7 +27,7 @@ class DashboardController extends BaseController
         return $this->render('@KontrolgruppenCore/dashboard/index.html.twig', [
             'reminders' => $reminderRepository->findActiveUserReminders($this->getUser()),
             'unassignedProcesses' => $processRepository->findBy(['caseWorker' => null]),
-            'myProcesses' => $processRepository->findBy(['caseWorker' => $this->getUser()])
+            'myProcesses' => $processRepository->findBy(['caseWorker' => $this->getUser()]),
         ]);
     }
 }
