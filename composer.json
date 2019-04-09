@@ -15,7 +15,7 @@
     },
     "scripts": {
         "check-coding-standards/php-cs-fixer": [
-            "php-cs-fixer --config=.php_cs.dist fix --dry-run --diff"
+            "php-cs-fixer --config=.php_cs.dist fix --dry-run"
         ],
         "check-coding-standards/phpcs": [
             "phpcs --standard=phpcs.xml.dist"
@@ -36,7 +36,11 @@
         "apply-coding-standards": [
             "@apply-coding-standards/php-cs-fixer",
             "@apply-coding-standards/phpcs"
-        ]
+        ],
+        "checkcs": [
+            "php-cs-fixer --config=.php_cs.dist fix --dry-run --diff",
+            "@check-coding-standards/twigcs"
+	]
     },
     "require-dev": {
         "allocine/twigcs": "^3.1",
