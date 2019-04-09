@@ -40,17 +40,19 @@
             {% endfor %}
           {% endblock %}
 
-          {% if menuItems %}
+
             {% block navigation_mobile %}
-              {% for menuItem in menuItems %}
-                <li class="nav-item d-lg-none">
-                  <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
-                    {{ menuItem.name }} <span class="sr-only">(current)</span>
-                  </a>
-                </li>
-              {% endfor %}
+              {% if menuItems is defined %}
+                {% for menuItem in menuItems %}
+                  <li class="nav-item d-lg-none">
+                    <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
+                      {{ menuItem.name }} <span class="sr-only">(current)</span>
+                    </a>
+                  </li>
+                {% endfor %}
+              {% endif %}
             {% endblock %}
-          {% endif %}
+
 
           <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
             <a class="btn btn-sm btn-success btn-block" href="{{ path('process_new') }}">{{ 'navigation.main.new_process'|trans }}</a>
