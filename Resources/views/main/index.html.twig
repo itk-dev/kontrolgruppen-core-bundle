@@ -93,11 +93,11 @@
         {% endblock %}
       </nav>
 
-      <nav class="col-auto d-none d-md-block bg-light">
-        <div class="sidebar-sticky pt-3">
-          {% block navigation_sidebar %}
-            <ul class="nav flex-column nav-pills">
-              {% if menuItems is defined %}
+      {% block navigation_sidebar %}
+        {% if menuItems is defined %}
+          <nav class="col-auto d-none d-md-block bg-light">
+            <div class="sidebar-sticky pt-3">
+              <ul class="nav flex-column nav-pills">
                 {% for menuItem in menuItems %}
                 <li class="nav-item">
                   <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
@@ -105,22 +105,31 @@
                   </a>
                 </li>
                 {% endfor %}
-              {% endif %}
-            </ul>
-          {% endblock %}
-        </div>
-      </nav>
+              </ul>
+            </div>
+          </nav>
+        {% endif %}
+      {% endblock %}
 
-      <main role="main" class="col-auto">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+      <main role="main" class="col-auto flex-grow-1">
           <div class="row">
-            <div class="col">
+            <div class="col p-lg-5">
               {% block content %}
               {% endblock %}
             </div>
           </div>
-        </div>
       </main>
+
+      {% if sidebarRight is defined %}
+          <aside role="sidebar-right" class="d-none d-lg-flex col-lg-3">
+            <div class="row">
+              <div class="col m-lg-4 p-lg-3 bg-light">
+                {% block sidebarRight %}
+                {% endblock %}
+              </div>
+            </div>
+          </aside>
+      {% endif %}
 
     </div>
   </div>
