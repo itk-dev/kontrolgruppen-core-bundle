@@ -4,6 +4,7 @@ namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository")
@@ -27,6 +28,12 @@ class JournalEntry extends AbstractEntity
      * @ORM\JoinColumn(nullable=false)
      */
     private $process;
+
+    /**
+     * @ORM\Column(name="type", type="JournalEntryEnumType", nullable=false)
+     * @DoctrineAssert\Enum(entity="Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType")
+     */
+    protected $type;
 
     public function getId(): ?int
     {
@@ -67,5 +74,15 @@ class JournalEntry extends AbstractEntity
         $this->process = $process;
 
         return $this;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($type): void
+    {
+        $this->type = $type;
     }
 }
