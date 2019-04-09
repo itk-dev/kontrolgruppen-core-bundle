@@ -15,7 +15,7 @@ use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * Class AbstractEntity
+ * Class AbstractEntity.
  */
 abstract class AbstractEntity
 {

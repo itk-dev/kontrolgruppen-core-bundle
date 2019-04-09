@@ -26,7 +26,7 @@ class JournalEntryType extends AbstractType
             ])
             ->add('body', CKEditorType::class, [
                 'label' => 'journal_entry.form.body',
-                'config' => array('toolbar' => 'editor'),
+                'config' => ['toolbar' => 'editor'],
             ])
             ->add('type', null, [
                 'label' => 'journal_entry.form.type',

@@ -15,7 +15,7 @@
     },
     "scripts": {
         "check-coding-standards/php-cs-fixer": [
-            "php-cs-fixer --config=.php_cs.dist fix --dry-run"
+            "php-cs-fixer --config=.php_cs.dist fix --dry-run --diff"
         ],
         "check-coding-standards/phpcs": [
             "phpcs --standard=phpcs.xml.dist"
