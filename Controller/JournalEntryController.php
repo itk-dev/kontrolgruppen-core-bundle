@@ -49,7 +49,7 @@ class JournalEntryController extends BaseController
             $entityManager->persist($journalEntry);
             $entityManager->flush();
 
-            return $this->redirectToRoute('journal_entry_index');
+            return $this->redirectToRoute('journal_entry_index', ['process' => $process->getId()]);
         }
 
         return $this->render('@KontrolgruppenCore/journal_entry/new.html.twig', [

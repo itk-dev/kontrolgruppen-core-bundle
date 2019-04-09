@@ -12,8 +12,16 @@
             <td>{{ journalEntry.id }}</td>
         </tr>
         <tr>
-            <th>{{ 'journal_entry.table.name'|trans }}</th>
-            <td>{{ journalEntry.name }}</td>
+            <th>{{ 'journal_entry.table.type'|trans }}</th>
+            <td>{{ journalEntry.type|readable_enum|trans }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'journal_entry.table.title'|trans }}</th>
+            <td>{{ journalEntry.title }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'journal_entry.table.body'|trans }}</th>
+            <td>{{ journalEntry.body }}</td>
         </tr>
         </tbody>
     </table>

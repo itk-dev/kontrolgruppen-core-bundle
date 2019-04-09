@@ -28,6 +28,11 @@ common:
     boolean:
         'true': Ja
         'false': Nej
+    enum:
+        journal_entry:
+            diary: Dagbog
+            internal_note: Internt notat
+            note: Notat
     no_records_found: Ingen indgange fundet
     table:
         actions: Handlinger
@@ -44,6 +49,14 @@ dashboard:
         title: Påmindelser
 
 journal_entry:
+    form:
+        body: Tekst
+        title: Overskrift
+        type: Type
+    index:
+        title: Journal
+    new:
+        title: Opret nyt journalindlæg
     table:
         body: Tekst
         id: ID
@@ -183,3 +196,6 @@ service:
     table:
         id: ID
         name: Navn
+
+
+NOTE: Notat

@@ -19,7 +19,7 @@
         {% for journalEntry in journalEntries %}
             <tr>
                 <td>{{ journalEntry.id }}</td>
-                <td>{{ journalEntry.type }}</td>
+                <td>{{ journalEntry.type|readable_enum|trans }}</td>
                 <td>{{ journalEntry.title }}</td>
                 <td>{{ journalEntry.body }}</td>
                 <td>

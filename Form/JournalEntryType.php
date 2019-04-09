@@ -21,7 +21,7 @@ class JournalEntryType extends AbstractType
     {
         $builder
             ->add('title', null, [
-                'label' => 'journal_entry.form.name',
+                'label' => 'journal_entry.form.title',
             ])
             ->add('body', null, [
                 'label' => 'journal_entry.form.body',
