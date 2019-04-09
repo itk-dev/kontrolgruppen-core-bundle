@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
@@ -79,10 +80,18 @@ class ProcessController extends BaseController
             $this->getDoctrine()->getManager()->flush();
         }
 
+        // Latest journal entries.
+        $latestDiaryEntries = $this->getDoctrine()->getRepository(JournalEntry::class)->getLatestDiaryEntries($process);
+        $latestNoteEntries = $this->getDoctrine()->getRepository(JournalEntry::class)->getLatestNoteEntries($process);
+        $latestInternalNoteEntries = $this->getDoctrine()->getRepository(JournalEntry::class)->getLatestInternalNoteEntries($process);
+
         return $this->render('@KontrolgruppenCore/process/show.html.twig', [
             'menuItems' => $this->createMenuItems($process),
             'process' => $process,
             'process_type_form' => $form->createView(),
+            'latestDiaryEntries' => $latestDiaryEntries,
+            'latestNoteEntries' => $latestNoteEntries,
+            'latestInternalNoteEntries' => $latestInternalNoteEntries,
         ]);
     }
 
@@ -148,9 +157,9 @@ class ProcessController extends BaseController
                     'name' => $this->translator->trans('journal.menu_title'),
                     'path' => '/process/'.$process->getId().'/journal',
                     'active' => false !== preg_match(
-                            '/\/process\/\d+\/journal\/.*/',
-                            $path
-                        ),
+                        '/\/process\/\d+\/journal\/.*/',
+                        $path
+                    ),
                 ],
             ];
         }

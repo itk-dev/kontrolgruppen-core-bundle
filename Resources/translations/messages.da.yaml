@@ -110,7 +110,11 @@ process:
         case_worker: Sagsbehandler
         channel: Kanal
         client_cpr: Klient CPR
+        diary: Dagbog
         id: ID
+        internal_note: Interne notater
+        journal: '%numberOfJournalEntries% indgange, se alle'
+        note: Notater
         process_type: Sagstype
         reminders: Påmindelser
         reminders_open: '%numberOfReminders% påmindelser, se alle'
