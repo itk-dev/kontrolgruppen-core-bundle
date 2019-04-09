@@ -13,9 +13,11 @@ namespace Kontrolgruppen\CoreBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository")
+ * @Gedmo\Loggable()
  */
 class ProcessStatus extends AbstractTaxonomy
 {
