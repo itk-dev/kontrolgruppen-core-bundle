@@ -23,8 +23,8 @@
       <td>{{ reminder.date ? reminder.date|date('Y-m-d H:i:s') : '' }}</td>
       <td>{{ (reminder.finished ? 'common.boolean.true' : 'common.boolean.false')|trans }}</td>
       <td>
-        <a href="{{ path('reminder_show', {'id': reminder.id, 'process': reminder.process.id}) }}">show</a>
-        <a href="{{ path('reminder_edit', {'id': reminder.id, 'process': reminder.process.id}) }}">edit</a>
+        <a href="{{ path('reminder_show', {'id': reminder.id, 'process': reminder.process.id}) }}">{{ 'common.actions.show'|trans }}</a>
+        <a href="{{ path('reminder_edit', {'id': reminder.id, 'process': reminder.process.id}) }}">{{ 'common.actions.edit'|trans }}</a>
       </td>
     </tr>
   {% else %}

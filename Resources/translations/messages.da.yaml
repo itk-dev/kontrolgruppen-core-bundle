@@ -43,6 +43,13 @@ dashboard:
     reminders:
         title: Påmindelser
 
+journal_entry:
+    table:
+        body: Tekst
+        id: ID
+        title: Overskrift
+        type: Type
+
 navigation:
     main:
         search: Søg

@@ -9,7 +9,9 @@
         <thead>
         <tr>
             <th>{{ 'journal_entry.table.id'|trans }}</th>
-            <th>{{ 'journal_entry.table.name'|trans }}</th>
+            <th>{{ 'journal_entry.table.type'|trans }}</th>
+            <th>{{ 'journal_entry.table.title'|trans }}</th>
+            <th>{{ 'journal_entry.table.body'|trans }}</th>
             <th>{{ 'common.table.actions'|trans }}</th>
         </tr>
         </thead>
@@ -17,10 +19,12 @@
         {% for journalEntry in journalEntries %}
             <tr>
                 <td>{{ journalEntry.id }}</td>
-                <td>{{ journalEntry.name }}</td>
+                <td>{{ journalEntry.type }}</td>
+                <td>{{ journalEntry.title }}</td>
+                <td>{{ journalEntry.body }}</td>
                 <td>
-                    <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}">show</a>
-                    <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}">edit</a>
+                    <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}">{{ 'common.actions.show'|trans }}</a>
+                    <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}">{{ 'common.actions.edit'|trans }}</a>
                 </td>
             </tr>
         {% else %}
