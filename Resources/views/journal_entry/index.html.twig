@@ -21,7 +21,7 @@
                 <td>{{ journalEntry.id }}</td>
                 <td>{{ journalEntry.type|readable_enum|trans }}</td>
                 <td>{{ journalEntry.title }}</td>
-                <td>{{ journalEntry.body }}</td>
+                <td>{{ journalEntry.body|raw }}</td>
                 <td>
                     <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}">{{ 'common.actions.show'|trans }}</a>
                     <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}">{{ 'common.actions.edit'|trans }}</a>
