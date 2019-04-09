@@ -29,7 +29,7 @@ class ProcessController extends BaseController
     public function index(ProcessRepository $processRepository): Response
     {
         return $this->render('@KontrolgruppenCore/process/index.html.twig', [
-            'menuItems' => $this->createMenuItems($this->requestStack->getCurrentRequest()->getPathInfo(), null),
+            'menuItems' => $this->createMenuItems(),
             'processes' => $processRepository->findAll(),
         ]);
     }
@@ -54,7 +54,7 @@ class ProcessController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/process/new.html.twig', [
-            'menuItems' => $this->createMenuItems($this->requestStack->getCurrentRequest()->getPathInfo(), $process),
+            'menuItems' => $this->createMenuItems($process),
             'process' => $process,
             'form' => $form->createView(),
         ]);
@@ -80,7 +80,7 @@ class ProcessController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/process/show.html.twig', [
-            'menuItems' => $this->createMenuItems($this->requestStack->getCurrentRequest()->getPathInfo(), $process),
+            'menuItems' => $this->createMenuItems($process),
             'process' => $process,
             'process_type_form' => $form->createView(),
         ]);
@@ -103,7 +103,7 @@ class ProcessController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/process/edit.html.twig', [
-            'menuItems' => $this->createMenuItems($this->requestStack->getCurrentRequest()->getPathInfo(), $process),
+            'menuItems' => $this->createMenuItems($process),
             'process' => $process,
             'form' => $form->createView(),
         ]);
@@ -126,22 +126,31 @@ class ProcessController extends BaseController
     /**
      * Create menu items for process views.
      *
-     * @param $path
      * @param $process
      *
      * @return array
      */
-    private function createMenuItems($path, $process)
+    private function createMenuItems($process = null)
     {
+        $path = $this->requestStack->getCurrentRequest()->getPathInfo();
+
         if (isset($process) && null !== $process->getId()) {
             return [
-                (object) [
+                [
                     'name' => $this->translator->trans('reminder.menu_title'),
                     'path' => '/process/'.$process->getId().'/reminder',
                     'active' => false !== preg_match(
                         '/\/process\/\d+\/reminder\/.*/',
                         $path
                     ),
+                ],
+                [
+                    'name' => $this->translator->trans('journal.menu_title'),
+                    'path' => '/process/'.$process->getId().'/journal',
+                    'active' => false !== preg_match(
+                            '/\/process\/\d+\/journal\/.*/',
+                            $path
+                        ),
                 ],
             ];
         }

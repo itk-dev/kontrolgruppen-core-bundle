@@ -29,7 +29,9 @@ class JournalEntryController extends BaseController
     public function index(JournalEntryRepository $journalEntryRepository, Process $process): Response
     {
         return $this->render('@KontrolgruppenCore/journal_entry/index.html.twig', [
-            'journalEntries' => $journalEntryRepository->findAll(),
+            'journalEntries' => $journalEntryRepository->findBy([
+                'process' => $process,
+            ]),
             'process' => $process,
         ]);
     }
