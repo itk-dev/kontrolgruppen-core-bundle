@@ -9,16 +9,16 @@
 
     {% include '@KontrolgruppenCore/reminder/_reminder_list.html.twig' with {reminders: reminders, limit: 2} %}
 
-    <h3>{{ 'dashboard.not_assigned_title' }}</h3>
+    <h3>{{ 'dashboard.not_assigned.title'|trans }} ({{ unassignedProcesses|length }})</h3>
+
+    {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: unassignedProcesses, limit: 2} %}
+
+    <h3>{{ 'dashboard.not_visited.title'|trans }}</h3>
 
     @TODO
 
-    <h3>{{ 'dashboard.not_visited_title' }}</h3>
+    <h3>{{ 'dashboard.my_processes.title'|trans }} ({{ myProcesses|length }})</h3>
 
-    @TODO
-
-    <h3>{{ 'dashboard.my_processes_title' }}</h3>
-
-    @TODO
+  {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: myProcesses, limit: 2} %}
 
 {% endblock %}

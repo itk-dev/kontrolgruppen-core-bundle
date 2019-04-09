@@ -45,6 +45,12 @@ common:
 dashboard:
     index:
         title: Dashboard
+    my_processes:
+        title: Mine sager
+    not_assigned:
+        title: Ikke tildelte sager
+    not_visited:
+        title: Ikke besøgte sager
     reminders:
         title: Påmindelser
 
