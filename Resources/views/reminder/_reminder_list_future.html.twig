@@ -1,21 +1,25 @@
 {% block reminder_list_future %}
   {% set max_iterations = limit is defined ? min(reminders|length, limit) : reminders|length %}
-  <div class="form-group">
-    <label for="">{{ 'reminder.upcomming.title'|trans }}</label>
-    <select class="form-control" name="" id="">
-      <option>{{ 'reminder.upcomming.option.7days'|trans }}</option>
-    </select>
+  <div class="row">
+    <div class="col-12">
+        <div class="form-group w-100">
+            <label for="">{{ 'reminder.upcomming.title'|trans }}</label>
+            <select class="form-control" name="" id="">
+                <option>{{ 'reminder.upcomming.option.7days'|trans }}</option>
+            </select>
+        </div>
+        {% for reminder in reminders|slice(0, max_iterations) %}
+            <div class="{% if not reminder.finished and reminder.date|date('Y-m-d') < "now"|date('Y-m-d') %}bg-warning{% endif %}">
+            <a href="{{ path('reminder_show', {'id': reminder.id, 'process': reminder.process.id}) }}">
+                Dato:{{ reminder.date ? reminder.date|date('Y-m-d H:i:s') : '' }} Sag: {{ reminder.process.caseNumber }}
+                <i class="fas fa-tasksmr-3"></i>{{ reminder.message }}
+            </a>
+            </div>
+            {% else %}
+            <div>
+                <p>{{ 'common.no_records_found'|trans }}</p>
+            </div>
+        {% endfor %}
+    </div>
   </div>
-  {% for reminder in reminders|slice(0, max_iterations) %}
-    <div class="{% if not reminder.finished and reminder.date|date('Y-m-d') < "now"|date('Y-m-d') %}bg-warning{% endif %}">
-      <a href="{{ path('reminder_show', {'id': reminder.id, 'process': reminder.process.id}) }}">
-        Dato:{{ reminder.date ? reminder.date|date('Y-m-d H:i:s') : '' }} Sag: {{ reminder.process.caseNumber }}
-        <i class="fas fa-tasksmr-3"></i>{{ reminder.message }}
-      </a>
-    </div>
-    {% else %}
-    <div>
-        <p>{{ 'common.no_records_found'|trans }}</p>
-    </div>
-  {% endfor %}
 {% endblock %}

@@ -76,8 +76,9 @@
 
   <div class="container-fluid main-container">
     <div class="row">
+        <div class="d-flex">
 
-      <nav class="globalmenu d-none d-lg-block bg-dark pt-3">
+      <nav class="globalmenu d-none d-lg-flex bg-dark pt-3">
         {% block globalmenu_sidebar %}
           <ul class="nav flex-column">
             {% if globalMenuItems is defined %}
@@ -95,7 +96,7 @@
 
       {% block navigation_sidebar %}
         {% if menuItems is defined %}
-          <nav class="col-auto d-none d-md-block bg-light">
+          <nav class="d-none d-lg-flex bg-light">
             <div class="sidebar-sticky pt-3">
               <ul class="nav flex-column nav-pills">
                 {% for menuItem in menuItems %}
@@ -111,23 +112,17 @@
         {% endif %}
       {% endblock %}
 
-      <main role="main" class="col-auto flex-grow-1">
-          <div class="row">
-            <div class="col p-lg-5">
-              {% block content %}
-              {% endblock %}
-            </div>
-          </div>
+      <main role="main" class="d-flex flex-shrink-1 flex-column p-3">
+            {% block content %}
+            {% endblock %}
       </main>
 
       {% if block("sidebarRight") is not empty %}
-          <aside role="sidebar-right" class="d-none d-lg-flex col-lg-3">
-            <div class="row">
+          <aside role="sidebar-right" class="d-none d-md-flex flex-md-column mr-auto p-3">
               {% block sidebarRight %}{% endblock %}
-            </div>
           </aside>
       {% endif %}
-
+        </div>
     </div>
   </div>
 {% endblock %}
