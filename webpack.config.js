@@ -6,7 +6,8 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 module.exports = {
   entry: {
     'core': './Resources/assets/js/core.js',
-    'login': './Resources/assets/js/login.js'
+    'login': './Resources/assets/js/login.js',
+    'reminderLatest': './Resources/assets/js/reminderLatest.js'
   },
   output: {
     path: path.resolve('./Resources/public/build'),
@@ -33,6 +34,16 @@ module.exports = {
             presets: ['@babel/preset-env']
           }
         }
+      },
+      {
+        test: require.resolve('jquery'),
+        use: [{
+          loader: 'expose-loader',
+          options: 'jQuery'
+        },{
+          loader: 'expose-loader',
+          options: '$'
+        }]
       }
     ]
   },

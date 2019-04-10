@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Repository;
 
+use Kontrolgruppen\CoreBundle\DBAL\Types\DateIntervalType;
 use Kontrolgruppen\CoreBundle\Entity\Reminder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -104,5 +105,55 @@ class ReminderRepository extends ServiceEntityRepository
             ->getQuery();
 
         return $qb->getSingleScalarResult();
+    }
+
+    /**
+     * @param \Kontrolgruppen\CoreBundle\Entity\User $user
+     * @param string $interval From DateIntervalType.
+     * @return mixed
+     * @throws \Exception
+     */
+    public function findComingUserReminders(User $user, string $interval = null) {
+        $now = new \DateTime();
+
+        $qb = $this->createQueryBuilder('reminder');
+        $expr = $qb->expr();
+        $qb = $qb
+            ->select('reminder')
+            ->leftJoin('reminder.process', 'process')->addSelect('process')
+            ->where('process.caseWorker = :user')
+            ->setParameter('user', $user)
+            ->andWhere(
+                $expr->orX(
+                    $expr->isNull('reminder.finished'),
+                    $expr->neq('reminder.finished', true)
+                )
+            )
+            ->andWhere('reminder.date > :now')
+            ->setParameter('now', $now);
+
+        if ($interval == DateIntervalType::THIS_WEEK) {
+            $qb->andWhere('WEEK(CURRENT_DATE()) = WEEK(reminder.date)');
+        }
+        else if ($interval == DateIntervalType::WEEK) {
+            $qb->andWhere('reminder.date BETWEEN :now AND :to')
+                ->setParameter('to', (new \DateTime())->add(new \DateInterval("P7D")));
+
+            $qb->andWhere('MONTH(CURRENT_DATE()) = MONTH(reminder.date)');
+        }
+        else if ($interval == DateIntervalType::TWO_WEEKS) {
+            $qb->andWhere('reminder.date BETWEEN :now AND :to')
+                ->setParameter('to', (new \DateTime())->add(new \DateInterval("P14D")));
+
+            $qb->andWhere('MONTH(CURRENT_DATE()) = MONTH(reminder.date)');
+        }
+        else if ($interval == DateIntervalType::MONTH) {
+            $qb->andWhere('reminder.date BETWEEN :now AND :to')
+                ->setParameter('to', (new \DateTime())->add(new \DateInterval("P1M")));
+
+            $qb->andWhere('MONTH(CURRENT_DATE()) = MONTH(reminder.date)');
+        }
+
+        return $qb->getQuery()->execute();
     }
 }
