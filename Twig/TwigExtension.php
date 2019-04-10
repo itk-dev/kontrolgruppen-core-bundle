@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Twig;
 
 use Twig\Extension\AbstractExtension;
@@ -17,17 +25,27 @@ class TwigExtension extends AbstractExtension
     public function getIconClass(string $name)
     {
         switch ($name) {
-            case 'dashboard': return 'fa-tachometer-alt';
-            case 'process': return 'fa-tasks';
-            case 'profile': return 'fa-id-card';
-            case 'users': return 'fa-users-cog';
-            case 'admin': return 'fa-cog';
-            case 'reminder': return 'fa-clock';
-            case 'not-assigned': return 'fa-user-plus';
-            case 'not-visited': return 'fa-archive';
-            case 'tasks': return 'fa-tasks';
+            case 'dashboard':
+                return 'fa-tachometer-alt';
+            case 'process':
+                return 'fa-tasks';
+            case 'profile':
+                return 'fa-id-card';
+            case 'users':
+                return 'fa-users-cog';
+            case 'admin':
+                return 'fa-cog';
+            case 'reminder':
+                return 'fa-clock';
+            case 'not-assigned':
+                return 'fa-user-plus';
+            case 'not-visited':
+                return 'fa-archive';
+            case 'tasks':
+                return 'fa-tasks';
 
-            default: return '';
+            default:
+                return '';
         }
     }
 }
