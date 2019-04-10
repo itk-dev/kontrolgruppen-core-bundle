@@ -28,5 +28,10 @@
 {% endblock %}
 
 {% block sidebarRight %}
-  <h1>Sidebar</h1>
+  <div class="col-10 m-lg-4 p-lg-3 bg-warning">
+    {% include '@KontrolgruppenCore/reminder/_reminder_list_future.html.twig' %}
+  </div>
+  <div class="col-10 m-lg-4 p-lg-3 bg-light">
+    {% include '@KontrolgruppenCore/reminder/_reminder_list_future.html.twig' %}
+  </div>
 {% endblock %}

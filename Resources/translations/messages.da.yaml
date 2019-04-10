@@ -168,6 +168,10 @@ reminder:
         message: Besked
         date: Dato
         finished: Afsluttet
+    upcomming:
+        title: Kommende påmindelser
+        option:
+          7days: de næste 7 dage
 
 service:
     edit:
