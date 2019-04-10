@@ -1,0 +1,11 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'journal_entry.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'journal_entry.index.title'|trans }}</h1>
+
+    {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig' %}
+
+    <a href="{{ path('journal_entry_new', {'process': process.id}) }}">{{ 'common.actions.create'|trans }}</a>
+{% endblock %}

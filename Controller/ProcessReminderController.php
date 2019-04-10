@@ -111,6 +111,8 @@ class ProcessReminderController extends BaseController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('reminder_index');
+        return $this->redirectToRoute('reminder_index', [
+            'process' => $process->getId(),
+        ]);
     }
 }

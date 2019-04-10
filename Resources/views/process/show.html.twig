@@ -58,6 +58,33 @@
             <a href="{{ path('reminder_index', {'process': process.id}) }}">{{ 'process.table.reminders_open'|trans({'%numberOfReminders%': process.reminders|length}) }}</a>
           </td>
         </tr>
+        <tr>
+          <th>{{ 'process.table.diary'|trans }}</th>
+          <td>
+            {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig'  with { journalEntries: latestDiaryEntries, limit: 2 } %}
+            <a href="{{ path('journal_entry_index', {'process': process.id}) }}">
+              {{ 'process.table.journal'|trans({'%numberOfJournalEntries%': latestDiaryEntries|length}) }}
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <th>{{ 'process.table.note'|trans }}</th>
+          <td>
+            {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig'  with { journalEntries: latestNoteEntries, limit: 2 } %}
+            <a href="{{ path('journal_entry_index', {'process': process.id}) }}">
+              {{ 'process.table.journal'|trans({'%numberOfJournalEntries%': latestNoteEntries|length}) }}
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <th>{{ 'process.table.internal_note'|trans }}</th>
+          <td>
+            {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig'  with { journalEntries: latestInternalNoteEntries, limit: 2 } %}
+            <a href="{{ path('journal_entry_index', {'process': process.id}) }}">
+              {{ 'process.table.journal'|trans({'%numberOfJournalEntries%': latestInternalNoteEntries|length}) }}
+            </a>
+          </td>
+        </tr>
         </tbody>
       </table>
 

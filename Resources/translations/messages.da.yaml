@@ -28,6 +28,11 @@ common:
     boolean:
         'true': Ja
         'false': Nej
+    enum:
+        journal_entry:
+            diary: Dagbog
+            internal_note: Internt notat
+            note: Notat
     no_records_found: Ingen indgange fundet
     table:
         actions: Handlinger
@@ -48,6 +53,26 @@ dashboard:
         title: Ikke besøgte sager
     reminders:
         title: Påmindelser
+
+journal_entry:
+    edit:
+        title: Rediger journal
+    form:
+        body: Tekst
+        title: Overskrift
+        type: Type
+        update: Gem
+    index:
+        title: Journal
+    new:
+        title: Opret nyt journalindlæg
+    show:
+        title: Journal
+    table:
+        body: Tekst
+        id: ID
+        title: Overskrift
+        type: Type
 
 navigation:
     main:
@@ -85,7 +110,11 @@ process:
         case_worker: Sagsbehandler
         channel: Kanal
         client_cpr: Klient CPR
+        diary: Dagbog
         id: ID
+        internal_note: Interne notater
+        journal: '%numberOfJournalEntries% indgange, se alle'
+        note: Notater
         process_type: Sagstype
         reminders: Påmindelser
         reminders_open: '%numberOfReminders% påmindelser, se alle'
@@ -182,3 +211,6 @@ service:
     table:
         id: ID
         name: Navn
+
+
+NOTE: Notat

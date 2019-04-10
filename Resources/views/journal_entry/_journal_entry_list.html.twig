@@ -1,0 +1,34 @@
+{% block journal_entry_list %}
+  {% set max_iterations = limit is defined ? min(journalEntries|length, limit) : journalEntries|length %}
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>{{ 'journal_entry.table.id'|trans }}</th>
+      <th>{{ 'journal_entry.table.type'|trans }}</th>
+      <th>{{ 'journal_entry.table.title'|trans }}</th>
+      <th>{{ 'journal_entry.table.body'|trans }}</th>
+      <th>{{ 'common.table.actions'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for journalEntry in journalEntries|slice(0, max_iterations) %}
+      <tr>
+        <td>{{ journalEntry.id }}</td>
+        <td>{{ journalEntry.type|readable_enum|trans }}</td>
+        <td>{{ journalEntry.title }}</td>
+        <td>{{ journalEntry.body|raw }}</td>
+        <td>
+          <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}">{{ 'common.actions.show'|trans }}</a>
+          <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}">{{ 'common.actions.edit'|trans }}</a>
+        </td>
+      </tr>
+    {% else %}
+      <tr>
+        <td colspan="4">{{ 'common.no_records_found'|trans }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

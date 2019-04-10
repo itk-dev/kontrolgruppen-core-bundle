@@ -11,11 +11,13 @@
 namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 abstract class AbstractTaxonomy extends AbstractEntity
 {
     /**
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Versioned
      */
     protected $name;
 

@@ -21,8 +21,8 @@
                 <td>{{ quick_link.name }}</td>
                 <td>{{ quick_link.href }}</td>
                 <td>
-                    <a href="{{ path('quick_link_show', {'id': quick_link.id}) }}">show</a>
-                    <a href="{{ path('quick_link_edit', {'id': quick_link.id}) }}">edit</a>
+                    <a href="{{ path('quick_link_show', {'id': quick_link.id}) }}">{{ 'common.actions.show'|trans }}</a>
+                    <a href="{{ path('quick_link_edit', {'id': quick_link.id}) }}">{{ 'common.actions.edit'|trans }}</a>
                 </td>
             </tr>
         {% else %}

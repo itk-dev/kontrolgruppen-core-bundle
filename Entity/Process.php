@@ -13,9 +13,11 @@ namespace Kontrolgruppen\CoreBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ProcessRepository")
+ * @Gedmo\Loggable()
  */
 class Process extends AbstractEntity
 {
@@ -59,9 +61,15 @@ class Process extends AbstractEntity
      */
     private $reminders;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\JournalEntry", mappedBy="process", orphanRemoval=true)
+     */
+    private $journalEntries;
+
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
+        $this->journalEntries = new ArrayCollection();
     }
 
     public function getCaseWorker(): ?User
@@ -173,6 +181,37 @@ class Process extends AbstractEntity
             // set the owning side to null (unless already changed)
             if ($reminder->getProcess() === $this) {
                 $reminder->setProcess(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|JournalEntry[]
+     */
+    public function getJournalEntries(): Collection
+    {
+        return $this->journalEntries;
+    }
+
+    public function addJournalEntry(JournalEntry $journalEntry): self
+    {
+        if (!$this->journalEntries->contains($journalEntry)) {
+            $this->journalEntries[] = $journalEntry;
+            $journalEntry->setProcess($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJournalEntry(JournalEntry $journalEntry): self
+    {
+        if ($this->journalEntries->contains($journalEntry)) {
+            $this->journalEntries->removeElement($journalEntry);
+            // set the owning side to null (unless already changed)
+            if ($journalEntry->getProcess() === $this) {
+                $journalEntry->setProcess(null);
             }
         }
 
