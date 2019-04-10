@@ -43,6 +43,10 @@ class TwigExtension extends AbstractExtension
                 return 'fa-archive';
             case 'tasks':
                 return 'fa-tasks';
+            case 'show':
+                return 'fa-eye';
+            case 'edit':
+                return 'fa-edit';
 
             default:
                 return '';
