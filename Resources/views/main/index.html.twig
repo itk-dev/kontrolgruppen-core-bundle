@@ -112,13 +112,13 @@
             {% endif %}
           {% endblock %}
 
-          <main role="main" class="d-flex flex-shrink-1 flex-column p-3">
+          <main role="main" class="d-flex flex-shrink-1 flex-grow-1 flex-column w-auto p-3">
                 {% block content %}
                 {% endblock %}
           </main>
 
           {% if block("sidebarRight") is not empty %}
-              <aside role="sidebar-right" class="d-none d-lg-flex flex-lg-column flex-grow-1 p-3">
+              <aside role="sidebar-right" class="d-none d-lg-flex flex-lg-column flex-grow-1 p-3 mw-25">
                   {% block sidebarRight %}{% endblock %}
               </aside>
           {% endif %}
