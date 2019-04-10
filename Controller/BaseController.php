@@ -39,16 +39,19 @@ class BaseController extends AbstractController
      *
      * Attaches menu and quick links.
      *
-     * @param string                                          $view
-     * @param array                                           $parameters
+     * @param string $view
+     * @param array $parameters
      * @param \Symfony\Component\HttpFoundation\Response|null $response
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function render(string $view, array $parameters = [], Response $response = null): Response
-    {
+    public function render(
+        string $view,
+        array $parameters = [],
+        Response $response = null
+    ): Response {
         // Set reminders
         $numberOfReminders = $this->getDoctrine()->getRepository(
             Reminder::class
@@ -68,11 +71,36 @@ class BaseController extends AbstractController
 
         // Set global nav items.
         $globalNavItems = [
-            'dashboard' => $this->createGlobalNavItem('dashboard', '/', $this->twigExtension->getIconClass('dashboard'), ('/' === $path)),
-            'process' => $this->createGlobalNavItem('process', '/process/', $this->twigExtension->getIconClass('process'), (false !== $this->startsWith($path, '/process/'))),
-            'profile' => $this->createGlobalNavItem('profile', '/profile/', $this->twigExtension->getIconClass('profile'), (false !== $this->startsWith($path, '/profile/'))),
-            'users' => $this->createGlobalNavItem('users', '/users/', $this->twigExtension->getIconClass('users'), (false !== $this->startsWith($path, '/profile/'))),
-            'admin' => $this->createGlobalNavItem('admin', '/admin/', $this->twigExtension->getIconClass('admin'), (false !== $this->startsWith($path, '/admin/'))),
+            'dashboard' => $this->createGlobalNavItem(
+                'dashboard',
+                '/',
+                'dashboard',
+                ('/' === $path)
+            ),
+            'process' => $this->createGlobalNavItem(
+                'process',
+                '/process/',
+                'process',
+                (false !== $this->startsWith($path, '/process/'))
+            ),
+            'profile' => $this->createGlobalNavItem(
+                'profile',
+                '/profile/',
+                'profile',
+                (false !== $this->startsWith($path, '/profile/'))
+            ),
+            'users' => $this->createGlobalNavItem(
+                'users',
+                '/users/',
+                'users',
+                (false !== $this->startsWith($path, '/profile/'))
+            ),
+            'admin' => $this->createGlobalNavItem(
+                'admin',
+                '/admin/',
+                'admin',
+                (false !== $this->startsWith($path, '/admin/'))
+            ),
         ];
         $parameters['globalMenuItems'] = $globalNavItems;
 
@@ -89,12 +117,16 @@ class BaseController extends AbstractController
      *
      * @return object
      */
-    protected function createGlobalNavItem($itemName, $path, $icon, $active)
+    protected function createGlobalNavItem($itemName, $path, $iconName, $active)
     {
-        return (object) [
-            'name' => $this->translator->trans('global_nav.menu_title.'.$itemName),
-            'icon' => $icon,
-            'tooltip' => $this->translator->trans('global_nav.tooltip.'.$itemName),
+        return (object)[
+            'name' => $this->translator->trans(
+                'global_nav.menu_title.'.$itemName
+            ),
+            'icon' => $this->twigExtension->getIconClass($iconName),
+            'tooltip' => $this->translator->trans(
+                'global_nav.tooltip.'.$itemName
+            ),
             'path' => $path,
             'active' => $active,
         ];
