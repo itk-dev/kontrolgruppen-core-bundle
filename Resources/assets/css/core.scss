@@ -26,11 +26,7 @@
  */
 
 .globalmenu {
-  position: relative;
-  top: 0;
   height: calc(100vh - #{$navbarHeight});
-  overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   .nav {
     &-link {
       color: $white;

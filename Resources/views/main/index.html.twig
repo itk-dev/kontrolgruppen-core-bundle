@@ -78,50 +78,50 @@
     <div class="row">
         <div class="d-flex w-100">
 
-      <nav class="globalmenu d-none d-lg-flex bg-dark pt-3">
-        {% block globalmenu_sidebar %}
-          <ul class="nav flex-column">
-            {% if globalMenuItems is defined %}
-              {% for globalMenuItem in globalMenuItems %}
-                <li class="nav-item">
-                  <a class="nav-link {{ globalMenuItem.active ? ' active' : '' }}" href="{{ globalMenuItem.path }}" data-toggle="tooltip" data-placement="right" title="{{ globalMenuItem.tooltip }}">
-                    <i class="fas {{ globalMenuItem.icon }}" ></i><span class="sr-only">{{ globalMenuItem.name }}</span>
-                  </a>
-                </li>
-              {% endfor %}
-            {% endif %}
-          </ul>
-        {% endblock %}
-      </nav>
-
-      {% block navigation_sidebar %}
-        {% if menuItems is defined %}
-          <nav class="d-none d-lg-flex bg-light">
-            <div class="sidebar-sticky pt-3">
-              <ul class="nav flex-column nav-pills">
-                {% for menuItem in menuItems %}
-                <li class="nav-item">
-                  <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
-                    {{ menuItem.name }} <span class="sr-only">(current)</span>
-                  </a>
-                </li>
-                {% endfor %}
+          <nav class="globalmenu d-none d-lg-flex bg-dark pt-3">
+            {% block globalmenu_sidebar %}
+              <ul class="nav flex-column">
+                {% if globalMenuItems is defined %}
+                  {% for globalMenuItem in globalMenuItems %}
+                    <li class="nav-item">
+                      <a class="nav-link{{ globalMenuItem.active ? ' active' : '' }}" href="{{ globalMenuItem.path }}" data-toggle="tooltip" data-placement="right" title="{{ globalMenuItem.tooltip }}">
+                        <i class="fas {{ globalMenuItem.icon }} fa-fw" ></i><span class="sr-only">{{ globalMenuItem.name }}</span>
+                      </a>
+                    </li>
+                  {% endfor %}
+                {% endif %}
               </ul>
-            </div>
-          </nav>
-        {% endif %}
-      {% endblock %}
-
-      <main role="main" class="d-flex flex-shrink-1 flex-column p-3">
-            {% block content %}
             {% endblock %}
-      </main>
+          </nav>
 
-      {% if block("sidebarRight") is not empty %}
-          <aside role="sidebar-right" class="d-none d-lg-flex flex-lg-column flex-grow-1 p-3">
-              {% block sidebarRight %}{% endblock %}
-          </aside>
-      {% endif %}
+          {% block navigation_sidebar %}
+            {% if menuItems is defined %}
+              <nav class="d-none d-lg-flex bg-light">
+                <div class="sidebar-sticky pt-3">
+                  <ul class="nav flex-column nav-pills">
+                    {% for menuItem in menuItems %}
+                    <li class="nav-item">
+                      <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
+                        {{ menuItem.name }} <span class="sr-only">(current)</span>
+                      </a>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </nav>
+            {% endif %}
+          {% endblock %}
+
+          <main role="main" class="d-flex flex-shrink-1 flex-column p-3">
+                {% block content %}
+                {% endblock %}
+          </main>
+
+          {% if block("sidebarRight") is not empty %}
+              <aside role="sidebar-right" class="d-none d-lg-flex flex-lg-column flex-grow-1 p-3">
+                  {% block sidebarRight %}{% endblock %}
+              </aside>
+          {% endif %}
         </div>
     </div>
   </div>
