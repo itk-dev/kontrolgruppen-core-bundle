@@ -1,0 +1,11 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'journal_entry.new.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'journal_entry.new.title'|trans }}</h1>
+
+  {{ include('journal_entry/_form.html.twig') }}
+
+    <a href="{{ path('journal_entry_index', {'process': process.id}) }}">{{ 'common.back_to_list'|trans }}</a>
+{% endblock %}

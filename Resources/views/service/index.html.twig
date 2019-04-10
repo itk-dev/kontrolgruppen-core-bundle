@@ -20,8 +20,8 @@
                     <td>{{ service.id }}</td>
                     <td>{{ service.name }}</td>
                     <td>
-                        <a href="{{ path('service_show', {'id': service.id}) }}">show</a>
-                        <a href="{{ path('service_edit', {'id': service.id}) }}">edit</a>
+                        <a href="{{ path('service_show', {'id': service.id}) }}">{{ 'common.actions.show'|trans }}</a>
+                        <a href="{{ path('service_edit', {'id': service.id}) }}">{{ 'common.actions.edit'|trans }}</a>
                     </td>
                 </tr>
             {% else %}
