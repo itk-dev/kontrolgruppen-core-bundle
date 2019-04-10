@@ -12,6 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\QuickLink;
 use Kontrolgruppen\CoreBundle\Entity\Reminder;
+use Kontrolgruppen\CoreBundle\Twig\TwigExtension;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -21,13 +22,16 @@ class BaseController extends AbstractController
 {
     protected $requestStack;
     protected $translator;
+    protected $twigExtension;
 
     public function __construct(
         RequestStack $requestStack,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        TwigExtension $twigExtension
     ) {
         $this->requestStack = $requestStack;
         $this->translator = $translator;
+        $this->twigExtension = $twigExtension;
     }
 
     /**
@@ -64,11 +68,11 @@ class BaseController extends AbstractController
 
         // Set global nav items.
         $globalNavItems = [
-            'dashboard' => $this->createGlobalNavItem('dashboard', '/', 'fa-tachometer-alt', ('/' === $path)),
-            'process' => $this->createGlobalNavItem('process', '/process/', 'fa-tasks', (false !== $this->startsWith($path, '/process/'))),
-            'profile' => $this->createGlobalNavItem('profile', '/profile/', 'fa-id-card', (false !== $this->startsWith($path, '/profile/'))),
-            'users' => $this->createGlobalNavItem('users', '/users/', 'fa-users-cog', (false !== $this->startsWith($path, '/profile/'))),
-            'admin' => $this->createGlobalNavItem('admin', '/admin/', 'fa-cog', (false !== $this->startsWith($path, '/admin/'))),
+            'dashboard' => $this->createGlobalNavItem('dashboard', '/', $this->twigExtension->getIconClass('dashboard'), ('/' === $path)),
+            'process' => $this->createGlobalNavItem('process', '/process/', $this->twigExtension->getIconClass('process'), (false !== $this->startsWith($path, '/process/'))),
+            'profile' => $this->createGlobalNavItem('profile', '/profile/', $this->twigExtension->getIconClass('profile'), (false !== $this->startsWith($path, '/profile/'))),
+            'users' => $this->createGlobalNavItem('users', '/users/', $this->twigExtension->getIconClass('users'), (false !== $this->startsWith($path, '/profile/'))),
+            'admin' => $this->createGlobalNavItem('admin', '/admin/', $this->twigExtension->getIconClass('admin'), (false !== $this->startsWith($path, '/admin/'))),
         ];
         $parameters['globalMenuItems'] = $globalNavItems;
 
