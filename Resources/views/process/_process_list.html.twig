@@ -26,9 +26,23 @@
             <td>{{ process.processType }}</td>
             <td>{{ process.service }}</td>
             <td>
-            <a href="{{ path('process_show', {'id': process.id}) }}">{{ 'common.actions.show'|trans }}</a>
-            <a href="{{ path('process_edit', {'id': process.id}) }}">{{ 'common.actions.edit'|trans }}</a>
-            <a href="{{ path('reminder_index', {'process': process.id}) }}">{{ 'process.actions.reminders'|trans }}</a>
+                <a href="{{ path('process_show', {'id': process.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
+                    <span class="fa-stack">
+                        <i class="fas fa-square fa-stack-2x"></i>
+                        <i class="fas {{ iconClass('show') }} fa-stack-1x fa-inverse"></i></a>
+                    </span>
+                <a href="{{ path('process_edit', {'id': process.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
+                    <span class="fa-stack">
+                        <i class="fas fa-square fa-stack-2x"></i>
+                        <i class="fas {{ iconClass('edit') }} fa-stack-1x fa-inverse"></i></a>
+                    </span>
+                </a>
+                <a href="{{ path('reminder_index', {'process': process.id}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'process.actions.reminders'|trans }}">
+                    <span class="fa-stack">
+                        <i class="fas fa-square fa-stack-2x"></i>
+                        <i class="fas {{ iconClass('reminder') }} fa-stack-1x fa-inverse"></i></a>
+                    </span>
+                </a>
             </td>
         </tr>
         {% else %}
