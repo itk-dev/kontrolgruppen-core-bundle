@@ -46,7 +46,7 @@ class TwigExtension extends AbstractExtension
             case 'show':
                 return 'fa-eye';
             case 'edit':
-                return 'fa-edit';
+                return 'fa-pencil-alt';
 
             default:
                 return '';
