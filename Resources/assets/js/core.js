@@ -14,5 +14,9 @@ require('bootstrap');
 require('../css/core.scss');
 
 $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
+  $('[data-toggle="tooltip"]').tooltip(
+    {
+      delay: {show: 400},
+    }
+  )
 })
