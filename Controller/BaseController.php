@@ -67,7 +67,7 @@ class BaseController extends AbstractController
             'dashboard' => $this->createGlobalNavItem('dashboard', '/', 'fa-tachometer-alt', ('/' === $path)),
             'process' => $this->createGlobalNavItem('process', '/process/', 'fa-tasks', (false !== $this->startsWith($path, '/process/'))),
             'profile' => $this->createGlobalNavItem('profile', '/profile/', 'fa-id-card', (false !== $this->startsWith($path, '/profile/'))),
-            'users' => $this->createGlobalNavItem('users', '/users/', 'fa-users-cog', (false !== $this->startsWith($path, '/profile/'))),
+            //'users' => $this->createGlobalNavItem('users', '/users/', 'fa-users-cog', (false !== $this->startsWith($path, '/profile/'))), // Not included in first release
             'admin' => $this->createGlobalNavItem('admin', '/admin/', 'fa-cog', (false !== $this->startsWith($path, '/admin/'))),
         ];
         $parameters['globalMenuItems'] = $globalNavItems;
