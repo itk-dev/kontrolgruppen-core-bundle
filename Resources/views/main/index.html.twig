@@ -76,7 +76,7 @@
 
   <div class="container-fluid main-container">
     <div class="row">
-        <div class="d-flex">
+        <div class="d-flex w-100">
 
       <nav class="globalmenu d-none d-lg-flex bg-dark pt-3">
         {% block globalmenu_sidebar %}
@@ -118,7 +118,7 @@
       </main>
 
       {% if block("sidebarRight") is not empty %}
-          <aside role="sidebar-right" class="d-none d-md-flex flex-md-column mr-auto p-3">
+          <aside role="sidebar-right" class="d-none d-lg-flex flex-lg-column flex-grow-1 p-3">
               {% block sidebarRight %}{% endblock %}
           </aside>
       {% endif %}
