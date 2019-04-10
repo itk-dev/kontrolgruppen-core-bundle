@@ -6,22 +6,22 @@
     <h1>{{ 'dashboard.index.title'|trans }}</h1>
 
     <div class="bg-warning p-3 mb-3 border border-warning">
-      <h2><i class="fas fa-tachometer-alt mr-3"></i>{{ 'dashboard.reminders.title'|trans }} ({{ reminders|length }})</h2>
+      <h2><i class="fas {{ iconClass('reminder') }} mr-3"></i>{{ 'dashboard.reminders.title'|trans }} ({{ reminders|length }})</h2>
       {% include '@KontrolgruppenCore/reminder/_reminder_list.html.twig' with {reminders: reminders, limit: 2} %}
     </div>
 
     <div class="bg-light p-3 mb-3">
-      <h2><i class="fas fa-user-plus mr-3"></i>{{ 'dashboard.not_assigned.title'|trans }} ({{ unassignedProcesses|length }})</h2>
+      <h2><i class="fas {{ iconClass('not-assigned') }} mr-3"></i>{{ 'dashboard.not_assigned.title'|trans }} ({{ unassignedProcesses|length }})</h2>
       {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: unassignedProcesses, limit: 2} %}
     </div>
 
     <div class="bg-light p-3 mb-3">
-      <h2><i class="fas fa-archive mr-3"></i>{{ 'dashboard.not_visited.title'|trans }}</h2>
+      <h2><i class="fas {{ iconClass('not-visited') }} mr-3"></i>{{ 'dashboard.not_visited.title'|trans }}</h2>
       @TODO
     </div>
 
     <div class="bg-light p-3">
-      <h2><i class="fas fa-tasks mr-3"></i>{{ 'dashboard.my_processes.title'|trans }} ({{ myProcesses|length }})</h2>
+      <h2><i class="fas {{ iconClass('tasks') }} mr-3"></i>{{ 'dashboard.my_processes.title'|trans }} ({{ myProcesses|length }})</h2>
       {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: myProcesses, limit: 2} %}
     </div>
 
