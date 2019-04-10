@@ -3,6 +3,7 @@
 {% block title %}{{ 'dashboard.index.title'|trans }}{% endblock %}
 
 {% block content %}
+
     <h1>{{ 'dashboard.index.title'|trans }}</h1>
 
     <div class="bg-warning p-3 mb-3 border border-warning">
@@ -32,6 +33,14 @@
     {% include '@KontrolgruppenCore/reminder/_reminder_list_future.html.twig' %}
   </div>
   <div class="bg-light p-3">
-    {% include '@KontrolgruppenCore/reminder/_reminder_list_future.html.twig' %}
+    @TODO: Latest activity
   </div>
+{% endblock %}
+
+{% block javascripts %}
+
+  {{ parent() }}
+
+  <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/reminderLatest.js') }}"></script>
+
 {% endblock %}

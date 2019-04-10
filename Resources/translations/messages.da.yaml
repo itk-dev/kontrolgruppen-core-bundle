@@ -29,6 +29,11 @@ common:
         'true': Ja
         'false': Nej
     enum:
+        date_interval:
+            this_week: Denne uge
+            week: En uge frem
+            two_weeks: To uger frem
+            month: En måned frem
         journal_entry:
             diary: Dagbog
             internal_note: Internt notat
