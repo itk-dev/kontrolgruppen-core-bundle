@@ -45,6 +45,8 @@ common:
 dashboard:
     index:
         title: Dashboard
+    menu_title: Dashboard
+    tooltip: 'Din oversigt'
     my_processes:
         title: Mine sager
     not_assigned:
@@ -119,6 +121,7 @@ process:
         reminders: Påmindelser
         reminders_open: '%numberOfReminders% påmindelser, se alle'
         service: Ydelse
+    tooltip: Liste med alle sager
 
 process_status:
     edit:
@@ -194,6 +197,10 @@ reminder:
         message: Besked
         date: Dato
         finished: Afsluttet
+    upcomming:
+        title: Kommende påmindelser
+        option:
+          7days: de næste 7 dage
 
 service:
     edit:
@@ -212,5 +219,19 @@ service:
         id: ID
         name: Navn
 
+global_nav:
+    menu_title:
+        dashboard: Dashboard
+        process: Sager
+        profile: Profil
+        users: Brugere
+        admin: Indstillinger
+
+    tooltip:
+        dashboard: Få et hurtigt sagsoverblik
+        process: Få vist alle sager
+        profile: Dine profil informationer
+        users: Viser alle brugere på systemet
+        admin: Se og administre system indstillinger
 
 NOTE: Notat

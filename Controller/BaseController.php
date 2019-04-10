@@ -39,8 +39,8 @@ class BaseController extends AbstractController
      *
      * Attaches menu and quick links.
      *
-     * @param string $view
-     * @param array $parameters
+     * @param string                                          $view
+     * @param array                                           $parameters
      * @param \Symfony\Component\HttpFoundation\Response|null $response
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -119,7 +119,7 @@ class BaseController extends AbstractController
      */
     protected function createGlobalNavItem($itemName, $path, $iconName, $active)
     {
-        return (object)[
+        return (object) [
             'name' => $this->translator->trans(
                 'global_nav.menu_title.'.$itemName
             ),

@@ -35,6 +35,18 @@ class TwigExtension extends AbstractExtension
                 return 'fa-users-cog';
             case 'admin':
                 return 'fa-cog';
+            case 'reminder':
+                return 'fa-clock';
+            case 'not-assigned':
+                return 'fa-user-plus';
+            case 'not-visited':
+                return 'fa-archive';
+            case 'tasks':
+                return 'fa-tasks';
+            case 'show':
+                return 'fa-eye';
+            case 'edit':
+                return 'fa-pencil-alt';
 
             default:
                 return '';
