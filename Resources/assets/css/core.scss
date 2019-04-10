@@ -101,3 +101,10 @@ h1 {
   font-weight: 100;
   font-family: $h1-font-family;
 }
+
+.fa-stack {
+  font-size: 0.5em;
+  i {
+    vertical-align: middle;
+  }
+}
