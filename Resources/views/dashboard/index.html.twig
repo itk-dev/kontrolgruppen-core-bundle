@@ -5,7 +5,7 @@
 {% block content %}
     <h1>{{ 'dashboard.index.title'|trans }}</h1>
 
-    <div class="bg-warning p-3 mb-3 border border-warning">
+    <div class="bg-warning-light p-3 mb-3">
       <h2><i class="fas {{ iconClass('reminder') }} mr-3"></i>{{ 'dashboard.reminders.title'|trans }} ({{ reminders|length }})</h2>
       {% include '@KontrolgruppenCore/reminder/_reminder_list.html.twig' with {reminders: reminders, limit: 2} %}
     </div>
