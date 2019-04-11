@@ -20,9 +20,9 @@
         </table>
     </div>
 
-    <a href="{{ path('channel_index') }}">{{ 'common.back_to_list'|trans }}</a>
+    <a href="{{ path('channel_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
 
-    <a href="{{ path('channel_edit', {'id': channel.id}) }}">{{ 'common.actions.edit'|trans }}</a>
+    <a href="{{ path('channel_edit', {'id': channel.id}) }}" class="btn btn-primary float-right pr-5 pl-5">{{ 'common.actions.edit'|trans }}</a>
 
     {{ include('channel/_delete_form.html.twig') }}
 {% endblock %}
