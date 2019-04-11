@@ -14,12 +14,9 @@
  * Push down content behind navbar
  */
 
-@include media-breakpoint-up(md) {
-  .main-container {
-    margin-top: $navbarHeight;
-  }
+.main-container {
+  margin-top: $navbarHeight;
 }
-
 
 /*
  * GlobalMenu
