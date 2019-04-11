@@ -20,6 +20,35 @@ channel:
         id: ID
         name: Navn
 
+client:
+    edit:
+        title: Rediger klient
+    form:
+        address: Adresse
+        car_registration_number: Bils registreringsnummer
+        city: By
+        cpr: CPR nummer
+        first_name: Fornavn
+        id: ID
+        last_name: Efternavn
+        number_of_children: Antal børn
+        postal_code: Postnummer
+        telephone: Telefon
+        update: Gem
+    show:
+        title: Klient
+    table:
+        address: Adresse
+        car_registration_number: Bils registreringsnummer
+        city: By
+        cpr: CPR nummer
+        first_name: Fornavn
+        id: ID
+        last_name: Efternavn
+        number_of_children: Antal børn
+        postal_code: Postnummer
+        telephone: Telefon
+
 common:
     actions:
         create: Opret ny
@@ -89,7 +118,9 @@ journal_entry:
 menu:
     menu_title:
         channel: Kanaler
+        client: Klient
         journal: Journal
+        process_show: Sagsopsummering
         process_status: Sagsstatuser
         process_type: Sagstyper
         quick_link: Genveje

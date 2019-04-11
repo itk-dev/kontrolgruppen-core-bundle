@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Kontrolgruppen\CoreBundle\Entity\Client;
 
 /**
  * @Route("/process")
@@ -62,6 +63,13 @@ class ProcessController extends BaseController
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($process);
+
+            $client = new Client();
+            $client->setCpr($process->getClientCPR());
+            $process->setClient($client);
+
+            $entityManager->persist($client);
+
             $entityManager->flush();
 
             return $this->redirectToRoute('process_index');

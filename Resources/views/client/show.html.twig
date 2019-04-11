@@ -1,0 +1,56 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'client.show.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'client.show.title'|trans }}</h1>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-borderless thead-light">
+            <tbody>
+                <tr>
+                    <th>{{ 'client.table.id'|trans }}</th>
+                    <td>{{ client.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'client.table.cpr'|trans }}</th>
+                    <td>{{ client.cpr }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'client.table.first_name'|trans }}</th>
+                    <td>{{ client.firstName }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'client.table.last_name'|trans }}</th>
+                    <td>{{ client.lastName }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'client.table.address'|trans }}</th>
+                    <td>{{ client.address }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'client.table.postal_code'|trans }}</th>
+                    <td>{{ client.postalCode }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'client.table.city'|trans }}</th>
+                    <td>{{ client.city }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'client.table.telephone'|trans }}</th>
+                    <td>{{ client.telephone }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'client.table.number_of_children'|trans }}</th>
+                    <td>{{ client.numberOfChildren }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'client.table.car_registration_number'|trans }}</th>
+                    <td>{{ client.carRegistrationNumber }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ path('client_edit', {'process': process.id}) }}">{{ 'common.actions.edit'|trans }}</a>
+{% endblock %}

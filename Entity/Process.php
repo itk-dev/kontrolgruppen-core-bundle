@@ -66,6 +66,11 @@ class Process extends AbstractEntity
      */
     private $journalEntries;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Client", mappedBy="process", cascade={"persist", "remove"})
+     */
+    private $client;
+
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
@@ -213,6 +218,23 @@ class Process extends AbstractEntity
             if ($journalEntry->getProcess() === $this) {
                 $journalEntry->setProcess(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(Client $client): self
+    {
+        $this->client = $client;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $client->getProcess()) {
+            $client->setProcess($this);
         }
 
         return $this;
