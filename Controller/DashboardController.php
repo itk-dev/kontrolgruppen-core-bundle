@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashboardController extends BaseController
 {
     /**
-     * @Route("", name="main")
+     * @Route("", name="dashboard_index")
      */
     public function index(ReminderRepository $reminderRepository, ProcessRepository $processRepository)
     {

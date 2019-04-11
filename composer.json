@@ -39,8 +39,12 @@
         ],
         "checkcs": [
             "php-cs-fixer --config=.php_cs.dist fix --dry-run --diff",
+            "@check-coding-standards/phpcs",
             "@check-coding-standards/twigcs"
-	]
+	    ],
+        "applycs": [
+            "@apply-coding-standards"
+        ]
     },
     "require-dev": {
         "allocine/twigcs": "^3.1",

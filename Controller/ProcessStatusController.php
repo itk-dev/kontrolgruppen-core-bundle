@@ -18,16 +18,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/process_status")
+ * @Route("/admin/process_status")
  */
 class ProcessStatusController extends BaseController
 {
     /**
      * @Route("/", name="process_status_index", methods={"GET"})
      */
-    public function index(ProcessStatusRepository $processStatusRepository): Response
+    public function index(Request $request, ProcessStatusRepository $processStatusRepository): Response
     {
         return $this->render('@KontrolgruppenCore/process_status/index.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'process_statuses' => $processStatusRepository->findAll(),
         ]);
     }
@@ -50,6 +51,7 @@ class ProcessStatusController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/process_status/new.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'process_status' => $processStatus,
             'form' => $form->createView(),
         ]);
@@ -58,9 +60,10 @@ class ProcessStatusController extends BaseController
     /**
      * @Route("/{id}", name="process_status_show", methods={"GET"})
      */
-    public function show(ProcessStatus $processStatus): Response
+    public function show(Request $request, ProcessStatus $processStatus): Response
     {
         return $this->render('@KontrolgruppenCore/process_status/show.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'process_status' => $processStatus,
         ]);
     }
@@ -82,6 +85,7 @@ class ProcessStatusController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/process_status/edit.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'process_status' => $processStatus,
             'form' => $form->createView(),
         ]);

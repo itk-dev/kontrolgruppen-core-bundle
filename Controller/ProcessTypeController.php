@@ -18,16 +18,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/process_type")
+ * @Route("/admin/process_type")
  */
 class ProcessTypeController extends BaseController
 {
     /**
      * @Route("/", name="process_type_index", methods={"GET"})
      */
-    public function index(ProcessTypeRepository $processTypeRepository): Response
+    public function index(Request $request, ProcessTypeRepository $processTypeRepository): Response
     {
         return $this->render('@KontrolgruppenCore/process_type/index.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'process_types' => $processTypeRepository->findAll(),
         ]);
     }
@@ -50,6 +51,7 @@ class ProcessTypeController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/process_type/new.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'process_type' => $processType,
             'form' => $form->createView(),
         ]);
@@ -58,9 +60,10 @@ class ProcessTypeController extends BaseController
     /**
      * @Route("/{id}", name="process_type_show", methods={"GET"})
      */
-    public function show(ProcessType $processType): Response
+    public function show(Request $request, ProcessType $processType): Response
     {
         return $this->render('@KontrolgruppenCore/process_type/show.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'process_type' => $processType,
         ]);
     }
@@ -82,6 +85,7 @@ class ProcessTypeController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/process_type/edit.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'process_type' => $processType,
             'form' => $form->createView(),
         ]);

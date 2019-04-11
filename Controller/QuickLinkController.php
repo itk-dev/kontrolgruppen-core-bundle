@@ -18,16 +18,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/quick_link")
+ * @Route("/admin/quick_link")
  */
 class QuickLinkController extends BaseController
 {
     /**
      * @Route("/", name="quick_link_index", methods={"GET"})
      */
-    public function index(QuickLinkRepository $quickLinkRepository): Response
+    public function index(Request $request, QuickLinkRepository $quickLinkRepository): Response
     {
         return $this->render('@KontrolgruppenCore/quick_link/index.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'quick_links' => $quickLinkRepository->findAll(),
         ]);
     }
@@ -50,6 +51,7 @@ class QuickLinkController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/quick_link/new.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'quick_link' => $quickLink,
             'form' => $form->createView(),
         ]);
@@ -58,9 +60,10 @@ class QuickLinkController extends BaseController
     /**
      * @Route("/{id}", name="quick_link_show", methods={"GET"})
      */
-    public function show(QuickLink $quickLink): Response
+    public function show(Request $request, QuickLink $quickLink): Response
     {
         return $this->render('@KontrolgruppenCore/quick_link/show.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'quick_link' => $quickLink,
         ]);
     }
@@ -82,6 +85,7 @@ class QuickLinkController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/quick_link/edit.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'quick_link' => $quickLink,
             'form' => $form->createView(),
         ]);
