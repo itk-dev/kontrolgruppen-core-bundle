@@ -89,11 +89,17 @@
           </tbody>
         </table>
       </div>
-      <a href="{{ path('process_index') }}">{{ 'common.back_to_list'|trans }}</a>
+      <div class="row">
+      <a href="{{ path('process_index') }}" class="col btn btn-secondary">{{ 'common.back_to_list'|trans }}</a>
 
-      <a href="{{ path('process_edit', {'id': process.id}) }}">{{ 'common.actions.edit'|trans }}</a>
+      <a href="{{ path('process_edit', {'id': process.id}) }}" class="col btn btn-primary">{{ 'common.actions.edit'|trans }}</a>
 
       {{ include('process/_delete_form.html.twig') }}
+      </div>
     </div>
   </div>
+{% endblock %}
+
+{% block sidebarRight %}
+  {{ include('process/_sidebar_right.html.twig') }}
 {% endblock %}

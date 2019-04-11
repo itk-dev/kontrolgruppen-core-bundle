@@ -7,5 +7,9 @@
 
   {% include '@KontrolgruppenCore/process/_process_list.html.twig' %}
 
-  <a href="{{ path('process_new') }}">{{ 'common.actions.create'|trans }}</a>
+  <a href="{{ path('process_new') }}" class="btn btn-success">{{ 'common.actions.create'|trans }}</a>
+{% endblock %}
+
+{% block sidebarRight %}
+  {{ include('process/_sidebar_right.html.twig') }}
 {% endblock %}
