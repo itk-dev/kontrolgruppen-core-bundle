@@ -115,8 +115,12 @@
         {% endblock %}
 
         <main role="main" class="d-flex flex-shrink-1 flex-grow-1 flex-column w-75 p-3">
-          {% block content %}
-          {% endblock %}
+          <div class="row">
+            <div class="col-12">
+              {% block content %}
+              {% endblock %}
+            </div>
+          </div>
         </main>
 
         {% set _sidebar_right = block('sidebar_right') %}
