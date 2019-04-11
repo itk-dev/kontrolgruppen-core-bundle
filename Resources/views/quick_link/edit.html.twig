@@ -7,7 +7,7 @@
 
     {{ include('quick_link/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('quick_link_index') }}">{{ 'common.back_to_list'|trans }}</a>
+    <a href="{{ path('quick_link_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
 
     {{ include('quick_link/_delete_form.html.twig') }}
 {% endblock %}
