@@ -140,6 +140,8 @@ process_status:
         id: ID
         name: Navn
         process_types: Tilkoblede sagstyper
+    select:
+        label: Sagsstatus
 
 process_type:
     edit:
