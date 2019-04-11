@@ -26,9 +26,10 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/", name="journal_entry_index", methods={"GET"})
      */
-    public function index(JournalEntryRepository $journalEntryRepository, Process $process): Response
+    public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process): Response
     {
         return $this->render('@KontrolgruppenCore/journal_entry/index.html.twig', [
+            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'journalEntries' => $journalEntryRepository->findBy([
                 'process' => $process,
             ]),
@@ -55,6 +56,7 @@ class JournalEntryController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/journal_entry/new.html.twig', [
+            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'journalEntry' => $journalEntry,
             'process' => $process,
             'form' => $form->createView(),
@@ -64,9 +66,10 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/{id}", name="journal_entry_show", methods={"GET"})
      */
-    public function show(JournalEntry $journalEntry, Process $process): Response
+    public function show(Request $request, JournalEntry $journalEntry, Process $process): Response
     {
         return $this->render('@KontrolgruppenCore/journal_entry/show.html.twig', [
+            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'journalEntry' => $journalEntry,
             'process' => $process,
         ]);
@@ -90,6 +93,7 @@ class JournalEntryController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/journal_entry/edit.html.twig', [
+            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'journalEntry' => $journalEntry,
             'process' => $process,
             'form' => $form->createView(),

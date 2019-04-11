@@ -27,10 +27,10 @@ class ProcessController extends BaseController
     /**
      * @Route("/", name="process_index", methods={"GET"})
      */
-    public function index(ProcessRepository $processRepository): Response
+    public function index(Request $request, ProcessRepository $processRepository): Response
     {
         return $this->render('@KontrolgruppenCore/process/index.html.twig', [
-            'menuItems' => $this->createMenuItems(),
+            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo()),
             'processes' => $processRepository->findAll(),
         ]);
     }
@@ -55,7 +55,7 @@ class ProcessController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/process/new.html.twig', [
-            'menuItems' => $this->createMenuItems($process),
+            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'process' => $process,
             'form' => $form->createView(),
         ]);
@@ -67,6 +67,7 @@ class ProcessController extends BaseController
     public function show(Request $request, Process $process): Response
     {
         // @TODO: Limit the available process statuses based on selected process type.
+        // @TODO: Replace with javascript widget.
         $form = $this->createFormBuilder($process)
             ->add('processStatus', null, [
                 'label' => 'process.form.process_status',
@@ -86,7 +87,7 @@ class ProcessController extends BaseController
         $latestInternalNoteEntries = $this->getDoctrine()->getRepository(JournalEntry::class)->getLatestInternalNoteEntries($process);
 
         return $this->render('@KontrolgruppenCore/process/show.html.twig', [
-            'menuItems' => $this->createMenuItems($process),
+            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'process' => $process,
             'process_type_form' => $form->createView(),
             'latestDiaryEntries' => $latestDiaryEntries,
@@ -112,7 +113,7 @@ class ProcessController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/process/edit.html.twig', [
-            'menuItems' => $this->createMenuItems($process),
+            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'process' => $process,
             'form' => $form->createView(),
         ]);
@@ -130,41 +131,6 @@ class ProcessController extends BaseController
         }
 
         return $this->redirectToRoute('process_index');
-    }
-
-    /**
-     * Create menu items for process views.
-     *
-     * @param $process
-     *
-     * @return array
-     */
-    private function createMenuItems($process = null)
-    {
-        $path = $this->requestStack->getCurrentRequest()->getPathInfo();
-
-        if (isset($process) && null !== $process->getId()) {
-            return [
-                [
-                    'name' => $this->translator->trans('reminder.menu_title'),
-                    'path' => '/process/'.$process->getId().'/reminder',
-                    'active' => false !== preg_match(
-                        '/\/process\/\d+\/reminder\/.*/',
-                        $path
-                    ),
-                ],
-                [
-                    'name' => $this->translator->trans('journal.menu_title'),
-                    'path' => '/process/'.$process->getId().'/journal',
-                    'active' => false !== preg_match(
-                        '/\/process\/\d+\/journal\/.*/',
-                        $path
-                    ),
-                ],
-            ];
-        }
-
-        return [];
     }
 
     /**

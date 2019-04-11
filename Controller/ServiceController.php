@@ -18,16 +18,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/service")
+ * @Route("/admin/service")
  */
 class ServiceController extends BaseController
 {
     /**
      * @Route("/", name="service_index", methods={"GET"})
      */
-    public function index(ServiceRepository $serviceRepository): Response
+    public function index(Request $request, ServiceRepository $serviceRepository): Response
     {
         return $this->render('@KontrolgruppenCore/service/index.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'services' => $serviceRepository->findAll(),
         ]);
     }
@@ -50,6 +51,7 @@ class ServiceController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/service/new.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'service' => $service,
             'form' => $form->createView(),
         ]);
@@ -58,9 +60,10 @@ class ServiceController extends BaseController
     /**
      * @Route("/{id}", name="service_show", methods={"GET"})
      */
-    public function show(Service $service): Response
+    public function show(Request $request, Service $service): Response
     {
         return $this->render('@KontrolgruppenCore/service/show.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'service' => $service,
         ]);
     }
@@ -82,6 +85,7 @@ class ServiceController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/service/edit.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'service' => $service,
             'form' => $form->createView(),
         ]);

@@ -13,7 +13,6 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Kontrolgruppen\CoreBundle\Entity\Reminder;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Form\ReminderType;
-use Kontrolgruppen\CoreBundle\Repository\ReminderRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,9 +25,10 @@ class ProcessReminderController extends BaseController
     /**
      * @Route("/", name="reminder_index", methods={"GET"})
      */
-    public function index(ReminderRepository $reminderRepository, Process $process): Response
+    public function index(Request $request, Process $process): Response
     {
         return $this->render('@KontrolgruppenCore/reminder/index.html.twig', [
+            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'reminders' => $process->getReminders(),
             'process' => $process,
         ]);
@@ -53,6 +53,7 @@ class ProcessReminderController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/reminder/new.html.twig', [
+            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'reminder' => $reminder,
             'process' => $process,
             'form' => $form->createView(),
@@ -62,9 +63,10 @@ class ProcessReminderController extends BaseController
     /**
      * @Route("/{id}", name="reminder_show", methods={"GET"})
      */
-    public function show(Reminder $reminder, Process $process): Response
+    public function show(Request $request, Reminder $reminder, Process $process): Response
     {
         return $this->render('@KontrolgruppenCore/reminder/show.html.twig', [
+            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'reminder' => $reminder,
             'process' => $process,
         ]);
@@ -94,6 +96,7 @@ class ProcessReminderController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/reminder/edit.html.twig', [
+            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'reminder' => $reminder,
             'process' => $process,
             'form' => $form->createView(),

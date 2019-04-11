@@ -81,6 +81,16 @@ journal_entry:
         title: Overskrift
         type: Type
 
+menu:
+    menu_title:
+        channel: Kanaler
+        journal: Journal
+        process_status: Sagsstatuser
+        process_type: Sagstyper
+        quick_link: Genveje
+        reminder: Påmindelser
+        service: Ydelser
+
 navigation:
     main:
         search: Søg
