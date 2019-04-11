@@ -19,10 +19,7 @@
             </tbody>
         </table>
     </div>
-
-    <a href="{{ path('process_type_index') }}">{{ 'common.back_to_list'|trans }}</a>
-
-    <a href="{{ path('process_type_edit', {'id': process_type.id}) }}">{{ 'common.actions.edit'|trans }}</a>
-
+    <a href="{{ path('process_type_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+    <a href="{{ path('process_type_edit', {'id': process_type.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
     {{ include('process_type/_delete_form.html.twig') }}
 {% endblock %}
