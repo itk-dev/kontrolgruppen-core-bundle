@@ -27,7 +27,8 @@ class DashboardController extends BaseController
     public function index(ReminderRepository $reminderRepository, ProcessRepository $processRepository)
     {
         $comingReminderForm = $this->createFormBuilder()->add('date_interval', ChoiceType::class, [
-            'choices' => DateIntervalType::getChoices()
+            'choices' => DateIntervalType::getChoices(),
+            'label' => 'dashboard.coming_reminders.label',
         ])->getForm();
 
         return $this->render('@KontrolgruppenCore/dashboard/index.html.twig', [

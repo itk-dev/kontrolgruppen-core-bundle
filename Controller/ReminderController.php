@@ -12,8 +12,6 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Reminder;
 use Kontrolgruppen\CoreBundle\Repository\ReminderRepository;
-use PHP_CodeSniffer\Reports\Json;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -45,9 +43,10 @@ class ReminderController extends BaseController
     /**
      * @Route("/latest/{interval}", name="user_reminder_get_latest", methods={"GET"})
      */
-    public function getLatestReminders(string $interval, ReminderRepository $reminderRepository) {
+    public function getLatestReminders(string $interval, ReminderRepository $reminderRepository)
+    {
         return $this->render('@KontrolgruppenCore/reminder/_reminder_latest_list.html.twig', [
-            'reminders' => $reminderRepository->findComingUserReminders($this->getUser(), $interval)
+            'reminders' => $reminderRepository->findComingUserReminders($this->getUser(), $interval),
         ]);
     }
 }
