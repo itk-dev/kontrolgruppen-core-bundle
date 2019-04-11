@@ -84,7 +84,9 @@ journal_entry:
 menu:
     menu_title:
         channel: Kanaler
+        client: Klient
         journal: Journal
+        process_show: Sagsopsummering
         process_status: Sagsstatuser
         process_type: Sagstyper
         quick_link: Genveje

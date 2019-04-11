@@ -106,6 +106,15 @@ class MenuService
                     ['id' => $process->getId()]
                 ),
                 $this->createMenuItem(
+                    'client',
+                    1 === preg_match(
+                        '/^\/process\/[0-9]+\/client.*$/',
+                        $path
+                    ),
+                    'client_show',
+                    ['process' => $process]
+                ),
+                $this->createMenuItem(
                     'reminder',
                     1 === preg_match(
                         '/^\/process\/[0-9]+\/reminder\/.*$/',

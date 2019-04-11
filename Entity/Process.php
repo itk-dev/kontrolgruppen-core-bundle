@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Entity;
 
+use Kontrolgruppen\CoreBundle\Entity\Client;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -65,6 +66,11 @@ class Process extends AbstractEntity
      * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\JournalEntry", mappedBy="process", orphanRemoval=true)
      */
     private $journalEntries;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Client", mappedBy="process", cascade={"persist", "remove"})
+     */
+    private $client;
 
     public function __construct()
     {
@@ -213,6 +219,23 @@ class Process extends AbstractEntity
             if ($journalEntry->getProcess() === $this) {
                 $journalEntry->setProcess(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(Client $client): self
+    {
+        $this->client = $client;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $client->getProcess()) {
+            $client->setProcess($this);
         }
 
         return $this;
