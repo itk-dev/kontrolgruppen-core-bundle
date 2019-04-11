@@ -24,9 +24,9 @@
         </table>
     </div>
 
-    <a href="{{ path('quick_link_index') }}">{{ 'common.back_to_list'|trans }}</a>
+    <a href="{{ path('quick_link_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
 
-    <a href="{{ path('quick_link_edit', {'id': quick_link.id}) }}">{{ 'common.actions.edit'|trans }}</a>
+    <a href="{{ path('quick_link_edit', {'id': quick_link.id}) }}" class="btn btn-primary float-right pr-5 pl-5">{{ 'common.actions.edit'|trans }}</a>
 
     {{ include('quick_link/_delete_form.html.twig') }}
 {% endblock %}

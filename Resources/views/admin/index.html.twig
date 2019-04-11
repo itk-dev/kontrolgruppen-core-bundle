@@ -4,5 +4,11 @@
 
 {% block content %}
     <h1>{{ 'admin.index.title'|trans }}</h1>
-
+    <p class="lead">{{ 'admin.index.lead'|trans }}</p>
+    <h2>{{ 'common.actions.create'|trans }}</h2>
+    <a href="{{ path('process_type_new') }}" class="btn btn-success">{{ 'process_type.new.title'|trans }}</a>
+    <a href="{{ path('process_status_new') }}" class="btn btn-success">{{ 'process_status.new.title'|trans }}</a>
+    <a href="{{ path('channel_new') }}" class="btn btn-success">{{ 'channel.new.title'|trans }}</a>
+    <a href="{{ path('service_new') }}" class="btn btn-success">{{ 'service.new.title'|trans }}</a>
+    <a href="{{ path('quick_link_new') }}" class="btn btn-success">{{ 'quick_link.new.title'|trans }}</a>
 {% endblock %}

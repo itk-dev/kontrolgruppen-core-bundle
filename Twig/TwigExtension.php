@@ -41,8 +41,6 @@ class TwigExtension extends AbstractExtension
                 return 'fa-user-plus';
             case 'not-visited':
                 return 'fa-archive';
-            case 'tasks':
-                return 'fa-tasks';
             case 'show':
                 return 'fa-eye';
             case 'edit':

@@ -1,3 +1,8 @@
+admin:
+    index:
+        title: System indstillinger
+        lead: Rediger og tilpas systemets indstillinger.
+
 channel:
     edit:
         title: Rediger kanal
@@ -155,6 +160,8 @@ process_status:
         id: ID
         name: Navn
         process_types: Tilkoblede sagstyper
+    select:
+        label: Sagsstatus
 
 process_type:
     edit:
@@ -250,3 +257,4 @@ global_nav:
         admin: Se og administre system indstillinger
 
 NOTE: Notat
+
