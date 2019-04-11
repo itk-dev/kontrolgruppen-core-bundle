@@ -34,7 +34,10 @@
   <meta name="msapplication-square310x310logo" content="{{ asset('bundles/kontrolgruppencore/images/mstile-310x310.png') }}" />
 </head>
 <body {% block body_attributes %}{% endblock %}>
-{% block body %}{% endblock %}
+{% block body %}
+  {% block content %}{% endblock %}
+  {% block sidebar_right %}{% endblock %}
+{% endblock %}
 {% block javascripts %}
   <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/core.js') }}"></script>
 {% endblock %}

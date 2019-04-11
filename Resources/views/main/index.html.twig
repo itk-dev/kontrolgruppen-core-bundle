@@ -120,10 +120,10 @@
           {% endblock %}
         </main>
 
-        {% set sidebar_right = block("sidebarRight") %}
-        {% if block("sidebarRight") is not empty %}
+        {% set _sidebar_right = block('sidebar_right') %}
+        {% if _sidebar_right is not empty %}
           <aside role="sidebar-right" class="d-none d-lg-flex flex-lg-column flex-grow-1 p-3 mw-25">
-            {{ sidebar_right|raw }}
+            {{ _sidebar_right|raw }}
           </aside>
         {% endif %}
       </div>
