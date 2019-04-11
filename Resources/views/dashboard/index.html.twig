@@ -24,14 +24,20 @@
       <h2><i class="fas {{ iconClass('process') }} mr-3"></i>{{ 'dashboard.my_processes.title'|trans }} ({{ myProcesses|length }})</h2>
       {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: myProcesses, limit: 2} %}
     </div>
-
 {% endblock %}
 
-{% block sidebarRight %}
+{% block sidebar_right %}
   <div class="bg-warning-light p-3 mb-3">
     {% include '@KontrolgruppenCore/reminder/_reminder_list_future.html.twig' %}
   </div>
+
   <div class="bg-light p-3">
-    {% include '@KontrolgruppenCore/reminder/_reminder_list_future.html.twig' %}
+    @TODO: Latest activity
   </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+
+  <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/reminderLatest.js') }}"></script>
 {% endblock %}

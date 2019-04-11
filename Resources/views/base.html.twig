@@ -28,10 +28,12 @@
   <meta name="msapplication-square150x150logo" content="{{ asset('bundles/kontrolgruppencore/images/mstile-150x150.png') }}" />
   <meta name="msapplication-wide310x150logo" content="{{ asset('bundles/kontrolgruppencore/images/mstile-310x150.png') }}" />
   <meta name="msapplication-square310x310logo" content="{{ asset('bundles/kontrolgruppencore/images/mstile-310x310.png') }}" />
-
 </head>
 <body {% block body_attributes %}{% endblock %}>
-{% block body %}{% endblock %}
+{% block body %}
+  {% block content %}{% endblock %}
+  {% block sidebar_right %}{% endblock %}
+{% endblock %}
 {% block javascripts %}
   <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/core.js') }}"></script>
 {% endblock %}
