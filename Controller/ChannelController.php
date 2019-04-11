@@ -18,16 +18,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/channel")
+ * @Route("/admin/channel")
  */
 class ChannelController extends BaseController
 {
     /**
      * @Route("/", name="channel_index", methods={"GET"})
      */
-    public function index(ChannelRepository $channelRepository): Response
+    public function index(Request $request, ChannelRepository $channelRepository): Response
     {
         return $this->render('@KontrolgruppenCore/channel/index.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'channels' => $channelRepository->findAll(),
         ]);
     }
@@ -50,6 +51,7 @@ class ChannelController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/channel/new.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'channel' => $channel,
             'form' => $form->createView(),
         ]);
@@ -58,9 +60,10 @@ class ChannelController extends BaseController
     /**
      * @Route("/{id}", name="channel_show", methods={"GET"})
      */
-    public function show(Channel $channel): Response
+    public function show(Request $request, Channel $channel): Response
     {
         return $this->render('@KontrolgruppenCore/channel/show.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'channel' => $channel,
         ]);
     }
@@ -82,6 +85,7 @@ class ChannelController extends BaseController
         }
 
         return $this->render('@KontrolgruppenCore/channel/edit.html.twig', [
+            'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'channel' => $channel,
             'form' => $form->createView(),
         ]);
