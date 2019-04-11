@@ -25,13 +25,26 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class ProcessController extends BaseController
 {
     /**
+     * @Route("/all", name="process_index_all", methods={"GET"})
+     */
+    public function all(Request $request, ProcessRepository $processRepository): Response
+    {
+        return $this->render('@KontrolgruppenCore/process/index.html.twig', [
+            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo()),
+            'processes' => $processRepository->findAll(),
+        ]);
+    }
+
+    /**
      * @Route("/", name="process_index", methods={"GET"})
      */
     public function index(Request $request, ProcessRepository $processRepository): Response
     {
         return $this->render('@KontrolgruppenCore/process/index.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo()),
-            'processes' => $processRepository->findAll(),
+            'processes' => $processRepository->findBy([
+                'caseWorker' => $this->getUser(),
+            ]),
         ]);
     }
 
