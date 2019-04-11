@@ -16,16 +16,16 @@ class ClientType extends AbstractType
                 'label' => 'client.form.cpr',
             ])
             ->add('firstName', null, [
-                'label' => 'client.form.firstName',
+                'label' => 'client.form.first_name',
             ])
             ->add('lastName', null, [
-                'label' => 'client.form.lastName',
+                'label' => 'client.form.last_name',
             ])
             ->add('address', null, [
                 'label' => 'client.form.address',
             ])
             ->add('postalCode', null, [
-                'label' => 'client.form.postalCode',
+                'label' => 'client.form.postal_code',
             ])
             ->add('city', null, [
                 'label' => 'client.form.city',
@@ -34,10 +34,10 @@ class ClientType extends AbstractType
                 'label' => 'client.form.telephone',
             ])
             ->add('numberOfChildren', null, [
-                'label' => 'client.form.numberOfChildren',
+                'label' => 'client.form.number_of_children',
             ])
             ->add('carRegistrationNumber', null, [
-                'label' => 'client.form.carRegistrationNumber',
+                'label' => 'client.form.car_registration_number',
             ])
         ;
     }
