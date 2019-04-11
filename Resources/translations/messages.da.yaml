@@ -1,3 +1,8 @@
+admin:
+    index:
+        title: System indstillinger
+        lead: Rediger og tilpas systemets indstillinger.
+
 channel:
     edit:
         title: Rediger kanal
@@ -242,3 +247,4 @@ global_nav:
         admin: Se og administre system indstillinger
 
 NOTE: Notat
+
