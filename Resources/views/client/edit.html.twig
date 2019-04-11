@@ -1,0 +1,10 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'client.edit.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'client.edit.title'|trans }}</h1>
+
+    {{ include('@KontrolgruppenCore/client/_form.html.twig', {'button_label': 'Update'}) }}
+
+{% endblock %}
