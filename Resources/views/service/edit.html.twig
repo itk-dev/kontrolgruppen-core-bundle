@@ -7,7 +7,7 @@
 
     {{ include('service/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('service_index') }}">{{ 'common.back_to_list'|trans }}</a>
+    <a href="{{ path('service_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
 
     {{ include('service/_delete_form.html.twig') }}
 {% endblock %}
