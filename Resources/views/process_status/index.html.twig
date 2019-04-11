@@ -26,10 +26,10 @@
                     {% endfor %}
                     </td>
                     <td class="float-right">
-                      <a href="{{ path('process_status_show', {'id': process_status.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
+                      <a href="{{ path('process_status_show', {'id': process_status.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
                         <i class="fas {{ iconClass('show') }} fa-inverse"></i>
                       </a>
-                      <a href="{{ path('process_status_edit', {'id': process_status.id}) }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
+                      <a href="{{ path('process_status_edit', {'id': process_status.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
                         <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
                       </a>
                     </td>

@@ -20,10 +20,10 @@
                     <td>{{ channel.id }}</td>
                     <td>{{ channel.name }}</td>
                     <td class="float-right">
-                        <a href="{{ path('channel_show', {'id': channel.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
+                        <a href="{{ path('channel_show', {'id': channel.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
                           <i class="fas {{ iconClass('show') }} fa-inverse"></i>
                         </a>
-                        <a href="{{ path('channel_edit', {'id': channel.id}) }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
+                        <a href="{{ path('channel_edit', {'id': channel.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
                           <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
                         </a>
                     </td>

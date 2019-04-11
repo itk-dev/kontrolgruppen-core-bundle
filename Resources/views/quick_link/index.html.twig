@@ -22,10 +22,10 @@
                     <td>{{ quick_link.name }}</td>
                     <td>{{ quick_link.href }}</td>
                     <td class="float-right">
-                      <a href="{{ path('quick_link_show', {'id': quick_link.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
+                      <a href="{{ path('quick_link_show', {'id': quick_link.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
                         <i class="fas {{ iconClass('show') }} fa-inverse"></i>
                       </a>
-                      <a href="{{ path('quick_link_edit', {'id': quick_link.id}) }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
+                      <a href="{{ path('quick_link_edit', {'id': quick_link.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
                         <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
                       </a>
                     </td>
