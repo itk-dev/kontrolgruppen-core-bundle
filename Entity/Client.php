@@ -108,7 +108,7 @@ class Client extends AbstractEntity
 
     public function setAddress(?string $address): self
     {
-        $this->address = $Address;
+        $this->address = $address;
 
         return $this;
     }
