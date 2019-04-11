@@ -3,13 +3,9 @@
 {% block title %}{{ 'process.index.title'|trans }}{% endblock %}
 
 {% block content %}
-  <h1>{{ 'process.index.title'|trans }}</h1>
+  <h1 class="float-left">{{ 'process.index.title'|trans }}</h1>
+  <a href="{{ path('process_new') }}" class="btn btn-success btn-lg float-right">{{ 'common.actions.create'|trans }}</a>
 
   {% include '@KontrolgruppenCore/process/_process_list.html.twig' %}
 
-  <a href="{{ path('process_new') }}" class="btn btn-success">{{ 'common.actions.create'|trans }}</a>
-{% endblock %}
-
-{% block sidebar_right %}
-  {{ include('process/_sidebar_right.html.twig') }}
 {% endblock %}
