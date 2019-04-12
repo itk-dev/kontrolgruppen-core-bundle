@@ -7,5 +7,10 @@
 
   {{ include('journal_entry/_form.html.twig') }}
 
-    <a href="{{ path('journal_entry_index', {'process': process.id}) }}">{{ 'common.back_to_list'|trans }}</a>
+    <a href="{{ path('journal_entry_index', {'process': process.id}) }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+  {{ include('process/_sidebar_process_type.html.twig') }}
+  {{ include('process/_sidebar_activity.html.twig') }}
 {% endblock %}

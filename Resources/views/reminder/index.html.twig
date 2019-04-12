@@ -3,11 +3,9 @@
 {% block title %}{{ 'reminder.index.title'|trans }}{% endblock %}
 
 {% block content %}
-  <h1>{{ 'reminder.index.title'|trans }}</h1>
-
-  {% include '@KontrolgruppenCore/reminder/_reminder_list.html.twig' with { reminders: reminders } %}
-
+  <h1 class="float-left">{{ 'reminder.index.title'|trans }}</h1>
   {% if process is defined %}
-    <a href="{{ path('reminder_new', {'process': process.id}) }}">{{ 'common.actions.create'|trans }}</a>
+    <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-success float-right btn-lg">{{ 'common.actions.create'|trans }}</a>
   {% endif %}
+  {% include '@KontrolgruppenCore/reminder/_reminder_list.html.twig' with { reminders: reminders } %}
 {% endblock %}

@@ -14,8 +14,10 @@ import { faArchive } from "@fortawesome/free-solid-svg-icons/faArchive";
 import { faEye } from "@fortawesome/free-solid-svg-icons/faEye";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons/faPencilAlt";
 import { faHouseDamage } from "@fortawesome/free-solid-svg-icons/faHouseDamage";
+import { faFileDownload } from "@fortawesome/free-solid-svg-icons/faFileDownload";
+import { faPrint } from "@fortawesome/free-solid-svg-icons/faPrint";
 
-library.add(faTachometerAlt, faTasks, faIdCard, faUsersCog, faCog, faClock, faUserPlus, faArchive, faEye, faPencilAlt, faHouseDamage);
+library.add(faTachometerAlt, faTasks, faIdCard, faUsersCog, faCog, faClock, faUserPlus, faArchive, faEye, faPencilAlt, faHouseDamage, faFileDownload, faPrint);
 dom.watch();
 
 // any CSS you require will output into a single css file (app.css in this case)

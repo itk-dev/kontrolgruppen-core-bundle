@@ -9,3 +9,8 @@
   {% include '@KontrolgruppenCore/process/_process_list.html.twig' %}
 
 {% endblock %}
+
+{% block sidebar_right %}
+  {{ include('process/_sidebar_process_type.html.twig') }}
+  {{ include('process/_sidebar_activity.html.twig') }}
+{% endblock %}

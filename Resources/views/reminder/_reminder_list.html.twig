@@ -10,7 +10,7 @@
           <th>{{ 'reminder.table.message'|trans }}</th>
           <th>{{ 'reminder.table.date'|trans }}</th>
           <th>{{ 'reminder.table.finished'|trans }}</th>
-          <th>{{ 'common.table.actions'|trans }}</th>
+          <th class="float-right">{{ 'common.table.actions'|trans }}</th>
         </tr>
       </thead>
       <tbody>
@@ -22,9 +22,13 @@
             <td>{{ reminder.message }}</td>
             <td>{{ reminder.date ? reminder.date|date('Y-m-d H:i:s') : '' }}</td>
             <td>{{ (reminder.finished ? 'common.boolean.true' : 'common.boolean.false')|trans }}</td>
-            <td>
-              <a href="{{ path('reminder_show', {'id': reminder.id, 'process': reminder.process.id}) }}">{{ 'common.actions.show'|trans }}</a>
-              <a href="{{ path('reminder_edit', {'id': reminder.id, 'process': reminder.process.id}) }}">{{ 'common.actions.edit'|trans }}</a>
+            <td class="float-right">
+              <a href="{{ path('reminder_show', {'id': reminder.id, 'process': reminder.process.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
+                <i class="fas {{ iconClass('show') }} fa-inverse"></i>
+              </a>
+              <a href="{{ path('reminder_edit', {'id': reminder.id, 'process': reminder.process.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
+                <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
+              </a>
             </td>
         </tr>
         {% else %}
