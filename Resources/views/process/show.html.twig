@@ -14,19 +14,6 @@
   </div>
   <div class="row">
     <div class="col">
-      <div class="bg-light p-3 mb-3">
-        <div class="row">
-          <div class="col-lg-3">
-            <p class="lead d-inline" data-toggle="tooltip" data-placement="top" title="{{ 'process.table.client_name'|trans }}">TODO: Client name</p>
-          </div>
-          <div class="col-lg-3">
-            <p class="lead d-inline" data-toggle="tooltip" data-placement="top" title="{{ 'process.table.client_cpr'|trans }}">{{ process.clientCPR }}</p>
-          </div>
-          <div class="col-lg-6">
-            <p class="lead d-inline" data-toggle="tooltip" data-placement="top" title="{{ 'process.table.client_adress'|trans }}">TODO: Client address</p>
-          </div>
-        </div>
-      </div>
       <div class="bg-success-light p-3 mb-3">
         <div class="row">
           <div class="col-lg-3">
@@ -111,6 +98,7 @@
 {% endblock %}
 
 {% block sidebar_right %}
+  {{ include('process/_sidebar_process_info.html.twig') }}
   {{ include('process/_sidebar_process_type.html.twig') }}
   {{ include('process/_sidebar_activity.html.twig') }}
 {% endblock %}
