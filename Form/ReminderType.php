@@ -24,6 +24,7 @@ class ReminderType extends AbstractType
                 'label' => 'reminder.form.message',
             ])
             ->add('date', null, [
+                'widget' => 'single_text',
                 'label' => 'reminder.form.date',
             ])
         ;
