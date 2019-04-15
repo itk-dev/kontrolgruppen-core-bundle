@@ -3,7 +3,7 @@
   <div class="{% if not reminder.finished and reminder.date|date('Y-m-d') < "now"|date('Y-m-d') %}bg-warning{% endif %}">
     <a href="{{ path('reminder_show', {'id': reminder.id, 'process': reminder.process.id}) }}">
       Dato:{{ reminder.date ? reminder.date|date('Y-m-d H:i:s') : '' }} Sag: {{ reminder.process.caseNumber }}
-      <i class="fas fa-tasksmr-3"></i>{{ reminder.message }}
+      <i class="fas {{ iconClass('process') }} mr-3"></i>{{ reminder.message }}
     </a>
   </div>
 {% else %}

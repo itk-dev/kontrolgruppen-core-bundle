@@ -242,6 +242,7 @@ reminder:
         title: Rediger påmindelse
     form:
         date: Dato
+        time: Tidspunkt
         finished: Afsluttet
         message: Besked
         update: Gem
@@ -253,7 +254,7 @@ reminder:
     table:
         id: ID
         message: Besked
-        date: Dato
+        date: Dato og tidspunkt
         finished: Afsluttet
     upcomming:
         title: Kommende påmindelser
