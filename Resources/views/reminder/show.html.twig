@@ -3,8 +3,10 @@
 {% block title %}{{ 'reminder.show.title'|trans }}{% endblock %}
 
 {% block content %}
-    <p class="lead">{{ 'reminder.show.title'|trans }}</p>
-    <h1>{{ reminder.message }}</h1>
+    <h1>{{ 'reminder.show.title'|trans }}</h1>
+
+    <p><b>{{ 'reminder.table.message'|trans }}</b></p>
+    <p class="lead">{{ reminder.message }}</p>
     <div class="table-responsive">
         <table class="table table-sm table-striped table-hover table-borderless thead-light">
             <tbody>
@@ -29,4 +31,9 @@
     <a href="{{ path('reminder_edit', {'id': reminder.id, 'process': process.id}) }}" class="btn btn-primary float-right pr-5 pl-5">{{ 'common.actions.edit'|trans }}</a>
 
     {{ include('reminder/_delete_form.html.twig') }}
+{% endblock %}
+
+{% block sidebar_right %}
+  TODO: Include process status and process summary
+  {{ include('process/_sidebar_activity.html.twig') }}
 {% endblock %}
