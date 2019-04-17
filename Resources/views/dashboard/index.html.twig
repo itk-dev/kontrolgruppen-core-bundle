@@ -3,26 +3,28 @@
 {% block title %}{{ 'dashboard.index.title'|trans }}{% endblock %}
 
 {% block content %}
-    <h1>{{ 'dashboard.index.title'|trans }}</h1>
+    <h1 class="mb-3">{{ 'dashboard.index.title'|trans }}</h1>
 
-    <div class="bg-warning-light p-3 mb-3">
+    {% if reminders|length > 0 %}
+    <div class="mb-3">
       <h2><i class="fas {{ iconClass('reminder') }} mr-3"></i>{{ 'dashboard.reminders.title'|trans }} ({{ reminders|length }})</h2>
       {% include '@KontrolgruppenCore/reminder/_reminder_list.html.twig' with {reminders: reminders, limit: 2} %}
     </div>
+    {% endif %}
 
-    <div class="bg-light p-3 mb-3">
+    <div class="mb-3">
       <h2><i class="fas {{ iconClass('not-assigned') }} mr-3"></i>{{ 'dashboard.not_assigned.title'|trans }} ({{ unassignedProcesses|length }})</h2>
       {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: unassignedProcesses, limit: 2} %}
     </div>
 
-    <div class="bg-light p-3 mb-3">
-      <h2><i class="fas {{ iconClass('not-visited') }} mr-3"></i>{{ 'dashboard.not_visited.title'|trans }}</h2>
-      @TODO
-    </div>
-
-    <div class="bg-light p-3">
+    <div class="mb-3">
       <h2><i class="fas {{ iconClass('process') }} mr-3"></i>{{ 'dashboard.my_processes.title'|trans }} ({{ myProcesses|length }})</h2>
       {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: myProcesses, limit: 2} %}
+    </div>
+
+    <div>
+      <h2><i class="fas {{ iconClass('not-visited') }} mr-3"></i>{{ 'dashboard.not_visited.title'|trans }}</h2>
+      <p class="alert alert-info">TODO: Show cases not visited lately. Defined by user select.</p>
     </div>
 {% endblock %}
 
@@ -32,7 +34,8 @@
   </div>
 
   <div class="bg-light p-3">
-    @TODO: Latest activity
+    <p>{{ 'dashboard.latest_activity.title'|trans }}</p>
+    <p class="alert alert-info">TODO: Latest activity</p>
   </div>
 {% endblock %}
 
