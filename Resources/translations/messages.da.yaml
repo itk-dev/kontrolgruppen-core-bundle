@@ -58,6 +58,7 @@ common:
         edit: Rediger
         save: Gem
         show: Vis
+        done: Udført
     back_to_list: Tilbage til liste
     boolean:
         'true': Ja
@@ -95,6 +96,10 @@ dashboard:
         title: Ikke besøgte sager
     reminders:
         title: Påmindelser
+    coming_reminders:
+        label: Kommende påmindelser
+    latest_activity:
+        title: Seneste aktivitet
 
 journal_entry:
     edit:
