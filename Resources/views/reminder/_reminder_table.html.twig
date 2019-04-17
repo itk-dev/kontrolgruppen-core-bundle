@@ -4,7 +4,6 @@
     <table class="table table-striped table-hover table-borderless thead-light">
       <thead>
         <tr>
-          <th>{{ 'reminder.table.id'|trans }}</th>
           <th>{{ 'process.table.case_number'|trans }}</th>
           <th>{{ 'process.table.process_type'|trans }}</th>
           <th>{{ 'reminder.table.message'|trans }}</th>
@@ -16,7 +15,6 @@
       <tbody>
       {% for reminder in reminders|slice(0, max_iterations) %}
         <tr class="{% if not reminder.finished and reminder.date|date('Y-m-d') < "now"|date('Y-m-d') %}bg-warning{% endif %}">
-            <td>{{ reminder.id }}</td>
             <td><a href="{{ path('process_show', {id: reminder.process.id}) }}">{{ reminder.process.caseNumber }}</a></td>
             <td>{{ reminder.process.processType }}</td>
             <td>{{ reminder.message }}</td>

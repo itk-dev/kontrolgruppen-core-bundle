@@ -3,14 +3,18 @@
 {% block title %}{{ 'journal_entry.index.title'|trans }}{% endblock %}
 
 {% block content %}
-    <h1 class="float-left">{{ 'journal_entry.index.title'|trans }}</h1>
-    <a href="{{ path('journal_entry_new', {'process': process.id}) }}" class="btn btn-success btn-lg float-right">{{ 'common.actions.create'|trans }}</a>
+  <div class="row">
+    <div class="col-12">
+      <h1 class="float-left">{{ 'journal_entry.index.title'|trans }}</h1>
+      <a href="{{ path('journal_entry_new', {'process': process.id}) }}" class="btn btn-success btn-lg float-right">{{ 'common.actions.create'|trans }}</a>
+    </div>
+  </div>
 
-    {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig' %}
+  {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig' %}
 
 {% endblock %}
 
 {% block sidebar_right %}
-  TODO: Include process status and process summary
+  {{ include('process/_sidebar_process_info.html.twig') }}
   {{ include('process/_sidebar_activity.html.twig') }}
 {% endblock %}
