@@ -52,5 +52,10 @@
         </table>
     </div>
 
-    <a href="{{ path('client_edit', {'process': process.id}) }}">{{ 'common.actions.edit'|trans }}</a>
+    <a href="{{ path('client_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+  {{ include('process/_sidebar_process_info.html.twig') }}
+  {{ include('process/_sidebar_activity.html.twig') }}
 {% endblock %}
