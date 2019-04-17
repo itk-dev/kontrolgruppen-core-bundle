@@ -7,10 +7,10 @@
   {% if process is defined %}
     <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-success float-right btn-lg">{{ 'common.actions.create'|trans }}</a>
   {% endif %}
-  {% include '@KontrolgruppenCore/reminder/_reminder_list.html.twig' with { reminders: reminders } %}
+  {% include '@KontrolgruppenCore/reminder/_reminder_table.html.twig' with { reminders: reminders } %}
 {% endblock %}
 
 {% block sidebar_right %}
-  TODO: Include process status and process summary
+  {{ include('process/_sidebar_process_info.html.twig') }}
   {{ include('process/_sidebar_activity.html.twig') }}
 {% endblock %}
