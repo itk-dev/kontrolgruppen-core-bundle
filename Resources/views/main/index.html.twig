@@ -47,11 +47,13 @@
           {% block navigation_mobile %}
             {% if menuItems is defined %}
               {% for menuItem in menuItems %}
+                {% if menuItem.hide_from_mobile_menu is not defined or not menuItem.hide_from_mobile_menu %}
                 <li class="nav-item d-lg-none">
                   <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
                     {{ menuItem.name }}
                   </a>
                 </li>
+                {% endif %}
               {% endfor %}
             {% endif %}
           {% endblock %}
@@ -103,12 +105,10 @@
               <nav class="d-none d-lg-flex bg-light p-3">
                 <div class="sidebar-sticky">
                   <ul class="nav flex-column nav-pills">
-                    <li class="nav-item">
-                      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">{{ 'process.show.title'|trans }}: {{ process.caseNumber }}</a>
-                    </li>
                     {% for menuItem in menuItems %}
                     <li class="nav-item">
-                      <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
+                      <a class="nav-link{{ menuItem.active ? ' active' : '' }}{{ menuItem.disabled ? ' disabled' : '' }}"
+                         href="{{ menuItem.path }}" {{ menuItem.disabled ? 'tabindex="-1" aria-disabled="true"' : '' }}>
                         {{ menuItem.name }} {% if menuItem.name == 'reminder.index.title'|trans %}<span class="badge badge-secondary">{{ process.reminders|length }}</span>{% endif %}
                       </a>
                     </li>

@@ -126,6 +126,7 @@ menu:
         channel: Kanaler
         client: Klient
         journal: Journal
+        process_number: 'Sag: %processNumber%'
         process_show: Sagsopsummering
         process_status: Sagsstatuser
         process_type: Sagstyper

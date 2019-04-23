@@ -96,6 +96,15 @@ class MenuService
     {
         if (isset($process) && null !== $process->getId()) {
             return [
+                [
+                    'name' => $this->translator->trans('menu.menu_title.process_number', [
+                        '%processNumber%' => $process->getCaseNumber(),
+                    ]),
+                    'disabled' => true,
+                    'active' => false,
+                    'path' => '#',
+                    'hide_from_mobile_menu' => true,
+                ],
                 $this->createMenuItem(
                     'process_show',
                     1 === preg_match(
@@ -223,15 +232,17 @@ class MenuService
      * @param $itemName
      * @param $active
      * @param $pathName
+     * @param $disabled
      *
      * @return array
      */
-    protected function createMenuItem($itemName, $active, $pathName, $pathParameters = [])
+    protected function createMenuItem($itemName, $active = false, $pathName = null, $pathParameters = [], $disabled = false)
     {
         return [
             'name' => $this->translator->trans('menu.menu_title.'.$itemName),
             'active' => $active,
-            'path' => $this->router->generate($pathName, $pathParameters, UrlGeneratorInterface::RELATIVE_PATH),
+            'path' => !is_null($pathName) ? $this->router->generate($pathName, $pathParameters, UrlGeneratorInterface::RELATIVE_PATH) : '#',
+            'disabled' => $disabled
         ];
     }
 
