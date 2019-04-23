@@ -23,7 +23,9 @@
  */
 
 .globalmenu {
-  height: calc(100vh - #{$navbarHeight});
+  position: relative;
+  top: calc(#{$spacer} + #{$navbarHeight}); //sticky meny offset
+  height: calc(100vh - #{$navbarHeight} - #{$spacer});
   .nav {
     &-link {
       color: $white;
@@ -45,15 +47,14 @@
 
 .sidebar-sticky {
   position: relative;
-  top: 0;
-  height: calc(100vh - #{$navbarHeight});
+  top: calc(#{$spacer} + #{$navbarHeight}); //sticky meny offset
+  height: calc(100vh - #{$navbarHeight} - #{$spacer*2});
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
 
-@supports ((position: -webkit-sticky) or (position: sticky)) {
+@supports (position: sticky) {
   .sidebar-sticky, .globalmenu {
-    position: -webkit-sticky;
     position: sticky;
   }
 }
@@ -93,4 +94,12 @@
 h1 {
   font-weight: 100;
   font-family: $h1-font-family;
+}
+
+h2 {
+  font-size: $h2-font-size*.8;
+}
+
+h3 {
+  font-size: $h3-font-size*.7;
 }

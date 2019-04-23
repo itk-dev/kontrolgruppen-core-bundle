@@ -58,6 +58,7 @@ common:
         edit: Rediger
         save: Gem
         show: Vis
+        done: Udført
     back_to_list: Tilbage til liste
     boolean:
         'true': Ja
@@ -79,6 +80,7 @@ common:
         created_by: Oprettet af
         updated_at: Opdateret
         updated_by: Opdateret af
+        by: af
     title: Kontrolgruppen
 
 dashboard:
@@ -94,6 +96,10 @@ dashboard:
         title: Ikke besøgte sager
     reminders:
         title: Påmindelser
+    coming_reminders:
+        label: Kommende påmindelser
+    latest_activity:
+        title: Seneste aktivitet
 
 journal_entry:
     edit:
@@ -162,17 +168,21 @@ process:
         case_number: Sagsnummer
         case_worker: Sagsbehandler
         channel: Kanal
+        client_name: Klient navn
         client_cpr: Klient CPR
-        diary: Dagbog
+        diary: Senest i dagbogen
         id: ID
-        internal_note: Interne notater
-        journal: '%numberOfJournalEntries% indgange, se alle'
-        note: Notater
+        internal_note: Seneste interne notater
+        journal: Journal
+        note: Seneste notater
         process_type: Sagstype
         reminders: Påmindelser
-        reminders_open: '%numberOfReminders% påmindelser, se alle'
+        reminders_open: Vis påmindelser
         service: Ydelse
     tooltip: Liste med alle sager
+    btns:
+        create_report: Opret sagsrapport
+        print: Udskriv
 
 process_status:
     edit:
@@ -237,6 +247,7 @@ reminder:
         title: Rediger påmindelse
     form:
         date: Dato
+        time: Tidspunkt
         finished: Afsluttet
         message: Besked
         update: Gem
@@ -248,12 +259,16 @@ reminder:
     table:
         id: ID
         message: Besked
-        date: Dato
+        date: Dato og tidspunkt
         finished: Afsluttet
     upcomming:
         title: Kommende påmindelser
         option:
           7days: de næste 7 dage
+    btns:
+        create: Opret ny påmindelse
+    show:
+        title: Påmindelse
 
 service:
     edit:

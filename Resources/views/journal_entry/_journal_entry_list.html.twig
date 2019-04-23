@@ -1,34 +1,39 @@
 {% block journal_entry_list %}
   {% set max_iterations = limit is defined ? min(journalEntries|length, limit) : journalEntries|length %}
 
-  <table class="table">
-    <thead>
-    <tr>
-      <th>{{ 'journal_entry.table.id'|trans }}</th>
-      <th>{{ 'journal_entry.table.type'|trans }}</th>
-      <th>{{ 'journal_entry.table.title'|trans }}</th>
-      <th>{{ 'journal_entry.table.body'|trans }}</th>
-      <th>{{ 'common.table.actions'|trans }}</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for journalEntry in journalEntries|slice(0, max_iterations) %}
-      <tr>
-        <td>{{ journalEntry.id }}</td>
-        <td>{{ journalEntry.type|readable_enum|trans }}</td>
-        <td>{{ journalEntry.title }}</td>
-        <td>{{ journalEntry.body|raw }}</td>
-        <td>
-          <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}">{{ 'common.actions.show'|trans }}</a>
-          <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}">{{ 'common.actions.edit'|trans }}</a>
-        </td>
-      </tr>
+    <div class="mb-3 p-3">
+      {% for journalEntry in journalEntries|slice(0, max_iterations) %}
+        <div class="row bg-light mb-2">
+          <div class="col-2 pt-2">
+            <span class="text-muted d-block">16-04-2019</span>
+          </div>
+          <div class="col-8 pt-2">
+            <p class="mb-0"><strong><a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}">{{ journalEntry.title }}</a></strong></p>
+          </div>
+          <div class="col-2 pt-2 text-right">
+            <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
+              <i class="fas {{ iconClass('show') }} fa-inverse"></i>
+            </a>
+            <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
+              <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
+            </a>
+          </div>
+          <div class="col-2 pb-2">
+            {% if journalEntry.type == 'DIARY' %}
+              <span class="badge badge-dark">{{ 'common.enum.journal_entry.diary'|trans }}</span>
+            {% elseif journalEntry.type == 'NOTE' %}
+              <span class="badge badge-info">{{ 'common.enum.journal_entry.note'|trans }}</span>
+            {% elseif journalEntry.type == 'INTERNAL_NOTE' %}
+              <span class="badge badge-warning">{{ 'common.enum.journal_entry.internal_note'|trans }}</span>
+            {% endif %}
+          </div>
+          <div class="col-10 pb-2">
+            {{ journalEntry.body|raw }}
+          </div>
+        </div>
     {% else %}
-      <tr>
-        <td colspan="4">{{ 'common.no_records_found'|trans }}</td>
-      </tr>
+      {{ 'common.no_records_found'|trans }}
     {% endfor %}
-    </tbody>
-  </table>
+    </div>
 
 {% endblock %}

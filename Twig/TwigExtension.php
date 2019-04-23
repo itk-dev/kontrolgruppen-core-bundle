@@ -45,6 +45,10 @@ class TwigExtension extends AbstractExtension
                 return 'fa-eye';
             case 'edit':
                 return 'fa-pencil-alt';
+            case 'report':
+                return 'fa-file-download';
+            case 'print':
+                return 'fa-print';
 
             default:
                 return '';

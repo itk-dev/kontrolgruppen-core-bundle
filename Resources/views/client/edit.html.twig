@@ -8,3 +8,8 @@
     {{ include('@KontrolgruppenCore/client/_form.html.twig', {'button_label': 'Update'}) }}
 
 {% endblock %}
+
+{% block sidebar_right %}
+  {{ include('process/_sidebar_process_info.html.twig') }}
+  {{ include('process/_sidebar_activity.html.twig') }}
+{% endblock %}

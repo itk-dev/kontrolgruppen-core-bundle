@@ -3,103 +3,97 @@
 {% block title %}{{ 'process.show.title'|trans }}{% endblock %}
 
 {% block content %}
+
   <div class="row">
     <div class="col">
-      <h1>{{ 'process.show.title'|trans }}</h1>
-
-      {{ form(process_type_form) }}
-
-      <div class="table-responsive">
-        <table class="table table-striped table-hover table-borderless thead-light">
-          <tbody>
-          <tr>
-            <th>{{ 'process.table.id'|trans }}</th>
-            <td>{{ process.id }}</td>
-          </tr>
-          <tr>
-            <th>{{ 'process.table.client_cpr'|trans }}</th>
-            <td>{{ process.clientCPR }}</td>
-          </tr>
-          <tr>
-            <th>{{ 'process.table.case_worker'|trans }}</th>
-            <td>{{ process.caseWorker }}</td>
-          </tr>
-          <tr>
-            <th>{{ 'process.table.channel'|trans }}</th>
-            <td>{{ process.channel }}</td>
-          </tr>
-          <tr>
-            <th>{{ 'process.table.process_type'|trans }}</th>
-            <td>{{ process.processType }}</td>
-          </tr>
-          <tr>
-            <th>{{ 'process.table.service'|trans }}</th>
-            <td>{{ process.service }}</td>
-          </tr>
-
-          <tr>
-            <th>{{ 'common.table.created_by'|trans }}</th>
-            <td>{{ process.createdBy }}</td>
-          </tr>
-          <tr>
-            <th>{{ 'common.table.created_at'|trans }}</th>
-            <td>{{ process.createdAt|date('Y-m-d') }}</td>
-          </tr>
-          <tr>
-            <th>{{ 'common.table.updated_by'|trans }}</th>
-            <td>{{ process.createdBy }}</td>
-          </tr>
-          <tr>
-            <th>{{ 'common.table.updated_at'|trans }}</th>
-            <td>{{ process.updatedAt|date('Y-m-d') }}</td>
-          </tr>
-          <tr>
-            <th>{{ 'process.table.reminders'|trans }}</th>
-            <td>
-              <a href="{{ path('reminder_index', {'process': process.id}) }}">{{ 'process.table.reminders_open'|trans({'%numberOfReminders%': process.reminders|length}) }}</a>
-            </td>
-          </tr>
-          <tr>
-            <th>{{ 'process.table.diary'|trans }}</th>
-            <td>
-              {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig'  with { journalEntries: latestDiaryEntries, limit: 2 } %}
-              <a href="{{ path('journal_entry_index', {'process': process.id}) }}">
-                {{ 'process.table.journal'|trans({'%numberOfJournalEntries%': latestDiaryEntries|length}) }}
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <th>{{ 'process.table.note'|trans }}</th>
-            <td>
-              {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig'  with { journalEntries: latestNoteEntries, limit: 2 } %}
-              <a href="{{ path('journal_entry_index', {'process': process.id}) }}">
-                {{ 'process.table.journal'|trans({'%numberOfJournalEntries%': latestNoteEntries|length}) }}
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <th>{{ 'process.table.internal_note'|trans }}</th>
-            <td>
-              {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig'  with { journalEntries: latestInternalNoteEntries, limit: 2 } %}
-              <a href="{{ path('journal_entry_index', {'process': process.id}) }}">
-                {{ 'process.table.journal'|trans({'%numberOfJournalEntries%': latestInternalNoteEntries|length}) }}
-              </a>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+      <h1 class="float-left">{{ 'process.show.title'|trans }} {{ process.caseNumber }}</h1>
+      <a href="" class="btn btn-sm btn-outline-dark float-right"><i class="fas {{ iconClass('print') }} mr-2" ></i>{{ 'process.btns.print'|trans }}</a>
+      <a href="TODO: report path" class="btn btn-sm btn-outline-primary float-right mr-3"><i class="fas {{ iconClass('report') }} mr-2" ></i>{{ 'process.btns.create_report'|trans }}</a>
+      <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-sm btn-outline-warning float-right mr-3"><i class="fas {{ iconClass('reminder') }} mr-2" ></i>{{ 'reminder.btns.create'|trans }}</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="bg-light border pt-3 pr-3 pl-3 mb-3">
+        <div class="row">
+          <div class="col-6 col-lg-3">
+            <dl class="row">
+              <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.created_by'|trans }}</dd>
+              <dt class="col-sm-12">{{ process.createdBy }}</dt>
+            </dl>
+          </div>
+          <div class="col-6 col-lg-3">
+            <dl class="row">
+              <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.created_at'|trans }}</dd>
+              <dt class="col-sm-12">{{ process.createdAt|date('Y-m-d') }}</dt>
+            </dl>
+          </div>
+          <div class="col-6 col-lg-3">
+            <dl class="row">
+              <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.updated_at'|trans }}</dd>
+              <dt class="col-sm-12">{{ process.updatedAt|date('Y-m-d') }} {{ 'common.table.by'|trans }} {{ process.updatedBy }}</dt>
+            </dl>
+          </div>
+          <div class="col-6 col-lg-3">
+            <dl class="row">
+              <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.case_worker'|trans }}</dd>
+              <dt class="col-sm-12">{{ process.caseWorker }}</dt>
+            </dl>
+          </div>
+          <div class="col-6 col-lg-3">
+            <dl class="row">
+              <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.process_type'|trans }}</dd>
+              <dt class="col-sm-12">{{ process.processType }}</dt>
+            </dl>
+          </div>
+          <div class="col-6 col-lg-3">
+            <dl class="row">
+              <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.channel'|trans }}</dd>
+              <dt class="col-sm-12">{{ process.channel }}</dt>
+            </dl>
+          </div>
+          <div class="col-6 col-lg-3">
+            <dl class="row">
+              <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.service'|trans }}</dd>
+              <dt class="col-sm-12">{{ process.service }}</dt>
+            </dl>
+          </div>
+        </div>
       </div>
-      <div class="row">
-      <a href="{{ path('process_index') }}" class="col btn btn-secondary">{{ 'common.back_to_list'|trans }}</a>
+    </div>
+  </div>
 
-      <a href="{{ path('process_edit', {'id': process.id}) }}" class="col btn btn-primary">{{ 'common.actions.edit'|trans }}</a>
+  <div class="row">
+    <div class="col-12">
+      <h2 class="float-left">{{ 'process.table.journal'|trans }}</h2>
+      <a href="{{ path('journal_entry_new', {'process': process.id}) }}" class="btn btn-success btn-sm float-right">{{ 'journal_entry.new.title'|trans }}</a>
+    </div>
+    <div class="col-12">
+      <h3>{{ 'process.table.diary'|trans }}</h3>
+      {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig'  with { journalEntries: latestDiaryEntries, limit: 2 } %}
+    </div>
+    <div class="col-12">
+      <h3>{{ 'process.table.note'|trans }}</h3>
+      {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig'  with { journalEntries: latestNoteEntries, limit: 2 } %}
+    </div>
+    <div class="col-12">
+      <h3>{{ 'process.table.internal_note'|trans }}</h3>
+      {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig'  with { journalEntries: latestInternalNoteEntries, limit: 2 } %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <a href="{{ path('process_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+
+      <a href="{{ path('process_edit', {'id': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'process.edit.title'|trans }}</a>
 
       {{ include('process/_delete_form.html.twig') }}
-      </div>
     </div>
   </div>
 {% endblock %}
 
 {% block sidebar_right %}
-  {{ include('process/_sidebar_right.html.twig') }}
+  {{ include('process/_sidebar_process_info.html.twig') }}
+  {{ include('process/_sidebar_process_type.html.twig') }}
+  {{ include('process/_sidebar_activity.html.twig') }}
 {% endblock %}

@@ -3,13 +3,14 @@
 {% block title %}{{ 'process.index.title'|trans }}{% endblock %}
 
 {% block content %}
-  <h1>{{ 'process.index.title'|trans }}</h1>
+  <div class="row">
+    <div class="col-12">
+      <h1 class="float-left">{{ 'process.index.title'|trans }}</h1>
+      <a href="{{ path('process_new') }}" class="btn btn-success btn-lg float-right">{{ 'common.actions.create'|trans }}</a>
+    </div>
+  </div>
+  <p class="alert alert-info">TODO: Filter to show all cases or only cases assigned to current user.</p>
+  {% include '@KontrolgruppenCore/process/_process_table.html.twig' %}
 
-  {% include '@KontrolgruppenCore/process/_process_list.html.twig' %}
-
-  <a href="{{ path('process_new') }}" class="btn btn-success">{{ 'common.actions.create'|trans }}</a>
 {% endblock %}
 
-{% block sidebar_right %}
-  {{ include('process/_sidebar_right.html.twig') }}
-{% endblock %}

@@ -25,7 +25,7 @@
                         {{ processType }}{% if not loop.last %}, {% endif %}
                     {% endfor %}
                     </td>
-                    <td class="float-right">
+                    <td class="text-right">
                       <a href="{{ path('process_status_show', {'id': process_status.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
                         <i class="fas {{ iconClass('show') }} fa-inverse"></i>
                       </a>

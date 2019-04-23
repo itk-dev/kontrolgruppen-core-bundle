@@ -7,7 +7,7 @@
 
     {{ include('reminder/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('reminder_index', {'process': process.id}) }}">{{ 'common.back_to_list'|trans }}</a>
+    <a href="{{ path('reminder_index', {'process': process.id}) }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
 
     {{ include('reminder/_delete_form.html.twig') }}
 {% endblock %}

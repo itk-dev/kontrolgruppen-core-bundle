@@ -19,7 +19,7 @@
                 <tr>
                     <td>{{ service.id }}</td>
                     <td>{{ service.name }}</td>
-                    <td class="float-right">
+                    <td class="text-right">
                       <a href="{{ path('service_show', {'id': service.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
                           <i class="fas {{ iconClass('show') }} fa-inverse"></i>
                       </a>

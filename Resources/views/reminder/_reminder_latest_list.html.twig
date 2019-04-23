@@ -1,14 +1,11 @@
 {% set max_iterations = limit is defined ? min(reminders|length, limit) : reminders|length %}
+<div class="list-group">
 {% for reminder in reminders|slice(0, max_iterations) %}
-  <div class="{% if not reminder.finished and reminder.date|date('Y-m-d') < "now"|date('Y-m-d') %}bg-warning{% endif %}">
-    <a href="{{ path('reminder_show', {'id': reminder.id, 'process': reminder.process.id}) }}">
-      Dato:{{ reminder.date ? reminder.date|date('Y-m-d H:i:s') : '' }} Sag: {{ reminder.process.caseNumber }}
-      <i class="fas fa-tasksmr-3"></i>{{ reminder.message }}
-    </a>
-  </div>
+  <a href="{{ path('reminder_show', {'id': reminder.id, 'process': reminder.process.id}) }}" class="list-group-item list-group-item-action list-group-item-warning{% if not reminder.finished and reminder.date|date('d-m-Y') < "now"|date('d-m-Y') %}list-group-item-warning{% endif %}">
+    <span class="d-block float-left text-muted">{{ reminder.date ? reminder.date|date('d-m-Y H:i') : '' }}</span><span class="d-block float-right text-muted">Sag: {{ reminder.process.caseNumber }}</span>
+    <span class="d-block float-left text-dark"><i class="fas {{ iconClass('process') }} mr-3"></i>{{ reminder.message }}</span>
+  </a>
 {% else %}
-  <div>
-    <p>{{ 'common.no_records_found'|trans }}</p>
-  </div>
+  <li class="list-group-item">{{ 'common.no_records_found'|trans }}</li>
 {% endfor %}
-
+</div>

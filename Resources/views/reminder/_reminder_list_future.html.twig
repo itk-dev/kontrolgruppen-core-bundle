@@ -1,15 +1,16 @@
 <div class="row">
   <div class="col-12">
     <div class="form-group w-100">
-      <label for="coming-reminders-form">{{ 'reminder.upcomming.title'|trans }}</label>
       <form id="coming-reminders-form">
         {{ form(comingReminderForm) }}
       </form>
     </div>
     <div id="coming-reminders-content">
     </div>
-    <div id="coming-reminders-spinner" class="spinner-border" role="status">
-      <span class="sr-only">Loading...</span>
+    <div class="d-flex justify-content-center">
+      <div id="coming-reminders-spinner" class="spinner-border spinner-border-sm" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
     </div>
   </div>
 </div>
