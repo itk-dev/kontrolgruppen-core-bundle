@@ -28,9 +28,13 @@
 
     <a href="{{ path('reminder_index', {'process': process.id}) }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
 
+  {% if not reminder.finished %}
+      <a href="{{ path('reminder_finish', {'id': reminder.id, 'process': process.id}) }}" class="btn btn-info float-right pr-5 pl-5 ml-3">{{ 'common.actions.finish'|trans }}</a>
+  {% endif %}
+
     <a href="{{ path('reminder_edit', {'id': reminder.id, 'process': process.id}) }}" class="btn btn-primary float-right pr-5 pl-5">{{ 'common.actions.edit'|trans }}</a>
 
-    {{ include('reminder/_delete_form.html.twig') }}
+  {{ include('reminder/_delete_form.html.twig') }}
 {% endblock %}
 
 {% block sidebar_right %}

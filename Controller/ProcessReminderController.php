@@ -118,4 +118,20 @@ class ProcessReminderController extends BaseController
             'process' => $process->getId(),
         ]);
     }
+
+    /**
+     * @Route("{id}/finish", name="reminder_finish", methods={"GET", "POST"})
+     */
+    public function finishReminder(Reminder $reminder, Process $process)
+    {
+        $reminder->setFinished(true);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+
+        return $this->redirectToRoute('reminder_show', [
+            'process' => $process->getId(),
+            'id' => $reminder->getId(),
+        ]);
+    }
 }

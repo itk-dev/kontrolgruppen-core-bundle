@@ -56,6 +56,7 @@ common:
             delete: Er du sikker på at du vil slette dette?
         delete: Slet
         edit: Rediger
+        finish: Afslut
         save: Gem
         show: Vis
         done: Udført
@@ -190,6 +191,7 @@ process_status:
         title: Rediger sagsstatus
     form:
         name: Navn
+        process_types: Sagstyper
         update: Gem
     index:
         title: Sagsstatuser
