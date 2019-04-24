@@ -14,14 +14,16 @@ use Kontrolgruppen\CoreBundle\Entity\BaseConclusion;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class BaseConclusionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('conclusion', null, [
+            ->add('conclusion', CKEditorType::class, [
                 'label' => 'conclusion.form.base.conclusion',
+                'config' => ['toolbar' => 'editor'],
             ])
         ;
     }

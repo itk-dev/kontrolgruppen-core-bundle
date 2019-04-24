@@ -14,20 +14,24 @@ use Kontrolgruppen\CoreBundle\Entity\WeightedConclusion;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class WeightedConclusionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('argumentsFor', null, [
+            ->add('argumentsFor', CKEditorType::class, [
                 'label' => 'conclusion.form.weighted.arguments_for',
+                'config' => ['toolbar' => 'editor'],
             ])
-            ->add('argumentsAgainst', null, [
+            ->add('argumentsAgainst', CKEditorType::class, [
                 'label' => 'conclusion.form.weighted.arguments_against',
+                'config' => ['toolbar' => 'editor'],
             ])
-            ->add('conclusion', null, [
+            ->add('conclusion', CKEditorType::class, [
                 'label' => 'conclusion.form.weighted.conclusion',
+                'config' => ['toolbar' => 'editor'],
             ])
         ;
     }
