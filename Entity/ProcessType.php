@@ -31,6 +31,11 @@ class ProcessType extends AbstractTaxonomy
      */
     private $processStatuses;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $conclusionClass;
+
     public function __construct()
     {
         $this->processes = new ArrayCollection();
@@ -90,6 +95,18 @@ class ProcessType extends AbstractTaxonomy
         if ($this->processStatuses->contains($processStatus)) {
             $this->processStatuses->removeElement($processStatus);
         }
+
+        return $this;
+    }
+
+    public function getConclusionClass(): ?string
+    {
+        return $this->conclusionClass;
+    }
+
+    public function setConclusionClass(string $conclusionClass): self
+    {
+        $this->conclusionClass = $conclusionClass;
 
         return $this;
     }

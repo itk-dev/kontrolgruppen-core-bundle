@@ -3,6 +3,10 @@ admin:
         title: System indstillinger
         lead: Rediger og tilpas systemets indstillinger.
 
+base_conclusion:
+    form:
+        update: Gem
+
 channel:
     edit:
         title: Rediger kanal
@@ -84,6 +88,27 @@ common:
         by: af
     title: Kontrolgruppen
 
+conclusion:
+    edit:
+        title: Rediger konklusion
+    form:
+        base:
+            conclusion: Konklusion
+        weighted:
+            arguments_for: Argumenter for
+            arguments_against: Argumenter imod
+            conclusion: Konklusion
+    show:
+        title: Konklusion
+    table:
+        id: ID
+        arguments_against: Argumenter imod
+        arguments_for: Argumenter for
+        conclusion: Konklusion
+    types:
+        base: Basal
+        weighted: Argumenter for/imod
+
 dashboard:
     index:
         title: Dashboard
@@ -122,10 +147,26 @@ journal_entry:
         title: Overskrift
         type: Type
 
+global_nav:
+    menu_title:
+        dashboard: Dashboard
+        process: Sager
+        profile: Profil
+        users: Brugere
+        admin: Indstillinger
+
+    tooltip:
+        dashboard: Få et hurtigt sagsoverblik
+        process: Få vist alle sager
+        profile: Dine profil informationer
+        users: Viser alle brugere på systemet
+        admin: Se og administre system indstillinger
+
 menu:
     menu_title:
         channel: Kanaler
         client: Klient
+        conclusion: Konklusion
         journal: Journal
         process_number: 'Sag: %processNumber%'
         process_show: Sagsopsummering
@@ -211,6 +252,7 @@ process_type:
     edit:
         title: Rediger sagstype
     form:
+        conclusion_class: Konklusionstype
         name: Navn
         process_statuses: Sagsstatuser
         update: Gem
@@ -222,6 +264,7 @@ process_type:
     show:
         title: Sagstype
     table:
+        conclusion_class: Konklusionstype
         id: ID
         name: Navn
         process_statuses: Tilkoblede sagsstatuser
@@ -290,20 +333,6 @@ service:
         id: ID
         name: Navn
 
-global_nav:
-    menu_title:
-        dashboard: Dashboard
-        process: Sager
-        profile: Profil
-        users: Brugere
-        admin: Indstillinger
-
-    tooltip:
-        dashboard: Få et hurtigt sagsoverblik
-        process: Få vist alle sager
-        profile: Dine profil informationer
-        users: Viser alle brugere på systemet
-        admin: Se og administre system indstillinger
-
-NOTE: Notat
-
+weighted_conclusion:
+    form:
+        update: Gem

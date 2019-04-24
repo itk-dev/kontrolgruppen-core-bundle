@@ -141,6 +141,15 @@ class MenuService
                     'journal_entry_index',
                     ['process' => $process]
                 ),
+                $this->createMenuItem(
+                    'conclusion',
+                    1 === preg_match(
+                        '/^\/process\/[0-9]+\/conclusion.*$/',
+                        $path
+                    ),
+                    'conclusion_show',
+                    ['process' => $process]
+                ),
             ];
         }
 
@@ -241,8 +250,8 @@ class MenuService
         return [
             'name' => $this->translator->trans('menu.menu_title.'.$itemName),
             'active' => $active,
-            'path' => !is_null($pathName) ? $this->router->generate($pathName, $pathParameters, UrlGeneratorInterface::RELATIVE_PATH) : '#',
-            'disabled' => $disabled
+            'path' => null !== $pathName ? $this->router->generate($pathName, $pathParameters, UrlGeneratorInterface::RELATIVE_PATH) : '#',
+            'disabled' => $disabled,
         ];
     }
 

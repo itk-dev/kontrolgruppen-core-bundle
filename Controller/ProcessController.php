@@ -61,6 +61,10 @@ class ProcessController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $process->setCaseNumber($this->getNewCaseNumber());
 
+            $conclusionClass = $process->getProcessType()->getConclusionClass();
+            $conclusion = new $conclusionClass();
+            $process->setConclusion($conclusion);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($process);
 
@@ -69,7 +73,6 @@ class ProcessController extends BaseController
             $process->setClient($client);
 
             $entityManager->persist($client);
-
             $entityManager->flush();
 
             return $this->redirectToRoute('process_index');

@@ -48,6 +48,7 @@ class Process extends AbstractEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessType", inversedBy="processes")
+     * @ORM\JoinColumn(name="process_type_id", referencedColumnName="id", nullable=false)
      */
     private $processType;
 
@@ -70,6 +71,11 @@ class Process extends AbstractEntity
      * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Client", mappedBy="process", cascade={"persist", "remove"})
      */
     private $client;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Conclusion", mappedBy="process", cascade={"persist", "remove"})
+     */
+    private $conclusion;
 
     public function __construct()
     {
@@ -235,6 +241,24 @@ class Process extends AbstractEntity
         // set the owning side of the relation if necessary
         if ($this !== $client->getProcess()) {
             $client->setProcess($this);
+        }
+
+        return $this;
+    }
+
+    public function getConclusion(): ?Conclusion
+    {
+        return $this->conclusion;
+    }
+
+    public function setConclusion(?Conclusion $conclusion): self
+    {
+        $this->conclusion = $conclusion;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newProcess = null === $conclusion ? null : $this;
+        if ($newProcess !== $conclusion->getProcess()) {
+            $conclusion->setProcess($newProcess);
         }
 
         return $this;

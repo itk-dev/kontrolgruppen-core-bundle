@@ -10,16 +10,36 @@
 
 namespace Kontrolgruppen\CoreBundle\Twig;
 
+use Kontrolgruppen\CoreBundle\Service\ConclusionService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class TwigExtension extends AbstractExtension
 {
+    private $conclusionService;
+
+    /**
+     * TwigExtension constructor.
+     *
+     * @param $conclusionService
+     */
+    public function __construct(ConclusionService $conclusionService)
+    {
+        $this->conclusionService = $conclusionService;
+    }
+
     public function getFunctions()
     {
         return [
             new TwigFunction('iconClass', [$this, 'getIconClass']),
+            new TwigFunction('conclusionClassTranslation', [$this, 'getConclusionClassTranslation']),
         ];
+    }
+
+    public function getConclusionClassTranslation(string $className)
+    {
+        // @TODO: Replace with event.
+        return $this->conclusionService->getTranslation($className);
     }
 
     public function getIconClass(string $name)
