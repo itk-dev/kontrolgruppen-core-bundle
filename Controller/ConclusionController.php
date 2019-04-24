@@ -30,9 +30,9 @@ class ConclusionController extends BaseController
     {
         $conclusion = $process->getConclusion();
 
-        if (is_null($conclusion)) {
+        if (null === $conclusion) {
             $conclusionType = $process->getProcessType()->getConclusionClass();
-            $conclusion = new $conclusionType;
+            $conclusion = new $conclusionType();
 
             $this->getDoctrine()->getManager()->persist($conclusion);
 
@@ -41,7 +41,7 @@ class ConclusionController extends BaseController
             $this->getDoctrine()->getManager()->flush();
         }
 
-        $event = new GetConclusionTemplateEvent(get_class($conclusion));
+        $event = new GetConclusionTemplateEvent(\get_class($conclusion));
         $template = $dispatcher->dispatch(GetConclusionTemplateEvent::NAME, $event)->getTemplate();
 
         return $this->render($template, [

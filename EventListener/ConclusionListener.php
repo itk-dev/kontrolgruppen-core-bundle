@@ -21,6 +21,7 @@ class ConclusionListener implements EventSubscriberInterface
 
     /**
      * ConclusionListener constructor.
+     *
      * @param \Kontrolgruppen\CoreBundle\Service\ConclusionService $conclusionService
      */
     public function __construct(ConclusionService $conclusionService)

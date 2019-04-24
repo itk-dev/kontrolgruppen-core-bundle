@@ -256,7 +256,7 @@ class Process extends AbstractEntity
         $this->conclusion = $conclusion;
 
         // set (or unset) the owning side of the relation if necessary
-        $newProcess = $conclusion === null ? null : $this;
+        $newProcess = null === $conclusion ? null : $this;
         if ($newProcess !== $conclusion->getProcess()) {
             $conclusion->setProcess($newProcess);
         }

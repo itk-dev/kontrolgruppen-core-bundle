@@ -250,8 +250,8 @@ class MenuService
         return [
             'name' => $this->translator->trans('menu.menu_title.'.$itemName),
             'active' => $active,
-            'path' => !is_null($pathName) ? $this->router->generate($pathName, $pathParameters, UrlGeneratorInterface::RELATIVE_PATH) : '#',
-            'disabled' => $disabled
+            'path' => null !== $pathName ? $this->router->generate($pathName, $pathParameters, UrlGeneratorInterface::RELATIVE_PATH) : '#',
+            'disabled' => $disabled,
         ];
     }
 

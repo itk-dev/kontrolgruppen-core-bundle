@@ -21,6 +21,7 @@ class GetConclusionTemplateEvent extends Event
 
     /**
      * GetConclusionClasssEvent constructor.
+     *
      * @param string
      */
     public function __construct($class)

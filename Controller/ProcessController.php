@@ -62,7 +62,7 @@ class ProcessController extends BaseController
             $process->setCaseNumber($this->getNewCaseNumber());
 
             $conclusionClass = $process->getProcessType()->getConclusionClass();
-            $conclusion = new $conclusionClass;
+            $conclusion = new $conclusionClass();
             $process->setConclusion($conclusion);
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -71,7 +71,6 @@ class ProcessController extends BaseController
             $client = new Client();
             $client->setCpr($process->getClientCPR());
             $process->setClient($client);
-
 
             $entityManager->persist($client);
             $entityManager->flush();

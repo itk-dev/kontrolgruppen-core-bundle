@@ -20,6 +20,7 @@ class TwigExtension extends AbstractExtension
 
     /**
      * TwigExtension constructor.
+     *
      * @param $conclusionService
      */
     public function __construct(ConclusionService $conclusionService)
@@ -27,12 +28,11 @@ class TwigExtension extends AbstractExtension
         $this->conclusionService = $conclusionService;
     }
 
-
     public function getFunctions()
     {
         return [
             new TwigFunction('iconClass', [$this, 'getIconClass']),
-            new TwigFunction('conclusionClassTranslation', [$this, 'getConclusionClassTranslation'])
+            new TwigFunction('conclusionClassTranslation', [$this, 'getConclusionClassTranslation']),
         ];
     }
 

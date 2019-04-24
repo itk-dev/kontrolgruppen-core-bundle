@@ -24,6 +24,7 @@ class ConclusionService
 
     /**
      * ConclusionService constructor.
+     *
      * @param $translator
      */
     public function __construct(TranslatorInterface $translator)
@@ -33,10 +34,11 @@ class ConclusionService
 
     public function getEntityFormType(AbstractEntity $entity)
     {
-        return str_replace('Entity', 'Form', get_class($entity)."Type");
+        return str_replace('Entity', 'Form', \get_class($entity).'Type');
     }
 
-    public function getTemplate($class) {
+    public function getTemplate($class)
+    {
         switch ($class) {
             case BaseConclusion::class:
                 return '@KontrolgruppenCore/conclusion/show_base.html.twig';
@@ -47,7 +49,8 @@ class ConclusionService
         return false;
     }
 
-    public function getTranslation($class) {
+    public function getTranslation($class)
+    {
         switch ($class) {
             case BaseConclusion::class:
                 return $this->translator->trans('conclusion.types.base');
