@@ -21,7 +21,7 @@ class BaseConclusionType extends AbstractType
     {
         $builder
             ->add('conclusion', null, [
-                'label' => 'conclusion.form.weighted.conclusion',
+                'label' => 'conclusion.form.base.conclusion',
             ])
         ;
     }

@@ -3,6 +3,10 @@ admin:
         title: System indstillinger
         lead: Rediger og tilpas systemets indstillinger.
 
+base_conclusion:
+    form:
+        update: Gem
+
 channel:
     edit:
         title: Rediger kanal
@@ -85,6 +89,15 @@ common:
     title: Kontrolgruppen
 
 conclusion:
+    edit:
+        title: Rediger konklusion
+    form:
+        base:
+            conclusion: Konklusion
+        weighted:
+            arguments_for: Argumenter for
+            arguments_against: Argumenter imod
+            conclusion: Konklusion
     show:
         title: Konklusion
     table:
@@ -130,6 +143,21 @@ journal_entry:
         id: ID
         title: Overskrift
         type: Type
+
+global_nav:
+    menu_title:
+        dashboard: Dashboard
+        process: Sager
+        profile: Profil
+        users: Brugere
+        admin: Indstillinger
+
+    tooltip:
+        dashboard: Få et hurtigt sagsoverblik
+        process: Få vist alle sager
+        profile: Dine profil informationer
+        users: Viser alle brugere på systemet
+        admin: Se og administre system indstillinger
 
 menu:
     menu_title:
@@ -300,20 +328,6 @@ service:
         id: ID
         name: Navn
 
-global_nav:
-    menu_title:
-        dashboard: Dashboard
-        process: Sager
-        profile: Profil
-        users: Brugere
-        admin: Indstillinger
-
-    tooltip:
-        dashboard: Få et hurtigt sagsoverblik
-        process: Få vist alle sager
-        profile: Dine profil informationer
-        users: Viser alle brugere på systemet
-        admin: Se og administre system indstillinger
-
-NOTE: Notat
-
+weighted_conclusion:
+    form:
+        update: Gem
