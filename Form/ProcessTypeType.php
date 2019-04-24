@@ -52,6 +52,7 @@ class ProcessTypeType extends AbstractType
             ])
             ->add('conclusionClass', ChoiceType::class, [
                 'choices' => $choices,
+                'label' => 'process_type.form.conclusion_class',
             ])
         ;
     }

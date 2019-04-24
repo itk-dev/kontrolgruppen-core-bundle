@@ -105,6 +105,9 @@ conclusion:
         arguments_against: Argumenter imod
         arguments_for: Argumenter for
         conclusion: Konklusion
+    types:
+        base: Basal
+        weighted: Argumenter for/imod
 
 dashboard:
     index:
@@ -249,6 +252,7 @@ process_type:
     edit:
         title: Rediger sagstype
     form:
+        conclusion_class: Konklusionstype
         name: Navn
         process_statuses: Sagsstatuser
         update: Gem
@@ -260,6 +264,7 @@ process_type:
     show:
         title: Sagstype
     table:
+        conclusion_class: Konklusionstype
         id: ID
         name: Navn
         process_statuses: Tilkoblede sagsstatuser

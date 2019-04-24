@@ -12,6 +12,7 @@
                     <th>{{ 'process_type.table.id'|trans }}</th>
                     <th>{{ 'process_type.table.name'|trans }}</th>
                     <th>{{ 'process_type.table.process_statuses'|trans }}</th>
+                    <th>{{ 'process_type.table.conclusion_class'|trans }}</th>
                     <th class="float-right">{{ 'common.table.actions'|trans }}</th>
                 </tr>
             </thead>
@@ -25,6 +26,7 @@
                         {{ processStatus }}{% if not loop.last %}, {% endif %}
                         {% endfor %}
                     </td>
+                    <td>{{ conclusionClassTranslation(process_type.conclusionClass) }}</td>
                     <td class="text-right">
                         <a href="{{ path('process_type_show', {'id': process_type.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
                           <i class="fas {{ iconClass('show') }} fa-inverse"></i>

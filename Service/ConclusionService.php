@@ -47,18 +47,27 @@ class ConclusionService
         return false;
     }
 
+    public function getTranslation($class) {
+        switch ($class) {
+            case BaseConclusion::class:
+                return $this->translator->trans('conclusion.types.base');
+            case WeightedConclusion::class:
+                return $this->translator->trans('conclusion.types.weighted');
+        }
+    }
+
     public function getConclusionTypes()
     {
         $types = [];
 
         $types['conclusion.types.base'] = [
-            'name' => $this->translator->trans('conclusion.types.base'),
-            'class' => \Kontrolgruppen\CoreBundle\Entity\BaseConclusion::class,
+            'name' => $this->getTranslation(BaseConclusion::class),
+            'class' => BaseConclusion::class,
         ];
 
         $types['conclusion.types.weighted'] = [
-            'name' => $this->translator->trans('conclusion.types.weighted'),
-            'class' => \Kontrolgruppen\CoreBundle\Entity\WeightedConclusion::class,
+            'name' => $this->getTranslation(WeightedConclusion::class),
+            'class' => WeightedConclusion::class,
         ];
 
         return $types;
