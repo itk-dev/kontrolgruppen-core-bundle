@@ -141,6 +141,15 @@ class MenuService
                     'journal_entry_index',
                     ['process' => $process]
                 ),
+                $this->createMenuItem(
+                    'conclusion',
+                    1 === preg_match(
+                        '/^\/process\/[0-9]+\/conclusion.*$/',
+                        $path
+                    ),
+                    'conclusion_show',
+                    ['process' => $process]
+                ),
             ];
         }
 

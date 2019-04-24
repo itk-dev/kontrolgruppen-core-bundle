@@ -1,0 +1,37 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}{{ 'conclusion.show.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'conclusion.show.title'|trans }}</h1>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-borderless thead-light">
+            <tbody>
+                <tr>
+                    <th>{{ 'conclusion.table.id'|trans }}</th>
+                    <td>{{ conclusion.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'conclusion.table.arguments_for'|trans }}</th>
+                    <td>{{ conclusion.argumentsFor }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'conclusion.table.arguments_against'|trans }}</th>
+                    <td>{{ conclusion.argumentsAgainst }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'conclusion.table.conclusion'|trans }}</th>
+                    <td>{{ conclusion.conclusion }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ path('conclusion_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
+{% endblock %}
+
+{% block sidebar_right %}
+  {{ include('process/_sidebar_process_info.html.twig') }}
+  {{ include('process/_sidebar_activity.html.twig') }}
+{% endblock %}

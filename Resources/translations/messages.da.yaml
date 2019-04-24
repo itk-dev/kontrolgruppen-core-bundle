@@ -84,6 +84,15 @@ common:
         by: af
     title: Kontrolgruppen
 
+conclusion:
+    show:
+        title: Konklusion
+    table:
+        id: ID
+        arguments_against: Argumenter imod
+        arguments_for: Argumenter for
+        conclusion: Konklusion
+
 dashboard:
     index:
         title: Dashboard
@@ -126,6 +135,7 @@ menu:
     menu_title:
         channel: Kanaler
         client: Klient
+        conclusion: Konklusion
         journal: Journal
         process_number: 'Sag: %processNumber%'
         process_show: Sagsopsummering
