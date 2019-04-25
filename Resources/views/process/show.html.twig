@@ -2,6 +2,12 @@
 
 {% block title %}{{ 'process.show.title'|trans }}{% endblock %}
 
+{% block javascripts %}
+  {{ parent() }}
+
+  <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/processStatusForm.js') }}"></script>
+{% endblock %}
+
 {% block content %}
 
   <div class="row">

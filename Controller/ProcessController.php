@@ -31,8 +31,12 @@ class ProcessController extends BaseController
     /**
      * @Route("/", name="process_index", methods={"GET"})
      */
-    public function index(Request $request, ProcessRepository $processRepository, FilterBuilderUpdaterInterface $lexikBuilderUpdater, PaginatorInterface $paginator): Response
-    {
+    public function index(
+        Request $request,
+        ProcessRepository $processRepository,
+        FilterBuilderUpdaterInterface $lexikBuilderUpdater,
+        PaginatorInterface $paginator
+    ): Response {
         $form = $this->get('form.factory')->create(ProcessFilterType::class);
 
         $results = [];
@@ -48,8 +52,7 @@ class ProcessController extends BaseController
 
             // build the query from the given form object
             $lexikBuilderUpdater->addFilterConditions($form, $qb);
-        }
-        else {
+        } else {
             $qb = $processRepository->createQueryBuilder('e');
         }
 
@@ -61,13 +64,18 @@ class ProcessController extends BaseController
             10
         );
 
-        return $this->render('@KontrolgruppenCore/process/index.html.twig', array(
-            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo()),
-            'processes' => $results,
-            'pagination' => $pagination,
-            'form' => $form->createView(),
-            'query' => $query,
-        ));
+        return $this->render(
+            '@KontrolgruppenCore/process/index.html.twig',
+            array(
+                'menuItems' => $this->menuService->getProcessMenu(
+                    $request->getPathInfo()
+                ),
+                'processes' => $results,
+                'pagination' => $pagination,
+                'form' => $form->createView(),
+                'query' => $query,
+            )
+        );
     }
 
     /**
@@ -99,11 +107,17 @@ class ProcessController extends BaseController
             return $this->redirectToRoute('process_index');
         }
 
-        return $this->render('@KontrolgruppenCore/process/new.html.twig', [
-            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
-            'process' => $process,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            '@KontrolgruppenCore/process/new.html.twig',
+            [
+                'menuItems' => $this->menuService->getProcessMenu(
+                    $request->getPathInfo(),
+                    $process
+                ),
+                'process' => $process,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -114,10 +128,23 @@ class ProcessController extends BaseController
         // @TODO: Limit the available process statuses based on selected process type.
         // @TODO: Replace with javascript widget.
         $form = $this->createFormBuilder($process)
-            ->add('processStatus', null, [
-                'label' => 'process.form.process_status',
-            ])
-            ->add('save', SubmitType::class, ['label' => 'process.form.change_process_status.save'])
+            ->add(
+                'processStatus',
+                null,
+                [
+                    'label' => 'process.form.process_status',
+                ]
+            )
+            ->add(
+                'save',
+                SubmitType::class,
+                [
+                    'label' => 'process.form.change_process_status.save',
+                    'attr' => [
+                        'style' => 'display: none',
+                    ],
+                ]
+            )
             ->getForm();
 
         $form->handleRequest($request);
@@ -127,18 +154,30 @@ class ProcessController extends BaseController
         }
 
         // Latest journal entries.
-        $latestDiaryEntries = $this->getDoctrine()->getRepository(JournalEntry::class)->getLatestDiaryEntries($process);
-        $latestNoteEntries = $this->getDoctrine()->getRepository(JournalEntry::class)->getLatestNoteEntries($process);
-        $latestInternalNoteEntries = $this->getDoctrine()->getRepository(JournalEntry::class)->getLatestInternalNoteEntries($process);
+        $latestDiaryEntries = $this->getDoctrine()->getRepository(
+            JournalEntry::class
+        )->getLatestDiaryEntries($process);
+        $latestNoteEntries = $this->getDoctrine()->getRepository(
+            JournalEntry::class
+        )->getLatestNoteEntries($process);
+        $latestInternalNoteEntries = $this->getDoctrine()->getRepository(
+            JournalEntry::class
+        )->getLatestInternalNoteEntries($process);
 
-        return $this->render('@KontrolgruppenCore/process/show.html.twig', [
-            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
-            'process' => $process,
-            'process_type_form' => $form->createView(),
-            'latestDiaryEntries' => $latestDiaryEntries,
-            'latestNoteEntries' => $latestNoteEntries,
-            'latestInternalNoteEntries' => $latestInternalNoteEntries,
-        ]);
+        return $this->render(
+            '@KontrolgruppenCore/process/show.html.twig',
+            [
+                'menuItems' => $this->menuService->getProcessMenu(
+                    $request->getPathInfo(),
+                    $process
+                ),
+                'process' => $process,
+                'process_type_form' => $form->createView(),
+                'latestDiaryEntries' => $latestDiaryEntries,
+                'latestNoteEntries' => $latestNoteEntries,
+                'latestInternalNoteEntries' => $latestInternalNoteEntries,
+            ]
+        );
     }
 
     /**
@@ -152,16 +191,25 @@ class ProcessController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('process_index', [
-                'id' => $process->getId(),
-            ]);
+            return $this->redirectToRoute(
+                'process_index',
+                [
+                    'id' => $process->getId(),
+                ]
+            );
         }
 
-        return $this->render('@KontrolgruppenCore/process/edit.html.twig', [
-            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
-            'process' => $process,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            '@KontrolgruppenCore/process/edit.html.twig',
+            [
+                'menuItems' => $this->menuService->getProcessMenu(
+                    $request->getPathInfo(),
+                    $process
+                ),
+                'process' => $process,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -169,7 +217,10 @@ class ProcessController extends BaseController
      */
     public function delete(Request $request, Process $process): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$process->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid(
+            'delete'.$process->getId(),
+            $request->request->get('_token')
+        )) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($process);
             $entityManager->flush();
@@ -187,7 +238,9 @@ class ProcessController extends BaseController
      */
     private function getNewCaseNumber()
     {
-        $casesInYear = $this->getDoctrine()->getRepository(Process::class)->findAllFromYear(date('Y'));
+        $casesInYear = $this->getDoctrine()
+            ->getRepository(Process::class)
+            ->findAllFromYear(date('Y'));
         $caseNumber = str_pad(\count($casesInYear) + 1, 5, '0', STR_PAD_LEFT);
 
         return date('y').'-'.$caseNumber;

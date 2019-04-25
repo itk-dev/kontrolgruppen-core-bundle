@@ -11,12 +11,15 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
+use Kontrolgruppen\CoreBundle\Filter\JournalFilterType;
 use Kontrolgruppen\CoreBundle\Form\JournalEntryType;
 use Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/process/{process}/journal")
@@ -26,13 +29,38 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/", name="journal_entry_index", methods={"GET"})
      */
-    public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process): Response
+    public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process, FilterBuilderUpdaterInterface $lexikBuilderUpdater, PaginatorInterface $paginator): Response
     {
+        $form = $this->get('form.factory')->create(JournalFilterType::class);
+
+        $qb = null;
+
+        if ($request->query->has($form->getName())) {
+            // manually bind values from the request
+            $form->submit($request->query->get($form->getName()));
+
+            // initialize a query builder
+            $qb = $journalEntryRepository->createQueryBuilder('e');
+
+            // build the query from the given form object
+            $lexikBuilderUpdater->addFilterConditions($form, $qb);
+        }
+        else {
+            $qb = $journalEntryRepository->createQueryBuilder('e');
+        }
+
+        $query = $qb->getQuery();
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            10
+        );
+
         return $this->render('@KontrolgruppenCore/journal_entry/index.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
-            'journalEntries' => $journalEntryRepository->findBy([
-                'process' => $process,
-            ]),
+            'form' => $form->createView(),
+            'pagination' => $pagination,
             'process' => $process,
         ]);
     }

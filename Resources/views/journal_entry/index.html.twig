@@ -10,11 +10,32 @@
     </div>
   </div>
 
-  {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig' %}
+  <form method="get" action=".">
+    {{ form_rest(form) }}
+  </form>
+
+  <select id="pagination-sort-select">
+    {{ knp_pagination_sortable(pagination, 'common.sort.asc'|trans, 'e.id', { }, {'direction': 'asc'}, '@KontrolgruppenCore/main/sortable_option.html.twig') }}
+    {{ knp_pagination_sortable(pagination, 'common.sort.desc'|trans, 'e.id', { }, {'direction': 'desc'}, '@KontrolgruppenCore/main/sortable_option.html.twig') }}
+  </select>
+
+  {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list_pagination.html.twig' %}
 
 {% endblock %}
 
 {% block sidebar_right %}
   {{ include('process/_sidebar_process_info.html.twig') }}
   {{ include('process/_sidebar_activity.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+
+  <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/processFilters.js') }}"></script>
+
+  <script type="text/javascript">
+    $('#pagination-sort-select').on('change', function () {
+      window.location.href = $(this).find('option:selected').attr('href');
+    });
+  </script>
 {% endblock %}

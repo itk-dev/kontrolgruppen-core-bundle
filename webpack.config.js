@@ -9,6 +9,7 @@ module.exports = {
     'login': './Resources/assets/js/login.js',
     'reminderLatest': './Resources/assets/js/reminderLatest.js',
     'processFilters': './Resources/assets/js/processFilters.js',
+    'processStatusForm': './Resources/assets/js/processStatusForm.js',
     'globalSearch': './Resources/assets/js/globalSearch.js'
   },
   output: {
