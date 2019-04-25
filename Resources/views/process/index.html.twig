@@ -9,8 +9,17 @@
       <a href="{{ path('process_new') }}" class="btn btn-success btn-lg float-right">{{ 'common.actions.create'|trans }}</a>
     </div>
   </div>
-  <p class="alert alert-info">TODO: Filter to show all cases or only cases assigned to current user.</p>
-  {% include '@KontrolgruppenCore/process/_process_table.html.twig' %}
+
+  <form method="get" action=".">
+    {{ form_rest(form) }}
+  </form>
+
+  {% include '@KontrolgruppenCore/process/_process_table_pagination.html.twig' %}
 
 {% endblock %}
 
+{% block javascripts %}
+  {{ parent() }}
+
+  <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/processFilters.js') }}"></script>
+{% endblock %}

@@ -6,22 +6,14 @@
         <tbody>
         {% for process in processes|slice(0, max_iterations) %}
         <tr>
-            <td>{{ process.caseNumber }}</td>
+            <td><a href="{{ path('process_show', {'id': process.id}) }}">{{ process.caseNumber }}</a></td>
             <td>{{ process.processType }}</td>
             <td>{{ process.clientCPR }}</td>
             <td>{{ process.caseWorker }}</td>
             <td>{{ process.channel }}</td>
             <td>{{ process.service }}</td>
             <td class="text-right">
-                <a href="{{ path('process_show', {'id': process.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
-                  <i class="fas {{ iconClass('show') }} fa-inverse"></i>
-                </a>
-                <a href="{{ path('process_edit', {'id': process.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
-                  <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
-                </a>
-                <a href="{{ path('reminder_index', {'process': process.id}) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="{{ 'process.actions.reminders'|trans }}">
-                  <i class="fas {{ iconClass('reminder') }} fa-inverse"></i></a>
-                </a>
+              {% include '@KontrolgruppenCore/process/_process_actions.html.twig' %}
             </td>
         </tr>
         {% else %}

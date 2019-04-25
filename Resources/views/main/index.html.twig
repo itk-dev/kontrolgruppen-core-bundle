@@ -2,6 +2,12 @@
 
 {% block title %}{% endblock %}
 
+{% block javascripts %}
+  {{ parent() }}
+
+  <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/globalSearch.js') }}"></script>
+{% endblock %}
+
 {% block body %}
   <nav class="navbar navbar-dark fixed-top bg-dark p-0 shadow navbar-expand-lg">
 
@@ -10,9 +16,10 @@
       <span class="d-none d-md-inline">{{ 'common.title'|trans }}</span>
     </a>
     {% block navigation_main %}
-
-      <input class="form-control form-control-dark rounded-pill col-6 col-lg-4" type="text" placeholder="{{ 'navigation.main.search'|trans }}"
-             aria-label="{{ 'navigation.main.search'|trans }}">
+      <form id="kontrolgruppenGlobalSearch">
+        <input class="form-control form-control-dark rounded-pill col-6 col-lg-4" type="text" placeholder="{{ 'navigation.main.search'|trans }}"
+               aria-label="{{ 'navigation.main.search'|trans }}">
+      </form>
 
       <button class="navbar-toggler mr-1" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
               aria-label="Toggle navigation">

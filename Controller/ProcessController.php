@@ -10,8 +10,10 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Kontrolgruppen\CoreBundle\Entity\Client;
+use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 
 /**
  * @Route("/process")
@@ -26,27 +29,59 @@ use Kontrolgruppen\CoreBundle\Entity\Client;
 class ProcessController extends BaseController
 {
     /**
-     * @Route("/all", name="process_index_all", methods={"GET"})
-     */
-    public function all(Request $request, ProcessRepository $processRepository): Response
-    {
-        return $this->render('@KontrolgruppenCore/process/index.html.twig', [
-            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo()),
-            'processes' => $processRepository->findAll(),
-        ]);
-    }
-
-    /**
      * @Route("/", name="process_index", methods={"GET"})
      */
-    public function index(Request $request, ProcessRepository $processRepository): Response
+    public function index(Request $request, ProcessRepository $processRepository, FilterBuilderUpdaterInterface $lexikBuilderUpdater, PaginatorInterface $paginator): Response
     {
-        return $this->render('@KontrolgruppenCore/process/index.html.twig', [
+        $wildcard = $request->query->get('process_filter_wildcard');
+
+        $form = $this->get('form.factory')->create(ProcessFilterType::class);
+        $form->get('wildcard')->setData($wildcard);
+
+        $results = [];
+
+        $qb = null;
+
+        if ($request->query->has($form->getName())) {
+            // manually bind values from the request
+            $form->submit($request->query->get($form->getName()));
+
+            // initialize a query builder
+            $qb = $processRepository->createQueryBuilder('e');
+
+            // build the query from the given form object
+            $lexikBuilderUpdater->addFilterConditions($form, $qb);
+        }
+        else {
+            $qb = $processRepository->createQueryBuilder('e');
+
+            // Handle wildcard input.
+            if (null !== $wildcard) {
+                $qb->andWhere(
+                    $qb->expr()->orX(
+                        $qb->expr()->like('e.clientCPR', ':wildcard'),
+                        $qb->expr()->like('e.caseNumber', ':wildcard')
+                    )
+                )
+                    ->setParameter('wildcard',  '%'.$wildcard.'%');
+            }
+        }
+
+        $query = $qb->getQuery();
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            10
+        );
+
+        return $this->render('@KontrolgruppenCore/process/index.html.twig', array(
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo()),
-            'processes' => $processRepository->findBy([
-                'caseWorker' => $this->getUser(),
-            ]),
-        ]);
+            'processes' => $results,
+            'pagination' => $pagination,
+            'form' => $form->createView(),
+            'query' => $query,
+        ));
     }
 
     /**

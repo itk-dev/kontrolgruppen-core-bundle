@@ -7,7 +7,9 @@ module.exports = {
   entry: {
     'core': './Resources/assets/js/core.js',
     'login': './Resources/assets/js/login.js',
-    'reminderLatest': './Resources/assets/js/reminderLatest.js'
+    'reminderLatest': './Resources/assets/js/reminderLatest.js',
+    'processFilters': './Resources/assets/js/processFilters.js',
+    'globalSearch': './Resources/assets/js/globalSearch.js'
   },
   output: {
     path: path.resolve('./Resources/public/build'),

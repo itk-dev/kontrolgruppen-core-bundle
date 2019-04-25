@@ -68,6 +68,7 @@ common:
     boolean:
         'true': Ja
         'false': Nej
+    choice_all: Alle
     enum:
         date_interval:
             this_week: Denne uge
