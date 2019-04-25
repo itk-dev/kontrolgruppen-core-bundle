@@ -72,24 +72,6 @@ class ProcessFilterType extends AbstractType
             'label' => 'process.form.case_worker',
             'placeholder' => $this->translator->trans('common.choice_all'),
         ]);
-
-        $builder->add('wildcard', HiddenType::class, [
-            'label' => 'process.form.search',
-            'apply_filter' => function (QueryInterface $filterQuery, $field, $values) {
-                if (empty($values['value'])) {
-                    return null;
-                }
-
-                $expression = $filterQuery->getExpr()->orX(
-                    $filterQuery->getExpr()->like('e.clientCPR', ':wildcard'),
-                    $filterQuery->getExpr()->like('e.caseNumber', ':wildcard')
-                );
-
-                $parameters = array('wildcard' => '%'.$values['value'].'%');
-
-                return $filterQuery->createCondition($expression, $parameters);
-            }
-        ]);
     }
 
     public function getBlockPrefix()

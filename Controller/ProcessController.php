@@ -33,10 +33,7 @@ class ProcessController extends BaseController
      */
     public function index(Request $request, ProcessRepository $processRepository, FilterBuilderUpdaterInterface $lexikBuilderUpdater, PaginatorInterface $paginator): Response
     {
-        $wildcard = $request->query->get('process_filter_wildcard');
-
         $form = $this->get('form.factory')->create(ProcessFilterType::class);
-        $form->get('wildcard')->setData($wildcard);
 
         $results = [];
 
@@ -54,17 +51,6 @@ class ProcessController extends BaseController
         }
         else {
             $qb = $processRepository->createQueryBuilder('e');
-
-            // Handle wildcard input.
-            if (null !== $wildcard) {
-                $qb->andWhere(
-                    $qb->expr()->orX(
-                        $qb->expr()->like('e.clientCPR', ':wildcard'),
-                        $qb->expr()->like('e.caseNumber', ':wildcard')
-                    )
-                )
-                    ->setParameter('wildcard',  '%'.$wildcard.'%');
-            }
         }
 
         $query = $qb->getQuery();

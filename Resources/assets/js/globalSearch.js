@@ -1,11 +1,21 @@
+'use strict';
+
+var parse = require('url-parse');
+
 $(document).ready(function(){
-  $('#kontrolgruppenGlobalSearch').on('submit', function (event) {
+  let globalSearch = $('#kontrolgruppenGlobalSearch');
+
+  let url = parse(window.location, true);
+
+  $('#kontrolgruppenGlobalSearch > input').val(url.query.search);
+
+  globalSearch.on('submit', function (event) {
     event.preventDefault();
     event.stopPropagation();
 
     let input = $(this).find('input').val();
 
-    window.location.href = '/process/?process_filter[wildcard]=' + input;
+    window.location.href = '/search/?search='+input;
 
     return false;
   });
