@@ -8,6 +8,7 @@ module.exports = {
     'core': './Resources/assets/js/core.js',
     'login': './Resources/assets/js/login.js',
     'reminderLatest': './Resources/assets/js/reminderLatest.js',
+    'sortSubmit': './Resources/assets/js/sortSubmit.js',
     'processFilters': './Resources/assets/js/processFilters.js',
     'processStatusForm': './Resources/assets/js/processStatusForm.js',
     'globalSearch': './Resources/assets/js/globalSearch.js'

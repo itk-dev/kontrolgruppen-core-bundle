@@ -10,21 +10,18 @@
     </div>
   </div>
 
-  <div class="form form-inline">
-    <form method="get" action="." >
-      {{ form_rest(form) }}
-    </form>
-    <div class="form-group">
-      <label for="pagination-sort-select" class="sr-only">{{ 'journal_entry.table.filter.sort_label'|trans }}</label>
-      <select id="pagination-sort-select" class="form-control form-control-sm">
-        {{ knp_pagination_sortable(pagination, 'journal_entry.table.filter.sort_asc'|trans, 'e.id', { }, {'direction': 'asc'}, '@KontrolgruppenCore/main/sortable_option.html.twig') }}
-        {{ knp_pagination_sortable(pagination, 'journal_entry.table.filter.sort_desc'|trans, 'e.id', { }, {'direction': 'desc'}, '@KontrolgruppenCore/main/sortable_option.html.twig') }}
-      </select>
-    </div>
-  </div>
+  <form method="get" action="." class="form form-inline">
+    {{ form_rest(form) }}
 
-  {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list_pagination.html.twig' %}
+    <label for="sort-select" class="sr-only">{{ 'journal_entry.table.filter.sort_label'|trans }}</label>{{ app.request.get('sort_direction') }}
+    <select id="js-sort-select" class="form-control form-control-sm">
+      {% for sortDirection in ['asc', 'desc'] %}
+        <option value="{{ sortDirection }}" {% if sortDirection == app.request.get('sort_direction') %} selected="selected"{% endif %}>{{ ('journal_entry.table.filter.sort_'~sortDirection)|trans }}</option>
+      {% endfor %}
+    </select>
+  </form>
 
+  {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig' %}
 {% endblock %}
 
 {% block sidebar_right %}
@@ -35,7 +32,7 @@
 {% block javascripts %}
   {{ parent() }}
 
-  <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/processFilters.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/sortSubmit.js') }}"></script>
 
   <script type="text/javascript">
     $('#pagination-sort-select').on('change', function () {

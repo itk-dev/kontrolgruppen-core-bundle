@@ -16,6 +16,8 @@ use Kontrolgruppen\CoreBundle\Form\JournalEntryType;
 use Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
@@ -29,9 +31,20 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/", name="journal_entry_index", methods={"GET"})
      */
-    public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process, FilterBuilderUpdaterInterface $lexikBuilderUpdater, PaginatorInterface $paginator): Response
+    public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process, FilterBuilderUpdaterInterface $lexikBuilderUpdater, SessionInterface $session): Response
     {
         $form = $this->get('form.factory')->create(JournalFilterType::class);
+
+        $sortDirection = $request->query->get('sort_direction') ?: null;
+
+        if (null != $sortDirection) {
+            $session->set('journal_entry_index_sort_direction', $sortDirection);
+        }
+        else {
+            $sessionSortDirection = $session->get('journal_entry_index_sort_direction');
+
+            $sortDirection = $sessionSortDirection ?: 'desc';
+        }
 
         $qb = null;
 
@@ -49,18 +62,14 @@ class JournalEntryController extends BaseController
             $qb = $journalEntryRepository->createQueryBuilder('e');
         }
 
-        $query = $qb->getQuery();
+        $qb->orderBy('e.id', $sortDirection);
 
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->get('page', 1),
-            10
-        );
+        $query = $qb->getQuery();
 
         return $this->render('@KontrolgruppenCore/journal_entry/index.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'form' => $form->createView(),
-            'pagination' => $pagination,
+            'journalEntries' => $query->execute(),
             'process' => $process,
         ]);
     }

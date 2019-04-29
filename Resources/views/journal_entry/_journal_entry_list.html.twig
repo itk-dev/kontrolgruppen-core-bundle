@@ -5,7 +5,7 @@
       {% for journalEntry in journalEntries|slice(0, max_iterations) %}
         <div class="row bg-light mb-2">
           <div class="col-2 pt-2">
-            <span class="text-muted d-block">16-04-2019</span>
+            <span class="text-muted d-block">{{ journalEntry.createdAt|date('d/m Y') }}</span>
           </div>
           <div class="col-8 pt-2">
             <p class="mb-0"><strong><a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}">{{ journalEntry.title }}</a></strong></p>

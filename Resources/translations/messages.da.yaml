@@ -150,8 +150,8 @@ journal_entry:
         filter:
           all_entry: Alle indlæg
           sort_label: Sortering
-          sort_asc: Nyeste først
-          sort_desc: Ældste først
+          sort_desc: Nyeste først
+          sort_asc: Ældste først
 
 global_nav:
     menu_title:
