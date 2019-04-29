@@ -9,10 +9,11 @@
       <tr>
         <th>{{ knp_pagination_sortable(pagination, 'process.table.case_number'|trans , 'e.caseNumber')|raw }}</th>
         <th>{{ knp_pagination_sortable(pagination, 'process.table.client_cpr'|trans , 'e.clientCPR')|raw }}</th>
-        <th>{{ 'process.table.case_worker'|trans }}</th>
-        <th>{{ 'process.table.channel'|trans }}</th>
-        <th>{{ 'process.table.process_type'|trans }}</th>
-        <th>{{ 'process.table.service'|trans }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'process.table.case_worker'|trans , 'case_worker_id')|raw }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'process.table.channel'|trans , 'channel.id')|raw }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'process.table.process_type'|trans , 'processType.id')|raw }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'process.table.service'|trans , 'service.id')|raw }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'process.table.process_status'|trans , 'processStatus.id')|raw }}</th>
         <th class="float-right">{{ 'common.table.actions'|trans }}</th>
       </tr>
       </thead>
@@ -25,6 +26,7 @@
           <td>{{ process.channel }}</td>
           <td>{{ process.processType }}</td>
           <td>{{ process.service }}</td>
+          <td>{{ process.processStatus }}</td>
           <td class="text-right">
             {% include '@KontrolgruppenCore/process/_process_actions.html.twig' %}
           </td>

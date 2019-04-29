@@ -71,12 +71,28 @@ class ProcessController extends BaseController
             $qb->setParameter(':caseWorker', $this->getUser());
         }
 
+        // Add sortable fields.
+        $qb->leftJoin('e.caseWorker', 'caseWorker');
+        $qb->addSelect('partial caseWorker.{id}');
+
+        $qb->leftJoin('e.channel', 'channel');
+        $qb->addSelect('partial channel.{id,name}');
+
+        $qb->leftJoin('e.service', 'service');
+        $qb->addSelect('partial service.{id,name}');
+
+        $qb->leftJoin('e.processType', 'processType');
+        $qb->addSelect('partial processType.{id}');
+
+        $qb->leftJoin('e.processStatus', 'processStatus');
+        $qb->addSelect('partial processStatus.{id}');
+
         $query = $qb->getQuery();
 
         $pagination = $paginator->paginate(
             $query,
             $request->query->get('page', 1),
-            10
+            50
         );
 
         return $this->render(
