@@ -43,9 +43,21 @@ class ProcessController extends BaseController
 
         $qb = null;
 
+        $selectedCaseWorker = $form->get('caseWorker');
+
+        if (null === $selectedCaseWorker->getData()) {
+            $form->get('caseWorker')->setData($this->getUser()->getId());
+        }
+
         if ($request->query->has($form->getName())) {
+            $formParameters = $request->query->get($form->getName());
+
+            if (!isset($formParameters['caseWorker'])) {
+                $formParameters['caseWorker'] = $this->getUser()->getId();
+            }
+
             // manually bind values from the request
-            $form->submit($request->query->get($form->getName()));
+            $form->submit($formParameters);
 
             // initialize a query builder
             $qb = $processRepository->createQueryBuilder('e');
@@ -54,6 +66,9 @@ class ProcessController extends BaseController
             $lexikBuilderUpdater->addFilterConditions($form, $qb);
         } else {
             $qb = $processRepository->createQueryBuilder('e');
+
+            $qb->where('e.caseWorker = :caseWorker');
+            $qb->setParameter(':caseWorker', $this->getUser());
         }
 
         $query = $qb->getQuery();
