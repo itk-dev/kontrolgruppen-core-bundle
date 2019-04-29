@@ -1,11 +1,17 @@
-{#
 <div class="mb-3">
   <div class="row">
     <div class="col">
-      <span class="d-block"><span class="sr-only">{{ 'process.table.client_name'|trans }}</span>TODO: Client name</span>
-      <span class="d-block"><span class="sr-only">{{ 'process.table.client_cpr'|trans }}</span>{{ process.clientCPR }}</span>
-      <span class="d-block"><span class="sr-only">{{ 'process.table.client_adress'|trans }}</span>TODO: Client address</span>
+      <div class="bg-light p-3">
+        <p>{{ 'process.summary.title'|trans }}</p>
+        <p class="alert alert-info">
+          (@TODO: Styling)
+        </p>
+        <span class="d-block"><span class="sr-only">{{ 'process.table.case_number'|trans }}</span>{{ process.caseNumber }}</span>
+        <span class="d-block"><span class="sr-only">{{ 'process.table.client_name'|trans }}</span>{{ process.client.firstName }} {{ process.client.lastName }}</span>
+        <span class="d-block"><span class="sr-only">{{ 'process.table.client_cpr'|trans }}</span>{{ process.clientCPR }}</span>
+        <span class="d-block"><span class="sr-only">{{ 'process.table.client_adress'|trans }}</span>{{ process.client.address }}, {{ process.client.postalCode }} {{ process.client.city }}</span>
+        <span class="d-block"><span class="sr-only">{{ 'process.table.client_telephone'|trans }}</span>{{ process.client.telephone }}</span>
+      </div>
     </div>
   </div>
 </div>
-#}

@@ -213,6 +213,8 @@ process:
         title: Opret sag
     show:
         title: Sag
+    summary:
+        title: Sagsopsummering
     table:
         case_number: Sagsnummer
         case_worker: Sagsbehandler
@@ -224,7 +226,8 @@ process:
         internal_note: Seneste interne notater
         journal: Journal
         note: Seneste notater
-        process_type: Sagstype
+        process_status: Status
+        process_type: Type
         reminders: Påmindelser
         reminders_open: Vis påmindelser
         service: Ydelse
