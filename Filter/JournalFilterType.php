@@ -49,8 +49,10 @@ class JournalFilterType extends AbstractType
     {
         $builder->add('type', Filters\ChoiceFilterType::class, [
             'label' => 'process.form.process_type',
-            'placeholder' => $this->translator->trans('common.choice_all'),
+            'label_attr' => array('class'=>'sr-only'),
+            'placeholder' => $this->translator->trans('journal_entry.table.filter.all_entry'),
             'choices' => JournalEntryEnumType::getChoices(),
+            'attr'=> array('class'=>'mr-3 form-control-sm')
         ]);
     }
 

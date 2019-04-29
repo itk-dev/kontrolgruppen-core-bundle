@@ -10,14 +10,18 @@
     </div>
   </div>
 
-  <form method="get" action=".">
-    {{ form_rest(form) }}
-  </form>
-
-  <select id="pagination-sort-select">
-    {{ knp_pagination_sortable(pagination, 'common.sort.asc'|trans, 'e.id', { }, {'direction': 'asc'}, '@KontrolgruppenCore/main/sortable_option.html.twig') }}
-    {{ knp_pagination_sortable(pagination, 'common.sort.desc'|trans, 'e.id', { }, {'direction': 'desc'}, '@KontrolgruppenCore/main/sortable_option.html.twig') }}
-  </select>
+  <div class="form form-inline">
+    <form method="get" action="." >
+      {{ form_rest(form) }}
+    </form>
+    <div class="form-group">
+      <label for="pagination-sort-select" class="sr-only">{{ 'journal_entry.table.filter.sort_label'|trans }}</label>
+      <select id="pagination-sort-select" class="form-control form-control-sm">
+        {{ knp_pagination_sortable(pagination, 'journal_entry.table.filter.sort_asc'|trans, 'e.id', { }, {'direction': 'asc'}, '@KontrolgruppenCore/main/sortable_option.html.twig') }}
+        {{ knp_pagination_sortable(pagination, 'journal_entry.table.filter.sort_desc'|trans, 'e.id', { }, {'direction': 'desc'}, '@KontrolgruppenCore/main/sortable_option.html.twig') }}
+      </select>
+    </div>
+  </div>
 
   {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list_pagination.html.twig' %}
 

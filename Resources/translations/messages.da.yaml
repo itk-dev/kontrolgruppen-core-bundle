@@ -147,6 +147,11 @@ journal_entry:
         id: ID
         title: Overskrift
         type: Type
+        filter:
+          all_entry: Alle indlæg
+          sort_label: Sortering
+          sort_asc: Nyeste først
+          sort_desc: Ældste først
 
 global_nav:
     menu_title:
