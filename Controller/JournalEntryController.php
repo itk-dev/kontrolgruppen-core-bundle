@@ -29,6 +29,16 @@ use Knp\Component\Pager\PaginatorInterface;
 class JournalEntryController extends BaseController
 {
     /**
+     * @Route("/latest", name="journal_entry_latest", methods={"GET"})
+     */
+    public function getLatestJournalEntries(Process $process, JournalEntryRepository $journalEntryRepository)
+    {
+        return $this->render('@KontrolgruppenCore/journal_entry/_journal_entry_latest_list.html.twig', [
+            'journalEntries' => $journalEntryRepository->findBy(['process' => $process]),
+        ]);
+    }
+
+    /**
      * @Route("/", name="journal_entry_index", methods={"GET"})
      */
     public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process, FilterBuilderUpdaterInterface $lexikBuilderUpdater, SessionInterface $session): Response

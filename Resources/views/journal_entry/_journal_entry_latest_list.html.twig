@@ -1,0 +1,37 @@
+{% block journal_entry_list %}
+  <div class="mb-3 p-3">
+    {% for journalEntry in journalEntries %}
+      <div class="row bg-light mb-2">
+        <div class="col-2 pt-2">
+          <span class="text-muted d-block">{{ journalEntry.createdAt|date('d/m Y') }}</span>
+        </div>
+        <div class="col-8 pt-2">
+          <p class="mb-0"><strong><a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': journalEntry.process.id}) }}">{{ journalEntry.title }}</a></strong></p>
+        </div>
+        <div class="col-2 pt-2 text-right">
+          <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': journalEntry.process.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
+            <i class="fas {{ iconClass('show') }} fa-inverse"></i>
+          </a>
+          <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': journalEntry.process.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
+            <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
+          </a>
+        </div>
+        <div class="col-2 pb-2">
+          {% if journalEntry.type == 'DIARY' %}
+            <span class="badge badge-dark">{{ 'common.enum.journal_entry.diary'|trans }}</span>
+          {% elseif journalEntry.type == 'NOTE' %}
+            <span class="badge badge-info">{{ 'common.enum.journal_entry.note'|trans }}</span>
+          {% elseif journalEntry.type == 'INTERNAL_NOTE' %}
+            <span class="badge badge-warning">{{ 'common.enum.journal_entry.internal_note'|trans }}</span>
+          {% endif %}
+        </div>
+        <div class="col-10 pb-2">
+          {{ journalEntry.body|raw }}
+        </div>
+      </div>
+    {% else %}
+      {{ 'common.no_records_found'|trans }}
+    {% endfor %}
+  </div>
+
+{% endblock %}

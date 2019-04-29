@@ -6,8 +6,6 @@ $(document).ready(function(){
 
     let sortDirection = $(this).closest('form').find('#js-sort-select').val();
 
-    console.log(sortDirection);
-
     $(this).closest('form').append('<input type="hidden" name="sort_direction" value="'+sortDirection+'"/>');
 
     $(this).closest('form').submit();

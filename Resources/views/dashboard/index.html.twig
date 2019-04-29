@@ -26,6 +26,9 @@
       <h2><i class="fas {{ iconClass('not-visited') }} mr-3"></i>{{ 'dashboard.not_visited.title'|trans }}</h2>
       <p class="alert alert-info">TODO: Show cases not visited lately. Defined by user select.</p>
     </div>
+
+    {% include '@KontrolgruppenCore/journal_entry/_modal_quick_view.html.twig' %}
+
 {% endblock %}
 
 {% block sidebar_right %}
@@ -43,4 +46,5 @@
   {{ parent() }}
 
   <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/reminderLatest.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/journalQuickview.js') }}"></script>
 {% endblock %}
