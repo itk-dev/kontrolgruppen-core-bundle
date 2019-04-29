@@ -223,6 +223,10 @@ process:
         reminders: Påmindelser
         reminders_open: Vis påmindelser
         service: Ydelse
+        filter:
+          show_all_types: Alle sagstyper
+          show_all_status: Alle sagsstatuer
+          show_all_case_worker: Alle sagsbehandlere
     tooltip: Liste med alle sager
     btns:
         create_report: Opret sagsrapport

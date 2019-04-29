@@ -52,7 +52,9 @@ class ProcessFilterType extends AbstractType
                 return $carry;
             }, []),
             'label' => 'process.form.process_type',
-            'placeholder' => $this->translator->trans('common.choice_all'),
+            'label_attr' => array('class'=>'sr-only'),
+            'placeholder' => $this->translator->trans('process.table.filter.show_all_types'),
+            'attr'=> array('class'=>'form-control-sm ml-auto mr-3')
         ]);
 
         $builder->add('processStatus', Filters\ChoiceFilterType::class, [
@@ -61,7 +63,9 @@ class ProcessFilterType extends AbstractType
                 return $carry;
             }, []),
             'label' => 'process.form.process_status',
-            'placeholder' => $this->translator->trans('common.choice_all'),
+            'label_attr' => array('class'=>'sr-only'),
+            'placeholder' => $this->translator->trans('process.table.filter.show_all_status'),
+            'attr'=> array('class'=>'form-control-sm mr-3')
         ]);
 
         $builder->add('caseWorker', Filters\ChoiceFilterType::class, [
@@ -70,7 +74,9 @@ class ProcessFilterType extends AbstractType
                 return $carry;
             }, []),
             'label' => 'process.form.case_worker',
-            'placeholder' => $this->translator->trans('common.choice_all'),
+            'label_attr' => array('class'=>'sr-only'),
+            'placeholder' => $this->translator->trans('process.table.filter.show_all_case_worker'),
+            'attr'=> array('class'=>'form-control-sm')
         ]);
     }
 
