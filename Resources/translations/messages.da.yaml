@@ -199,6 +199,7 @@ process:
     form:
         case_worker: Sagbehandler
         change_process_status:
+            placeholder: Vælg sagsstatus
             save: Gem ny status
         channel: Kanal
         client_cpr: Klient CPR

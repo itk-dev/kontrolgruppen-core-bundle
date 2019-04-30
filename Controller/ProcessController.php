@@ -164,6 +164,9 @@ class ProcessController extends BaseController
                 null,
                 [
                     'label' => 'process.form.process_status',
+                    'label_attr' => array('class'=>'sr-only'),
+                    'placeholder' => 'process.form.change_process_status.placeholder',
+                    'attr'=> array('class'=>'form-control-lg')
                 ]
             )
             ->add(
