@@ -214,7 +214,7 @@ process:
     show:
         title: Sag
     summary:
-        title: Sagsopsummering
+        title: Klient
     table:
         case_number: Sagsnummer
         case_worker: Sagsbehandler
