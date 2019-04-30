@@ -66,18 +66,18 @@
           {% endblock %}
 
           <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
-            <a class="btn btn-sm btn-success btn-block" href="{{ path('process_new') }}">{{ 'navigation.main.new_process'|trans }}</a>
+            <a class="btn btn-sm btn-success btn-block" role="button" href="{{ path('process_new') }}">{{ 'navigation.main.new_process'|trans }}</a>
           </li>
 
           <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
             <a class="btn {% if activeUserReminders|length > 0 %}btn-warning{% else %}btn-secondary{% endif %} btn-sm btn-block"
                href="{{ path('user_reminder_index') }}" role="button">
-              {{ 'navigation.main.remainders.number_of_reminders'|trans({'%numberOfReminders%': activeUserReminders}) }}
+              <i class="fas {{ iconClass('reminder') }} mr-2" ></i><strong>{{ 'navigation.main.reminders.number_of_reminders'|trans({'%numberOfReminders%': activeUserReminders}) }}</strong>
             </a>
           </li>
 
           <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
-            <a class="btn btn-sm btn-outline-danger btn-block" href="{{ path('fos_user_security_logout') }}">{{ 'navigation.main.sign_out'|trans }}</a>
+            <a class="btn btn-sm btn-outline-danger btn-block" role="button" href="{{ path('fos_user_security_logout') }}">{{ 'navigation.main.sign_out'|trans }}</a>
           </li>
 
         </ul>

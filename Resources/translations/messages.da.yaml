@@ -188,8 +188,8 @@ navigation:
         sign_out: Log ud
         quick_links: Genveje
         new_process: Ny sag
-        remainders:
-            number_of_reminders: '%numberOfReminders% påmindelser'
+        reminders:
+            number_of_reminders: '%numberOfReminders%'
 
 process:
     actions:
@@ -238,8 +238,7 @@ process:
           show_all_case_worker: Alle sagsbehandlere
     tooltip: Liste med alle sager
     btns:
-        create_report: Opret sagsrapport
-        print: Udskriv
+        create_report: Sagsrapport
 
 process_status:
     edit:
@@ -248,6 +247,7 @@ process_status:
         name: Navn
         process_types: Sagstyper
         update: Gem
+        label: Vælg sagsstatus
     index:
         title: Sagsstatuser
     menu_title: Sagsstatuser
