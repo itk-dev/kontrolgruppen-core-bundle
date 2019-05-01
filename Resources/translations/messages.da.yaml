@@ -352,3 +352,8 @@ service:
 weighted_conclusion:
     form:
         update: Gem
+
+activity:
+  event:
+    process_created: Sag oprettet
+    process_completed: Sag afsluttet
