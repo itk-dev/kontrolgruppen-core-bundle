@@ -14,9 +14,13 @@ $(document).ready(function(){
   }
 
   $('.js-process-journal-quickview-button').on('click', function (event) {
-    $('#journalQuickviewModal').modal({});
-
+    let journalQuickviewModal = $('#journalQuickviewModal');
     let processId = $(this).data('process-id');
+
+    // Set path to all journal entries.
+    journalQuickviewModal.find('.js-journal-entry-modal-show-all-link').attr('href', '/process/'+processId+'/journal/');
+
+    journalQuickviewModal.modal({});
 
     loadJournal(processId);
   });

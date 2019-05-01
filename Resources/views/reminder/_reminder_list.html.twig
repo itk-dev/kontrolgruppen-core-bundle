@@ -20,8 +20,9 @@
           {{ 'common.actions.done'|trans }}: {{ (reminder.finished ? 'common.boolean.true' : 'common.boolean.false')|trans }}
         </div>
         <div class="col text-right">
-          <a href="{{ path('reminder_show', {'id': reminder.id, 'process': reminder.process.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
-            <i class="fas {{ iconClass('show') }} fa-inverse"></i>
+          <a href="{{ path('reminder_finish', {'id': reminder.id, 'process': reminder.process.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.finish'|trans }}">
+            {# @TODO: icon class for finish action #}
+            <i class="fas {{ iconClass('finish') }} fa-inverse"></i>
           </a>
           <a href="{{ path('reminder_edit', {'id': reminder.id, 'process': reminder.process.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
             <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
