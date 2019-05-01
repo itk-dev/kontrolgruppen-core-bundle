@@ -72,6 +72,9 @@ class JournalEntryController extends BaseController
             $qb = $journalEntryRepository->createQueryBuilder('e');
         }
 
+        $qb->where('e.process = :process');
+        $qb->setParameter('process', $process);
+
         $qb->orderBy('e.id', $sortDirection);
 
         $query = $qb->getQuery();

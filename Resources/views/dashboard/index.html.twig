@@ -8,18 +8,18 @@
     {% if reminders|length > 0 %}
     <div class="mb-3">
       <h2><i class="fas {{ iconClass('reminder') }} mr-3"></i>{{ 'dashboard.reminders.title'|trans }} ({{ reminders|length }})</h2>
-      {% include '@KontrolgruppenCore/reminder/_reminder_list.html.twig' with {reminders: reminders, limit: 2} %}
+      {% include '@KontrolgruppenCore/reminder/_reminder_list.html.twig' with {reminders: reminders} %}
     </div>
     {% endif %}
 
     <div class="mb-3">
       <h2><i class="fas {{ iconClass('not-assigned') }} mr-3"></i>{{ 'dashboard.not_assigned.title'|trans }} ({{ unassignedProcesses|length }})</h2>
-      {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: unassignedProcesses, limit: 2} %}
+      {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: unassignedProcesses} %}
     </div>
 
     <div class="mb-3">
       <h2><i class="fas {{ iconClass('process') }} mr-3"></i>{{ 'dashboard.my_processes.title'|trans }} ({{ myProcesses|length }})</h2>
-      {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: myProcesses, limit: 2} %}
+      {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: myProcesses} %}
     </div>
 
     <div>
