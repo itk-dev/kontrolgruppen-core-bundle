@@ -16,12 +16,10 @@ use Kontrolgruppen\CoreBundle\Form\JournalEntryType;
 use Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
-use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/process/{process}/journal")
@@ -39,11 +37,24 @@ class JournalEntryController extends BaseController
     }
 
     /**
-     * @Route("/", name="journal_entry_index", methods={"GET"})
+     * @Route("/", name="journal_entry_index", methods={"GET","POST"})
      */
     public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process, FilterBuilderUpdaterInterface $lexikBuilderUpdater, SessionInterface $session): Response
     {
-        $form = $this->get('form.factory')->create(JournalFilterType::class);
+        $journalEntry = new JournalEntry();
+        $journalEntry->setProcess($process);
+        $journalEntryForm = $this->createForm(JournalEntryType::class, $journalEntry);
+        $journalEntryForm->handleRequest($request);
+
+        if ($journalEntryForm->isSubmitted() && $journalEntryForm->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($journalEntry);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('journal_entry_index', ['process' => $process->getId()]);
+        }
+
+        $filterForm = $this->get('form.factory')->create(JournalFilterType::class);
 
         $sortDirection = $request->query->get('sort_direction') ?: null;
 
@@ -58,15 +69,15 @@ class JournalEntryController extends BaseController
 
         $qb = null;
 
-        if ($request->query->has($form->getName())) {
+        if ($request->query->has($filterForm->getName())) {
             // manually bind values from the request
-            $form->submit($request->query->get($form->getName()));
+            $filterForm->submit($request->query->get($filterForm->getName()));
 
             // initialize a query builder
             $qb = $journalEntryRepository->createQueryBuilder('e');
 
             // build the query from the given form object
-            $lexikBuilderUpdater->addFilterConditions($form, $qb);
+            $lexikBuilderUpdater->addFilterConditions($filterForm, $qb);
         }
         else {
             $qb = $journalEntryRepository->createQueryBuilder('e');
@@ -81,8 +92,9 @@ class JournalEntryController extends BaseController
 
         return $this->render('@KontrolgruppenCore/journal_entry/index.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
-            'form' => $form->createView(),
+            'form' => $filterForm->createView(),
             'journalEntries' => $query->execute(),
+            'journalEntryForm' => $journalEntryForm->createView(),
             'process' => $process,
         ]);
     }
