@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block sidebar_right %}
-  TODO: Include process status and process summary
+  {# {{ include('process/_sidebar_process_type.html.twig') }} TODO: Enable #}
+  {{ include('process/_sidebar_process_info.html.twig') }}
   {{ include('process/_sidebar_activity.html.twig') }}
 {% endblock %}
