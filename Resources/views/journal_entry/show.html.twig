@@ -1,4 +1,4 @@
-{% extends 'main/index.html.twig' %}
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
 
 {% block title %}{{ 'journal_entry.show.title'|trans }}{% endblock %}
 
@@ -27,15 +27,9 @@
           </tbody>
       </table>
     </div>
-    <a href="{{ path('journal_entry_index', {'process': process.id}) }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
 
+    <a href="{{ path('journal_entry_index', {'process': process.id}) }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
     <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-primary float-right pr-5 pl-5">{{ 'common.actions.edit'|trans }}</a>
 
-    {{ include('journal_entry/_delete_form.html.twig') }}
-{% endblock %}
-
-{% block sidebar_right %}
-  {# {{ include('process/_sidebar_process_type.html.twig') }} TODO: Enable #}
-  {{ include('process/_sidebar_process_info.html.twig') }}
-  {{ include('process/_sidebar_activity.html.twig') }}
+    {{ include('@KontrolgruppenCore/journal_entry/_delete_form.html.twig') }}
 {% endblock %}

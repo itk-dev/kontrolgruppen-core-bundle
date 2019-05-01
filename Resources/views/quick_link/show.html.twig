@@ -1,4 +1,4 @@
-{% extends 'main/index.html.twig' %}
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
 
 {% block title %}{{ 'quick_link.show.title'|trans }}{% endblock %}
 
@@ -28,5 +28,5 @@
 
     <a href="{{ path('quick_link_edit', {'id': quick_link.id}) }}" class="btn btn-primary float-right pr-5 pl-5">{{ 'common.actions.edit'|trans }}</a>
 
-    {{ include('quick_link/_delete_form.html.twig') }}
+    {{ include('@KontrolgruppenCore/quick_link/_delete_form.html.twig') }}
 {% endblock %}

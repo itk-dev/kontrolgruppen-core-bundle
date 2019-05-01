@@ -16,6 +16,8 @@ use Kontrolgruppen\CoreBundle\Service\MenuService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 
 class BaseController extends AbstractController
 {
@@ -68,6 +70,47 @@ class BaseController extends AbstractController
         // Add global navigation.
         $parameters['globalMenuItems'] = $this->menuService->getGlobalNavMenu($path);
 
+        // If this is a route beneath the proces/{id}/, attach changeProcessStatusForm.
+        if (1 === preg_match('/^\/process\/[0-9]+/', $path) && isset($parameters['process'])) {
+            $changeProcessStatusForm = $this->createChangeProcessStatusForm($parameters['process']);
+            $this->handleChangeProcessStatusForm($request, $changeProcessStatusForm);
+
+            $parameters['changeProcessStatusForm'] = $changeProcessStatusForm->createView();
+        }
+
         return parent::render($view, $parameters, $response);
+    }
+
+    public function createChangeProcessStatusForm($process) {
+        return $this->createFormBuilder($process)
+            ->add(
+                'processStatus',
+                null,
+                [
+                    'label' => 'process.form.process_status',
+                    'label_attr' => array('class'=>'sr-only'),
+                    'placeholder' => 'process.form.change_process_status.placeholder',
+                    'attr'=> array('class'=>'form-control-lg')
+                ]
+            )
+            ->add(
+                'save',
+                SubmitType::class,
+                [
+                    'label' => 'process.form.change_process_status.save',
+                    'attr' => [
+                        'style' => 'display: none',
+                    ],
+                ]
+            )
+            ->getForm();
+    }
+
+    public function handleChangeProcessStatusForm($request, $changeProcessStatusForm)
+    {
+        $changeProcessStatusForm->handleRequest($request);
+        if ($changeProcessStatusForm->isSubmitted() && $changeProcessStatusForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+        }
     }
 }

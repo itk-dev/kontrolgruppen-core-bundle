@@ -12,6 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Form\ClientType;
+use Kontrolgruppen\CoreBundle\Service\FormService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,11 +24,14 @@ use Kontrolgruppen\CoreBundle\Entity\Process;
 class ClientController extends BaseController
 {
     /**
-     * @Route("/", name="client_show", methods={"GET"})
+     * @Route("/", name="client_show", methods={"GET","POST"})
      */
     public function show(Request $request, Process $process): Response
     {
         $client = $process->getClient();
+
+        $changeProcessStatusForm = $this->createChangeProcessStatusForm($process);
+        $this->handleChangeProcessStatusForm($request, $changeProcessStatusForm);
 
         // Make sure a client has been created for the process.
         if (!isset($client)) {
@@ -42,6 +46,7 @@ class ClientController extends BaseController
         return $this->render('@KontrolgruppenCore/client/show.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'client' => $process->getClient(),
+            'changeProcessStatusForm' => $changeProcessStatusForm->createView(),
             'process' => $process,
         ]);
     }

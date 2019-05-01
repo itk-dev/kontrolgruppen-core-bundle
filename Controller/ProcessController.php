@@ -16,6 +16,7 @@ use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
+use Kontrolgruppen\CoreBundle\Service\FormService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -156,37 +157,6 @@ class ProcessController extends BaseController
      */
     public function show(Request $request, Process $process): Response
     {
-        // @TODO: Limit the available process statuses based on selected process type.
-        // @TODO: Replace with javascript widget.
-        $form = $this->createFormBuilder($process)
-            ->add(
-                'processStatus',
-                null,
-                [
-                    'label' => 'process.form.process_status',
-                    'label_attr' => array('class'=>'sr-only'),
-                    'placeholder' => 'process.form.change_process_status.placeholder',
-                    'attr'=> array('class'=>'form-control-lg')
-                ]
-            )
-            ->add(
-                'save',
-                SubmitType::class,
-                [
-                    'label' => 'process.form.change_process_status.save',
-                    'attr' => [
-                        'style' => 'display: none',
-                    ],
-                ]
-            )
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-        }
-
         // Latest journal entries.
         $latestDiaryEntries = $this->getDoctrine()->getRepository(
             JournalEntry::class
@@ -206,7 +176,6 @@ class ProcessController extends BaseController
                     $process
                 ),
                 'process' => $process,
-                'process_type_form' => $form->createView(),
                 'latestDiaryEntries' => $latestDiaryEntries,
                 'latestNoteEntries' => $latestNoteEntries,
                 'latestInternalNoteEntries' => $latestInternalNoteEntries,

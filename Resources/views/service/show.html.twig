@@ -1,4 +1,4 @@
-{% extends 'main/index.html.twig' %}
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
 
 {% block title %}{{ 'service.show.title'|trans }}{% endblock %}
 
@@ -24,5 +24,5 @@
 
     <a href="{{ path('service_edit', {'id': service.id}) }}" class="btn btn-primary float-right pr-5 pl-5">{{ 'common.actions.edit'|trans }}</a>
 
-  {{ include('service/_delete_form.html.twig') }}
+  {{ include('@KontrolgruppenCore/service/_delete_form.html.twig') }}
 {% endblock %}
