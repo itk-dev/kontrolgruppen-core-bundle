@@ -22,15 +22,12 @@ class WeightedConclusionType extends AbstractType
     {
         $builder
             ->add('argumentsFor', CKEditorType::class, [
-                'label' => 'conclusion.form.weighted.arguments_for',
                 'config' => ['toolbar' => 'editor'],
             ])
             ->add('argumentsAgainst', CKEditorType::class, [
-                'label' => 'conclusion.form.weighted.arguments_against',
                 'config' => ['toolbar' => 'editor'],
             ])
             ->add('conclusion', CKEditorType::class, [
-                'label' => 'conclusion.form.weighted.conclusion',
                 'config' => ['toolbar' => 'editor'],
             ])
         ;

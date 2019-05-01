@@ -23,6 +23,7 @@ class BaseConclusionType extends AbstractType
         $builder
             ->add('conclusion', CKEditorType::class, [
                 'label' => 'conclusion.form.base.conclusion',
+                'label_attr' => array('class' => 'sr-only'),
                 'config' => ['toolbar' => 'editor'],
             ])
         ;
