@@ -3,31 +3,41 @@
 {% block title %}{{ 'dashboard.index.title'|trans }}{% endblock %}
 
 {% block content %}
-    <h1 class="mb-3">{{ 'dashboard.index.title'|trans }}</h1>
+  <h1 class="mb-3">{{ 'dashboard.index.title'|trans }}</h1>
 
-    {% if reminders|length > 0 %}
+  {% if reminders|length > 0 %}
     <div class="mb-3">
       <h2><i class="fas {{ iconClass('reminder') }} mr-3"></i>{{ 'dashboard.reminders.title'|trans }} ({{ reminders|length }})</h2>
       {% include '@KontrolgruppenCore/reminder/_reminder_list.html.twig' with {reminders: reminders} %}
     </div>
-    {% endif %}
+  {% endif %}
 
+  {% if unassignedProcesses|length > 0 %}
     <div class="mb-3">
-      <h2 class="mb-3"><i class="fas {{ iconClass('not-assigned') }} mr-3"></i>{{ 'dashboard.not_assigned.title'|trans }} ({{ unassignedProcesses|length }})</h2>
+      <h2 class="mb-3"><i class="fas {{ iconClass('not-assigned') }} mr-3"></i>{{ 'dashboard.not_assigned.title'|trans }} ({{ unassignedProcesses|length }})
+      </h2>
       {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: unassignedProcesses} %}
     </div>
+  {% endif %}
 
+  {% if myProcessesLength > 0 %}
     <div class="mb-3">
-      <h2 class="mb-3"><i class="fas {{ iconClass('process') }} mr-3"></i>{{ 'dashboard.my_processes.title'|trans }} ({{ myProcesses|length }})</h2>
+      <h2 class="mb-3"><i class="fas {{ iconClass('process') }} mr-3"></i>{{ 'dashboard.my_processes.title'|trans }} ({{ myProcessesLength }})</h2>
+
+      <div class="form form-inline float-right m-2">
+        {{ form(myProcessesFilterForm) }}
+      </div>
+
       {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: myProcesses} %}
     </div>
+  {% endif %}
 
-    <div>
-      <h2 class="mb-3"><i class="fas {{ iconClass('not-visited') }} mr-3"></i>{{ 'dashboard.not_visited.title'|trans }}</h2>
-      <p class="alert alert-info">TODO: Show cases not visited lately. Defined by user select.</p>
-    </div>
+  <div>
+    <h2 class="mb-3"><i class="fas {{ iconClass('not-visited') }} mr-3"></i>{{ 'dashboard.not_visited.title'|trans }}</h2>
+    <p class="alert alert-info">TODO: Show cases not visited lately. Defined by user select.</p>
+  </div>
 
-    {% include '@KontrolgruppenCore/journal_entry/_modal_quick_view.html.twig' %}
+  {% include '@KontrolgruppenCore/journal_entry/_modal_quick_view.html.twig' %}
 
 {% endblock %}
 
@@ -44,6 +54,12 @@
 
 {% block javascripts %}
   {{ parent() }}
+
+  <script type="text/javascript">
+    $('#form select').on('change', function () {
+      $(this).closest('form').submit();
+    })
+  </script>
 
   <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/reminderLatest.js') }}"></script>
   <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/journalQuickview.js') }}"></script>

@@ -16,11 +16,9 @@ use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
-use Kontrolgruppen\CoreBundle\Service\FormService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Kontrolgruppen\CoreBundle\Entity\Client;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 
@@ -38,33 +36,33 @@ class ProcessController extends BaseController
         FilterBuilderUpdaterInterface $lexikBuilderUpdater,
         PaginatorInterface $paginator
     ): Response {
-        $form = $this->get('form.factory')->create(ProcessFilterType::class);
+        $filterForm = $this->get('form.factory')->create(ProcessFilterType::class);
 
         $results = [];
 
         $qb = null;
 
-        $selectedCaseWorker = $form->get('caseWorker');
+        $selectedCaseWorker = $filterForm->get('caseWorker');
 
         if (null === $selectedCaseWorker->getData()) {
-            $form->get('caseWorker')->setData($this->getUser()->getId());
+            $filterForm->get('caseWorker')->setData($this->getUser()->getId());
         }
 
-        if ($request->query->has($form->getName())) {
-            $formParameters = $request->query->get($form->getName());
+        if ($request->query->has($filterForm->getName())) {
+            $formParameters = $request->query->get($filterForm->getName());
 
             if (!isset($formParameters['caseWorker'])) {
                 $formParameters['caseWorker'] = $this->getUser()->getId();
             }
 
             // manually bind values from the request
-            $form->submit($formParameters);
+            $filterForm->submit($formParameters);
 
             // initialize a query builder
             $qb = $processRepository->createQueryBuilder('e');
 
             // build the query from the given form object
-            $lexikBuilderUpdater->addFilterConditions($form, $qb);
+            $lexikBuilderUpdater->addFilterConditions($filterForm, $qb);
         } else {
             $qb = $processRepository->createQueryBuilder('e');
 
@@ -104,7 +102,7 @@ class ProcessController extends BaseController
                 ),
                 'processes' => $results,
                 'pagination' => $pagination,
-                'form' => $form->createView(),
+                'form' => $filterForm->createView(),
                 'query' => $query,
             )
         );
