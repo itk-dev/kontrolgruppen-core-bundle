@@ -37,13 +37,13 @@ class ConclusionService
         return str_replace('Entity', 'Form', \get_class($entity).'Type');
     }
 
-    public function getTemplate($class)
+    public function getTemplate($class, $action = 'show')
     {
         switch ($class) {
             case BaseConclusion::class:
-                return '@KontrolgruppenCore/conclusion/show_base.html.twig';
+                return '@KontrolgruppenCore/conclusion/'.$action.'_base.html.twig';
             case WeightedConclusion::class:
-                return '@KontrolgruppenCore/conclusion/show_weighted.html.twig';
+                return '@KontrolgruppenCore/conclusion/'.$action.'_weighted.html.twig';
         }
 
         return false;

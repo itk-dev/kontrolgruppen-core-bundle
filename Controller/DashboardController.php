@@ -26,6 +26,7 @@ class DashboardController extends BaseController
      */
     public function index(ReminderRepository $reminderRepository, ProcessRepository $processRepository)
     {
+        // Coming reminders form.
         $comingReminderForm = $this->createFormBuilder()->add('date_interval', ChoiceType::class, [
             'choices' => DateIntervalType::getChoices(),
             'label' => 'dashboard.coming_reminders.label',

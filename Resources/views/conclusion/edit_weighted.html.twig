@@ -1,6 +1,12 @@
-{{ form_start(form) }}
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
 
-{% if form.vars.id == 'weighted_conclusion' %}
+{% block title %}{{ 'conclusion.edit.title'|trans }}{% endblock %}
+
+{% block content %}
+  <h1>{{ 'conclusion.edit.title'|trans }}</h1>
+
+  {{ form_start(form) }}
+
   <div class="row" id="{{ form.vars.id }}">
     <div class="col-sm-6">
       {{ form_label(form.argumentsFor, 'conclusion.form.weighted.arguments_for'|trans ) }}
@@ -15,9 +21,10 @@
       {{ form_widget(form.conclusion) }}
     </div>
   </div>
-{% else %}
-    {{ form_widget(form) }}
-{% endif %}
 
-<button class="btn btn-success float-right pl-5 pr-5">{{ (button_label is defined ? (form.vars.full_name ~ '.form.' ~ button_label|lower) : 'common.actions.save')|trans }}</button>
-{{ form_end(form) }}
+  <button class="btn btn-success float-right pl-5 pr-5">
+    {{ (button_label is defined ? (form.vars.full_name ~ '.form.' ~ button_label|lower) : 'common.actions.save')|trans }}
+  </button>
+
+  {{ form_end(form) }}
+{% endblock %}
