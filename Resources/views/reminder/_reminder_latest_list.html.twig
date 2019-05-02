@@ -1,12 +1,16 @@
-{% set max_iterations = limit is defined ? min(reminders|length, limit) : reminders|length %}
 <div class="list-group">
-{% for reminder in reminders|slice(0, max_iterations) %}
-  <a href="{{ path('reminder_show', {'id': reminder.id, 'process': reminder.process.id}) }}" class="list-group-item list-group-item-action list-group-item-warning{% if not reminder.finished and reminder.date|date('d-m-Y') < "now"|date('d-m-Y') %}list-group-item-warning{% endif %}">
-    <span class="d-block float-left text-muted">{{ reminder.date ? reminder.date|date('d-m-Y H:i') : '' }}</span>
-    <span class="d-block float-right text-muted">{{ 'process.show.title'|trans }}: {{ reminder.process.caseNumber }}</span>
-    <span class="d-block w-100 float-left text-dark"><i class="fas {{ iconClass('process') }} mr-3"></i>{{ reminder.message }}</span>
-  </a>
-{% else %}
-  <li class="list-group-item">{{ 'common.no_records_found'|trans }}</li>
-{% endfor %}
+  {% for day,dateReminders in reminders %}
+    <span>{{ ('common.day.'~(day|date('l')))|lower|trans }}</span>
+    <span>{{ day|date('d-m-Y') }}</span>
+    {% for reminder in dateReminders %}
+      <a href="{{ path('reminder_show', {'id': reminder.id, 'process': reminder.process.id}) }}"
+         class="list-group-item list-group-item-action list-group-item-warning{% if not reminder.finished and reminder.date|date('d-m-Y') < "now"|date('d-m-Y') %}list-group-item-warning{% endif %}">
+        <span class="d-block float-left text-muted">kl. {{ reminder.date|date('H:i') }}</span>
+        <span class="d-block float-right text-muted">{{ 'process.show.title'|trans }}: {{ reminder.process.caseNumber }}</span>
+        <span class="d-block w-100 float-left text-dark"><i class="fas {{ iconClass('process') }} mr-3"></i>{{ reminder.message }}</span>
+      </a>
+    {% else %}
+      <li class="list-group-item">{{ 'common.no_records_found'|trans }}</li>
+    {% endfor %}
+  {% endfor %}
 </div>

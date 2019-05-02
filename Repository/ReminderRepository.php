@@ -110,12 +110,13 @@ class ReminderRepository extends ServiceEntityRepository
     /**
      * @param \Kontrolgruppen\CoreBundle\Entity\User $user
      * @param string                                 $interval from DateIntervalType
+     * @param boolean $sortByDate
      *
      * @return mixed
      *
      * @throws \Exception
      */
-    public function findComingUserReminders(User $user, string $interval = null)
+    public function findComingUserReminders(User $user, string $interval = null, $sortByDate = false)
     {
         $now = new \DateTime();
 
@@ -152,6 +153,25 @@ class ReminderRepository extends ServiceEntityRepository
                 ->setParameter('to', (new \DateTime())->add(new \DateInterval('P1M')));
 
             $qb->andWhere('MONTH(CURRENT_DATE()) = MONTH(reminder.date)');
+        }
+
+        if ($sortByDate) {
+            $results = $qb->getQuery()->execute();
+
+            $dateResults = [];
+
+            foreach ($results as $result) {
+                $day = $result->getDate()->format('Y-m-d');
+                $day = (new \DateTime($day))->format('c');
+
+                if (!isset($dateResults[$day])) {
+                    $dateResults[$day] = [];
+                }
+
+                $dateResults[$day][] = $result;
+            }
+
+            return $dateResults;
         }
 
         return $qb->getQuery()->execute();

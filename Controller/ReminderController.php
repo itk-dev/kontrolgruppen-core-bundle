@@ -46,7 +46,7 @@ class ReminderController extends BaseController
     public function getLatestReminders(string $interval, ReminderRepository $reminderRepository)
     {
         return $this->render('@KontrolgruppenCore/reminder/_reminder_latest_list.html.twig', [
-            'reminders' => $reminderRepository->findComingUserReminders($this->getUser(), $interval),
+            'reminders' => $reminderRepository->findComingUserReminders($this->getUser(), $interval, true),
         ]);
     }
 }
