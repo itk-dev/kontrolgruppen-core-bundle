@@ -1,13 +1,19 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Filter;
 
 use Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessTypeRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
-use Lexik\Bundle\FormFilterBundle\Filter\Query\QueryInterface;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
@@ -25,10 +31,10 @@ class ProcessFilterType extends AbstractType
     /**
      * ProcessFilterType constructor.
      *
-     * @param ProcessTypeRepository $processTypeRepository
+     * @param ProcessTypeRepository   $processTypeRepository
      * @param ProcessStatusRepository $processStatusRepository
-     * @param UserRepository $userRepository
-     * @param Security $security
+     * @param UserRepository          $userRepository
+     * @param Security                $security
      */
     public function __construct(
         ProcessTypeRepository $processTypeRepository,
@@ -49,34 +55,37 @@ class ProcessFilterType extends AbstractType
         $builder->add('processType', Filters\ChoiceFilterType::class, [
             'choices' => array_reduce($this->processTypeRepository->findAll(), function ($carry, $processType) {
                 $carry[$processType->getName()] = $processType->getId();
+
                 return $carry;
             }, []),
             'label' => 'process.form.process_type',
-            'label_attr' => array('class'=>'sr-only'),
+            'label_attr' => ['class' => 'sr-only'],
             'placeholder' => $this->translator->trans('process.table.filter.show_all_types'),
-            'attr'=> array('class'=>'form-control-sm ml-auto mr-3')
+            'attr' => ['class' => 'form-control-sm ml-auto mr-3'],
         ]);
 
         $builder->add('processStatus', Filters\ChoiceFilterType::class, [
             'choices' => array_reduce($this->processStatusRepository->findAll(), function ($carry, $processStatus) {
                 $carry[$processStatus->getName()] = $processStatus->getId();
+
                 return $carry;
             }, []),
             'label' => 'process.form.process_status',
-            'label_attr' => array('class'=>'sr-only'),
+            'label_attr' => ['class' => 'sr-only'],
             'placeholder' => $this->translator->trans('process.table.filter.show_all_status'),
-            'attr'=> array('class'=>'form-control-sm mr-3')
+            'attr' => ['class' => 'form-control-sm mr-3'],
         ]);
 
         $builder->add('caseWorker', Filters\ChoiceFilterType::class, [
             'choices' => array_reduce($this->userRepository->findAll(), function ($carry, $caseWorker) {
                 $carry[$caseWorker->getUsername()] = $caseWorker->getId();
+
                 return $carry;
             }, []),
             'label' => 'process.form.case_worker',
-            'label_attr' => array('class'=>'sr-only'),
+            'label_attr' => ['class' => 'sr-only'],
             'placeholder' => $this->translator->trans('process.table.filter.show_all_case_worker'),
-            'attr'=> array('class'=>'form-control-sm')
+            'attr' => ['class' => 'form-control-sm'],
         ]);
     }
 
@@ -90,7 +99,7 @@ class ProcessFilterType extends AbstractType
         $resolver->setDefaults(
             [
                 'csrf_protection' => false,
-                'validation_groups' => array('filtering'),
+                'validation_groups' => ['filtering'],
             ]
         );
     }

@@ -58,10 +58,9 @@ class JournalEntryController extends BaseController
 
         $sortDirection = $request->query->get('sort_direction') ?: null;
 
-        if (null != $sortDirection) {
+        if (null !== $sortDirection) {
             $session->set('journal_entry_index_sort_direction', $sortDirection);
-        }
-        else {
+        } else {
             $sessionSortDirection = $session->get('journal_entry_index_sort_direction');
 
             $sortDirection = $sessionSortDirection ?: 'desc';
@@ -78,8 +77,7 @@ class JournalEntryController extends BaseController
 
             // build the query from the given form object
             $lexikBuilderUpdater->addFilterConditions($filterForm, $qb);
-        }
-        else {
+        } else {
             $qb = $journalEntryRepository->createQueryBuilder('e');
         }
 

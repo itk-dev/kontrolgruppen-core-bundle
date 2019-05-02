@@ -17,7 +17,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 
 class BaseController extends AbstractController
 {
@@ -81,16 +80,17 @@ class BaseController extends AbstractController
         return parent::render($view, $parameters, $response);
     }
 
-    public function createChangeProcessStatusForm($process) {
+    public function createChangeProcessStatusForm($process)
+    {
         return $this->createFormBuilder($process)
             ->add(
                 'processStatus',
                 null,
                 [
                     'label' => 'process.form.process_status',
-                    'label_attr' => array('class'=>'sr-only'),
+                    'label_attr' => ['class' => 'sr-only'],
                     'placeholder' => 'process.form.change_process_status.placeholder',
-                    'attr'=> array('class'=>'form-control-lg')
+                    'attr' => ['class' => 'form-control-lg'],
                 ]
             )
             ->add(

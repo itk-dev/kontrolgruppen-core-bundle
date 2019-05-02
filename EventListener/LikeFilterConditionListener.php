@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\EventListener;
 
 use Lexik\Bundle\FormFilterBundle\Event\GetFilterConditionEvent;
@@ -22,7 +30,7 @@ class LikeFilterConditionListener implements EventSubscriberInterface
 
     public function onGetFilterCondition(GetFilterConditionEvent $event)
     {
-        $expr   = $event->getFilterQuery()->getExpr();
+        $expr = $event->getFilterQuery()->getExpr();
         $values = $event->getValues();
 
         if (!empty($values['value'])) {
@@ -31,9 +39,8 @@ class LikeFilterConditionListener implements EventSubscriberInterface
 
             // Set the condition on the given event
             $event->setCondition(
-
-                $expr->like($event->getField(), ':' . $paramName),
-                array($paramName => '%' .$values['value'] . '%')
+                $expr->like($event->getField(), ':'.$paramName),
+                [$paramName => '%'.$values['value'].'%']
             );
         }
     }

@@ -109,8 +109,8 @@ class ReminderRepository extends ServiceEntityRepository
 
     /**
      * @param \Kontrolgruppen\CoreBundle\Entity\User $user
-     * @param string                                 $interval from DateIntervalType
-     * @param boolean $sortByDate
+     * @param string                                 $interval   from DateIntervalType
+     * @param bool                                   $sortByDate
      *
      * @return mixed
      *

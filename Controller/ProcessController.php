@@ -96,7 +96,7 @@ class ProcessController extends BaseController
 
         return $this->render(
             '@KontrolgruppenCore/process/index.html.twig',
-            array(
+            [
                 'menuItems' => $this->menuService->getProcessMenu(
                     $request->getPathInfo()
                 ),
@@ -104,7 +104,7 @@ class ProcessController extends BaseController
                 'pagination' => $pagination,
                 'form' => $filterForm->createView(),
                 'query' => $query,
-            )
+            ]
         );
     }
 

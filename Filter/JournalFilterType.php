@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Filter;
 
 use Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType;
@@ -7,8 +15,6 @@ use Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessTypeRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
 use Symfony\Component\Form\AbstractType;
-use Lexik\Bundle\FormFilterBundle\Filter\Query\QueryInterface;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
@@ -26,10 +32,10 @@ class JournalFilterType extends AbstractType
     /**
      * ProcessFilterType constructor.
      *
-     * @param ProcessTypeRepository $processTypeRepository
+     * @param ProcessTypeRepository   $processTypeRepository
      * @param ProcessStatusRepository $processStatusRepository
-     * @param UserRepository $userRepository
-     * @param Security $security
+     * @param UserRepository          $userRepository
+     * @param Security                $security
      */
     public function __construct(
         ProcessTypeRepository $processTypeRepository,
@@ -49,10 +55,10 @@ class JournalFilterType extends AbstractType
     {
         $builder->add('type', Filters\ChoiceFilterType::class, [
             'label' => 'process.form.process_type',
-            'label_attr' => array('class'=>'sr-only'),
+            'label_attr' => ['class' => 'sr-only'],
             'placeholder' => $this->translator->trans('journal_entry.table.filter.all_entry'),
             'choices' => JournalEntryEnumType::getChoices(),
-            'attr'=> array('class'=>'mr-3 form-control-sm')
+            'attr' => ['class' => 'mr-3 form-control-sm'],
         ]);
     }
 
@@ -66,7 +72,7 @@ class JournalFilterType extends AbstractType
         $resolver->setDefaults(
             [
                 'csrf_protection' => false,
-                'validation_groups' => array('filtering'),
+                'validation_groups' => ['filtering'],
             ]
         );
     }
