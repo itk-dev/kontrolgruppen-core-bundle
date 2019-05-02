@@ -137,6 +137,8 @@ dashboard:
         title: Seneste aktivitet
 
 journal_entry:
+    actions:
+        create: Opret nyt indlæg
     edit:
         title: Rediger journal
     form:
@@ -313,6 +315,8 @@ quick_link:
         name: Navn
 
 reminder:
+    actions:
+        create: Opret ny påmindelse
     edit:
         title: Rediger påmindelse
     form:

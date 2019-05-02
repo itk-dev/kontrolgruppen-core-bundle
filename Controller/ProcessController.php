@@ -16,6 +16,7 @@ use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
+use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -111,18 +112,14 @@ class ProcessController extends BaseController
     /**
      * @Route("/new", name="process_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, ProcessManager $processManager): Response
     {
         $process = new Process();
         $form = $this->createForm(ProcessType::class, $process);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $process->setCaseNumber($this->getNewCaseNumber());
-
-            $conclusionClass = $process->getProcessType()->getConclusionClass();
-            $conclusion = new $conclusionClass();
-            $process->setConclusion($conclusion);
+            $process = $processManager->newProcess($process);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($process);
@@ -228,22 +225,5 @@ class ProcessController extends BaseController
         }
 
         return $this->redirectToRoute('process_index');
-    }
-
-    /**
-     * Generate a new case number.
-     *
-     * @TODO: Move to service.
-     *
-     * @return string case number of format YY-XXXX where YY is the year and XXXX an increasing counter
-     */
-    private function getNewCaseNumber()
-    {
-        $casesInYear = $this->getDoctrine()
-            ->getRepository(Process::class)
-            ->findAllFromYear(date('Y'));
-        $caseNumber = str_pad(\count($casesInYear) + 1, 5, '0', STR_PAD_LEFT);
-
-        return date('y').'-'.$caseNumber;
     }
 }
