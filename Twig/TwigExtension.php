@@ -69,6 +69,8 @@ class TwigExtension extends AbstractExtension
                 return 'fa-file-download';
             case 'print':
                 return 'fa-print';
+            case 'complete':
+                return 'fa-check';
 
             default:
                 return '';

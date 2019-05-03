@@ -1,3 +1,3 @@
-<div class="mb-3">
-  {{ form(process_type_form) }}
-</div>
+{% if changeProcessStatusForm is defined %}
+  {{ form(changeProcessStatusForm, {'attr': {'id': 'process_status_form'}}) }}
+{% endif %}

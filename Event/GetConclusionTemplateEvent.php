@@ -18,15 +18,18 @@ class GetConclusionTemplateEvent extends Event
 
     private $class;
     private $template;
+    private $action;
 
     /**
      * GetConclusionClasssEvent constructor.
      *
-     * @param string
+     * @param string $class
+     * @param string $action
      */
-    public function __construct($class)
+    public function __construct($class, $action)
     {
         $this->class = $class;
+        $this->action = $action;
     }
 
     public function getClass()
@@ -47,5 +50,15 @@ class GetConclusionTemplateEvent extends Event
     public function setTemplate($template)
     {
         $this->template = $template;
+    }
+
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    public function setAction($action)
+    {
+        $this->action = $action;
     }
 }

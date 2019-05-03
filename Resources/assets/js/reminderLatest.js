@@ -9,7 +9,8 @@ function getLatestReminders(interval) {
     .then(function(body) {
       $('#coming-reminders-spinner').hide();
       $('#coming-reminders-content').html(body);
-    })
+    }
+  );
 }
 
 let formDateInterval = $('#form_date_interval');

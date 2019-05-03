@@ -1,4 +1,4 @@
-{% extends 'main/index.html.twig' %}
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
 
 {% block title %}{{ 'reminder.show.title'|trans }}{% endblock %}
 
@@ -10,10 +10,6 @@
     <div class="table-responsive">
         <table class="table table-sm table-striped table-hover table-borderless thead-light">
             <tbody>
-                <tr>
-                    <th>{{ 'reminder.table.id'|trans }}</th>
-                    <td>{{ reminder.id }}</td>
-                </tr>
                 <tr>
                     <th>{{ 'reminder.table.date'|trans }}</th>
                     <td>{{ reminder.date ? reminder.date|date('d/m Y H:i') : '' }}</td>
@@ -34,10 +30,5 @@
 
     <a href="{{ path('reminder_edit', {'id': reminder.id, 'process': process.id}) }}" class="btn btn-primary float-right pr-5 pl-5">{{ 'common.actions.edit'|trans }}</a>
 
-  {{ include('reminder/_delete_form.html.twig') }}
-{% endblock %}
-
-{% block sidebar_right %}
-  {{ include('process/_sidebar_process_info.html.twig') }}
-  {{ include('process/_sidebar_activity.html.twig') }}
+  {{ include('@KontrolgruppenCore/reminder/_delete_form.html.twig') }}
 {% endblock %}

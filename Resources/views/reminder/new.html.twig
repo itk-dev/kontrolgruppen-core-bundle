@@ -1,16 +1,11 @@
-{% extends 'main/index.html.twig' %}
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
 
 {% block title %}{{ 'reminder.new.title'|trans }}{% endblock %}
 
 {% block content %}
     <h1>{{ 'reminder.new.title'|trans }}</h1>
 
-    {{ include('reminder/_form.html.twig') }}
+    {{ include('@KontrolgruppenCore/reminder/_form.html.twig') }}
 
     <a href="{{ path('reminder_index', {process: process.id}) }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
-{% endblock %}
-
-{% block sidebar_right %}
-  {{ include('process/_sidebar_process_info.html.twig') }}
-  {{ include('process/_sidebar_activity.html.twig') }}
 {% endblock %}

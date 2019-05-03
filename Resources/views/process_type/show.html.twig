@@ -1,4 +1,4 @@
-{% extends 'main/index.html.twig' %}
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
 
 {% block title %}{{ 'process_type.show.title'|trans }}{% endblock %}
 
@@ -21,5 +21,5 @@
     </div>
     <a href="{{ path('process_type_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
     <a href="{{ path('process_type_edit', {'id': process_type.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
-    {{ include('process_type/_delete_form.html.twig') }}
+    {{ include('@KontrolgruppenCore/process_type/_delete_form.html.twig') }}
 {% endblock %}

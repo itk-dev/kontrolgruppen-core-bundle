@@ -1,4 +1,4 @@
-{% extends 'main/index.html.twig' %}
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
 
 {% block title %}{{ 'reminder.index.title'|trans }}{% endblock %}
 
@@ -8,11 +8,6 @@
   {% include '@KontrolgruppenCore/reminder/_reminder_table.html.twig' with { reminders: reminders } %}
 
   {% if process is defined %}
-    <a href="{{ path('reminder_new', {'process': process.id}) }}">{{ 'common.actions.create'|trans }}</a>
+    <a href="{{ path('reminder_new', {'process': process.id}) }}">{{ 'reminder.btns.create'|trans }}</a>
   {% endif %}
-{% endblock %}
-
-{% block sidebar_right %}
-  TODO: Include process status and process summary
-  {{ include('process/_sidebar_activity.html.twig') }}
 {% endblock %}

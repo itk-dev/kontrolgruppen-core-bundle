@@ -1,0 +1,13 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block javascripts %}
+  {{ parent() }}
+
+  <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/processStatusForm.js') }}"></script>
+{% endblock %}
+
+{% block sidebar_right %}
+  {{ include('@KontrolgruppenCore/process/_sidebar_process_type.html.twig') }}
+  {{ include('@KontrolgruppenCore/process/_sidebar_process_info.html.twig') }}
+  {{ include('@KontrolgruppenCore/process/_sidebar_activity.html.twig') }}
+{% endblock %}

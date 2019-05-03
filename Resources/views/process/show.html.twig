@@ -1,14 +1,12 @@
-{% extends 'main/index.html.twig' %}
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
 
 {% block title %}{{ 'process.show.title'|trans }}{% endblock %}
 
 {% block content %}
-
   <div class="row">
     <div class="col">
       <h1 class="float-left">{{ 'process.show.title'|trans }} {{ process.caseNumber }}</h1>
-      <a href="" class="btn btn-sm btn-outline-dark float-right"><i class="fas {{ iconClass('print') }} mr-2" ></i>{{ 'process.btns.print'|trans }}</a>
-      <a href="TODO: report path" class="btn btn-sm btn-outline-primary float-right mr-3"><i class="fas {{ iconClass('report') }} mr-2" ></i>{{ 'process.btns.create_report'|trans }}</a>
+      <a href="TODO: report path" class="btn btn-sm btn-outline-primary float-right"><i class="fas {{ iconClass('report') }} mr-2" ></i>{{ 'process.btns.create_report'|trans }}</a>
       <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-sm btn-outline-warning float-right mr-3"><i class="fas {{ iconClass('reminder') }} mr-2" ></i>{{ 'reminder.btns.create'|trans }}</a>
     </div>
   </div>
@@ -87,13 +85,7 @@
 
       <a href="{{ path('process_edit', {'id': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'process.edit.title'|trans }}</a>
 
-      {{ include('process/_delete_form.html.twig') }}
+      {{ include('@KontrolgruppenCore/process/_delete_form.html.twig') }}
     </div>
   </div>
-{% endblock %}
-
-{% block sidebar_right %}
-  {{ include('process/_sidebar_process_info.html.twig') }}
-  {{ include('process/_sidebar_process_type.html.twig') }}
-  {{ include('process/_sidebar_activity.html.twig') }}
 {% endblock %}

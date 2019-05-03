@@ -7,7 +7,12 @@ module.exports = {
   entry: {
     'core': './Resources/assets/js/core.js',
     'login': './Resources/assets/js/login.js',
-    'reminderLatest': './Resources/assets/js/reminderLatest.js'
+    'reminderLatest': './Resources/assets/js/reminderLatest.js',
+    'sortSubmit': './Resources/assets/js/sortSubmit.js',
+    'journalQuickview': './Resources/assets/js/journalQuickview.js',
+    'processFilters': './Resources/assets/js/processFilters.js',
+    'processStatusForm': './Resources/assets/js/processStatusForm.js',
+    'globalSearch': './Resources/assets/js/globalSearch.js'
   },
   output: {
     path: path.resolve('./Resources/public/build'),

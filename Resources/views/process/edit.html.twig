@@ -1,18 +1,13 @@
-{% extends 'main/index.html.twig' %}
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
 
 {% block title %}{{ 'process.edit.title'|trans }}{% endblock %}
 
 {% block content %}
       <h1>{{ 'process.edit.title'|trans }}</h1>
 
-      {{ include('process/_form.html.twig', {'button_label': 'Update'}) }}
+      {{ include('@KontrolgruppenCore/process/_form.html.twig', {'button_label': 'Update'}) }}
 
-      {{ include('process/_delete_form.html.twig') }}
+      {{ include('@KontrolgruppenCore/process/_delete_form.html.twig') }}
+
       <a href="{{ path('process_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
-
-
-{% endblock %}
-{% block sidebar_right %}
-  TODO: Include process status and process summary
-  {{ include('process/_sidebar_activity.html.twig') }}
 {% endblock %}

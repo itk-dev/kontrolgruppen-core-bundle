@@ -23,6 +23,8 @@ channel:
     table:
         id: ID
         name: Navn
+    btns:
+        create_new: Opret ny kanal
 
 client:
     edit:
@@ -68,6 +70,15 @@ common:
     boolean:
         'true': Ja
         'false': Nej
+    choice_all: Alle
+    day:
+        monday: Mandag
+        tuesday: Tirsdag
+        wednesday: Onsdag
+        thursday: Torsdag
+        friday: Fredag
+        saturday: Lørdag
+        sunday: Søndag
     enum:
         date_interval:
             this_week: Denne uge
@@ -128,6 +139,8 @@ dashboard:
         title: Seneste aktivitet
 
 journal_entry:
+    actions:
+        create: Opret nyt indlæg
     edit:
         title: Rediger journal
     form:
@@ -146,6 +159,11 @@ journal_entry:
         id: ID
         title: Overskrift
         type: Type
+        filter:
+          all_entry: Alle indlæg
+          sort_label: Sortering
+          sort_desc: Nyeste først
+          sort_asc: Ældste først
 
 global_nav:
     menu_title:
@@ -182,8 +200,8 @@ navigation:
         sign_out: Log ud
         quick_links: Genveje
         new_process: Ny sag
-        remainders:
-            number_of_reminders: '%numberOfReminders% påmindelser'
+        reminders:
+            number_of_reminders: '%numberOfReminders%'
 
 process:
     actions:
@@ -193,7 +211,8 @@ process:
     form:
         case_worker: Sagbehandler
         change_process_status:
-            save: Skift status
+            placeholder: Vælg sagsstatus
+            save: Gem ny status
         channel: Kanal
         client_cpr: Klient CPR
         process_status: Sagsstatus
@@ -207,25 +226,34 @@ process:
         title: Opret sag
     show:
         title: Sag
+    summary:
+        title: Klient
     table:
         case_number: Sagsnummer
         case_worker: Sagsbehandler
         channel: Kanal
-        client_name: Klient navn
+        client_adress: Klient adresse
         client_cpr: Klient CPR
+        client_name: Klient navn
+        client_telephone: Klient telefonnummer
         diary: Senest i dagbogen
         id: ID
         internal_note: Seneste interne notater
         journal: Journal
         note: Seneste notater
-        process_type: Sagstype
+        process_status: Status
+        process_type: Type
         reminders: Påmindelser
         reminders_open: Vis påmindelser
         service: Ydelse
+        filter:
+          show_all_types: Alle sagstyper
+          show_all_status: Alle sagsstatuer
+          show_all_case_worker: Alle sagsbehandlere
     tooltip: Liste med alle sager
     btns:
-        create_report: Opret sagsrapport
-        print: Udskriv
+        create_new: Opret ny sag
+        create_report: Sagsrapport
 
 process_status:
     edit:
@@ -234,6 +262,7 @@ process_status:
         name: Navn
         process_types: Sagstyper
         update: Gem
+        label: Vælg sagsstatus
     index:
         title: Sagsstatuser
     menu_title: Sagsstatuser
@@ -247,6 +276,8 @@ process_status:
         process_types: Tilkoblede sagstyper
     select:
         label: Sagsstatus
+    btns:
+        create_new: Opret ny sagsstatus
 
 process_type:
     edit:
@@ -268,6 +299,8 @@ process_type:
         id: ID
         name: Navn
         process_statuses: Tilkoblede sagsstatuser
+    btns:
+        create_new: Opret ny sagstype
 
 quick_link:
     edit:
@@ -287,8 +320,12 @@ quick_link:
         href: Link
         id: ID
         name: Navn
+    btns:
+        create_new: Opret ny genvej
 
 reminder:
+    actions:
+        create: Opret ny påmindelse
     edit:
         title: Rediger påmindelse
     form:
@@ -332,7 +369,14 @@ service:
     table:
         id: ID
         name: Navn
+    btns:
+      create_new: Opret ny ydelse
 
 weighted_conclusion:
     form:
         update: Gem
+
+activity:
+  event:
+    process_created: Sag oprettet
+    process_completed: Sag afsluttet

@@ -10,6 +10,8 @@
 
 namespace Kontrolgruppen\CoreBundle\EventListener;
 
+use Kontrolgruppen\CoreBundle\Entity\BaseConclusion;
+use Kontrolgruppen\CoreBundle\Entity\WeightedConclusion;
 use Kontrolgruppen\CoreBundle\Event\GetConclusionTemplateEvent;
 use Kontrolgruppen\CoreBundle\Service\ConclusionService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -58,6 +60,12 @@ class ConclusionListener implements EventSubscriberInterface
 
     public function onGetConclusionTemplate(GetConclusionTemplateEvent $event)
     {
-        $event->setTemplate($this->conclusionService->getTemplate($event->getClass()));
+        // Only react to locally based conclusion templates.
+        switch ($event->getClass()) {
+            case WeightedConclusion::class:
+            case BaseConclusion::class:
+                $event->setTemplate($this->conclusionService->getTemplate($event->getClass(), $event->getAction()));
+                break;
+        }
     }
 }

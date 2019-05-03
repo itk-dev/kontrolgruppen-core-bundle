@@ -37,5 +37,21 @@
 {% block javascripts %}
   <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/core.js') }}"></script>
 {% endblock %}
+
+{# TODO: Remove in production
+  - - - -
+#}
+<style>
+  body {
+    padding-bottom: 56px;
+  }
+</style>
+<nav class="navbar fixed-bottom bg-danger justify-content-center">
+  <span class="navbar-text">
+    <p class="text-light mb-0"><strong>KUN DEMO - Indtast ingen personfølsomme data</strong></p>
+  </span>
+</nav>
+{# - - - - #}
+
 </body>
 </html>

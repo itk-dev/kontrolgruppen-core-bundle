@@ -11,12 +11,15 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
+use Kontrolgruppen\CoreBundle\Filter\JournalFilterType;
 use Kontrolgruppen\CoreBundle\Form\JournalEntryType;
 use Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 
 /**
  * @Route("/process/{process}/journal")
@@ -24,15 +27,72 @@ use Kontrolgruppen\CoreBundle\Entity\Process;
 class JournalEntryController extends BaseController
 {
     /**
-     * @Route("/", name="journal_entry_index", methods={"GET"})
+     * @Route("/latest", name="journal_entry_latest", methods={"GET"})
      */
-    public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process): Response
+    public function getLatestJournalEntries(Process $process, JournalEntryRepository $journalEntryRepository)
     {
+        return $this->render('@KontrolgruppenCore/journal_entry/_journal_entry_latest_list.html.twig', [
+            'journalEntries' => $journalEntryRepository->findBy(['process' => $process]),
+        ]);
+    }
+
+    /**
+     * @Route("/", name="journal_entry_index", methods={"GET","POST"})
+     */
+    public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process, FilterBuilderUpdaterInterface $lexikBuilderUpdater, SessionInterface $session): Response
+    {
+        $journalEntry = new JournalEntry();
+        $journalEntry->setProcess($process);
+        $journalEntryForm = $this->createForm(JournalEntryType::class, $journalEntry);
+        $journalEntryForm->handleRequest($request);
+
+        if ($journalEntryForm->isSubmitted() && $journalEntryForm->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($journalEntry);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('journal_entry_index', ['process' => $process->getId()]);
+        }
+
+        $filterForm = $this->get('form.factory')->create(JournalFilterType::class);
+
+        $sortDirection = $request->query->get('sort_direction') ?: null;
+
+        if (null !== $sortDirection) {
+            $session->set('journal_entry_index_sort_direction', $sortDirection);
+        } else {
+            $sessionSortDirection = $session->get('journal_entry_index_sort_direction');
+
+            $sortDirection = $sessionSortDirection ?: 'desc';
+        }
+
+        $qb = null;
+
+        if ($request->query->has($filterForm->getName())) {
+            // manually bind values from the request
+            $filterForm->submit($request->query->get($filterForm->getName()));
+
+            // initialize a query builder
+            $qb = $journalEntryRepository->createQueryBuilder('e');
+
+            // build the query from the given form object
+            $lexikBuilderUpdater->addFilterConditions($filterForm, $qb);
+        } else {
+            $qb = $journalEntryRepository->createQueryBuilder('e');
+        }
+
+        $qb->where('e.process = :process');
+        $qb->setParameter('process', $process);
+
+        $qb->orderBy('e.id', $sortDirection);
+
+        $query = $qb->getQuery();
+
         return $this->render('@KontrolgruppenCore/journal_entry/index.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
-            'journalEntries' => $journalEntryRepository->findBy([
-                'process' => $process,
-            ]),
+            'form' => $filterForm->createView(),
+            'journalEntries' => $query->execute(),
+            'journalEntryForm' => $journalEntryForm->createView(),
             'process' => $process,
         ]);
     }

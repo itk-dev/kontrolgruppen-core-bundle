@@ -1,10 +1,10 @@
-{% extends 'main/index.html.twig' %}
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
 
 {% block title %}{{ 'process_type.index.title'|trans }}{% endblock %}
 
 {% block content %}
     <h1 class="float-left">{{ 'process_type.index.title'|trans }}</h1>
-    <a href="{{ path('process_type_new') }}" class="btn btn-success btn-lg float-right">{{ 'common.actions.create'|trans }}</a>
+    <a href="{{ path('process_type_new') }}" class="btn btn-success btn-lg float-right">{{ 'process_type.btns.create_new'|trans }}</a>
     <div class="table-responsive">
         <table class="table table-striped table-hover table-borderless thead-light">
             <thead>

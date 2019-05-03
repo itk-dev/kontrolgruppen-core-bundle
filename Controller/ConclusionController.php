@@ -41,7 +41,7 @@ class ConclusionController extends BaseController
             $this->getDoctrine()->getManager()->flush();
         }
 
-        $event = new GetConclusionTemplateEvent(\get_class($conclusion));
+        $event = new GetConclusionTemplateEvent(\get_class($conclusion), 'show');
         $template = $dispatcher->dispatch(GetConclusionTemplateEvent::NAME, $event)->getTemplate();
 
         return $this->render($template, [
@@ -54,7 +54,7 @@ class ConclusionController extends BaseController
     /**
      * @Route("/edit", name="conclusion_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Process $process, ConclusionService $conclusionService): Response
+    public function edit(Request $request, Process $process, ConclusionService $conclusionService, EventDispatcherInterface $dispatcher): Response
     {
         $conclusion = $process->getConclusion();
 
@@ -69,7 +69,10 @@ class ConclusionController extends BaseController
             ]);
         }
 
-        return $this->render('@KontrolgruppenCore/conclusion/edit.html.twig', [
+        $event = new GetConclusionTemplateEvent(\get_class($conclusion), 'edit');
+        $template = $dispatcher->dispatch(GetConclusionTemplateEvent::NAME, $event)->getTemplate();
+
+        return $this->render($template, [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'conclusion' => $conclusion,
             'form' => $form->createView(),
