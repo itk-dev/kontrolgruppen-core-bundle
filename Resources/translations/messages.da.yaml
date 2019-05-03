@@ -23,6 +23,8 @@ channel:
     table:
         id: ID
         name: Navn
+    btns:
+        create_new: Opret ny kanal
 
 client:
     edit:
@@ -250,6 +252,7 @@ process:
           show_all_case_worker: Alle sagsbehandlere
     tooltip: Liste med alle sager
     btns:
+        create_new: Opret ny sag
         create_report: Sagsrapport
 
 process_status:
@@ -273,6 +276,8 @@ process_status:
         process_types: Tilkoblede sagstyper
     select:
         label: Sagsstatus
+    btns:
+        create_new: Opret ny sagsstatus
 
 process_type:
     edit:
@@ -294,6 +299,8 @@ process_type:
         id: ID
         name: Navn
         process_statuses: Tilkoblede sagsstatuser
+    btns:
+        create_new: Opret ny sagstype
 
 quick_link:
     edit:
@@ -313,6 +320,8 @@ quick_link:
         href: Link
         id: ID
         name: Navn
+    btns:
+        create_new: Opret ny genvej
 
 reminder:
     actions:
@@ -360,6 +369,8 @@ service:
     table:
         id: ID
         name: Navn
+    btns:
+      create_new: Opret ny ydelse
 
 weighted_conclusion:
     form:

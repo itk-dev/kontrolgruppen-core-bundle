@@ -8,6 +8,6 @@
   {% include '@KontrolgruppenCore/reminder/_reminder_table.html.twig' with { reminders: reminders } %}
 
   {% if process is defined %}
-    <a href="{{ path('reminder_new', {'process': process.id}) }}">{{ 'common.actions.create'|trans }}</a>
+    <a href="{{ path('reminder_new', {'process': process.id}) }}">{{ 'reminder.btns.create'|trans }}</a>
   {% endif %}
 {% endblock %}
