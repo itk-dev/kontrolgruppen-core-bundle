@@ -1,6 +1,6 @@
 <div class="list-group">
   {% for day,dateReminders in reminders %}
-    <span>{{ ('common.day.'~(day|date('l')))|lower|trans }}</span>
+    <span>{{ ('common.day.' ~ (day|date('l')))|lower|trans }}</span>
     <span>{{ day|date('d-m-Y') }}</span>
     {% for reminder in dateReminders %}
       <a href="{{ path('reminder_show', {'id': reminder.id, 'process': reminder.process.id}) }}"
