@@ -164,6 +164,11 @@ journal_entry:
           sort_label: Sortering
           sort_desc: Nyeste først
           sort_asc: Ældste først
+journal_quickview:
+    title: Senste indlæg i journal
+    actions:
+        show_all: Vis hele journalen
+
 
 global_nav:
     menu_title:
@@ -206,6 +211,7 @@ navigation:
 process:
     actions:
         reminders: Påmindelser
+        journal_quickview: Senest i journal
     edit:
         title: Rediger sag
     form:
