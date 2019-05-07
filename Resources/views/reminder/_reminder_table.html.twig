@@ -14,7 +14,7 @@
       </thead>
       <tbody>
       {% for reminder in reminders|slice(0, max_iterations) %}
-        <tr class="{% if not reminder.finished and reminder.date|date('Y-m-d') < "now"|date('Y-m-d') %}bg-warning{% endif %}">
+        <tr class="{% if not reminder.finished and reminder.date|date('Y-m-d') < "now"|date('Y-m-d') %}bg-warning border-bottom border-warning-light{% endif %}">
             <td><a href="{{ path('process_show', {id: reminder.process.id}) }}">{{ reminder.process.caseNumber }}</a></td>
             <td>{{ reminder.process.processType }}</td>
             <td>{{ reminder.message }}</td>
