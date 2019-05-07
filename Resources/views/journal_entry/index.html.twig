@@ -25,7 +25,7 @@
     <label for="sort-select" class="sr-only">{{ 'journal_entry.table.filter.sort_label'|trans }}</label>
     <select id="js-sort-select" class="form-control form-control-sm">
       {% for sortDirection in ['asc', 'desc'] %}
-        <option value="{{ sortDirection }}" {% if sortDirection == app.request.get('sort_direction') %} selected="selected"{% endif %}>{{ ('journal_entry.table.filter.sort_'~sortDirection)|trans }}</option>
+        <option value="{{ sortDirection }}" {% if sortDirection == app.request.get('sort_direction') %} selected="selected"{% endif %}>{{ ('journal_entry.table.filter.sort_' ~ sortDirection)|trans }}</option>
       {% endfor %}
     </select>
   </form>
