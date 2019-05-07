@@ -9,10 +9,12 @@
       <button data-toggle="collapse" data-target="#journalEntryNew" aria-expanded="false" class="btn btn-success btn-lg float-right">{{ 'journal_entry.actions.create'|trans }}</button>
     </div>
     <div class="col-12 collapse" id="journalEntryNew">
-      {{ form_start(journalEntryForm) }}
-      {{ form_widget(journalEntryForm) }}
-      <button class="btn btn-success pl-5 pr-5 float-right">{{ 'common.actions.save'|trans }}</button>
-      {{ form_end(journalEntryForm) }}
+      <div class="bg-light border-bottom p-3 mb-3">
+        {{ form_start(journalEntryForm) }}
+        {{ form_widget(journalEntryForm) }}
+          <button class="btn btn-success pl-5 pr-5 btn-block">{{ 'common.actions.save'|trans }}</button>
+        {{ form_end(journalEntryForm) }}
+      </div>
     </div>
   </div>
 
