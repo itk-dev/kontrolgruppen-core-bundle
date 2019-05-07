@@ -11,11 +11,11 @@
             <p class="mb-0"><strong><a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}">{{ journalEntry.title }}</a></strong></p>
           </div>
           <div class="col-2 pt-2 text-right">
-            <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
-              <i class="fas {{ iconClass('show') }} fa-inverse"></i>
+            <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-dark mb-1" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
+              <i class="fas {{ iconClass('show') }} fa-inverse fa-fw"></i>
             </a>
-            <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
-              <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
+            <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-primary mb-1" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
+              <i class="fas {{ iconClass('edit') }} fa-inverse fa-fw"></i></a>
             </a>
           </div>
           <div class="col-2 pb-2">
