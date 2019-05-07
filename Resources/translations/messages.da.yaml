@@ -165,7 +165,7 @@ journal_entry:
           sort_desc: Nyeste først
           sort_asc: Ældste først
 journal_quickview:
-    title: Senste indlæg i journal
+    title: Seneste indlæg i journal
     actions:
         show_all: Vis hele journalen
 
