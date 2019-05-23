@@ -2,7 +2,7 @@
 
 {% block content %}
   <div class="js-search-text" data-search="{{ search }}">
-    {{ 'search.results_for'|trans }}: "{{ search }}"
+    {{ 'search.results_for'|trans({'%searchTerm%': search}) }}
   </div>
 
   <div class="search-result">

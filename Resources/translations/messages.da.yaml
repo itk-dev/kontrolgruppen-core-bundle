@@ -367,6 +367,7 @@ reminder:
         title: Påmindelse
 
 search:
+    results_for: 'Viser resultater for "%searchTerm%".'
     table:
         case_number: Sagsnummer
         case_worker: Sagsbehandler
@@ -380,6 +381,7 @@ search:
         process_type: Type
         reminders: Påmindelser
         service: Ydelse
+    total_results: 'Antal resultater: %numberOfResults%.'
 
 service:
     edit:
