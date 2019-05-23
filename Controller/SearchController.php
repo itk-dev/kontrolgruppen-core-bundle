@@ -1,0 +1,58 @@
+<?php
+
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
+namespace Kontrolgruppen\CoreBundle\Controller;
+
+use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
+
+/**
+ * Class SearchController.
+ *
+ * @Route("/search")
+ */
+class SearchController extends BaseController
+{
+    /**
+     * @Route("/", name="search_index")
+     */
+    public function index(Request $request, ProcessRepository $processRepository, PaginatorInterface $paginator)
+    {
+        $search = $request->query->get('search');
+
+        $qb = $processRepository->createQueryBuilder('e');
+        $qb->leftJoin('e.client', 'client');
+        $qb->addSelect('client');
+        $qb->where('e.caseNumber LIKE :search');
+        $qb->orWhere('client.cpr LIKE :search');
+        $qb->orWhere('client.firstName LIKE :search');
+        $qb->orWhere('client.lastName LIKE :search');
+        $qb->orWhere('client.telephone LIKE :search');
+        $qb->orWhere('client.address LIKE :search');
+        $qb->setParameter(':search', '%'.$search.'%');
+
+        $query = $qb->getQuery();
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            50
+        );
+
+        return $this->render(
+            '@KontrolgruppenCore/search/index.html.twig', [
+                'pagination' => $pagination,
+                'search' => $search,
+            ]
+        );
+    }
+}
