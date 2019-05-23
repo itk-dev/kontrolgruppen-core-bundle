@@ -65,7 +65,8 @@ class SearchController extends BaseController
         );
 
         return $this->render(
-            '@KontrolgruppenCore/search/index.html.twig', [
+            '@KontrolgruppenCore/search/index.html.twig',
+            [
                 'pagination' => $pagination,
                 'search' => $search,
             ]
