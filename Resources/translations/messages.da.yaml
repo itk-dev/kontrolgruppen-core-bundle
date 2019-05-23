@@ -1,3 +1,8 @@
+activity:
+    event:
+        process_created: Sag oprettet
+        process_completed: Sag afsluttet
+
 admin:
     index:
         title: System indstillinger
@@ -240,6 +245,8 @@ process:
         channel: Kanal
         client_adress: Klient adresse
         client_cpr: Klient CPR
+        client_first_name: Fornavn
+        client_last_name: Efternavn
         client_name: Klient navn
         client_telephone: Klient telefonnummer
         diary: Senest i dagbogen
@@ -359,6 +366,21 @@ reminder:
     show:
         title: Påmindelse
 
+search:
+    table:
+        case_number: Sagsnummer
+        case_worker: Sagsbehandler
+        channel: Kanal
+        client_adress: Adresse
+        client_cpr: CPR
+        client_first_name: Fornavn
+        client_last_name: Efternavn
+        client_telephone: Telefon
+        process_status: Status
+        process_type: Type
+        reminders: Påmindelser
+        service: Ydelse
+
 service:
     edit:
         title: Rediger ydelse
@@ -381,8 +403,3 @@ service:
 weighted_conclusion:
     form:
         update: Gem
-
-activity:
-  event:
-    process_created: Sag oprettet
-    process_completed: Sag afsluttet

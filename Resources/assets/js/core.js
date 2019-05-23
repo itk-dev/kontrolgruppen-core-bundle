@@ -17,11 +17,9 @@ import { faHouseDamage } from "@fortawesome/free-solid-svg-icons/faHouseDamage";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons/faFileDownload";
 import { faPrint } from "@fortawesome/free-solid-svg-icons/faPrint";
 import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
-
 library.add(faTachometerAlt, faTasks, faIdCard, faUsersCog, faCog, faClock, faUserPlus, faArchive, faEye, faPencilAlt, faHouseDamage, faFileDownload, faPrint, faCheck);
 dom.watch();
 
-// any CSS you require will output into a single css file (app.css in this case)
 require('../css/core.scss');
 
 import 'whatwg-fetch';

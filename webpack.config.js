@@ -12,7 +12,8 @@ module.exports = {
     'journalQuickview': './Resources/assets/js/journalQuickview.js',
     'processFilters': './Resources/assets/js/processFilters.js',
     'processStatusForm': './Resources/assets/js/processStatusForm.js',
-    'globalSearch': './Resources/assets/js/globalSearch.js'
+    'globalSearch': './Resources/assets/js/globalSearch.js',
+    'searchPage': './Resources/assets/js/searchPage.js'
   },
   output: {
     path: path.resolve('./Resources/public/build'),

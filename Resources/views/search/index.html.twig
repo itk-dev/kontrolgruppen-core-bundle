@@ -1,21 +1,17 @@
-{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
 
 {% block content %}
   <div class="js-search-text" data-search="{{ search }}">
     {{ 'search.results_for'|trans }}: "{{ search }}"
   </div>
 
-  <div>
-    {% include '@KontrolgruppenCore/process/_process_table_pagination.html.twig' %}
+  <div class="search-result">
+    {% include '@KontrolgruppenCore/search/_search_process.html.twig' %}
   </div>
 {% endblock %}
 
 {% block javascripts %}
   {{ parent() }}
 
-  <script type="text/javascript">
-    console.log(
-      $('.js-search-text').data('search')
-    );
-  </script>
+  <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/searchPage.js') }}"></script>
 {% endblock %}
