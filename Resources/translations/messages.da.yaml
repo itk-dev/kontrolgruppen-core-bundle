@@ -103,6 +103,7 @@ common:
         updated_by: Opdateret af
         by: af
     title: Kontrolgruppen
+    loading: Henter data ...
 
 conclusion:
     edit:
@@ -367,7 +368,7 @@ reminder:
         title: Påmindelse
 
 search:
-    results_for: 'Viser resultater for "%searchTerm%".'
+    results_for: '%numberOfResults% resultater for søgning på: %searchTerm%'
     table:
         case_number: Sagsnummer
         case_worker: Sagsbehandler
@@ -382,6 +383,7 @@ search:
         reminders: Påmindelser
         service: Ydelse
     total_results: 'Antal resultater: %numberOfResults%.'
+    loading_results: Søger ...
 
 service:
     edit:
