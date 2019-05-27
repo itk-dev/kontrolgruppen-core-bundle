@@ -384,6 +384,7 @@ search:
         service: Ydelse
     total_results: 'Antal resultater: %numberOfResults%.'
     loading_results: Søger ...
+    no_results_found: Søgning på %searchTerm% gav ingen resultater.
 
 service:
     edit:

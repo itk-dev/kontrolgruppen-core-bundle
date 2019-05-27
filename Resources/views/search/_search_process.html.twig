@@ -14,12 +14,6 @@
         <th>{{ knp_pagination_sortable(pagination, 'search.table.client_adress'|trans , 'client.address')|raw }}</th>
         <th>{{ knp_pagination_sortable(pagination, 'search.table.client_telephone'|trans , 'client.telephone')|raw }}</th>
         <th>{{ knp_pagination_sortable(pagination, 'search.table.case_worker'|trans , 'caseWorker.id')|raw }}</th>
-{#
-        <th>{{ knp_pagination_sortable(pagination, 'search.table.channel'|trans , 'channel.id')|raw }}</th>
-        <th>{{ knp_pagination_sortable(pagination, 'search.table.process_type'|trans , 'processType.id')|raw }}</th>
-        <th>{{ knp_pagination_sortable(pagination, 'search.table.service'|trans , 'service.id')|raw }}</th>
-        <th>{{ knp_pagination_sortable(pagination, 'search.table.process_status'|trans , 'processStatus.id')|raw }}</th>
-#}
       </tr>
       </thead>
       <tbody class="js-search-result-rows">
@@ -32,27 +26,17 @@
           <td>{{ process.client.address }}</td>
           <td>{{ process.client.telephone }}</td>
           <td>{{ process.caseWorker }}</td>
-{#
-          <td>{{ process.channel }}</td>
-          <td>{{ process.processType }}</td>
-          <td>{{ process.service }}</td>
-          <td>{{ process.processStatus }}</td>
-#}
         </tr>
       {% else %}
         <tr>
-          <td colspan="7">{{ 'common.no_records_found'|trans }}</td>
+          <td colspan="7">{{ 'search.no_results_found'|trans({'%searchTerm%': search}) }}</td>
         </tr>
       {% endfor %}
       </tbody>
     </table>
+  </div>
 
-    {# @TODO: Style pagination and total results. #}
-
-    {{ 'search.total_results'|trans({'%numberOfResults%': pagination.getTotalItemCount}) }}
-
-    <div class="navigation">
-      {{ knp_pagination_render(pagination) }}
-   </div>
+  <div class="navigation">
+    {{ knp_pagination_render(pagination) }}
   </div>
 {% endblock %}

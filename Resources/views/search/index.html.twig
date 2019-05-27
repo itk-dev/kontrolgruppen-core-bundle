@@ -1,8 +1,9 @@
 {% extends '@KontrolgruppenCore/main/index.html.twig' %}
 
 {% block content %}
+  <h1>Søgning</h1>
   <div class="js-search-text" data-search="{{ search }}">
-    {{ 'search.results_for'|trans({'%searchTerm%': search}) }}
+    <h2>{{ 'search.results_for'|trans({'%searchTerm%': search, '%numberOfResults%': pagination.getTotalItemCount}) }}</h2>
   </div>
 
   <div class="search-result">

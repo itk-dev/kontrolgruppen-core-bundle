@@ -63,6 +63,11 @@ class SearchController extends BaseController
             $request->query->get('page', 1),
             50
         );
+        $pagination->setCustomParameters([
+          'align' => 'center',
+          'size' => 'small',
+          'style' => 'bottom',
+        ]);
 
         return $this->render(
             '@KontrolgruppenCore/search/index.html.twig',

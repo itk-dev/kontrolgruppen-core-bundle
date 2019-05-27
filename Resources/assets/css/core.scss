@@ -103,3 +103,8 @@ h2 {
 h3 {
   font-size: $h3-font-size*.7;
 }
+
+table th a.asc,
+table th a.desc {
+  text-decoration: underline;
+}
