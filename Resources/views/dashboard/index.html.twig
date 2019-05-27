@@ -55,12 +55,6 @@
 {% block javascripts %}
   {{ parent() }}
 
-  <script type="text/javascript">
-    $('#form select').on('change', function () {
-      $(this).closest('form').submit();
-    })
-  </script>
-
   <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/reminderLatest.js') }}"></script>
   <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/journalQuickview.js') }}"></script>
 {% endblock %}
