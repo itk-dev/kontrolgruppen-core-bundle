@@ -193,7 +193,7 @@ menu:
         journal: Journal
         process_number: 'Sag: %processNumber%'
         process_show: Sagsopsummering
-        process_status: Sagsstatuser
+        process_status: Sagsstatusser
         process_type: Sagstyper
         quick_link: Genveje
         reminder: Påmindelser
@@ -254,7 +254,7 @@ process:
         service: Ydelse
         filter:
           show_all_types: Alle sagstyper
-          show_all_status: Alle sagsstatuer
+          show_all_status: Alle sagsstatusser
           show_all_case_worker: Alle sagsbehandlere
     tooltip: Liste med alle sager
     btns:
@@ -270,8 +270,8 @@ process_status:
         update: Gem
         label: Vælg sagsstatus
     index:
-        title: Sagsstatuser
-    menu_title: Sagsstatuser
+        title: Sagsstatusser
+    menu_title: Sagsstatusser
     new:
         title: Opret sagsstatus
     show:
@@ -291,7 +291,7 @@ process_type:
     form:
         conclusion_class: Konklusionstype
         name: Navn
-        process_statuses: Sagsstatuser
+        process_statuses: Sagsstatusser
         update: Gem
     index:
         title: Sagstyper
@@ -304,7 +304,7 @@ process_type:
         conclusion_class: Konklusionstype
         id: ID
         name: Navn
-        process_statuses: Tilkoblede sagsstatuser
+        process_statuses: Tilkoblede sagsstatusser
     btns:
         create_new: Opret ny sagstype
 
