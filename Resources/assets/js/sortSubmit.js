@@ -1,6 +1,6 @@
 $(document).ready(function(){
   // Attach sort direction and submit on change
-  $('form select').on('change', function () {
+  $('form.js-filters select').on('change', function () {
     $('.js-process-table-results').hide();
     $('#js-process-spinner').show();
 
