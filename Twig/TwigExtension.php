@@ -71,7 +71,12 @@ class TwigExtension extends AbstractExtension
                 return 'fa-print';
             case 'complete':
                 return 'fa-check';
-
+            case 'sort':
+                return 'fa-sort';
+            case 'sort-up':
+                return 'fa-sort-up';
+            case 'sort-down':
+                return 'fa-sort-down';
             default:
                 return '';
         }

@@ -17,7 +17,10 @@ import { faHouseDamage } from "@fortawesome/free-solid-svg-icons/faHouseDamage";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons/faFileDownload";
 import { faPrint } from "@fortawesome/free-solid-svg-icons/faPrint";
 import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
-library.add(faTachometerAlt, faTasks, faIdCard, faUsersCog, faCog, faClock, faUserPlus, faArchive, faEye, faPencilAlt, faHouseDamage, faFileDownload, faPrint, faCheck);
+import { faSort } from "@fortawesome/free-solid-svg-icons/faSort";
+import { faSortUp } from "@fortawesome/free-solid-svg-icons/faSortUp";
+import { faSortDown } from "@fortawesome/free-solid-svg-icons/faSortDown";
+library.add(faTachometerAlt, faTasks, faIdCard, faUsersCog, faCog, faClock, faUserPlus, faArchive, faEye, faPencilAlt, faHouseDamage, faFileDownload, faPrint, faCheck, faSort, faSortUp, faSortDown);
 dom.watch();
 
 require('../css/core.scss');
