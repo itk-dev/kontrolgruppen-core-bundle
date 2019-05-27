@@ -86,7 +86,6 @@ common:
             two_weeks: To uger frem
             month: En måned frem
         journal_entry:
-            diary: Dagbog
             internal_note: Internt notat
             note: Notat
     no_records_found: Ingen indgange fundet
@@ -242,7 +241,6 @@ process:
         client_cpr: Klient CPR
         client_name: Klient navn
         client_telephone: Klient telefonnummer
-        diary: Senest i dagbogen
         id: ID
         internal_note: Seneste interne notater
         journal: Journal

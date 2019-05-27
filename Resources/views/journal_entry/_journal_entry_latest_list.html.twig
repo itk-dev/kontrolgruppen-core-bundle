@@ -17,9 +17,7 @@
           </a>
         </div>
         <div class="col-2 pb-2">
-          {% if journalEntry.type == 'DIARY' %}
-            <span class="badge badge-dark">{{ 'common.enum.journal_entry.diary'|trans }}</span>
-          {% elseif journalEntry.type == 'NOTE' %}
+          {% if journalEntry.type == 'NOTE' %}
             <span class="badge badge-info">{{ 'common.enum.journal_entry.note'|trans }}</span>
           {% elseif journalEntry.type == 'INTERNAL_NOTE' %}
             <span class="badge badge-warning">{{ 'common.enum.journal_entry.internal_note'|trans }}</span>

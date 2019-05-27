@@ -153,15 +153,9 @@ class ProcessController extends BaseController
     public function show(Request $request, Process $process): Response
     {
         // Latest journal entries.
-        $latestDiaryEntries = $this->getDoctrine()->getRepository(
+        $latestJournalEntries = $this->getDoctrine()->getRepository(
             JournalEntry::class
-        )->getLatestDiaryEntries($process);
-        $latestNoteEntries = $this->getDoctrine()->getRepository(
-            JournalEntry::class
-        )->getLatestNoteEntries($process);
-        $latestInternalNoteEntries = $this->getDoctrine()->getRepository(
-            JournalEntry::class
-        )->getLatestInternalNoteEntries($process);
+        )->getLatestEntries($process);
 
         return $this->render(
             '@KontrolgruppenCore/process/show.html.twig',
@@ -171,9 +165,7 @@ class ProcessController extends BaseController
                     $process
                 ),
                 'process' => $process,
-                'latestDiaryEntries' => $latestDiaryEntries,
-                'latestNoteEntries' => $latestNoteEntries,
-                'latestInternalNoteEntries' => $latestInternalNoteEntries,
+                'latestJournalEntries' => $latestJournalEntries,
             ]
         );
     }

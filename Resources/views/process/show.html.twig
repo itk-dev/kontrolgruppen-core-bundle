@@ -67,16 +67,7 @@
       <a href="{{ path('journal_entry_new', {'process': process.id}) }}" class="btn btn-success btn-sm float-right">{{ 'journal_entry.new.title'|trans }}</a>
     </div>
     <div class="col-12">
-      <h3>{{ 'process.table.diary'|trans }}</h3>
-      {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig'  with { journalEntries: latestDiaryEntries, limit: 2 } %}
-    </div>
-    <div class="col-12">
-      <h3>{{ 'process.table.note'|trans }}</h3>
-      {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig'  with { journalEntries: latestNoteEntries, limit: 2 } %}
-    </div>
-    <div class="col-12">
-      <h3>{{ 'process.table.internal_note'|trans }}</h3>
-      {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig'  with { journalEntries: latestInternalNoteEntries, limit: 2 } %}
+      {% include '@KontrolgruppenCore/journal_entry/_journal_entry_headline_list.html.twig'  with { journalEntries: latestJournalEntries } %}
     </div>
   </div>
   <div class="row">
