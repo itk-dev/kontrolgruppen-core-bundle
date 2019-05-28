@@ -11,8 +11,10 @@
     <div class="col-12 collapse" id="journalEntryNew">
       <div class="bg-light border-bottom p-3 mb-3">
         {{ form_start(journalEntryForm) }}
-        {{ form_widget(journalEntryForm) }}
-          <button class="btn btn-success pl-5 pr-5 btn-block">{{ 'common.actions.save'|trans }}</button>
+          {{ form_widget(journalEntryForm) }}
+          <div class="form-group text-right">
+            <button class="btn btn-success pl-5 pr-5">{{ 'common.actions.save'|trans }}</button>
+          </div>
         {{ form_end(journalEntryForm) }}
       </div>
     </div>
