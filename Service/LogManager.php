@@ -32,8 +32,10 @@ class LogManager
             $journalEntries,
             function ($carry, $item) {
                 $carry[] = $item['id'];
+
                 return $carry;
-            }, []
+            },
+            []
         );
         $qb = $this->entityManager->createQueryBuilder('log');
         $qb->select('log')->from(LogEntry::class, 'log')

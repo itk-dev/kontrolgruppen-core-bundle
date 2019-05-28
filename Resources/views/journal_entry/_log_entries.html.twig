@@ -14,7 +14,7 @@
     </thead>
     {% for log in journalEntry.logs %}
       <tr>
-      <td>{{ ('journal_entry.revision.action_type.'~(log.action|lower))|trans }}</td>
+      <td>{{ ('journal_entry.revision.action_type.' ~ (log.action|lower))|trans }}</td>
       <td>{{ log.loggedAt|date('d/m Y') }}</td>
 
       {% for changeKey, change in log.data %}
@@ -22,7 +22,7 @@
           <tr>
           <td colspan="2"></td>
         {% endif %}
-        <td>{{ ('journal_entry.revision.change_key.'~(changeKey|lower))|trans }}</td>
+        <td>{{ ('journal_entry.revision.change_key.' ~ (changeKey|lower))|trans }}</td>
         <td>{{ change|raw }}</td>
         {% if not loop.first %}
           </tr>

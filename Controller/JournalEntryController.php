@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
-use Gedmo\Loggable\Entity\LogEntry;
 
 /**
  * @Route("/process/{process}/journal")

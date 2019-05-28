@@ -47,10 +47,11 @@ class JournalEntryRepository extends ServiceEntityRepository
     /**
      * Get latest journal entries for a given process.
      *
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process The process the journal entries apply to.
-     * @param string|null $type Type of entry.
-     * @param int|null $limit Limit on number of results.
-     * @param bool $attachLogEntries Attach the log entries for journal entries.
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process          the process the journal entries apply to
+     * @param string|null                               $type             type of entry
+     * @param int|null                                  $limit            limit on number of results
+     * @param bool                                      $attachLogEntries attach the log entries for journal entries
+     *
      * @return array
      */
     public function getLatestEntries(Process $process, string $type = null, int $limit = null, bool $attachLogEntries = false)
