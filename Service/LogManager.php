@@ -38,6 +38,7 @@ class LogManager
         $qb = $this->entityManager->createQueryBuilder('log');
         $qb->select('log')->from(LogEntry::class, 'log')
             ->where('log.objectId IN (:journalEntryIds)')
+            ->orderBy('log.id', 'desc')
             ->andWhere('log.objectClass = \''.JournalEntry::class.'\'');
         $qb->setParameter('journalEntryIds', $journalEntryIds);
         $logs = $qb->getQuery()->execute();
@@ -49,5 +50,26 @@ class LogManager
         }
 
         return $journalEntries;
+    }
+
+    public function attachLogEntriesToJournalEntry($journalEntry)
+    {
+        $qb = $this->entityManager->createQueryBuilder('log');
+        $qb->select('log')->from(LogEntry::class, 'log')
+            ->where('log.objectId = :journalEntryId')
+            ->orderBy('log.id', 'desc')
+            ->andWhere('log.objectClass = \''.JournalEntry::class.'\'');
+        $qb->setParameter('journalEntryId', $journalEntry->getId());
+        $logs = $qb->getQuery()->execute();
+
+        if (!isset($journalEntries->logs)) {
+            $journalEntry->logs = [];
+        }
+
+        foreach ($logs as $log) {
+            $journalEntry->logs[] = $log;
+        }
+
+        return $journalEntry;
     }
 }

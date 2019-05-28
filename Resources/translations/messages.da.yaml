@@ -151,7 +151,23 @@ journal_entry:
         title: Journal
     new:
         title: Opret nyt journalindlæg
-    number_of_revisions: 'Rettelser: %numberOfRevisions%'
+    revision:
+        action: Hændelse
+        actions:
+            revisions: Vis rettelser
+        action_type:
+            create: Oprettet
+            update: Ændret
+        change_key:
+            body: Tekst
+            title: Overskrift
+            type: Type
+        headline: Ændringslog
+        table:
+            action: Hændelse
+            date: Dato
+            change_key: Felt
+            change: Ændring
     show:
         title: Journal
     table:

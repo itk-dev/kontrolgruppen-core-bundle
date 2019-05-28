@@ -127,8 +127,10 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/{id}", name="journal_entry_show", methods={"GET"})
      */
-    public function show(Request $request, JournalEntry $journalEntry, Process $process): Response
+    public function show(Request $request, JournalEntry $journalEntry, Process $process, LogManager $logManager): Response
     {
+        $journalEntry = $logManager->attachLogEntriesToJournalEntry($journalEntry);
+
         return $this->render('@KontrolgruppenCore/journal_entry/show.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'journalEntry' => $journalEntry,
@@ -139,7 +141,7 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/{id}/edit", name="journal_entry_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, JournalEntry $journalEntry, Process $process): Response
+    public function edit(Request $request, JournalEntry $journalEntry, Process $process, LogManager $logManager): Response
     {
         $form = $this->createForm(JournalEntryType::class, $journalEntry);
         $form->handleRequest($request);
@@ -152,6 +154,8 @@ class JournalEntryController extends BaseController
                 'process' => $process->getId(),
             ]);
         }
+
+        $journalEntry = $logManager->attachLogEntriesToJournalEntry($journalEntry);
 
         return $this->render('@KontrolgruppenCore/journal_entry/edit.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),

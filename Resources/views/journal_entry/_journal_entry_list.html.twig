@@ -1,23 +1,30 @@
 {% block journal_entry_list %}
   {% set max_iterations = limit is defined ? min(journalEntries|length, limit) : journalEntries|length %}
 
-    <div class="mb-3 p-3">
-      {% for journalEntry in journalEntries|slice(0, max_iterations) %}
-        <div class="row bg-light mb-2">
+  <div class="mb-3 p-3">
+    {% for journalEntry in journalEntries|slice(0, max_iterations) %}
+      <div class="mb-2">
+        <div class="row bg-light">
           <div class="col-2 pt-2">
             <span class="text-muted d-block">{{ journalEntry.createdAt|date('d/m Y') }}</span>
           </div>
           <div class="col-8 pt-2">
-            <p class="mb-0"><strong><a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}">{{ journalEntry.title }}</a></strong></p>
+            <p class="mb-0"><strong><a
+                    href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}">{{ journalEntry.title }}</a></strong></p>
           </div>
           <div class="col-2 pt-2 text-right">
-            {% if journalEntry.logs is defined and journalEntry.logs|length > 1  %}
-              <button class="js-revision-toggle" data-journal-id="{{ journalEntry.id }}">{{ 'journal_entry.number_of_revisions'|trans({'%numberOfRevisions%': journalEntry.logs|length - 1 }) }}</button>
+            {% if journalEntry.logs is defined and journalEntry.logs|length > 1 %}
+              <button class="btn btn-sm btn-dark mb-1 js-revision-toggle"
+                      data-journal-id="{{ journalEntry.id }}" data-toggle="tooltip" title="{{ 'journal_entry.revision.actions.revisions'|trans }}">
+                <i class="fas {{ iconClass('edit') }} fa-inverse fa-fw"></i>{{ journalEntry.logs|length - 1 }}
+              </button>
             {% endif %}
-            <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-dark mb-1" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
+            <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-dark mb-1" data-toggle="tooltip"
+               data-placement="top" title="{{ 'common.actions.show'|trans }}">
               <i class="fas {{ iconClass('show') }} fa-inverse fa-fw"></i>
             </a>
-            <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-primary mb-1" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
+            <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-primary mb-1" data-toggle="tooltip"
+               data-placement="top" title="{{ 'common.actions.edit'|trans }}">
               <i class="fas {{ iconClass('edit') }} fa-inverse fa-fw"></i></a>
             </a>
           </div>
@@ -32,13 +39,18 @@
           <div class="col-10 pb-2">
             {{ journalEntry.body|raw }}
           </div>
-          {% if journalEntry.logs is defined and journalEntry.logs|length > 1 %}
-            {% include '@KontrolgruppenCore/journal_entry/_log_entries.html.twig' %}
-          {% endif %}
         </div>
+        {% if journalEntry.logs is defined and journalEntry.logs|length > 1 %}
+          <div class="row bg-light">
+            <div class="col mt-2">
+              {% include '@KontrolgruppenCore/journal_entry/_log_entries.html.twig' with {show: false} %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
     {% else %}
       {{ 'common.no_records_found'|trans }}
     {% endfor %}
-    </div>
+  </div>
 
 {% endblock %}
