@@ -1,0 +1,18 @@
+<div class="js-revision-list" data-journal-id="{{ journalEntry.id }}" style="display: none">
+  <h2>{{ 'journal_entry.revisions'|trans }}</h2>
+
+  {% for log in journalEntry.logs %}
+    <div class="log">
+      <h3>{{ log.action }}</h3>
+      <span>{{ log.loggedAt|date }}</span>
+      <div class="changes">
+        {% for changeKey, change in log.data %}
+          <div class="change">
+            <h6>"{{ changeKey }}" ->:</h6>
+            {{ change|raw }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>

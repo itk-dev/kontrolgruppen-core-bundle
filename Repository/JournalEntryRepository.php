@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Repository;
 
+use Kontrolgruppen\CoreBundle\Service\LogManager;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -24,8 +25,12 @@ use Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType;
  */
 class JournalEntryRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    protected $logManager;
+
+    public function __construct(RegistryInterface $registry, LogManager $logManager)
     {
+        $this->logManager = $logManager;
+
         parent::__construct($registry, JournalEntry::class);
     }
 
@@ -39,9 +44,18 @@ class JournalEntryRepository extends ServiceEntityRepository
         return $this->getLatestEntries($process, JournalEntryEnumType::INTERNAL_NOTE);
     }
 
-    public function getLatestEntries(Process $process, string $type = null, int $limit = null)
+    /**
+     * Get latest journal entries for a given process.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process The process the journal entries apply to.
+     * @param string|null $type Type of entry.
+     * @param int|null $limit Limit on number of results.
+     * @param bool $attachLogEntries Attach the log entries for journal entries.
+     * @return array
+     */
+    public function getLatestEntries(Process $process, string $type = null, int $limit = null, bool $attachLogEntries = false)
     {
-        $qb = $this->createQueryBuilder('journalEntry');
+        $qb = $this->createQueryBuilder('journalEntry', 'journalEntry.id');
         $qb
             ->where('journalEntry.process = :process')
             ->setParameter('process', $process)
@@ -57,7 +71,11 @@ class JournalEntryRepository extends ServiceEntityRepository
             $qb->setMaxResults($limit);
         }
 
-        $result = $qb->getQuery()->getResult();
+        $result = $qb->getQuery()->getArrayResult();
+
+        if ($attachLogEntries) {
+            $result = $this->logManager->attachLogEntriesToJournalEntries($result);
+        }
 
         return $result;
     }

@@ -14,12 +14,14 @@ use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Filter\JournalFilterType;
 use Kontrolgruppen\CoreBundle\Form\JournalEntryType;
 use Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository;
+use Kontrolgruppen\CoreBundle\Service\LogManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
+use Gedmo\Loggable\Entity\LogEntry;
 
 /**
  * @Route("/process/{process}/journal")
@@ -39,7 +41,7 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/", name="journal_entry_index", methods={"GET","POST"})
      */
-    public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process, FilterBuilderUpdaterInterface $lexikBuilderUpdater, SessionInterface $session): Response
+    public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process, FilterBuilderUpdaterInterface $lexikBuilderUpdater, SessionInterface $session, LogManager $logManager): Response
     {
         $journalEntry = new JournalEntry();
         $journalEntry->setProcess($process);
@@ -66,19 +68,15 @@ class JournalEntryController extends BaseController
             $sortDirection = $sessionSortDirection ?: 'desc';
         }
 
-        $qb = null;
+        // initialize a query builder
+        $qb = $journalEntryRepository->createQueryBuilder('e', 'e.id');
 
         if ($request->query->has($filterForm->getName())) {
             // manually bind values from the request
             $filterForm->submit($request->query->get($filterForm->getName()));
 
-            // initialize a query builder
-            $qb = $journalEntryRepository->createQueryBuilder('e');
-
             // build the query from the given form object
             $lexikBuilderUpdater->addFilterConditions($filterForm, $qb);
-        } else {
-            $qb = $journalEntryRepository->createQueryBuilder('e');
         }
 
         $qb->andWhere('e.process = :process');
@@ -86,12 +84,15 @@ class JournalEntryController extends BaseController
 
         $qb->orderBy('e.id', $sortDirection);
 
-        $query = $qb->getQuery();
+        $result = $qb->getQuery()->getArrayResult();
+
+        // Attach log entries.
+        $result = $logManager->attachLogEntriesToJournalEntries($result);
 
         return $this->render('@KontrolgruppenCore/journal_entry/index.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'form' => $filterForm->createView(),
-            'journalEntries' => $query->execute(),
+            'journalEntries' => $result,
             'journalEntryForm' => $journalEntryForm->createView(),
             'process' => $process,
         ]);

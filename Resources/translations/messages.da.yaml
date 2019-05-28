@@ -151,6 +151,7 @@ journal_entry:
         title: Journal
     new:
         title: Opret nyt journalindlæg
+    number_of_revisions: 'Rettelser: %numberOfRevisions%'
     show:
         title: Journal
     table:

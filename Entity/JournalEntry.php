@@ -28,6 +28,7 @@ class JournalEntry extends AbstractEntity
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Gedmo\Versioned()
      */
     private $body;
 
@@ -40,6 +41,7 @@ class JournalEntry extends AbstractEntity
     /**
      * @ORM\Column(name="type", type="JournalEntryEnumType", nullable=false)
      * @DoctrineAssert\Enum(entity="Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType")
+     * @Gedmo\Versioned()
      */
     protected $type;
 
