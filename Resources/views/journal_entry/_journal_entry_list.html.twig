@@ -14,9 +14,9 @@
           </div>
           <div class="col-2 pt-2 text-right">
             {% if journalEntry.logs is defined and journalEntry.logs|length > 1 %}
-              <button class="btn btn-sm btn-dark mb-1 js-revision-toggle"
+              <button class="btn btn-sm btn-secondary mb-1 js-revision-toggle" data-toggle="button"
                       data-journal-id="{{ journalEntry.id }}" data-toggle="tooltip" title="{{ 'journal_entry.revision.actions.revisions'|trans }}">
-                <i class="fas {{ iconClass('edit') }} fa-inverse fa-fw"></i>{{ journalEntry.logs|length - 1 }}
+                <i class="fas {{ iconClass('layer-group') }} fa-inverse fa-fw"></i>{{ journalEntry.logs|length - 1 }}
               </button>
             {% endif %}
             <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-dark mb-1" data-toggle="tooltip"

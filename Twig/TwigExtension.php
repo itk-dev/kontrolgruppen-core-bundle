@@ -71,6 +71,8 @@ class TwigExtension extends AbstractExtension
                 return 'fa-print';
             case 'complete':
                 return 'fa-check';
+            case 'layer-group':
+                return 'fa-layer-group';
 
             default:
                 return '';

@@ -2,23 +2,28 @@ require('jquery');
 require('bootstrap');
 
 // Add fontawesome
-import { library, dom } from "@fortawesome/fontawesome-svg-core";
-import { faTachometerAlt } from "@fortawesome/free-solid-svg-icons/faTachometerAlt";
-import { faTasks } from "@fortawesome/free-solid-svg-icons/faTasks";
-import { faIdCard } from "@fortawesome/free-solid-svg-icons/faIdCard";
-import { faUsersCog } from "@fortawesome/free-solid-svg-icons/faUsersCog";
-import { faCog } from "@fortawesome/free-solid-svg-icons/faCog";
-import { faClock } from "@fortawesome/free-solid-svg-icons/faClock";
-import { faUserPlus } from "@fortawesome/free-solid-svg-icons/faUserPlus";
-import { faArchive } from "@fortawesome/free-solid-svg-icons/faArchive";
-import { faEye } from "@fortawesome/free-solid-svg-icons/faEye";
-import { faPencilAlt } from "@fortawesome/free-solid-svg-icons/faPencilAlt";
-import { faHouseDamage } from "@fortawesome/free-solid-svg-icons/faHouseDamage";
-import { faFileDownload } from "@fortawesome/free-solid-svg-icons/faFileDownload";
-import { faPrint } from "@fortawesome/free-solid-svg-icons/faPrint";
-import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
+import { library, dom } from '@fortawesome/fontawesome-svg-core';
+import { faTachometerAlt } from '@fortawesome/free-solid-svg-icons/faTachometerAlt';
+import { faTasks } from '@fortawesome/free-solid-svg-icons/faTasks';
+import { faIdCard } from '@fortawesome/free-solid-svg-icons/faIdCard';
+import { faUsersCog } from '@fortawesome/free-solid-svg-icons/faUsersCog';
+import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
+import { faClock } from '@fortawesome/free-solid-svg-icons/faClock';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons/faUserPlus';
+import { faArchive } from '@fortawesome/free-solid-svg-icons/faArchive';
+import { faEye } from '@fortawesome/free-solid-svg-icons/faEye';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt';
+import { faHouseDamage } from '@fortawesome/free-solid-svg-icons/faHouseDamage';
+import { faFileDownload } from '@fortawesome/free-solid-svg-icons/faFileDownload';
+import { faPrint } from '@fortawesome/free-solid-svg-icons/faPrint';
+import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
+import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup';
 
-library.add(faTachometerAlt, faTasks, faIdCard, faUsersCog, faCog, faClock, faUserPlus, faArchive, faEye, faPencilAlt, faHouseDamage, faFileDownload, faPrint, faCheck);
+library.add(
+  faTachometerAlt, faTasks, faIdCard, faUsersCog, faCog, faClock,
+  faUserPlus, faArchive, faEye, faPencilAlt, faHouseDamage, faFileDownload,
+  faPrint, faCheck, faLayerGroup
+);
 dom.watch();
 
 // any CSS you require will output into a single css file (app.css in this case)
@@ -31,5 +36,5 @@ $(function () {
     {
       delay: {show: 400},
     }
-  )
+  );
 });
