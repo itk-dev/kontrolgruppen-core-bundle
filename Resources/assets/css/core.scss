@@ -1,8 +1,9 @@
 /*
- * Include variables and bootstrap
+ * Include variables, bootstrap and select2
  */
 @import "_variables";
 @import "~bootstrap/scss/bootstrap";
+@import "~select2/src/scss/core";
 
 /*
 * Include partials

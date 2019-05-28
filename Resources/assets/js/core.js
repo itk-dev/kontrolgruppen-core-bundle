@@ -1,5 +1,6 @@
 require('jquery');
 require('bootstrap');
+require('select2');
 
 // Add fontawesome
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
@@ -31,5 +32,5 @@ $(function () {
     {
       delay: {show: 400},
     }
-  )
+  );
 });

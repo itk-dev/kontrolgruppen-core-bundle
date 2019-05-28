@@ -26,6 +26,7 @@ class ProcessStatusType extends AbstractType
             ->add('processTypes', null, [
                 'label' => 'process_status.form.process_types',
                 'by_reference' => false,
+                'attr'=> array('class'=> 'select2')
             ])
         ;
     }

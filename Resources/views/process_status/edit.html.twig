@@ -11,3 +11,14 @@
 
     {{ include('@KontrolgruppenCore/process_status/_delete_form.html.twig') }}
 {% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script type="text/javascript">
+    $(function () {
+      $('#process_status_processTypes').select2({
+        placeholder: "{{ 'process_status.form.select.placeholder'|trans }}"
+      });
+    });
+  </script>
+{% endblock %}

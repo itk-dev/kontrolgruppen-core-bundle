@@ -267,6 +267,8 @@ process_status:
         process_types: Sagstyper
         update: Gem
         label: Vælg sagsstatus
+        select:
+            placeholder: Tryk for at vælge
     index:
         title: Sagsstatusser
     menu_title: Sagsstatusser
