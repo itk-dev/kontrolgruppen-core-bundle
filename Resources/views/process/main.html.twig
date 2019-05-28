@@ -8,6 +8,22 @@
 
 {% block sidebar_right %}
   {{ include('@KontrolgruppenCore/process/_sidebar_process_type.html.twig') }}
-  {{ include('@KontrolgruppenCore/process/_sidebar_process_info.html.twig') }}
-  {{ include('@KontrolgruppenCore/process/_sidebar_activity.html.twig') }}
+
+  <ul class="nav nav-tabs" id="sidebar-right-tabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="sidebar-right-activity-tab" data-toggle="tab" href="#sidebar-right-activity" role="tab" aria-controls="sidebar-right-activity" aria-selected="true">{{ 'dashboard.latest_activity.title'|trans }}</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="sidebar-right-process-info-tab" data-toggle="tab" href="#sidebar-right-process-info" role="tab" aria-controls="sidebar-right-process-info" aria-selected="false">{{ 'process.summary.title'|trans }}</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="sidebarRightTabsContent">
+    <div class="tab-pane fade show active" id="sidebar-right-activity" role="tabpanel" aria-labelledby="sidebar-right-activity-tab">
+      {{ include('@KontrolgruppenCore/process/_sidebar_activity.html.twig') }}
+    </div>
+    <div class="tab-pane fade" id="sidebar-right-process-info" role="tabpanel" aria-labelledby="sidebar-right-process-info-tab">
+      {{ include('@KontrolgruppenCore/process/_sidebar_process_info.html.twig') }}
+    </div>
+  </div>
+
 {% endblock %}
