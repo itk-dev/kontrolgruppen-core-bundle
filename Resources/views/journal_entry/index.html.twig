@@ -3,46 +3,48 @@
 {% block title %}{{ 'journal_entry.index.title'|trans }}{% endblock %}
 
 {% block content %}
-  <div class="row">
-    <div class="col-12">
-      <h1 class="float-left">{{ 'journal_entry.index.title'|trans }}</h1>
-      <button data-toggle="collapse" data-target="#journalEntryNew" aria-expanded="false" class="btn btn-success btn-lg float-right">{{ 'journal_entry.actions.create'|trans }}</button>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="float-left">{{ 'journal_entry.index.title'|trans }}</h1>
+            <button data-toggle="collapse" data-target="#journalEntryNew" aria-expanded="false"
+                    class="btn btn-success btn-lg float-right">{{ 'journal_entry.actions.create'|trans }}</button>
+        </div>
+        <div class="col-12 collapse" id="journalEntryNew">
+            <div class="bg-light border-bottom p-3 mb-3">
+                {{ form_start(journalEntryForm) }}
+                {{ form_widget(journalEntryForm) }}
+                <div class="form-group text-right">
+                    <button class="btn btn-success pl-5 pr-5">{{ 'common.actions.save'|trans }}</button>
+                </div>
+                {{ form_end(journalEntryForm) }}
+            </div>
+        </div>
     </div>
-    <div class="col-12 collapse" id="journalEntryNew">
-      <div class="bg-light border-bottom p-3 mb-3">
-        {{ form_start(journalEntryForm) }}
-          {{ form_widget(journalEntryForm) }}
-          <div class="form-group text-right">
-            <button class="btn btn-success pl-5 pr-5">{{ 'common.actions.save'|trans }}</button>
-          </div>
-        {{ form_end(journalEntryForm) }}
-      </div>
-    </div>
-  </div>
 
 
-  <form method="get" action="." class="form form-inline js-filters">
-    {{ form_rest(form) }}
+    <form method="get" action="." class="form form-inline js-filters">
+        {{ form_rest(form) }}
 
-    <label for="sort-select" class="sr-only">{{ 'journal_entry.table.filter.sort_label'|trans }}</label>
-    <select id="js-sort-select" class="form-control form-control-sm">
-      {% for sortDirection in ['asc', 'desc'] %}
-        <option value="{{ sortDirection }}" {% if sortDirection == app.request.get('sort_direction') %} selected="selected"{% endif %}>{{ ('journal_entry.table.filter.sort_' ~ sortDirection)|trans }}</option>
-      {% endfor %}
-    </select>
-  </form>
+        <label for="sort-select" class="sr-only">{{ 'journal_entry.table.filter.sort_label'|trans }}</label>
+        <select id="js-sort-select" class="form-control form-control-sm">
+            {% for sortDirection in ['asc', 'desc'] %}
+                <option
+                    value="{{ sortDirection }}" {% if sortDirection == app.request.get('sort_direction') %} selected="selected"{% endif %}>{{ ('journal_entry.table.filter.sort_' ~ sortDirection)|trans }}</option>
+            {% endfor %}
+        </select>
+    </form>
 
-  {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig' %}
+    {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}
-  {{ parent() }}
+    {{ parent() }}
 
-  <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/sortSubmit.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/sortSubmit.js') }}"></script>
 
-  <script type="text/javascript">
-    $('#pagination-sort-select').on('change', function () {
-      window.location.href = $(this).find('option:selected').attr('href');
-    });
-  </script>
+    <script type="text/javascript">
+        $('#pagination-sort-select').on('change', function () {
+            window.location.href = $(this).find('option:selected').attr('href');
+        });
+    </script>
 {% endblock %}

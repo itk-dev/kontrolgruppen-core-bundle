@@ -10,25 +10,27 @@
     <div class="table-responsive">
         <table class="table table-sm table-striped table-hover table-borderless thead-light">
             <tbody>
-                <tr>
-                    <th>{{ 'reminder.table.date'|trans }}</th>
-                    <td>{{ reminder.date ? reminder.date|date('d/m Y H:i') : '' }}</td>
-                </tr>
-                <tr>
-                    <th>{{ 'reminder.table.finished'|trans }}</th>
-                    <td>{{ (reminder.finished ? 'common.boolean.true' : 'common.boolean.false')|trans }}</td>
-                </tr>
+            <tr>
+                <th>{{ 'reminder.table.date'|trans }}</th>
+                <td>{{ reminder.date ? reminder.date|date('d/m Y H:i') : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'reminder.table.finished'|trans }}</th>
+                <td>{{ (reminder.finished ? 'common.boolean.true' : 'common.boolean.false')|trans }}</td>
+            </tr>
             </tbody>
         </table>
     </div>
 
     <a href="{{ path('reminder_index', {'process': process.id}) }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
 
-  {% if not reminder.finished %}
-      <a href="{{ path('reminder_finish', {'id': reminder.id, 'process': process.id}) }}" class="btn btn-info float-right pr-5 pl-5 ml-3">{{ 'common.actions.finish'|trans }}</a>
-  {% endif %}
+    {% if not reminder.finished %}
+        <a href="{{ path('reminder_finish', {'id': reminder.id, 'process': process.id}) }}"
+           class="btn btn-info float-right pr-5 pl-5 ml-3">{{ 'common.actions.finish'|trans }}</a>
+    {% endif %}
 
-    <a href="{{ path('reminder_edit', {'id': reminder.id, 'process': process.id}) }}" class="btn btn-primary float-right pr-5 pl-5">{{ 'common.actions.edit'|trans }}</a>
+    <a href="{{ path('reminder_edit', {'id': reminder.id, 'process': process.id}) }}"
+       class="btn btn-primary float-right pr-5 pl-5">{{ 'common.actions.edit'|trans }}</a>
 
-  {{ include('@KontrolgruppenCore/reminder/_delete_form.html.twig') }}
+    {{ include('@KontrolgruppenCore/reminder/_delete_form.html.twig') }}
 {% endblock %}

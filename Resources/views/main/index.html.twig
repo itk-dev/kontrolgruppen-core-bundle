@@ -3,143 +3,146 @@
 {% block title %}{% endblock %}
 
 {% block javascripts %}
-  {{ parent() }}
+    {{ parent() }}
 
-  <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/globalSearch.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/globalSearch.js') }}"></script>
 {% endblock %}
 
 {% block body %}
-  <nav class="navbar navbar-dark fixed-top bg-dark p-0 shadow navbar-expand-lg">
+    <nav class="navbar navbar-dark fixed-top bg-dark p-0 shadow navbar-expand-lg">
 
-    <a class="navbar-brand col-auto col-sm-3 col-md-2 col-lg-2 mr-0" href="/">
-      <i class="fas fa-house-damage text-white mr-sm-3" title="{{ 'common.title'|trans }}"></i>
-      <span class="d-none d-md-inline">{{ 'common.title'|trans }}</span>
-    </a>
-    {% block navigation_main %}
-      <input class="form-control form-control-dark rounded-pill col-6 col-lg-4" type="text" placeholder="{{ 'navigation.main.search'|trans }}"
-             aria-label="{{ 'navigation.main.search'|trans }}">
+        <a class="navbar-brand col-auto col-sm-3 col-md-2 col-lg-2 mr-0" href="/">
+            <i class="fas fa-house-damage text-white mr-sm-3" title="{{ 'common.title'|trans }}"></i>
+            <span class="d-none d-md-inline">{{ 'common.title'|trans }}</span>
+        </a>
+        {% block navigation_main %}
+            <input class="form-control form-control-dark rounded-pill col-6 col-lg-4" type="text" placeholder="{{ 'navigation.main.search'|trans }}"
+                   aria-label="{{ 'navigation.main.search'|trans }}">
 
-      <button class="navbar-toggler mr-1" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-              aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+            <button class="navbar-toggler mr-1" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-      <div class="collapse navbar-collapse col-lg-6" id="navbarNav">
-        <ul class="navbar-nav ml-0 ml-lg-auto p-3 p-lg-0">
+            <div class="collapse navbar-collapse col-lg-6" id="navbarNav">
+                <ul class="navbar-nav ml-0 ml-lg-auto p-3 p-lg-0">
 
-          <li class="nav-item dropdown mr-0 mr-sm-3 mb-3 mb-lg-0">
-            <a class="btn btn-sm btn-light dropdown-toggle btn-block" href="#" id="navbarQuicklinksDropdown" role="button" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
-              {{ 'navigation.main.quick_links'|trans }}
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarQuicklinksDropdown">
-              {% for quickLink in quickLinks %}
-                <a class="dropdown-item" href="{{ quickLink.href }}" target="_blank">{{ quickLink.name }}</a>
-              {% endfor %}
-            </div>
-          </li>
-
-          {% block globalmenu_mobile %}
-            {% for globalMenuItem in globalMenuItems %}
-              <li class="nav-item d-lg-none">
-                <a class="nav-link" href="{{ globalMenuItem.path }}">
-                  <i class="fas {{ globalMenuItem.icon }} text-light mr-3 mr-lg-none"></i>{{ globalMenuItem.name }}
-                </a>
-              </li>
-            {% endfor %}
-          {% endblock %}
-
-          {% block navigation_mobile %}
-            {% if menuItems is defined %}
-              {% for menuItem in menuItems %}
-                {% if menuItem.hide_from_mobile_menu is not defined or not menuItem.hide_from_mobile_menu %}
-                <li class="nav-item d-lg-none">
-                  <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
-                    {{ menuItem.name }}
-                  </a>
-                </li>
-                {% endif %}
-              {% endfor %}
-            {% endif %}
-          {% endblock %}
-
-          <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
-            <a class="btn btn-sm btn-success btn-block" role="button" href="{{ path('process_new') }}">{{ 'navigation.main.new_process'|trans }}</a>
-          </li>
-
-          <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
-            <a class="btn {% if activeUserReminders|length > 0 %}btn-warning{% else %}btn-secondary{% endif %} btn-sm btn-block"
-               href="{{ path('user_reminder_index') }}" role="button">
-              <i class="fas {{ iconClass('reminder') }} mr-2" ></i><strong>{{ 'navigation.main.reminders.number_of_reminders'|trans({'%numberOfReminders%': activeUserReminders}) }}</strong>
-            </a>
-          </li>
-
-          <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0 mr-lg-0">
-            <a class="btn btn-sm btn-outline-danger btn-block" role="button" href="{{ path('fos_user_security_logout') }}">{{ 'navigation.main.sign_out'|trans }}</a>
-          </li>
-
-        </ul>
-      </div>
-    {% endblock %}
-  </nav>
-
-  <div class="container-fluid main-container">
-    <div class="row">
-        <div class="d-flex w-100">
-
-          <nav class="d-none d-lg-flex bg-dark">
-            {% block globalmenu_sidebar %}
-             <div class="globalmenu">
-              <ul class="nav flex-column">
-                {% if globalMenuItems is defined %}
-                  {% for globalMenuItem in globalMenuItems %}
-                    <li class="nav-item">
-                      <a class="nav-link{{ globalMenuItem.active ? ' active' : '' }}" href="{{ globalMenuItem.path }}" data-toggle="tooltip" data-placement="right" title="{{ globalMenuItem.tooltip }}">
-                        <i class="fas {{ globalMenuItem.icon }} fa-fw" ></i><span class="sr-only">{{ globalMenuItem.name }}</span>
-                      </a>
+                    <li class="nav-item dropdown mr-0 mr-sm-3 mb-3 mb-lg-0">
+                        <a class="btn btn-sm btn-light dropdown-toggle btn-block" href="#" id="navbarQuicklinksDropdown" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            {{ 'navigation.main.quick_links'|trans }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarQuicklinksDropdown">
+                            {% for quickLink in quickLinks %}
+                                <a class="dropdown-item" href="{{ quickLink.href }}" target="_blank">{{ quickLink.name }}</a>
+                            {% endfor %}
+                        </div>
                     </li>
-                  {% endfor %}
-                {% endif %}
-              </ul>
-             </div>
-            {% endblock %}
-          </nav>
 
-          {% block navigation_sidebar %}
-            {% if menuItems is defined %}
-              <nav class="d-none d-lg-flex bg-light p-3">
-                <div class="sidebar-sticky">
-                  <ul class="nav flex-column nav-pills">
-                    {% for menuItem in menuItems %}
-                    <li class="nav-item">
-                      <a class="nav-link{{ menuItem.active ? ' active' : '' }}{{ menuItem.disabled ? ' disabled' : '' }}"
-                         href="{{ menuItem.path }}" {{ menuItem.disabled ? 'tabindex="-1" aria-disabled="true"' : '' }}>
-                        {{ menuItem.name }} {% if menuItem.name == 'reminder.index.title'|trans %}<span class="badge badge-secondary">{{ process.reminders|length }}</span>{% endif %}
-                      </a>
+                    {% block globalmenu_mobile %}
+                        {% for globalMenuItem in globalMenuItems %}
+                            <li class="nav-item d-lg-none">
+                                <a class="nav-link" href="{{ globalMenuItem.path }}">
+                                    <i class="fas {{ globalMenuItem.icon }} text-light mr-3 mr-lg-none"></i>{{ globalMenuItem.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endblock %}
+
+                    {% block navigation_mobile %}
+                        {% if menuItems is defined %}
+                            {% for menuItem in menuItems %}
+                                {% if menuItem.hide_from_mobile_menu is not defined or not menuItem.hide_from_mobile_menu %}
+                                    <li class="nav-item d-lg-none">
+                                        <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
+                                            {{ menuItem.name }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endblock %}
+
+                    <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
+                        <a class="btn btn-sm btn-success btn-block" role="button" href="{{ path('process_new') }}">{{ 'navigation.main.new_process'|trans }}</a>
                     </li>
-                  {% endfor %}
+
+                    <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
+                        <a class="btn {% if activeUserReminders|length > 0 %}btn-warning{% else %}btn-secondary{% endif %} btn-sm btn-block"
+                           href="{{ path('user_reminder_index') }}" role="button">
+                            <i class="fas {{ iconClass('reminder') }} mr-2"></i><strong>{{ 'navigation.main.reminders.number_of_reminders'|trans({'%numberOfReminders%': activeUserReminders}) }}</strong>
+                        </a>
+                    </li>
+
+                    <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0 mr-lg-0">
+                        <a class="btn btn-sm btn-outline-danger btn-block" role="button"
+                           href="{{ path('fos_user_security_logout') }}">{{ 'navigation.main.sign_out'|trans }}</a>
+                    </li>
+
                 </ul>
-              </div>
-            </nav>
-          {% endif %}
-        {% endblock %}
-
-        <main role="main" class="d-flex flex-shrink-1 flex-grow-1 flex-column w-75 p-3">
-          <div class="row">
-            <div class="col-12">
-              {% block content %}
-              {% endblock %}
             </div>
-          </div>
-        </main>
+        {% endblock %}
+    </nav>
 
-        {% set _sidebar_right = block('sidebar_right') %}
-        {% if _sidebar_right is not empty %}
-          <aside role="sidebar-right" class="d-none d-lg-flex flex-lg-column flex-grow-1 p-3 w-25">
-            {{ _sidebar_right|raw }}
-          </aside>
-        {% endif %}
-      </div>
+    <div class="container-fluid main-container">
+        <div class="row">
+            <div class="d-flex w-100">
+
+                <nav class="d-none d-lg-flex bg-dark">
+                    {% block globalmenu_sidebar %}
+                        <div class="globalmenu">
+                            <ul class="nav flex-column">
+                                {% if globalMenuItems is defined %}
+                                    {% for globalMenuItem in globalMenuItems %}
+                                        <li class="nav-item">
+                                            <a class="nav-link{{ globalMenuItem.active ? ' active' : '' }}" href="{{ globalMenuItem.path }}"
+                                               data-toggle="tooltip" data-placement="right" title="{{ globalMenuItem.tooltip }}">
+                                                <i class="fas {{ globalMenuItem.icon }} fa-fw"></i><span class="sr-only">{{ globalMenuItem.name }}</span>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+                        </div>
+                    {% endblock %}
+                </nav>
+
+                {% block navigation_sidebar %}
+                    {% if menuItems is defined %}
+                        <nav class="d-none d-lg-flex bg-light p-3">
+                            <div class="sidebar-sticky">
+                                <ul class="nav flex-column nav-pills">
+                                    {% for menuItem in menuItems %}
+                                        <li class="nav-item">
+                                            <a class="nav-link{{ menuItem.active ? ' active' : '' }}{{ menuItem.disabled ? ' disabled' : '' }}"
+                                               href="{{ menuItem.path }}" {{ menuItem.disabled ? 'tabindex="-1" aria-disabled="true"' : '' }}>
+                                                {{ menuItem.name }} {% if menuItem.name == 'reminder.index.title'|trans %}<span
+                                                    class="badge badge-secondary">{{ process.reminders|length }}</span>{% endif %}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </nav>
+                    {% endif %}
+                {% endblock %}
+
+                <main role="main" class="d-flex flex-shrink-1 flex-grow-1 flex-column w-75 p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            {% block content %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </main>
+
+                {% set _sidebar_right = block('sidebar_right') %}
+                {% if _sidebar_right is not empty %}
+                    <aside role="sidebar-right" class="d-none d-lg-flex flex-lg-column flex-grow-1 p-3 w-25">
+                        {{ _sidebar_right|raw }}
+                    </aside>
+                {% endif %}
+            </div>
+        </div>
     </div>
-  </div>
 {% endblock %}
