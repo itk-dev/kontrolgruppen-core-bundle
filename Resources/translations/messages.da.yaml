@@ -1,3 +1,60 @@
+admin:
+    index:
+        title: System indstillinger
+        lead: Rediger og tilpas systemets indstillinger.
+
+base_conclusion:
+    form:
+        update: Gem
+
+channel:
+    edit:
+        title: Rediger kanal
+    form:
+        name: Navn
+        update: Gem
+    index:
+        title: Kanaler
+    menu_title: Kanaler
+    new:
+        title: Opret kanal
+    show:
+        title: Kanal
+    table:
+        id: ID
+        name: Navn
+    btns:
+        create_new: Opret ny kanal
+
+client:
+    edit:
+        title: Rediger klient
+    form:
+        address: Adresse
+        car_registration_number: Bils registreringsnummer
+        city: By
+        cpr: CPR nummer
+        first_name: Fornavn
+        id: ID
+        last_name: Efternavn
+        number_of_children: Antal børn
+        postal_code: Postnummer
+        telephone: Telefon
+        update: Gem
+    show:
+        title: Klient
+    table:
+        address: Adresse
+        car_registration_number: Bils registreringsnummer
+        city: By
+        cpr: CPR nummer
+        first_name: Fornavn
+        id: ID
+        last_name: Efternavn
+        number_of_children: Antal børn
+        postal_code: Postnummer
+        telephone: Telefon
+
 common:
     actions:
         create: Opret ny
@@ -5,31 +62,327 @@ common:
             delete: Er du sikker på at du vil slette dette?
         delete: Slet
         edit: Rediger
+        finish: Afslut
+        save: Gem
         show: Vis
+        done: Udført
     back_to_list: Tilbage til liste
+    boolean:
+        'true': Ja
+        'false': Nej
+    choice_all: Alle
+    day:
+        monday: Mandag
+        tuesday: Tirsdag
+        wednesday: Onsdag
+        thursday: Torsdag
+        friday: Fredag
+        saturday: Lørdag
+        sunday: Søndag
+    enum:
+        date_interval:
+            this_week: Denne uge
+            week: En uge frem
+            two_weeks: To uger frem
+            month: En måned frem
+        journal_entry:
+            internal_note: Internt notat
+            note: Notat
     no_records_found: Ingen indgange fundet
     table:
         actions: Handlinger
         created_at: Oprettet
-        updated_at: Opdateret
         created_by: Oprettet af
+        updated_at: Opdateret
         updated_by: Opdateret af
+        by: af
     title: Kontrolgruppen
+
+conclusion:
+    edit:
+        title: Rediger konklusion
+    form:
+        base:
+            conclusion: Konklusion
+        weighted:
+            arguments_for: Argumenter for
+            arguments_against: Argumenter imod
+            conclusion: Konklusion
+    show:
+        title: Konklusion
+    table:
+        id: ID
+        arguments_against: Argumenter imod
+        arguments_for: Argumenter for
+        conclusion: Konklusion
+    types:
+        base: Basal
+        weighted: Argumenter for/imod
+
+dashboard:
+    index:
+        title: Dashboard
+    menu_title: Dashboard
+    tooltip: 'Din oversigt'
+    my_processes:
+        title: Mine sager
+    not_assigned:
+        title: Ikke tildelte sager
+    not_visited:
+        title: Ikke besøgte sager
+    reminders:
+        title: Påmindelser
+    coming_reminders:
+        label: Kommende påmindelser
+    latest_activity:
+        title: Seneste aktivitet
+
+journal_entry:
+    actions:
+        create: Opret nyt indlæg
+    edit:
+        title: Rediger journal
+    form:
+        body: Tekst
+        title: Overskrift
+        type: Type
+        update: Gem
+    index:
+        title: Journal
+    new:
+        title: Opret nyt journalindlæg
+    show:
+        title: Journal
+    table:
+        body: Tekst
+        id: ID
+        title: Overskrift
+        type: Type
+        filter:
+            all_entry: Alle indlæg
+            sort_label: Sortering
+            sort_desc: Nyeste først
+            sort_asc: Ældste først
+journal_quickview:
+    title: Seneste indlæg i journal
+    actions:
+        show_all: Vis hele journalen
+
+
+global_nav:
+    menu_title:
+        dashboard: Dashboard
+        process: Sager
+        profile: Profil
+        users: Brugere
+        admin: Indstillinger
+
+    tooltip:
+        dashboard: Få et hurtigt sagsoverblik
+        process: Få vist alle sager
+        profile: Dine profil informationer
+        users: Viser alle brugere på systemet
+        admin: Se og administre system indstillinger
+
+menu:
+    menu_title:
+        channel: Kanaler
+        client: Klient
+        conclusion: Konklusion
+        journal: Journal
+        process_number: 'Sag: %processNumber%'
+        process_show: Sagsopsummering
+        process_status: Sagsstatusser
+        process_type: Sagstyper
+        quick_link: Genveje
+        reminder: Påmindelser
+        service: Ydelser
 
 navigation:
     main:
         search: Søg
         sign_out: Log ud
+        quick_links: Genveje
+        new_process: Ny sag
+        reminders:
+            number_of_reminders: '%numberOfReminders%'
 
 process:
+    actions:
+        reminders: Påmindelser
+        journal_quickview: Senest i journal
     edit:
         title: Rediger sag
+    form:
+        case_worker: Sagbehandler
+        change_process_status:
+            placeholder: Vælg sagsstatus
+            save: Gem ny status
+        channel: Kanal
+        client_cpr: Klient CPR
+        process_status: Sagsstatus
+        process_type: Sagstype
+        service: Ydelse
+        update: Gem
     index:
         title: Sager
+    menu_title: Sager
     new:
         title: Opret sag
+    show:
+        title: Sag
+    summary:
+        title: Klient
+    table:
+        case_number: Sagsnummer
+        case_worker: Sagsbehandler
+        channel: Kanal
+        client_adress: Klient adresse
+        client_cpr: Klient CPR
+        client_name: Klient navn
+        client_telephone: Klient telefonnummer
+        id: ID
+        internal_note: Seneste interne notater
+        journal: Journal
+        note: Seneste notater
+        process_status: Status
+        process_type: Type
+        reminders: Påmindelser
+        reminders_open: Vis påmindelser
+        service: Ydelse
+        filter:
+            show_all_types: Alle sagstyper
+            show_all_status: Alle sagsstatusser
+            show_all_case_worker: Alle sagsbehandlere
+    tooltip: Liste med alle sager
+    btns:
+        create_new: Opret ny sag
+        create_report: Sagsrapport
+
+process_status:
+    edit:
+        title: Rediger sagsstatus
+    form:
+        name: Navn
+        process_types: Sagstyper
+        update: Gem
+        label: Vælg sagsstatus
+        select:
+            placeholder: Tryk for at vælge
+    index:
+        title: Sagsstatusser
+    menu_title: Sagsstatusser
+    new:
+        title: Opret sagsstatus
+    show:
+        title: Sagsstatus
     table:
         id: ID
-        case_number: Sagsnummer
-        client_cpr: Klient CPR
-        case_worker: Sagsbehandler
+        name: Navn
+        process_types: Tilkoblede sagstyper
+    select:
+        label: Sagsstatus
+    btns:
+        create_new: Opret ny sagsstatus
+
+process_type:
+    edit:
+        title: Rediger sagstype
+    form:
+        conclusion_class: Konklusionstype
+        name: Navn
+        process_statuses: Sagsstatusser
+        update: Gem
+    index:
+        title: Sagstyper
+    menu_title: Sagstyper
+    new:
+        title: Opret sagstype
+    show:
+        title: Sagstype
+    table:
+        conclusion_class: Konklusionstype
+        id: ID
+        name: Navn
+        process_statuses: Tilkoblede sagsstatusser
+    btns:
+        create_new: Opret ny sagstype
+
+quick_link:
+    edit:
+        title: Rediger genvej
+    form:
+        name: Navn
+        href: Link
+        update: Gem
+    index:
+        title: Genveje
+    menu_title: Genveje
+    new:
+        title: Opret genvej
+    show:
+        title: Genvej
+    table:
+        href: Link
+        id: ID
+        name: Navn
+    btns:
+        create_new: Opret ny genvej
+
+reminder:
+    actions:
+        create: Opret ny påmindelse
+    edit:
+        title: Rediger påmindelse
+    form:
+        date: Dato
+        time: Tidspunkt
+        finished: Afsluttet
+        message: Besked
+        update: Gem
+    index:
+        title: Påmindelser
+    menu_title: Påmindelser
+    new:
+        title: Opret påmindelse
+    table:
+        id: ID
+        message: Besked
+        date: Dato og tidspunkt
+        finished: Afsluttet
+    upcomming:
+        title: Kommende påmindelser
+        option:
+            7days: de næste 7 dage
+    btns:
+        create: Opret ny påmindelse
+    show:
+        title: Påmindelse
+
+service:
+    edit:
+        title: Rediger ydelse
+    form:
+        name: Navn
+        update: Gem
+    index:
+        title: Ydelser
+    menu_title: Ydelser
+    new:
+        title: Opret ydelse
+    show:
+        title: Ydelse
+    table:
+        id: ID
+        name: Navn
+    btns:
+        create_new: Opret ny ydelse
+
+weighted_conclusion:
+    form:
+        update: Gem
+
+activity:
+    event:
+        process_created: Sag oprettet
+        process_completed: Sag afsluttet

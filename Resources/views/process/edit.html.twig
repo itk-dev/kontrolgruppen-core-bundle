@@ -1,17 +1,13 @@
-{% extends 'main/index.html.twig' %}
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
 
 {% block title %}{{ 'process.edit.title'|trans }}{% endblock %}
 
 {% block content %}
-  <div class="row">
-    <div class="col">
-      <h1>{{ 'process.edit.title'|trans }}</h1>
+    <h1>{{ 'process.edit.title'|trans }}</h1>
 
-      {{ include('process/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('@KontrolgruppenCore/process/_form.html.twig', {'button_label': 'Update'}) }}
 
-      <a href="{{ path('process_index') }}">{{ 'common.back_to_list'|trans }}</a>
+    {{ include('@KontrolgruppenCore/process/_delete_form.html.twig') }}
 
-      {{ include('process/_delete_form.html.twig') }}
-    </div>
-  </div>
+    <a href="{{ path('process_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
 {% endblock %}

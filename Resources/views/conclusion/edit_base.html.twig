@@ -1,0 +1,14 @@
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+
+{% block title %}{{ 'conclusion.edit.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'conclusion.edit.title'|trans }}</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-success float-right pl-5 pr-5">
+        {{ (button_label is defined ? (form.vars.full_name ~ '.form.' ~ button_label|lower) : 'common.actions.save')|trans }}
+    </button>
+    {{ form_end(form) }}
+{% endblock %}

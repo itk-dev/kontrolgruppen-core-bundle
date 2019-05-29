@@ -1,0 +1,24 @@
+{{ form_start(form) }}
+
+{% if form.vars.id == 'weighted_conclusion' %}
+    <div class="row" id="{{ form.vars.id }}">
+        <div class="col-sm-6">
+            {{ form_label(form.argumentsFor, 'conclusion.form.weighted.arguments_for'|trans) }}
+            {{ form_widget(form.argumentsFor) }}
+        </div>
+        <div class="col-sm-6 mt-3 mt-sm-0">
+            {{ form_label(form.argumentsAgainst, 'conclusion.form.weighted.arguments_against'|trans) }}
+            {{ form_widget(form.argumentsAgainst) }}
+        </div>
+        <div class="col-sm-12 mt-3 mb-3">
+            {{ form_label(form.conclusion, 'conclusion.form.weighted.conclusion'|trans) }}
+            {{ form_widget(form.conclusion) }}
+        </div>
+    </div>
+{% else %}
+    {{ form_widget(form) }}
+{% endif %}
+
+<button
+    class="btn btn-success float-right pl-5 pr-5">{{ (button_label is defined ? (form.vars.full_name ~ '.form.' ~ button_label|lower) : 'common.actions.save')|trans }}</button>
+{{ form_end(form) }}

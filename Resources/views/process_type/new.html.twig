@@ -1,0 +1,11 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'process_type.new.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'process_type.new.title'|trans }}</h1>
+
+    {{ include('@KontrolgruppenCore/process_type/_form.html.twig') }}
+
+    <a href="{{ path('process_type_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+{% endblock %}

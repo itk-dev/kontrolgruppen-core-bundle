@@ -13,5 +13,5 @@
 
 {% block stylesheets %}
   {{ parent() }}
-  {{ encore_entry_link_tags('core_login') }}
+  <link rel="stylesheet" type="text/css" href="{{ asset('bundles/kontrolgruppencore/build/login.css') }}">
 {% endblock %}

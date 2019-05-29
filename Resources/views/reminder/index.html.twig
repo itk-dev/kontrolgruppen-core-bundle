@@ -1,0 +1,11 @@
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+
+{% block title %}{{ 'reminder.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1 class="float-left">{{ 'reminder.index.title'|trans }}</h1>
+    {% if process is defined %}
+        <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-success float-right btn-lg">{{ 'reminder.actions.create'|trans }}</a>
+    {% endif %}
+    {% include '@KontrolgruppenCore/reminder/_reminder_table.html.twig' with { reminders: reminders } %}
+{% endblock %}

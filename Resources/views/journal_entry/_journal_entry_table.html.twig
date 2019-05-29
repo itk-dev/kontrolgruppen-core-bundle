@@ -1,0 +1,37 @@
+{% block journal_entry_list %}
+    {% set max_iterations = limit is defined ? min(journalEntries|length, limit) : journalEntries|length %}
+
+    <div class="table-responsive bg-light mb-3">
+        <table class="table table-striped table-hover table-borderless thead-light">
+            <thead>
+            <tr>
+                <th>{{ 'journal_entry.table.title'|trans }}</th>
+                <th>{{ 'journal_entry.table.body'|trans }}</th>
+                <th class="float-right">{{ 'common.table.actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for journalEntry in journalEntries|slice(0, max_iterations) %}
+                <tr>
+                    <td>{{ journalEntry.title }}</td>
+                    <td>{{ journalEntry.body|raw }}</td>
+                    <td class="text-right">
+                        <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-dark"
+                           data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
+                            <i class="fas {{ iconClass('show') }} fa-inverse"></i>
+                        </a>
+                        <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-primary"
+                           data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
+                            <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">{{ 'common.no_records_found'|trans }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

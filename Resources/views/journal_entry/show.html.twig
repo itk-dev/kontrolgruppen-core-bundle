@@ -1,0 +1,32 @@
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+
+{% block title %}{{ 'journal_entry.show.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'journal_entry.show.title'|trans }}</h1>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-borderless thead-light">
+            <tbody>
+            <tr>
+                <th>{{ 'journal_entry.table.type'|trans }}</th>
+                <td>{{ journalEntry.type|readable_enum|trans }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'journal_entry.table.title'|trans }}</th>
+                <td>{{ journalEntry.title }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'journal_entry.table.body'|trans }}</th>
+                <td>{{ journalEntry.body|raw }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ path('journal_entry_index', {'process': process.id}) }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+    <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}"
+       class="btn btn-primary float-right pr-5 pl-5">{{ 'common.actions.edit'|trans }}</a>
+
+    {{ include('@KontrolgruppenCore/journal_entry/_delete_form.html.twig') }}
+{% endblock %}

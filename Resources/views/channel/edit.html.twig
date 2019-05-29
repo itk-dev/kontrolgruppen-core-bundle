@@ -1,0 +1,13 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'channel.edit.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'channel.edit.title'|trans }}</h1>
+
+    {{ include('@KontrolgruppenCore/channel/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('channel_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+
+    {{ include('@KontrolgruppenCore/channel/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+
+{% block title %}{{ 'conclusion.show.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'conclusion.show.title'|trans }}</h1>
+    <div class="mt-3">
+        {{ conclusion.conclusion|raw }}
+    </div>
+    <a href="{{ path('conclusion_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
+{% endblock %}

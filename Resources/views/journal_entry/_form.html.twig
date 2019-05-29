@@ -1,0 +1,5 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+<button
+    class="btn btn-success pl-5 pr-5 float-right">{{ (button_label is defined ? (form.vars.full_name ~ '.form.' ~ button_label|lower) : 'common.actions.save')|trans }}</button>
+{{ form_end(form) }}

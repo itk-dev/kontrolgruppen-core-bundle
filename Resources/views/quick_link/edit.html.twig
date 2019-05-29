@@ -1,0 +1,13 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'quick_link.edit.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'quick_link.edit.title'|trans }}</h1>
+
+    {{ include('@KontrolgruppenCore/quick_link/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('quick_link_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+
+    {{ include('@KontrolgruppenCore/quick_link/_delete_form.html.twig') }}
+{% endblock %}

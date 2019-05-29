@@ -1,7 +1,7 @@
 {% extends "@FOSUser/layout.html.twig" %}
 
 {% trans_default_domain 'FOSUserBundle' %}
-{% block page_title 'security.login.submit' | trans %}
+{% block page_title 'security.login.submit'|trans %}
 
 {% block fos_user_content %}
 <form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin">

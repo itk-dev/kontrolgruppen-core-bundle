@@ -2,8 +2,12 @@
 <ruleset name="PHP_CodeSniffer">
 	<description>The coding standard.</description>
 
-	<file>src/</file>
-	<file>tests/</file>
+	<file>./</file>
+
+  <exclude-pattern>Resources/*</exclude-pattern>
+  <exclude-pattern>vendor/*</exclude-pattern>
+  <exclude-pattern>node_modules/*</exclude-pattern>
+  <exclude-pattern>./webpack.config.js</exclude-pattern>
 
 	<!-- Do not print warnings -->
 	<arg value="n"/>

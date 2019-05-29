@@ -1,0 +1,11 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'service.new.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'service.new.title'|trans }}</h1>
+
+    {{ include('@KontrolgruppenCore/service/_form.html.twig') }}
+
+    <a href="{{ path('service_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+{% endblock %}

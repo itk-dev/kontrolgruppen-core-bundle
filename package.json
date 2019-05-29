@@ -1,0 +1,38 @@
+{
+  "name": "core-bundle",
+  "version": "1.0.0",
+  "main": "Resources/assets/js/app.js",
+  "repository": "git@github.com:aakb/kontrolgruppen-core-bundle.git",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@fortawesome/fontawesome-free": "^5.8.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.17",
+    "@fortawesome/free-solid-svg-icons": "^5.8.1",
+    "babel-loader": "^8.0.5",
+    "bootstrap": "^4.3.1",
+    "copy-webpack-plugin": "^5.0.2",
+    "css-loader": "^2.1.1",
+    "expose-loader": "^0.7.5",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "jquery": "^3.3.1",
+    "mini-css-extract-plugin": "^0.5.0",
+    "node-sass": "^4.11.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "popper.js": "^1.14.7",
+    "sass-loader": "^7.1.0",
+    "select2": "^4.0.7",
+    "style-loader": "^0.23.1",
+    "uglifyjs-webpack-plugin": "^2.1.2",
+    "url-parse": "^1.4.6",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "whatwg-fetch": "^3.0.0"
+  },
+  "scripts": {
+    "build": "webpack --mode=production",
+    "watch": "webpack --mode=production --watch"
+  }
+}

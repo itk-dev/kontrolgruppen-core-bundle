@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('process_status_delete', {'id': process_status.id}) }}"
+      onsubmit="return confirm({{ "'" ~ ('common.actions.confirm.delete'|trans) ~ "'" }});">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ process_status.id) }}">
+    <button class="btn btn-danger float-right mr-3">{{ 'common.actions.delete'|trans }}</button>
+</form>

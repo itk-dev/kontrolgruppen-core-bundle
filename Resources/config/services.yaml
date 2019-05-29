@@ -5,7 +5,7 @@ services:
 
     Kontrolgruppen\CoreBundle\:
         resource: '../../*'
-        exclude: '../../{DependencyInjection,Entity,Migrations,Tests,Kernel.php,assets,node_modules}'
+        exclude: '../../{DependencyInjection,Entity,Migrations,Tests,Kernel.php,assets,node_modules,vendor}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class

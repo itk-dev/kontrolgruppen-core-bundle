@@ -6,7 +6,7 @@
   {% set username = app.request.query.get('reset_user_username') %}
   {% if username %}
     <div class="form-group">
-      <label class="control-label">{{ 'security.login.username' | trans }}</label>
+      <label class="control-label">{{ 'security.login.username'|trans }}</label>
       <input type="text" class="form-control" value="{{ username }}" disabled/>
     </div>
   {% endif %}
