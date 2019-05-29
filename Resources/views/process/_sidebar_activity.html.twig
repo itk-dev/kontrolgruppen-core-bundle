@@ -1,12 +1,11 @@
 <div class="bg-light p-3 mb-3">
-  <p>{{ 'dashboard.latest_activity.title'|trans }}</p>
-  <div class="list-group">
-    {% for i in 0..4 %}
-      <a href="#" class="list-group-item list-group-item-action list-group-item-light">
-        <span class="d-block float-left text-muted">01-05-2019</span>
-        <span class="d-block float-right text-muted">{{ 'process.show.title'|trans }}: 19-00002</span>
-        <span class="d-block w-100 float-left text-dark"><i class="fas {{ iconClass('process') }} mr-3"></i>{{ 'activity.event.process_created'|trans }}</span>
-      </a>
-    {% endfor %}
-  </div>
+    <div class="list-group">
+        {% for i in 0..4 %}
+            <a href="#" class="list-group-item list-group-item-action list-group-item-light">
+                <span class="d-block float-left text-muted">01-05-2019</span>
+                <span class="d-block float-right text-muted">{{ 'process.show.title'|trans }}: 19-00002</span>
+                <span class="d-block w-100 float-left text-dark"><i class="fas {{ iconClass('process') }} mr-3"></i>{{ 'activity.event.process_created'|trans }}</span>
+            </a>
+        {% endfor %}
+    </div>
 </div>

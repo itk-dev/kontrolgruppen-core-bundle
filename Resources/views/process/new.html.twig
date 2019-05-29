@@ -3,14 +3,14 @@
 {% block title %}{{ 'process.new.title'|trans }}{% endblock %}
 
 {% block content %}
-  <div class="row">
-    <div class="col">
-      <h1>{{ 'process.new.title'|trans }}</h1>
+    <div class="row">
+        <div class="col">
+            <h1>{{ 'process.new.title'|trans }}</h1>
 
-      {{ include('@KontrolgruppenCore/process/_form.html.twig') }}
+            {{ include('@KontrolgruppenCore/process/_form.html.twig') }}
 
-      <a href="{{ path('process_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+            <a href="{{ path('process_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+        </div>
     </div>
-  </div>
 {% endblock %}
 

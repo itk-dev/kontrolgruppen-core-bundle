@@ -1,5 +1,6 @@
 require('jquery');
 require('bootstrap');
+require('select2');
 
 // Add fontawesome
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
@@ -20,9 +21,9 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup';
 
 library.add(
-  faTachometerAlt, faTasks, faIdCard, faUsersCog, faCog, faClock,
-  faUserPlus, faArchive, faEye, faPencilAlt, faHouseDamage, faFileDownload,
-  faPrint, faCheck, faLayerGroup
+    faTachometerAlt, faTasks, faIdCard, faUsersCog, faCog, faClock,
+    faUserPlus, faArchive, faEye, faPencilAlt, faHouseDamage, faFileDownload,
+    faPrint, faCheck, faLayerGroup
 );
 dom.watch();
 
@@ -32,9 +33,9 @@ require('../css/core.scss');
 import 'whatwg-fetch';
 
 $(function () {
-  $('[data-toggle="tooltip"]').tooltip(
-    {
-      delay: {show: 400},
-    }
-  );
+    $('[data-toggle="tooltip"]').tooltip(
+        {
+            delay: {show: 400},
+        }
+    );
 });

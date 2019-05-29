@@ -1,27 +1,27 @@
 {% block process_list %}
-  {% set max_iterations = limit is defined ? min(processes|length, limit) : processes|length %}
+    {% set max_iterations = limit is defined ? min(processes|length, limit) : processes|length %}
 
-  <div class="table-responsive">
-    <table class="table table-striped table-hover table-borderless">
-        <tbody>
-        {% for process in processes|slice(0, max_iterations) %}
-        <tr>
-            <td><a href="{{ path('process_show', {'id': process.id}) }}">{{ process.caseNumber }}</a></td>
-            <td>{{ process.processType }}</td>
-            <td>{{ process.clientCPR }}</td>
-            <td>{{ process.caseWorker }}</td>
-            <td>{{ process.channel }}</td>
-            <td>{{ process.service }}</td>
-            <td class="text-right">
-              {% include '@KontrolgruppenCore/process/_process_actions.html.twig' %}
-            </td>
-        </tr>
-        {% else %}
-        <tr>
-            <td colspan="7">{{ 'common.no_records_found'|trans }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-  </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-borderless">
+            <tbody>
+            {% for process in processes|slice(0, max_iterations) %}
+                <tr>
+                    <td><a href="{{ path('process_show', {'id': process.id}) }}">{{ process.caseNumber }}</a></td>
+                    <td>{{ process.processType }}</td>
+                    <td>{{ process.clientCPR }}</td>
+                    <td>{{ process.caseWorker }}</td>
+                    <td>{{ process.channel }}</td>
+                    <td>{{ process.service }}</td>
+                    <td class="text-right">
+                        {% include '@KontrolgruppenCore/process/_process_actions.html.twig' %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">{{ 'common.no_records_found'|trans }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

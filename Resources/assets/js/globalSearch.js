@@ -2,21 +2,21 @@
 
 var parse = require('url-parse');
 
-$(document).ready(function(){
-  let globalSearch = $('#kontrolgruppenGlobalSearch');
+$(document).ready(function () {
+    let globalSearch = $('#kontrolgruppenGlobalSearch');
 
-  let url = parse(window.location, true);
+    let url = parse(window.location, true);
 
-  $('#kontrolgruppenGlobalSearch > input').val(url.query.search);
+    $('#kontrolgruppenGlobalSearch > input').val(url.query.search);
 
-  globalSearch.on('submit', function (event) {
-    event.preventDefault();
-    event.stopPropagation();
+    globalSearch.on('submit', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
 
-    let input = $(this).find('input').val();
+        let input = $(this).find('input').val();
 
-    window.location.href = '/search/?search='+input;
+        window.location.href = '/search/?search=' + input;
 
-    return false;
-  });
+        return false;
+    });
 });
