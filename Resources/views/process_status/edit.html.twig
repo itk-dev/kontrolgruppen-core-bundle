@@ -13,12 +13,14 @@
 {% endblock %}
 
 {% block javascripts %}
-  {{ parent() }}
-  <script type="text/javascript">
-    $(function () {
-      $('#process_status_processTypes').select2({
-        placeholder: "{{ 'process_status.form.select.placeholder'|trans }}"
-      });
-    });
-  </script>
+    {{ parent() }}
+
+    {# @TODO: Move to separate js file #}
+    <script type="text/javascript">
+        $(function () {
+            $('#process_status_processTypes').select2({
+                placeholder: "{{ 'process_status.form.select.placeholder'|trans }}"
+            });
+        });
+    </script>
 {% endblock %}

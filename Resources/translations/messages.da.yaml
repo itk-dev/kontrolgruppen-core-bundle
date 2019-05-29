@@ -159,10 +159,10 @@ journal_entry:
         title: Overskrift
         type: Type
         filter:
-          all_entry: Alle indlæg
-          sort_label: Sortering
-          sort_desc: Nyeste først
-          sort_asc: Ældste først
+            all_entry: Alle indlæg
+            sort_label: Sortering
+            sort_desc: Nyeste først
+            sort_asc: Ældste først
 journal_quickview:
     title: Seneste indlæg i journal
     actions:
@@ -251,9 +251,9 @@ process:
         reminders_open: Vis påmindelser
         service: Ydelse
         filter:
-          show_all_types: Alle sagstyper
-          show_all_status: Alle sagsstatusser
-          show_all_case_worker: Alle sagsbehandlere
+            show_all_types: Alle sagstyper
+            show_all_status: Alle sagsstatusser
+            show_all_case_worker: Alle sagsbehandlere
     tooltip: Liste med alle sager
     btns:
         create_new: Opret ny sag
@@ -353,7 +353,7 @@ reminder:
     upcomming:
         title: Kommende påmindelser
         option:
-          7days: de næste 7 dage
+            7days: de næste 7 dage
     btns:
         create: Opret ny påmindelse
     show:
@@ -376,13 +376,13 @@ service:
         id: ID
         name: Navn
     btns:
-      create_new: Opret ny ydelse
+        create_new: Opret ny ydelse
 
 weighted_conclusion:
     form:
         update: Gem
 
 activity:
-  event:
-    process_created: Sag oprettet
-    process_completed: Sag afsluttet
+    event:
+        process_created: Sag oprettet
+        process_completed: Sag afsluttet

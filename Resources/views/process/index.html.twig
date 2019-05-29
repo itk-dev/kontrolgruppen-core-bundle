@@ -3,29 +3,29 @@
 {% block title %}{{ 'process.index.title'|trans }}{% endblock %}
 
 {% block content %}
-  <div class="row">
-    <div class="col-12">
-      <h1 class="float-left">{{ 'process.index.title'|trans }}</h1>
-      <a href="{{ path('process_new') }}" class="btn btn-success btn-lg float-right">{{ 'process.btns.create_new'|trans }}</a>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="float-left">{{ 'process.index.title'|trans }}</h1>
+            <a href="{{ path('process_new') }}" class="btn btn-success btn-lg float-right">{{ 'process.btns.create_new'|trans }}</a>
+        </div>
     </div>
-  </div>
 
-  <form method="get" action="." class="form form-inline">
-    {{ form_rest(form) }}
-  </form>
+    <form method="get" action="." class="form form-inline">
+        {{ form_rest(form) }}
+    </form>
 
-  {% include '@KontrolgruppenCore/process/_process_table_pagination.html.twig' %}
+    {% include '@KontrolgruppenCore/process/_process_table_pagination.html.twig' %}
 
-  {% include '@KontrolgruppenCore/journal_entry/_modal_quick_view.html.twig' %}
+    {% include '@KontrolgruppenCore/journal_entry/_modal_quick_view.html.twig' %}
 {% endblock %}
 
 {% block sidebar_right %}
-  {{ include('@KontrolgruppenCore/process/_sidebar_activity.html.twig') }}
+    {{ include('@KontrolgruppenCore/process/_sidebar_activity.html.twig') }}
 {% endblock %}
 
 {% block javascripts %}
-  {{ parent() }}
+    {{ parent() }}
 
-  <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/processFilters.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/journalQuickview.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/processFilters.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/journalQuickview.js') }}"></script>
 {% endblock %}
