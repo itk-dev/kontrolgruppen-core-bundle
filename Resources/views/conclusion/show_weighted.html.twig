@@ -5,30 +5,30 @@
 {% block content %}
     <h1>{{ 'conclusion.show.title'|trans }}</h1>
     <div class="row">
-      <div class="col-sm-6">
-        <p>{{ 'conclusion.table.arguments_for'|trans }}</p>
-        <div class="card">
-          <div class="card-body">
-            {{ conclusion.argumentsFor|raw }}
-          </div>
+        <div class="col-sm-6">
+            <p>{{ 'conclusion.table.arguments_for'|trans }}</p>
+            <div class="card">
+                <div class="card-body">
+                    {{ conclusion.argumentsFor|raw }}
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-sm-6 mt-3 mt-sm-0">
-        <p>{{ 'conclusion.table.arguments_against'|trans }}</p>
-        <div class="card">
-          <div class="card-body">
-            {{ conclusion.argumentsAgainst|raw }}
-          </div>
+        <div class="col-sm-6 mt-3 mt-sm-0">
+            <p>{{ 'conclusion.table.arguments_against'|trans }}</p>
+            <div class="card">
+                <div class="card-body">
+                    {{ conclusion.argumentsAgainst|raw }}
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-sm-12 mt-3 mb-3">
-        <p>{{ 'conclusion.table.conclusion'|trans }}</p>
-        <div class="card">
-          <div class="card-body">
-            {{ conclusion.conclusion|raw }}
-          </div>
+        <div class="col-sm-12 mt-3 mb-3">
+            <p>{{ 'conclusion.table.conclusion'|trans }}</p>
+            <div class="card">
+                <div class="card-body">
+                    {{ conclusion.conclusion|raw }}
+                </div>
+            </div>
         </div>
-      </div>
     </div>
     <a href="{{ path('conclusion_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
 {% endblock %}

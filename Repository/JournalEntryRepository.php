@@ -29,11 +29,6 @@ class JournalEntryRepository extends ServiceEntityRepository
         parent::__construct($registry, JournalEntry::class);
     }
 
-    public function getLatestDiaryEntries(Process $process)
-    {
-        return $this->getLatestEntries($process, JournalEntryEnumType::DIARY);
-    }
-
     public function getLatestNoteEntries(Process $process)
     {
         return $this->getLatestEntries($process, JournalEntryEnumType::NOTE);
@@ -44,16 +39,19 @@ class JournalEntryRepository extends ServiceEntityRepository
         return $this->getLatestEntries($process, JournalEntryEnumType::INTERNAL_NOTE);
     }
 
-    public function getLatestEntries(Process $process, string $type, int $limit = null)
+    public function getLatestEntries(Process $process, string $type = null, int $limit = null)
     {
         $qb = $this->createQueryBuilder('journalEntry');
         $qb
             ->where('journalEntry.process = :process')
             ->setParameter('process', $process)
-            ->andWhere('journalEntry.type = :type')
-            ->setParameter('type', $type)
-            ->orderBy('journalEntry.updatedAt', 'DESC')
+            ->orderBy('journalEntry.createdAt', 'DESC')
         ;
+
+        if (null !== $type) {
+            $qb->andWhere('journalEntry.type = :type')
+                ->setParameter('type', $type);
+        }
 
         if (null !== $limit) {
             $qb->setMaxResults($limit);

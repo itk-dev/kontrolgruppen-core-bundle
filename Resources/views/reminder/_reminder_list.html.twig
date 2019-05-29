@@ -1,40 +1,42 @@
 {% block reminder_list %}
-  {% set max_iterations = limit is defined ? min(reminders|length, limit) : reminders|length %}
+    {% set max_iterations = limit is defined ? min(reminders|length, limit) : reminders|length %}
 
-  {% for reminder in reminders|slice(0, max_iterations) %}
-    <div class="alert alert-warning p-3 mt-3">
-      <div class="row">
-        <div class="col-12 mb-1">
-          <h3>{{ reminder.message }}</h3>
+    {% for reminder in reminders|slice(0, max_iterations) %}
+        <div class="alert alert-warning p-3 mt-3">
+            <div class="row">
+                <div class="col-12 mb-1">
+                    <h3>{{ reminder.message }}</h3>
+                </div>
+                <div class="col">
+                    <a href="{{ path('process_show', {id: reminder.process.id}) }}">{{ reminder.process.caseNumber }}</a>
+                </div>
+                <div class="col">
+                    {{ reminder.process.processType }}
+                </div>
+                <div class="col">
+                    {{ reminder.date ? reminder.date|date('Y-m-d H:i:s') : '' }}
+                </div>
+                <div class="col">
+                    {{ 'common.actions.done'|trans }}: {{ (reminder.finished ? 'common.boolean.true' : 'common.boolean.false')|trans }}
+                </div>
+                <div class="col text-right">
+                    <a href="{{ path('reminder_finish', {'id': reminder.id, 'process': reminder.process.id}) }}" class="btn btn-sm btn-warning"
+                       data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.finish'|trans }}">
+                        <i class="fas {{ iconClass('complete') }} fa-inverse"></i>
+                    </a>
+                    <a href="{{ path('reminder_edit', {'id': reminder.id, 'process': reminder.process.id}) }}" class="btn btn-sm btn-primary"
+                       data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
+                        <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="col">
-          <a href="{{ path('process_show', {id: reminder.process.id}) }}">{{ reminder.process.caseNumber }}</a>
+    {% else %}
+        <div class="row">
+            <div class="col-12">
+                {{ 'common.no_records_found'|trans }}
+            </div>
         </div>
-        <div class="col">
-          {{ reminder.process.processType }}
-        </div>
-        <div class="col">
-          {{ reminder.date ? reminder.date|date('Y-m-d H:i:s') : '' }}
-        </div>
-        <div class="col">
-          {{ 'common.actions.done'|trans }}: {{ (reminder.finished ? 'common.boolean.true' : 'common.boolean.false')|trans }}
-        </div>
-        <div class="col text-right">
-          <a href="{{ path('reminder_finish', {'id': reminder.id, 'process': reminder.process.id}) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.finish'|trans }}">
-            <i class="fas {{ iconClass('complete') }} fa-inverse"></i>
-          </a>
-          <a href="{{ path('reminder_edit', {'id': reminder.id, 'process': reminder.process.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
-            <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
-          </a>
-        </div>
-      </div>
-    </div>
-  {% else %}
-    <div class="row">
-      <div class="col-12">
-        {{ 'common.no_records_found'|trans }}
-      </div>
-    </div>
-  {% endfor %}
+    {% endfor %}
 
 {% endblock %}

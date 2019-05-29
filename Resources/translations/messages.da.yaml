@@ -91,7 +91,6 @@ common:
             two_weeks: To uger frem
             month: En måned frem
         journal_entry:
-            diary: Dagbog
             internal_note: Internt notat
             note: Notat
     no_records_found: Ingen indgange fundet
@@ -166,10 +165,10 @@ journal_entry:
         title: Overskrift
         type: Type
         filter:
-          all_entry: Alle indlæg
-          sort_label: Sortering
-          sort_desc: Nyeste først
-          sort_asc: Ældste først
+            all_entry: Alle indlæg
+            sort_label: Sortering
+            sort_desc: Nyeste først
+            sort_asc: Ældste først
 journal_quickview:
     title: Seneste indlæg i journal
     actions:
@@ -199,7 +198,7 @@ menu:
         journal: Journal
         process_number: 'Sag: %processNumber%'
         process_show: Sagsopsummering
-        process_status: Sagsstatuser
+        process_status: Sagsstatusser
         process_type: Sagstyper
         quick_link: Genveje
         reminder: Påmindelser
@@ -250,7 +249,6 @@ process:
         client_last_name: Efternavn
         client_name: Klient navn
         client_telephone: Klient telefonnummer
-        diary: Senest i dagbogen
         id: ID
         internal_note: Seneste interne notater
         journal: Journal
@@ -261,9 +259,9 @@ process:
         reminders_open: Vis påmindelser
         service: Ydelse
         filter:
-          show_all_types: Alle sagstyper
-          show_all_status: Alle sagsstatuer
-          show_all_case_worker: Alle sagsbehandlere
+            show_all_types: Alle sagstyper
+            show_all_status: Alle sagsstatusser
+            show_all_case_worker: Alle sagsbehandlere
     tooltip: Liste med alle sager
     btns:
         create_new: Opret ny sag
@@ -277,9 +275,11 @@ process_status:
         process_types: Sagstyper
         update: Gem
         label: Vælg sagsstatus
+        select:
+            placeholder: Tryk for at vælge
     index:
-        title: Sagsstatuser
-    menu_title: Sagsstatuser
+        title: Sagsstatusser
+    menu_title: Sagsstatusser
     new:
         title: Opret sagsstatus
     show:
@@ -299,7 +299,7 @@ process_type:
     form:
         conclusion_class: Konklusionstype
         name: Navn
-        process_statuses: Sagsstatuser
+        process_statuses: Sagsstatusser
         update: Gem
     index:
         title: Sagstyper
@@ -312,7 +312,7 @@ process_type:
         conclusion_class: Konklusionstype
         id: ID
         name: Navn
-        process_statuses: Tilkoblede sagsstatuser
+        process_statuses: Tilkoblede sagsstatusser
     btns:
         create_new: Opret ny sagstype
 
@@ -361,7 +361,7 @@ reminder:
     upcomming:
         title: Kommende påmindelser
         option:
-          7days: de næste 7 dage
+            7days: de næste 7 dage
     btns:
         create: Opret ny påmindelse
     show:
@@ -403,7 +403,7 @@ service:
         id: ID
         name: Navn
     btns:
-      create_new: Opret ny ydelse
+        create_new: Opret ny ydelse
 
 weighted_conclusion:
     form:
