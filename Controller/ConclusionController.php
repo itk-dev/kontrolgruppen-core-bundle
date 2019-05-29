@@ -24,7 +24,7 @@ use Kontrolgruppen\CoreBundle\Entity\Process;
 class ConclusionController extends BaseController
 {
     /**
-     * @Route("/", name="conclusion_show", methods={"GET"})
+     * @Route("/", name="conclusion_show", methods={"GET","POST"})
      */
     public function show(Request $request, Process $process, EventDispatcherInterface $dispatcher): Response
     {

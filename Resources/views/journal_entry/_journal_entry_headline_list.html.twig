@@ -1,6 +1,8 @@
 {% block journal_entry_list %}
     {% set max_iterations = limit is defined ? min(journalEntries|length, limit) : journalEntries|length %}
 
+    {# TODO: Styling so it becomes more compact. #}
+
     <div class="mb-3 p-3">
         {% for journalEntry in journalEntries|slice(0, max_iterations) %}
             <div class="row bg-light mb-2">
@@ -29,9 +31,6 @@
                     {% elseif journalEntry.type == 'INTERNAL_NOTE' %}
                         <span class="badge badge-warning">{{ 'common.enum.journal_entry.internal_note'|trans }}</span>
                     {% endif %}
-                </div>
-                <div class="col-10 pb-2">
-                    {{ journalEntry.body|raw }}
                 </div>
             </div>
         {% else %}

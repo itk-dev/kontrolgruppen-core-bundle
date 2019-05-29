@@ -3,89 +3,83 @@
 {% block title %}{{ 'process.show.title'|trans }}{% endblock %}
 
 {% block content %}
-  <div class="row">
-    <div class="col">
-      <h1 class="float-left">{{ 'process.show.title'|trans }} {{ process.caseNumber }}</h1>
-      <a href="TODO: report path" class="btn btn-sm btn-outline-primary float-right"><i class="fas {{ iconClass('report') }} mr-2" ></i>{{ 'process.btns.create_report'|trans }}</a>
-      <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-sm btn-outline-warning float-right mr-3"><i class="fas {{ iconClass('reminder') }} mr-2" ></i>{{ 'reminder.btns.create'|trans }}</a>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <div class="bg-light border pt-3 pr-3 pl-3 mb-3">
-        <div class="row">
-          <div class="col-6 col-lg-3">
-            <dl class="row">
-              <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.created_by'|trans }}</dd>
-              <dt class="col-sm-12">{{ process.createdBy }}</dt>
-            </dl>
-          </div>
-          <div class="col-6 col-lg-3">
-            <dl class="row">
-              <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.created_at'|trans }}</dd>
-              <dt class="col-sm-12">{{ process.createdAt|date('Y-m-d') }}</dt>
-            </dl>
-          </div>
-          <div class="col-6 col-lg-3">
-            <dl class="row">
-              <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.updated_at'|trans }}</dd>
-              <dt class="col-sm-12">{{ process.updatedAt|date('Y-m-d') }} {{ 'common.table.by'|trans }} {{ process.updatedBy }}</dt>
-            </dl>
-          </div>
-          <div class="col-6 col-lg-3">
-            <dl class="row">
-              <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.case_worker'|trans }}</dd>
-              <dt class="col-sm-12">{{ process.caseWorker }}</dt>
-            </dl>
-          </div>
-          <div class="col-6 col-lg-3">
-            <dl class="row">
-              <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.process_type'|trans }}</dd>
-              <dt class="col-sm-12">{{ process.processType }}</dt>
-            </dl>
-          </div>
-          <div class="col-6 col-lg-3">
-            <dl class="row">
-              <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.channel'|trans }}</dd>
-              <dt class="col-sm-12">{{ process.channel }}</dt>
-            </dl>
-          </div>
-          <div class="col-6 col-lg-3">
-            <dl class="row">
-              <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.service'|trans }}</dd>
-              <dt class="col-sm-12">{{ process.service }}</dt>
-            </dl>
-          </div>
+    <div class="row">
+        <div class="col">
+            <h1 class="float-left">{{ 'process.show.title'|trans }} {{ process.caseNumber }}</h1>
+            <a href="TODO: report path" class="btn btn-sm btn-outline-primary float-right"><i
+                    class="fas {{ iconClass('report') }} mr-2"></i>{{ 'process.btns.create_report'|trans }}</a>
+            <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-sm btn-outline-warning float-right mr-3"><i
+                    class="fas {{ iconClass('reminder') }} mr-2"></i>{{ 'reminder.btns.create'|trans }}</a>
         </div>
-      </div>
     </div>
-  </div>
+    <div class="row">
+        <div class="col">
+            <div class="bg-light border pt-3 pr-3 pl-3 mb-3">
+                <div class="row">
+                    <div class="col-6 col-lg-3">
+                        <dl class="row">
+                            <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.created_by'|trans }}</dd>
+                            <dt class="col-sm-12">{{ process.createdBy }}</dt>
+                        </dl>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <dl class="row">
+                            <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.created_at'|trans }}</dd>
+                            <dt class="col-sm-12">{{ process.createdAt|date('Y-m-d') }}</dt>
+                        </dl>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <dl class="row">
+                            <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.updated_at'|trans }}</dd>
+                            <dt class="col-sm-12">{{ process.updatedAt|date('Y-m-d') }} {{ 'common.table.by'|trans }} {{ process.updatedBy }}</dt>
+                        </dl>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <dl class="row">
+                            <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.case_worker'|trans }}</dd>
+                            <dt class="col-sm-12">{{ process.caseWorker }}</dt>
+                        </dl>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <dl class="row">
+                            <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.process_type'|trans }}</dd>
+                            <dt class="col-sm-12">{{ process.processType }}</dt>
+                        </dl>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <dl class="row">
+                            <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.channel'|trans }}</dd>
+                            <dt class="col-sm-12">{{ process.channel }}</dt>
+                        </dl>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <dl class="row">
+                            <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.service'|trans }}</dd>
+                            <dt class="col-sm-12">{{ process.service }}</dt>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <div class="row">
-    <div class="col-12">
-      <h2 class="float-left">{{ 'process.table.journal'|trans }}</h2>
-      <a href="{{ path('journal_entry_new', {'process': process.id}) }}" class="btn btn-success btn-sm float-right">{{ 'journal_entry.new.title'|trans }}</a>
+    <div class="row">
+        <div class="col-12">
+            <h2 class="float-left">{{ 'process.table.journal'|trans }}</h2>
+            <a href="{{ path('journal_entry_new', {'process': process.id}) }}"
+               class="btn btn-success btn-sm float-right">{{ 'journal_entry.new.title'|trans }}</a>
+        </div>
+        <div class="col-12">
+            {% include '@KontrolgruppenCore/journal_entry/_journal_entry_headline_list.html.twig'  with { journalEntries: latestJournalEntries } %}
+        </div>
     </div>
-    <div class="col-12">
-      <h3>{{ 'process.table.diary'|trans }}</h3>
-      {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig'  with { journalEntries: latestDiaryEntries, limit: 2 } %}
-    </div>
-    <div class="col-12">
-      <h3>{{ 'process.table.note'|trans }}</h3>
-      {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig'  with { journalEntries: latestNoteEntries, limit: 2 } %}
-    </div>
-    <div class="col-12">
-      <h3>{{ 'process.table.internal_note'|trans }}</h3>
-      {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig'  with { journalEntries: latestInternalNoteEntries, limit: 2 } %}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <a href="{{ path('process_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+    <div class="row">
+        <div class="col">
+            <a href="{{ path('process_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
 
-      <a href="{{ path('process_edit', {'id': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'process.edit.title'|trans }}</a>
+            <a href="{{ path('process_edit', {'id': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'process.edit.title'|trans }}</a>
 
-      {{ include('@KontrolgruppenCore/process/_delete_form.html.twig') }}
+            {{ include('@KontrolgruppenCore/process/_delete_form.html.twig') }}
+        </div>
     </div>
-  </div>
 {% endblock %}

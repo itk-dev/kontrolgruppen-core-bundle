@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProcessReminderController extends BaseController
 {
     /**
-     * @Route("/", name="reminder_index", methods={"GET"})
+     * @Route("/", name="reminder_index", methods={"GET","POST"})
      */
     public function index(Request $request, Process $process): Response
     {

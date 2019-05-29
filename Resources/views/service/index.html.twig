@@ -20,12 +20,14 @@
                     <td>{{ service.id }}</td>
                     <td>{{ service.name }}</td>
                     <td class="text-right">
-                      <a href="{{ path('service_show', {'id': service.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
-                          <i class="fas {{ iconClass('show') }} fa-inverse"></i>
-                      </a>
-                      <a href="{{ path('service_edit', {'id': service.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
-                          <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
-                      </a>
+                        <a href="{{ path('service_show', {'id': service.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top"
+                           title="{{ 'common.actions.show'|trans }}">
+                            <i class="fas {{ iconClass('show') }} fa-inverse"></i>
+                        </a>
+                        <a href="{{ path('service_edit', {'id': service.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top"
+                           title="{{ 'common.actions.edit'|trans }}">
+                            <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
+                        </a>
                     </td>
                 </tr>
             {% else %}
@@ -36,5 +38,4 @@
             </tbody>
         </table>
     </div>
-
 {% endblock %}
