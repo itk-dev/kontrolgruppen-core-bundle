@@ -1,18 +1,18 @@
 {% extends '@KontrolgruppenCore/main/index.html.twig' %}
 
 {% block content %}
-  <h1>Søgning</h1>
-  <div class="js-search-text" data-search="{{ search }}">
-    <h2>{{ 'search.results_for'|trans({'%searchTerm%': search, '%numberOfResults%': pagination.getTotalItemCount}) }}</h2>
-  </div>
+    <h1>{{ 'search.headline'|trans }}</h1>
+    <div class="js-search-text" data-search="{{ search }}">
+        <h2>{{ 'search.results_for'|trans({'%searchTerm%': search, '%numberOfResults%': pagination.getTotalItemCount}) }}</h2>
+    </div>
 
-  <div class="search-result">
-    {% include '@KontrolgruppenCore/search/_search_process.html.twig' %}
-  </div>
+    <div class="search-result">
+        {% include '@KontrolgruppenCore/search/_search_process.html.twig' %}
+    </div>
 {% endblock %}
 
 {% block javascripts %}
-  {{ parent() }}
+    {{ parent() }}
 
-  <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/searchPage.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/searchPage.js') }}"></script>
 {% endblock %}
