@@ -36,6 +36,11 @@ class ProcessType extends AbstractTaxonomy
      */
     private $conclusionClass;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $hideInDashboard;
+
     public function __construct()
     {
         $this->processes = new ArrayCollection();
@@ -107,6 +112,18 @@ class ProcessType extends AbstractTaxonomy
     public function setConclusionClass(string $conclusionClass): self
     {
         $this->conclusionClass = $conclusionClass;
+
+        return $this;
+    }
+
+    public function getHideInDashboard(): ?bool
+    {
+        return $this->hideInDashboard;
+    }
+
+    public function setHideInDashboard(?bool $hideInDashboard): self
+    {
+        $this->hideInDashboard = $hideInDashboard;
 
         return $this;
     }
