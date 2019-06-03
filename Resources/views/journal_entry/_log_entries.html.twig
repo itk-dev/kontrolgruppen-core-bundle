@@ -1,0 +1,37 @@
+{% set show = (show is defined) ? show : true %}
+
+<div class="js-revision-list" data-journal-id="{{ journalEntry.id }}" style="{% if not show %}display: none; {% endif %}">
+  <h3>{{ 'journal_entry.revision.headline'|trans }}</h3>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>{{ 'journal_entry.revision.table.action'|trans }}</th>
+      <th>{{ 'journal_entry.revision.table.date'|trans }}</th>
+      <th>{{ 'journal_entry.revision.table.change_key'|trans }}</th>
+      <th>{{ 'journal_entry.revision.table.change'|trans }}</th>
+    </tr>
+    </thead>
+    {% for log in journalEntry.logs %}
+      <tr>
+      <td>{{ ('journal_entry.revision.action_type.' ~ (log.action|lower))|trans }}</td>
+      <td>{{ log.loggedAt|date('d/m Y') }}</td>
+
+      {% for changeKey, change in log.data %}
+        {% if not loop.first %}
+          <tr>
+          <td colspan="2"></td>
+        {% endif %}
+        <td>{{ ('journal_entry.revision.change_key.' ~ (changeKey|lower))|trans }}</td>
+        <td>{{ change|raw }}</td>
+        {% if not loop.first %}
+          </tr>
+        {% endif %}
+      {% endfor %}
+
+      {% if loop.last %}
+        </tr>
+      {% endif %}
+    {% endfor %}
+  </table>
+</div>

@@ -14,6 +14,7 @@ use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Filter\JournalFilterType;
 use Kontrolgruppen\CoreBundle\Form\JournalEntryType;
 use Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository;
+use Kontrolgruppen\CoreBundle\Service\LogManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -39,7 +40,7 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/", name="journal_entry_index", methods={"GET","POST"})
      */
-    public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process, FilterBuilderUpdaterInterface $lexikBuilderUpdater, SessionInterface $session): Response
+    public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process, FilterBuilderUpdaterInterface $lexikBuilderUpdater, SessionInterface $session, LogManager $logManager): Response
     {
         $journalEntry = new JournalEntry();
         $journalEntry->setProcess($process);
@@ -66,19 +67,15 @@ class JournalEntryController extends BaseController
             $sortDirection = $sessionSortDirection ?: 'desc';
         }
 
-        $qb = null;
+        // initialize a query builder
+        $qb = $journalEntryRepository->createQueryBuilder('e', 'e.id');
 
         if ($request->query->has($filterForm->getName())) {
             // manually bind values from the request
             $filterForm->submit($request->query->get($filterForm->getName()));
 
-            // initialize a query builder
-            $qb = $journalEntryRepository->createQueryBuilder('e');
-
             // build the query from the given form object
             $lexikBuilderUpdater->addFilterConditions($filterForm, $qb);
-        } else {
-            $qb = $journalEntryRepository->createQueryBuilder('e');
         }
 
         $qb->andWhere('e.process = :process');
@@ -86,12 +83,15 @@ class JournalEntryController extends BaseController
 
         $qb->orderBy('e.id', $sortDirection);
 
-        $query = $qb->getQuery();
+        $result = $qb->getQuery()->getArrayResult();
+
+        // Attach log entries.
+        $result = $logManager->attachLogEntriesToJournalEntries($result);
 
         return $this->render('@KontrolgruppenCore/journal_entry/index.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'form' => $filterForm->createView(),
-            'journalEntries' => $query->execute(),
+            'journalEntries' => $result,
             'journalEntryForm' => $journalEntryForm->createView(),
             'process' => $process,
         ]);
@@ -126,8 +126,10 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/{id}", name="journal_entry_show", methods={"GET"})
      */
-    public function show(Request $request, JournalEntry $journalEntry, Process $process): Response
+    public function show(Request $request, JournalEntry $journalEntry, Process $process, LogManager $logManager): Response
     {
+        $journalEntry = $logManager->attachLogEntriesToJournalEntry($journalEntry);
+
         return $this->render('@KontrolgruppenCore/journal_entry/show.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'journalEntry' => $journalEntry,
@@ -138,7 +140,7 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/{id}/edit", name="journal_entry_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, JournalEntry $journalEntry, Process $process): Response
+    public function edit(Request $request, JournalEntry $journalEntry, Process $process, LogManager $logManager): Response
     {
         $form = $this->createForm(JournalEntryType::class, $journalEntry);
         $form->handleRequest($request);
@@ -151,6 +153,8 @@ class JournalEntryController extends BaseController
                 'process' => $process->getId(),
             ]);
         }
+
+        $journalEntry = $logManager->attachLogEntriesToJournalEntry($journalEntry);
 
         return $this->render('@KontrolgruppenCore/journal_entry/edit.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
