@@ -16,6 +16,24 @@
                 <th>{{ 'process_type.table.name'|trans }}</th>
                 <td>{{ process_type.name }}</td>
             </tr>
+            <tr>
+                <th>{{ 'process_type.table.process_statuses'|trans }}</th>
+                <td>
+                    {% for processStatus in process_type.processStatuses %}
+                        {{ processStatus }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'process_type.table.hide_in_dashboard'|trans }}</th>
+                <td>
+                    {{ (process_type.hideInDashboard ? 'common.boolean.true' : 'common.boolean.false')|trans }}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'process_type.table.conclusion_class'|trans }}</th>
+                <td>{{ conclusionClassTranslation(process_type.conclusionClass) }}</td>
+            </tr>
             </tbody>
         </table>
     </div>

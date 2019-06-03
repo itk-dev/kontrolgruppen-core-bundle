@@ -50,6 +50,9 @@ class ProcessTypeType extends AbstractType
             ->add('processStatuses', null, [
                 'label' => 'process_type.form.process_statuses',
             ])
+            ->add('hideInDashboard', null, [
+                'label' => 'process_type.form.hide_in_dashboard',
+            ])
             ->add('conclusionClass', ChoiceType::class, [
                 'choices' => $choices,
                 'label' => 'process_type.form.conclusion_class',

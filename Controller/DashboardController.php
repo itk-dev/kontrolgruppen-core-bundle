@@ -56,9 +56,20 @@ class DashboardController extends BaseController
             $filterForm->get('limit')->setData($limit);
         }
 
+        // Only find current user's processes.
         $qb->where('e.caseWorker = :caseWorker');
         $qb->setParameter(':caseWorker', $this->getUser());
         $qb->orderBy('e.id', 'DESC');
+
+        // Only find processes where the processType.hideInDashboard is not true.
+        $qb->leftJoin('e.processType', 'processType');
+        $qb->addSelect('partial processType.{id,name,hideInDashboard}');
+        $qb->andWhere(
+            $qb->expr()->orX(
+                $qb->expr()->isNull('processType.hideInDashboard'),
+                $qb->expr()->eq('processType.hideInDashboard', 'false')
+            )
+        );
 
         $query = $qb->getQuery();
 
@@ -67,12 +78,6 @@ class DashboardController extends BaseController
             $request->query->get('page', 1),
             $limit
         );
-
-        $qb = $processRepository->createQueryBuilder('e');
-        $qb->select('count(e.id)');
-        $qb->where('e.caseWorker = :caseWorker');
-        $qb->setParameter(':caseWorker', $this->getUser());
-        $myProcessesLength = $qb->getQuery()->getSingleScalarResult();
 
         // Coming reminders form.
         $comingReminderForm = $this->createFormBuilder()->add('date_interval', ChoiceType::class, [
@@ -86,7 +91,6 @@ class DashboardController extends BaseController
             'myProcesses' => $pagination,
             'comingReminderForm' => $comingReminderForm->createView(),
             'myProcessesFilterForm' => $filterForm->createView(),
-            'myProcessesLength' => $myProcessesLength,
         ]);
     }
 }

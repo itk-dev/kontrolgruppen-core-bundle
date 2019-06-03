@@ -21,9 +21,9 @@
         </div>
     {% endif %}
 
-    {% if myProcessesLength > 0 %}
+    {% if myProcesses|length > 0 %}
         <div class="mb-3">
-            <h2 class="mb-3"><i class="fas {{ iconClass('process') }} mr-3"></i>{{ 'dashboard.my_processes.title'|trans }} ({{ myProcessesLength }})</h2>
+            <h2 class="mb-3"><i class="fas {{ iconClass('process') }} mr-3"></i>{{ 'dashboard.my_processes.title'|trans }}</h2>
 
             <div class="form form-inline float-right m-2">
                 {{ form(myProcessesFilterForm) }}

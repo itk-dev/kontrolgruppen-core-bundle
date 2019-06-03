@@ -315,6 +315,7 @@ process_type:
         title: Rediger sagstype
     form:
         conclusion_class: Konklusionstype
+        hide_in_dashboard: Skjul på dashboard
         name: Navn
         process_statuses: Sagsstatusser
         update: Gem
@@ -327,6 +328,7 @@ process_type:
         title: Sagstype
     table:
         conclusion_class: Konklusionstype
+        hide_in_dashboard: Skjul på dashboard
         id: ID
         name: Navn
         process_statuses: Tilkoblede sagsstatusser
