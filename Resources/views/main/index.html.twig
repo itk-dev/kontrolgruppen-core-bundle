@@ -10,14 +10,15 @@
 
 {% block body %}
     <nav class="navbar navbar-dark fixed-top bg-dark p-0 shadow navbar-expand-lg">
-
         <a class="navbar-brand col-auto col-sm-3 col-md-2 col-lg-2 mr-0" href="/">
             <i class="fas fa-house-damage text-white mr-sm-3" title="{{ 'common.title'|trans }}"></i>
             <span class="d-none d-md-inline">{{ 'common.title'|trans }}</span>
         </a>
         {% block navigation_main %}
-            <input class="form-control form-control-dark rounded-pill col-6 col-lg-4" type="text" placeholder="{{ 'navigation.main.search'|trans }}"
-                   aria-label="{{ 'navigation.main.search'|trans }}">
+            <form class="kontrolgruppen-global-search col-6 col-lg-4 form">
+                <input class="form-control form-control-dark rounded-pill" type="text" placeholder="{{ 'navigation.main.search'|trans }}"
+                       aria-label="{{ 'navigation.main.search'|trans }}">
+            </form>
 
             <button class="navbar-toggler mr-1" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                     aria-label="Toggle navigation">

@@ -108,3 +108,8 @@ h3 {
     background: $gray-100;
     border-bottom-color: $gray-100;
 }
+
+table th a.asc,
+table th a.desc {
+    text-decoration: underline;
+}
