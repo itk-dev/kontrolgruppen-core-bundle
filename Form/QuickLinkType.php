@@ -26,6 +26,10 @@ class QuickLinkType extends AbstractType
             ->add('href', null, [
                 'label' => 'quick_link.form.href',
             ])
+            ->add('weight', null, [
+                'label' => 'quick_link.form.weight',
+                'help' => 'quick_link.form.weight_help',
+            ])
         ;
     }
 
