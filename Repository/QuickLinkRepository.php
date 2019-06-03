@@ -28,11 +28,12 @@ class QuickLinkRepository extends ServiceEntityRepository
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
-        $orderBy = $orderBy === null ? ['weight' => 'ASC'] : $orderBy;
+        $orderBy = null === $orderBy ? ['weight' => 'ASC'] : $orderBy;
+
         return parent::findBy($criteria, $orderBy, $limit, $offset);
     }
 }
