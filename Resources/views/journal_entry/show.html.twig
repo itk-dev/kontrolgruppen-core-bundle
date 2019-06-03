@@ -29,4 +29,9 @@
        class="btn btn-primary float-right pr-5 pl-5">{{ 'common.actions.edit'|trans }}</a>
 
     {{ include('@KontrolgruppenCore/journal_entry/_delete_form.html.twig') }}
+
+    {# @TODO: Styling #}
+    <div style="margin-top: 100px; position: relative;">
+        {% include '@KontrolgruppenCore/journal_entry/_log_entries.html.twig' %}
+    </div>
 {% endblock %}
