@@ -77,6 +77,8 @@ class TwigExtension extends AbstractExtension
                 return 'fa-sort-up';
             case 'sort-down':
                 return 'fa-sort-down';
+            case 'layer-group':
+                return 'fa-layer-group';
             default:
                 return '';
         }
