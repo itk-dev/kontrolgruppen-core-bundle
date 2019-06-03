@@ -332,6 +332,8 @@ quick_link:
         name: Navn
         href: Link
         update: Gem
+        weight: Vægt
+        weight_help: Vægten bestemmer, hvor elementet placeres på listen over genveje. Lavere værdier kommer først.
     index:
         title: Genveje
     menu_title: Genveje
@@ -343,6 +345,7 @@ quick_link:
         href: Link
         id: ID
         name: Navn
+        weight: Vægt
     btns:
         create_new: Opret ny genvej
 
