@@ -19,15 +19,17 @@ import { faFileDownload } from '@fortawesome/free-solid-svg-icons/faFileDownload
 import { faPrint } from '@fortawesome/free-solid-svg-icons/faPrint';
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup';
+import { faSort } from "@fortawesome/free-solid-svg-icons/faSort";
+import { faSortUp } from "@fortawesome/free-solid-svg-icons/faSortUp";
+import { faSortDown } from "@fortawesome/free-solid-svg-icons/faSortDown";
 
 library.add(
     faTachometerAlt, faTasks, faIdCard, faUsersCog, faCog, faClock,
     faUserPlus, faArchive, faEye, faPencilAlt, faHouseDamage, faFileDownload,
-    faPrint, faCheck, faLayerGroup
+    faPrint, faCheck, faLayerGroup, faSort, faSortUp, faSortDown
 );
 dom.watch();
 
-// any CSS you require will output into a single css file (app.css in this case)
 require('../css/core.scss');
 
 import 'whatwg-fetch';

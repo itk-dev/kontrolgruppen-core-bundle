@@ -1,6 +1,6 @@
 {% block process_table %}
     <div id="js-process-spinner" class="spinner-border spinner-border-sm" style="display: none" role="status">
-        <span class="sr-only">Loading...</span>
+        <span class="sr-only">{{ 'common.loading'|trans }}</span>
     </div>
 
     <div class="table-responsive js-process-table-results">
@@ -9,7 +9,7 @@
             <tr>
                 <th>{{ knp_pagination_sortable(pagination, 'process.table.case_number'|trans , 'e.caseNumber')|raw }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'process.table.client_cpr'|trans , 'e.clientCPR')|raw }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'process.table.case_worker'|trans , 'case_worker_id')|raw }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'process.table.case_worker'|trans , 'caseWorker.id')|raw }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'process.table.channel'|trans , 'channel.id')|raw }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'process.table.process_type'|trans , 'processType.id')|raw }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'process.table.service'|trans , 'service.id')|raw }}</th>

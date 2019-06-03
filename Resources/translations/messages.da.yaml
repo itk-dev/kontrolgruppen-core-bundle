@@ -1,3 +1,8 @@
+activity:
+    event:
+        process_created: Sag oprettet
+        process_completed: Sag afsluttet
+
 admin:
     index:
         title: System indstillinger
@@ -97,6 +102,7 @@ common:
         updated_by: Opdateret af
         by: af
     title: Kontrolgruppen
+    loading: Henter data ...
 
 conclusion:
     edit:
@@ -256,6 +262,8 @@ process:
         channel: Kanal
         client_adress: Klient adresse
         client_cpr: Klient CPR
+        client_first_name: Fornavn
+        client_last_name: Efternavn
         client_name: Klient navn
         client_telephone: Klient telefonnummer
         id: ID
@@ -378,6 +386,26 @@ reminder:
     show:
         title: Påmindelse
 
+search:
+    headline: Søgning
+    loading_results: Søger ...
+    no_results_found: Søgning på %searchTerm% gav ingen resultater.
+    results_for: '%numberOfResults% resultater for søgning på: %searchTerm%'
+    table:
+        case_number: Sagsnummer
+        case_worker: Sagsbehandler
+        channel: Kanal
+        client_adress: Adresse
+        client_cpr: CPR
+        client_first_name: Fornavn
+        client_last_name: Efternavn
+        client_telephone: Telefon
+        process_status: Status
+        process_type: Type
+        reminders: Påmindelser
+        service: Ydelse
+    total_results: 'Antal resultater: %numberOfResults%.'
+
 service:
     edit:
         title: Rediger ydelse
@@ -400,8 +428,3 @@ service:
 weighted_conclusion:
     form:
         update: Gem
-
-activity:
-    event:
-        process_created: Sag oprettet
-        process_completed: Sag afsluttet

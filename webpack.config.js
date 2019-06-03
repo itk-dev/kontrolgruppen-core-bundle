@@ -13,6 +13,7 @@ module.exports = {
     'processFilters': './Resources/assets/js/processFilters.js',
     'processStatusForm': './Resources/assets/js/processStatusForm.js',
     'globalSearch': './Resources/assets/js/globalSearch.js',
+    'searchPage': './Resources/assets/js/searchPage.js',
     'journalRevisionToggle': './Resources/assets/js/journalRevisionToggle.js'
   },
   output: {
