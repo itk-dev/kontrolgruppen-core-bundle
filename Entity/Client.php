@@ -11,6 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kontrolgruppen\CoreBundle\Validator as KontrolgruppenAssert;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ClientRepository")
@@ -19,6 +20,7 @@ class Client extends AbstractEntity
 {
     /**
      * @ORM\Column(type="string", length=255)
+     * @KontrolgruppenAssert\CPR
      */
     private $cpr;
 
