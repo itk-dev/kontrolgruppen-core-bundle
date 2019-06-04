@@ -40,7 +40,7 @@
 {% block javascripts %}
     {{ parent() }}
 
-    <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/sortSubmit.js') }}"></script>
+    {{ encore_entry_script_tags('sortSubmit') }}
 
     <script type="text/javascript">
         $('#pagination-sort-select').on('change', function () {
@@ -48,5 +48,5 @@
         });
     </script>
 
-    <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/journalRevisionToggle.js') }}"></script>
+    {{ encore_entry_script_tags('journalRevisionToggle') }}
 {% endblock %}

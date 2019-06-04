@@ -5,7 +5,7 @@
     <title>{% block title %}{{ 'common.title'|trans }}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% block stylesheets %}
-        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/kontrolgruppencore/build/core.css') }}">
+        {{ encore_entry_link_tags('core')}}
     {% endblock %}
 
     <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('bundles/kontrolgruppencore/images/apple-touch-icon-57x57.png') }}"/>
@@ -30,12 +30,14 @@
     <meta name="msapplication-square310x310logo" content="{{ asset('bundles/kontrolgruppencore/images/mstile-310x310.png') }}"/>
 </head>
 <body {% block body_attributes %}{% endblock %}>
+
 {% block body %}
     {% block content %}{% endblock %}
     {% block sidebar_right %}{% endblock %}
 {% endblock %}
+
 {% block javascripts %}
-    <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/core.js') }}"></script>
+    {{ encore_entry_script_tags('core') }}
 {% endblock %}
 
 {# TODO: Remove in production
