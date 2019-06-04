@@ -23,7 +23,6 @@ class CPRValidator extends ConstraintValidator
             return;
         }
 
-        // @TODO: Validate according to CPR rules.
         if (!preg_match('/^\d{6}\-\d{4}$/', $value, $matches)) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $value)
