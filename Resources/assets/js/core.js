@@ -1,4 +1,6 @@
-require('jquery');
+const $ = require('jquery');
+global.$ = global.jQuery = $;
+
 require('bootstrap');
 require('select2');
 
