@@ -9,12 +9,16 @@
         <table class="table table-striped table-hover table-borderless thead-light">
             <tbody>
             <tr>
-                <th>{{ 'service.table.id'|trans }}</th>
-                <td>{{ service.id }}</td>
-            </tr>
-            <tr>
                 <th>{{ 'service.table.name'|trans }}</th>
                 <td>{{ service.name }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'service.table.process_types'|trans }}</th>
+                <td>
+                    {% for processType in service.processTypes %}
+                        {{ processType }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
             </tr>
             </tbody>
         </table>

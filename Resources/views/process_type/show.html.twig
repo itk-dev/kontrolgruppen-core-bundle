@@ -9,10 +9,6 @@
         <table class="table table-striped table-hover table-borderless thead-light">
             <tbody>
             <tr>
-                <th>{{ 'process_type.table.id'|trans }}</th>
-                <td>{{ process_type.id }}</td>
-            </tr>
-            <tr>
                 <th>{{ 'process_type.table.name'|trans }}</th>
                 <td>{{ process_type.name }}</td>
             </tr>
@@ -21,6 +17,14 @@
                 <td>
                     {% for processStatus in process_type.processStatuses %}
                         {{ processStatus }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'process_type.table.services'|trans }}</th>
+                <td>
+                    {% for service in process_type.services %}
+                        {{ service }}{% if not loop.last %}, {% endif %}
                     {% endfor %}
                 </td>
             </tr>

@@ -50,6 +50,9 @@ class ProcessTypeType extends AbstractType
             ->add('processStatuses', null, [
                 'label' => 'process_type.form.process_statuses',
             ])
+            ->add('services', null, [
+                'label' => 'process_type.form.services',
+            ])
             ->add('hideInDashboard', null, [
                 'label' => 'process_type.form.hide_in_dashboard',
             ])

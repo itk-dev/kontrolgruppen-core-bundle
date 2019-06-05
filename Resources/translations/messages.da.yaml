@@ -318,7 +318,8 @@ process_type:
         conclusion_class: Konklusionstype
         hide_in_dashboard: Skjul på dashboard
         name: Navn
-        process_statuses: Sagsstatusser
+        process_statuses: Tilkoblede sagsstatusser
+        services: Tilkoblede ydelser
         update: Gem
     index:
         title: Sagstyper
@@ -333,6 +334,7 @@ process_type:
         id: ID
         name: Navn
         process_statuses: Tilkoblede sagsstatusser
+        services: Tilkoblede ydelser
     btns:
         create_new: Opret ny sagstype
 
@@ -415,6 +417,7 @@ service:
         title: Rediger ydelse
     form:
         name: Navn
+        process_types: Tilkoblede sagstyper
         update: Gem
     index:
         title: Ydelser
@@ -426,6 +429,7 @@ service:
     table:
         id: ID
         name: Navn
+        process_types: Tilkoblede sagstyper
     btns:
         create_new: Opret ny ydelse
 

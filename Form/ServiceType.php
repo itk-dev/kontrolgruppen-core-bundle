@@ -23,6 +23,11 @@ class ServiceType extends AbstractType
             ->add('name', null, [
                 'label' => 'service.form.name',
             ])
+            ->add('processTypes', null, [
+                'label' => 'service.form.process_types',
+                'by_reference' => false,
+                'attr' => ['class' => 'select2'],
+            ])
         ;
     }
 
