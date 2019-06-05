@@ -41,10 +41,16 @@ class ProcessType extends AbstractTaxonomy
      */
     private $hideInDashboard;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="processTypes")
+     */
+    private $services;
+
     public function __construct()
     {
         $this->processes = new ArrayCollection();
         $this->processStatuses = new ArrayCollection();
+        $this->services = new ArrayCollection();
     }
 
     /**
@@ -124,6 +130,32 @@ class ProcessType extends AbstractTaxonomy
     public function setHideInDashboard(?bool $hideInDashboard): self
     {
         $this->hideInDashboard = $hideInDashboard;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Service[]
+     */
+    public function getServices(): Collection
+    {
+        return $this->services;
+    }
+
+    public function addService(Service $service): self
+    {
+        if (!$this->services->contains($service)) {
+            $this->services[] = $service;
+        }
+
+        return $this;
+    }
+
+    public function removeService(Service $service): self
+    {
+        if ($this->services->contains($service)) {
+            $this->services->removeElement($service);
+        }
 
         return $this;
     }
