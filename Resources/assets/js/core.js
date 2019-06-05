@@ -42,4 +42,9 @@ $(function () {
             delay: {show: 400},
         }
     );
+
+    // Apply select2 to all elements with select2 class.
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
 });

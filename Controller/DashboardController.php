@@ -39,7 +39,7 @@ class DashboardController extends BaseController
             ],
             'choice_translation_domain' => false,
             'label_attr' => ['class' => 'sr-only'],
-            'label' => 'dashboard.my_processes.limit'
+            'label' => 'dashboard.my_processes.limit',
         ]);
         $filterForm = $filterFormBuilder->getForm();
 
