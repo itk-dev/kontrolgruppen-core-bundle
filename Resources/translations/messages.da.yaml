@@ -62,6 +62,7 @@ client:
 
 common:
     actions:
+        close: Luk
         create: Opret ny
         confirm:
             delete: Er du sikker på at du vil slette dette?
@@ -132,6 +133,7 @@ dashboard:
     menu_title: Dashboard
     tooltip: 'Din oversigt'
     my_processes:
+        limit: Antal synlige sager
         title: Mine sager
     not_assigned:
         title: Ikke tildelte sager
