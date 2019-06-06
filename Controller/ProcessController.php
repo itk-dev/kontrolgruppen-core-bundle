@@ -13,10 +13,12 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Event\Doctrine\ORM\OnReadEventArgs;
 use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -150,8 +152,12 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}", name="process_show", methods={"GET", "POST"})
      */
-    public function show(Request $request, Process $process): Response
+    public function show(Request $request, Process $process, LoggerInterface $logger): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        $eventManager = $this->getDoctrine()->getManager()->getEventManager();
+        $eventManager->dispatchEvent('onRead', new OnReadEventArgs($entityManager, $process));
+
         // Latest journal entries.
         $latestJournalEntries = $this->getDoctrine()->getRepository(
             JournalEntry::class
