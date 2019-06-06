@@ -17,7 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ProcessRepository")
- * @Gedmo\Loggable()
+ * @Gedmo\Loggable(logEntryClass="Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry")
  */
 class Process extends AbstractEntity
 {

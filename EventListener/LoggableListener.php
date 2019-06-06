@@ -15,6 +15,11 @@ use Gedmo\Loggable\LoggableListener as BaseLoggableListener;
 
 class LoggableListener extends BaseLoggableListener
 {
+    private $actionLevelMapping = [
+        'read'      => 'INFO',
+        'default'   => 'INFO',
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -36,5 +41,29 @@ class LoggableListener extends BaseLoggableListener
         $this->createLogEntry('read', $object, $ea);
 
         $om->flush();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function prePersistLogEntry($logEntry, $object)
+    {
+        if (!method_exists($logEntry, 'setLevel')) {
+            return;
+        }
+
+        $logEntry->setLevel(
+            $this->getLevel($logEntry->getAction())
+        );
+    }
+
+    private function getLevel(string $action): string
+    {
+        if (array_key_exists($action, $this->actionLevelMapping)) {
+
+            return $this->actionLevelMapping[$action];
+        }
+
+        return $this->actionLevelMapping['default'];
     }
 }
