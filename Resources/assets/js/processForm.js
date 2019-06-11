@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var processTypeInput = $('#process_processType');
+    var clientCPRInput = $('#process_clientCPR');
 
     // Load service choices. Replaces form element with ajax loaded element.
     function loadServiceChoices (element) {
@@ -9,6 +10,8 @@ $(document).ready(function () {
 
         var data = {};
         data[processTypeInput.attr('name')] = processTypeInput.val();
+        // Fake the Client CPR data to avoid validation error.
+        data[clientCPRInput.attr('name')] = '111111-1111';
 
         $.ajax({
             url: $form.attr('action'),
@@ -22,8 +25,10 @@ $(document).ready(function () {
         });
     }
 
-    // Load for the present selected process type.
-    loadServiceChoices(processTypeInput);
+    // Load for the present selected process type if variable is set.
+    if (window.PROCESS_FORM_JAVASCRIPT_RUN_FIRST) {
+        loadServiceChoices(processTypeInput);
+    }
 
     // Register listener for changes to process type.
     processTypeInput.change(function () {

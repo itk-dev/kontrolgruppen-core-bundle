@@ -65,6 +65,7 @@ class ProcessType extends AbstractType
 
                 $form->remove('service');
                 $form->add('service', ChoiceType::class, [
+                    'label' => 'process.form.service',
                     'choices' => $choices,
                     'choice_label' => function ($choice, $key, $value) {
                         return $choice->getName();
