@@ -23,6 +23,12 @@ class ProcessLogEntry extends AbstractLogEntry
      */
     private $level;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="logEntries")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $process;
+
     public function getLevel(): ?string
     {
         return $this->level;
@@ -31,6 +37,18 @@ class ProcessLogEntry extends AbstractLogEntry
     public function setLevel(string $level): self
     {
         $this->level = $level;
+
+        return $this;
+    }
+
+    public function getProcess(): ?Process
+    {
+        return $this->process;
+    }
+
+    public function setProcess(?Process $process): self
+    {
+        $this->process = $process;
 
         return $this;
     }

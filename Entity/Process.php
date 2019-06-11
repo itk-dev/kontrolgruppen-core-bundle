@@ -79,10 +79,16 @@ class Process extends AbstractEntity
      */
     private $conclusion;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry", mappedBy="process", orphanRemoval=true)
+     */
+    private $logEntries;
+
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
         $this->journalEntries = new ArrayCollection();
+        $this->logEntries = new ArrayCollection();
     }
 
     public function getCaseWorker(): ?User
@@ -261,6 +267,34 @@ class Process extends AbstractEntity
         $newProcess = null === $conclusion ? null : $this;
         if ($newProcess !== $conclusion->getProcess()) {
             $conclusion->setProcess($newProcess);
+        }
+
+        return $this;
+    }
+
+    public function getLogEntries(): Collection
+    {
+        return $this->logEntries;
+    }
+
+    public function addLogEntry(ProcessLogEntry $logEntry): self
+    {
+        if (!$this->logEntries->contains($logEntry)) {
+            $this->logEntries[] = $logEntry;
+            $logEntry->setProcess($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLogEntry(ProcessLogEntry $logEntry): self
+    {
+        if ($this->logEntries->contains($logEntry)) {
+            $this->logEntries->removeElement($logEntry);
+            // set the owning side to null (unless already changed)
+            if ($logEntry->getProcess() === $this) {
+                $logEntry->setProcess(null);
+            }
         }
 
         return $this;
