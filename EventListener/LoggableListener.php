@@ -12,6 +12,9 @@ namespace Kontrolgruppen\CoreBundle\EventListener;
 
 use Doctrine\Common\EventArgs;
 use Gedmo\Loggable\LoggableListener as BaseLoggableListener;
+use Gedmo\Loggable\Mapping\Event\LoggableAdapter;
+use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 
 class LoggableListener extends BaseLoggableListener
 {
@@ -45,15 +48,26 @@ class LoggableListener extends BaseLoggableListener
     /**
      * {@inheritdoc}
      */
-    protected function prePersistLogEntry($logEntry, $object)
+    protected function createLogEntry($action, $object, LoggableAdapter $ea)
     {
-        if (!method_exists($logEntry, 'setLevel')) {
-            return;
+        $logEntry = parent::createLogEntry($action, $object, $ea);
+
+        if (!empty($logEntry)) {
+
+            if (in_array(get_class($object), [Process::class])) {
+
+                $processLogEntry = new ProcessLogEntry();
+                $processLogEntry->setLogEntry($logEntry);
+                $processLogEntry->setProcess($object);
+                $processLogEntry->setLevel('INFO');
+
+                $objectManager = $ea->getObjectManager();
+                $objectManager->persist($processLogEntry);
+                $objectManager->flush();
+            }
         }
 
-        $logEntry->setLevel(
-            $this->getLevel($logEntry->getAction())
-        );
+        return $logEntry;
     }
 
     private function getLevel(string $action): string
