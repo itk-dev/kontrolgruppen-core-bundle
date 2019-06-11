@@ -8,8 +8,6 @@
  * This source file is subject to the MIT license.
  */
 
-namespace App\Entity;
-
 namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
