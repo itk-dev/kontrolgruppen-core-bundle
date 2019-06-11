@@ -54,8 +54,8 @@ class ProcessType extends AbstractType
             ->add('service', null, [
                 'label' => 'process.form.service',
                 'attr' => [
-                    'disabled' => 'disabled'
-                ]
+                    'disabled' => 'disabled',
+                ],
             ])
         ;
 
@@ -76,7 +76,7 @@ class ProcessType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function(FormEvent $event) use ($formModifier) {
+            function (FormEvent $event) use ($formModifier) {
                 $data = $event->getData();
                 $formModifier($event->getForm(), $data->getProcessType());
             }
@@ -91,7 +91,8 @@ class ProcessType extends AbstractType
         );
     }
 
-    private function getServiceChoices(ProcessTypeEntity $processType) {
+    private function getServiceChoices(ProcessTypeEntity $processType)
+    {
         return $this->serviceRepository->getByProcessType($processType);
     }
 

@@ -28,7 +28,8 @@ class ServiceRepository extends ServiceEntityRepository
         parent::__construct($registry, Service::class);
     }
 
-    public function getByProcessType(ProcessType $processType) {
+    public function getByProcessType(ProcessType $processType)
+    {
         $qb = $this->createQueryBuilder('service', 'service.id')
             ->where(':processType MEMBER OF service.processTypes')
             ->setParameter('processType', $processType)
