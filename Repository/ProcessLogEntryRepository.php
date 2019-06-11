@@ -10,7 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Repository;
 
-use App\Entity\ProcessLogEntry;
+use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 

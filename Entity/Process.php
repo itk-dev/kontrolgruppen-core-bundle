@@ -17,7 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ProcessRepository")
- * @Gedmo\Loggable(logEntryClass="Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry")
+ * @Gedmo\Loggable()
  */
 class Process extends AbstractEntity
 {
@@ -80,7 +80,7 @@ class Process extends AbstractEntity
     private $conclusion;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry", mappedBy="process", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry", mappedBy="process")
      */
     private $logEntries;
 
@@ -272,6 +272,9 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return Collection|ProcessLogEntry[]
+     */
     public function getLogEntries(): Collection
     {
         return $this->logEntries;
