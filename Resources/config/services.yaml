@@ -25,3 +25,6 @@ services:
         # Exports must be public to load them dynamically (by id) in the Export
         # manager.
         public: true
+
+    Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator:
+        arguments: [~]

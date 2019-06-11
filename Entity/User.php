@@ -71,4 +71,29 @@ class User extends BaseUser
 
         return $this;
     }
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $cliLoginToken;
+
+    /**
+     * @return mixed
+     */
+    public function getCliLoginToken()
+    {
+        return $this->cliLoginToken;
+    }
+
+    /**
+     * @param mixed $cliLoginToken
+     *
+     * @return User
+     */
+    public function setCliLoginToken($cliLoginToken)
+    {
+        $this->cliLoginToken = $cliLoginToken;
+
+        return $this;
+    }
 }

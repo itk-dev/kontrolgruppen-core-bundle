@@ -11,6 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\DependencyInjection;
 
 use Kontrolgruppen\CoreBundle\Export\Manager;
+use Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -33,10 +34,17 @@ class KontrolgruppenCoreExtension extends Extension implements PrependExtensionI
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+
         $container->setParameter('kontrolgruppen_core.net_default_value', $config['net_default_value']);
+
 
         $definition = $container->getDefinition(Manager::class);
         $definition->replaceArgument('$configuration', ['exports' => $config['exports'] ?? []]);
+
+        $definition = $container->getDefinition(SAMLAuthenticator::class);
+        if (isset($config['saml']['php_saml_settings'])) {
+            $definition->replaceArgument(0, $config['saml']['php_saml_settings']);
+        }
     }
 
     public function prepend(ContainerBuilder $container)
