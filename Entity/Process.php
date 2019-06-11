@@ -28,6 +28,7 @@ class Process extends AbstractEntity
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Versioned()
      */
     private $caseNumber;
 
