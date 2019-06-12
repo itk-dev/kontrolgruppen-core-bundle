@@ -26,9 +26,15 @@ class Service extends AbstractTaxonomy
      */
     private $processes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessType", mappedBy="services")
+     */
+    private $processTypes;
+
     public function __construct()
     {
         $this->processes = new ArrayCollection();
+        $this->processTypes = new ArrayCollection();
     }
 
     /**
@@ -57,6 +63,34 @@ class Service extends AbstractTaxonomy
             if ($process->getService() === $this) {
                 $process->setService(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProcessType[]
+     */
+    public function getProcessTypes(): Collection
+    {
+        return $this->processTypes;
+    }
+
+    public function addProcessType(ProcessType $processType): self
+    {
+        if (!$this->processTypes->contains($processType)) {
+            $this->processTypes[] = $processType;
+            $processType->addService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProcessType(ProcessType $processType): self
+    {
+        if ($this->processTypes->contains($processType)) {
+            $this->processTypes->removeElement($processType);
+            $processType->removeService($this);
         }
 
         return $this;

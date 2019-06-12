@@ -9,7 +9,6 @@
         <table class="table table-striped table-hover table-borderless thead-light">
             <thead>
             <tr>
-                <th>{{ 'service.table.id'|trans }}</th>
                 <th>{{ 'service.table.name'|trans }}</th>
                 <th class="float-right">{{ 'common.table.actions'|trans }}</th>
             </tr>
@@ -17,7 +16,6 @@
             <tbody>
             {% for service in services %}
                 <tr>
-                    <td>{{ service.id }}</td>
                     <td>{{ service.name }}</td>
                     <td class="text-right">
                         <a href="{{ path('service_show', {'id': service.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top"
