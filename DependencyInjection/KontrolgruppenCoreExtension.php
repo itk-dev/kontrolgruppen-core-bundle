@@ -42,5 +42,14 @@ class KontrolgruppenCoreExtension extends Extension implements PrependExtensionI
                 ],
             ]
         );
+
+        $container->prependExtensionConfig(
+            'stof_doctrine_extensions',
+            [
+                'class' => [
+                    'loggable' => 'Kontrolgruppen\CoreBundle\EventListener\LoggableListener',
+                ],
+            ]
+        );
     }
 }

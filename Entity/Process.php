@@ -29,33 +29,39 @@ class Process extends AbstractEntity
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Versioned()
      */
     private $caseNumber;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @KontrolgruppenAssert\CPR
+     * @Gedmo\Versioned()
      */
     private $clientCPR;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Channel", inversedBy="processes")
+     * @Gedmo\Versioned()
      */
     private $channel;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="processes")
+     * @Gedmo\Versioned()
      */
     private $service;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessType", inversedBy="processes")
      * @ORM\JoinColumn(name="process_type_id", referencedColumnName="id", nullable=false)
+     * @Gedmo\Versioned()
      */
     private $processType;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessStatus", inversedBy="processes")
+     * @Gedmo\Versioned()
      */
     private $processStatus;
 
@@ -79,10 +85,16 @@ class Process extends AbstractEntity
      */
     private $conclusion;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry", mappedBy="process")
+     */
+    private $logEntries;
+
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
         $this->journalEntries = new ArrayCollection();
+        $this->logEntries = new ArrayCollection();
     }
 
     public function getCaseWorker(): ?User
@@ -261,6 +273,37 @@ class Process extends AbstractEntity
         $newProcess = null === $conclusion ? null : $this;
         if ($newProcess !== $conclusion->getProcess()) {
             $conclusion->setProcess($newProcess);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProcessLogEntry[]
+     */
+    public function getLogEntries(): Collection
+    {
+        return $this->logEntries;
+    }
+
+    public function addLogEntry(ProcessLogEntry $logEntry): self
+    {
+        if (!$this->logEntries->contains($logEntry)) {
+            $this->logEntries[] = $logEntry;
+            $logEntry->setProcess($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLogEntry(ProcessLogEntry $logEntry): self
+    {
+        if ($this->logEntries->contains($logEntry)) {
+            $this->logEntries->removeElement($logEntry);
+            // set the owning side to null (unless already changed)
+            if ($logEntry->getProcess() === $this) {
+                $logEntry->setProcess(null);
+            }
         }
 
         return $this;
