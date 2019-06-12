@@ -18,7 +18,6 @@ use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -152,7 +151,7 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}", name="process_show", methods={"GET", "POST"})
      */
-    public function show(Request $request, Process $process, LoggerInterface $logger): Response
+    public function show(Request $request, Process $process): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $eventManager = $this->getDoctrine()->getManager()->getEventManager();
