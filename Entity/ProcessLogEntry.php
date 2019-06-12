@@ -12,6 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Loggable\Entity\LogEntry;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ProcessLogEntryRepository")
@@ -31,7 +32,8 @@ class ProcessLogEntry extends AbstractEntity
     private $logEntry;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(name="level", type="ProcessLogEntryLevelEnumType", nullable=false)
+     * @DoctrineAssert\Enum(entity="Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType")
      */
     private $level;
 
