@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  * This is an empty conclusion type, which should be inherited from for different
  * conclusion types. For example, see BaseConclusion.
  */
-class Conclusion extends AbstractEntity
+class Conclusion extends AbstractEntity implements ProcessLoggableInterface
 {
     /**
      * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="conclusion", cascade={"persist", "remove"})
