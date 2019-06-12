@@ -146,6 +146,10 @@ dashboard:
     latest_activity:
         title: Seneste aktivitet
 
+economy:
+    show:
+        title: Økonomi
+
 journal_entry:
     actions:
         create: Opret nyt indlæg
@@ -215,6 +219,7 @@ menu:
         channel: Kanaler
         client: Klient
         conclusion: Konklusion
+        economy: Økonomi
         journal: Journal
         process_number: 'Sag: %processNumber%'
         process_show: Sagsopsummering

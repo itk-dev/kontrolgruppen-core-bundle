@@ -1,0 +1,25 @@
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+
+{% block title %}{{ 'economy.show.title'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <h1 class="float-left">{{ 'economy.show.title'|trans }}</h1>
+            <button data-toggle="collapse" data-target="#economyEntryNew" aria-expanded="false"
+                    class="btn btn-success btn-lg float-right">{{ 'economy.actions.create'|trans }}</button>
+        </div>
+        <div class="col-12 collapse" id="economyEntryNew">
+            <div class="bg-light border-bottom p-3 mb-3">
+                {{ form_start(economy_entry_form) }}
+                {{ form_widget(economy_entry_form) }}
+                <div class="form-group text-right">
+                    <button class="btn btn-success pl-5 pr-5">{{ 'common.actions.save'|trans }}</button>
+                </div>
+                {{ form_end(economy_entry_form) }}
+            </div>
+        </div>
+    </div>
+
+    {% include '@KontrolgruppenCore/economy_entry/_economy_entry_list.html.twig' %}
+{% endblock %}
