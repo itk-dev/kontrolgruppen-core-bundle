@@ -23,6 +23,9 @@ class LoggableListener extends BaseLoggableListener
 {
     private $actionLevelMapping = [
         'read' => ProcessLogEntryLevelEnumType::INFO,
+        'create' => ProcessLogEntryLevelEnumType::NOTICE,
+        'update' => ProcessLogEntryLevelEnumType::NOTICE,
+        'remove' => ProcessLogEntryLevelEnumType::NOTICE,
         'default' => ProcessLogEntryLevelEnumType::INFO,
     ];
 
