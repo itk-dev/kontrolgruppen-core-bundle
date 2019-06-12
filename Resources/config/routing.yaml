@@ -4,3 +4,6 @@ fos_user:
 controllers:
     resource: "@KontrolgruppenCoreBundle/Controller"
     type: annotation
+
+cli_login:
+    path: /cli-login

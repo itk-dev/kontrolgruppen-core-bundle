@@ -69,7 +69,7 @@ class UserLoginCommand extends Command
             $parameters['destination'] = $destination;
         }
 
-        $url = $this->router->generate('fos_user_security_login', $parameters, RouterInterface::ABSOLUTE_URL);
+        $url = $this->router->generate('cli_login', $parameters, RouterInterface::ABSOLUTE_URL);
         $output->writeln($url);
     }
 }

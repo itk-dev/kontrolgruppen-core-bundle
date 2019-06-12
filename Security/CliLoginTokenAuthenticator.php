@@ -37,7 +37,7 @@ class CliLoginTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function supports(Request $request)
     {
-        return !empty($request->query->get('cli-login-token'));
+        return 'cli_login' === $request->attributes->get('_route');
     }
 
     /**
