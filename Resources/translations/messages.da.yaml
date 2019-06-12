@@ -94,6 +94,7 @@ common:
             internal_note: Internt notat
             note: Notat
     no_records_found: Ingen indgange fundet
+    no_sensitive_information_warning: KUN DEMO - Indtast ingen personfølsomme data
     table:
         actions: Handlinger
         created_at: Oprettet

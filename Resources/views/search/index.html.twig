@@ -14,5 +14,5 @@
 {% block javascripts %}
     {{ parent() }}
 
-    <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/searchPage.js') }}"></script>
+    {{ encore_entry_script_tags('searchPage') }}
 {% endblock %}

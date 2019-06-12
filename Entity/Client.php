@@ -18,11 +18,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Client extends AbstractEntity
 {
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $cpr;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $firstName;
@@ -71,18 +66,6 @@ class Client extends AbstractEntity
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCpr(): ?string
-    {
-        return $this->cpr;
-    }
-
-    public function setCpr(string $cpr): self
-    {
-        $this->cpr = $cpr;
-
-        return $this;
     }
 
     public function getFirstName(): ?string
