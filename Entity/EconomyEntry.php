@@ -4,15 +4,21 @@ namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @Gedmo\Loggable()
+ *
+ * This is an empty conclusion type, which should be inherited from for different
+ * conclusion types. For example, see BaseConclusion.
  */
 class EconomyEntry extends AbstractEntity
 {
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=false)
      * @Gedmo\Versioned()
      */
     private $amount;
@@ -22,6 +28,13 @@ class EconomyEntry extends AbstractEntity
      * @ORM\JoinColumn(nullable=false)
      */
     private $process;
+
+    /**
+     * @ORM\Column(name="type", type="EconomyEntryEnumType", nullable=false)
+     * @DoctrineAssert\Enum(entity="Kontrolgruppen\CoreBundle\DBAL\Types\EconomyEntryEnumType")
+     * @Gedmo\Versioned()
+     */
+    private $type;
 
     public function getId(): ?int
     {
@@ -48,6 +61,18 @@ class EconomyEntry extends AbstractEntity
     public function setProcess(?Process $process): self
     {
         $this->process = $process;
+
+        return $this;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
