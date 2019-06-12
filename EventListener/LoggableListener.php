@@ -59,9 +59,7 @@ class LoggableListener extends BaseLoggableListener
         $logEntry = parent::createLogEntry($action, $object, $ea);
 
         if (!empty($logEntry)) {
-
             if ($object instanceof Process) {
-
                 $this->createProcessLogEntry(
                     $logEntry,
                     $object,
@@ -69,8 +67,7 @@ class LoggableListener extends BaseLoggableListener
                     $ea
                 );
             //} else if (method_exists($object, 'getProcess')) {
-            } else if ($object instanceof ProcessLoggableInterface) {
-
+            } elseif ($object instanceof ProcessLoggableInterface) {
                 $this->createProcessLogEntry(
                     $logEntry,
                     $object->getProcess(),
@@ -83,8 +80,8 @@ class LoggableListener extends BaseLoggableListener
         return $logEntry;
     }
 
-    private function createProcessLogEntry(LogEntry $logEntry, Process $process, string $level, LoggableAdapter $ea) {
-
+    private function createProcessLogEntry(LogEntry $logEntry, Process $process, string $level, LoggableAdapter $ea)
+    {
         $processLogEntry = new ProcessLogEntry();
         $processLogEntry->setLogEntry($logEntry);
         $processLogEntry->setProcess($process);
@@ -95,7 +92,7 @@ class LoggableListener extends BaseLoggableListener
 
         $uow = $objectManager->getUnitOfWork();
         $uow->computeChangeSet(
-            $objectManager->getClassMetadata(get_class($processLogEntry)),
+            $objectManager->getClassMetadata(\get_class($processLogEntry)),
             $processLogEntry
         );
     }
