@@ -17,7 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ReminderRepository")
  * @Gedmo\Loggable()
  */
-class Reminder extends AbstractEntity
+class Reminder extends AbstractEntity implements ProcessLoggableInterface
 {
     /**
      * @ORM\Column(type="string", length=255)
