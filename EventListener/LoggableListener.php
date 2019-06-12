@@ -11,16 +11,19 @@
 namespace Kontrolgruppen\CoreBundle\EventListener;
 
 use Doctrine\Common\EventArgs;
+use Gedmo\Loggable\Entity\LogEntry;
 use Gedmo\Loggable\LoggableListener as BaseLoggableListener;
 use Gedmo\Loggable\Mapping\Event\LoggableAdapter;
+use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
+use Kontrolgruppen\CoreBundle\Entity\ProcessLoggableInterface;
 
 class LoggableListener extends BaseLoggableListener
 {
     private $actionLevelMapping = [
-        'read' => 'INFO',
-        'default' => 'INFO',
+        'read' => ProcessLogEntryLevelEnumType::INFO,
+        'default' => ProcessLogEntryLevelEnumType::INFO,
     ];
 
     /**
@@ -54,20 +57,44 @@ class LoggableListener extends BaseLoggableListener
 
         if (!empty($logEntry)) {
 
-            if (in_array(get_class($object), [Process::class])) {
+            if ($object instanceof Process) {
 
-                $processLogEntry = new ProcessLogEntry();
-                $processLogEntry->setLogEntry($logEntry);
-                $processLogEntry->setProcess($object);
-                $processLogEntry->setLevel('INFO');
+                $this->createProcessLogEntry(
+                    $logEntry,
+                    $object,
+                    $this->getLevel($action),
+                    $ea
+                );
+            //} else if (method_exists($object, 'getProcess')) {
+            } else if ($object instanceof ProcessLoggableInterface) {
 
-                $objectManager = $ea->getObjectManager();
-                $objectManager->persist($processLogEntry);
-                $objectManager->flush();
+                $this->createProcessLogEntry(
+                    $logEntry,
+                    $object->getProcess(),
+                    $this->getLevel($action),
+                    $ea
+                );
             }
         }
 
         return $logEntry;
+    }
+
+    private function createProcessLogEntry(LogEntry $logEntry, Process $process, string $level, LoggableAdapter $ea) {
+
+        $processLogEntry = new ProcessLogEntry();
+        $processLogEntry->setLogEntry($logEntry);
+        $processLogEntry->setProcess($process);
+        $processLogEntry->setLevel($level);
+
+        $objectManager = $ea->getObjectManager();
+        $objectManager->persist($processLogEntry);
+
+        $uow = $objectManager->getUnitOfWork();
+        $uow->computeChangeSet(
+            $objectManager->getClassMetadata(get_class($processLogEntry)),
+            $processLogEntry
+        );
     }
 
     private function getLevel(string $action): string
