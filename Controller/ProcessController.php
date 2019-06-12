@@ -126,7 +126,6 @@ class ProcessController extends BaseController
             $entityManager->persist($process);
 
             $client = new Client();
-            $client->setCpr($process->getClientCPR());
             $process->setClient($client);
 
             $entityManager->persist($client);

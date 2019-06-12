@@ -20,12 +20,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Client extends AbstractEntity implements ProcessLoggableInterface
 {
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Gedmo\Versioned()
-     */
-    private $cpr;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Gedmo\Versioned()
      */
@@ -82,18 +76,6 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCpr(): ?string
-    {
-        return $this->cpr;
-    }
-
-    public function setCpr(string $cpr): self
-    {
-        $this->cpr = $cpr;
-
-        return $this;
     }
 
     public function getFirstName(): ?string

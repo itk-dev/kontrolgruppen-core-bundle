@@ -56,6 +56,6 @@
 {% block javascripts %}
     {{ parent() }}
 
-    <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/reminderLatest.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/journalQuickview.js') }}"></script>
+    {{ encore_entry_script_tags('reminderLatest') }}
+    {{ encore_entry_script_tags('journalQuickview') }}
 {% endblock %}
