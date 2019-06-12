@@ -40,22 +40,26 @@ class Process extends AbstractEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Channel", inversedBy="processes")
+     * @Gedmo\Versioned()
      */
     private $channel;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="processes")
+     * @Gedmo\Versioned()
      */
     private $service;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessType", inversedBy="processes")
      * @ORM\JoinColumn(name="process_type_id", referencedColumnName="id", nullable=false)
+     * @Gedmo\Versioned()
      */
     private $processType;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessStatus", inversedBy="processes")
+     * @Gedmo\Versioned()
      */
     private $processStatus;
 
