@@ -66,7 +66,6 @@ class LoggableListener extends BaseLoggableListener
                     $this->getLevel($action),
                     $ea
                 );
-            //} else if (method_exists($object, 'getProcess')) {
             } elseif ($object instanceof ProcessLoggableInterface) {
                 $this->createProcessLogEntry(
                     $logEntry,
