@@ -50,7 +50,7 @@ class EconomyController extends BaseController
         }
 
         $parameters['collapse_economy_entry_form'] = !isset($formResult['submitted']) || !$formResult['submitted'];
-        $parameters['menuItems'] =  $this->menuService->getProcessMenu($request->getPathInfo(), $process);
+        $parameters['menuItems'] = $this->menuService->getProcessMenu($request->getPathInfo(), $process);
         $parameters['process'] = $process;
         $parameters['economyEntries'] = $economyEntryRepository->findBy(['process' => $process]);
 
@@ -65,25 +65,25 @@ class EconomyController extends BaseController
      * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
      * @param $chosenType
      * @param $parameters
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    private function handleEntityForm(Request $request, Process $process, $chosenType, &$parameters) {
+    private function handleEntityForm(Request $request, Process $process, $chosenType, &$parameters)
+    {
         // Decide if a type has been chosen.
         if (!$chosenType && $request->request->has('base_economy_entry')) {
             $chosenType = $request->request->get('base_economy_entry')['type'];
-        }
-        else if (!$chosenType && $request->request->has('service_economy_entry')) {
+        } elseif (!$chosenType && $request->request->has('service_economy_entry')) {
             $chosenType = $request->request->get('service_economy_entry')['type'];
         }
 
         // Add given form if a type has been chosen.
         if ($chosenType) {
-            if ($chosenType == EconomyEntryEnumType::SERVICE) {
+            if (EconomyEntryEnumType::SERVICE === $chosenType) {
                 $economyEntry = new ServiceEconomyEntry();
                 $economyEntry->setType($chosenType);
                 $form = $this->createForm(ServiceEconomyEntryType::class, $economyEntry);
-            }
-            else {
+            } else {
                 $economyEntry = new BaseEconomyEntry();
                 $economyEntry->setType($chosenType);
                 $form = $this->createForm(BaseEconomyEntryType::class, $economyEntry);
@@ -109,9 +109,11 @@ class EconomyController extends BaseController
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse Parameters for the form, or redirects on success.
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse parameters for the form, or redirects on success
      */
-    private function handleEconomyEntryFormRequest(Request $request, Process $process) {
+    private function handleEconomyEntryFormRequest(Request $request, Process $process)
+    {
         $economyEntry = new EconomyEntry();
         $economyEntry->setProcess($process);
         $form = $this->createForm(EconomyEntryType::class, $economyEntry);
