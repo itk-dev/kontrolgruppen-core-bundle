@@ -12,7 +12,9 @@ class EconomyEntryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('amount')
+            ->add('type', null, [
+                'required' => false,
+            ])
         ;
     }
 

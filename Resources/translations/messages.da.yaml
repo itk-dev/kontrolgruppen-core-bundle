@@ -94,6 +94,10 @@ common:
         journal_entry:
             internal_note: Internt notat
             note: Notat
+        economy_entry:
+            service: Ydelse
+            account: Konti
+            arrear: Restance
     no_records_found: Ingen indgange fundet
     no_sensitive_information_warning: KUN DEMO - Indtast ingen personfølsomme data
     table:
