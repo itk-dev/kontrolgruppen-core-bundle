@@ -4,6 +4,12 @@
             <div class="mb-2">
                 <div class="row bg-light">
                     <div class="col-2 pt-2">
+                        <span class="text-muted d-block">{{ economyEntry.text }}</span>
+                    </div>
+                    <div class="col-2 pt-2">
+                        <span class="text-muted d-block">{{ economyEntry.date|date('d/m Y') }}</span>
+                    </div>
+                    <div class="col-2 pt-2">
                         <span class="text-muted d-block">{{ economyEntry.amount }}</span>
                     </div>
                 </div>

@@ -31,7 +31,15 @@
         </div>
     </div>
 
-    {% include '@KontrolgruppenCore/economy_entry/_economy_entry_list.html.twig' %}
+    <h2>{{ 'economy.headline.economy_entries_service'|trans }}</h2>
+    {% include '@KontrolgruppenCore/economy_entry/_economy_entry_service_table.html.twig' with {economyEntries: economyEntriesService} %}
+
+    <h2>{{ 'economy.headline.economy_entries_account'|trans }}</h2>
+    {% include '@KontrolgruppenCore/economy_entry/_economy_entry_base_table.html.twig' with {economyEntries: economyEntriesAccount} %}
+
+    <h2>{{ 'economy.headline.economy_entries_arrear'|trans }}</h2>
+    {% include '@KontrolgruppenCore/economy_entry/_economy_entry_base_table.html.twig' with {economyEntries: economyEntriesArrear} %}
+
 {% endblock %}
 
 {% block javascripts %}

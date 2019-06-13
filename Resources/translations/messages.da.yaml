@@ -151,8 +151,24 @@ dashboard:
         title: Seneste aktivitet
 
 economy:
+    headline:
+        economy_entries_account: Konti
+        economy_entries_arrear: Restance
+        economy_entries_service: Ydelse
     show:
         title: Økonomi
+    table:
+        base:
+            amount: Beløb
+            date: Dato
+            text: Tekst
+            type: Type
+        service:
+            amount: Beløb
+            amount_period: Beløb interval
+            period_from: Fra
+            period_to: Til
+            service: Ydelse
 
 journal_entry:
     actions:

@@ -52,7 +52,10 @@ class EconomyController extends BaseController
         $parameters['collapse_economy_entry_form'] = !isset($formResult['submitted']) || !$formResult['submitted'];
         $parameters['menuItems'] = $this->menuService->getProcessMenu($request->getPathInfo(), $process);
         $parameters['process'] = $process;
-        $parameters['economyEntries'] = $economyEntryRepository->findBy(['process' => $process]);
+
+        $parameters['economyEntriesService'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::SERVICE]);
+        $parameters['economyEntriesAccount'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::ACCOUNT]);
+        $parameters['economyEntriesArrear'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::ARREAR]);
 
         return $this->render(
             '@KontrolgruppenCore/economy/show.html.twig',
