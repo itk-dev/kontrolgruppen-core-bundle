@@ -19,10 +19,6 @@
 
   <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
 
-  {% if error %}
-      <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-  {% endif %}
-
   <a href="{{ path('saml_login') }}" class="btn btn-lg btn-primary btn-block">SAML</a>
 
   <div class="form-group">
