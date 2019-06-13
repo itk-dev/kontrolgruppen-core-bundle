@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\DependencyInjection;
 
+use Kontrolgruppen\CoreBundle\Entity\User;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -36,6 +37,7 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder->getRootNode()
             ->children()
+            ->scalarNode('user_class')->defaultValue(User::class)->end()
             ->arrayNode('saml')
             ->children()
             ->variableNode('php_saml_settings')

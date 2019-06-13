@@ -17,6 +17,7 @@ use OneLogin\Saml2\Response;
 use OneLogin\Saml2\Settings;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
@@ -26,12 +27,25 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
 class SAMLAuthenticator extends AbstractGuardAuthenticator
 {
+    /** @var \Symfony\Component\Routing\RouterInterface */
+    private $router;
+
     /** @var array */
     private $settings;
 
-    public function __construct(array $settings)
+    public function __construct(RouterInterface $router, array $settings)
     {
+        $this->router = $router;
         $this->settings = $settings;
+    }
+
+    public function start(
+        Request $request,
+        AuthenticationException $authException = null
+    ) {
+        $url = $this->router->generate('saml_login');
+
+        return new RedirectResponse($url);
     }
 
     public function supports(Request $request)
@@ -108,12 +122,6 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
     public function supportsRememberMe()
     {
         return false;
-    }
-
-    public function start(
-        Request $request,
-        AuthenticationException $authException = null
-    ) {
     }
 
     public function getAuth()

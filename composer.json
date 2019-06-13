@@ -10,7 +10,6 @@
         "box/spout": "^3.0",
         "fresh/doctrine-enum-bundle": "^6.3",
         "friendsofsymfony/ckeditor-bundle": "^2.0",
-        "friendsofsymfony/user-bundle": "^2.1",
         "knplabs/knp-paginator-bundle": "^3.0",
         "lexik/form-filter-bundle": "^5.0",
         "onelogin/php-saml": "^3.1",

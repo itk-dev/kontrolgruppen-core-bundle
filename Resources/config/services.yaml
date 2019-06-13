@@ -27,4 +27,11 @@ services:
         public: true
 
     Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator:
-        arguments: [~]
+        arguments:
+            $router: '@router.default'
+            $settings: ~
+
+    Kontrolgruppen\CoreBundle\Security\UserManager:
+        arguments:
+            $objectManager: '@doctrine.orm.entity_manager'
+            $class: ~
