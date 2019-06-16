@@ -22,6 +22,9 @@
                 {% if form is defined %}
                     {{ form_start(form) }}
                     {{ form_widget(form) }}
+
+                    <div class="js-itkdev-monthpicker"></div>
+
                     <div class="form-group text-right">
                         <button class="btn btn-success pl-5 pr-5">{{ 'common.actions.save'|trans }}</button>
                     </div>
@@ -39,18 +42,21 @@
 
     <h2>{{ 'economy.headline.economy_entries_arrear'|trans }}</h2>
     {% include '@KontrolgruppenCore/economy_entry/_economy_entry_base_table.html.twig' with {economyEntries: economyEntriesArrear} %}
-
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
 
     <script type="text/javascript">
+        $(document).ready(function () {
+            $('.js-itkdev-monthpicker').monthpicker($('.js-monthpicker-from'), $('.js-monthpicker-to'));
+        });
+
         $('#economy_entry_type').change(function () {
             $(this).closest('form').submit();
             $('#base_economy_entry').hide();
             $('#service_economy_entry').hide();
             $('#js-economy-form-spinner').show();
-        })
+        });
     </script>
 {% endblock %}

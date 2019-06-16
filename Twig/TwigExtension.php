@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Twig;
 
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Kontrolgruppen\CoreBundle\Service\ConclusionService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -17,15 +18,17 @@ use Twig\TwigFunction;
 class TwigExtension extends AbstractExtension
 {
     private $conclusionService;
+    private $translator;
 
     /**
      * TwigExtension constructor.
      *
      * @param $conclusionService
      */
-    public function __construct(ConclusionService $conclusionService)
+    public function __construct(ConclusionService $conclusionService, TranslatorInterface $translator)
     {
         $this->conclusionService = $conclusionService;
+        $this->translator = $translator;
     }
 
     public function getFunctions()
@@ -33,7 +36,15 @@ class TwigExtension extends AbstractExtension
         return [
             new TwigFunction('iconClass', [$this, 'getIconClass']),
             new TwigFunction('conclusionClassTranslation', [$this, 'getConclusionClassTranslation']),
+            new TwigFunction('enumTranslation', [$this, 'getEnumTranslation']),
         ];
+    }
+
+    public function getEnumTranslation(string $value, $enum)
+    {
+        $className = "Kontrolgruppen\\CoreBundle\\DBAL\\Types\\".$enum;
+
+        return $this->translator->trans(($className)::TRANSLATIONS[$value]);
     }
 
     public function getConclusionClassTranslation(string $className)

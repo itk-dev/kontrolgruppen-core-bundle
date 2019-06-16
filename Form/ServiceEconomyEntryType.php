@@ -12,6 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Form;
 
 use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,17 +27,26 @@ class ServiceEconomyEntryType extends AbstractType
             ->add('service', null, [
                 'label' => 'economy_entry.form.service.service',
             ])
-            ->add('periodFrom', null, [
+            ->add('periodFrom', HiddenType::class, [
                 'label' => 'economy_entry.form.service.period_from',
+                'attr' => [
+                    'class' => 'js-monthpicker-from',
+                ],
             ])
-            ->add('periodTo', null, [
+            ->add('periodTo', HiddenType::class, [
                 'label' => 'economy_entry.form.service.period_to',
+                'attr' => [
+                    'class' => 'js-monthpicker-to',
+                ],
             ])
-            ->add('periodTo', null, [
-                'label' => 'economy_entry.form.service.period_to',
-            ])
-            ->add('amountPeriod', null, [
+            ->add('amountPeriod', ChoiceType::class, [
                 'label' => 'economy_entry.form.service.amount_period',
+                'choices' => [
+                    'Pr. month' => 1,
+                    'Pr. third month' => '3',
+                    'Pr. half year' => '6',
+                    'Pr. year' => 12,
+                ],
             ])
             ->add('amount', null, [
                 'label' => 'economy_entry.form.service.amount',

@@ -18,9 +18,11 @@ final class EconomyEntryEnumType extends AbstractEnumType
     public const ACCOUNT = 'ACCOUNT';
     public const ARREAR = 'ARREAR';
 
-    protected static $choices = [
+    public const TRANSLATIONS = [
         self::SERVICE => 'common.enum.economy_entry.service',
         self::ACCOUNT => 'common.enum.economy_entry.account',
         self::ARREAR => 'common.enum.economy_entry.arrear',
     ];
+
+    protected static $choices = self::TRANSLATIONS;
 }

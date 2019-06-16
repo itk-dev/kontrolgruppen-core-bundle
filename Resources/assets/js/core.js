@@ -4,6 +4,15 @@ global.$ = global.jQuery = $;
 require('bootstrap');
 require('select2');
 
+// Add Moment.js.
+const moment = require('moment');
+moment.locale('da');
+global.moment = moment;
+
+
+require('./monthpicker/monthpicker');
+require('./monthpicker/monthpicker.css');
+
 // Add fontawesome
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
 import { faTachometerAlt } from '@fortawesome/free-solid-svg-icons/faTachometerAlt';
