@@ -23,7 +23,12 @@
                     {{ form_start(form) }}
                     {{ form_widget(form) }}
 
-                    <div class="js-itkdev-monthpicker"></div>
+                    {% if form.vars.id == 'service_economy_entry' %}
+                    <div class="form-group service-economy-entry-monthpicker">
+                        <label for="service_economy_entry_monthpicker" class="required">{{ 'economy_entry.form.service.monthpicker'|trans }}</label>
+                        <div class="form-control js-itkdev-monthpicker" id="service_economy_entry_monthpicker"></div>
+                    </div>
+                    {% endif %}
 
                     <div class="form-group text-right">
                         <button class="btn btn-success pl-5 pr-5">{{ 'common.actions.save'|trans }}</button>
@@ -55,6 +60,7 @@
         $('#economy_entry_type').change(function () {
             $(this).closest('form').submit();
             $('#base_economy_entry').hide();
+            $('.service-economy-entry-monthpicker').hide();
             $('#service_economy_entry').hide();
             $('#js-economy-form-spinner').show();
         });

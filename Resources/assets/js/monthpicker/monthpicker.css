@@ -7,6 +7,7 @@
 
 .itkdev-monthpicker-content {
     justify-content: center;
+    max-width: 300px;
 }
 
 .itkdev-month-button {
@@ -25,5 +26,11 @@
     width: 300px;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
+}
+
+.itkdev-month-picker-modal-content {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
 }

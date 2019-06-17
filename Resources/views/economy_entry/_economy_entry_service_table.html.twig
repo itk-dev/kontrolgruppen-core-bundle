@@ -14,8 +14,8 @@
             {% for economyEntry in economyEntries %}
                 <tr>
                     <td>{{ economyEntry.service }}</td>
-                    <td>{{ economyEntry.periodFrom }}</td>
-                    <td>{{ economyEntry.periodTo }}</td>
+                    <td>{{ monthYear(economyEntry.periodFrom) }}</td>
+                    <td>{{ monthYear(economyEntry.periodTo) }}</td>
                     <td>{{ economyEntry.amountPeriod }}</td>
                     <td>{{ economyEntry.amount }}</td>
                 </tr>

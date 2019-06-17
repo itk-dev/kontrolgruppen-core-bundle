@@ -25,8 +25,10 @@ class TwigExtension extends AbstractExtension
      *
      * @param $conclusionService
      */
-    public function __construct(ConclusionService $conclusionService, TranslatorInterface $translator)
-    {
+    public function __construct(
+        ConclusionService $conclusionService,
+        TranslatorInterface $translator
+    ) {
         $this->conclusionService = $conclusionService;
         $this->translator = $translator;
     }
@@ -35,9 +37,30 @@ class TwigExtension extends AbstractExtension
     {
         return [
             new TwigFunction('iconClass', [$this, 'getIconClass']),
-            new TwigFunction('conclusionClassTranslation', [$this, 'getConclusionClassTranslation']),
+            new TwigFunction('conclusionClassTranslation',
+                [$this, 'getConclusionClassTranslation']),
             new TwigFunction('enumTranslation', [$this, 'getEnumTranslation']),
+            new TwigFunction('monthYear', [$this, 'getMonthYearString']),
         ];
+    }
+
+    public function getMonthYearString(string $value = null)
+    {
+        if (is_null($value)) {
+            return $value;
+        }
+
+        $parts = explode('/', $value);
+
+        $dateObj = \DateTime::createFromFormat('!m', $parts[0]);
+
+        if (!$dateObj) {
+            return $value;
+        }
+
+        $monthName = $dateObj->format('M');
+
+        return $monthName.'. '.$parts[1];
     }
 
     public function getEnumTranslation(string $value, $enum)
