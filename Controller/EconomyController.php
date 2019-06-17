@@ -71,7 +71,7 @@ class EconomyController extends BaseController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    private function handleEntityForm(Request $request, Process $process, $chosenType, &$parameters)
+    public function handleEntityForm(Request $request, Process $process, $chosenType, &$parameters)
     {
         // Decide if a type has been chosen.
         if (!$chosenType && $request->request->has('base_economy_entry')) {
@@ -115,7 +115,7 @@ class EconomyController extends BaseController
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse parameters for the form, or redirects on success
      */
-    private function handleEconomyEntryFormRequest(Request $request, Process $process)
+    public function handleEconomyEntryFormRequest(Request $request, Process $process)
     {
         $economyEntry = new EconomyEntry();
         $economyEntry->setProcess($process);

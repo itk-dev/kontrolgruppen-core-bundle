@@ -37,8 +37,10 @@ class TwigExtension extends AbstractExtension
     {
         return [
             new TwigFunction('iconClass', [$this, 'getIconClass']),
-            new TwigFunction('conclusionClassTranslation',
-                [$this, 'getConclusionClassTranslation']),
+            new TwigFunction(
+                'conclusionClassTranslation',
+                [$this, 'getConclusionClassTranslation']
+            ),
             new TwigFunction('enumTranslation', [$this, 'getEnumTranslation']),
             new TwigFunction('monthYear', [$this, 'getMonthYearString']),
         ];
@@ -46,7 +48,7 @@ class TwigExtension extends AbstractExtension
 
     public function getMonthYearString(string $value = null)
     {
-        if (is_null($value)) {
+        if (null === $value) {
             return $value;
         }
 
@@ -65,7 +67,7 @@ class TwigExtension extends AbstractExtension
 
     public function getEnumTranslation(string $value, $enum)
     {
-        $className = "Kontrolgruppen\\CoreBundle\\DBAL\\Types\\".$enum;
+        $className = 'Kontrolgruppen\\CoreBundle\\DBAL\\Types\\'.$enum;
 
         return $this->translator->trans(($className)::TRANSLATIONS[$value]);
     }

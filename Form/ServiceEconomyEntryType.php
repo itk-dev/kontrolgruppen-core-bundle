@@ -23,7 +23,10 @@ class ServiceEconomyEntryType extends AbstractType
     {
         $builder
             ->add('type', HiddenType::class)
-            ->add('process', HiddenType::class)
+            ->add('process', null, [
+                'label' => false,
+                'attr' => ['class' => 'd-none'],
+            ])
             ->add('service', null, [
                 'label' => 'economy_entry.form.service.service',
             ])
@@ -39,6 +42,7 @@ class ServiceEconomyEntryType extends AbstractType
                     'class' => 'js-monthpicker-to',
                 ],
             ])
+            // @TODO: Translation
             ->add('amountPeriod', ChoiceType::class, [
                 'label' => 'economy_entry.form.service.amount_period',
                 'choices' => [

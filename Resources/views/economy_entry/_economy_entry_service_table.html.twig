@@ -13,7 +13,7 @@
             <tbody>
             {% for economyEntry in economyEntries %}
                 <tr>
-                    <td>{{ economyEntry.service }}</td>
+                    <td><a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.service }}</a></td>
                     <td>{{ monthYear(economyEntry.periodFrom) }}</td>
                     <td>{{ monthYear(economyEntry.periodTo) }}</td>
                     <td>{{ economyEntry.amountPeriod }}</td>

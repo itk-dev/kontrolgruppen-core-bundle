@@ -1,5 +1,13 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
+
+    {% if form.vars.id == 'service_economy_entry' %}
+        <div class="form-group service-economy-entry-monthpicker">
+            <label for="service_economy_entry_monthpicker" class="required">{{ 'economy_entry.form.service.monthpicker'|trans }}</label>
+            <div class="form-control js-itkdev-monthpicker" id="service_economy_entry_monthpicker"></div>
+        </div>
+    {% endif %}
+
 <button class="btn btn-success pl-5 pr-5 float-right">
     {{ (button_label is defined ? (form.vars.full_name ~ '.form.' ~ button_label|lower) : 'common.actions.save')|trans }}
 </button>

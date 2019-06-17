@@ -11,76 +11,77 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\EconomyEntry;
-use Kontrolgruppen\CoreBundle\Form\EconomyEntryType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
+use Kontrolgruppen\CoreBundle\Form\BaseEconomyEntryType;
+use Kontrolgruppen\CoreBundle\Form\ServiceEconomyEntryType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Kontrolgruppen\CoreBundle\Entity\Process;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Kontrolgruppen\CoreBundle\Service\MenuService;
 
 /**
- * @Route("/economy/entry")
+ * @Route("/process/{process}/economy_entry")
  */
-class EconomyEntryController extends AbstractController
+class EconomyEntryController extends BaseController
 {
-    /**
-     * @Route("/new", name="economy_entry_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $economyEntry = new EconomyEntry();
-        $form = $this->createForm(EconomyEntryType::class, $economyEntry);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($economyEntry);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('economy_entry_index');
-        }
-
-        return $this->render('economy_entry/new.html.twig', [
-            'economy_entry' => $economyEntry,
-            'form' => $form->createView(),
-        ]);
-    }
+    private $economyController;
 
     /**
-     * @Route("/{id}", name="economy_entry_show", methods={"GET"})
+     * EconomyEntryController constructor.
      */
-    public function show(EconomyEntry $economyEntry): Response
-    {
-        return $this->render('economy_entry/show.html.twig', [
-            'economy_entry' => $economyEntry,
-        ]);
+    public function __construct(
+        RequestStack $requestStack,
+        MenuService $menuService,
+        EconomyController $economyController
+    ) {
+        parent::__construct($requestStack, $menuService);
+        $this->economyController = $economyController;
     }
 
     /**
      * @Route("/{id}/edit", name="economy_entry_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, EconomyEntry $economyEntry): Response
+    public function edit(Process $process, EconomyEntry $economyEntry, Request $request): Response
     {
-        $form = $this->createForm(EconomyEntryType::class, $economyEntry);
+        if ($economyEntry instanceof ServiceEconomyEntry) {
+            $form = $this->createForm(ServiceEconomyEntryType::class, $economyEntry);
+        } else {
+            $form = $this->createForm(BaseEconomyEntryType::class, $economyEntry);
+        }
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('economy_entry_index', [
-                'id' => $economyEntry->getId(),
-            ]);
+            return $this->redirectToRoute(
+                'economy_show',
+                [
+                    'process' => $process->getId(),
+                ]
+            );
         }
 
-        return $this->render('economy_entry/edit.html.twig', [
-            'economy_entry' => $economyEntry,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            '@KontrolgruppenCore/economy_entry/edit.html.twig',
+            [
+                'menuItems' => $this->menuService->getProcessMenu(
+                    $request->getPathInfo(),
+                    $process
+                ),
+                'process' => $process,
+                'economyEntry' => $economyEntry,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
      * @Route("/{id}", name="economy_entry_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, EconomyEntry $economyEntry): Response
+    public function delete(Request $request, EconomyEntry $economyEntry, Process $process): Response
     {
         if ($this->isCsrfTokenValid('delete'.$economyEntry->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -88,6 +89,6 @@ class EconomyEntryController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('economy_entry_index');
+        return $this->redirectToRoute('economy_show', ['process' => $process]);
     }
 }

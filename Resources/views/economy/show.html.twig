@@ -20,6 +20,8 @@
                 </div>
 
                 {% if form is defined %}
+                    {% include '@KontrolgruppenCore/economy_entry/_form.html.twig' %}
+{#
                     {{ form_start(form) }}
                     {{ form_widget(form) }}
 
@@ -34,6 +36,7 @@
                         <button class="btn btn-success pl-5 pr-5">{{ 'common.actions.save'|trans }}</button>
                     </div>
                     {{ form_end(form) }}
+#}
                 {% endif %}
             </div>
         </div>
