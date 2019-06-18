@@ -80,6 +80,9 @@ class ProcessController extends BaseController
         $qb->leftJoin('e.channel', 'channel');
         $qb->addSelect('partial channel.{id,name}');
 
+        $qb->leftJoin('e.reason', 'reason');
+        $qb->addSelect('partial reason.{id,name}');
+
         $qb->leftJoin('e.service', 'service');
         $qb->addSelect('partial service.{id,name}');
 

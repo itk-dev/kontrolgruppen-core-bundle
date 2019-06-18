@@ -35,6 +35,25 @@ channel:
     btns:
         create_new: Opret ny kanal
 
+reason:
+    edit:
+        title: Rediger årsag
+    form:
+        name: Navn
+        update: Gem
+    index:
+        title: Årsager
+    menu_title: Årsager
+    new:
+        title: Opret årsag
+    show:
+        title: Årsag
+    table:
+        id: ID
+        name: Navn
+    btns:
+        create_new: Opret ny årsag
+
 client:
     edit:
         title: Rediger klient
@@ -281,6 +300,7 @@ global_nav:
 
 menu:
     menu_title:
+        reason: Årsager
         channel: Kanaler
         client: Klient
         conclusion: Konklusion
@@ -311,6 +331,7 @@ process:
         title: Rediger sag
     form:
         case_worker: Sagbehandler
+        reason: Årsag
         change_process_status:
             placeholder: Vælg sagsstatus
             save: Gem ny status
@@ -333,6 +354,7 @@ process:
         case_number: Sagsnummer
         case_worker: Sagsbehandler
         channel: Kanal
+        reason: Årsag
         client_adress: Klient adresse
         client_cpr: Klient CPR
         client_first_name: Fornavn
