@@ -26,7 +26,7 @@ class ProcessLogEntry extends AbstractEntity
     private $process;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Gedmo\Loggable\Entity\LogEntry", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Gedmo\Loggable\Entity\LogEntry")
      * @ORM\JoinColumn(nullable=false)
      */
     private $logEntry;
