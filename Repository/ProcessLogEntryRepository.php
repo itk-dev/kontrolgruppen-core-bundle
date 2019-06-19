@@ -10,6 +10,8 @@
 
 namespace Kontrolgruppen\CoreBundle\Repository;
 
+use Gedmo\Loggable\Entity\LogEntry;
+use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -25,5 +27,26 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, ProcessLogEntry::class);
+    }
+
+    public function getLatestEntries(Process $process, $limit = null, $offset = null)
+    {
+        $qb = $this->createQueryBuilder('processLogEntry', 'processLogEntry.id');
+        $qb
+            ->select(['processLogEntry', 'logEntry'])
+            ->where('processLogEntry.process = :process')
+            ->setParameter('process', $process)
+            ->innerJoin('processLogEntry.logEntry', 'logEntry')
+            ->orderBy('logEntry.loggedAt', 'DESC');
+
+        if (!is_null($limit)) {
+            $qb->setMaxResults($limit);
+        }
+
+        if (!is_null($offset)) {
+            $qb->setFirstResult($offset);
+        }
+
+        return $qb->getQuery()->getArrayResult();
     }
 }
