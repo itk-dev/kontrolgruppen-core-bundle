@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Form;
 
+use Kontrolgruppen\CoreBundle\DBAL\Types\EconomyEntryAmountPeriodEnumType;
 use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -42,15 +43,9 @@ class ServiceEconomyEntryType extends AbstractType
                     'class' => 'js-monthpicker-to',
                 ],
             ])
-            // @TODO: Translation
             ->add('amountPeriod', ChoiceType::class, [
                 'label' => 'economy_entry.form.service.amount_period',
-                'choices' => [
-                    'Pr. month' => 1,
-                    'Pr. third month' => '3',
-                    'Pr. half year' => '6',
-                    'Pr. year' => 12,
-                ],
+                'choices' => EconomyEntryAmountPeriodEnumType::getChoices(),
             ])
             ->add('amount', null, [
                 'label' => 'economy_entry.form.service.amount',

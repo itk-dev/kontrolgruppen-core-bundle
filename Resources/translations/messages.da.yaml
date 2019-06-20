@@ -98,6 +98,11 @@ common:
             service: Ydelse
             account: Konti
             arrear: Restance
+        economy_entry_amount_period:
+            pr_month: pr. måned
+            pr_3_month: pr. 3. måned
+            pr_6_month: pr. halvår
+            pr_year: pr. år
     no_records_found: Ingen indgange fundet
     no_sensitive_information_warning: KUN DEMO - Indtast ingen personfølsomme data
     table:
@@ -151,6 +156,8 @@ dashboard:
         title: Seneste aktivitet
 
 economy:
+    actions:
+        create: Opret ny registrering
     headline:
         economy_entries_account: Konti
         economy_entries_arrear: Restance
@@ -165,7 +172,22 @@ economy:
             type: Type
         service:
             amount: Beløb
-            amount_period: Beløb interval
+            amount_period: Beløbsinterval
+            period_from: Fra
+            period_to: Til
+            service: Ydelse
+
+economy_entry:
+    form:
+        base:
+            amount: Beløb
+            date: Dato
+            text: Tekst
+            type: Type
+        service:
+            amount: Beløb
+            amount_period: Beløbsinterval
+            monthpicker: Periode
             period_from: Fra
             period_to: Til
             service: Ydelse
@@ -459,6 +481,10 @@ service:
         process_types: Tilkoblede sagstyper
     btns:
         create_new: Opret ny ydelse
+
+service_economy_entry:
+    form:
+        update: Gem
 
 weighted_conclusion:
     form:
