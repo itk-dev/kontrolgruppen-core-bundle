@@ -6,9 +6,9 @@ require('select2');
 
 // Add Moment.js.
 const moment = require('moment');
+// Set moment locale to danish.
 moment.locale('da');
 global.moment = moment;
-
 
 require('./monthpicker/monthpicker');
 require('./monthpicker/monthpicker.css');

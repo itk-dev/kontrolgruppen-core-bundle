@@ -1,6 +1,8 @@
 /**
  * Month range picker jQuery plugin.
  *
+ * Requires moment, jquery, bootstrap.
+ *
  * Sets the value of the selected fields in the month/year format.
  *
  * Example use:
@@ -15,6 +17,7 @@
  * </script>
  */
 (function ($) {
+    // Get month short names from moment.
     let months = [];
     for (var i = 0; i < 12; i++) {
         months.push(moment().month(i).format('MMM'));
@@ -24,6 +27,12 @@
     const currentMonth = now.month();
     const currentYear = now.year();
 
+    /**
+     * Creates dom element for a month picker.
+     *
+     * @param content
+     * @param source
+     */
     const createView = function (content, source) {
         let yearElement = $('<div class="itkdev-year"><button class="btn btn-primary year-dec-' + source + ' m-1">-</button><button class="btn btn-light year-' + source + ' m-1"></button><button class="btn btn-primary year-inc-' + source + ' m-1">+</button></div>');
 
@@ -43,6 +52,11 @@
         content.append(monthsElement);
     };
 
+    /**
+     * Saves selected values to input elements.
+     *
+     * @param monthPicker
+     */
     const applyValues = function (monthPicker) {
         monthPicker.find('.current-values .first-value')
             .html(months[monthPicker.from.month - 1] + '. ' + monthPicker.from.year);
@@ -53,14 +67,28 @@
         monthPicker.toElement.val(monthPicker.to.month + '/' + monthPicker.to.year);
     };
 
+    /**
+     * Get month from string of format Month/Year
+     * @param value
+     * @return {number}
+     */
     const getMonth = function (value) {
         return parseInt(value.split('/')[0]);
     };
 
+    /**
+     * Get year from string of format Month/Year
+     * @param value
+     * @return {number}
+     */
     const getYear = function (value) {
         return parseInt(value.split('/')[1]);
     };
 
+    /**
+     * Enforce constraints between values, som from is never greater than to.
+     * @param monthPicker
+     */
     const enforceConstraints = function (monthPicker) {
         if (monthPicker.from.year > monthPicker.to.year) {
             monthPicker.from.year = monthPicker.to.year;
@@ -73,6 +101,10 @@
         }
     };
 
+    /**
+     * Set values from input elements' values.
+     * @param monthPicker
+     */
     const setValuesFromInput = function (monthPicker) {
         // @TODO: Validate input values.
         monthPicker.fromValue = monthPicker.fromElement.val() ? monthPicker.fromElement.val() : currentMonth + '/' + currentYear;
@@ -89,6 +121,10 @@
         };
     };
 
+    /**
+     * Set html for picker.
+     * @param monthPicker
+     */
     const setHtml = function (monthPicker) {
         let currentElement = $('<div class="current-values"><span class="first-value"></span> - <span class="second-value"></span></div>');
         monthPicker.append(currentElement);
@@ -128,6 +164,10 @@
         monthPicker.append(modalElement);
     };
 
+    /**
+     * Update view data.
+     * @param monthPicker
+     */
     const updateHtmlValues = function (monthPicker) {
         enforceConstraints(monthPicker);
 
@@ -157,6 +197,13 @@
         }
     };
 
+    /**
+     * Register monthpicker jquery plugin.
+     *
+     * @param fromElement
+     * @param toElement
+     * @return {jQuery}
+     */
     $.fn.monthpicker = function (fromElement, toElement) {
         let self = $(this);
 
@@ -205,7 +252,6 @@
             updateHtmlValues(self);
         });
         self.find('.js-apply-button').on('click', function (event) {
-            console.log('apply');
             event.preventDefault();
             event.stopPropagation();
             self.find('.js-month-picker-modal').modal('hide');
