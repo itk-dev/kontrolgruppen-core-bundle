@@ -45,7 +45,11 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.js-itkdev-monthpicker').monthpicker($('.js-monthpicker-from'), $('.js-monthpicker-to'));
+            $('.js-itkdev-monthpicker').monthpicker($('.js-monthpicker-from'), $('.js-monthpicker-to'), {
+                headline: "{{ 'economy_entry.form.service.monthpicker_headline'|trans }}",
+                applyButtonText: "{{ 'economy_entry.form.service.monthpicker_applybutton_text'|trans }}",
+                cancelButtonText: "{{ 'economy_entry.form.service.monthpicker_cancelbutton_text'|trans }}"
+            });
 
             $('#economy_entry_type').change(function () {
                 $(this).closest('form').submit();

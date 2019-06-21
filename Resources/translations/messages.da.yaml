@@ -203,6 +203,9 @@ economy_entry:
             amount_period_help: Vælg hvor ofte beløbet udbetales
             monthpicker: Periode
             monthpicker_help: Vælg hvilken periode registreringen gælder for
+            monthpicker_cancelbutton_text: Annullér
+            monthpicker_applybutton_text: Vælg
+            monthpicker_headline: Vælg periode
             period_from: Fra
             period_to: Til
             service: Ydelse

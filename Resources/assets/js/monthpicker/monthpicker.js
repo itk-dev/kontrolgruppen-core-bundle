@@ -145,14 +145,15 @@
             '  <div class="modal-dialog modal-lg" role="document">\n' +
             '    <div class="modal-content">\n' +
             '      <div class="modal-header">\n' +
+            '        <h5 class="modal-title">' + monthPicker.options.headline + '</h5>\n' +
             '        <button type="button" class="close" data-dismiss="modal" aria-label="Close">\n' +
             '          <span aria-hidden="true">&times;</span>\n' +
             '        </button>\n' +
             '      </div>\n' +
             '      <div class="modal-body itkdev-month-picker-modal-content"></div>\n' +
             '      <div class="modal-footer">\n' +
-            '        <button type="button" class="itkdev-cancel-button btn btn-secondary" class="btn btn-secondary" data-dismiss="modal">Cancel</button>\n' +
-            '        <button type="button" class="js-apply-button btn btn-primary" data-dismiss="modal">Apply</button>\n' +
+            '        <button type="button" class="itkdev-cancel-button btn btn-secondary" class="btn btn-secondary" data-dismiss="modal">' + monthPicker.options.cancelButtonText + '</button>\n' +
+            '        <button type="button" class="js-apply-button btn btn-primary" data-dismiss="modal">' + monthPicker.options.applyButtonText + '</button>\n' +
             '      </div>\n' +
             '    </div>\n' +
             '  </div>\n' +
@@ -202,13 +203,20 @@
      *
      * @param fromElement
      * @param toElement
+     * @param options
      * @return {jQuery}
      */
-    $.fn.monthpicker = function (fromElement, toElement) {
+    $.fn.monthpicker = function (fromElement, toElement, options) {
         let self = $(this);
 
         self.fromElement = fromElement;
         self.toElement = toElement;
+
+        self.options = $.extend({
+            'headline': 'Choose period',
+            'applyButtonText': 'Apply',
+            'cancelButtonText': 'Cancel'
+        }, options);
 
         setValuesFromInput(self);
         setHtml(self);
