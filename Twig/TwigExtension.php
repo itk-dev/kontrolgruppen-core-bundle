@@ -14,18 +14,23 @@ use Kontrolgruppen\CoreBundle\Service\ConclusionService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+use Symfony\Bridge\Doctrine\RegistryInterface;
+
 class TwigExtension extends AbstractExtension
 {
     private $conclusionService;
+    private $doctrine;
 
     /**
      * TwigExtension constructor.
      *
      * @param $conclusionService
+     * @param $doctrine
      */
-    public function __construct(ConclusionService $conclusionService)
+    public function __construct(ConclusionService $conclusionService, RegistryInterface $doctrine)
     {
         $this->conclusionService = $conclusionService;
+        $this->doctrine = $doctrine;
     }
 
     public function getFunctions()
@@ -33,6 +38,7 @@ class TwigExtension extends AbstractExtension
         return [
             new TwigFunction('iconClass', [$this, 'getIconClass']),
             new TwigFunction('conclusionClassTranslation', [$this, 'getConclusionClassTranslation']),
+            new TwigFunction('camelCaseToUnderscore', [$this, 'camelCaseToUnderscore']),
         ];
     }
 
@@ -82,5 +88,12 @@ class TwigExtension extends AbstractExtension
             default:
                 return '';
         }
+    }
+
+    public function camelCaseToUnderscore(string $camelCaseString)
+    {
+        $result = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $camelCaseString));
+
+        return $result;
     }
 }
