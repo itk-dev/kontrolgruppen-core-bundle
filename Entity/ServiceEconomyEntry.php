@@ -45,6 +45,12 @@ class ServiceEconomyEntry extends EconomyEntry
      */
     private $amountPeriod;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     * @Gedmo\Versioned()
+     */
+    private $repayment_amount;
+
     public function getService(): ?Service
     {
         return $this->service;
@@ -89,6 +95,18 @@ class ServiceEconomyEntry extends EconomyEntry
     public function setAmountPeriod(?int $amountPeriod): self
     {
         $this->amountPeriod = $amountPeriod;
+
+        return $this;
+    }
+
+    public function getRepaymentAmount(): ?float
+    {
+        return $this->repayment_amount;
+    }
+
+    public function setRepaymentAmount(?float $repayment_amount): self
+    {
+        $this->repayment_amount = $repayment_amount;
 
         return $this;
     }

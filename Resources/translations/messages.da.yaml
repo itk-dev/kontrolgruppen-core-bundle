@@ -176,22 +176,35 @@ economy:
             period: Periode
             period_from: Fra
             period_to: Til
+            repayment_amount: Tilbagebetalingskrav
             service: Ydelse
 
 economy_entry:
     form:
         base:
             amount: Beløb
+            amount_help: Vælg beløb for registrering
             date: Dato
+            date_help: Vælg en dato for registreringen
             text: Tekst
+            text_help: Beskriv registreringen
             type: Type
+            type_help: Vælg registreringstype
         service:
             amount: Beløb
+            amount_help: Vælg beløb for registrering
             amount_period: Beløbsinterval
+            amount_period_help: Vælg hvor ofte beløbet udbetales
             monthpicker: Periode
+            monthpicker_help: Vælg hvilken periode registreringen gælder for
             period_from: Fra
             period_to: Til
             service: Ydelse
+            service_help: Vælg hvilken ydelse registreringen gælder for
+            repayment_amount: Tilbagebetalingskrav
+            repayment_amount_help: Skriv det samlede tilbagebetalingskrav for registreringen
+        type: Type
+        type_help: Vælg hvilken type registrering du vil oprette
 
 journal_entry:
     actions:

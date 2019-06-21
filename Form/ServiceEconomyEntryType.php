@@ -30,6 +30,7 @@ class ServiceEconomyEntryType extends AbstractType
             ])
             ->add('service', null, [
                 'label' => 'economy_entry.form.service.service',
+                'help' => 'economy_entry.form.service.service_help',
             ])
             ->add('periodFrom', null, [
                 'label' => false,
@@ -52,9 +53,15 @@ class ServiceEconomyEntryType extends AbstractType
             ->add('amountPeriod', ChoiceType::class, [
                 'label' => 'economy_entry.form.service.amount_period',
                 'choices' => EconomyEntryAmountPeriodEnumType::getChoices(),
+                'help' => 'economy_entry.form.service.amount_period_help',
             ])
             ->add('amount', null, [
                 'label' => 'economy_entry.form.service.amount',
+                'help' => 'economy_entry.form.service.amount_help',
+            ])
+            ->add('repaymentAmount', null, [
+                'label' => 'economy_entry.form.service.repayment_amount',
+                'help' => 'economy_entry.form.service.repayment_amount_help',
             ])
         ;
     }

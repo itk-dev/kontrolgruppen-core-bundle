@@ -33,11 +33,20 @@ import { faSort } from "@fortawesome/free-solid-svg-icons/faSort";
 import { faSortUp } from "@fortawesome/free-solid-svg-icons/faSortUp";
 import { faSortDown } from "@fortawesome/free-solid-svg-icons/faSortDown";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons/faCalendar";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons/faArrowUp";
+import { faArrowDown } from "@fortawesome/free-solid-svg-icons/faArrowDown";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons/faChevronLeft";
+import { faCalendarCheck } from "@fortawesome/free-solid-svg-icons/faCalendarCheck";
+import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
+import { faTimes } from "@fortawesome/free-solid-svg-icons/faTimes";
 
 library.add(
     faTachometerAlt, faTasks, faIdCard, faUsersCog, faCog, faClock,
     faUserPlus, faArchive, faEye, faPencilAlt, faHouseDamage, faFileDownload,
-    faPrint, faCheck, faLayerGroup, faSort, faSortUp, faSortDown, faCalendar
+    faPrint, faCheck, faLayerGroup, faSort, faSortUp, faSortDown, faCalendar,
+    faArrowUp, faArrowDown, faChevronRight, faChevronLeft, faCalendarCheck,
+    faTrash, faTimes
 );
 dom.watch();
 
@@ -64,15 +73,15 @@ $(function () {
         $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
             format: 'DD/MM YYYY',
             icons: {
-                time: 'far fa-clock',
-                date: 'far fa-calendar',
-                up: 'far fa-arrow-up',
-                down: 'far fa-arrow-down',
-                previous: 'far fa-chevron-left',
-                next: 'far fa-chevron-right',
-                today: 'far fa-calendar-check-o',
-                clear: 'far fa-trash',
-                close: 'far fa-times'
+                time: 'fas fa-clock',
+                date: 'fas fa-calendar',
+                up: 'fas fa-arrow-up',
+                down: 'fas fa-arrow-down',
+                previous: 'fas fa-chevron-left',
+                next: 'fas fa-chevron-right',
+                today: 'fas fa-calendar-check',
+                clear: 'fas fa-trash',
+                close: 'fas fa-times'
             } });
 
         // Transforms dom to match required by datetimepicker.
@@ -95,7 +104,7 @@ $(function () {
 
             $(inputGroup).append(el);
 
-            $(parent).append(inputGroup);
+            $(parent).find('label').after(inputGroup);
         });
     });
 });

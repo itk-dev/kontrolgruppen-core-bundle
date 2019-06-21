@@ -5,8 +5,9 @@
             <tr>
                 <th>{{ 'economy.table.service.service'|trans }}</th>
                 <th>{{ 'economy.table.service.period'|trans }}</th>
-                <th>{{ 'economy.table.service.amount_period'|trans }}</th>
                 <th>{{ 'economy.table.service.amount'|trans }}</th>
+                <th>{{ 'economy.table.service.amount_period'|trans }}</th>
+                <th>{{ 'economy.table.service.repayment_amount'|trans }}</th>
             </tr>
             </thead>
             <tbody>
@@ -14,8 +15,9 @@
                 <tr>
                     <td><a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.service }}</a></td>
                     <td>{{ economyEntry.periodFrom|date("M. Y") }} - {{ economyEntry.periodTo|date("M. Y") }}</td>
-                    <td>{{ enumTranslation(economyEntry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>
                     <td>{{ economyEntry.amount }}</td>
+                    <td>{{ enumTranslation(economyEntry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>
+                    <td>{{ economyEntry.repaymentAmount }}</td>
                 </tr>
             {% else %}
                 <tr>

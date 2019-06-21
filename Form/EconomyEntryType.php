@@ -21,7 +21,9 @@ class EconomyEntryType extends AbstractType
     {
         $builder
             ->add('type', null, [
+                'label' => 'economy_entry.form.type',
                 'required' => false,
+                'help' => 'economy_entry.form.type_help',
             ])
         ;
     }

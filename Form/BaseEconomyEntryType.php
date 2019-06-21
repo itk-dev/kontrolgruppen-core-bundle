@@ -25,6 +25,7 @@ class BaseEconomyEntryType extends AbstractType
             ->add('process', HiddenType::class)
             ->add('text', null, [
                 'label' => 'economy_entry.form.base.text',
+                'help' => 'economy_entry.form.base.text_help',
             ])
             ->add('date', null, [
                 'label' => 'economy_entry.form.base.date',
@@ -32,9 +33,11 @@ class BaseEconomyEntryType extends AbstractType
                 'html5' => false,
                 'format' => 'dd/MM yyyy',
                 'attr' => ['class' => 'js-datepicker'],
+                'help' => 'economy_entry.form.base.date_help',
             ])
             ->add('amount', null, [
                 'label' => 'economy_entry.form.base.amount',
+                'help' => 'economy_entry.form.base.amount_help',
             ])
         ;
     }
