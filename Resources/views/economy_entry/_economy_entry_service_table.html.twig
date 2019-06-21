@@ -4,8 +4,7 @@
             <thead>
             <tr>
                 <th>{{ 'economy.table.service.service'|trans }}</th>
-                <th>{{ 'economy.table.service.period_from'|trans }}</th>
-                <th>{{ 'economy.table.service.period_to'|trans }}</th>
+                <th>{{ 'economy.table.service.period'|trans }}</th>
                 <th>{{ 'economy.table.service.amount_period'|trans }}</th>
                 <th>{{ 'economy.table.service.amount'|trans }}</th>
             </tr>
@@ -14,8 +13,7 @@
             {% for economyEntry in economyEntries %}
                 <tr>
                     <td><a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.service }}</a></td>
-                    <td>{{ monthYear(economyEntry.periodFrom) }}</td>
-                    <td>{{ monthYear(economyEntry.periodTo) }}</td>
+                    <td>{{ economyEntry.periodFrom|date("M. Y") }} - {{ economyEntry.periodTo|date("M. Y") }}</td>
                     <td>{{ enumTranslation(economyEntry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>
                     <td>{{ economyEntry.amount }}</td>
                 </tr>

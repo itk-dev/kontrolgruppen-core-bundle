@@ -31,16 +31,22 @@ class ServiceEconomyEntryType extends AbstractType
             ->add('service', null, [
                 'label' => 'economy_entry.form.service.service',
             ])
-            ->add('periodFrom', HiddenType::class, [
-                'label' => 'economy_entry.form.service.period_from',
+            ->add('periodFrom', null, [
+                'label' => false,
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'MM/yyyy',
                 'attr' => [
-                    'class' => 'js-monthpicker-from',
+                    'class' => 'js-monthpicker-from d-none',
                 ],
             ])
-            ->add('periodTo', HiddenType::class, [
-                'label' => 'economy_entry.form.service.period_to',
+            ->add('periodTo', null, [
+                'label' => false,
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'MM/yyyy',
                 'attr' => [
-                    'class' => 'js-monthpicker-to',
+                    'class' => 'js-monthpicker-to d-none',
                 ],
             ])
             ->add('amountPeriod', ChoiceType::class, [

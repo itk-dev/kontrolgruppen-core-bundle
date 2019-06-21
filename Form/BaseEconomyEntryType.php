@@ -28,6 +28,10 @@ class BaseEconomyEntryType extends AbstractType
             ])
             ->add('date', null, [
                 'label' => 'economy_entry.form.base.date',
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'dd/MM yyyy',
+                'attr' => ['class' => 'js-datepicker'],
             ])
             ->add('amount', null, [
                 'label' => 'economy_entry.form.base.amount',

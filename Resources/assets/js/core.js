@@ -1,6 +1,8 @@
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 
+import 'whatwg-fetch';
+
 require('bootstrap');
 require('select2');
 
@@ -9,9 +11,6 @@ const moment = require('moment');
 // Set moment locale to danish.
 moment.locale('da');
 global.moment = moment;
-
-require('./monthpicker/monthpicker');
-require('./monthpicker/monthpicker.css');
 
 // Add fontawesome
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
@@ -33,17 +32,23 @@ import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup';
 import { faSort } from "@fortawesome/free-solid-svg-icons/faSort";
 import { faSortUp } from "@fortawesome/free-solid-svg-icons/faSortUp";
 import { faSortDown } from "@fortawesome/free-solid-svg-icons/faSortDown";
+import { faCalendar } from "@fortawesome/free-solid-svg-icons/faCalendar";
 
 library.add(
     faTachometerAlt, faTasks, faIdCard, faUsersCog, faCog, faClock,
     faUserPlus, faArchive, faEye, faPencilAlt, faHouseDamage, faFileDownload,
-    faPrint, faCheck, faLayerGroup, faSort, faSortUp, faSortDown
+    faPrint, faCheck, faLayerGroup, faSort, faSortUp, faSortDown, faCalendar
 );
 dom.watch();
 
-require('../css/core.scss');
+require('./monthpicker/monthpicker');
+require('./monthpicker/monthpicker.css');
 
-import 'whatwg-fetch';
+// https://tempusdominus.github.io/bootstrap-4
+require('tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4');
+require('tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css');
+
+require('../css/core.scss');
 
 $(function () {
     $('[data-toggle="tooltip"]').tooltip(
@@ -55,5 +60,42 @@ $(function () {
     // Apply select2 to all elements with select2 class.
     $(document).ready(function() {
         $('.select2').select2();
+
+        $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
+            format: 'DD/MM YYYY',
+            icons: {
+                time: 'far fa-clock',
+                date: 'far fa-calendar',
+                up: 'far fa-arrow-up',
+                down: 'far fa-arrow-down',
+                previous: 'far fa-chevron-left',
+                next: 'far fa-chevron-right',
+                today: 'far fa-calendar-check-o',
+                clear: 'far fa-trash',
+                close: 'far fa-times'
+            } });
+
+        // Transforms dom to match required by datetimepicker.
+        let dateInputs = $('.js-datepicker');
+
+        dateInputs.each(function (i, val) {
+            let parent = val.closest('.form-group');
+            let inputGroup = $('<div class="input-group date" id="datetimepicker' + i +'" data-target-input="nearest"></div>');
+            let input = $(parent).find('input');
+
+            $(input).attr('data-target', '#datetimepicker' + i);
+            $(parent).find('input').remove();
+            inputGroup.html(input);
+
+            let el = $(
+                '<div class="input-group-append" data-target="#datetimepicker' + i + '" data-toggle="datetimepicker">\n' +
+                '<div class="input-group-text"><i class="fa fa-calendar"></i></div>\n' +
+                '</div>')
+            ;
+
+            $(inputGroup).append(el);
+
+            $(parent).append(inputGroup);
+        });
     });
 });

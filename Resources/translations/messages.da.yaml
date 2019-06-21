@@ -173,6 +173,7 @@ economy:
         service:
             amount: Beløb
             amount_period: Beløbsinterval
+            period: Periode
             period_from: Fra
             period_to: Til
             service: Ydelse

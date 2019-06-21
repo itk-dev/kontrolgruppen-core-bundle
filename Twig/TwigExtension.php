@@ -42,27 +42,7 @@ class TwigExtension extends AbstractExtension
                 [$this, 'getConclusionClassTranslation']
             ),
             new TwigFunction('enumTranslation', [$this, 'getEnumTranslation']),
-            new TwigFunction('monthYear', [$this, 'getMonthYearString']),
         ];
-    }
-
-    public function getMonthYearString(string $value = null)
-    {
-        if (null === $value) {
-            return $value;
-        }
-
-        $parts = explode('/', $value);
-
-        $dateObj = \DateTime::createFromFormat('!m', $parts[0]);
-
-        if (!$dateObj) {
-            return $value;
-        }
-
-        $monthName = $dateObj->format('M');
-
-        return $monthName.'. '.$parts[1];
     }
 
     public function getEnumTranslation(string $value, $enum)
