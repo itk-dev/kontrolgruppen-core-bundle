@@ -151,7 +151,7 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}", name="process_show", methods={"GET", "POST"})
      */
-    public function show(Request $request, Process $process, PaginatorInterface $paginator): Response
+    public function show(Request $request, Process $process): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $eventManager = $this->getDoctrine()->getManager()->getEventManager();
@@ -163,12 +163,10 @@ class ProcessController extends BaseController
         )->getLatestEntries($process);
 
         // Latest Log entries
-        $latestLogEntries = $this->getDoctrine()->getRepository(
+        $logEntriesPagination = $this->getDoctrine()->getRepository(
             ProcessLogEntry::class
-        )->getLatestEntries($process);
-
-        $logEntriesPagination = $paginator->paginate(
-            $latestLogEntries,
+        )->getLatestEntriesPaginated(
+            $process,
             $request->query->get('page', 1),
             20
         );
