@@ -59,6 +59,8 @@ require('tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css')
 
 require('../css/core.scss');
 
+require('./preventCPR/preventCPR');
+
 $(function () {
     $('[data-toggle="tooltip"]').tooltip(
         {
@@ -70,6 +72,7 @@ $(function () {
     $(document).ready(function() {
         $('.select2').select2();
 
+        // Setup datetimepicker defaults.
         $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
             format: 'DD/MM YYYY',
             icons: {
@@ -86,7 +89,6 @@ $(function () {
 
         // Transforms dom to match required by datetimepicker.
         let dateInputs = $('.js-datepicker');
-
         dateInputs.each(function (i, val) {
             let parent = val.closest('.form-group');
             let inputGroup = $('<div class="input-group date" id="datetimepicker' + i +'" data-target-input="nearest"></div>');
@@ -106,5 +108,8 @@ $(function () {
 
             $(parent).find('label').after(inputGroup);
         });
+
+        // Use preventCPR script for all text and textarea elements not marked with class .no-cpr-scanning
+        $('input[type=text]:not(.no-cpr-scanning), textarea:not(.no-cpr-scanning)').preventCPRinText();
     });
 });

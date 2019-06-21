@@ -42,7 +42,7 @@ class ProcessType extends AbstractType
             ->add('clientCPR', null, [
                 'label' => 'process.form.client_cpr',
                 'attr' => [
-                    'class' => 'js-input-cpr',
+                    'class' => 'js-input-cpr no-cpr-scanning',
                 ],
             ])
             ->add('caseWorker', null, [
