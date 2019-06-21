@@ -12,6 +12,10 @@ base_conclusion:
     form:
         update: Gem
 
+base_economy_entry:
+    form:
+        update: Gem
+
 channel:
     edit:
         title: Rediger kanal
@@ -180,6 +184,8 @@ economy:
             service: Ydelse
 
 economy_entry:
+    edit:
+        title: Rediger registrering
     form:
         base:
             amount: Beløb

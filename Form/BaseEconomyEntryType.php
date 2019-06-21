@@ -22,7 +22,9 @@ class BaseEconomyEntryType extends AbstractType
     {
         $builder
             ->add('type', HiddenType::class)
-            ->add('process', HiddenType::class)
+            ->add('process', null, [
+                'attr' => ['class' => 'd-none'],
+            ])
             ->add('text', null, [
                 'label' => 'economy_entry.form.base.text',
                 'help' => 'economy_entry.form.base.text_help',

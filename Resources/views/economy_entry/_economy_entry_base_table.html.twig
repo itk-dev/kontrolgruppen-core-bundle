@@ -11,7 +11,7 @@
             <tbody>
             {% for economyEntry in economyEntries %}
                 <tr>
-                    <td>{{ economyEntry.text }}</td>
+                    <td><a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.text }}</a></td>
                     <td>{{ economyEntry.date|date('d/m Y') }}</td>
                     <td>{{ economyEntry.amount }}</td>
                 </tr>
