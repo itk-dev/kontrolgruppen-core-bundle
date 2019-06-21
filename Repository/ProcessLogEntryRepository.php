@@ -28,7 +28,7 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
         parent::__construct($registry, ProcessLogEntry::class);
     }
 
-    public function getLatestEntries(Process $process, $limit = null, $offset = null)
+    public function getLatestEntries(Process $process)
     {
         $qb = $this->createQueryBuilder('processLogEntry', 'processLogEntry.id');
         $qb
@@ -37,14 +37,6 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
             ->setParameter('process', $process)
             ->innerJoin('processLogEntry.logEntry', 'logEntry')
             ->orderBy('logEntry.loggedAt', 'DESC');
-
-        if (null !== $limit) {
-            $qb->setMaxResults($limit);
-        }
-
-        if (null !== $offset) {
-            $qb->setFirstResult($offset);
-        }
 
         return $qb->getQuery()->getArrayResult();
     }
