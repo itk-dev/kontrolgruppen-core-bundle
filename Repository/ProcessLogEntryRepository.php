@@ -10,7 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\Repository;
 
-use Gedmo\Loggable\Entity\LogEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -39,11 +38,11 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
             ->innerJoin('processLogEntry.logEntry', 'logEntry')
             ->orderBy('logEntry.loggedAt', 'DESC');
 
-        if (!is_null($limit)) {
+        if (null !== $limit) {
             $qb->setMaxResults($limit);
         }
 
-        if (!is_null($offset)) {
+        if (null !== $offset) {
             $qb->setFirstResult($offset);
         }
 

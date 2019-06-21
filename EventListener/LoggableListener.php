@@ -62,23 +62,21 @@ class LoggableListener extends BaseLoggableListener
         $newData = [];
 
         foreach ($data as $key => $value) {
-
             switch ($key) {
-
                 case 'channel':
-                    $newData[$key]['name'] = !is_null($object->getChannel()) ? $object->getChannel()->getName() : null;
+                    $newData[$key]['name'] = null !== $object->getChannel() ? $object->getChannel()->getName() : null;
                     break;
 
                 case 'service':
-                    $newData[$key]['name'] = !is_null($object->getService()) ? $object->getService()->getName() : null;
+                    $newData[$key]['name'] = null !== $object->getService() ? $object->getService()->getName() : null;
                     break;
 
                 case 'processType':
-                    $newData[$key]['name'] = !is_null($object->getProcessType()) ? $object->getProcessType()->getName() : null;
+                    $newData[$key]['name'] = null !== $object->getProcessType() ? $object->getProcessType()->getName() : null;
                     break;
 
                 case 'processStatus':
-                    $newData[$key]['name'] = !is_null($object->getProcessStatus()) ? $object->getProcessStatus()->getName() : null;
+                    $newData[$key]['name'] = null !== $object->getProcessStatus() ? $object->getProcessStatus()->getName() : null;
                     break;
 
                 default:

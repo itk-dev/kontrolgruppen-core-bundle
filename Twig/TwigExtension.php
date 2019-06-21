@@ -13,7 +13,6 @@ namespace Kontrolgruppen\CoreBundle\Twig;
 use Kontrolgruppen\CoreBundle\Service\ConclusionService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class TwigExtension extends AbstractExtension
