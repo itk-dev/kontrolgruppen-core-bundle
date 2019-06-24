@@ -55,8 +55,7 @@ class LoggableListener extends BaseLoggableListener
     {
         $data = $logEntry->getData();
 
-        # If data is iterable it is probably describing a relationship, and we need to
-        # add some data. If it is not iterable there is no need.
+        # If data is iterable it is probably describing a relationship, and we need to add some data. If it is not iterable there is no need.
         if (!is_iterable($data)) {
             return;
         }
