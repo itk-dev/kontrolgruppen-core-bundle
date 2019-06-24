@@ -2,10 +2,6 @@
    title="{{ 'process.actions.journal_quickview'|trans }}">
     <i class="fas {{ iconClass('show') }} fa-inverse"></i>
 </a>
-<a href="{{ path('process_edit', {'id': process.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top"
-   title="{{ 'common.actions.edit'|trans }}">
-    <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
-</a>
 <a href="{{ path('reminder_index', {'process': process.id}) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="top"
    title="{{ 'process.actions.reminders'|trans }}">
     <i class="fas {{ iconClass('reminder') }} fa-inverse"></i></a>

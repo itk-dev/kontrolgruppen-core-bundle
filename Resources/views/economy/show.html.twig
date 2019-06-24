@@ -1,0 +1,66 @@
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+
+{% block title %}{{ 'economy.show.title'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <h1 class="float-left">{{ 'economy.show.title'|trans }}</h1>
+            <button data-toggle="collapse" data-target="#economyEntryNew" aria-expanded="{{ collapse_economy_entry_form }}"
+                    class="btn btn-success btn-lg float-right">{{ 'economy.actions.create'|trans }}</button>
+        </div>
+        <div class="col-12 collapse {{ collapse_economy_entry_form ? '' : 'show' }}" id="economyEntryNew">
+            <div class="bg-light border-bottom p-3 mb-3">
+                {# This consists of two forms #}
+
+                {# This form decides which economy entry type is created #}
+                {{ form_start(economy_entry_form) }}
+                {{ form_widget(economy_entry_form) }}
+                {{ form_end(economy_entry_form) }}
+
+                <div id="js-economy-form-spinner" class="spinner-border spinner-border-sm" style="display: none" role="status">
+                    <span class="sr-only">{{ 'search.loading_results'|trans }}</span>
+                </div>
+
+                {# When an economy entry type has been chosen, this entity form becomes added #}
+                {% if form is defined %}
+                    {% include '@KontrolgruppenCore/economy_entry/_form.html.twig' %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <h2>{{ 'economy.headline.economy_entries_service'|trans }}</h2>
+    {% include '@KontrolgruppenCore/economy_entry/_economy_entry_service_table.html.twig' with {economyEntries: economyEntriesService} %}
+
+    <h2>{{ 'economy.headline.economy_entries_account'|trans }}</h2>
+    {% include '@KontrolgruppenCore/economy_entry/_economy_entry_base_table.html.twig' with {economyEntries: economyEntriesAccount} %}
+
+    <h2>{{ 'economy.headline.economy_entries_arrear'|trans }}</h2>
+    {% include '@KontrolgruppenCore/economy_entry/_economy_entry_base_table.html.twig' with {economyEntries: economyEntriesArrear} %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.js-itkdev-monthpicker').monthpicker($('.js-monthpicker-from'), $('.js-monthpicker-to'), {
+                headline: "{{ 'economy_entry.form.service.monthpicker_headline'|trans }}",
+                applyButtonText: "{{ 'economy_entry.form.service.monthpicker_applybutton_text'|trans }}",
+                cancelButtonText: "{{ 'economy_entry.form.service.monthpicker_cancelbutton_text'|trans }}"
+            });
+
+            $('#economy_entry_type').change(function () {
+                $(this).closest('form').submit();
+                $('#base_economy_entry').hide();
+                $('.service-economy-entry-monthpicker').hide();
+                $('#service_economy_entry').hide();
+                $('#js-economy-form-spinner').show();
+            });
+
+            // Apply datetimepicker to all js-datepicker elements.
+            $('.js-datepicker').datetimepicker();
+        });
+    </script>
+{% endblock %}

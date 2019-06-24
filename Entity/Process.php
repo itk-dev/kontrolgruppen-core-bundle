@@ -86,6 +86,11 @@ class Process extends AbstractEntity
     private $conclusion;
 
     /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\EconomyEntry", mappedBy="process", orphanRemoval=true)
+     */
+    private $economyEntries;
+
+    /**
      * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry", mappedBy="process", cascade={"persist", "remove"})
      */
     private $logEntries;
@@ -94,6 +99,7 @@ class Process extends AbstractEntity
     {
         $this->reminders = new ArrayCollection();
         $this->journalEntries = new ArrayCollection();
+        $this->economyEntries = new ArrayCollection();
         $this->logEntries = new ArrayCollection();
     }
 
@@ -273,6 +279,37 @@ class Process extends AbstractEntity
         $newProcess = null === $conclusion ? null : $this;
         if ($newProcess !== $conclusion->getProcess()) {
             $conclusion->setProcess($newProcess);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EconomyEntry[]
+     */
+    public function getEconomyEntries(): Collection
+    {
+        return $this->economyEntries;
+    }
+
+    public function addEconomyEntry(EconomyEntry $economyEntry): self
+    {
+        if (!$this->economyEntries->contains($economyEntry)) {
+            $this->economyEntries[] = $economyEntry;
+            $economyEntry->setProcess($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEconomyEntry(EconomyEntry $economyEntry): self
+    {
+        if ($this->economyEntries->contains($economyEntry)) {
+            $this->economyEntries->removeElement($economyEntry);
+            // set the owning side to null (unless already changed)
+            if ($economyEntry->getProcess() === $this) {
+                $economyEntry->setProcess(null);
+            }
         }
 
         return $this;

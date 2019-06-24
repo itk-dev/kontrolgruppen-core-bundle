@@ -12,6 +12,10 @@ base_conclusion:
     form:
         update: Gem
 
+base_economy_entry:
+    form:
+        update: Gem
+
 channel:
     edit:
         title: Rediger kanal
@@ -94,6 +98,15 @@ common:
         journal_entry:
             internal_note: Internt notat
             note: Notat
+        economy_entry:
+            service: Ydelse
+            account: Konti
+            arrear: Restance
+        economy_entry_amount_period:
+            pr_month: pr. måned
+            pr_3_month: pr. 3. måned
+            pr_6_month: pr. halvår
+            pr_year: pr. år
     no_records_found: Ingen indgange fundet
     no_sensitive_information_warning: KUN DEMO - Indtast ingen personfølsomme data
     table:
@@ -145,6 +158,62 @@ dashboard:
         label: Kommende påmindelser
     latest_activity:
         title: Seneste aktivitet
+
+economy:
+    actions:
+        create: Opret ny registrering
+    headline:
+        economy_entries_account: Konti
+        economy_entries_arrear: Restance
+        economy_entries_service: Ydelse
+    show:
+        title: Økonomi
+    table:
+        base:
+            amount: Beløb
+            date: Dato
+            text: Tekst
+            type: Type
+        service:
+            amount: Beløb
+            amount_period: Beløbsinterval
+            period: Periode
+            period_from: Fra
+            period_to: Til
+            repayment_amount: Tilbagebetalingskrav
+            service: Ydelse
+
+economy_entry:
+    edit:
+        title: Rediger registrering
+    form:
+        base:
+            amount: Beløb
+            amount_help: Vælg beløb for registrering
+            date: Dato
+            date_help: Vælg en dato for registreringen
+            text: Tekst
+            text_help: Beskriv registreringen
+            type: Type
+            type_help: Vælg registreringstype
+        service:
+            amount: Beløb
+            amount_help: Vælg beløb for registrering
+            amount_period: Beløbsinterval
+            amount_period_help: Vælg hvor ofte beløbet udbetales
+            monthpicker: Periode
+            monthpicker_help: Vælg hvilken periode registreringen gælder for
+            monthpicker_cancelbutton_text: Annullér
+            monthpicker_applybutton_text: Vælg
+            monthpicker_headline: Vælg periode
+            period_from: Fra
+            period_to: Til
+            service: Ydelse
+            service_help: Vælg hvilken ydelse registreringen gælder for
+            repayment_amount: Tilbagebetalingskrav
+            repayment_amount_help: Skriv det samlede tilbagebetalingskrav for registreringen
+        type: Type
+        type_help: Vælg hvilken type registrering du vil oprette
 
 journal_entry:
     actions:
@@ -215,6 +284,7 @@ menu:
         channel: Kanaler
         client: Klient
         conclusion: Konklusion
+        economy: Økonomi
         journal: Journal
         process_number: 'Sag: %processNumber%'
         process_show: Sagsopsummering
@@ -486,6 +556,10 @@ service:
         process_types: Tilkoblede sagstyper
     btns:
         create_new: Opret ny ydelse
+
+service_economy_entry:
+    form:
+        update: Gem
 
 weighted_conclusion:
     form:

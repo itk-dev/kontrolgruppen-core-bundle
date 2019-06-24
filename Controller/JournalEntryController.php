@@ -86,7 +86,10 @@ class JournalEntryController extends BaseController
         $result = $qb->getQuery()->getArrayResult();
 
         // Attach log entries.
-        $result = $logManager->attachLogEntriesToJournalEntries($result);
+        // Only attach log entries if user is granted ROLE_ADMIN.
+        if ($this->isGranted('ROLE_ADMIN', $this->getUser())) {
+            $result = $logManager->attachLogEntriesToJournalEntries($result);
+        }
 
         return $this->render('@KontrolgruppenCore/journal_entry/index.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
@@ -128,7 +131,11 @@ class JournalEntryController extends BaseController
      */
     public function show(Request $request, JournalEntry $journalEntry, Process $process, LogManager $logManager): Response
     {
-        $journalEntry = $logManager->attachLogEntriesToJournalEntry($journalEntry);
+        // Attach log entries.
+        // Only attach log entries if user is granted ROLE_ADMIN.
+        if ($this->isGranted('ROLE_ADMIN', $this->getUser())) {
+            $journalEntry = $logManager->attachLogEntriesToJournalEntry($journalEntry);
+        }
 
         return $this->render('@KontrolgruppenCore/journal_entry/show.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
@@ -154,7 +161,11 @@ class JournalEntryController extends BaseController
             ]);
         }
 
-        $journalEntry = $logManager->attachLogEntriesToJournalEntry($journalEntry);
+        // Attach log entries.
+        // Only attach log entries if user is granted ROLE_ADMIN.
+        if ($this->isGranted('ROLE_ADMIN', $this->getUser())) {
+            $journalEntry = $logManager->attachLogEntriesToJournalEntry($journalEntry);
+        }
 
         return $this->render('@KontrolgruppenCore/journal_entry/edit.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
