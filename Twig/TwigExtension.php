@@ -14,23 +14,28 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Kontrolgruppen\CoreBundle\Service\ConclusionService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class TwigExtension extends AbstractExtension
 {
     private $conclusionService;
     private $translator;
+    private $doctrine;
 
     /**
      * TwigExtension constructor.
      *
      * @param $conclusionService
+     * @param $doctrine
      */
     public function __construct(
         ConclusionService $conclusionService,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        RegistryInterface $doctrine
     ) {
         $this->conclusionService = $conclusionService;
         $this->translator = $translator;
+        $this->doctrine = $doctrine;
     }
 
     public function getFunctions()
@@ -42,6 +47,7 @@ class TwigExtension extends AbstractExtension
                 [$this, 'getConclusionClassTranslation']
             ),
             new TwigFunction('enumTranslation', [$this, 'getEnumTranslation']),
+            new TwigFunction('camelCaseToUnderscore', [$this, 'camelCaseToUnderscore']),
         ];
     }
 
@@ -98,5 +104,12 @@ class TwigExtension extends AbstractExtension
             default:
                 return '';
         }
+    }
+
+    public function camelCaseToUnderscore(string $camelCaseString)
+    {
+        $result = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $camelCaseString));
+
+        return $result;
     }
 }

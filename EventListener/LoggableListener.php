@@ -51,6 +51,45 @@ class LoggableListener extends BaseLoggableListener
         $om->flush();
     }
 
+    protected function prePersistLogEntry($logEntry, $object)
+    {
+        $data = $logEntry->getData();
+
+        // If data is iterable it is probably describing a relationship, and we need to add some data. If it is not iterable there is no need.
+        if (!is_iterable($data)) {
+            return;
+        }
+
+        $newData = [];
+
+        foreach ($data as $key => $value) {
+            switch ($key) {
+                case 'channel':
+                    $newData[$key]['name'] = null !== $object->getChannel() ? $object->getChannel()->getName() : null;
+                    break;
+
+                case 'service':
+                    $newData[$key]['name'] = null !== $object->getService() ? $object->getService()->getName() : null;
+                    break;
+
+                case 'processType':
+                    $newData[$key]['name'] = null !== $object->getProcessType() ? $object->getProcessType()->getName() : null;
+                    break;
+
+                case 'processStatus':
+                    $newData[$key]['name'] = null !== $object->getProcessStatus() ? $object->getProcessStatus()->getName() : null;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        $data = array_merge_recursive($data, $newData);
+
+        $logEntry->setData($data);
+    }
+
     /**
      * {@inheritdoc}
      */
