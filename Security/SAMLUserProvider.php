@@ -46,7 +46,7 @@ class SAMLUserProvider implements UserProviderInterface
         if (isset($attributes['roles'])) {
             $roles[] = $attributes['roles'];
         }
-        $roles = array_unique(array_merge(...$roles));
+        $roles = array_values(array_unique(array_merge(...$roles)));
 
         $user->setRoles($roles);
 
