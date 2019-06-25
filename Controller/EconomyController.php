@@ -13,6 +13,7 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
 use Kontrolgruppen\CoreBundle\Form\ServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +23,7 @@ use Kontrolgruppen\CoreBundle\Form\EconomyEntryType;
 use Kontrolgruppen\CoreBundle\DBAL\Types\EconomyEntryEnumType;
 use Kontrolgruppen\CoreBundle\Entity\BaseEconomyEntry;
 use Kontrolgruppen\CoreBundle\Form\BaseEconomyEntryType;
+use Kontrolgruppen\CoreBundle\Service\EconomyService;
 
 /**
  * Class EconomyController.
@@ -30,6 +32,34 @@ use Kontrolgruppen\CoreBundle\Form\BaseEconomyEntryType;
  */
 class EconomyController extends BaseController
 {
+    /**
+     * @Route("/revenue", name="economy_revenue")
+     */
+    public function revenue(Request $request, Process $process, EconomyService $economyService)
+    {
+        $parameters = [];
+
+        $formBuilder = $this->createFormBuilder();
+        $formBuilder->add('submit', SubmitType::class, [
+            'label' => 'economy.revenue.calculate_button',
+        ]);
+
+        $form = $formBuilder->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $parameters['revenue'] = $economyService->calculateRevenue($process);
+        }
+
+        $parameters['form'] = $form->createView();
+
+        return $this->render(
+            '@KontrolgruppenCore/economy/revenue.html.twig',
+            $parameters
+        );
+    }
+
     /**
      * @Route("/", name="economy_show")
      */

@@ -151,6 +151,15 @@ class MenuService
                     ['process' => $process]
                 ),
                 $this->createMenuItem(
+                    'revenue',
+                    1 === preg_match(
+                        '/^\/process\/[0-9]+\/revenue.*$/',
+                        $path
+                    ),
+                    'economy_revenue',
+                    ['process' => $process]
+                ),
+                $this->createMenuItem(
                     'conclusion',
                     1 === preg_match(
                         '/^\/process\/[0-9]+\/conclusion.*$/',
