@@ -125,16 +125,14 @@ class TwigExtension extends AbstractExtension
         $reflectedClass = new \ReflectionClass($class);
 
         if ($reflectedClass->isSubclassOf(Conclusion::class)) {
-
             return $this->urlGenerator->generate(
                 'conclusion_show',
                 [
                     'id' => $id,
-                    'process' => $processId
+                    'process' => $processId,
                 ]
             );
-        } elseif ($reflectedClass->getName() == Process::class) {
-
+        } elseif (Process::class === $reflectedClass->getName()) {
             return $this->urlGenerator->generate(
                 'process_show',
                 [
@@ -143,13 +141,13 @@ class TwigExtension extends AbstractExtension
             );
         }
 
-        $route = $this->camelCaseToUnderscore($reflectedClass->getShortName()) . '_show';
+        $route = $this->camelCaseToUnderscore($reflectedClass->getShortName()).'_show';
 
         return $this->urlGenerator->generate(
             $route,
             [
                 'id' => $id,
-                'process' => $processId
+                'process' => $processId,
             ]
         );
     }

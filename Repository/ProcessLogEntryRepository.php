@@ -46,8 +46,7 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
         $level = ProcessLogEntryLevelEnumType::NOTICE,
         $limit = 5,
         Process $process = null
-    )
-    {
+    ) {
         $qb = $this->createQueryBuilder('processLogEntry', 'processLogEntry.id');
         $qb
             ->select(['processLogEntry', 'logEntry', 'process'])
