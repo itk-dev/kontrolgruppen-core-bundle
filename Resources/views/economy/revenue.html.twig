@@ -7,12 +7,16 @@
     {{ form_widget(form) }}
     {{ form_end(form) }}
 
-    {{ dump() }}
-
     {% if revenue is defined %}
-        {% for repaymentEntry in revenue.repaymentEntries %}
-            {{ repaymentEntry.id }}
-        {% endfor %}
+        {% include '@KontrolgruppenCore/economy/_revenue_table.html.twig' with {economyEntries: revenue.repayment.entries } %}
+
+        <div>
+            {{ revenue.repayment.sum }}
+        </div>
+
+        <div>
+            {{ revenue.repayment.netto }}
+        </div>
     {% endif %}
 {% endblock %}
 

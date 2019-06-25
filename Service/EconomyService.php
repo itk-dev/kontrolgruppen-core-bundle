@@ -41,14 +41,20 @@ class EconomyService
             'type' => EconomyEntryEnumType::SERVICE,
         ]);
 
-        $result['repaymentEntries'] = array_reduce($serviceEconomyEntries, function ($carry, $entry) {
+        $result['repayment'] = array_reduce($serviceEconomyEntries, function ($carry, $entry) {
             if ($entry->getRepaymentAmount() != null) {
-                $carry[] = $entry;
+                $carry['entries'][] = $entry;
+                $carry['sum'] = $carry['sum'] + $entry->getRepaymentAmount();
+                // @TODO: Configurable.
+                $carry['netto'] = $carry['netto'] + ($entry->getRepaymentAmount() * .7);
             }
 
             return $carry;
-        }, []);
-
+        }, [
+            'entries' => [],
+            'sum' => 0.0,
+            'netto' => 0.0,
+        ]);
 
         return $result;
     }
