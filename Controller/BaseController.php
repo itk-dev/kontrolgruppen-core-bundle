@@ -10,6 +10,8 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
+use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Entity\QuickLink;
 use Kontrolgruppen\CoreBundle\Entity\Reminder;
 use Kontrolgruppen\CoreBundle\Service\MenuService;
@@ -69,12 +71,20 @@ class BaseController extends AbstractController
         // Add global navigation.
         $parameters['globalMenuItems'] = $this->menuService->getGlobalNavMenu($path);
 
-        // If this is a route beneath the proces/{id}/, attach changeProcessStatusForm.
+        // If this is a route beneath the proces/{id}/, attach changeProcessStatusForm and recent activity
         if (1 === preg_match('/^\/process\/[0-9]+/', $path) && isset($parameters['process'])) {
             $changeProcessStatusForm = $this->createChangeProcessStatusForm($parameters['process']);
             $this->handleChangeProcessStatusForm($request, $changeProcessStatusForm);
 
             $parameters['changeProcessStatusForm'] = $changeProcessStatusForm->createView();
+
+            $parameters['recentActivity'] = $this->getDoctrine()->getRepository(
+                ProcessLogEntry::class
+            )->getLatestEntriesByLevel(
+                ProcessLogEntryLevelEnumType::NOTICE,
+                10,
+                $parameters['process']
+            );
         }
 
         return parent::render($view, $parameters, $response);
