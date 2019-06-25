@@ -11,6 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Knp\Component\Pager\PaginatorInterface;
+use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -39,6 +40,34 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
             $page,
             $limit
         );
+    }
+
+    public function getLatestEntriesByLevel(
+        $level = ProcessLogEntryLevelEnumType::NOTICE,
+        $limit = 5,
+        Process $process = null
+    )
+    {
+        $qb = $this->createQueryBuilder('processLogEntry', 'processLogEntry.id');
+        $qb
+            ->select(['processLogEntry', 'logEntry', 'process'])
+            ->where('processLogEntry.level = :level')
+            ->setParameter('level', $level)
+            ->innerJoin('processLogEntry.logEntry', 'logEntry')
+            ->innerJoin('processLogEntry.process', 'process')
+            ->orderBy('logEntry.loggedAt', 'DESC');
+
+        if ($process) {
+            $qb
+                ->andWhere('processLogEntry.process = :process')
+                ->setParameter('process', $process);
+        }
+
+        $qb->setMaxResults($limit);
+
+        $query = $qb->getQuery();
+
+        return $query->getArrayResult();
     }
 
     protected function getLatestEntriesQuery(Process $process)
