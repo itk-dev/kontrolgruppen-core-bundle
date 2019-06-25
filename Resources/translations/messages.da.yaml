@@ -356,6 +356,58 @@ process:
     btns:
         create_new: Opret ny sag
         create_report: Sagsrapport
+    revision:
+        headline: Ændringslog
+        action_type:
+            create: oprettet
+            read: vist
+            remove: slettet
+            update: ændret
+        table:
+            action: Hændelse
+            action_view: Vis detaljer
+            actions: Handlinger
+            date: Dato
+            change_key: Felt
+            change: Ændring
+            user: Bruger
+            object_types:
+                journal_entry: Journal
+                process: Sag
+                base_conclusion: Konklusion
+                weighted_conclusion: Konklusion
+                reminder: Påmindelse
+                client: Klient
+            log_entry:
+                type: Type
+                process:
+                    case_number: Sagsnummer
+                    client_cpr: Klient CPR
+                    channel: Kanal
+                    service: Ydelse
+                    process_type: Type
+                    process_status: Status
+                client:
+                    first_name: Fornavn
+                    last_name: Efternavn
+                    address: Adresse
+                    postal_code: Postnummer
+                    city: By
+                    telephone: Telefon
+                    number_of_children: Antal børn
+                    car_registration_number: Bil registeringsnummer
+                journal_entry:
+                    title: Titel
+                    body: Tekst
+                    type: Type
+                base_conclusion:
+                    conclusion: Konklusion
+                weighted_conclusion:
+                    arguments_for: Argumenter for
+                    arguments_against: Argumenter imod
+                    conclusion: Konklusion
+                reminder:
+                    message: Besked
 
 process_status:
     edit:
