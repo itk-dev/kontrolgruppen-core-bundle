@@ -47,6 +47,12 @@ class Process extends AbstractEntity
     private $channel;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Reason", inversedBy="processes")
+     * @Gedmo\Versioned()
+     */
+    private $reason;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="processes")
      * @Gedmo\Versioned()
      */
@@ -147,6 +153,18 @@ class Process extends AbstractEntity
     public function setChannel(?Channel $channel): self
     {
         $this->channel = $channel;
+
+        return $this;
+    }
+
+    public function getReason(): ?Reason
+    {
+        return $this->reason;
+    }
+
+    public function setReason(?Reason $reason): self
+    {
+        $this->reason = $reason;
 
         return $this;
     }
