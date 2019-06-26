@@ -1,0 +1,11 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'reason.new.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'reason.new.title'|trans }}</h1>
+
+    {{ include('@KontrolgruppenCore/reason/_form.html.twig') }}
+
+    <a href="{{ path('reason_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+{% endblock %}
