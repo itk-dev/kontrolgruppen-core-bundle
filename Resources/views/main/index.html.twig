@@ -112,7 +112,7 @@
                                             <a class="nav-link{{ menuItem.active ? ' active' : '' }}{{ menuItem.disabled ? ' disabled' : '' }}"
                                                href="{{ menuItem.path }}" {{ menuItem.disabled ? 'tabindex="-1" aria-disabled="true"' : '' }}>
                                                 {{ menuItem.name }}
-                                                {% if process is defined %}
+                                                {% if process is defined and menuItem.name == 'reminder.index.title'|trans %}
                                                     <span class="badge badge-secondary">{{ process.reminders|length }}</span>
                                                 {% endif %}
                                             </a>
