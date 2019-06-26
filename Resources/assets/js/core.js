@@ -23,6 +23,7 @@ import { faClock } from '@fortawesome/free-solid-svg-icons/faClock';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons/faUserPlus';
 import { faArchive } from '@fortawesome/free-solid-svg-icons/faArchive';
 import { faEye } from '@fortawesome/free-solid-svg-icons/faEye';
+import { faEyeSlash } from '@fortawesome/free-solid-svg-icons/faEyeSlash';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt';
 import { faHouseDamage } from '@fortawesome/free-solid-svg-icons/faHouseDamage';
 import { faFileDownload } from '@fortawesome/free-solid-svg-icons/faFileDownload';
@@ -46,7 +47,7 @@ library.add(
     faUserPlus, faArchive, faEye, faPencilAlt, faHouseDamage, faFileDownload,
     faPrint, faCheck, faLayerGroup, faSort, faSortUp, faSortDown, faCalendar,
     faArrowUp, faArrowDown, faChevronRight, faChevronLeft, faCalendarCheck,
-    faTrash, faTimes
+    faTrash, faTimes, faEyeSlash
 );
 dom.watch();
 

@@ -85,6 +85,8 @@ class TwigExtension extends AbstractExtension
                 return 'fa-archive';
             case 'show':
                 return 'fa-eye';
+            case 'hide':
+                return 'fa-eye-slash';
             case 'edit':
                 return 'fa-pencil-alt';
             case 'report':
