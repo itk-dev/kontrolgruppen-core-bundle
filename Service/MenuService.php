@@ -192,6 +192,14 @@ class MenuService
                 'process_status_index'
             ),
             $this->createMenuItem(
+                'reason',
+                1 === preg_match(
+                    '/^\/admin\/reason\/.*$/',
+                    $path
+                ),
+                'reason_index'
+            ),
+            $this->createMenuItem(
                 'channel',
                 1 === preg_match(
                     '/^\/admin\/channel\/.*$/',

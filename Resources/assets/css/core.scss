@@ -113,3 +113,21 @@ table th a.asc,
 table th a.desc {
     text-decoration: underline;
 }
+
+/* Toggle btn text and icon with collapse */
+.btn-collapse[aria-expanded="true"] {
+    .btn-collapse-show{
+        display: none;
+    }
+    .btn-collapse-hide{
+        display: inline;
+    }
+}
+.btn-collapse[aria-expanded="false"] {
+    .btn-collapse-show{
+        display: inline;
+    }
+    .btn-collapse-hide{
+        display: none;
+    }
+}
