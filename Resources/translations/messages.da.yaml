@@ -240,7 +240,7 @@ journal_entry:
             body: Tekst
             title: Overskrift
             type: Type
-        headline: Ændringslog
+        headline: Hændelseslog
         table:
             action: Hændelse
             date: Dato
@@ -366,6 +366,7 @@ process:
         table:
             action: Hændelse
             action_view: Vis detaljer
+            action_hide: Skjul detaljer
             actions: Handlinger
             date: Dato
             change_key: Felt
