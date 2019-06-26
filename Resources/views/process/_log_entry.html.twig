@@ -1,20 +1,11 @@
-<table class="table table-dark table-sm">
-    <thead>
-        <th>{{ 'process.revision.table.log_entry.type'|trans }}</th>
-        {% for changeKey, change in log.logEntry.data %}
-        <th>
-            {{ ('process.revision.table.log_entry.' ~ camelCaseToUnderscore((log.logEntry.objectClass|split('\\')|last)) ~ '.' ~ camelCaseToUnderscore(changeKey))|trans }}
-        </th>
-        {% endfor %}
-    </thead>
-    <tbody>
-        <td>{{ ('process.revision.table.object_types.' ~ camelCaseToUnderscore((log.logEntry.objectClass|split('\\')|last)))|trans }}</td>
-        {% for changeKey, change in log.logEntry.data %}
+<ul class="list-group">
+    {% for changeKey, change in log.logEntry.data %}
+        <li class="list-group-item">
             {% if change is iterable %}
-                <td>{{ change.name }}</td>
+                {{ ('process.revision.table.log_entry.' ~ camelCaseToUnderscore((log.logEntry.objectClass|split('\\')|last)) ~ '.' ~ camelCaseToUnderscore(changeKey))|trans }}: {{ change.name }}
             {% else %}
-                <td>{{ change }}</td>
+                {{ ('process.revision.table.log_entry.' ~ camelCaseToUnderscore((log.logEntry.objectClass|split('\\')|last)) ~ '.' ~ camelCaseToUnderscore(changeKey))|trans }}: {{ change }}
             {% endif %}
-        {% endfor %}
-    </tbody>
-</table>
+        </li>
+    {% endfor %}
+</ul>
