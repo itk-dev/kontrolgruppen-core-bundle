@@ -14,17 +14,19 @@
             </thead>
             <tbody>
             {% for reminder in reminders|slice(0, max_iterations) %}
-                <tr class="{% if not reminder.finished and reminder.date|date('Y-m-d') < "now"|date('Y-m-d') %}bg-warning border-bottom border-warning-light{% endif %}">
+                <tr class="{% if not reminder.finished and reminder.date|date('Y-m-d') < "now"|date('Y-m-d') %}bg-warning-light border-bottom border-warning-light{% endif %}">
                     <td><a href="{{ path('process_show', {id: reminder.process.id}) }}">{{ reminder.process.caseNumber }}</a></td>
                     <td>{{ reminder.process.processType }}</td>
                     <td>{{ reminder.message }}</td>
                     <td>{{ reminder.date ? reminder.date|date('Y-m-d H:i:s') : '' }}</td>
                     <td>{{ (reminder.finished ? 'common.boolean.true' : 'common.boolean.false')|trans }}</td>
                     <td class="text-right">
-                        <a href="{{ path('reminder_show', {'id': reminder.id, 'process': reminder.process.id}) }}" class="btn btn-sm btn-dark"
-                           data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
-                            <i class="fas {{ iconClass('show') }} fa-inverse"></i>
-                        </a>
+                        {% if not reminder.finished %}
+                            <a href="{{ path('reminder_finish', {'id': reminder.id, 'process': reminder.process.id}) }}" class="btn btn-sm btn-warning"
+                                data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.finish'|trans }}">
+                                    <i class="fas {{ iconClass('complete') }} fa-inverse"></i>
+                            </a>
+                        {% endif %}
                         <a href="{{ path('reminder_edit', {'id': reminder.id, 'process': reminder.process.id}) }}" class="btn btn-sm btn-primary"
                            data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
                             <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
