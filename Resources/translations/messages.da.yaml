@@ -466,6 +466,7 @@ process_type:
         conclusion_class: Konklusionstype
         hide_in_dashboard: Skjul på dashboard
         name: Navn
+        net_default_value: Netto standardværdi
         process_statuses: Tilkoblede sagsstatusser
         services: Tilkoblede ydelser
         update: Gem
@@ -481,6 +482,7 @@ process_type:
         hide_in_dashboard: Skjul på dashboard
         id: ID
         name: Navn
+        net_default_value: Netto standardværdi
         process_statuses: Tilkoblede sagsstatusser
         services: Tilkoblede ydelser
     btns:
