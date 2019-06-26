@@ -41,13 +41,7 @@ class SAMLUserProvider implements UserProviderInterface
         $response = new Response(new Settings($this->saml->getSettings()), $credentials['SAMLResponse']);
         $attributes = $response->getAttributes();
 
-        // @TODO: Use a mapping for this
-        $roles = [['ROLE_USER']];
-        if (isset($attributes['roles'])) {
-            $roles[] = $attributes['roles'];
-        }
-        $roles = array_values(array_unique(array_merge(...$roles)));
-
+        $roles = $this->saml->getRoles($attributes);
         $user->setRoles($roles);
 
         $this->userManager->updateUser($user);
