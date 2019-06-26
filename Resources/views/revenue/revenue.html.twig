@@ -49,7 +49,7 @@
                         <td><strong>{{ revenue.futureSavingsSum }}</strong></td>
                     </tr>
                     <tr>
-                        <td><i>{{ 'revenue.table.repayment.net_sum_title'|trans }}</i></td>
+                        <td><i>{{ 'revenue.table.future_savings.net_sum_title'|trans }}</i></td>
                         <td><i>{{ revenue.netFutureSavingsSum }}</i></td>
                     </tr>
                     {% for key,futureSavingsSum in revenue.futureSavingsSums %}
@@ -60,7 +60,7 @@
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="7">{{ 'revenue.table.repayment.no_records_found'|trans }}</td>
+                        <td colspan="7">{{ 'revenue.table.future_savings.no_records_found'|trans }}</td>
                     </tr>
                 {% endif %}
 
