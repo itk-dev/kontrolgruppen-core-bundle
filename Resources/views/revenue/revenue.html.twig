@@ -1,0 +1,85 @@
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+
+{% block title %}{{ 'revenue.title'|trans }}{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    {% if revenue is defined %}
+        {# @TODO: Styling #}
+
+        <i>{{ 'revenue.subtitle'|trans }}</i>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-borderless thead-light">
+                <tbody>
+                {% if revenue.repaymentSums|length > 0 %}
+                    <tr>
+                        <td><strong>{{ 'revenue.table.repayment.sum_title'|trans }}</strong></td>
+                        <td><strong>{{ revenue.repaymentSum }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td><i>{{ 'revenue.table.repayment.net_sum_title'|trans }}</i></td>
+                        <td><i>{{ revenue.netRepaymentSum }}</i></td>
+                    </tr>
+                    {% for key,repaymentSum in revenue.repaymentSums %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td>{{ repaymentSum }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7">{{ 'revenue.table.repayment.no_records_found'|trans }}</td>
+                    </tr>
+                {% endif %}
+
+                <tr>
+                    <td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td></td>
+                </tr>
+
+                {% if revenue.futureSavingsSums|length > 0 %}
+                    <tr>
+                        <td><strong>{{ 'revenue.table.future_savings.sum_title'|trans }}</strong></td>
+                        <td><strong>{{ revenue.futureSavingsSum }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td><i>{{ 'revenue.table.repayment.net_sum_title'|trans }}</i></td>
+                        <td><i>{{ revenue.netFutureSavingsSum }}</i></td>
+                    </tr>
+                    {% for key,futureSavingsSum in revenue.futureSavingsSums %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td>{{ futureSavingsSum }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7">{{ 'revenue.table.repayment.no_records_found'|trans }}</td>
+                    </tr>
+                {% endif %}
+
+                <tr>
+                    <td></td><td></td>
+                </tr>
+                <tr>
+                    <td></td><td></td>
+                </tr>
+
+                <tr>
+                    <td><strong>{{ 'revenue.table.collective_net_sum.title'|trans }}</strong></td>
+                    <td><strong>{{ revenue.collectiveNetSum }}</strong></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

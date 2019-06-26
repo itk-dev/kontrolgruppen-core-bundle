@@ -312,6 +312,7 @@ menu:
         process_type: Sagstyper
         quick_link: Genveje
         reminder: Påmindelser
+        revenue: Provenue
         service: Ydelser
 
 navigation:
@@ -538,6 +539,20 @@ reminder:
         create: Opret ny påmindelse
     show:
         title: Påmindelse
+
+revenue:
+    calculate_button: Vis provenue
+    subtitle: Tilbagebetalingskrav overfor klient
+    table:
+        repayment:
+            net_sum_title: Netto samlet tilbagebetalingskrav i kr (KL).
+            sum_title: Samlet tilbagebetalingskrav i kr.
+        future_savings:
+            net_sum_title: Netto fremadrettet besparelse i kr (KL).
+            sum_title: Samlet fremadrettet besparelse i kr.
+        collective_net_sum:
+            title: Samlet nettoopgørelse (KL)
+    title: Provenue
 
 search:
     headline: Søgning

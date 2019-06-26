@@ -62,6 +62,9 @@ class ProcessTypeType extends AbstractType
                 'choices' => $choices,
                 'label' => 'process_type.form.conclusion_class',
             ])
+            ->add('netDefaultValue', null, [
+                'label' => 'process_type.form.net_default_value',
+            ])
         ;
     }
 
