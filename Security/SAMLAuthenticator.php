@@ -148,11 +148,14 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         return $this->settings;
     }
 
-    public function getRoles(array $attributes)
+    public function getRoles($samlResponse)
     {
         $roles = [];
 
         $settings = $this->getSettings();
+        $response = new Response(new Settings($settings), $samlResponse);
+        $attributes = $response->getAttributes();
+
         if (isset($settings['user_roles'])) {
             $userRoles = $settings['user_roles'];
             $attribute = $userRoles['attribute'] ?? 'http://schemas.xmlsoap.org/claims/Group';

@@ -10,8 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\Security;
 
-use OneLogin\Saml2\Response;
-use OneLogin\Saml2\Settings;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -38,10 +36,7 @@ class SAMLUserProvider implements UserProviderInterface
             $user->setUsername($username);
         }
 
-        $response = new Response(new Settings($this->saml->getSettings()), $credentials['SAMLResponse']);
-        $attributes = $response->getAttributes();
-
-        $roles = $this->saml->getRoles($attributes);
+        $roles = $this->saml->getRoles($credentials['SAMLResponse']);
         $user->setRoles($roles);
 
         $this->userManager->updateUser($user);
