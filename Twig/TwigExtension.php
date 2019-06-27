@@ -80,7 +80,9 @@ class TwigExtension extends AbstractExtension
      */
     public function getFormatPercent($number, $includeUnit = true)
     {
+        // Max precision 2 decimals
         $number = number_format($number * 100.0, 2, ',', '.');
+        // Remove trailing zeros after the comma and the comma if there are only zeroes after the comma.
         $number = preg_replace("/\,?0+$/", "", $number);
         return $number.($includeUnit ? ' %' : '');
     }

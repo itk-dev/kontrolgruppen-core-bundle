@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder->getRootNode()
             ->children()
-                ->floatNode('net_default_value')->defaultValue('.7')->end()
+                ->floatNode('net_default_value')->defaultValue(.7)->end()
             ->end()
         ;
 
