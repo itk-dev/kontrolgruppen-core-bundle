@@ -56,8 +56,6 @@ class ProcessType extends AbstractTaxonomy
         $this->processes = new ArrayCollection();
         $this->processStatuses = new ArrayCollection();
         $this->services = new ArrayCollection();
-
-        $this->netDefaultValue = .7;
     }
 
     /**

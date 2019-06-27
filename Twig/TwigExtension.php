@@ -13,6 +13,7 @@ namespace Kontrolgruppen\CoreBundle\Twig;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Kontrolgruppen\CoreBundle\Service\ConclusionService;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -38,6 +39,14 @@ class TwigExtension extends AbstractExtension
         $this->doctrine = $doctrine;
     }
 
+    public function getFilters()
+    {
+        return [
+            new TwigFilter('format_percent', [$this, 'getFormatPercent']),
+            new TwigFilter('format_amount', [$this, 'getFormatAmount']),
+        ];
+    }
+
     public function getFunctions()
     {
         return [
@@ -51,6 +60,31 @@ class TwigExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * Formats a float value as an amount (money).
+     *
+     * @param $number
+     * @return string
+     */
+    public function getFormatAmount($number)
+    {
+        return number_format($number, 2, ',', '.');
+    }
+
+    /**
+     * Formats a float value as a percent string value, with an optional unit in the end.
+     *
+     * @param $number
+     * @param bool $includeUnit
+     * @return string
+     */
+    public function getFormatPercent($number, $includeUnit = true)
+    {
+        $number = number_format($number * 100.0, 2, ',', '.');
+        $number = preg_replace("/\,?0+$/", "", $number);
+        return $number.($includeUnit ? ' %' : '');
+    }
+
     public function getEnumTranslation(string $value, $enum)
     {
         $className = 'Kontrolgruppen\\CoreBundle\\DBAL\\Types\\'.$enum;
@@ -60,7 +94,6 @@ class TwigExtension extends AbstractExtension
 
     public function getConclusionClassTranslation(string $className)
     {
-        // @TODO: Replace with event.
         return $this->conclusionService->getTranslation($className);
     }
 

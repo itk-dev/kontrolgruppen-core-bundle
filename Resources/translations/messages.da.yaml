@@ -312,7 +312,7 @@ menu:
         process_type: Sagstyper
         quick_link: Genveje
         reminder: Påmindelser
-        revenue: Provenue
+        revenue: Provenu
         service: Ydelser
 
 navigation:
@@ -543,7 +543,8 @@ reminder:
         title: Påmindelse
 
 revenue:
-    calculate_button: Vis provenue
+    calculate_button: Vis provenu
+    net_multiplier: Nettoprocent
     subtitle: Tilbagebetalingskrav overfor klient
     table:
         repayment:
@@ -556,7 +557,7 @@ revenue:
             no_records_found: Ingen fremadrettet besparelse
         collective_net_sum:
             title: Samlet nettoopgørelse (KL)
-    title: Provenue
+    title: Provenu
 
 search:
     headline: Søgning

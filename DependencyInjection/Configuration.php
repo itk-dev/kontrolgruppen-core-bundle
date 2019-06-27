@@ -20,8 +20,13 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('kontrolgruppen_core');
+        $treeBuilder = new TreeBuilder('kontrolgruppen_core');
+
+        $treeBuilder->getRootNode()
+            ->children()
+                ->floatNode('net_default_value')->defaultValue('.7')->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

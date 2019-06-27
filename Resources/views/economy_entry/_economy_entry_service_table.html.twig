@@ -15,9 +15,9 @@
                 <tr>
                     <td><a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.service }}</a></td>
                     <td>{{ economyEntry.periodFrom|date("M. Y") }} - {{ economyEntry.periodTo|date("M. Y") }}</td>
-                    <td>{{ economyEntry.amount }}</td>
+                    <td>{{ economyEntry.amount|format_amount }}</td>
                     <td>{{ enumTranslation(economyEntry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>
-                    <td>{{ economyEntry.repaymentAmount }}</td>
+                    <td>{{ economyEntry.repaymentAmount|format_amount }}</td>
                 </tr>
             {% else %}
                 <tr>

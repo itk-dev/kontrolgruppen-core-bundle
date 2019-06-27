@@ -39,18 +39,18 @@ class EconomyService
      */
     public function calculateRevenue(Process $process)
     {
-        $netMultiplyValue = $process->getProcessType()->getNetDefaultValue();
+        $netMultiplier = $process->getProcessType()->getNetDefaultValue();
 
         $serviceEconomyEntries = $this->economyEntryRepository->findBy([
             'process' => $process,
             'type' => EconomyEntryEnumType::SERVICE,
         ]);
 
-        $result = array_reduce($serviceEconomyEntries, function ($carry, ServiceEconomyEntry $entry) use ($netMultiplyValue) {
+        $result = array_reduce($serviceEconomyEntries, function ($carry, ServiceEconomyEntry $entry) use ($netMultiplier) {
             if (null !== $entry->getRepaymentAmount()) {
                 $carry['entries'][] = $entry;
                 $carry['repaymentSum'] = $carry['repaymentSum'] + $entry->getRepaymentAmount();
-                $carry['netRepaymentSum'] = $carry['netRepaymentSum'] + ($entry->getRepaymentAmount() * $netMultiplyValue);
+                $carry['netRepaymentSum'] = $carry['netRepaymentSum'] + ($entry->getRepaymentAmount() * $netMultiplier);
 
                 if (!isset($carry['repaymentSums'][$entry->getService()->getName()])) {
                     $carry['repaymentSums'][$entry->getService()->getName()] = 0;
@@ -66,7 +66,7 @@ class EconomyService
                     $carry['futureSavingsSums'][$entry->getService()->getName()] = 0;
                 }
                 $carry['futureSavingsSums'][$entry->getService()->getName()] = $carry['futureSavingsSums'][$entry->getService()->getName()] + $futureSavings;
-                $carry['netFutureSavingsSum'] = $carry['netFutureSavingsSum'] + $futureSavings * $netMultiplyValue;
+                $carry['netFutureSavingsSum'] = $carry['netFutureSavingsSum'] + $futureSavings * $netMultiplier;
             }
 
             return $carry;
@@ -89,6 +89,7 @@ class EconomyService
         ]);
 
         $result['collectiveNetSum'] = $result['netRepaymentSum'] + $result['netFutureSavingsSum'];
+        $result['netMultiplier'] = $netMultiplier;
 
         return $result;
     }
