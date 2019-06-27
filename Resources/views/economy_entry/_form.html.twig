@@ -1,14 +1,34 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-
+{{ form_start(form, {'attr': {'class': 'form-row'}}) }}
     {% if form.vars.id == 'service_economy_entry' %}
-        <div class="form-group service-economy-entry-monthpicker">
+        <div class="col-3">
+            {{ form_row(form.service) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.amountPeriod) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.amount) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.repaymentAmount) }}
+        </div>
+        <div class="form-group service-economy-entry-monthpicker col-12">
             <label for="service_economy_entry_monthpicker" class="required">{{ 'economy_entry.form.service.monthpicker'|trans }}</label>
             <div class="form-control js-itkdev-monthpicker" id="service_economy_entry_monthpicker"></div>
             <small id="service_economy_entry_monthpicker_help" class="form-text text-muted">{{ 'economy_entry.form.service.monthpicker_help'|trans }}</small>
         </div>
+    {% else %}
+        <div class="col-4">
+            {{ form_row(form.text) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.date) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.amount) }}
+        </div>
     {% endif %}
-    <div class="form-group text-right">
+    <div class="form-group col-12 text-right">
         <button class="btn btn-success pl-5 pr-5">
             {{ (button_label is defined ? (form.vars.full_name ~ '.form.' ~ button_label|lower) : 'common.actions.save')|trans }}
         </button>
