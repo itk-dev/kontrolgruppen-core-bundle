@@ -1,0 +1,72 @@
+<div class="mb-3 p-3">
+    {% for entry in entries %}
+        <div class="mb-2">
+            {# Duck typing to figure out if it is a journal entry or a log entry #}
+            {% if entry.logEntry is defined %}
+            <div class="row bg-light">
+                <div class="col">
+                    <div class="row p-1">
+                        <strong class="mr-4">{{ 'journal_entry.process_status_changed'|trans }}</strong>
+                        <span class="mr-4">{{ entry.createdAt|localizeddate('short') }}</span>
+                        <span>{{ entry.createdBy }}</span>
+                    </div>
+                    <div class="row p-1">
+                        {{ 'journal_entry.new_process_status'|trans }}: {{ entry.logEntry.data.processStatus.name }}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="row bg-light">
+                <div class="col-2 pt-2">
+                    <span class="text-muted d-block">{{ entry.createdAt|date('d/m Y') }}</span>
+                </div>
+                <div class="col-8 pt-2">
+                    <p class="mb-0"><strong><a
+                                href="{{ path('journal_entry_show', {'id': entry.id, 'process': process.id}) }}">{{ entry.title }}</a></strong>
+                    </p>
+                </div>
+                <div class="col-2 pt-2 text-right">
+                    {% if entry.logs is defined and entry.logs|length > 1 %}
+                        <button class="btn btn-sm btn-secondary mb-1 js-revision-toggle" data-toggle="button"
+                                data-journal-id="{{ entry.id }}" data-toggle="tooltip"
+                                title="{{ 'journal_entry.revision.actions.revisions'|trans }}">
+                            <i class="fas {{ iconClass('layer-group') }} fa-inverse fa-fw"></i>{{ entry.logs|length - 1 }}
+                        </button>
+                    {% endif %}
+                    <a href="{{ path('journal_entry_show', {'id': entry.id, 'process': process.id}) }}" class="btn btn-sm btn-dark mb-1"
+                       data-toggle="tooltip"
+                       data-placement="top" title="{{ 'common.actions.show'|trans }}">
+                        <i class="fas {{ iconClass('show') }} fa-inverse fa-fw"></i>
+                    </a>
+                    <a href="{{ path('journal_entry_edit', {'id': entry.id, 'process': process.id}) }}" class="btn btn-sm btn-primary mb-1"
+                       data-toggle="tooltip"
+                       data-placement="top" title="{{ 'common.actions.edit'|trans }}">
+                        <i class="fas {{ iconClass('edit') }} fa-inverse fa-fw"></i></a>
+                    </a>
+                </div>
+                <div class="col-2 pb-2">
+                    <span class="text-muted d-block">{{ entry.createdBy }}</span>
+                    {% if entry.type == 'NOTE' %}
+                        <span class="badge badge-info">{{ 'common.enum.journal_entry.note'|trans }}</span>
+                    {% elseif entry.type == 'INTERNAL_NOTE' %}
+                        <span class="badge badge-warning">{{ 'common.enum.journal_entry.internal_note'|trans }}</span>
+                    {% endif %}
+                </div>
+                <div class="col-10 pb-2">
+                    {{ entry.body|raw }}
+                </div>
+            </div>
+            {% if entry.logs is defined and entry.logs|length > 1 %}
+                <div class="row bg-light">
+                    <div class="col mt-2">
+                        {% include '@KontrolgruppenCore/journal_entry/_log_entries.html.twig' with {show: false} %}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% endif %}
+        </div>
+    {% else %}
+        {{ 'common.no_records_found'|trans }}
+    {% endfor %}
+</div>

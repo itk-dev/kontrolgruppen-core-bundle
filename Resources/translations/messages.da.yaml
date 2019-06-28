@@ -248,6 +248,8 @@ journal_entry:
         title: Journal
     new:
         title: Opret nyt journalindlæg
+    new_process_status: Ny status
+    process_status_changed: Sagsstatus ændret
     revision:
         action: Hændelse
         actions:
