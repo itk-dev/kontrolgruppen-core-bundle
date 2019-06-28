@@ -33,8 +33,10 @@ class LogManager
     public function attachProcessStatusChangesToJournalEntries($result, $process, $sortDirection)
     {
         // Merged log entries into result.
-        $processLogEntries = $this->processLogEntryRepository->getLatestLogEntries($process,
-            ProcessLogEntryLevelEnumType::NOTICE)->getArrayResult();
+        $processLogEntries = $this->processLogEntryRepository->getLatestLogEntries(
+            $process,
+            ProcessLogEntryLevelEnumType::NOTICE
+        )->getArrayResult();
 
         foreach ($processLogEntries as $logEntry) {
             if (isset($logEntry['logEntry']['data']['processStatus'])) {
@@ -45,10 +47,10 @@ class LogManager
         // Sort the results.
         usort($result, function ($a, $b) use ($sortDirection) {
             if ($a['updatedAt'] > $b['updatedAt']) {
-                return $sortDirection === 'desc' ? -1 : 1;
+                return 'desc' === $sortDirection ? -1 : 1;
             } else {
                 if ($a['updatedAt'] < $b['updatedAt']) {
-                    return $sortDirection !== 'desc' ? -1 : 1;
+                    return 'desc' !== $sortDirection ? -1 : 1;
                 }
             }
 

@@ -10,7 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
-use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Filter\JournalFilterType;
 use Kontrolgruppen\CoreBundle\Form\JournalEntryType;
@@ -36,10 +35,12 @@ class JournalEntryController extends BaseController
         Process $process,
         JournalEntryRepository $journalEntryRepository
     ) {
-        return $this->render('@KontrolgruppenCore/journal_entry/_journal_entry_latest_list.html.twig',
+        return $this->render(
+            '@KontrolgruppenCore/journal_entry/_journal_entry_latest_list.html.twig',
             [
                 'journalEntries' => $journalEntryRepository->findBy(['process' => $process]),
-            ]);
+            ]
+        );
     }
 
     /**
@@ -56,8 +57,10 @@ class JournalEntryController extends BaseController
     ): Response {
         $journalEntry = new JournalEntry();
         $journalEntry->setProcess($process);
-        $journalEntryForm = $this->createForm(JournalEntryType::class,
-            $journalEntry);
+        $journalEntryForm = $this->createForm(
+            JournalEntryType::class,
+            $journalEntry
+        );
         $journalEntryForm->handleRequest($request);
 
         if ($journalEntryForm->isSubmitted() && $journalEntryForm->isValid()) {
@@ -65,8 +68,10 @@ class JournalEntryController extends BaseController
             $entityManager->persist($journalEntry);
             $entityManager->flush();
 
-            return $this->redirectToRoute('journal_entry_index',
-                ['process' => $process->getId()]);
+            return $this->redirectToRoute(
+                'journal_entry_index',
+                ['process' => $process->getId()]
+            );
         }
 
         $filterForm = $this->get('form.factory')
@@ -106,17 +111,25 @@ class JournalEntryController extends BaseController
             $result = $logManager->attachLogEntriesToJournalEntries($result);
         }
 
-        $result = $logManager->attachProcessStatusChangesToJournalEntries($result, $process, $sortDirection);
+        $result = $logManager->attachProcessStatusChangesToJournalEntries(
+            $result,
+            $process,
+            $sortDirection
+        );
 
-        return $this->render('@KontrolgruppenCore/journal_entry/index.html.twig',
+        return $this->render(
+            '@KontrolgruppenCore/journal_entry/index.html.twig',
             [
-                'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(),
-                    $process),
+                'menuItems' => $this->menuService->getProcessMenu(
+                    $request->getPathInfo(),
+                    $process
+                ),
                 'form' => $filterForm->createView(),
                 'entries' => $result,
                 'journalEntryForm' => $journalEntryForm->createView(),
                 'process' => $process,
-            ]);
+            ]
+        );
     }
 
     /**
@@ -134,18 +147,24 @@ class JournalEntryController extends BaseController
             $entityManager->persist($journalEntry);
             $entityManager->flush();
 
-            return $this->redirectToRoute('journal_entry_index',
-                ['process' => $process->getId()]);
+            return $this->redirectToRoute(
+                'journal_entry_index',
+                ['process' => $process->getId()]
+            );
         }
 
-        return $this->render('@KontrolgruppenCore/journal_entry/new.html.twig',
+        return $this->render(
+            '@KontrolgruppenCore/journal_entry/new.html.twig',
             [
-                'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(),
-                    $process),
+                'menuItems' => $this->menuService->getProcessMenu(
+                    $request->getPathInfo(),
+                    $process
+                ),
                 'journalEntry' => $journalEntry,
                 'process' => $process,
                 'form' => $form->createView(),
-            ]);
+            ]
+        );
     }
 
     /**
@@ -163,13 +182,17 @@ class JournalEntryController extends BaseController
             $journalEntry = $logManager->attachLogEntriesToJournalEntry($journalEntry);
         }
 
-        return $this->render('@KontrolgruppenCore/journal_entry/show.html.twig',
+        return $this->render(
+            '@KontrolgruppenCore/journal_entry/show.html.twig',
             [
-                'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(),
-                    $process),
+                'menuItems' => $this->menuService->getProcessMenu(
+                    $request->getPathInfo(),
+                    $process
+                ),
                 'journalEntry' => $journalEntry,
                 'process' => $process,
-            ]);
+            ]
+        );
     }
 
     /**
@@ -199,14 +222,18 @@ class JournalEntryController extends BaseController
             $journalEntry = $logManager->attachLogEntriesToJournalEntry($journalEntry);
         }
 
-        return $this->render('@KontrolgruppenCore/journal_entry/edit.html.twig',
+        return $this->render(
+            '@KontrolgruppenCore/journal_entry/edit.html.twig',
             [
-                'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(),
-                    $process),
+                'menuItems' => $this->menuService->getProcessMenu(
+                    $request->getPathInfo(),
+                    $process
+                ),
                 'journalEntry' => $journalEntry,
                 'process' => $process,
                 'form' => $form->createView(),
-            ]);
+            ]
+        );
     }
 
     /**
@@ -217,8 +244,10 @@ class JournalEntryController extends BaseController
         JournalEntry $journalEntry,
         Process $process
     ): Response {
-        if ($this->isCsrfTokenValid('delete'.$journalEntry->getId(),
-            $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid(
+            'delete'.$journalEntry->getId(),
+            $request->request->get('_token')
+        )) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($journalEntry);
             $entityManager->flush();

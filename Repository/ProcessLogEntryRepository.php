@@ -11,7 +11,6 @@
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Knp\Component\Pager\PaginatorInterface;
-use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
