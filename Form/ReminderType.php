@@ -24,8 +24,12 @@ class ReminderType extends AbstractType
                 'label' => 'reminder.form.message',
             ])
             ->add('date', null, [
-                'widget' => 'single_text',
                 'label' => 'reminder.form.date',
+                'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'dd/MM yyyy HH:mm',
+                'attr' => ['class' => 'js-datepicker'],
+                'help' => 'economy_entry.form.base.date_help',
             ])
         ;
     }
