@@ -29,7 +29,7 @@ class ReminderType extends AbstractType
                 'html5' => false,
                 'format' => 'dd/MM yyyy HH:mm',
                 'attr' => ['class' => 'js-datepicker'],
-                'help' => 'economy_entry.form.base.date_help',
+                'help' => 'reminder.form.date_help',
             ])
         ;
     }
