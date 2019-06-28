@@ -60,7 +60,6 @@ class TwigExtension extends AbstractExtension
 
     public function getConclusionClassTranslation(string $className)
     {
-        // @TODO: Replace with event.
         return $this->conclusionService->getTranslation($className);
     }
 

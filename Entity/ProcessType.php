@@ -46,6 +46,11 @@ class ProcessType extends AbstractTaxonomy
      */
     private $services;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $netDefaultValue;
+
     public function __construct()
     {
         $this->processes = new ArrayCollection();
@@ -156,6 +161,18 @@ class ProcessType extends AbstractTaxonomy
         if ($this->services->contains($service)) {
             $this->services->removeElement($service);
         }
+
+        return $this;
+    }
+
+    public function getNetDefaultValue(): ?float
+    {
+        return $this->netDefaultValue;
+    }
+
+    public function setNetDefaultValue(float $netDefaultValue): self
+    {
+        $this->netDefaultValue = $netDefaultValue;
 
         return $this;
     }

@@ -28,6 +28,11 @@ class KontrolgruppenCoreExtension extends Extension implements PrependExtensionI
             new FileLocator(__DIR__.'/../Resources/config')
         );
         $loader->load('services.yaml');
+
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter('kontrolgruppen_core.net_default_value', $config['net_default_value']);
     }
 
     public function prepend(ContainerBuilder $container)
