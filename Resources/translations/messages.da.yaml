@@ -312,6 +312,7 @@ menu:
         process_type: Sagstyper
         quick_link: Genveje
         reminder: Påmindelser
+        revenue: Provenu
         service: Ydelser
 
 navigation:
@@ -465,6 +466,7 @@ process_type:
         conclusion_class: Konklusionstype
         hide_in_dashboard: Skjul på dashboard
         name: Navn
+        net_default_value: Netto standardværdi
         process_statuses: Tilkoblede sagsstatusser
         services: Tilkoblede ydelser
         update: Gem
@@ -480,6 +482,7 @@ process_type:
         hide_in_dashboard: Skjul på dashboard
         id: ID
         name: Navn
+        net_default_value: Netto standardværdi
         process_statuses: Tilkoblede sagsstatusser
         services: Tilkoblede ydelser
     btns:
@@ -538,6 +541,23 @@ reminder:
         create: Opret ny påmindelse
     show:
         title: Påmindelse
+
+revenue:
+    calculate_button: Vis provenu
+    net_multiplier: Nettoprocent
+    subtitle: Tilbagebetalingskrav overfor klient
+    table:
+        repayment:
+            net_sum_title: Netto samlet tilbagebetalingskrav i kr (KL).
+            sum_title: Samlet tilbagebetalingskrav i kr.
+            no_records_found: Ingen tilbagebetalingskrav
+        future_savings:
+            net_sum_title: Netto fremadrettet besparelse i kr (KL).
+            sum_title: Samlet fremadrettet besparelse i kr.
+            no_records_found: Ingen fremadrettet besparelse
+        collective_net_sum:
+            title: Samlet nettoopgørelse (KL)
+    title: Provenu
 
 search:
     headline: Søgning
