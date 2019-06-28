@@ -3,7 +3,7 @@
         <div class="mb-2">
             {# Duck typing to figure out if it is a journal entry or a log entry #}
             {% if entry.logEntry is defined %}
-            <div class="row bg-light">
+            <div class="row bg-light p-2">
                 <div class="col">
                     <div class="row p-1">
                         <strong class="mr-4">{{ 'journal_entry.process_status_changed'|trans }}</strong>
