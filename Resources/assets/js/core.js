@@ -75,7 +75,7 @@ $(function () {
 
         // Setup datetimepicker defaults.
         $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
-            format: 'DD/MM YYYY',
+            format: 'DD/MM YYYY HH:mm',
             icons: {
                 time: 'fas fa-clock',
                 date: 'fas fa-calendar',
