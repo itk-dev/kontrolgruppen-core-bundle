@@ -7,10 +7,10 @@
                         <span class="text-muted d-block">{{ economyEntry.service }}</span>
                     </div>
                     <div class="col-2 pt-2">
-                        <span class="text-muted d-block">{{ economyEntry.periodFrom|date('d/m Y') }}</span>
+                        <span class="text-muted d-block">{{ economyEntry.periodFrom|localizeddate('short', 'none') }}</span>
                     </div>
                     <div class="col-2 pt-2">
-                        <span class="text-muted d-block">{{ economyEntry.periodTo|date('d/m Y') }}</span>
+                        <span class="text-muted d-block">{{ economyEntry.periodTo|localizeddate('short', 'none') }}</span>
                     </div>
                     <div class="col-2 pt-2">
                         <span class="text-muted d-block">{{ economyEntry.amountPeriod }}</span>

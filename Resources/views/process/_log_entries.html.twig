@@ -16,7 +16,7 @@
                     <tbody>
                         {% for log in logEntriesPagination %}
                         <tr class="accordion-toggle">
-                            <td>{{ log.logEntry.loggedAt|date('d/m Y H:i') }}</td>
+                            <td>{{ log.logEntry.loggedAt|localizeddate('short') }}</td>
                             <td>{{ ('process.revision.table.object_types.' ~ camelCaseToUnderscore((log.logEntry.objectClass|split('\\')|last)))|trans }} {{ ('process.revision.action_type.' ~ (log.logEntry.action|lower))|trans }}</td>
                             <td>{{ log.logEntry.username }}</td>
                             <td class="text-right">

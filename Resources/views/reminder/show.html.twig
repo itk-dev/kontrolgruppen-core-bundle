@@ -12,7 +12,7 @@
             <tbody>
             <tr>
                 <th>{{ 'reminder.table.date'|trans }}</th>
-                <td>{{ reminder.date ? reminder.date|date('d/m Y H:i') : '' }}</td>
+                <td>{{ reminder.date ? reminder.date|localizeddate('short') : '' }}</td>
             </tr>
             <tr>
                 <th>{{ 'reminder.table.finished'|trans }}</th>
