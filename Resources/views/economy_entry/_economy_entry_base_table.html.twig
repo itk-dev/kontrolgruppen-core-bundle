@@ -5,7 +5,7 @@
             <tr>
                 <th>{{ 'economy.table.base.text'|trans }}</th>
                 <th class="w-20">{{ 'economy.table.base.date'|trans }}</th>
-                <th class="w-20">{{ 'economy.table.base.amount'|trans }}</th>
+                <th class="w-20 text-right">{{ 'economy.table.base.amount'|trans }}</th>
             </tr>
             </thead>
             <tbody>
@@ -13,7 +13,7 @@
                 <tr>
                     <td><a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.text }}</a></td>
                     <td>{{ economyEntry.date|date('d/m Y') }}</td>
-                    <td>{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
+                    <td class="text-right">{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
                 </tr>
             {% else %}
                 <tr>
