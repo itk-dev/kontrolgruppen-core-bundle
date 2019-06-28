@@ -13,7 +13,7 @@
                 <tr>
                     <td><a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.text }}</a></td>
                     <td>{{ economyEntry.date|date('d/m Y') }}</td>
-                    <td>{{ economyEntry.amount|format_amount }}</td>
+                    <td>{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
                 </tr>
             {% else %}
                 <tr>
