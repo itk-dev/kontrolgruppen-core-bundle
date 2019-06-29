@@ -519,6 +519,7 @@ reminder:
         title: Rediger påmindelse
     form:
         date: Dato
+        date_help: Vælg hvornår påmindelsen skal aktiveres
         time: Tidspunkt
         finished: Afsluttet
         message: Besked

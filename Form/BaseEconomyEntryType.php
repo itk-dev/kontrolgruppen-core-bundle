@@ -34,7 +34,7 @@ class BaseEconomyEntryType extends AbstractType
                 'label' => 'economy_entry.form.base.date',
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'dd/MM yyyy',
+                'format' => 'dd/MM yyyy HH:mm',
                 'attr' => ['class' => 'js-datepicker'],
                 'help' => 'economy_entry.form.base.date_help',
             ])
