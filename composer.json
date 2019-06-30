@@ -60,14 +60,5 @@
         "applycs": [
             "@apply-coding-standards"
         ]
-    },
-    "conflict": {
-        "symfony/symfony": "*"
-    },
-    "extra": {
-        "symfony": {
-            "allow-contrib": false,
-            "require": "4.3.*"
-        }
     }
 }
