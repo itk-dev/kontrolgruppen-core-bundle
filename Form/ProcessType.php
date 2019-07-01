@@ -66,7 +66,7 @@ class ProcessType extends AbstractType
                     null => null,
                     'common.boolean.true' => true,
                     'common.boolean.false' => false,
-                ]
+                ],
             ])
         ;
 

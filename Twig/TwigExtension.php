@@ -61,7 +61,7 @@ class TwigExtension extends AbstractExtension
 
     public function booleanFilter($value)
     {
-        if (is_null($value)) {
+        if (null === $value) {
             return $this->translator->trans('common.boolean.null');
         }
 
