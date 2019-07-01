@@ -20,7 +20,7 @@
             {% for process_type in process_types %}
                 <tr>
                     <td><a href="{{ path('process_type_show', {'id': process_type.id}) }}">{{ process_type.name }}</a></td>
-                    <td>{{ (process_type.hideInDashboard|boolean }}</td>
+                    <td>{{ process_type.hideInDashboard|boolean }}</td>
                     <td>{{ conclusionClassTranslation(process_type.conclusionClass) }}</td>
                     <td>{{ process_type.netDefaultValue|localizednumber('percent') }}</td>
                     <td class="text-right">
