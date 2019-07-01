@@ -97,8 +97,11 @@ common:
         done: Udført
     back_to_list: Tilbage til liste
     boolean:
-        'true': Ja
-        'false': Nej
+        'null': ''
+        'true': Sandt
+        'false': Falsk
+        yes: Ja
+        no: Nej
     choice_all: Alle
     day:
         monday: Mandag
@@ -340,6 +343,7 @@ process:
             save: Gem ny status
         channel: Kanal
         client_cpr: Klient CPR
+        police_report: Er sagen politianmeldt?
         process_status: Sagsstatus
         process_type: Sagstype
         service: Ydelse
@@ -368,6 +372,7 @@ process:
         internal_note: Seneste interne notater
         journal: Journal
         note: Seneste notater
+        police_report: Er sagen politianmeldt?
         process_status: Status
         process_type: Type
         reminders: Påmindelser

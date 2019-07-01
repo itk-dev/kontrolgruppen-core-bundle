@@ -101,6 +101,11 @@ class Process extends AbstractEntity
      */
     private $logEntries;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $policeReport;
+
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
@@ -360,6 +365,18 @@ class Process extends AbstractEntity
                 $logEntry->setProcess(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPoliceReport(): ?bool
+    {
+        return $this->policeReport;
+    }
+
+    public function setPoliceReport(?bool $policeReport): self
+    {
+        $this->policeReport = $policeReport;
 
         return $this;
     }
