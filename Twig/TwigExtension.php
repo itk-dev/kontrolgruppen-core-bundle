@@ -15,6 +15,7 @@ use Kontrolgruppen\CoreBundle\Service\ConclusionService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Twig\TwigFilter;
 
 class TwigExtension extends AbstractExtension
 {
@@ -38,6 +39,13 @@ class TwigExtension extends AbstractExtension
         $this->doctrine = $doctrine;
     }
 
+    public function getFilters()
+    {
+        return [
+            new TwigFilter('boolean', [$this, 'booleanFilter']),
+        ];
+    }
+
     public function getFunctions()
     {
         return [
@@ -49,6 +57,19 @@ class TwigExtension extends AbstractExtension
             new TwigFunction('enumTranslation', [$this, 'getEnumTranslation']),
             new TwigFunction('camelCaseToUnderscore', [$this, 'camelCaseToUnderscore']),
         ];
+    }
+
+    public function booleanFilter($value)
+    {
+        if (is_null($value)) {
+            return $this->translator->trans('common.boolean.null');
+        }
+
+        if ($value) {
+            return $this->translator->trans('common.boolean.true');
+        }
+
+        return $this->translator->trans('common.boolean.false');
     }
 
     public function getEnumTranslation(string $value, $enum)

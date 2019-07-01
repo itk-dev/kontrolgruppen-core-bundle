@@ -31,7 +31,7 @@
             <tr>
                 <th>{{ 'process_type.table.hide_in_dashboard'|trans }}</th>
                 <td>
-                    {{ (process_type.hideInDashboard ? 'common.boolean.true' : 'common.boolean.false')|trans }}
+                    {{ (process_type.hideInDashboard|boolean }}
                 </td>
             </tr>
             <tr>
