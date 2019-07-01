@@ -53,6 +53,7 @@ dom.watch();
 
 require('./monthpicker/monthpicker');
 require('./monthpicker/monthpicker.css');
+require('jquery-confirm');
 
 // https://tempusdominus.github.io/bootstrap-4
 require('tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4');
@@ -61,6 +62,11 @@ require('tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css')
 require('../css/core.scss');
 
 require('./preventCPR/preventCPR');
+
+var translate = (text) => {
+    return ('undefined' !== typeof(kontrolgruppen_messages) && 'undefined' !== typeof(kontrolgruppen_messages[text]))
+        ? kontrolgruppen_messages[text] : text
+}
 
 $(function () {
     $('[data-toggle="tooltip"]').tooltip(
@@ -112,5 +118,32 @@ $(function () {
 
         // Use preventCPR script for all text and textarea elements not marked with class .no-cpr-scanning
         $('input[type=text]:not(.no-cpr-scanning), textarea:not(.no-cpr-scanning)').preventCPRinText();
+
+        $('form[data-yes-no-message]').each(function() {
+            $(this).on('submit', () => {
+                if (true !== $(this).data('submit-confirmed')) {
+                    $.confirm({
+                        title: $(this).data('yes-no-title') || null,
+                        content: $(this).data('yes-no-message'),
+                        escapeKey: 'no',
+                        buttons: {
+                            yes: {
+                                text: translate('common.boolean.Yes'),
+                                btnClass: 'btn-primary',
+                                action: () => {
+                                    $(this).data('submit-confirmed', true)
+                                    $(this).submit();
+                                }
+                            },
+                            no: {
+                                text: translate('common.boolean.No'),
+                                btnClass: 'btn-default',
+                            }
+                        }
+                    })
+                    return false
+                }
+            })
+        })
     });
 });
