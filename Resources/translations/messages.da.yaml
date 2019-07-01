@@ -65,10 +65,13 @@ client:
         first_name: Fornavn
         id: ID
         last_name: Efternavn
+        not_employed: Ikke i arbejde
         number_of_children: Antal børn
         postal_code: Postnummer
+        self_employed: Driver selvstændig virksomhed
         telephone: Telefon
         update: Gem
+        works_in_major_company: Ansat i større virksomhed
     show:
         title: Klient
     table:
@@ -79,10 +82,12 @@ client:
         first_name: Fornavn
         id: ID
         last_name: Efternavn
+        not_employed: Ikke i arbejde
         number_of_children: Antal børn
         postal_code: Postnummer
+        self_employed: Driver selvstændig virksomhed
         telephone: Telefon
-
+        works_in_major_company: Ansat i større virksomhed
 common:
     actions:
         close: Luk
