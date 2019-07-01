@@ -64,8 +64,8 @@ class ProcessType extends AbstractType
                 'label' => 'process.form.police_report',
                 'choices' => [
                     null => null,
-                    'common.boolean.true' => true,
-                    'common.boolean.false' => false,
+                    'common.boolean.yes' => true,
+                    'common.boolean.no' => false,
                 ],
             ])
         ;

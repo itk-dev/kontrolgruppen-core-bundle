@@ -17,7 +17,7 @@
                     {{ reminder.date ? reminder.date|date('Y-m-d H:i:s') : '' }}
                 </div>
                 <div class="col">
-                    {{ 'common.actions.done'|trans }}: {{ reminder.finished|boolean }}
+                    {{ 'common.actions.done'|trans }}: {{ reminder.finished|yes_no }}
                 </div>
                 <div class="col text-right">
                     <a href="{{ path('reminder_finish', {'id': reminder.id, 'process': reminder.process.id}) }}" class="btn btn-sm btn-warning"

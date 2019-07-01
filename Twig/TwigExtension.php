@@ -42,7 +42,8 @@ class TwigExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('boolean', [$this, 'booleanFilter']),
+            new TwigFilter('yes_no', [$this, 'booleanYesNoFilter']),
+            new TwigFilter('true_false', [$this, 'booleanTrueFalseFilter']),
         ];
     }
 
@@ -59,7 +60,7 @@ class TwigExtension extends AbstractExtension
         ];
     }
 
-    public function booleanFilter($value)
+    public function booleanTrueFalseFilter($value)
     {
         if (null === $value) {
             return $this->translator->trans('common.boolean.null');
@@ -70,6 +71,19 @@ class TwigExtension extends AbstractExtension
         }
 
         return $this->translator->trans('common.boolean.false');
+    }
+
+    public function booleanYesNoFilter($value)
+    {
+        if (null === $value) {
+            return $this->translator->trans('common.boolean.null');
+        }
+
+        if ($value) {
+            return $this->translator->trans('common.boolean.yes');
+        }
+
+        return $this->translator->trans('common.boolean.no');
     }
 
     public function getEnumTranslation(string $value, $enum)
