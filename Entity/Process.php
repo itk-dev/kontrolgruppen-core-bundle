@@ -114,12 +114,18 @@ class Process extends AbstractEntity
      */
     private $policeReport;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Car", mappedBy="process", orphanRemoval=true)
+     */
+    private $cars;
+
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
         $this->journalEntries = new ArrayCollection();
         $this->economyEntries = new ArrayCollection();
         $this->logEntries = new ArrayCollection();
+        $this->cars = new ArrayCollection();
     }
 
     public function getCompletedAt(): ?\DateTime
@@ -397,6 +403,37 @@ class Process extends AbstractEntity
     public function setPoliceReport(?bool $policeReport): self
     {
         $this->policeReport = $policeReport;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Car[]
+     */
+    public function getCars(): Collection
+    {
+        return $this->cars;
+    }
+
+    public function addCar(Car $car): self
+    {
+        if (!$this->cars->contains($car)) {
+            $this->cars[] = $car;
+            $car->setProcess($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCar(Car $car): self
+    {
+        if ($this->cars->contains($car)) {
+            $this->cars->removeElement($car);
+            // set the owning side to null (unless already changed)
+            if ($car->getProcess() === $this) {
+                $car->setProcess(null);
+            }
+        }
 
         return $this;
     }
