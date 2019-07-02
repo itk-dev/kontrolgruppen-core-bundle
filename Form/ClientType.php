@@ -44,6 +44,15 @@ class ClientType extends AbstractType
             ->add('carRegistrationNumber', null, [
                 'label' => 'client.form.car_registration_number',
             ])
+            ->add('selfEmployed', null, [
+                'label' => 'client.form.self_employed',
+            ])
+            ->add('worksInMajorCompany', null, [
+                'label' => 'client.form.works_in_major_company',
+            ])
+            ->add('notEmployed', null, [
+                'label' => 'client.form.not_employed',
+            ])
         ;
     }
 
