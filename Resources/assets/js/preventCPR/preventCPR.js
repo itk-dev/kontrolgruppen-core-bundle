@@ -1,3 +1,4 @@
+/* global alert:readonly */
 /**
  * Prevent CPR numbers in text field. Displays an alert.
  */
@@ -10,15 +11,14 @@
             text: 'Indeholder følgende CPR numre (fjern venligst): '
         }, options);
 
-        function checkInputField(event, inputElement) {
+        function checkInputField (event, inputElement) {
             let contents = '';
 
             let cke = inputElement.siblings('div .cke');
 
             if (cke.length > 0) {
                 contents = inputElement.siblings('div .cke').find('iframe').contents().find('body').text();
-            }
-            else {
+            } else {
                 contents = inputElement.val();
             }
 

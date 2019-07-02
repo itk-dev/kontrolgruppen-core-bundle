@@ -1,3 +1,4 @@
+/* global fetch:readonly */
 $(document).ready(function () {
     function loadJournal (processId) {
         $('#journalQuickviewModal .js-journal-entry-modal-content').html('');
