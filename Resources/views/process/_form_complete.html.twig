@@ -1,0 +1,62 @@
+{{ form_start(form, {
+      attr: {
+          'data-yes-no-message': 'process.complete.confirm'|trans,
+      }
+}) }}
+    <p>Sagen afsluttes med følgende oplysninger</p>
+
+    <table class="table table-borderless">
+        <tr>
+            <th>{{ 'process.complete.processing_time'|trans }}</th>
+            <td>
+                {{ process.createdAt|date('d. F Y') }}–{{ 'now'|date('d. F Y') }}
+
+                {# @see https://stackoverflow.com/questions/15657687/twig-date-difference #}
+                {% set start_date = process.createdAt %}
+                {% set end_date = 'now' %}
+                {% set difference = date(end_date).diff(date(start_date)) %}
+                ({{ 'process.complete.processing_time_value'|transchoice(difference.days, {'%days%': difference.days}) }})
+            </td>
+        </tr>
+
+        <tr>
+            <th>{{ 'process.complete.case_worker'|trans }}</th>
+            <td>
+                {{ process.caseWorker }}
+            </td>
+        </tr>
+
+        <tr>
+            <th>{{ 'process.complete.police_report'|trans }}</th>
+            <td>
+                {% if process.policeReport is null %}
+                    {{ 'common.empty_field_value'|trans }}
+                    <a class="btn btn-link" href="{{ path('process_edit', {id: process.id, referer: app.request.pathinfo}) }}">{{ 'common.actions.edit'|trans }}</a>
+                {% else %}
+                    {{ process.policeReport|yes_no }}
+                {% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <th>{{ 'process.complete.court_decision'|trans }}</th>
+            <td>
+                {% if (process.courtDecision|default(null)) is null %}
+                    {{ 'common.empty_field_value'|trans }}
+                    <a class="btn btn-link" href="{{ path('process_edit', {id: process.id, referer: app.request.pathinfo}) }}">{{ 'common.actions.edit'|trans }}</a>
+                {% else %}
+                    {{ process.courtDecision|yes_no }}
+                {% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <th>{{ 'process.complete.status'|trans }}</th>
+            <td>{{ form_widget(form.processStatus) }}</td>
+        </tr>
+
+    </table>
+
+<button
+    class="btn btn-success float-right pr-5 pl-5">{{ 'process.complete.submit'|trans }}</button>
+{{ form_end(form) }}
