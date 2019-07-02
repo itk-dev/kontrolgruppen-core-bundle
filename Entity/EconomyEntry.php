@@ -23,7 +23,7 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
  * This is an empty conclusion type, which should be inherited from for different
  * conclusion types. For example, see BaseConclusion.
  */
-class EconomyEntry extends AbstractEntity
+class EconomyEntry extends AbstractEntity implements ProcessLoggableInterface
 {
     /**
      * @ORM\Column(type="float", nullable=false)
