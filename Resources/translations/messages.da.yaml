@@ -108,14 +108,6 @@ common:
         yes: Ja
         no: Nej
     choice_all: Alle
-    day:
-        monday: Mandag
-        tuesday: Tirsdag
-        wednesday: Onsdag
-        thursday: Torsdag
-        friday: Fredag
-        saturday: Lørdag
-        sunday: Søndag
     enum:
         date_interval:
             this_week: Denne uge
