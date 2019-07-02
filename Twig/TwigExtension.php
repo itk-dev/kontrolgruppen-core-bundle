@@ -152,11 +152,11 @@ class TwigExtension extends AbstractExtension
 
     public function formatLogEntryValue($value)
     {
-        if (is_string($value)) {
+        if (\is_string($value)) {
             return $value;
         }
 
-        if (is_bool($value)) {
+        if (\is_bool($value)) {
             return $this->booleanYesNoFilter($value);
         }
 
