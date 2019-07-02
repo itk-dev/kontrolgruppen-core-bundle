@@ -159,5 +159,13 @@ class TwigExtension extends AbstractExtension
         if (is_bool($value)) {
             return $this->booleanYesNoFilter($value);
         }
+
+        if (is_numeric($value)) {
+            return $value;
+        }
+
+        if ($value instanceof \DateTime) {
+            return $value->format('d-m-Y h:m');
+        }
     }
 }
