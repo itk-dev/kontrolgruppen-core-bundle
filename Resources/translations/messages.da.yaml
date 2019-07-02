@@ -452,6 +452,8 @@ process:
                     service: Ydelse
                     process_type: Type
                     process_status: Status
+                    reason: Årsag
+                    police_report: Politianmeldt
                 client:
                     first_name: Fornavn
                     last_name: Efternavn

@@ -110,6 +110,7 @@ class Process extends AbstractEntity
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned()
      */
     private $policeReport;
 
