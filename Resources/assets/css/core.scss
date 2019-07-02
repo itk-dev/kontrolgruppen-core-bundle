@@ -7,11 +7,6 @@
 @import "~jquery-confirm/css/jquery-confirm";
 
 /*
-* Include partials
-*/
-@import "_dashboard";
-
-/*
  * Push down content behind navbar
  */
 
@@ -118,18 +113,18 @@ table th a.desc {
 
 /* Toggle btn text and icon with collapse */
 .btn-collapse[aria-expanded="true"] {
-    .btn-collapse-show{
+    .btn-collapse-show {
         display: none;
     }
-    .btn-collapse-hide{
+    .btn-collapse-hide {
         display: inline;
     }
 }
 .btn-collapse[aria-expanded="false"] {
-    .btn-collapse-show{
+    .btn-collapse-show {
         display: inline;
     }
-    .btn-collapse-hide{
+    .btn-collapse-hide {
         display: none;
     }
 }
