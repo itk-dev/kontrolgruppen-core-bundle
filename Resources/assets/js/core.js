@@ -1,16 +1,4 @@
-const $ = require('jquery');
-global.$ = global.jQuery = $;
-
 import 'whatwg-fetch';
-
-require('bootstrap');
-require('select2');
-
-// Add Moment.js.
-const moment = require('moment');
-// Set moment locale to danish.
-moment.locale('da');
-global.moment = moment;
 
 // Add fontawesome
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
@@ -30,17 +18,29 @@ import { faFileDownload } from '@fortawesome/free-solid-svg-icons/faFileDownload
 import { faPrint } from '@fortawesome/free-solid-svg-icons/faPrint';
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup';
-import { faSort } from "@fortawesome/free-solid-svg-icons/faSort";
-import { faSortUp } from "@fortawesome/free-solid-svg-icons/faSortUp";
-import { faSortDown } from "@fortawesome/free-solid-svg-icons/faSortDown";
-import { faCalendar } from "@fortawesome/free-solid-svg-icons/faCalendar";
-import { faArrowUp } from "@fortawesome/free-solid-svg-icons/faArrowUp";
-import { faArrowDown } from "@fortawesome/free-solid-svg-icons/faArrowDown";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight";
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons/faChevronLeft";
-import { faCalendarCheck } from "@fortawesome/free-solid-svg-icons/faCalendarCheck";
-import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
-import { faTimes } from "@fortawesome/free-solid-svg-icons/faTimes";
+import { faSort } from '@fortawesome/free-solid-svg-icons/faSort';
+import { faSortUp } from '@fortawesome/free-solid-svg-icons/faSortUp';
+import { faSortDown } from '@fortawesome/free-solid-svg-icons/faSortDown';
+import { faCalendar } from '@fortawesome/free-solid-svg-icons/faCalendar';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons/faArrowUp';
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons/faArrowDown';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons/faChevronLeft';
+import { faCalendarCheck } from '@fortawesome/free-solid-svg-icons/faCalendarCheck';
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
+
+const $ = require('jquery');
+global.$ = global.jQuery = $;
+
+require('bootstrap');
+require('select2');
+
+// Add Moment.js.
+const moment = require('moment');
+// Set moment locale to danish.
+moment.locale('da');
+global.moment = moment;
 
 library.add(
     faTachometerAlt, faTasks, faIdCard, faUsersCog, faCog, faClock,
@@ -53,6 +53,7 @@ dom.watch();
 
 require('./monthpicker/monthpicker');
 require('./monthpicker/monthpicker.css');
+require('jquery-confirm');
 
 // https://tempusdominus.github.io/bootstrap-4
 require('tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4');
@@ -62,15 +63,20 @@ require('../css/core.scss');
 
 require('./preventCPR/preventCPR');
 
+var translate = (text) => {
+    return ('undefined' !== typeof(kontrolgruppen_messages) && 'undefined' !== typeof(kontrolgruppen_messages[text]))
+        ? kontrolgruppen_messages[text] : text
+}
+
 $(function () {
     $('[data-toggle="tooltip"]').tooltip(
         {
-            delay: {show: 400},
+            delay: { show: 400 }
         }
     );
 
     // Apply select2 to all elements with select2 class.
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.select2').select2();
 
         // Setup datetimepicker defaults.
@@ -92,7 +98,7 @@ $(function () {
         let dateInputs = $('.js-datepicker');
         dateInputs.each(function (i, val) {
             let parent = val.closest('.form-group');
-            let inputGroup = $('<div class="input-group date" id="datetimepicker' + i +'" data-target-input="nearest"></div>');
+            let inputGroup = $('<div class="input-group date" id="datetimepicker' + i + '" data-target-input="nearest"></div>');
             let input = $(parent).find('input');
 
             $(input).attr('data-target', '#datetimepicker' + i);
@@ -102,8 +108,7 @@ $(function () {
             let el = $(
                 '<div class="input-group-append" data-target="#datetimepicker' + i + '" data-toggle="datetimepicker">\n' +
                 '<div class="input-group-text"><i class="fa fa-calendar"></i></div>\n' +
-                '</div>')
-            ;
+                '</div>');
 
             $(inputGroup).append(el);
 
@@ -112,5 +117,32 @@ $(function () {
 
         // Use preventCPR script for all text and textarea elements not marked with class .no-cpr-scanning
         $('input[type=text]:not(.no-cpr-scanning), textarea:not(.no-cpr-scanning)').preventCPRinText();
+
+        $('form[data-yes-no-message]').each(function() {
+            $(this).on('submit', () => {
+                if (true !== $(this).data('submit-confirmed')) {
+                    $.confirm({
+                        title: $(this).data('yes-no-title') || null,
+                        content: $(this).data('yes-no-message'),
+                        escapeKey: 'no',
+                        buttons: {
+                            yes: {
+                                text: translate('common.boolean.Yes'),
+                                btnClass: 'btn-primary',
+                                action: () => {
+                                    $(this).data('submit-confirmed', true)
+                                    $(this).submit();
+                                }
+                            },
+                            no: {
+                                text: translate('common.boolean.No'),
+                                btnClass: 'btn-default',
+                            }
+                        }
+                    })
+                    return false
+                }
+            })
+        })
     });
 });

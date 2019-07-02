@@ -28,6 +28,14 @@
     <meta name="msapplication-square150x150logo" content="{{ asset('bundles/kontrolgruppencore/images/mstile-150x150.png') }}"/>
     <meta name="msapplication-wide310x150logo" content="{{ asset('bundles/kontrolgruppencore/images/mstile-310x150.png') }}"/>
     <meta name="msapplication-square310x310logo" content="{{ asset('bundles/kontrolgruppencore/images/mstile-310x310.png') }}"/>
+    <script>
+        {# Global translated messages #}
+        {% set messages = {} %}
+        {% for message in ['common.boolean.Yes', 'common.boolean.No'] %}
+        {% set messages = messages|merge({(message): message|trans}) %}
+        {% endfor %}
+        var kontrolgruppen_messages = {{ messages|json_encode|raw }}
+    </script>
 </head>
 <body {% block body_attributes %}{% endblock %}>
 

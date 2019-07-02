@@ -103,10 +103,14 @@ common:
     back_to_list: Tilbage til liste
     boolean:
         'null': ''
-        'true': Sandt
-        'false': Falsk
-        yes: Ja
-        no: Nej
+        'True': Sandt
+        'False': Falsk
+        'true': sandt
+        'false': falsk
+        Yes: Ja
+        No: Nej
+        yes: ja
+        no: nej
     choice_all: Alle
     day:
         monday: Mandag
@@ -145,6 +149,7 @@ common:
         by: af
     title: Kontrolgruppen
     loading: Henter data ...
+    empty_field_value: Feltet er ikke udfyldt
 
 conclusion:
     edit:
@@ -338,6 +343,27 @@ process:
     actions:
         reminders: Påmindelser
         journal_quickview: Senest i journal
+    complete:
+        cancel: Fortryd afslutning
+        case_worker: Sagsbehandler
+        complete: Afslut sag
+        confirm: Er du sikker på at du vil afslutte sagen?
+        court_decision: Rettens afgørelse
+        police_report: Sagen er politianmeldt
+        processing_time: Sagens behandlingstid
+        processing_time_value: 'En dag|%days% dage'
+        # # @see https://symfony.com/doc/current/translation/message_format.html#pluralization
+        # processing_time_value: >
+        #   {days, plural,
+        #       =0 {Nul dage}
+        #       one {én dag}
+        #       other {%days% dage}
+        #   }
+        status: Status ved sagens afslutning
+        submit: Godkend afslutning af sag
+        title: Afslut sag %case_number%
+    resume:
+        confirm: Er du sikker på at du vil genoptage sagen?
     edit:
         title: Rediger sag
     form:
@@ -380,6 +406,7 @@ process:
         police_report: Er sagen politianmeldt?
         process_status: Status
         process_type: Type
+        processing_time: Sagens behandlingstid
         reminders: Påmindelser
         reminders_open: Vis påmindelser
         service: Ydelse
@@ -391,6 +418,8 @@ process:
     btns:
         create_new: Opret ny sag
         create_report: Sagsrapport
+        complete: Afslut sag
+        resume: Genoptag sag
     revision:
         headline: Ændringslog
         action_type:
@@ -446,6 +475,7 @@ process:
                     conclusion: Konklusion
                 reminder:
                     message: Besked
+    completed_message: Sagen er afsluttet og kan ikke længere redigeres
 
 process_status:
     edit:
@@ -472,6 +502,7 @@ process_status:
         label: Sagsstatus
     btns:
         create_new: Opret ny sagsstatus
+
 
 process_type:
     edit:

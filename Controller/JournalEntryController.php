@@ -137,6 +137,10 @@ class JournalEntryController extends BaseController
      */
     public function new(Request $request, Process $process): Response
     {
+        if (null !== $process->getCompletedAt() && !$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('process_show', ['id' => $process->getId()]);
+        }
+
         $journalEntry = new JournalEntry();
         $journalEntry->setProcess($process);
         $form = $this->createForm(JournalEntryType::class, $journalEntry);
