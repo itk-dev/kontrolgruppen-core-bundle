@@ -25,14 +25,16 @@
                     <p class="text-muted mb-0">{{ journalEntry.createdBy }}</p>
                 </div>
                 <div class="col-4 col-lg-6 pt-2 text-right">
-                    <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-dark mb-1"
-                       data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
-                        <i class="fas {{ iconClass('show') }} fa-inverse fa-fw"></i>
-                    </a>
-                    <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-primary mb-1"
-                       data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
-                        <i class="fas {{ iconClass('edit') }} fa-inverse fa-fw"></i></a>
-                    </a>
+                    {% if not process.completedAt %}
+                        <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-dark mb-1"
+                        data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
+                            <i class="fas {{ iconClass('show') }} fa-inverse fa-fw"></i>
+                        </a>
+                        <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-primary mb-1"
+                        data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
+                            <i class="fas {{ iconClass('edit') }} fa-inverse fa-fw"></i></a>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         {% else %}
