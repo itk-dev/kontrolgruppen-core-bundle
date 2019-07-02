@@ -88,6 +88,16 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
      */
     private $notEmployed;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $hasDriversLicense;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $hasCar;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -233,6 +243,30 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
     public function setNotEmployed(?bool $notEmployed): self
     {
         $this->notEmployed = $notEmployed;
+
+        return $this;
+    }
+
+    public function getHasDriversLicense(): ?bool
+    {
+        return $this->hasDriversLicense;
+    }
+
+    public function setHasDriversLicense(?bool $hasDriversLicense): self
+    {
+        $this->hasDriversLicense = $hasDriversLicense;
+
+        return $this;
+    }
+
+    public function getHasCar(): ?bool
+    {
+        return $this->hasCar;
+    }
+
+    public function setHasCar(?bool $hasCar): self
+    {
+        $this->hasCar = $hasCar;
 
         return $this;
     }
