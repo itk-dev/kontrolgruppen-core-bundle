@@ -1,3 +1,4 @@
+/* global moment:readonly */
 /**
  * Month range picker jQuery plugin.
  *
@@ -40,7 +41,7 @@
 
         let monthsElement = $('<div class="itkdev-months months"></div>');
 
-        for (monthKey in months) {
+        for (var monthKey in months) {
             let month = months[monthKey];
             let monthValue = parseInt(monthKey) + 1;
 
@@ -223,13 +224,13 @@
         updateHtmlValues(self);
 
         // Register listeners.
-        self.find('.month-button-from').on('click', function () {
+        self.find('.month-button-from').on('click', function (event) {
             event.preventDefault();
             event.stopPropagation();
             self.from.month = $(this).attr('data-month');
             updateHtmlValues(self);
         });
-        self.find('.month-button-to').on('click', function () {
+        self.find('.month-button-to').on('click', function (event) {
             event.preventDefault();
             event.stopPropagation();
             self.to.month = $(this).attr('data-month');
