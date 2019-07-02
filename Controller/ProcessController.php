@@ -31,7 +31,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProcessController extends BaseController
 {
-
     /**
      * @Route("/", name="process_index", methods={"GET"})
      */
