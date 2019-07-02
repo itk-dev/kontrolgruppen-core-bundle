@@ -200,7 +200,7 @@ class ProcessController extends BaseController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute(
-                'process_index',
+                'process_show',
                 [
                     'id' => $process->getId(),
                 ]
