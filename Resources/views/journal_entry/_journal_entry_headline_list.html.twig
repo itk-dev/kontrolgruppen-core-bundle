@@ -1,8 +1,5 @@
 {% block journal_entry_list %}
     {% set max_iterations = limit is defined ? min(journalEntries|length, limit) : journalEntries|length %}
-
-    {# TODO: Styling so it becomes more compact. #}
-
     <div class="mb-3 p-3">
         {% for journalEntry in journalEntries|slice(0, max_iterations) %}
             <div class="row bg-light mb-2 pb-2">
@@ -10,8 +7,11 @@
                     <p class="mb-0">{{ journalEntry.createdAt|date('d/m Y') }}</p>
                 </div>
                 <div class="col-12 col-sm-8 col-lg-10 pt-2">
-                    <p class="mb-0"><strong><a
-                                href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="text-dark">{{ journalEntry.title }}</a></strong>
+                        {% if not process.completedAt %}
+                            <strong><a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="text-dark">{{ journalEntry.title }}</a></strong>
+                        {% else %}
+                            <strong>{{ journalEntry.title }}</strong>
+                        {% endif %}
                     </p>
                 </div>
                 <div class="col-4 col-lg-2 pt-2">
