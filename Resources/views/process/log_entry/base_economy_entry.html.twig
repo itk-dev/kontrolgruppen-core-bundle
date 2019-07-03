@@ -1,0 +1,14 @@
+<ul class="list-group">
+    <li class="list-group-item">
+        {{ 'process.revision.table.log_entry.base_economy_entry.amount'|trans }}: {{ amount|localizedcurrency('DKK') }}
+    </li>
+    <li class="list-group-item">
+        {{ 'process.revision.table.log_entry.base_economy_entry.type'|trans }}: {{ ('process.revision.table.log_entry.base_economy_entry.' ~ type|lower)|trans }}
+    </li>
+    <li class="list-group-item">
+        {{ 'process.revision.table.log_entry.base_economy_entry.text'|trans }}: {{ text }}
+    </li>
+    <li class="list-group-item">
+        {{ 'process.revision.table.log_entry.base_economy_entry.date'|trans }}: {{ date|date('d-m-Y h:m') }}
+    </li>
+</ul>

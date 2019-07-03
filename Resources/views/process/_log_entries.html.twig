@@ -28,8 +28,7 @@
                         </tr>
                         <tr id="collapse{{ log.logEntry.id }}" class="collapse">
                             <td colspan="4">
-                                <div class="mb-3">
-                                    {{ include('@KontrolgruppenCore/process/_log_entry.html.twig') }}
+                                    {% include('@KontrolgruppenCoreBundle/process/log_entry/' ~ camelCaseToUnderscore(log.logEntry.objectClass|split('\\')|last) ~ '.html.twig') with log.logEntry.data only %}
                                 </div>
                             </td>
                         </tr>
