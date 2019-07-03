@@ -321,6 +321,7 @@ menu:
         reminder: Påmindelser
         revenue: Provenu
         service: Ydelser
+        log: Log
 
 navigation:
     main:
@@ -412,6 +413,11 @@ process:
         create_report: Sagsrapport
         complete: Afslut sag
         resume: Genoptag sag
+    completed_message: Sagen er afsluttet og kan ikke længere redigeres
+
+process_log:
+    index:
+        title: Ændringslog
     revision:
         headline: Ændringslog
         action_type:
@@ -435,6 +441,8 @@ process:
                 weighted_conclusion: Konklusion
                 reminder: Påmindelse
                 client: Klient
+                service_economy_entry: Ydelse registrering
+                base_economy_entry: Konto registrering
             log_entry:
                 type: Type
                 process:
@@ -446,6 +454,7 @@ process:
                     process_status: Status
                     reason: Årsag
                     police_report: Politianmeldt
+                    case_worker: Sagsbehandler
                 client:
                     first_name: Fornavn
                     last_name: Efternavn
@@ -455,6 +464,9 @@ process:
                     telephone: Telefon
                     number_of_children: Antal børn
                     car_registration_number: Bil registeringsnummer
+                    works_in_major_company: Ansat i større virksomhed
+                    not_employed: Ikke i arbejde
+                    self_employed: Driver selvstændig virksomhed
                 journal_entry:
                     title: Titel
                     body: Tekst
@@ -467,7 +479,23 @@ process:
                     conclusion: Konklusion
                 reminder:
                     message: Besked
-    completed_message: Sagen er afsluttet og kan ikke længere redigeres
+                    date: Dato og tidspunkt
+                    finished: Afsluttet
+                service_economy_entry:
+                    amount: Beløb
+                    type: Type
+                    period_from: Fra
+                    period_to: Til
+                    amount_period: Beløbsinterval
+                    repayment_amount: Tilbagebetalingskrav
+                    service: Ydelse
+                base_economy_entry:
+                    amount: Beløb
+                    type: Type
+                    text: Tekst
+                    date: Dato
+                    arrear: Restance
+                    account: Konto
 
 process_status:
     edit:

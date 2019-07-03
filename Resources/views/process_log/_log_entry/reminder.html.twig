@@ -1,0 +1,17 @@
+<ul class="list-group">
+    {% if message is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.reminder.message'|trans }}: {{ message ?: '-' }}
+    </li>
+    {% endif %}
+    {% if date is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.reminder.date'|trans }}: {{ date|localizeddate('short') }}
+    </li>
+    {% endif %}
+    {% if finished is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.reminder.finished'|trans }}: {{ finished|yes_no }}
+    </li>
+    {% endif %}
+</ul>

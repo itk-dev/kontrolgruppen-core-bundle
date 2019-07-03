@@ -92,6 +92,11 @@ class LoggableListener extends BaseLoggableListener
                         ? $object->getReason()->getName()
                         : null;
                     break;
+                case 'caseWorker':
+                    $newData[$key]['name'] = null !== $object->getCaseWorker()
+                        ? $object->getCaseWorker()->getUsername()
+                        : null;
+                    break;
 
                 default:
                     break;

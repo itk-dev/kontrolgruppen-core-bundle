@@ -176,6 +176,16 @@ class MenuService
                     'conclusion_show',
                     ['process' => $process]
                 );
+
+                $items[] = $this->createMenuItem(
+                    'log',
+                    1 === preg_match(
+                        '/^\/process\/[0-9]+\/log.*$/',
+                        $path
+                    ),
+                    'process_log_index',
+                    ['process' => $process]
+                );
             }
         }
 

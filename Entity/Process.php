@@ -31,6 +31,7 @@ class Process extends AbstractEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\User", inversedBy="processes")
+     * @Gedmo\Versioned()
      */
     private $caseWorker;
 

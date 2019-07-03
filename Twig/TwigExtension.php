@@ -153,23 +153,4 @@ class TwigExtension extends AbstractExtension
 
         return $result;
     }
-
-    public function formatLogEntryValue($value)
-    {
-        if (\is_string($value)) {
-            return $value;
-        }
-
-        if (\is_bool($value)) {
-            return $this->booleanYesNoFilter($value);
-        }
-
-        if (is_numeric($value)) {
-            return $value;
-        }
-
-        if ($value instanceof \DateTime) {
-            return $value->format('d-m-Y h:m');
-        }
-    }
 }
