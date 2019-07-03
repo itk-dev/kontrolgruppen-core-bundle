@@ -16,7 +16,7 @@
     {% endif %}
     {% if date is defined %}
     <li class="list-group-item">
-        {{ 'process_log.revision.table.log_entry.base_economy_entry.date'|trans }}: {{ date|date('d-m-Y h:m') }}
+        {{ 'process_log.revision.table.log_entry.base_economy_entry.date'|trans }}: {{ date|localizeddate('short') }}
     </li>
     {% endif %}
 </ul>
