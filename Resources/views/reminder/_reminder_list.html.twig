@@ -14,7 +14,7 @@
                     {{ reminder.process.processType }}
                 </div>
                 <div class="col">
-                    {{ reminder.date ? reminder.date|date('Y-m-d H:i:s') : '' }}
+                    {{ reminder.date ? reminder.date|localizeddate('short') : '' }}
                 </div>
                 <div class="col">
                     {{ 'common.actions.done'|trans }}: {{ reminder.finished|yes_no }}
