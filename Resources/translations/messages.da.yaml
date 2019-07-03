@@ -472,6 +472,9 @@ process_log:
                     telephone: Telefon
                     number_of_children: Antal børn
                     car_registration_number: Bil registeringsnummer
+                    works_in_major_company: Ansat i større virksomhed
+                    not_employed: Ikke i arbejde
+                    self_employed: Driver selvstændig virksomhed
                 journal_entry:
                     title: Titel
                     body: Tekst
