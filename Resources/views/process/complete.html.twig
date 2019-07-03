@@ -1,0 +1,18 @@
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+
+{% block title %}{{ 'process.complete.title'|trans({'%case_number%': process.caseNumber}) }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'process.complete.title'|trans({'%case_number%': process.caseNumber}) }}</h1>
+
+    {{ include('@KontrolgruppenCore/process/_form_complete.html.twig', {'button_label': 'complete'}) }}
+
+    <a href="{{ path('process_show', {id: process.id}) }}" class="btn btn-light float-left">{{ 'process.complete.cancel'|trans }}</a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('processForm') }}
+    {{ encore_entry_script_tags('inputCPR') }}
+{% endblock %}

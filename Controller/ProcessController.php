@@ -11,19 +11,20 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Knp\Component\Pager\PaginatorInterface;
+use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Event\Doctrine\ORM\OnReadEventArgs;
 use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
+use Kontrolgruppen\CoreBundle\Form\ProcessCompleteType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
+use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Kontrolgruppen\CoreBundle\Entity\Client;
-use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 
 /**
  * @Route("/process")
@@ -39,7 +40,8 @@ class ProcessController extends BaseController
         FilterBuilderUpdaterInterface $lexikBuilderUpdater,
         PaginatorInterface $paginator
     ): Response {
-        $filterForm = $this->get('form.factory')->create(ProcessFilterType::class);
+        $filterForm = $this->get('form.factory')
+            ->create(ProcessFilterType::class);
 
         $results = [];
 
@@ -117,8 +119,10 @@ class ProcessController extends BaseController
     /**
      * @Route("/new", name="process_new", methods={"GET","POST"})
      */
-    public function new(Request $request, ProcessManager $processManager): Response
-    {
+    public function new(
+        Request $request,
+        ProcessManager $processManager
+    ): Response {
         $process = new Process();
         $form = $this->createForm(ProcessType::class, $process);
         $form->handleRequest($request);
@@ -193,13 +197,17 @@ class ProcessController extends BaseController
      */
     public function edit(Request $request, Process $process): Response
     {
+        if (null !== $process->getCompletedAt() && !$this->isGranted('ROLE_ADMIN')) {
+            $this->redirectToRoute('process_show', ['id' => $process->getId()]);
+        }
+
         $form = $this->createForm(ProcessType::class, $process);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute(
+            return $this->redirectToReferer(
                 'process_show',
                 [
                     'id' => $process->getId(),
@@ -235,5 +243,60 @@ class ProcessController extends BaseController
         }
 
         return $this->redirectToRoute('process_index');
+    }
+
+    /**
+     * @Route("/{id}/complete", name="process_complete", methods={"GET","POST"})
+     */
+    public function complete(Request $request, Process $process): Response
+    {
+        if (null !== $process->getCompletedAt()) {
+            return $this->redirectToRoute(
+                'process_show',
+                ['id' => $process->getId()]
+            );
+        }
+
+        $form = $this->createForm(ProcessCompleteType::class, $process);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $process->setCompletedAt(new \DateTime());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($process);
+            $em->flush();
+
+            return $this->redirectToRoute(
+                'process_show',
+                [
+                    'id' => $process->getId(),
+                ]
+            );
+        }
+
+        return $this->render(
+            '@KontrolgruppenCore/process/complete.html.twig',
+            [
+                'menuItems' => $this->menuService->getProcessMenu(
+                    $request->getPathInfo(),
+                    $process
+                ),
+                'process' => $process,
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/{id}/resume", name="process_resume", methods={"POST"})
+     */
+    public function resume(Request $request, Process $process): Response
+    {
+        $process->setCompletedAt(null);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($process);
+        $em->flush();
+
+        return $this->redirectToRoute('process_show', ['id' => $process->getId()]);
     }
 }

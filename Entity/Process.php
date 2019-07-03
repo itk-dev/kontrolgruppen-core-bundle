@@ -23,6 +23,13 @@ use Kontrolgruppen\CoreBundle\Validator as KontrolgruppenAssert;
 class Process extends AbstractEntity
 {
     /**
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Gedmo\Versioned()
+     */
+    private $completedAt;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\User", inversedBy="processes")
      */
     private $caseWorker;
@@ -103,6 +110,7 @@ class Process extends AbstractEntity
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned()
      */
     private $policeReport;
 
@@ -112,6 +120,18 @@ class Process extends AbstractEntity
         $this->journalEntries = new ArrayCollection();
         $this->economyEntries = new ArrayCollection();
         $this->logEntries = new ArrayCollection();
+    }
+
+    public function getCompletedAt(): ?\DateTime
+    {
+        return $this->completedAt;
+    }
+
+    public function setCompletedAt(?\DateTime $completedAt): self
+    {
+        $this->completedAt = $completedAt;
+
+        return $this;
     }
 
     public function getCaseWorker(): ?User

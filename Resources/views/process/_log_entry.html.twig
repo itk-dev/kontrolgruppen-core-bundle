@@ -4,7 +4,7 @@
             {% if change is iterable %}
                 {{ ('process.revision.table.log_entry.' ~ camelCaseToUnderscore((log.logEntry.objectClass|split('\\')|last)) ~ '.' ~ camelCaseToUnderscore(changeKey))|trans }}: {{ change.name }}
             {% else %}
-                {{ ('process.revision.table.log_entry.' ~ camelCaseToUnderscore((log.logEntry.objectClass|split('\\')|last)) ~ '.' ~ camelCaseToUnderscore(changeKey))|trans }}: {{ change }}
+                {{ ('process.revision.table.log_entry.' ~ camelCaseToUnderscore((log.logEntry.objectClass|split('\\')|last)) ~ '.' ~ camelCaseToUnderscore(changeKey))|trans }}: {{ formatLogEntryValue(change) }}
             {% endif %}
         </li>
     {% endfor %}

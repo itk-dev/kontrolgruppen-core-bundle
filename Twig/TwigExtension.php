@@ -57,6 +57,7 @@ class TwigExtension extends AbstractExtension
             ),
             new TwigFunction('enumTranslation', [$this, 'getEnumTranslation']),
             new TwigFunction('camelCaseToUnderscore', [$this, 'camelCaseToUnderscore']),
+            new TwigFunction('formatLogEntryValue', [$this, 'formatLogEntryValue']),
         ];
     }
 
@@ -137,6 +138,10 @@ class TwigExtension extends AbstractExtension
                 return 'fa-sort-down';
             case 'layer-group':
                 return 'fa-layer-group';
+            case 'process-complete':
+                return 'fa-door-closed';
+            case 'process-resume':
+                return 'fa-door-open';
             default:
                 return '';
         }
@@ -147,5 +152,24 @@ class TwigExtension extends AbstractExtension
         $result = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $camelCaseString));
 
         return $result;
+    }
+
+    public function formatLogEntryValue($value)
+    {
+        if (\is_string($value)) {
+            return $value;
+        }
+
+        if (\is_bool($value)) {
+            return $this->booleanYesNoFilter($value);
+        }
+
+        if (is_numeric($value)) {
+            return $value;
+        }
+
+        if ($value instanceof \DateTime) {
+            return $value->format('d-m-Y h:m');
+        }
     }
 }

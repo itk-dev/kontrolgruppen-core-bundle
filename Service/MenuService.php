@@ -94,27 +94,30 @@ class MenuService
      */
     public function getProcessMenu(string $path, Process $process = null)
     {
+        $items = [];
         if (isset($process) && null !== $process->getId()) {
-            return [
-                [
-                    'name' => $this->translator->trans('menu.menu_title.process_number', [
-                        '%processNumber%' => $process->getCaseNumber(),
-                    ]),
-                    'disabled' => true,
-                    'active' => false,
-                    'path' => '#',
-                    'hide_from_mobile_menu' => true,
-                ],
-                $this->createMenuItem(
-                    'process_show',
-                    1 === preg_match(
-                        '/^\/process\/[0-9]+$/',
-                        $path
-                    ),
-                    'process_show',
-                    ['id' => $process->getId()]
+            $items[] = [
+                'name' => $this->translator->trans('menu.menu_title.process_number', [
+                    '%processNumber%' => $process->getCaseNumber(),
+                ]),
+                'disabled' => true,
+                'active' => false,
+                'path' => '#',
+                'hide_from_mobile_menu' => true,
+            ];
+
+            $items[] = $this->createMenuItem(
+                'process_show',
+                1 === preg_match(
+                    '/^\/process\/[0-9]+$/',
+                    $path
                 ),
-                $this->createMenuItem(
+                'process_show',
+                ['id' => $process->getId()]
+            );
+
+            if (null === $process->getCompletedAt()) {
+                $items[] = $this->createMenuItem(
                     'client',
                     1 === preg_match(
                         '/^\/process\/[0-9]+\/client.*$/',
@@ -122,8 +125,9 @@ class MenuService
                     ),
                     'client_show',
                     ['process' => $process]
-                ),
-                $this->createMenuItem(
+                );
+
+                $items[] = $this->createMenuItem(
                     'reminder',
                     1 === preg_match(
                         '/^\/process\/[0-9]+\/reminder\/.*$/',
@@ -131,8 +135,9 @@ class MenuService
                     ),
                     'reminder_index',
                     ['process' => $process]
-                ),
-                $this->createMenuItem(
+                );
+
+                $items[] = $this->createMenuItem(
                     'journal',
                     1 === preg_match(
                         '/^\/process\/[0-9]+\/journal\/.*$/',
@@ -140,8 +145,9 @@ class MenuService
                     ),
                     'journal_entry_index',
                     ['process' => $process]
-                ),
-                $this->createMenuItem(
+                );
+
+                $items[] = $this->createMenuItem(
                     'economy',
                     1 === preg_match(
                         '/^\/process\/[0-9]+\/economy.*$/',
@@ -149,8 +155,9 @@ class MenuService
                     ),
                     'economy_show',
                     ['process' => $process]
-                ),
-                $this->createMenuItem(
+                );
+
+                $items[] = $this->createMenuItem(
                     'revenue',
                     1 === preg_match(
                         '/^\/process\/[0-9]+\/revenue.*$/',
@@ -158,8 +165,9 @@ class MenuService
                     ),
                     'economy_revenue',
                     ['process' => $process]
-                ),
-                $this->createMenuItem(
+                );
+
+                $items[] = $this->createMenuItem(
                     'conclusion',
                     1 === preg_match(
                         '/^\/process\/[0-9]+\/conclusion.*$/',
@@ -167,11 +175,11 @@ class MenuService
                     ),
                     'conclusion_show',
                     ['process' => $process]
-                ),
-            ];
+                );
+            }
         }
 
-        return [];
+        return $items;
     }
 
     /**
