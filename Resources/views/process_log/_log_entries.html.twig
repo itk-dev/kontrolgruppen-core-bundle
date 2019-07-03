@@ -28,7 +28,8 @@
                         </tr>
                         <tr id="collapse{{ log.logEntry.id }}" class="collapse">
                             <td colspan="4">
-                                    {% include('@KontrolgruppenCoreBundle/process_log/_log_entry/' ~ camelCaseToUnderscore(log.logEntry.objectClass|split('\\')|last) ~ '.html.twig') with log.logEntry.data only %}
+                                    {% set logEntryData = (log.logEntry.data is not empty) ? log.logEntry.data : {} %}
+                                    {% include('@KontrolgruppenCoreBundle/process_log/_log_entry/' ~ camelCaseToUnderscore(log.logEntry.objectClass|split('\\')|last) ~ '.html.twig') with logEntryData only %}
                                 </div>
                             </td>
                         </tr>
