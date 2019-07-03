@@ -3,7 +3,7 @@
         {{ 'process_log.revision.table.log_entry.journal_entry.title'|trans }}: {{ title ?: '-' }}
     </li>
     <li class="list-group-item">
-        {{ 'process_log.revision.table.log_entry.journal_entry.body'|trans }}: {{ body ?: '-' }}
+        {{ 'process_log.revision.table.log_entry.journal_entry.body'|trans }}: {{ body|striptags ?: '-' }}
     </li>
     <li class="list-group-item">
         {{ 'process_log.revision.table.log_entry.journal_entry.type'|trans }}: {{ enumTranslation(type, 'JournalEntryEnumType') }}
