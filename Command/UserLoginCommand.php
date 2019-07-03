@@ -51,7 +51,7 @@ class UserLoginCommand extends Command
     {
         $username = $input->getArgument('username');
 
-        $user = $this->userRepository->find($username) ?? $this->userRepository->findOneBy(['email' => $username]);
+        $user = $this->userRepository->find($username) ?? $this->userRepository->findOneBy(['username' => $username]);
         if (null === $user) {
             throw new RuntimeException(sprintf('Invalid username: %s', $username));
         }
