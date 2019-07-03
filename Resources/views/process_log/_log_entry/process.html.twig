@@ -1,8 +1,14 @@
 <ul class="list-group">
     {% if caseNumber is defined %}
-    <li class="list-group-item">
-        {{ 'process_log.revision.table.log_entry.process.case_number'|trans }}: {{ caseNumber }}
-    </li>
+        <li class="list-group-item">
+            {{ 'process_log.revision.table.log_entry.process.case_number'|trans }}: {{ caseNumber }}
+        </li>
+    {% endif %}
+
+    {% if caseWorker is defined %}
+        <li class="list-group-item">
+            {{ 'process_log.revision.table.log_entry.process.case_worker'|trans }}: {{ caseWorker.name }}
+        </li>
     {% endif %}
 
     {% if clientCPR is defined %}

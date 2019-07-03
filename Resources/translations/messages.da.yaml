@@ -462,6 +462,7 @@ process_log:
                     process_status: Status
                     reason: Årsag
                     police_report: Politianmeldt
+                    case_worker: Sagsbehandler
                 client:
                     first_name: Fornavn
                     last_name: Efternavn
