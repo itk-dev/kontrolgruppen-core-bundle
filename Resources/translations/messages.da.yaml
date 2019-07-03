@@ -483,6 +483,8 @@ process_log:
                     conclusion: Konklusion
                 reminder:
                     message: Besked
+                    date: Dato og tidspunkt
+                    finished: Afsluttet
                 service_economy_entry:
                     amount: Beløb
                     type: Type
