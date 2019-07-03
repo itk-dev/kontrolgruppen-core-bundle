@@ -138,6 +138,10 @@ class TwigExtension extends AbstractExtension
                 return 'fa-sort-down';
             case 'layer-group':
                 return 'fa-layer-group';
+            case 'process-complete':
+                return 'fa-door-closed';
+            case 'process-resume':
+                return 'fa-door-open';
             default:
                 return '';
         }

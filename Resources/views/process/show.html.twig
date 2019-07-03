@@ -8,11 +8,11 @@
             <h1 class="float-left">{{ 'process.show.title'|trans }} {{ process.caseNumber }}</h1>
             {% if not process.completedAt %}
                 <a href="{{ path('process_complete', {'id': process.id}) }}" class="btn btn-sm btn-outline-danger float-right ml-3"><i
-                        class="flag {{ iconClass('process-complete') }} mr-2"></i>{{ 'process.btns.complete'|trans }}</a>
+                        class="fas {{ iconClass('process-complete') }} mr-2"></i>{{ 'process.btns.complete'|trans }}</a>
             {% elseif is_granted('ROLE_ADMIN') %}
                 <form method="post" action="{{ path('process_resume', {'id': process.id}) }}" data-yes-no-message="{{ 'process.resume.confirm'|trans }}">
                     <button class="btn btn-sm btn-outline-danger float-right ml-3">
-                        <i class="flag {{ iconClass('process-resume') }} mr-2"></i>{{ 'process.btns.resume'|trans }}
+                        <i class="fas {{ iconClass('process-resume') }} mr-2"></i>{{ 'process.btns.resume'|trans }}
                     </button>
                 </form>
             {% endif %}
