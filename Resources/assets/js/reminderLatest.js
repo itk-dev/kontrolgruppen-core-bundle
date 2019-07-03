@@ -1,3 +1,4 @@
+/* global fetch:readonly */
 function getLatestReminders (interval) {
     $('#coming-reminders-spinner').show();
     $('#coming-reminders-content').html('');
@@ -7,9 +8,9 @@ function getLatestReminders (interval) {
             return response.text();
         })
         .then(function (body) {
-                $('#coming-reminders-spinner').hide();
-                $('#coming-reminders-content').html(body);
-            }
+            $('#coming-reminders-spinner').hide();
+            $('#coming-reminders-content').html(body);
+        }
         );
 }
 

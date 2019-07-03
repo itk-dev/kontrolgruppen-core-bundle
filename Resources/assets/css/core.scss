@@ -4,10 +4,7 @@
 @import "_variables";
 @import "~bootstrap/scss/bootstrap";
 @import "~select2/src/scss/core";
-/*
-* Include partials
-*/
-@import "_dashboard";
+@import "~jquery-confirm/css/jquery-confirm";
 
 /*
  * Push down content behind navbar
@@ -112,4 +109,22 @@ h3 {
 table th a.asc,
 table th a.desc {
     text-decoration: underline;
+}
+
+/* Toggle btn text and icon with collapse */
+.btn-collapse[aria-expanded="true"] {
+    .btn-collapse-show {
+        display: none;
+    }
+    .btn-collapse-hide {
+        display: inline;
+    }
+}
+.btn-collapse[aria-expanded="false"] {
+    .btn-collapse-show {
+        display: inline;
+    }
+    .btn-collapse-hide {
+        display: none;
+    }
 }

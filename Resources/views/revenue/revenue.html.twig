@@ -1,0 +1,89 @@
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+
+{% block title %}{{ 'revenue.title'|trans }}{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <h1>{{ 'revenue.title'|trans }}</h1>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+    {% if revenue is defined %}
+        <div class="row">
+            <div class="col">
+                <p>{{ 'revenue.subtitle'|trans }}</p>
+            </div>
+            <div class="col text-right">
+                <p>{{ 'revenue.net_multiplier'|trans }}: <strong>{{ revenue.netMultiplier|localizednumber('percent') }}</strong></p>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-borderless thead-light">
+                <tbody>
+                {% if revenue.repaymentSums|length > 0 %}
+                    <tr>
+                        <th>{{ 'revenue.table.repayment.sum_title'|trans }}</th>
+                        <th class="w-20 text-right">{{ revenue.repaymentSum|localizedcurrency('DKK') }}</th>
+                    </tr>
+                    <tr>
+                        <td>{{ 'revenue.table.repayment.net_sum_title'|trans }}</td>
+                        <td class="text-right">{{ revenue.netRepaymentSum|localizedcurrency('DKK') }}</td>
+                    </tr>
+                    {% for key,repaymentSum in revenue.repaymentSums %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td class="text-right">{{ repaymentSum|localizedcurrency('DKK') }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7">{{ 'revenue.table.repayment.no_records_found'|trans }}</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-borderless thead-light">
+                <tbody>
+                {% if revenue.futureSavingsSums|length > 0 %}
+                    <tr>
+                        <th>{{ 'revenue.table.future_savings.sum_title'|trans }}</th>
+                        <th class="w-20 text-right"><{{ revenue.futureSavingsSum|localizedcurrency('DKK') }}</th>
+                    </tr>
+                    <tr>
+                        <td>{{ 'revenue.table.future_savings.net_sum_title'|trans }}</td>
+                        <td class="text-right">{{ revenue.netFutureSavingsSum|localizedcurrency('DKK') }}</td>
+                    </tr>
+                    {% for key,futureSavingsSum in revenue.futureSavingsSums %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td class="text-right">{{ futureSavingsSum|localizedcurrency('DKK') }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7">{{ 'revenue.table.future_savings.no_records_found'|trans }}</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-borderless thead-light">
+                <tbody>
+                <tr>
+                    <th>{{ 'revenue.table.collective_net_sum.title'|trans }}</th>
+                    <th class="w-20 text-right">{{ revenue.collectiveNetSum|localizedcurrency('DKK') }}</th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -23,7 +23,15 @@ use Kontrolgruppen\CoreBundle\Validator as KontrolgruppenAssert;
 class Process extends AbstractEntity
 {
     /**
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Gedmo\Versioned()
+     */
+    private $completedAt;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\User", inversedBy="processes")
+     * @Gedmo\Versioned()
      */
     private $caseWorker;
 
@@ -45,6 +53,12 @@ class Process extends AbstractEntity
      * @Gedmo\Versioned()
      */
     private $channel;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Reason", inversedBy="processes")
+     * @Gedmo\Versioned()
+     */
+    private $reason;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="processes")
@@ -95,12 +109,30 @@ class Process extends AbstractEntity
      */
     private $logEntries;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned()
+     */
+    private $policeReport;
+
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
         $this->journalEntries = new ArrayCollection();
         $this->economyEntries = new ArrayCollection();
         $this->logEntries = new ArrayCollection();
+    }
+
+    public function getCompletedAt(): ?\DateTime
+    {
+        return $this->completedAt;
+    }
+
+    public function setCompletedAt(?\DateTime $completedAt): self
+    {
+        $this->completedAt = $completedAt;
+
+        return $this;
     }
 
     public function getCaseWorker(): ?User
@@ -147,6 +179,18 @@ class Process extends AbstractEntity
     public function setChannel(?Channel $channel): self
     {
         $this->channel = $channel;
+
+        return $this;
+    }
+
+    public function getReason(): ?Reason
+    {
+        return $this->reason;
+    }
+
+    public function setReason(?Reason $reason): self
+    {
+        $this->reason = $reason;
 
         return $this;
     }
@@ -342,6 +386,18 @@ class Process extends AbstractEntity
                 $logEntry->setProcess(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPoliceReport(): ?bool
+    {
+        return $this->policeReport;
+    }
+
+    public function setPoliceReport(?bool $policeReport): self
+    {
+        $this->policeReport = $policeReport;
 
         return $this;
     }

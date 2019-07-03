@@ -18,6 +18,7 @@ use Kontrolgruppen\CoreBundle\Service\ConclusionService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Twig\TwigFilter;
 
 class TwigExtension extends AbstractExtension
 {
@@ -44,6 +45,14 @@ class TwigExtension extends AbstractExtension
         $this->urlGenerator = $urlGenerator;
     }
 
+    public function getFilters()
+    {
+        return [
+            new TwigFilter('yes_no', [$this, 'booleanYesNoFilter']),
+            new TwigFilter('true_false', [$this, 'booleanTrueFalseFilter']),
+        ];
+    }
+
     public function getFunctions()
     {
         return [
@@ -58,6 +67,32 @@ class TwigExtension extends AbstractExtension
         ];
     }
 
+    public function booleanTrueFalseFilter($value)
+    {
+        if (null === $value) {
+            return $this->translator->trans('common.boolean.null');
+        }
+
+        if ($value) {
+            return $this->translator->trans('common.boolean.true');
+        }
+
+        return $this->translator->trans('common.boolean.false');
+    }
+
+    public function booleanYesNoFilter($value)
+    {
+        if (null === $value) {
+            return $this->translator->trans('common.boolean.null');
+        }
+
+        if ($value) {
+            return $this->translator->trans('common.boolean.yes');
+        }
+
+        return $this->translator->trans('common.boolean.no');
+    }
+
     public function getEnumTranslation(string $value, $enum)
     {
         $className = 'Kontrolgruppen\\CoreBundle\\DBAL\\Types\\'.$enum;
@@ -67,7 +102,6 @@ class TwigExtension extends AbstractExtension
 
     public function getConclusionClassTranslation(string $className)
     {
-        // @TODO: Replace with event.
         return $this->conclusionService->getTranslation($className);
     }
 
@@ -92,6 +126,8 @@ class TwigExtension extends AbstractExtension
                 return 'fa-archive';
             case 'show':
                 return 'fa-eye';
+            case 'hide':
+                return 'fa-eye-slash';
             case 'edit':
                 return 'fa-pencil-alt';
             case 'report':
@@ -108,6 +144,10 @@ class TwigExtension extends AbstractExtension
                 return 'fa-sort-down';
             case 'layer-group':
                 return 'fa-layer-group';
+            case 'process-complete':
+                return 'fa-door-closed';
+            case 'process-resume':
+                return 'fa-door-open';
             default:
                 return '';
         }

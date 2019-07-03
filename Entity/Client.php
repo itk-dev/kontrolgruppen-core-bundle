@@ -73,6 +73,24 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
      */
     private $process;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned()
+     */
+    private $selfEmployed;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned()
+     */
+    private $worksInMajorCompany;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned()
+     */
+    private $notEmployed;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -182,6 +200,42 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
     public function setProcess(Process $process): self
     {
         $this->process = $process;
+
+        return $this;
+    }
+
+    public function getSelfEmployed(): ?bool
+    {
+        return $this->selfEmployed;
+    }
+
+    public function setSelfEmployed(?bool $selfEmployed): self
+    {
+        $this->selfEmployed = $selfEmployed;
+
+        return $this;
+    }
+
+    public function getWorksInMajorCompany(): ?bool
+    {
+        return $this->worksInMajorCompany;
+    }
+
+    public function setWorksInMajorCompany(?bool $worksInMajorCompany): self
+    {
+        $this->worksInMajorCompany = $worksInMajorCompany;
+
+        return $this;
+    }
+
+    public function getNotEmployed(): ?bool
+    {
+        return $this->notEmployed;
+    }
+
+    public function setNotEmployed(?bool $notEmployed): self
+    {
+        $this->notEmployed = $notEmployed;
 
         return $this;
     }

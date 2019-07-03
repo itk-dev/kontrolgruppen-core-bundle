@@ -1,0 +1,79 @@
+{{ form_start(form, {
+      attr: {
+          'data-yes-no-message': 'process.complete.confirm'|trans,
+      }
+}) }}
+    <p>Sagen afsluttes med følgende oplysninger</p>
+
+    <ul class="list-group mb-3">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    {{ 'process.complete.processing_time'|trans }}
+                </div>
+                <div class="col-12 col-sm-6">
+                    <strong>{{ process.createdAt|date('d. F Y') }} – {{ 'now'|date('d. F Y') }}
+
+                    {# @see https://stackoverflow.com/questions/15657687/twig-date-difference #}
+                    {% set start_date = process.createdAt %}
+                    {% set end_date = 'now' %}
+                    {% set days = date(end_date).diff(date(start_date)).days + 1 %}
+                    ({{ 'process.complete.processing_time_value'|transchoice(days, {'%days%': days}) }})</strong>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    {{ 'process.complete.case_worker'|trans }}
+                </div>
+                <div class="col-12 col-sm-6">
+                    <strong>{{ process.caseWorker }}</strong>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    {{ 'process.complete.police_report'|trans }}
+                </div>
+                <div class="col-12 col-sm-6">
+                    {% if process.policeReport is null %}
+                        <strong class="text-danger">{{ 'common.empty_field_value'|trans }}</strong>
+                        <a class="ml-3" href="{{ path('process_edit', {id: process.id, referer: app.request.pathinfo}) }}">{{ 'common.actions.edit'|trans }}</a>
+                    {% else %}
+                        <strong>{{ process.policeReport|yes_no }}</strong>
+                    {% endif %}
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    {{ 'process.complete.court_decision'|trans }}
+                </div>
+                <div class="col-12 col-sm-6">
+                    {% if (process.courtDecision|default(null)) is null %}
+                        <strong class="text-danger">{{ 'common.empty_field_value'|trans }}</strong>
+                        <a class="ml-3" href="{{ path('process_edit', {id: process.id, referer: app.request.pathinfo}) }}">{{ 'common.actions.edit'|trans }}</a>
+                    {% else %}
+                        <strong>{{ process.courtDecision|yes_no }}</strong>
+                    {% endif %}
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    {{ 'process.complete.status'|trans }}
+                </div>
+                <div class="col-12 col-sm-6">
+                    {{ form_widget(form.processStatus) }}
+                </div>
+            </div>
+        </li>
+    </ul>
+
+<button
+    class="btn btn-success float-right pr-5 pl-5">{{ 'process.complete.submit'|trans }}</button>
+{{ form_end(form) }}

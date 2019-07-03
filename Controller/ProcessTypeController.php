@@ -39,6 +39,7 @@ class ProcessTypeController extends BaseController
     public function new(Request $request): Response
     {
         $processType = new ProcessType();
+        $processType->setNetDefaultValue($this->getParameter('kontrolgruppen_core.net_default_value'));
         $form = $this->createForm(ProcessTypeType::class, $processType);
         $form->handleRequest($request);
 

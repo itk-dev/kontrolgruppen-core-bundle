@@ -16,6 +16,7 @@ use Kontrolgruppen\CoreBundle\Entity\QuickLink;
 use Kontrolgruppen\CoreBundle\Entity\Reminder;
 use Kontrolgruppen\CoreBundle\Service\MenuService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -71,20 +72,25 @@ class BaseController extends AbstractController
         // Add global navigation.
         $parameters['globalMenuItems'] = $this->menuService->getGlobalNavMenu($path);
 
-        // If this is a route beneath the proces/{id}/, attach changeProcessStatusForm and recent activity
-        if (1 === preg_match('/^\/process\/[0-9]+/', $path) && isset($parameters['process'])) {
-            $changeProcessStatusForm = $this->createChangeProcessStatusForm($parameters['process']);
-            $this->handleChangeProcessStatusForm($request, $changeProcessStatusForm);
+        if ('process_complete' !== $request->get('_route')) {
+            // If this is a route beneath the proces/{id}/, attach changeProcessStatusForm.
+            if (1 === preg_match('/^\/process\/[0-9]+/', $path) && isset($parameters['process'])) {
+                $changeProcessStatusForm = $this->createChangeProcessStatusForm($parameters['process']);
+                $this->handleChangeProcessStatusForm(
+                    $request,
+                    $changeProcessStatusForm
+                );
 
-            $parameters['changeProcessStatusForm'] = $changeProcessStatusForm->createView();
+                $parameters['changeProcessStatusForm'] = $changeProcessStatusForm->createView();
 
-            $parameters['recentActivity'] = $this->getDoctrine()->getRepository(
-                ProcessLogEntry::class
-            )->getLatestEntriesByLevel(
-                ProcessLogEntryLevelEnumType::NOTICE,
-                10,
-                $parameters['process']
-            );
+                $parameters['recentActivity'] = $this->getDoctrine()->getRepository(
+                    ProcessLogEntry::class
+                )->getLatestEntriesByLevel(
+                    ProcessLogEntryLevelEnumType::NOTICE,
+                    10,
+                    $parameters['process']
+                );
+            }
         }
 
         return parent::render($view, $parameters, $response);
@@ -122,5 +128,25 @@ class BaseController extends AbstractController
         if ($changeProcessStatusForm->isSubmitted() && $changeProcessStatusForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
         }
+    }
+
+    /**
+     * @param string $route
+     * @param array  $parameters
+     * @param int    $status
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function redirectToReferer(string $route, array $parameters = [], int $status = 302): RedirectResponse
+    {
+        // Check for referer in query string.
+        if (null !== $request = $this->requestStack->getCurrentRequest()) {
+            $referer = $request->query->get('referer');
+            if (null !== $referer) {
+                return $this->redirect($referer);
+            }
+        }
+
+        return $this->redirectToRoute($route, $parameters, $status);
     }
 }

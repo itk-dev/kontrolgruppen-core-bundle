@@ -17,8 +17,10 @@ final class JournalEntryEnumType extends AbstractEnumType
     public const NOTE = 'NOTE';
     public const INTERNAL_NOTE = 'INTERNAL_NOTE';
 
-    protected static $choices = [
+    public const TRANSLATIONS = [
         self::NOTE => 'common.enum.journal_entry.note',
         self::INTERNAL_NOTE => 'common.enum.journal_entry.internal_note',
     ];
+
+    protected static $choices = self::TRANSLATIONS;
 }

@@ -11,6 +11,7 @@
                 <th>{{ knp_pagination_sortable(pagination, 'process.table.client_cpr'|trans , 'e.clientCPR')|raw }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'process.table.case_worker'|trans , 'caseWorker.id')|raw }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'process.table.channel'|trans , 'channel.id')|raw }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'process.table.reason'|trans , 'reason.id')|raw }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'process.table.process_type'|trans , 'processType.id')|raw }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'process.table.service'|trans , 'service.id')|raw }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'process.table.process_status'|trans , 'processStatus.id')|raw }}</th>
@@ -24,6 +25,7 @@
                     <td>{{ process.clientCPR }}</td>
                     <td>{{ process.caseWorker }}</td>
                     <td>{{ process.channel }}</td>
+                    <td>{{ process.reason }}</td>
                     <td>{{ process.processType }}</td>
                     <td>{{ process.service }}</td>
                     <td>{{ process.processStatus }}</td>

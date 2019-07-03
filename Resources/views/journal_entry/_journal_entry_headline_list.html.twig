@@ -1,35 +1,39 @@
 {% block journal_entry_list %}
     {% set max_iterations = limit is defined ? min(journalEntries|length, limit) : journalEntries|length %}
-
-    {# TODO: Styling so it becomes more compact. #}
-
     <div class="mb-3 p-3">
         {% for journalEntry in journalEntries|slice(0, max_iterations) %}
-            <div class="row bg-light mb-2">
-                <div class="col-2 pt-2">
-                    <span class="text-muted d-block">{{ journalEntry.createdAt|date('d/m Y') }}</span>
+            <div class="row bg-light mb-2 pb-2">
+                <div class="col-12 col-sm-4 col-lg-2 pt-2">
+                    <p class="mb-0">{{ journalEntry.createdAt|localizeddate('short', 'none') }}</p>
                 </div>
-                <div class="col-8 pt-2">
-                    <p class="mb-0"><strong><a
-                                href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}">{{ journalEntry.title }}</a></strong>
+                <div class="col-12 col-sm-8 col-lg-10 pt-2">
+                        {% if not process.completedAt %}
+                            <strong><a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="text-dark">{{ journalEntry.title }}</a></strong>
+                        {% else %}
+                            <strong>{{ journalEntry.title }}</strong>
+                        {% endif %}
                     </p>
                 </div>
-                <div class="col-2 pt-2 text-right">
-                    <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-dark mb-1"
-                       data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
-                        <i class="fas {{ iconClass('show') }} fa-inverse fa-fw"></i>
-                    </a>
-                    <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-primary mb-1"
-                       data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
-                        <i class="fas {{ iconClass('edit') }} fa-inverse fa-fw"></i></a>
-                    </a>
-                </div>
-                <div class="col-2 pb-2">
-                    <span class="text-muted d-block">{{ journalEntry.createdBy }}</span>
+                <div class="col-4 col-lg-2 pt-2">
                     {% if journalEntry.type == 'NOTE' %}
                         <span class="badge badge-info">{{ 'common.enum.journal_entry.note'|trans }}</span>
                     {% elseif journalEntry.type == 'INTERNAL_NOTE' %}
                         <span class="badge badge-warning">{{ 'common.enum.journal_entry.internal_note'|trans }}</span>
+                    {% endif %}
+                </div>
+                <div class="col-4 col-lg-4 pt-2">
+                    <p class="text-muted mb-0">{{ journalEntry.createdBy }}</p>
+                </div>
+                <div class="col-4 col-lg-6 pt-2 text-right">
+                    {% if not process.completedAt %}
+                        <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-dark mb-1"
+                        data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
+                            <i class="fas {{ iconClass('show') }} fa-inverse fa-fw"></i>
+                        </a>
+                        <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-primary mb-1"
+                        data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
+                            <i class="fas {{ iconClass('edit') }} fa-inverse fa-fw"></i></a>
+                        </a>
                     {% endif %}
                 </div>
             </div>

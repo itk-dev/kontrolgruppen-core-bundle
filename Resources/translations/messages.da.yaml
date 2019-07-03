@@ -35,6 +35,25 @@ channel:
     btns:
         create_new: Opret ny kanal
 
+reason:
+    edit:
+        title: Rediger årsag
+    form:
+        name: Navn
+        update: Gem
+    index:
+        title: Årsager
+    menu_title: Årsager
+    new:
+        title: Opret årsag
+    show:
+        title: Årsag
+    table:
+        id: ID
+        name: Navn
+    btns:
+        create_new: Opret ny årsag
+
 client:
     edit:
         title: Rediger klient
@@ -46,10 +65,13 @@ client:
         first_name: Fornavn
         id: ID
         last_name: Efternavn
+        not_employed: Ikke i arbejde
         number_of_children: Antal børn
         postal_code: Postnummer
+        self_employed: Driver selvstændig virksomhed
         telephone: Telefon
         update: Gem
+        works_in_major_company: Ansat i større virksomhed
     show:
         title: Klient
     table:
@@ -60,10 +82,12 @@ client:
         first_name: Fornavn
         id: ID
         last_name: Efternavn
+        not_employed: Ikke i arbejde
         number_of_children: Antal børn
         postal_code: Postnummer
+        self_employed: Driver selvstændig virksomhed
         telephone: Telefon
-
+        works_in_major_company: Ansat i større virksomhed
 common:
     actions:
         close: Luk
@@ -78,17 +102,16 @@ common:
         done: Udført
     back_to_list: Tilbage til liste
     boolean:
-        'true': Ja
-        'false': Nej
+        'null': ''
+        'True': Sandt
+        'False': Falsk
+        'true': sandt
+        'false': falsk
+        Yes: Ja
+        No: Nej
+        yes: ja
+        no: nej
     choice_all: Alle
-    day:
-        monday: Mandag
-        tuesday: Tirsdag
-        wednesday: Onsdag
-        thursday: Torsdag
-        friday: Fredag
-        saturday: Lørdag
-        sunday: Søndag
     enum:
         date_interval:
             this_week: Denne uge
@@ -118,6 +141,7 @@ common:
         by: af
     title: Kontrolgruppen
     loading: Henter data ...
+    empty_field_value: Feltet er ikke udfyldt
 
 conclusion:
     edit:
@@ -229,6 +253,8 @@ journal_entry:
         title: Journal
     new:
         title: Opret nyt journalindlæg
+    new_process_status: Ny status
+    process_status_changed: Sagsstatus ændret
     revision:
         action: Hændelse
         actions:
@@ -240,7 +266,7 @@ journal_entry:
             body: Tekst
             title: Overskrift
             type: Type
-        headline: Ændringslog
+        headline: Hændelseslog
         table:
             action: Hændelse
             date: Dato
@@ -281,6 +307,7 @@ global_nav:
 
 menu:
     menu_title:
+        reason: Årsager
         channel: Kanaler
         client: Klient
         conclusion: Konklusion
@@ -292,7 +319,9 @@ menu:
         process_type: Sagstyper
         quick_link: Genveje
         reminder: Påmindelser
+        revenue: Provenu
         service: Ydelser
+        log: Log
 
 navigation:
     main:
@@ -307,15 +336,38 @@ process:
     actions:
         reminders: Påmindelser
         journal_quickview: Senest i journal
+    complete:
+        cancel: Fortryd afslutning
+        case_worker: Sagsbehandler
+        complete: Afslut sag
+        confirm: Er du sikker på at du vil afslutte sagen?
+        court_decision: Rettens afgørelse
+        police_report: Sagen er politianmeldt
+        processing_time: Sagens behandlingstid
+        processing_time_value: 'En dag|%days% dage'
+        # # @see https://symfony.com/doc/current/translation/message_format.html#pluralization
+        # processing_time_value: >
+        #   {days, plural,
+        #       =0 {Nul dage}
+        #       one {én dag}
+        #       other {%days% dage}
+        #   }
+        status: Status ved sagens afslutning
+        submit: Godkend afslutning af sag
+        title: Afslut sag %case_number%
+    resume:
+        confirm: Er du sikker på at du vil genoptage sagen?
     edit:
         title: Rediger sag
     form:
         case_worker: Sagbehandler
+        reason: Årsag
         change_process_status:
             placeholder: Vælg sagsstatus
             save: Gem ny status
         channel: Kanal
         client_cpr: Klient CPR
+        police_report: Er sagen politianmeldt?
         process_status: Sagsstatus
         process_type: Sagstype
         service: Ydelse
@@ -333,6 +385,7 @@ process:
         case_number: Sagsnummer
         case_worker: Sagsbehandler
         channel: Kanal
+        reason: Årsag
         client_adress: Klient adresse
         client_cpr: Klient CPR
         client_first_name: Fornavn
@@ -343,8 +396,10 @@ process:
         internal_note: Seneste interne notater
         journal: Journal
         note: Seneste notater
+        police_report: Er sagen politianmeldt?
         process_status: Status
         process_type: Type
+        processing_time: Sagens behandlingstid
         reminders: Påmindelser
         reminders_open: Vis påmindelser
         service: Ydelse
@@ -356,6 +411,13 @@ process:
     btns:
         create_new: Opret ny sag
         create_report: Sagsrapport
+        complete: Afslut sag
+        resume: Genoptag sag
+    completed_message: Sagen er afsluttet og kan ikke længere redigeres
+
+process_log:
+    index:
+        title: Ændringslog
     revision:
         headline: Ændringslog
         action_type:
@@ -366,6 +428,7 @@ process:
         table:
             action: Hændelse
             action_view: Vis detaljer
+            action_hide: Skjul detaljer
             actions: Handlinger
             date: Dato
             change_key: Felt
@@ -378,6 +441,8 @@ process:
                 weighted_conclusion: Konklusion
                 reminder: Påmindelse
                 client: Klient
+                service_economy_entry: Ydelse registrering
+                base_economy_entry: Konto registrering
             log_entry:
                 type: Type
                 process:
@@ -387,6 +452,9 @@ process:
                     service: Ydelse
                     process_type: Type
                     process_status: Status
+                    reason: Årsag
+                    police_report: Politianmeldt
+                    case_worker: Sagsbehandler
                 client:
                     first_name: Fornavn
                     last_name: Efternavn
@@ -396,6 +464,9 @@ process:
                     telephone: Telefon
                     number_of_children: Antal børn
                     car_registration_number: Bil registeringsnummer
+                    works_in_major_company: Ansat i større virksomhed
+                    not_employed: Ikke i arbejde
+                    self_employed: Driver selvstændig virksomhed
                 journal_entry:
                     title: Titel
                     body: Tekst
@@ -408,6 +479,23 @@ process:
                     conclusion: Konklusion
                 reminder:
                     message: Besked
+                    date: Dato og tidspunkt
+                    finished: Afsluttet
+                service_economy_entry:
+                    amount: Beløb
+                    type: Type
+                    period_from: Fra
+                    period_to: Til
+                    amount_period: Beløbsinterval
+                    repayment_amount: Tilbagebetalingskrav
+                    service: Ydelse
+                base_economy_entry:
+                    amount: Beløb
+                    type: Type
+                    text: Tekst
+                    date: Dato
+                    arrear: Restance
+                    account: Konto
 
 process_status:
     edit:
@@ -435,6 +523,7 @@ process_status:
     btns:
         create_new: Opret ny sagsstatus
 
+
 process_type:
     edit:
         title: Rediger sagstype
@@ -442,6 +531,7 @@ process_type:
         conclusion_class: Konklusionstype
         hide_in_dashboard: Skjul på dashboard
         name: Navn
+        net_default_value: Netto standardværdi
         process_statuses: Tilkoblede sagsstatusser
         services: Tilkoblede ydelser
         update: Gem
@@ -457,6 +547,7 @@ process_type:
         hide_in_dashboard: Skjul på dashboard
         id: ID
         name: Navn
+        net_default_value: Netto standardværdi
         process_statuses: Tilkoblede sagsstatusser
         services: Tilkoblede ydelser
     btns:
@@ -493,6 +584,7 @@ reminder:
         title: Rediger påmindelse
     form:
         date: Dato
+        date_help: Vælg hvornår påmindelsen skal aktiveres
         time: Tidspunkt
         finished: Afsluttet
         message: Besked
@@ -515,6 +607,23 @@ reminder:
         create: Opret ny påmindelse
     show:
         title: Påmindelse
+
+revenue:
+    calculate_button: Vis provenu
+    net_multiplier: Nettoprocent
+    subtitle: Tilbagebetalingskrav overfor klient
+    table:
+        repayment:
+            net_sum_title: Netto samlet tilbagebetalingskrav i kr (KL).
+            sum_title: Samlet tilbagebetalingskrav i kr.
+            no_records_found: Ingen tilbagebetalingskrav
+        future_savings:
+            net_sum_title: Netto fremadrettet besparelse i kr (KL).
+            sum_title: Samlet fremadrettet besparelse i kr.
+            no_records_found: Ingen fremadrettet besparelse
+        collective_net_sum:
+            title: Samlet nettoopgørelse (KL)
+    title: Provenu
 
 search:
     headline: Søgning

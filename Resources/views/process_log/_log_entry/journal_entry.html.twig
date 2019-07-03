@@ -1,0 +1,17 @@
+<ul class="list-group">
+    {% if title is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.journal_entry.title'|trans }}: {{ title ?: '-' }}
+    </li>
+    {% endif %}
+    {% if body is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.journal_entry.body'|trans }}: {{ body|striptags ?: '-' }}
+    </li>
+    {% endif %}
+    {% if type is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.journal_entry.type'|trans }}: {{ enumTranslation(type, 'JournalEntryEnumType') }}
+    </li>
+    {% endif %}
+</ul>

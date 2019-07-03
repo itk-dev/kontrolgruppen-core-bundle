@@ -6,12 +6,29 @@
     <div class="row">
         <div class="col">
             <h1 class="float-left">{{ 'process.show.title'|trans }} {{ process.caseNumber }}</h1>
-            <a href="TODO: report path" class="btn btn-sm btn-outline-primary float-right"><i
+            {% if not process.completedAt %}
+                <a href="{{ path('process_complete', {'id': process.id}) }}" class="btn btn-sm btn-outline-danger float-right ml-3"><i
+                        class="fas {{ iconClass('process-complete') }} mr-2"></i>{{ 'process.btns.complete'|trans }}</a>
+            {% elseif is_granted('ROLE_ADMIN') %}
+                <form method="post" action="{{ path('process_resume', {'id': process.id}) }}" data-yes-no-message="{{ 'process.resume.confirm'|trans }}">
+                    <button class="btn btn-sm btn-outline-danger float-right ml-3">
+                        <i class="fas {{ iconClass('process-resume') }} mr-2"></i>{{ 'process.btns.resume'|trans }}
+                    </button>
+                </form>
+            {% endif %}
+            <a href="TODO: report path" class="btn btn-sm btn-outline-secondary float-right ml-3"><i
                     class="fas {{ iconClass('report') }} mr-2"></i>{{ 'process.btns.create_report'|trans }}</a>
-            <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-sm btn-outline-warning float-right mr-3"><i
-                    class="fas {{ iconClass('reminder') }} mr-2"></i>{{ 'reminder.btns.create'|trans }}</a>
+            {% if not process.completedAt %}
+                <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-sm btn-outline-warning float-right ml-3"><i
+                        class="fas {{ iconClass('reminder') }} mr-2"></i>{{ 'reminder.btns.create'|trans }}</a>
+            {% endif %}
         </div>
     </div>
+
+    {% if process.completedAt %}
+        <div class="alert alert-warning">{{ 'process.completed_message'|trans }}</div>
+    {% endif %}
+
     <div class="row">
         <div class="col">
             <div class="bg-light border pt-3 pr-3 pl-3 mb-3">
@@ -25,13 +42,13 @@
                     <div class="col-6 col-lg-3">
                         <dl class="row">
                             <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.created_at'|trans }}</dd>
-                            <dt class="col-sm-12">{{ process.createdAt|date('Y-m-d') }}</dt>
+                            <dt class="col-sm-12">{{ process.createdAt|localizeddate('short', 'none') }}</dt>
                         </dl>
                     </div>
                     <div class="col-6 col-lg-3">
                         <dl class="row">
                             <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.updated_at'|trans }}</dd>
-                            <dt class="col-sm-12">{{ process.updatedAt|date('Y-m-d') }} {{ 'common.table.by'|trans }} {{ process.updatedBy }}</dt>
+                            <dt class="col-sm-12">{{ process.updatedAt|localizeddate('short', 'none') }} {{ 'common.table.by'|trans }} {{ process.updatedBy }}</dt>
                         </dl>
                     </div>
                     <div class="col-6 col-lg-3">
@@ -58,6 +75,12 @@
                             <dt class="col-sm-12">{{ process.service }}</dt>
                         </dl>
                     </div>
+                    <div class="col-6 col-lg-3">
+                        <dl class="row">
+                            <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.police_report'|trans }}</dd>
+                            <dt class="col-sm-12">{{ process.policeReport|yes_no }}</dt>
+                        </dl>
+                    </div>
                 </div>
             </div>
         </div>
@@ -66,8 +89,10 @@
     <div class="row">
         <div class="col-12">
             <h2 class="float-left">{{ 'process.table.journal'|trans }}</h2>
-            <a href="{{ path('journal_entry_new', {'process': process.id}) }}"
-               class="btn btn-success btn-sm float-right">{{ 'journal_entry.new.title'|trans }}</a>
+            {% if not process.completedAt %}
+                <a href="{{ path('journal_entry_new', {'process': process.id}) }}"
+                   class="btn btn-success btn-sm float-right">{{ 'journal_entry.new.title'|trans }}</a>
+            {% endif %}
         </div>
         <div class="col-12">
             {% include '@KontrolgruppenCore/journal_entry/_journal_entry_headline_list.html.twig'  with { journalEntries: latestJournalEntries } %}
@@ -77,14 +102,11 @@
         <div class="col">
             <a href="{{ path('process_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
 
-            <a href="{{ path('process_edit', {'id': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'process.edit.title'|trans }}</a>
+            {% if not process.completedAt %}
+                <a href="{{ path('process_edit', {'id': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'process.edit.title'|trans }}</a>
 
-            {{ include('@KontrolgruppenCore/process/_delete_form.html.twig') }}
+                {{ include('@KontrolgruppenCore/process/_delete_form.html.twig') }}
+            {% endif %}
         </div>
-    </div>
-
-    {# @TODO: Styling #}
-    <div style="margin-top: 100px; position: relative;">
-        {% include '@KontrolgruppenCore/process/_log_entries.html.twig' %}
     </div>
 {% endblock %}

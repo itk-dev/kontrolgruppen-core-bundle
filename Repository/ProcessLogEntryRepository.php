@@ -46,8 +46,10 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
         $level = ProcessLogEntryLevelEnumType::NOTICE,
         $limit = 5,
         Process $process = null
-    ) {
-        $qb = $this->createQueryBuilder('processLogEntry', 'processLogEntry.id');
+    )
+    {
+        $qb = $this->createQueryBuilder('processLogEntry',
+            'processLogEntry.id');
         $qb
             ->select(['processLogEntry', 'logEntry', 'process'])
             ->where('processLogEntry.level = :level')
@@ -67,6 +69,21 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
         $query = $qb->getQuery();
 
         return $query->getArrayResult();
+    }
+
+    public function getLatestLogEntries(Process $process, $level)
+    {
+        $qb = $this->createQueryBuilder('processLogEntry', 'processLogEntry.id');
+        $qb
+            ->select(['processLogEntry', 'logEntry'])
+            ->where('processLogEntry.process = :process')
+            ->setParameter('process', $process)
+            ->andWhere('processLogEntry.level = :level')
+            ->setParameter('level', $level)
+            ->innerJoin('processLogEntry.logEntry', 'logEntry')
+            ->orderBy('logEntry.loggedAt', 'DESC');
+
+        return $qb->getQuery();
     }
 
     protected function getLatestEntriesQuery(Process $process)

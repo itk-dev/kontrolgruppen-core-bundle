@@ -27,6 +27,7 @@ class Reminder extends AbstractEntity implements ProcessLoggableInterface
 
     /**
      * @ORM\Column(type="datetime")
+     * @Gedmo\Versioned()
      */
     private $date;
 
@@ -38,6 +39,7 @@ class Reminder extends AbstractEntity implements ProcessLoggableInterface
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned()
      */
     private $finished;
 

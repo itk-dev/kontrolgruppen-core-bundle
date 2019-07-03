@@ -1,5 +1,5 @@
 $('.js-revision-toggle').click(function () {
-  var journalId = $(this).data('journal-id');
+    var journalId = $(this).data('journal-id');
 
-  $('.js-revision-list[data-journal-id='+journalId+']').toggle();
+    $('.js-revision-list[data-journal-id=' + journalId + ']').toggle();
 });

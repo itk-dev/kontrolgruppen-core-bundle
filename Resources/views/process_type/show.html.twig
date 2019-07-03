@@ -31,12 +31,16 @@
             <tr>
                 <th>{{ 'process_type.table.hide_in_dashboard'|trans }}</th>
                 <td>
-                    {{ (process_type.hideInDashboard ? 'common.boolean.true' : 'common.boolean.false')|trans }}
+                    {{ process_type.hideInDashboard|yes_no }}
                 </td>
             </tr>
             <tr>
                 <th>{{ 'process_type.table.conclusion_class'|trans }}</th>
                 <td>{{ conclusionClassTranslation(process_type.conclusionClass) }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'process_type.table.net_default_value'|trans }}</th>
+                <td>{{ process_type.netDefaultValue|localizednumber('percent') }}</td>
             </tr>
             </tbody>
         </table>

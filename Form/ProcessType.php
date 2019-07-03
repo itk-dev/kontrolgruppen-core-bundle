@@ -51,10 +51,21 @@ class ProcessType extends AbstractType
             ->add('channel', null, [
                 'label' => 'process.form.channel',
             ])
+            ->add('reason', null, [
+                'label' => 'process.form.reason',
+            ])
             ->add('service', null, [
                 'label' => 'process.form.service',
                 'attr' => [
                     'disabled' => 'disabled',
+                ],
+            ])
+            ->add('policeReport', ChoiceType::class, [
+                'label' => 'process.form.police_report',
+                'choices' => [
+                    null => null,
+                    'common.boolean.yes' => true,
+                    'common.boolean.no' => false,
                 ],
             ])
         ;
