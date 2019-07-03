@@ -1,0 +1,20 @@
+<ul class="list-group">
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.service_economy_entry.amount'|trans }}: {{ amount|localizedcurrency('DKK') }}
+    </li>
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.service_economy_entry.type'|trans }}: {{ ('process_log.revision.table.log_entry.service_economy_entry.' ~ type|lower)|trans }}
+    </li>
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.service_economy_entry.amount_period'|trans }}: {{ enumTranslation(amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}
+    </li>
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.service_economy_entry.repayment_amount'|trans }}: {{ repayment_amount|localizedcurrency('DKK') }}
+    </li>
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.service_economy_entry.period_from'|trans }}: {{ periodFrom|date('d-m-Y h:m') }}
+    </li>
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.service_economy_entry.period_to'|trans }}: {{ periodTo|date('d-m-Y h:m') }}
+    </li>
+</ul>

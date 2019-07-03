@@ -169,15 +169,6 @@ class ProcessController extends BaseController
             JournalEntry::class
         )->getLatestEntries($process);
 
-        // Latest Log entries
-        $logEntriesPagination = $this->getDoctrine()->getRepository(
-            ProcessLogEntry::class
-        )->getLatestEntriesPaginated(
-            $process,
-            $request->query->get('page', 1),
-            20
-        );
-
         return $this->render(
             '@KontrolgruppenCore/process/show.html.twig',
             [
@@ -187,7 +178,6 @@ class ProcessController extends BaseController
                 ),
                 'process' => $process,
                 'latestJournalEntries' => $latestJournalEntries,
-                'logEntriesPagination' => $logEntriesPagination,
             ]
         );
     }

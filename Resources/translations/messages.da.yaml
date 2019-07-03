@@ -329,6 +329,7 @@ menu:
         reminder: Påmindelser
         revenue: Provenu
         service: Ydelser
+        log: Log
 
 navigation:
     main:
@@ -421,6 +422,10 @@ process:
         complete: Afslut sag
         resume: Genoptag sag
     completed_message: Sagen er afsluttet og kan ikke længere redigeres
+
+process_log:
+    index:
+        title: Ændringslog
     revision:
         headline: Ændringslog
         action_type:
@@ -493,6 +498,7 @@ process:
                     date: Dato
                     arrear: Restance
                     account: Konto
+
 process_status:
     edit:
         title: Rediger sagsstatus
