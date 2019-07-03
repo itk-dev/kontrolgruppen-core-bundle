@@ -41,10 +41,6 @@
                 <td>{{ client.numberOfChildren }}</td>
             </tr>
             <tr>
-                <th>{{ 'client.table.car_registration_number'|trans }}</th>
-                <td>{{ client.carRegistrationNumber }}</td>
-            </tr>
-            <tr>
                 <th>{{ 'client.table.self_employed'|trans }}</th>
                 <td>{{ client.selfEmployed }}</td>
             </tr>
@@ -55,6 +51,20 @@
             <tr>
                 <th>{{ 'client.table.not_employed'|trans }}</th>
                 <td>{{ client.notEmployed }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'client.table.cars'|trans }}</th>
+                <td>
+                    <ul class="list-group">
+                        {% for car in client.cars %}
+                            <li class="list-group-item">
+                                <div>{{ car.registrationNumber }}</div>
+                                <div>{{ 'client.table.car.shared_ownership'|trans }}: {{ car.sharedOwnership|yes_no }}</div>
+                                <div>{{ car.notes }}</div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
             </tr>
             </tbody>
         </table>

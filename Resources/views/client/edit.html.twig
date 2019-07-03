@@ -12,3 +12,9 @@
 
     {{ include('@KontrolgruppenCore/client/_form.html.twig', {'button_label': 'Update'}) }}
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('cars') }}
+{% endblock %}

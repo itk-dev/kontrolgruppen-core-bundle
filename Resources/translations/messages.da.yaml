@@ -59,10 +59,18 @@ client:
         title: Rediger klient
     form:
         address: Adresse
-        car_registration_number: Bils registreringsnummer
+        car:
+            registration_number: Registreringsnummer
+            shared_ownership: Fællesejet
+            notes: Noter
+            add: Tilføj bil
+            remove: Fjern bil
+        cars: Biler
         city: By
         cpr: CPR nummer
         first_name: Fornavn
+        has_drivers_license: Har kørekort
+        has_car: Har bil
         id: ID
         last_name: Efternavn
         not_employed: Ikke i arbejde
@@ -76,7 +84,9 @@ client:
         title: Klient
     table:
         address: Adresse
-        car_registration_number: Bils registreringsnummer
+        car:
+            shared_ownership: Fællesejet
+        cars: Biler
         city: By
         cpr: CPR nummer
         first_name: Fornavn
