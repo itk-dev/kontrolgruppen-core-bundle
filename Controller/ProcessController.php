@@ -14,7 +14,6 @@ use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Event\Doctrine\ORM\OnReadEventArgs;
 use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessCompleteType;

@@ -26,7 +26,7 @@ class ProcessLogController extends BaseController
      */
     public function index(Request $request, Process $process): Response
     {
-// Latest Log entries
+        // Latest Log entries
         $logEntriesPagination = $this->getDoctrine()->getRepository(
             ProcessLogEntry::class
         )->getLatestEntriesPaginated(
