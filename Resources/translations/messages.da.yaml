@@ -61,7 +61,7 @@ client:
         address: Adresse
         car:
             registration_number: Registreringsnummer
-            shared_ownership: Delt ejerskab
+            shared_ownership: Fællesejet
             notes: Noter
             add: Tilføj bil
             remove: Fjern bil
@@ -85,7 +85,7 @@ client:
     table:
         address: Adresse
         car:
-            shared_ownership: Delt ejerskab
+            shared_ownership: Fællesejet
         cars: Biler
         city: By
         cpr: CPR nummer
