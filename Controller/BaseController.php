@@ -10,6 +10,8 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
+use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Entity\QuickLink;
 use Kontrolgruppen\CoreBundle\Entity\Reminder;
 use Kontrolgruppen\CoreBundle\Service\MenuService;
@@ -80,6 +82,14 @@ class BaseController extends AbstractController
                 );
 
                 $parameters['changeProcessStatusForm'] = $changeProcessStatusForm->createView();
+
+                $parameters['recentActivity'] = $this->getDoctrine()->getRepository(
+                    ProcessLogEntry::class
+                )->getLatestEntriesByLevel(
+                    ProcessLogEntryLevelEnumType::NOTICE,
+                    10,
+                    $parameters['process']
+                );
             }
         }
 
