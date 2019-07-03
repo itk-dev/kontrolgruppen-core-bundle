@@ -19,7 +19,7 @@ class Car
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $RegistrationNumber;
+    private $registrationNumber;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -32,10 +32,10 @@ class Car
     private $notes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="cars")
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Client", inversedBy="cars")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $process;
+    private $client;
 
     public function getId(): ?int
     {
@@ -44,12 +44,12 @@ class Car
 
     public function getRegistrationNumber(): ?string
     {
-        return $this->RegistrationNumber;
+        return $this->registrationNumber;
     }
 
-    public function setRegistrationNumber(string $RegistrationNumber): self
+    public function setRegistrationNumber(string $registrationNumber): self
     {
-        $this->RegistrationNumber = $RegistrationNumber;
+        $this->registrationNumber = $registrationNumber;
 
         return $this;
     }
@@ -78,14 +78,14 @@ class Car
         return $this;
     }
 
-    public function getProcess(): ?Process
+    public function getClient(): ?Client
     {
-        return $this->process;
+        return $this->client;
     }
 
-    public function setProcess(?Process $process): self
+    public function setClient(?Client $client): self
     {
-        $this->process = $process;
+        $this->client = $client;
 
         return $this;
     }

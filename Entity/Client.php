@@ -10,6 +10,8 @@
 
 namespace Kontrolgruppen\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -62,12 +64,6 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
     private $numberOfChildren;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Gedmo\Versioned()
-     */
-    private $carRegistrationNumber;
-
-    /**
      * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="client", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
@@ -97,6 +93,16 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $hasCar;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Car", mappedBy="client", orphanRemoval=true, cascade={"persist", "remove"})
+     */
+    private $cars;
+
+    public function __construct()
+    {
+        $this->cars = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -187,18 +193,6 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
         return $this;
     }
 
-    public function getCarRegistrationNumber(): ?string
-    {
-        return $this->carRegistrationNumber;
-    }
-
-    public function setCarRegistrationNumber(?string $carRegistrationNumber): self
-    {
-        $this->carRegistrationNumber = $carRegistrationNumber;
-
-        return $this;
-    }
-
     public function getProcess(): ?Process
     {
         return $this->process;
@@ -267,6 +261,37 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
     public function setHasCar(?bool $hasCar): self
     {
         $this->hasCar = $hasCar;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Car[]
+     */
+    public function getCars(): Collection
+    {
+        return $this->cars;
+    }
+
+    public function addCar(Car $car): self
+    {
+        if (!$this->cars->contains($car)) {
+            $this->cars[] = $car;
+            $car->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCar(Car $car): self
+    {
+        if ($this->cars->contains($car)) {
+            $this->cars->removeElement($car);
+            // set the owning side to null (unless already changed)
+            if ($car->getClient() === $this) {
+                $car->setClient(null);
+            }
+        }
 
         return $this;
     }

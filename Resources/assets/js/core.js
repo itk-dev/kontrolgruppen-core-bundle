@@ -1,3 +1,5 @@
+/* global kontrolgruppenMessages */
+
 import 'whatwg-fetch';
 
 // Add fontawesome
@@ -63,10 +65,11 @@ require('../css/core.scss');
 
 require('./preventCPR/preventCPR');
 
-var translate = (text) => {
-    return ('undefined' !== typeof(kontrolgruppen_messages) && 'undefined' !== typeof(kontrolgruppen_messages[text]))
-        ? kontrolgruppen_messages[text] : text
-}
+let translate = (text) => {
+    return (typeof (kontrolgruppenMessages) !== 'undefined' && typeof (kontrolgruppenMessages[text]) !== 'undefined')
+        ? kontrolgruppenMessages[text] : text;
+};
+global.translate = translate;
 
 $(function () {
     $('[data-toggle="tooltip"]').tooltip(
@@ -118,9 +121,9 @@ $(function () {
         // Use preventCPR script for all text and textarea elements not marked with class .no-cpr-scanning
         $('input[type=text]:not(.no-cpr-scanning), textarea:not(.no-cpr-scanning)').preventCPRinText();
 
-        $('form[data-yes-no-message]').each(function() {
+        $('form[data-yes-no-message]').each(function () {
             $(this).on('submit', () => {
-                if (true !== $(this).data('submit-confirmed')) {
+                if ($(this).data('submit-confirmed') !== true) {
                     $.confirm({
                         title: $(this).data('yes-no-title') || null,
                         content: $(this).data('yes-no-message'),
@@ -130,19 +133,19 @@ $(function () {
                                 text: translate('common.boolean.Yes'),
                                 btnClass: 'btn-primary',
                                 action: () => {
-                                    $(this).data('submit-confirmed', true)
+                                    $(this).data('submit-confirmed', true);
                                     $(this).submit();
                                 }
                             },
                             no: {
                                 text: translate('common.boolean.No'),
-                                btnClass: 'btn-default',
+                                btnClass: 'btn-default'
                             }
                         }
-                    })
-                    return false
+                    });
+                    return false;
                 }
-            })
-        })
+            });
+        });
     });
 });

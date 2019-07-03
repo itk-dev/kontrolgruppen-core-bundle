@@ -11,6 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\Form;
 
 use Kontrolgruppen\CoreBundle\Entity\Client;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -41,9 +42,6 @@ class ClientType extends AbstractType
             ->add('numberOfChildren', null, [
                 'label' => 'client.form.number_of_children',
             ])
-            ->add('carRegistrationNumber', null, [
-                'label' => 'client.form.car_registration_number',
-            ])
             ->add('selfEmployed', null, [
                 'label' => 'client.form.self_employed',
             ])
@@ -52,6 +50,23 @@ class ClientType extends AbstractType
             ])
             ->add('notEmployed', null, [
                 'label' => 'client.form.not_employed',
+            ])
+            ->add('hasDriversLicense', null, [
+                'label' => 'client.form.has_drivers_license',
+            ])
+            ->add('hasCar', null, [
+                'label' => 'client.form.has_car',
+            ])
+            ->add('cars',  CollectionType::class, [
+                'entry_type' => CarType::class,
+                'entry_options' => ['label' => false],
+                'label' => 'client.form.cars',
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'attr' => array(
+                    'class' => 'my-selector',
+                ),
             ])
         ;
     }

@@ -1,5 +1,26 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.firstName) }}
+    {{ form_row(form.lastName) }}
+    {{ form_row(form.address) }}
+    {{ form_row(form.postalCode) }}
+    {{ form_row(form.city) }}
+    {{ form_row(form.telephone) }}
+    {{ form_row(form.numberOfChildren) }}
+
+    {{ form_row(form.selfEmployed) }}
+    {{ form_row(form.worksInMajorCompany) }}
+    {{ form_row(form.notEmployed) }}
+
+    {{ form_row(form.hasDriversLicense) }}
+    {{ form_row(form.hasCar) }}
+
+    <label>{{ 'client.form.cars'|trans }}</label>
+    <ul class="cars list-group" data-prototype="{{ form_widget(form.cars.vars.prototype)|e('html_attr') }}">
+        {% for car in form.cars %}
+            <li class="list-group-item m-2">{{ form_row(car) }}</li>
+        {% endfor %}
+    </ul>
+
 <button
     class="btn btn-success float-right pl-5 pr-5">{{ (button_label is defined ? (form.vars.full_name ~ '.form.' ~ button_label|lower) : 'common.actions.save')|trans }}</button>
 {{ form_end(form) }}
