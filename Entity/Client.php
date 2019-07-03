@@ -71,16 +71,19 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned()
      */
     private $selfEmployed;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned()
      */
     private $worksInMajorCompany;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned()
      */
     private $notEmployed;
 

@@ -10,6 +10,9 @@
 
 namespace Kontrolgruppen\CoreBundle\Twig;
 
+use Kontrolgruppen\CoreBundle\Entity\Conclusion;
+use Kontrolgruppen\CoreBundle\Entity\Process;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Kontrolgruppen\CoreBundle\Service\ConclusionService;
 use Twig\Extension\AbstractExtension;
@@ -22,6 +25,7 @@ class TwigExtension extends AbstractExtension
     private $conclusionService;
     private $translator;
     private $doctrine;
+    private $urlGenerator;
 
     /**
      * TwigExtension constructor.
@@ -32,11 +36,13 @@ class TwigExtension extends AbstractExtension
     public function __construct(
         ConclusionService $conclusionService,
         TranslatorInterface $translator,
-        RegistryInterface $doctrine
+        RegistryInterface $doctrine,
+        UrlGeneratorInterface $urlGenerator
     ) {
         $this->conclusionService = $conclusionService;
         $this->translator = $translator;
         $this->doctrine = $doctrine;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function getFilters()
@@ -57,7 +63,7 @@ class TwigExtension extends AbstractExtension
             ),
             new TwigFunction('enumTranslation', [$this, 'getEnumTranslation']),
             new TwigFunction('camelCaseToUnderscore', [$this, 'camelCaseToUnderscore']),
-            new TwigFunction('formatLogEntryValue', [$this, 'formatLogEntryValue']),
+            new TwigFunction('urlToProcessRelatedClass', [$this, 'urlToProcessRelatedClass']),
         ];
     }
 
@@ -154,22 +160,35 @@ class TwigExtension extends AbstractExtension
         return $result;
     }
 
-    public function formatLogEntryValue($value)
+    public function urlToProcessRelatedClass(string $class, int $id, int $processId)
     {
-        if (\is_string($value)) {
-            return $value;
+        $reflectedClass = new \ReflectionClass($class);
+
+        if ($reflectedClass->isSubclassOf(Conclusion::class)) {
+            return $this->urlGenerator->generate(
+                'conclusion_show',
+                [
+                    'id' => $id,
+                    'process' => $processId,
+                ]
+            );
+        } elseif (Process::class === $reflectedClass->getName()) {
+            return $this->urlGenerator->generate(
+                'process_show',
+                [
+                    'id' => $id,
+                ]
+            );
         }
 
-        if (\is_bool($value)) {
-            return $this->booleanYesNoFilter($value);
-        }
+        $route = $this->camelCaseToUnderscore($reflectedClass->getShortName()).'_show';
 
-        if (is_numeric($value)) {
-            return $value;
-        }
-
-        if ($value instanceof \DateTime) {
-            return $value->format('d-m-Y h:m');
-        }
+        return $this->urlGenerator->generate(
+            $route,
+            [
+                'id' => $id,
+                'process' => $processId,
+            ]
+        );
     }
 }

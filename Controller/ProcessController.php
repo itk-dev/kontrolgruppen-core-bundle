@@ -11,10 +11,10 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Knp\Component\Pager\PaginatorInterface;
+use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Event\Doctrine\ORM\OnReadEventArgs;
 use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessCompleteType;
@@ -102,6 +102,11 @@ class ProcessController extends BaseController
             50
         );
 
+        // Get latest log entries
+        $recentActivity = $this->getDoctrine()->getRepository(
+            ProcessLogEntry::class
+        )->getLatestEntriesByLevel(ProcessLogEntryLevelEnumType::NOTICE, 10);
+
         return $this->render(
             '@KontrolgruppenCore/process/index.html.twig',
             [
@@ -112,6 +117,7 @@ class ProcessController extends BaseController
                 'pagination' => $pagination,
                 'form' => $filterForm->createView(),
                 'query' => $query,
+                'recentActivity' => $recentActivity,
             ]
         );
     }
@@ -169,15 +175,6 @@ class ProcessController extends BaseController
             JournalEntry::class
         )->getLatestEntries($process);
 
-        // Latest Log entries
-        $logEntriesPagination = $this->getDoctrine()->getRepository(
-            ProcessLogEntry::class
-        )->getLatestEntriesPaginated(
-            $process,
-            $request->query->get('page', 1),
-            20
-        );
-
         return $this->render(
             '@KontrolgruppenCore/process/show.html.twig',
             [
@@ -187,7 +184,6 @@ class ProcessController extends BaseController
                 ),
                 'process' => $process,
                 'latestJournalEntries' => $latestJournalEntries,
-                'logEntriesPagination' => $logEntriesPagination,
             ]
         );
     }

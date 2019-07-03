@@ -1,0 +1,55 @@
+<ul class="list-group">
+    {% if caseNumber is defined %}
+        <li class="list-group-item">
+            {{ 'process_log.revision.table.log_entry.process.case_number'|trans }}: {{ caseNumber }}
+        </li>
+    {% endif %}
+
+    {% if caseWorker is defined %}
+        <li class="list-group-item">
+            {{ 'process_log.revision.table.log_entry.process.case_worker'|trans }}: {{ caseWorker.name }}
+        </li>
+    {% endif %}
+
+    {% if clientCPR is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.process.client_cpr'|trans }}: {{ clientCPR }}
+    </li>
+    {% endif %}
+
+    {% if channel is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.process.channel'|trans }}: {{ channel.name ?: '-' }}
+    </li>
+    {% endif %}
+
+    {% if service is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.process.service'|trans }}: {{ service.name ?: '-' }}
+    </li>
+    {% endif %}
+
+    {% if processType is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.process.process_type'|trans }}: {{ processType.name ?: '-' }}
+    </li>
+    {% endif %}
+
+    {% if processStatus is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.process.process_status'|trans }}: {{ processStatus.name ?: '-' }}
+    </li>
+    {% endif %}
+
+    {% if reason is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.process.reason'|trans }}: {{ reason.name ?: '-' }}
+    </li>
+    {% endif %}
+
+    {% if policeReport is defined %}
+        <li class="list-group-item">
+            {{ 'process_log.revision.table.log_entry.process.police_report'|trans }}: {{ policeReport|yes_no }}
+        </li>
+    {% endif %}
+</ul>

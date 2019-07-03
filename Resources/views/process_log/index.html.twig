@@ -1,0 +1,15 @@
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+
+{% block title %}{{ 'process_log.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1 class="float-left">{{ 'process_log.index.title'|trans }}</h1>
+    {# @TODO: Styling #}
+    <div style="margin-top: 100px; position: relative;">
+        {% include '@KontrolgruppenCore/process_log/_log_entries.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block sidebar_right %}
+    {{ include('@KontrolgruppenCore/process/_sidebar_activity.html.twig') }}
+{% endblock %}
