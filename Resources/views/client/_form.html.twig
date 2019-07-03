@@ -14,7 +14,7 @@
     {{ form_row(form.hasDriversLicense) }}
     {{ form_row(form.hasCar) }}
 
-    <label>{{ 'client.form.cars'|trans }}</label>
+    <label>{{ form_label(form.cars) }}</label>
     <ul class="cars list-group" data-prototype="{{ form_widget(form.cars.vars.prototype)|e('html_attr') }}">
         {% for car in form.cars %}
             <li class="list-group-item m-2">{{ form_row(car) }}</li>

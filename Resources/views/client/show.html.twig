@@ -59,7 +59,7 @@
                         {% for car in client.cars %}
                             <li class="list-group-item">
                                 <div>{{ car.registrationNumber }}</div>
-                                <div>{{ 'client.table.car.shared_ownership'|trans }}: {{ car.sharedOwnership }}</div>
+                                <div>{{ 'client.table.car.shared_ownership'|trans }}: {{ car.sharedOwnership|yes_no }}</div>
                                 <div>{{ car.notes }}</div>
                             </li>
                         {% endfor %}
