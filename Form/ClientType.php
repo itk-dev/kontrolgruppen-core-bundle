@@ -57,16 +57,16 @@ class ClientType extends AbstractType
             ->add('hasCar', null, [
                 'label' => 'client.form.has_car',
             ])
-            ->add('cars',  CollectionType::class, [
+            ->add('cars', CollectionType::class, [
                 'entry_type' => CarType::class,
                 'entry_options' => ['label' => false],
                 'label' => 'client.form.cars',
                 'by_reference' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'attr' => array(
+                'attr' => [
                     'class' => 'my-selector',
-                ),
+                ],
             ])
         ;
     }
