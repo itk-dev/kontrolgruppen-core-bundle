@@ -27,14 +27,19 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
 {
     protected $paginator;
 
-    public function __construct(RegistryInterface $registry, PaginatorInterface $paginator)
-    {
+    public function __construct(
+        RegistryInterface $registry,
+        PaginatorInterface $paginator
+    ) {
         parent::__construct($registry, ProcessLogEntry::class);
         $this->paginator = $paginator;
     }
 
-    public function getLatestEntriesPaginated(Process $process, int $page = 1, int $limit = 20)
-    {
+    public function getLatestEntriesPaginated(
+        Process $process,
+        int $page = 1,
+        int $limit = 20
+    ) {
         return $this->paginator->paginate(
             $this->getLatestEntriesQuery($process),
             $page,
@@ -46,10 +51,11 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
         $level = ProcessLogEntryLevelEnumType::NOTICE,
         $limit = 5,
         Process $process = null
-    )
-    {
-        $qb = $this->createQueryBuilder('processLogEntry',
-            'processLogEntry.id');
+    ) {
+        $qb = $this->createQueryBuilder(
+            'processLogEntry',
+            'processLogEntry.id'
+        );
         $qb
             ->select(['processLogEntry', 'logEntry', 'process'])
             ->where('processLogEntry.level = :level')
@@ -73,7 +79,10 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
 
     public function getLatestLogEntries(Process $process, $level)
     {
-        $qb = $this->createQueryBuilder('processLogEntry', 'processLogEntry.id');
+        $qb = $this->createQueryBuilder(
+            'processLogEntry',
+            'processLogEntry.id'
+        );
         $qb
             ->select(['processLogEntry', 'logEntry'])
             ->where('processLogEntry.process = :process')
@@ -88,7 +97,10 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
 
     protected function getLatestEntriesQuery(Process $process)
     {
-        $qb = $this->createQueryBuilder('processLogEntry', 'processLogEntry.id');
+        $qb = $this->createQueryBuilder(
+            'processLogEntry',
+            'processLogEntry.id'
+        );
         $qb
             ->select(['processLogEntry', 'logEntry'])
             ->where('processLogEntry.process = :process')
