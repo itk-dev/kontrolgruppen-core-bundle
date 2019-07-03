@@ -18,7 +18,7 @@
                     <td><a href="{{ path('process_show', {id: reminder.process.id}) }}">{{ reminder.process.caseNumber }}</a></td>
                     <td>{{ reminder.process.processType }}</td>
                     <td>{{ reminder.message }}</td>
-                    <td>{{ reminder.date ? reminder.date|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ reminder.date ? reminder.date|localizeddate('short') : '' }}</td>
                     <td>{{ reminder.finished|yes_no }}</td>
                     <td class="text-right">
                         {% if not reminder.finished %}
