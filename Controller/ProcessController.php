@@ -24,6 +24,7 @@ use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
