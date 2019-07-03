@@ -148,6 +148,11 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         return $this->settings;
     }
 
+    public function supportsSingleLogout()
+    {
+        return false;
+    }
+
     public function getRoles($samlResponse)
     {
         $roles = [];

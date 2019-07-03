@@ -30,6 +30,8 @@ class SAMLLogoutHandler implements LogoutHandlerInterface
         Response $response,
         TokenInterface $token
     ) {
-        $this->saml->getAuth()->logout();
+        if ($this->saml->supportsSingleLogout()) {
+            $this->saml->getAuth()->logout();
+        }
     }
 }
