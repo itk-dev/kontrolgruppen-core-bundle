@@ -420,6 +420,7 @@ process:
         create_report: Sagsrapport
         complete: Afslut sag
         resume: Genoptag sag
+    completed_message: Sagen er afsluttet og kan ikke længere redigeres
     revision:
         headline: Ændringslog
         action_type:
@@ -443,6 +444,8 @@ process:
                 weighted_conclusion: Konklusion
                 reminder: Påmindelse
                 client: Klient
+                service_economy_entry: Ydelse registrering
+                base_economy_entry: Konto registrering
             log_entry:
                 type: Type
                 process:
@@ -475,8 +478,21 @@ process:
                     conclusion: Konklusion
                 reminder:
                     message: Besked
-    completed_message: Sagen er afsluttet og kan ikke længere redigeres
-
+                service_economy_entry:
+                    amount: Beløb
+                    type: Type
+                    period_from: Fra
+                    period_to: Til
+                    amount_period: Beløbsinterval
+                    repayment_amount: Tilbagebetalingskrav
+                    service: Ydelse
+                base_economy_entry:
+                    amount: Beløb
+                    type: Type
+                    text: Tekst
+                    date: Dato
+                    arrear: Restance
+                    account: Konto
 process_status:
     edit:
         title: Rediger sagsstatus
