@@ -40,4 +40,16 @@
         {{ 'process_log.revision.table.log_entry.process.process_status'|trans }}: {{ processStatus.name ?: '-' }}
     </li>
     {% endif %}
+
+    {% if reason is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.process.reason'|trans }}: {{ reason.name ?: '-' }}
+    </li>
+    {% endif %}
+
+    {% if policeReport is defined %}
+        <li class="list-group-item">
+            {{ 'process_log.revision.table.log_entry.process.police_report'|trans }}: {{ policeReport|yes_no }}
+        </li>
+    {% endif %}
 </ul>
