@@ -18,7 +18,7 @@
             {% else %}
             <div class="row bg-light">
                 <div class="col-2 pt-2">
-                    <span class="text-muted d-block small">{{ entry.createdAt|date('d/m Y') }}</span>
+                    <span class="text-muted d-block small">{{ entry.createdAt|localizeddate('short', 'none') }}</span>
                 </div>
                 <div class="col-8 pt-2">
                     <p class="mb-0"><strong><a
