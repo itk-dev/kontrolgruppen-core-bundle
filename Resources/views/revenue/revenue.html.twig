@@ -3,13 +3,12 @@
 {% block title %}{{ 'revenue.title'|trans }}{% endblock %}
 
 {% block content %}
-
     <div class="row">
         <div class="col-12">
             <h1>{{ 'revenue.title'|trans }}</h1>
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
+            {{ form_start(revenueForm) }}
+            {{ form_widget(revenueForm) }}
+            {{ form_end(revenueForm) }}
         </div>
     </div>
     {% if revenue is defined %}

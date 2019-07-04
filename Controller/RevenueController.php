@@ -43,7 +43,7 @@ class RevenueController extends BaseController
             $parameters['revenue'] = $economyService->calculateRevenue($process);
         }
 
-        $parameters['form'] = $form->createView();
+        $parameters['revenueForm'] = $form->createView();
         $parameters['menuItems'] = $this->menuService->getProcessMenu($request->getPathInfo(), $process);
         $parameters['process'] = $process;
 
