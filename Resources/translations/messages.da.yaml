@@ -365,6 +365,7 @@ process:
         status: Status ved sagens afslutning
         submit: Godkend afslutning af sag
         title: Afslut sag %case_number%
+        process_completed: Sag afsluttet
     resume:
         confirm: Er du sikker på at du vil genoptage sagen?
     edit:
