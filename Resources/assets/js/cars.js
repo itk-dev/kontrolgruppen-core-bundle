@@ -5,7 +5,7 @@
 let $collectionHolder;
 
 let $addCarButton = $('<button type="button" class="btn btn-sm btn-primary cars-add-button">' + translate('client.form.car.add') + '</button>');
-let $newLinkLi = $('<li class="list-group-item m-2"></li>').append($addCarButton);
+let $newLinkLi = $('<li class="list-group-item"></li>').append($addCarButton);
 
 $(document).ready(function () {
     $collectionHolder = $('ul.cars');
@@ -49,7 +49,7 @@ function addCarForm ($collectionHolder, $newLinkLi) {
     $collectionHolder.data('index', index + 1);
 
     // Display the form in the page in an li, before the "Add a car" link li
-    let $newFormLi = $('<li class="list-group-item m-2"></li>').append(newForm);
+    let $newFormLi = $('<li class="list-group-item"></li>').append(newForm);
     $newLinkLi.before($newFormLi);
 
     // add a delete link to the new form
@@ -57,7 +57,7 @@ function addCarForm ($collectionHolder, $newLinkLi) {
 }
 
 function addCarFormDeleteLink ($carFormLi) {
-    let $removeFormButton = $('<button type="button" class="btn btn-sm btn-danger cars-remove-button">' + translate('client.form.car.remove') + '</button>');
+    let $removeFormButton = $('<button type="button" class="btn btn-sm btn-danger cars-remove-button float-right">' + translate('client.form.car.remove') + '</button>');
     $carFormLi.append($removeFormButton);
 
     $removeFormButton.on('click', function (e) {
