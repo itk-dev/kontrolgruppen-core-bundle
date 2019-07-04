@@ -2,8 +2,8 @@
     <div class="list-group">
         {% for log in recentActivity %}
             <a href="{{ urlToProcessRelatedClass(log.logEntry.objectClass, log.logEntry.objectId, log.process.id) }}" class="list-group-item list-group-item-action list-group-item-light">
-                <span class="d-block float-left text-muted">{{ log.logEntry.loggedAt|date('d-m-Y') }}</span>
-                <span class="d-block float-right text-muted">{{ 'process.show.title'|trans }}: {{ log.process.caseNumber }}</span>
+                <span class="d-block float-left text-muted small">{{ log.logEntry.loggedAt|date('d-m-Y') }}</span>
+                <span class="d-block float-right text-muted small">{{ 'process.show.title'|trans }}: {{ log.process.caseNumber }}</span>
                 <span class="d-block w-100 float-left text-dark"><i class="fas {{ iconClass('process') }} mr-3"></i>{{ ('process_log.revision.table.object_types.' ~ camelCaseToUnderscore((log.logEntry.objectClass|split('\\')|last)))|trans }} {{ ('process_log.revision.action_type.' ~ (log.logEntry.action|lower))|trans }}</span>
             </a>
         {% endfor %}
