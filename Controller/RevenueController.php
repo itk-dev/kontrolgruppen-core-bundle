@@ -31,10 +31,6 @@ class RevenueController extends BaseController
         $parameters = [];
 
         $formBuilder = $this->createFormBuilder();
-        $formBuilder->add('submit', SubmitType::class, [
-            'label' => 'revenue.calculate_button',
-        ]);
-
         $form = $formBuilder->getForm();
 
         $form->handleRequest($request);
@@ -43,7 +39,7 @@ class RevenueController extends BaseController
             $parameters['revenue'] = $economyService->calculateRevenue($process);
         }
 
-        $parameters['form'] = $form->createView();
+        $parameters['revenueForm'] = $form->createView();
         $parameters['menuItems'] = $this->menuService->getProcessMenu($request->getPathInfo(), $process);
         $parameters['process'] = $process;
 
