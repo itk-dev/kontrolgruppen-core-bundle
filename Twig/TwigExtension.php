@@ -10,18 +10,23 @@
 
 namespace Kontrolgruppen\CoreBundle\Twig;
 
+use Kontrolgruppen\CoreBundle\Entity\Conclusion;
+use Kontrolgruppen\CoreBundle\Entity\Process;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Kontrolgruppen\CoreBundle\Service\ConclusionService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Twig\TwigFilter;
+use Exception;
 
 class TwigExtension extends AbstractExtension
 {
     private $conclusionService;
     private $translator;
     private $doctrine;
+    private $urlGenerator;
 
     /**
      * TwigExtension constructor.
@@ -32,11 +37,13 @@ class TwigExtension extends AbstractExtension
     public function __construct(
         ConclusionService $conclusionService,
         TranslatorInterface $translator,
-        RegistryInterface $doctrine
+        RegistryInterface $doctrine,
+        UrlGeneratorInterface $urlGenerator
     ) {
         $this->conclusionService = $conclusionService;
         $this->translator = $translator;
         $this->doctrine = $doctrine;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function getFilters()
@@ -57,7 +64,7 @@ class TwigExtension extends AbstractExtension
             ),
             new TwigFunction('enumTranslation', [$this, 'getEnumTranslation']),
             new TwigFunction('camelCaseToUnderscore', [$this, 'camelCaseToUnderscore']),
-            new TwigFunction('formatLogEntryValue', [$this, 'formatLogEntryValue']),
+            new TwigFunction('urlToProcessRelatedClass', [$this, 'urlToProcessRelatedClass']),
         ];
     }
 
@@ -152,5 +159,44 @@ class TwigExtension extends AbstractExtension
         $result = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $camelCaseString));
 
         return $result;
+    }
+
+    /**
+     * @TODO: Handle cases where there is not a show route for the given entity.
+     */
+    public function urlToProcessRelatedClass(string $class, int $id, int $processId)
+    {
+        try {
+            $reflectedClass = new \ReflectionClass($class);
+
+            if ($reflectedClass->isSubclassOf(Conclusion::class)) {
+                return $this->urlGenerator->generate(
+                    'conclusion_show',
+                    [
+                        'id' => $id,
+                        'process' => $processId,
+                    ]
+                );
+            } elseif (Process::class === $reflectedClass->getName()) {
+                return $this->urlGenerator->generate(
+                    'process_show',
+                    [
+                        'id' => $id,
+                    ]
+                );
+            }
+
+            $route = $this->camelCaseToUnderscore($reflectedClass->getShortName()).'_show';
+
+            return $this->urlGenerator->generate(
+                $route,
+                [
+                    'id' => $id,
+                    'process' => $processId,
+                ]
+            );
+        } catch (Exception $exception) {
+            return '#';
+        }
     }
 }

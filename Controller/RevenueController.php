@@ -45,6 +45,7 @@ class RevenueController extends BaseController
 
         $parameters['form'] = $form->createView();
         $parameters['menuItems'] = $this->menuService->getProcessMenu($request->getPathInfo(), $process);
+        $parameters['process'] = $process;
 
         return $this->render(
             '@KontrolgruppenCore/revenue/revenue.html.twig',

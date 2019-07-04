@@ -36,6 +36,7 @@ class ClientController extends BaseController
         if (!isset($client)) {
             $client = new Client();
             $client->setProcess($process);
+            $process->setClient($client);
 
             $this->getDoctrine()->getManager()->persist($client);
             $this->getDoctrine()->getManager()->flush();

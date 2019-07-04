@@ -11,6 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Knp\Component\Pager\PaginatorInterface;
+use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
@@ -23,6 +24,7 @@ use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -101,6 +103,11 @@ class ProcessController extends BaseController
             50
         );
 
+        // Get latest log entries
+        $recentActivity = $this->getDoctrine()->getRepository(
+            ProcessLogEntry::class
+        )->getLatestEntriesByLevel(ProcessLogEntryLevelEnumType::NOTICE, 10);
+
         return $this->render(
             '@KontrolgruppenCore/process/index.html.twig',
             [
@@ -111,6 +118,7 @@ class ProcessController extends BaseController
                 'pagination' => $pagination,
                 'form' => $filterForm->createView(),
                 'query' => $query,
+                'recentActivity' => $recentActivity,
             ]
         );
     }
@@ -141,6 +149,11 @@ class ProcessController extends BaseController
             return $this->redirectToRoute('process_index');
         }
 
+        // Get latest log entries
+        $recentActivity = $this->getDoctrine()->getRepository(
+            ProcessLogEntry::class
+        )->getLatestEntriesByLevel(ProcessLogEntryLevelEnumType::NOTICE, 10);
+
         return $this->render(
             '@KontrolgruppenCore/process/new.html.twig',
             [
@@ -150,6 +163,7 @@ class ProcessController extends BaseController
                 ),
                 'process' => $process,
                 'form' => $form->createView(),
+                'recentActivity' => $recentActivity,
             ]
         );
     }

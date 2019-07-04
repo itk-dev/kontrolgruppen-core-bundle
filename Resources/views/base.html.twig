@@ -31,10 +31,15 @@
     <script>
         {# Global translated messages #}
         {% set messages = {} %}
-        {% for message in ['common.boolean.Yes', 'common.boolean.No'] %}
+        {% for message in [
+            'common.boolean.Yes',
+            'common.boolean.No',
+            'client.form.car.add',
+            'client.form.car.remove'
+        ] %}
         {% set messages = messages|merge({(message): message|trans}) %}
         {% endfor %}
-        var kontrolgruppen_messages = {{ messages|json_encode|raw }}
+        let kontrolgruppenMessages = {{ messages|json_encode|raw }};
     </script>
 </head>
 <body {% block body_attributes %}{% endblock %}>
