@@ -149,6 +149,11 @@ class ProcessController extends BaseController
             return $this->redirectToRoute('process_index');
         }
 
+        // Get latest log entries
+        $recentActivity = $this->getDoctrine()->getRepository(
+            ProcessLogEntry::class
+        )->getLatestEntriesByLevel(ProcessLogEntryLevelEnumType::NOTICE, 10);
+
         return $this->render(
             '@KontrolgruppenCore/process/new.html.twig',
             [
@@ -158,6 +163,7 @@ class ProcessController extends BaseController
                 ),
                 'process' => $process,
                 'form' => $form->createView(),
+                'recentActivity' => $recentActivity,
             ]
         );
     }
