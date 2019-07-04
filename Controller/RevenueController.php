@@ -31,10 +31,6 @@ class RevenueController extends BaseController
         $parameters = [];
 
         $formBuilder = $this->createFormBuilder();
-        $formBuilder->add('submit', SubmitType::class, [
-            'label' => 'revenue.calculate_button',
-        ]);
-
         $form = $formBuilder->getForm();
 
         $form->handleRequest($request);
