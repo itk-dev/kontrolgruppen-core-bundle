@@ -168,13 +168,13 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
             $samlRoles = $this->getSAMLRoles($attributes, $attribute);
             $rolesMap = $this->getRolesMap($userRoles);
 
-            foreach ($samlRoles as $field => $values) {
-                if (isset($rolesMap[$field])) {
-                    foreach ($values as $value) {
-                        if (isset($rolesMap[$field][$value])) {
-                            $roles[] = (array) $rolesMap[$field][$value];
-                        }
-                    }
+            if (isset($rolesMap['CN'])) {
+                $rolesMap = $rolesMap['CN'];
+            }
+
+            foreach ($samlRoles as $role) {
+                if (isset($rolesMap[$role])) {
+                    $roles[] = (array) $rolesMap[$role];
                 }
             }
         }
@@ -189,18 +189,7 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
 
     private function getSAMLRoles(array $attributes, string $attributeName)
     {
-        $roles = [];
-        if (isset($attributes[$attributeName]) && \is_array($attributes[$attributeName])) {
-            foreach ($attributes[$attributeName] as $line) {
-                if (preg_match_all('/(?P<name>[A-Z]+)=(?P<value>[^,]+)/', $line, $matches, PREG_SET_ORDER)) {
-                    foreach ($matches as $match) {
-                        $roles[$match['name']][] = $match['value'];
-                    }
-                }
-            }
-        }
-
-        return array_map('array_unique', $roles);
+        return $attributes[$attributeName] ?? [];
     }
 
     private function getRolesMap($settings)
