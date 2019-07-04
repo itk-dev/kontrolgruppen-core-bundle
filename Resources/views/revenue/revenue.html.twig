@@ -54,7 +54,7 @@
                 {% if revenue.futureSavingsSums|length > 0 %}
                     <tr>
                         <th>{{ 'revenue.table.future_savings.sum_title'|trans }}</th>
-                        <th class="w-20 text-right"><{{ revenue.futureSavingsSum|localizedcurrency('DKK') }}</th>
+                        <th class="w-20 text-right">{{ revenue.futureSavingsSum|localizedcurrency('DKK') }}</th>
                     </tr>
                     <tr>
                         <td>{{ 'revenue.table.future_savings.net_sum_title'|trans }}</td>
