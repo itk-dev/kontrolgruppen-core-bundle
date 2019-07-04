@@ -19,6 +19,7 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Twig\TwigFilter;
+use Exception;
 
 class TwigExtension extends AbstractExtension
 {
@@ -160,35 +161,42 @@ class TwigExtension extends AbstractExtension
         return $result;
     }
 
+    /**
+     * @TODO: Handle cases where there is not a show route for the given entity.
+     */
     public function urlToProcessRelatedClass(string $class, int $id, int $processId)
     {
-        $reflectedClass = new \ReflectionClass($class);
+        try {
+            $reflectedClass = new \ReflectionClass($class);
 
-        if ($reflectedClass->isSubclassOf(Conclusion::class)) {
+            if ($reflectedClass->isSubclassOf(Conclusion::class)) {
+                return $this->urlGenerator->generate(
+                    'conclusion_show',
+                    [
+                        'id' => $id,
+                        'process' => $processId,
+                    ]
+                );
+            } elseif (Process::class === $reflectedClass->getName()) {
+                return $this->urlGenerator->generate(
+                    'process_show',
+                    [
+                        'id' => $id,
+                    ]
+                );
+            }
+
+            $route = $this->camelCaseToUnderscore($reflectedClass->getShortName()).'_show';
+
             return $this->urlGenerator->generate(
-                'conclusion_show',
+                $route,
                 [
                     'id' => $id,
                     'process' => $processId,
                 ]
             );
-        } elseif (Process::class === $reflectedClass->getName()) {
-            return $this->urlGenerator->generate(
-                'process_show',
-                [
-                    'id' => $id,
-                ]
-            );
+        } catch (Exception $exception) {
+            return '#';
         }
-
-        $route = $this->camelCaseToUnderscore($reflectedClass->getShortName()).'_show';
-
-        return $this->urlGenerator->generate(
-            $route,
-            [
-                'id' => $id,
-                'process' => $processId,
-            ]
-        );
     }
 }
