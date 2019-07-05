@@ -68,9 +68,11 @@
                         </a>
                     </li>
                 </ul>
-                <span class="nav-text text-muted p-2">
-                    <i class="fas {{ iconClass('user') }} mr-2"></i><span class="">super-admin@example.com</span>
-                </span>
+                {% if app.user.username|default(false) %}
+                    <span class="nav-text text-muted p-2">
+                        <i class="fas {{ iconClass('user') }} mr-2"></i><span class="app-username">{{ app.user.username }}</span>
+                    </span>
+                {% endif %}
             </div>
         {% endblock %}
     </nav>
