@@ -10,7 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Kontrolgruppen\CoreBundle\Entity\Process;
