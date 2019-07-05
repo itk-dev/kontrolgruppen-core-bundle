@@ -10,7 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Kontrolgruppen\CoreBundle\Entity\Process;
@@ -31,10 +30,6 @@ class RevenueController extends BaseController
         $parameters = [];
 
         $formBuilder = $this->createFormBuilder();
-        $formBuilder->add('submit', SubmitType::class, [
-            'label' => 'revenue.calculate_button',
-        ]);
-
         $form = $formBuilder->getForm();
 
         $form->handleRequest($request);
@@ -43,7 +38,7 @@ class RevenueController extends BaseController
             $parameters['revenue'] = $economyService->calculateRevenue($process);
         }
 
-        $parameters['form'] = $form->createView();
+        $parameters['revenueForm'] = $form->createView();
         $parameters['menuItems'] = $this->menuService->getProcessMenu($request->getPathInfo(), $process);
         $parameters['process'] = $process;
 

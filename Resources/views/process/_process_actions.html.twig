@@ -1,8 +1,10 @@
 <a href="#" class="btn btn-sm btn-dark js-process-journal-quickview-button" data-process-id="{{ process.id }}" data-toggle="tooltip" data-placement="top"
-   title="{{ 'process.actions.journal_quickview'|trans }}">
+title="{{ 'process.actions.journal_quickview'|trans }}">
     <i class="fas {{ iconClass('show') }} fa-inverse"></i>
 </a>
-<a href="{{ path('reminder_index', {'process': process.id}) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="top"
-   title="{{ 'process.actions.reminders'|trans }}">
-    <i class="fas {{ iconClass('reminder') }} fa-inverse"></i></a>
-</a>
+{% if not process.completedAt %}
+    <a href="{{ path('reminder_index', {'process': process.id}) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="top"
+    title="{{ 'process.actions.reminders'|trans }}">
+        <i class="fas {{ iconClass('reminder') }} fa-inverse"></i></a>
+    </a>
+{% endif %}

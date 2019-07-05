@@ -5,7 +5,7 @@
 
     <div class="table-responsive js-process-table-results">
         <table class="table table-striped table-hover table-borderless thead-light">
-            <thead>
+            <thead class="small">
             <tr>
                 <th>{{ knp_pagination_sortable(pagination, 'process.table.case_number'|trans , 'e.caseNumber')|raw }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'process.table.client_cpr'|trans , 'e.clientCPR')|raw }}</th>
@@ -21,7 +21,12 @@
             <tbody>
             {% for process in pagination %}
                 <tr>
-                    <td><a href="{{ path('process_show', {'id': process.id}) }}">{{ process.caseNumber }}</a></td>
+                    <td>
+                        <a href="{{ path('process_show', {'id': process.id}) }}">{{ process.caseNumber }}
+                        {% if process.completedAt %}
+                            <span class="badge badge-secondary ml-1">{{ 'process.complete.process_completed'|trans }}</span>
+                        {% endif %}</a>
+                    </td>
                     <td>{{ process.clientCPR }}</td>
                     <td>{{ process.caseWorker }}</td>
                     <td>{{ process.channel }}</td>
@@ -35,7 +40,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="7">{{ 'common.no_records_found'|trans }}</td>
+                    <td colspan="9">{{ 'common.no_records_found'|trans }}</td>
                 </tr>
             {% endfor %}
             </tbody>

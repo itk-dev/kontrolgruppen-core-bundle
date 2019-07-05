@@ -6,7 +6,12 @@
             <tbody>
             {% for process in processes|slice(0, max_iterations) %}
                 <tr>
-                    <td><a href="{{ path('process_show', {'id': process.id}) }}">{{ process.caseNumber }}</a></td>
+                    <td>
+                        <a href="{{ path('process_show', {'id': process.id}) }}">{{ process.caseNumber }}
+                        {% if process.completedAt %}
+                            <span class="badge badge-secondary ml-1">{{ 'process.complete.process_completed'|trans }}</span>
+                        {% endif %}</a>
+                    </td>
                     <td>{{ process.processType }}</td>
                     <td>{{ process.clientCPR }}</td>
                     <td>{{ process.caseWorker }}</td>

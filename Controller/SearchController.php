@@ -33,7 +33,7 @@ class SearchController extends BaseController
         $qb->leftJoin('e.client', 'client');
         $qb->addSelect('client');
         $qb->where('e.caseNumber LIKE :search');
-        $qb->orWhere('client.cpr LIKE :search');
+        $qb->orWhere('e.clientCPR LIKE :search');
         $qb->orWhere('client.firstName LIKE :search');
         $qb->orWhere('client.lastName LIKE :search');
         $qb->orWhere('client.telephone LIKE :search');
