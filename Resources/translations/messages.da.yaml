@@ -98,6 +98,10 @@ client:
         self_employed: Driver selvstændig virksomhed
         telephone: Telefon
         works_in_major_company: Ansat i større virksomhed
+    sections:
+        generel_info: Generel information
+        employment: Ansættelsesforhold
+        transportation: Transport
 common:
     actions:
         close: Luk

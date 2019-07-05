@@ -1,47 +1,45 @@
 {% set show = (show is defined) ? show : true %}
 <div class="row">
     <div class="col">
-        <div class="bg-light p-3">
-            <div class="table-responsive">
-                <table class="table table-sm table-borderless small">
-                    <thead>
-                        <tr>
-                            <th>{{ 'process_log.revision.table.date'|trans }}</th>
-                            <th>{{ 'process_log.revision.table.action'|trans }}</th>
-                            <th>{{ 'process_log.revision.table.user'|trans }}</th>
-                            <th class="text-right w-25">{{ 'process_log.revision.table.actions'|trans }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for log in logEntriesPagination %}
-                        <tr class="accordion-toggle">
-                            <td>{{ log.logEntry.loggedAt|localizeddate('short') }}</td>
-                            <td>{{ ('process_log.revision.table.object_types.' ~ camelCaseToUnderscore((log.logEntry.objectClass|split('\\')|last)))|trans }} {{ ('process_log.revision.action_type.' ~ (log.logEntry.action|lower))|trans }}</td>
-                            <td>{{ log.logEntry.username }}</td>
-                            <td class="text-right">
-                                <a href="#collapse{{ log.logEntry.id }}" class="btn btn-sm btn-collapse {% if log.logEntry.data is empty %}disabled{% endif %}" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapse{{ log.logEntry.id }}" title="{{ 'process_log.revision.table.action_view'|trans }}">
-                                    <span class="btn-collapse-show"><i class="fas {{ iconClass('show') }} fa-xs"></i> {{ 'process_log.revision.table.action_view'|trans }}</span>
-                                    <span class="btn-collapse-hide"><i class="fas {{ iconClass('hide') }} fa-xs"></i> {{ 'process_log.revision.table.action_hide'|trans }}</span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr id="collapse{{ log.logEntry.id }}" class="collapse">
-                            <td colspan="4">
-                                {% if log.logEntry.data is not empty %}
-                                    {% include('@KontrolgruppenCoreBundle/process_log/_log_entry/' ~ camelCaseToUnderscore(log.logEntry.objectClass|split('\\')|last) ~ '.html.twig') with log.logEntry.data %}
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            <div>
-                {{ knp_pagination_render(logEntriesPagination, null, {}, {
-                    'position': 'centered',
-                    'size': 'small',
-                }) }}
-            </div>
+        <div class="table-responsive">
+            <table class="table table-sm table-borderless small table-hover">
+                <thead>
+                    <tr>
+                        <th>{{ 'process_log.revision.table.date'|trans }}</th>
+                        <th>{{ 'process_log.revision.table.action'|trans }}</th>
+                        <th>{{ 'process_log.revision.table.user'|trans }}</th>
+                        <th class="text-right w-25">{{ 'process_log.revision.table.actions'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in logEntriesPagination %}
+                    <tr class="accordion-toggle">
+                        <td>{{ log.logEntry.loggedAt|localizeddate('short') }}</td>
+                        <td>{{ ('process_log.revision.table.object_types.' ~ camelCaseToUnderscore((log.logEntry.objectClass|split('\\')|last)))|trans }} {{ ('process_log.revision.action_type.' ~ (log.logEntry.action|lower))|trans }}</td>
+                        <td>{{ log.logEntry.username }}</td>
+                        <td class="text-right">
+                            <a href="#collapse{{ log.logEntry.id }}" class="btn btn-sm btn-collapse {% if log.logEntry.data is empty %}disabled{% endif %}" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapse{{ log.logEntry.id }}" title="{{ 'process_log.revision.table.action_view'|trans }}">
+                                <span class="btn-collapse-show"><i class="fas {{ iconClass('show') }} fa-xs"></i> {{ 'process_log.revision.table.action_view'|trans }}</span>
+                                <span class="btn-collapse-hide"><i class="fas {{ iconClass('hide') }} fa-xs"></i> {{ 'process_log.revision.table.action_hide'|trans }}</span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr id="collapse{{ log.logEntry.id }}" class="collapse table-active">
+                        <td colspan="4">
+                            {% if log.logEntry.data is not empty %}
+                                {% include('@KontrolgruppenCoreBundle/process_log/_log_entry/' ~ camelCaseToUnderscore(log.logEntry.objectClass|split('\\')|last) ~ '.html.twig') with log.logEntry.data %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div>
+            {{ knp_pagination_render(logEntriesPagination, null, {}, {
+                'position': 'centered',
+                'size': 'small',
+            }) }}
         </div>
     </div>
 </div>
