@@ -37,13 +37,16 @@ class ConclusionService
         return str_replace('Entity', 'Form', \get_class($entity).'Type');
     }
 
-    public function getTemplate($class, $action = 'show')
+    public function getTemplate($class, $action = 'show', $basePath = '@KontrolgruppenCore/conclusion/')
     {
+        // Making sure path has a trailing slash
+        $basePath = rtrim($basePath, '/') . '/';
+
         switch ($class) {
             case BaseConclusion::class:
-                return '@KontrolgruppenCore/conclusion/'.$action.'_base.html.twig';
+                return $basePath.$action.'_base.html.twig';
             case WeightedConclusion::class:
-                return '@KontrolgruppenCore/conclusion/'.$action.'_weighted.html.twig';
+                return $basePath.$action.'_weighted.html.twig';
         }
 
         return false;
