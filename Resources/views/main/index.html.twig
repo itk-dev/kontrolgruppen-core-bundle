@@ -21,7 +21,6 @@
 
             <div class="collapse navbar-collapse col-lg-6" id="navbarNav">
                 <ul class="navbar-nav ml-0 ml-lg-auto p-3 p-lg-0">
-
                     <li class="nav-item dropdown mr-0 mr-sm-3 mb-3 mb-lg-0">
                         <a class="btn btn-sm btn-light dropdown-toggle btn-block" href="#" id="navbarQuicklinksDropdown" role="button" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
@@ -68,13 +67,10 @@
                             <i class="fas {{ iconClass('reminder') }} mr-2"></i><strong>{{ 'navigation.main.reminders.number_of_reminders'|trans({'%numberOfReminders%': activeUserReminders}) }}</strong>
                         </a>
                     </li>
-
-                    <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0 mr-lg-0">
-                        <a class="btn btn-sm btn-outline-danger btn-block" role="button"
-                           href="{{ path('fos_user_security_logout') }}">{{ 'navigation.main.sign_out'|trans }}</a>
-                    </li>
-
                 </ul>
+                <span class="nav-text text-muted p-2">
+                    <i class="fas {{ iconClass('user') }} mr-2"></i><span class="">super-admin@example.com</span>
+                </span>
             </div>
         {% endblock %}
     </nav>
