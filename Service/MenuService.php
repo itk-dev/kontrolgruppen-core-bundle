@@ -186,15 +186,6 @@ class MenuService
                     'process_log_index',
                     ['process' => $process]
                     );
-
-                $items[] = $this->createMenuItem('report',
-                    1 === preg_match(
-                        '/^\/process\/[0-9]+\/report.*$/',
-                        $path
-                    ),
-                    'process_report_index',
-                    ['process' => $process]
-                );
             }
         }
 
