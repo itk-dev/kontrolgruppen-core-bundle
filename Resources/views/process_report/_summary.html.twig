@@ -1,0 +1,44 @@
+<table>
+    <tbody>
+        <tr>
+            <td>{{ 'process_report.report.summary.process_case_number'|trans }}:</td>
+            <td>{{ process.caseNumber }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'process_report.report.summary.process_created_at'|trans }}:</td>
+            <td>{{ process.createdAt|date('d-m-Y') }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'process_report.report.summary.process_updated_at'|trans }}:</td>
+            <td>{{ process.updatedAt|date('d-m-Y') }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'process_report.report.summary.process_completed_at'|trans }}:</td>
+            <td>{{ process.completedAt|date('d-m-Y') }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'process_report.report.summary.process_created_by'|trans }}:</td>
+            <td>{{ process.createdBy }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'process_report.report.summary.process_case_worker'|trans }}:</td>
+            <td>{{ (process.caseWorker is not empty) ? process.caseWorker : '-' }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'process_report.report.summary.process_status'|trans }}:</td>
+            <td>{{ (process.processStatus is not empty) ? process.processStatus.name : '-' }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'process_report.report.summary.process_type'|trans }}:</td>
+            <td>{{ (process.processType is not empty) ? process.processType.name : '-' }}</td>
+        </tr>%}
+        <tr>
+            <td>{{ 'process_report.report.summary.service'|trans }}:</td>
+            <td>{{ (process.service is not empty) ? process.service.name : '-' }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'process_report.report.summary.channel'|trans }}:</td>
+            <td>{{ (process.channel is not empty) ? process.channel.name : '-' }}</td>
+        </tr>
+    </tbody>
+</table>

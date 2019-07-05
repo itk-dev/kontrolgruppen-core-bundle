@@ -1,0 +1,26 @@
+<table>
+    <thead>
+    <tr>
+        <th>{{ 'process_report.report.economy.service.service'|trans }}</th>
+        <th>{{ 'process_report.report.economy.service.period'|trans }}</th>
+        <th>{{ 'process_report.report.economy.service.amount'|trans }}</th>
+        <th>{{ 'process_report.report.economy.service.amount_period'|trans }}</th>
+        <th>{{ 'process_report.report.economy.service.repayment_amount'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for economyEntry in economyEntries %}
+        <tr>
+            <td>{{ economyEntry.service }}</td>
+            <td>{{ economyEntry.periodFrom|date('d-m-y') }} - {{ economyEntry.periodTo|date('d-m-y') }}</td>
+            <td>{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
+            <td>{{ enumTranslation(economyEntry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>
+            <td>{{ economyEntry.repaymentAmount|localizedcurrency('DKK') }}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="3">{{ 'common.no_records_found'|trans }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

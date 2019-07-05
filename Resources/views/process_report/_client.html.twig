@@ -1,0 +1,56 @@
+<div style="border: solid; border-width: 1px;">
+    <h2>{{ 'process_report.report.client.title'|trans }}</h2>
+
+    <table>
+        <tbody>
+            <tr>
+                <td>{{ 'process_report.report.client.first_name'|trans }}:</td>
+                <td>{{ process.client.firstName ?: '-' }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'process_report.report.client.last_name'|trans }}:</td>
+                <td>{{ process.client.lastName ?: '-' }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'process_report.report.client.cpr'|trans }}:</td>
+                <td>{{ process.clientCPR }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'process_report.report.client.address'|trans }}:</td>
+                <td>{{ process.client.address ?: '-' }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'process_report.report.client.postal_code'|trans }}:</td>
+                <td>{{ process.client.postalCode ?: '-' }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'process_report.report.client.telephone'|trans }}:</td>
+                <td>{{ process.client.telephone ?: '-' }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'process_report.report.client.number_of_children'|trans }}:</td>
+                <td>{{ process.client.numberOfChildren ?: '-' }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'process_report.report.client.not_employed'|trans }}:</td>
+                <td>{{ process.client.notEmployed|yes_no }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'process_report.report.client.works_in_major_company'|trans }}:</td>
+                <td>{{ process.client.worksInMajorCompany|yes_no }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'process_report.report.client.self_employed'|trans }}:</td>
+                <td>{{ process.client.selfEmployed|yes_no }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'process_report.report.client.has_drivers_license'|trans }}:</td>
+                <td>{{ process.client.hasDriversLicense|yes_no }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'process_report.report.client.has_car'|trans }}:</td>
+                <td>{{ process.client.hasCar|yes_no }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
