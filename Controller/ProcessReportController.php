@@ -36,25 +36,23 @@ class ProcessReportController extends BaseController
         TranslatorInterface $translator,
         EconomyEntryRepository $economyEntryRepository,
         ConclusionService $conclusionService
-    ): Response
-    {
+    ): Response {
         $form = $this->createFormBuilder()
             ->add('options', ChoiceType::class, [
                 'label' => $translator->trans('process_report.form.choices.placeholder'),
                 'choices' => [
                     $translator->trans('process_report.form.choices.internal_notes') => 'internal_notes',
-                    $translator->trans('process_report.form.choices.only_summary') => 'only_summary'
+                    $translator->trans('process_report.form.choices.only_summary') => 'only_summary',
                 ],
             ])
             ->add('generate', SubmitType::class, [
-                'label' => $translator->trans('process_report.form.submit')
+                'label' => $translator->trans('process_report.form.submit'),
             ])
             ->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $formData = $form->getData();
 
             $viewData = [
@@ -89,7 +87,6 @@ class ProcessReportController extends BaseController
 
             $mpdf = new Mpdf();
             $mpdf->WriteHTML($report);
-
 
             $filenameTemplate = '%s-%s.pdf';
             $filename = sprintf(

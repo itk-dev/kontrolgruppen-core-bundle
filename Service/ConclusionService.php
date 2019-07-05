@@ -40,7 +40,7 @@ class ConclusionService
     public function getTemplate($class, $action = 'show', $basePath = '@KontrolgruppenCore/conclusion/')
     {
         // Making sure path has a trailing slash
-        $basePath = rtrim($basePath, '/') . '/';
+        $basePath = rtrim($basePath, '/').'/';
 
         switch ($class) {
             case BaseConclusion::class:
