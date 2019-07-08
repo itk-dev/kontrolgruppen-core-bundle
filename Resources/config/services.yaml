@@ -18,3 +18,10 @@ services:
     Kontrolgruppen\CoreBundle\Export\Manager:
         arguments:
             $configuration: ~
+
+    # Exports
+    Kontrolgruppen\CoreBundle\Export\:
+        resource: '../../Export/*/*'
+        # Exports must be public to load them dynamically (by id) in the Export
+        # manager.
+        public: true
