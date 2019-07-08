@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\DependencyInjection;
 
+use Kontrolgruppen\CoreBundle\Export\Manager;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -33,6 +34,9 @@ class KontrolgruppenCoreExtension extends Extension implements PrependExtensionI
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('kontrolgruppen_core.net_default_value', $config['net_default_value']);
+
+        $definition = $container->getDefinition(Manager::class);
+        $definition->replaceArgument('$configuration', ['exports' => $config['exports'] ?? []]);
     }
 
     public function prepend(ContainerBuilder $container)
