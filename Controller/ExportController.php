@@ -86,7 +86,7 @@ class ExportController extends BaseController
         }
 
         /** @var Export $export */
-        $export = new $exportClass($this->getDoctrine()->getManager());
+        $export = $this->exportManager->getExport($exportClass);
         $form = $this->buildParameterForm($export);
         $form->submit($request->get($form->getName()));
         $parameters = $form->getData();

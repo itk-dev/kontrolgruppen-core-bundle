@@ -15,16 +15,12 @@ use Box\Spout\Common\Entity\Style\Style;
 use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
 use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Box\Spout\Writer\WriterInterface;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 abstract class AbstractExport
 {
     /** @var string */
     protected $title;
-
-    /** @var \Kontrolgruppen\CoreBundle\Export\EntityManagerInterface */
-    protected $entityManager;
 
     /** @var array */
     protected $parameters;
@@ -35,13 +31,10 @@ abstract class AbstractExport
     /**
      * Constructor.
      *
-     * @param \Doctrine\ORM\EntityManagerInterface|null $entityManager
-     *
      * @throws \Exception
      */
-    public function __construct(EntityManagerInterface $entityManager = null)
+    public function __construct()
     {
-        $this->entityManager = $entityManager;
         if (empty($this->title)) {
             throw new \Exception('Export title not defined.');
         }

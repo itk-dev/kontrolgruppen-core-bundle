@@ -10,24 +10,40 @@
 
 namespace Kontrolgruppen\CoreBundle\Export\KL;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class Export extends AbstractExport
 {
     protected $title = 'KL';
 
+    /** @var \Doctrine\ORM\EntityManagerInterface */
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        parent::__construct();
+        $this->entityManager = $entityManager;
+    }
+
     public function getParameters()
     {
         return parent::getParameters() + [
                 'processtatus' => [
-                    'type' => ChoiceType::class,
+                    'type' => EntityType::class,
                     'type_options' => [
-                        'label' => 'Process status',
-                        'choices' => [
-                            'a' => 'A',
-                        ],
+                        'label' => 'process.table.process_status',
+                        'class' => ProcessStatus::class,
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('s')
+                                ->orderBy('s.name', 'ASC');
+                        },
+                        'required' => false,
+                        'empty_data' => null,
                     ],
                 ],
             ];
@@ -88,6 +104,12 @@ class Export extends AbstractExport
     private function getProcesses()
     {
         $queryBuilder = $this->entityManager->getRepository(Process::class)->createQueryBuilder('p');
+
+        if (!empty($this->parameters['processtatus'])) {
+            $queryBuilder
+                ->andWhere('p.processStatus = :processtatus')
+                ->setParameter('processtatus', $this->parameters['processtatus']);
+        }
 
         $startDate = $this->parameters['startdate'] ?? new \DateTime('2001-01-01');
         $endDate = $this->parameters['enddate'] ?? new \DateTime('2100-01-01');

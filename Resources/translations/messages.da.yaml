@@ -689,3 +689,12 @@ service_economy_entry:
 weighted_conclusion:
     form:
         update: Gem
+
+export:
+  index:
+    title: Eksportér data
+  name: Eksport
+  date_period: Periode
+  run:
+    xlsx: Eksportér (XLSX)
+    csv: Eksportér (CSV)
