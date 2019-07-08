@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityRepository;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
+use Kontrolgruppen\CoreBundle\Service\EconomyService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class Export extends AbstractExport
@@ -24,10 +25,11 @@ class Export extends AbstractExport
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService)
     {
         parent::__construct();
         $this->entityManager = $entityManager;
+        $this->economyService = $economyService;
     }
 
     public function getParameters()
@@ -82,17 +84,22 @@ class Export extends AbstractExport
         ]);
 
         foreach ($processes as $process) {
+            $revenue = $this->economyService->calculateRevenue($process);
+            $status = $process->getProcessStatus() ? $process->getProcessStatus()->getName() : null;
+            // @FIXME: Improve this check!
+            $forwardToAnotherAuthority = false !== stripos($status ?? '', 'ankestyrelse');
+
             $this->writeRow([
                 $process->getCaseNumber(),
                 $process->getChannel() ? $process->getChannel()->getName() : null,
                 $process->getProcessType() ? $process->getProcessType()->getName() : null,
                 $process->getService() ? $process->getService()->getName() : null,
                 $this->formatBoolean($process->getClient() && $process->getClient()->getSelfEmployed()),
-                $this->formatAmount(0.0), // 'Samlet tilbagebetalingskrav i kr.',
-                $this->formatAmount(0.0), // 'Samlet fremadrettet besparelse ved ydelsesstop i kr.',
-                null, // 'Videresendes til anden myndighed',
+                $this->formatAmount($revenue['collectiveNetSum'] ?? 0),
+                $this->formatAmount($revenue['futureSavingsSum'] ?? 0),
+                $this->formatBoolean($forwardToAnotherAuthority),
                 $this->formatBoolean($process->getPoliceReport()),
-                $process->getProcessStatus() ? $process->getProcessStatus()->getName() : null,
+                $status,
                 null,
             ]);
         }
@@ -103,7 +110,8 @@ class Export extends AbstractExport
      */
     private function getProcesses()
     {
-        $queryBuilder = $this->entityManager->getRepository(Process::class)->createQueryBuilder('p');
+        $queryBuilder = $this->entityManager->getRepository(Process::class)->createQueryBuilder('p')
+            ->andWhere('p.completedAt IS NOT NULL');
 
         if (!empty($this->parameters['processtatus'])) {
             $queryBuilder

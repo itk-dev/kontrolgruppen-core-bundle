@@ -170,7 +170,7 @@ abstract class AbstractExport
 
     protected function formatBoolean(bool $value)
     {
-        return $value ? 'TRUE' : 'FALSE';
+        return $value ? 'x' : '';
     }
 
     /**
