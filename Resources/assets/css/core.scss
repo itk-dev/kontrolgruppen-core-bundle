@@ -128,3 +128,22 @@ table th a.desc {
         display: none;
     }
 }
+
+/* Sidebar tab  */
+
+aside {
+    .short-text {
+        display: none;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1112px) {
+    aside {
+        .short-text {
+            display: block;
+        }
+        .long-text {
+            display: none;
+        }
+    }
+}
