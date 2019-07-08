@@ -28,6 +28,10 @@ class ProcessStatusType extends AbstractType
                 'by_reference' => false,
                 'attr' => ['class' => 'select2'],
             ])
+            ->add('isForwardToAnotherAuthority', null, [
+                'label' => 'process_status.form.is_forward_to_another_authority',
+                'help' => 'process_status.form.is_forward_to_another_authority_help',
+            ])
         ;
     }
 
