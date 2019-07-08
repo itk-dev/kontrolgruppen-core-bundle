@@ -196,6 +196,7 @@ dashboard:
         label: Kommende påmindelser
     latest_activity:
         title: Seneste aktivitet
+        title_short: Aktivitet
 
 economy:
     actions:
