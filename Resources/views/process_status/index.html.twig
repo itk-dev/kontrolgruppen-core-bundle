@@ -11,6 +11,7 @@
             <tr>
                 <th>{{ 'process_status.table.id'|trans }}</th>
                 <th>{{ 'process_status.table.name'|trans }}</th>
+                <th>{{ 'process_status.table.is_forward_to_another_authority'|trans }}</th>
                 <th>{{ 'process_status.table.process_types'|trans }}</th>
                 <th class="float-right">{{ 'common.table.actions'|trans }}</th>
             </tr>
@@ -20,6 +21,7 @@
                 <tr>
                     <td>{{ process_status.id }}</td>
                     <td>{{ process_status.name }}</td>
+                    <td>{{ process_status.isForwardToAnotherAuthority | yes_no }}</td>
                     <td>
                         {% for processType in process_status.processTypes %}
                             {{ processType }}{% if not loop.last %}, {% endif %}

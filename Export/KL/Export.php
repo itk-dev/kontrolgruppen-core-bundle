@@ -85,9 +85,6 @@ class Export extends AbstractExport
 
         foreach ($processes as $process) {
             $revenue = $this->economyService->calculateRevenue($process);
-            $status = $process->getProcessStatus() ? $process->getProcessStatus()->getName() : null;
-            // @FIXME: Improve this check!
-            $forwardToAnotherAuthority = false !== stripos($status ?? '', 'ankestyrelse');
 
             $this->writeRow([
                 $process->getCaseNumber(),
@@ -97,9 +94,9 @@ class Export extends AbstractExport
                 $this->formatBoolean($process->getClient() && $process->getClient()->getSelfEmployed()),
                 $this->formatAmount($revenue['collectiveNetSum'] ?? 0),
                 $this->formatAmount($revenue['futureSavingsSum'] ?? 0),
-                $this->formatBoolean($forwardToAnotherAuthority),
+                $this->formatBoolean($process->getProcessStatus() && $process->getProcessStatus()->getIsForwardToAnotherAuthority()),
                 $this->formatBoolean($process->getPoliceReport()),
-                $status,
+                $process->getProcessStatus() ? $process->getProcessStatus()->getName() : null,
                 null,
             ]);
         }

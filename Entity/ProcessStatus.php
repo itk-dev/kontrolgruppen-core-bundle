@@ -31,6 +31,12 @@ class ProcessStatus extends AbstractTaxonomy
      */
     private $processTypes;
 
+    /**
+     * @ORM\Column(type="boolean")
+     * @Gedmo\Versioned
+     */
+    private $isForwardToAnotherAuthority = false;
+
     public function __construct()
     {
         $this->processes = new ArrayCollection();
@@ -92,6 +98,18 @@ class ProcessStatus extends AbstractTaxonomy
             $this->processTypes->removeElement($processType);
             $processType->removeProcessStatus($this);
         }
+
+        return $this;
+    }
+
+    public function getIsForwardToAnotherAuthority(): bool
+    {
+        return $this->isForwardToAnotherAuthority;
+    }
+
+    public function setIsForwardToAnotherAuthority(bool $isForwardToAnotherAuthority): self
+    {
+        $this->isForwardToAnotherAuthority = $isForwardToAnotherAuthority;
 
         return $this;
     }
