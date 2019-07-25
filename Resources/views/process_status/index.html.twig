@@ -19,7 +19,7 @@
             {% for process_status in process_statuses %}
                 <tr>
                     <td>{{ process_status.name }}</td>
-                    <td>{{ process_status.isForwardToAnotherAuthority | yes_no }}</td>
+                    <td>{{ process_status.isForwardToAnotherAuthority|yes_no }}</td>
                     <td>
                         {% for processType in process_status.processTypes %}
                             {{ processType }}{% if not loop.last %}, {% endif %}
