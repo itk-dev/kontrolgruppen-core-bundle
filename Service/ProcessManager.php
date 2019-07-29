@@ -11,7 +11,6 @@
 namespace Kontrolgruppen\CoreBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Gedmo\Loggable\Entity\LogEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
@@ -27,8 +26,10 @@ class ProcessManager
      *
      * @param $processRepository
      */
-    public function __construct(ProcessRepository $processRepository, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        ProcessRepository $processRepository,
+        EntityManagerInterface $entityManager
+    ) {
         $this->processRepository = $processRepository;
         $this->entityManager = $entityManager;
     }
@@ -37,37 +38,26 @@ class ProcessManager
      * Find open processes assigned to user that has not been visited by the user.
      *
      * @param \Kontrolgruppen\CoreBundle\Entity\User $user
+     *
      * @return mixed
      */
     public function getUsersUnvisitedProcesses(User $user)
     {
-        $processes = $this->processRepository->findUserOpenProcessIds($user);
-        $ids = $titles = array_map(function($e) {
-            return $e->getId();
-        }, $processes);
+        $query = $this->entityManager->createQuery(
+            '
+            SELECT p
+            FROM Kontrolgruppen\CoreBundle\Entity\Process p
+            WHERE p.caseWorker = :caseWorker
+            AND NOT EXISTS (
+              SELECT l.id
+              FROM Gedmo\Loggable\Entity\LogEntry l
+              WHERE l.action = \'read\'
+              AND p.id = l.objectId
+            )
+            '
+        )->setParameter('caseWorker', $user);
 
-        // Find log entries for the processes the user has visited.
-        $qb = $this->entityManager->getRepository(LogEntry::class)->createQueryBuilder('e');
-        $qb->select('e.objectId');
-        $qb->where('e.action = \'read\'');
-        $qb->andWhere($qb->expr()->in('e.objectId', ':ids'));
-        $qb->setParameter('ids', $ids);
-        $qb->andWhere($qb->expr()->eq('e.username', ':username'));
-        $qb->setParameter('username', $user->getUsername());
-
-        $readProcessIds = $qb->getQuery()->getScalarResult();
-
-        $readProcessIds = array_column($readProcessIds, 'objectId');
-
-        $result = array_reduce($processes, function ($carry, $process) use ($readProcessIds) {
-            if (!in_array($process->getId(), $readProcessIds)) {
-                $carry[] = $process;
-            }
-
-            return $carry;
-        }, []);
-
-        return $result;
+        return $query->execute();
     }
 
     /**
@@ -77,8 +67,10 @@ class ProcessManager
      *
      * @return \Kontrolgruppen\CoreBundle\Entity\Process
      */
-    public function newProcess(Process $process = null, ProcessType $processType = null)
-    {
+    public function newProcess(
+        Process $process = null,
+        ProcessType $processType = null
+    ) {
         if (null === $process) {
             $process = new Process();
             $process->setProcessType($processType);
