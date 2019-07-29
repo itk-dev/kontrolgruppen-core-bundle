@@ -15,6 +15,7 @@ use Box\Spout\Writer\Common\Creator\WriterFactory;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Export\Manager;
 use Kontrolgruppen\CoreBundle\Service\MenuService;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,13 +30,18 @@ class ExportController extends BaseController
     /** @var \Kontrolgruppen\CoreBundle\Export\Manager */
     private $exportManager;
 
+    /** @var \Symfony\Component\Form\FormFactoryInterface */
+    private $formFactory;
+
     public function __construct(
         RequestStack $requestStack,
         MenuService $menuService,
-        Manager $exportManager
+        Manager $exportManager,
+        FormFactoryInterface $formFactory
     ) {
         parent::__construct($requestStack, $menuService);
         $this->exportManager = $exportManager;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -88,6 +94,7 @@ class ExportController extends BaseController
         /** @var Export $export */
         $export = $this->exportManager->getExport($exportClass);
         $form = $this->buildParameterForm($export);
+        // Use namespaced form values (cf. $this->buildParameterForm).
         $form->submit($request->get($form->getName()));
         $parameters = $form->getData();
 
@@ -141,7 +148,8 @@ class ExportController extends BaseController
     {
         $parameters = $export->getParameters();
 
-        $builder = $this->get('form.factory')->createNamedBuilder('parameters_'.md5(\get_class($export)));
+        // Use a named builder to namespace the parameter form values.
+        $builder = $this->get('form.factory')->createNamedBuilder('parameters_'.$this->getExportKey($export));
         foreach ($parameters as $name => $config) {
             $type = $config['type'] ?? null;
             $typeOptions = $config['type_options'] ?? [];
