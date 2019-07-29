@@ -12,6 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Kontrolgruppen\CoreBundle\Entity\User;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -25,6 +26,16 @@ class ProcessRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Process::class);
+    }
+
+    public function findUserOpenProcessIds(User $user)
+    {
+        $qb = $this->createQueryBuilder('e');
+        $qb->where($qb->expr()->isNull('e.completedAt'));
+        $qb->andWhere($qb->expr()->eq('e.caseWorker', ':user'));
+        $qb->setParameter('user', $user);
+
+        return $qb->getQuery()->getResult();
     }
 
     public function findAllFromYear($year)
