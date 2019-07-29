@@ -86,8 +86,7 @@ class ProcessReportController extends BaseController
                 ->andWhere('journalEntry.type = :note')
                 ->setParameter('note', JournalEntryEnumType::NOTE);
 
-            if ($formData['options'] == 'internal_notes') {
-
+            if ('internal_notes' === $formData['options']) {
                 $qb
                     ->orWhere('journalEntry.type = :internal')
                     ->setParameter('internal', JournalEntryEnumType::INTERNAL_NOTE);
