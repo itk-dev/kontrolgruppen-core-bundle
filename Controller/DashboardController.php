@@ -13,6 +13,7 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Kontrolgruppen\CoreBundle\DBAL\Types\DateIntervalType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ReminderRepository;
+use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
@@ -27,7 +28,7 @@ class DashboardController extends BaseController
     /**
      * @Route("", name="dashboard_index")
      */
-    public function index(Request $request, ReminderRepository $reminderRepository, ProcessRepository $processRepository, PaginatorInterface $paginator, SessionInterface $session)
+    public function index(Request $request, ReminderRepository $reminderRepository, ProcessRepository $processRepository, PaginatorInterface $paginator, SessionInterface $session, ProcessManager $processManager)
     {
         $filterFormBuilder = $this->createFormBuilder();
         $filterFormBuilder->add('limit', ChoiceType::class, [
@@ -87,12 +88,15 @@ class DashboardController extends BaseController
             'label' => 'dashboard.coming_reminders.label',
         ])->getForm();
 
+        $notVisitedProcesses = $processManager->getUsersUnvisitedProcesses($this->getUser());
+
         return $this->render('@KontrolgruppenCore/dashboard/index.html.twig', [
             'reminders' => $reminderRepository->findActiveUserReminders($this->getUser()),
             'unassignedProcesses' => $processRepository->findBy(['caseWorker' => null]),
             'myProcesses' => $pagination,
             'comingReminderForm' => $comingReminderForm->createView(),
             'myProcessesFilterForm' => $filterForm->createView(),
+            'notVisitedProcesses' => $notVisitedProcesses,
         ]);
     }
 }

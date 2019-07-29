@@ -62,6 +62,7 @@ class ProcessFilterType extends AbstractType
             'label_attr' => ['class' => 'sr-only'],
             'placeholder' => $this->translator->trans('process.table.filter.show_all_types'),
             'attr' => ['class' => 'form-control-sm ml-auto mr-3'],
+            'choice_translation_domain' => false,
         ]);
 
         $builder->add('processStatus', Filters\ChoiceFilterType::class, [
@@ -74,6 +75,7 @@ class ProcessFilterType extends AbstractType
             'label_attr' => ['class' => 'sr-only'],
             'placeholder' => $this->translator->trans('process.table.filter.show_all_status'),
             'attr' => ['class' => 'form-control-sm mr-3'],
+            'choice_translation_domain' => false,
         ]);
 
         $builder->add('caseWorker', Filters\ChoiceFilterType::class, [
@@ -86,6 +88,7 @@ class ProcessFilterType extends AbstractType
             'label_attr' => ['class' => 'sr-only'],
             'placeholder' => $this->translator->trans('process.table.filter.show_all_case_worker'),
             'attr' => ['class' => 'form-control-sm'],
+            'choice_translation_domain' => false,
         ]);
     }
 
