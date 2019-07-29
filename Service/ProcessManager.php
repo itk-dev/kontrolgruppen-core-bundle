@@ -52,10 +52,13 @@ class ProcessManager
               SELECT l.id
               FROM Gedmo\Loggable\Entity\LogEntry l
               WHERE l.action = \'read\'
+              AND l.username = :username
               AND p.id = l.objectId
             )
             '
-        )->setParameter('caseWorker', $user);
+        )
+            ->setParameter('caseWorker', $user)
+            ->setParameter('username', $user->getUsername());
 
         return $query->execute();
     }
