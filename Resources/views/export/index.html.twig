@@ -59,20 +59,5 @@
 
 {% block javascripts %}
   {{ parent() }}
-
-  <script>(function($) {
-     $(document).ready(function() {
-       var exportIds = {{ exports|keys|json_encode()|raw }},
-           updateUI = function() {
-             // Disable all parameter form controls
-             $('.export-parameters :input').prop('disabled', true);
-             $('.export-parameters').hide();
-             var id = $('#export').val();
-             $('#export-parameters-' + id + ' :input').prop('disabled', false);
-             $('#export-parameters-' + id).show();
-           };
-       $('#export').on('change', updateUI);
-       updateUI();
-     });
-   }(jQuery))</script>
+  {{ encore_entry_script_tags('export') }}
 {% endblock %}
