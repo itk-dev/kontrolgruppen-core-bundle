@@ -1,26 +1,48 @@
 {{ form_start(form) }}
-    {{ form_row(form.firstName) }}
-    {{ form_row(form.lastName) }}
-    {{ form_row(form.address) }}
-    {{ form_row(form.postalCode) }}
-    {{ form_row(form.city) }}
-    {{ form_row(form.telephone) }}
-    {{ form_row(form.numberOfChildren) }}
 
-    {{ form_row(form.selfEmployed) }}
-    {{ form_row(form.worksInMajorCompany) }}
-    {{ form_row(form.notEmployed) }}
-
-    {{ form_row(form.hasDriversLicense) }}
-    {{ form_row(form.hasCar) }}
-
-    <label>{{ form_label(form.cars) }}</label>
-    <ul class="cars list-group" data-prototype="{{ form_widget(form.cars.vars.prototype)|e('html_attr') }}">
-        {% for car in form.cars %}
-            <li class="list-group-item m-2">{{ form_row(car) }}</li>
-        {% endfor %}
-    </ul>
-
+    <h2>{{ 'client.sections.generel_info'|trans }}</h2>
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            {{ form_row(form.firstName) }}
+            {{ form_row(form.lastName) }}
+            {{ form_row(form.telephone) }}
+        </div>
+        <div class="col-12 col-sm-6">
+            {{ form_row(form.address) }}
+            <div class="row">
+                <div class="col-4">
+                    {{ form_row(form.postalCode) }}
+                </div>
+                <div class="col-8">
+                    {{ form_row(form.city) }}
+                </div>
+            </div>
+            {{ form_row(form.numberOfChildren) }}
+        </div>
+    </div>
+    <h2>{{ 'client.sections.employment'|trans }}</h2>
+    <div class="row">
+        <div class="col-12">
+            {{ form_row(form.selfEmployed) }}
+            {{ form_row(form.worksInMajorCompany) }}
+            {{ form_row(form.notEmployed) }}
+        </div>
+    </div>
+    <h2>{{ 'client.sections.generel_info'|trans }}</h2>
+    <div class="row">
+        <div class="col-12">
+            {{ form_row(form.hasDriversLicense) }}
+            {{ form_row(form.hasCar) }}
+        </div>
+        <div class="col-12">
+            <h3>{{ form_label(form.cars) }}</h3>
+            <ul class="cars list-group mb-3" data-prototype="{{ form_widget(form.cars.vars.prototype)|e('html_attr') }}">
+                {% for car in form.cars %}
+                    <li class="list-group-item">{{ form_row(car) }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 <button
     class="btn btn-success float-right pl-5 pr-5">{{ (button_label is defined ? (form.vars.full_name ~ '.form.' ~ button_label|lower) : 'common.actions.save')|trans }}</button>
 {{ form_end(form) }}

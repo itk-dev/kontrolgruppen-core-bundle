@@ -9,7 +9,6 @@
         <table class="table table-striped table-hover table-borderless thead-light">
             <thead>
             <tr>
-                <th>{{ 'process_status.table.id'|trans }}</th>
                 <th>{{ 'process_status.table.name'|trans }}</th>
                 <th>{{ 'process_status.table.process_types'|trans }}</th>
                 <th class="float-right">{{ 'common.table.actions'|trans }}</th>
@@ -18,7 +17,6 @@
             <tbody>
             {% for process_status in process_statuses %}
                 <tr>
-                    <td>{{ process_status.id }}</td>
                     <td>{{ process_status.name }}</td>
                     <td>
                         {% for processType in process_status.processTypes %}

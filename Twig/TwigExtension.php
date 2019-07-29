@@ -149,6 +149,8 @@ class TwigExtension extends AbstractExtension
                 return 'fa-door-closed';
             case 'process-resume':
                 return 'fa-door-open';
+            case 'user':
+                return 'fa-user-circle';
             default:
                 return '';
         }

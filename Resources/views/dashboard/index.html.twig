@@ -23,12 +23,16 @@
 
     {% if myProcesses|length > 0 %}
         <div class="mb-3">
-            <h2 class="mb-3"><i class="fas {{ iconClass('process') }} mr-3"></i>{{ 'dashboard.my_processes.title'|trans }}</h2>
-
-            <div class="form form-inline float-right m-2">
-                {{ form(myProcessesFilterForm) }}
+            <div class="row">
+                <div class="col-10">
+                    <h2 class="mb-3"><i class="fas {{ iconClass('process') }} mr-3"></i>{{ 'dashboard.my_processes.title'|trans }}</h2>
+                </div>
+                <div class="col-2">
+                    <div class="form form-inline float-right m-2">
+                        {{ form(myProcessesFilterForm) }}
+                    </div>
+                </div>
             </div>
-
             {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: myProcesses} %}
         </div>
     {% endif %}
