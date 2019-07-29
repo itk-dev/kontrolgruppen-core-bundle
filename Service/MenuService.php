@@ -185,7 +185,7 @@ class MenuService
                     ),
                     'process_log_index',
                     ['process' => $process]
-                    );
+                );
             }
         }
 
