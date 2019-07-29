@@ -121,13 +121,9 @@ class ExportController extends BaseController
         }
     }
 
-    private function getFilename($parameters, $title, $format)
-    {
-        $title = preg_replace('/[^a-z0-9_-]/i', '-', $title);
-
-        return $title.'.'.$format;
-    }
-
+    /**
+     * @return AbstractExport[]
+     */
     private function getExports()
     {
         $exports = [];

@@ -51,6 +51,13 @@ class Manager
         return $exports;
     }
 
+    /**
+     * @param $service
+     *
+     * @return \Kontrolgruppen\CoreBundle\Export\AbstractExport|object|null
+     *
+     * @throws \Exception
+     */
     public function getExport($service)
     {
         $export = $this->container->get($service);

@@ -20,7 +20,7 @@
     {% for name, form in parameterForms %}
         {% form_theme form with 'bootstrap_3_horizontal_layout.html.twig' %}
         <div class="export-parameters" id="export-parameters-{{ name }}" style="display: none">
-            {# Show startdata and enddata in a single row called "Period" #}
+            {# Show startdate and enddate in a single row called "Period" #}
             {% if 'startdate' in form|keys and 'enddate' in form|keys %}
                 <div class="form-group">
                     <label class="col-sm-2 control-label required">{{ 'export.date_period'|trans }}</label>
