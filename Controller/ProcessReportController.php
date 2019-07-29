@@ -11,8 +11,10 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\DBAL\Types\EconomyEntryEnumType;
+use Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
+use Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository;
 use Kontrolgruppen\CoreBundle\Service\ConclusionService;
 use Mpdf\Mpdf;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -35,7 +37,8 @@ class ProcessReportController extends BaseController
         Process $process,
         TranslatorInterface $translator,
         EconomyEntryRepository $economyEntryRepository,
-        ConclusionService $conclusionService
+        ConclusionService $conclusionService,
+        JournalEntryRepository $journalEntryRepository
     ): Response {
         $form = $this->createFormBuilder()
             ->add('options', ChoiceType::class, [
@@ -60,7 +63,7 @@ class ProcessReportController extends BaseController
                 'choice' => $formData['options'],
             ];
 
-            $economyEntries = [
+            $viewData['economyEntries'] = [
                 'service' => $economyEntryRepository->findBy([
                     'process' => $process,
                     'type' => EconomyEntryEnumType::SERVICE,
@@ -75,7 +78,22 @@ class ProcessReportController extends BaseController
                 ]),
             ];
 
-            $viewData['economyEntries'] = $economyEntries;
+            $qb = $journalEntryRepository->createQueryBuilder('journalEntry');
+            $qb
+                ->select('journalEntry')
+                ->where('journalEntry.process = :process')
+                ->setParameter('process', $process)
+                ->andWhere('journalEntry.type = :note')
+                ->setParameter('note', JournalEntryEnumType::NOTE);
+
+            if ($formData['options'] == 'internal_notes') {
+
+                $qb
+                    ->orWhere('journalEntry.type = :internal')
+                    ->setParameter('internal', JournalEntryEnumType::INTERNAL_NOTE);
+            }
+
+            $viewData['journalEntries'] = $qb->getQuery()->getArrayResult();
 
             $viewData['conclusionTemplate'] = $conclusionService->getTemplate(
                 \get_class($process->getConclusion()),
@@ -85,12 +103,12 @@ class ProcessReportController extends BaseController
 
             $report = $this->renderView('@KontrolgruppenCore/process_report/_report.html.twig', $viewData);
 
+            // @TODO Should probably be in a Service
             $mpdf = new Mpdf();
             $mpdf->WriteHTML($report);
 
-            $filenameTemplate = '%s-%s.pdf';
             $filename = sprintf(
-                $filenameTemplate,
+                '%s-%s.pdf',
                 strtolower($translator->trans('process_report.report.title')),
                 $process->getCaseNumber()
             );
