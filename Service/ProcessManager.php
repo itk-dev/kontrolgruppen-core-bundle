@@ -10,7 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\Service;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Loggable\Entity\LogEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
@@ -47,6 +46,7 @@ class ProcessManager
             return $e->getId();
         }, $processes);
 
+        // Find log entries for the processes the user has visited.
         $qb = $this->entityManager->getRepository(LogEntry::class)->createQueryBuilder('e');
         $qb->select('e.objectId');
         $qb->where('e.action = \'read\'');
@@ -54,6 +54,7 @@ class ProcessManager
         $qb->setParameter('ids', $ids);
         $qb->andWhere($qb->expr()->eq('e.username', ':username'));
         $qb->setParameter('username', $user->getUsername());
+
         $readProcessIds = $qb->getQuery()->getScalarResult();
 
         $readProcessIds = array_column($readProcessIds, 'objectId');

@@ -22,6 +22,7 @@ use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
@@ -39,10 +40,10 @@ class ProcessController extends BaseController
         Request $request,
         ProcessRepository $processRepository,
         FilterBuilderUpdaterInterface $lexikBuilderUpdater,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        FormFactoryInterface $formFactory
     ): Response {
-        $filterForm = $this->get('form.factory')
-            ->create(ProcessFilterType::class);
+        $filterForm = $formFactory->create(ProcessFilterType::class);
 
         $results = [];
 
