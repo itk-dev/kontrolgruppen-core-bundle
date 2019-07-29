@@ -39,19 +39,19 @@
         {{ 'process_log.revision.table.log_entry.client.car_registration_number'|trans }}: {{ carRegistrationNumber ?: '-' }}
     </li>
     {% endif %}
-    {% if selfEmployed is defined %}
+    {% if receivesPublicAid is defined %}
     <li class="list-group-item">
-        {{ 'process_log.revision.table.log_entry.client.self_employed'|trans }}: {{ selfEmployed|yes_no }}
+        {{ 'process_log.revision.table.log_entry.client.receives_public_aid'|trans }}: {{ receivesPublicAid|yes_no }}
     </li>
     {% endif %}
-    {% if worksInMajorCompany is defined %}
+    {% if employed is defined %}
         <li class="list-group-item">
-            {{ 'process_log.revision.table.log_entry.client.works_in_major_company'|trans }}: {{ worksInMajorCompany|yes_no }}
+            {{ 'process_log.revision.table.log_entry.client.employed'|trans }}: {{ employed|yes_no }}
         </li>
     {% endif %}
-    {% if notEmployed is defined %}
+    {% if hasOwnCompany is defined %}
         <li class="list-group-item">
-            {{ 'process_log.revision.table.log_entry.client.not_employed'|trans }}: {{ notEmployed|yes_no }}
+            {{ 'process_log.revision.table.log_entry.client.has_own_company'|trans }}: {{ hasOwnCompany|yes_no }}
         </li>
     {% endif %}
 </ul>

@@ -73,13 +73,13 @@ client:
         has_car: Har bil
         id: ID
         last_name: Efternavn
-        not_employed: Ikke i arbejde
+        employed: Ansat
         number_of_children: Antal børn
         postal_code: Postnummer
-        self_employed: Driver selvstændig virksomhed
+        receives_public_aid: Offentlig forsørgelse
         telephone: Telefon
         update: Gem
-        works_in_major_company: Ansat i større virksomhed
+        has_own_company: Egen virksomhed
     show:
         title: Klient
     table:
@@ -92,12 +92,12 @@ client:
         first_name: Fornavn
         id: ID
         last_name: Efternavn
-        not_employed: Ikke i arbejde
+        employed: Ansat
         number_of_children: Antal børn
         postal_code: Postnummer
-        self_employed: Driver selvstændig virksomhed
+        receives_public_aid: Offentlig forsørgelse
         telephone: Telefon
-        works_in_major_company: Ansat i større virksomhed
+        has_own_company: Egen virksomhed
     sections:
         generel_info: Generel information
         employment: Ansættelsesforhold
@@ -480,9 +480,9 @@ process_log:
                     telephone: Telefon
                     number_of_children: Antal børn
                     car_registration_number: Bil registeringsnummer
-                    works_in_major_company: Ansat i større virksomhed
-                    not_employed: Ikke i arbejde
-                    self_employed: Driver selvstændig virksomhed
+                    has_own_company: Egen virksomhed
+                    employed: Ansat
+                    receives_public_aid: Offentlig forsørgelse
                 journal_entry:
                     title: Titel
                     body: Tekst
