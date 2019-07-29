@@ -5,16 +5,23 @@
                 {% if process.clientCPR is defined %}
                     <span class="d-block"><span class="sr-only">{{ 'process.table.client_cpr'|trans }}</span>{{ process.clientCPR }}</span>
                 {% endif %}
-                {% if process.client.firstName is defined %}
+                {% if process.client.firstName is not empty %}
                     <span class="d-block"><span
                             class="sr-only">{{ 'process.table.client_name'|trans }}</span>{{ process.client.firstName }} {{ process.client.lastName }}</span>
                 {% endif %}
-                {% if process.client.address is defined %}
+                {% if process.client.address is not empty %}
                     <span class="d-block"><span
                             class="sr-only">{{ 'process.table.client_adress'|trans }}</span>{{ process.client.address }}, {{ process.client.postalCode }} {{ process.client.city }}</span>
                 {% endif %}
                 {% if process.client.telephone is defined %}
                     <span class="d-block"><span class="sr-only">{{ 'process.table.client_telephone'|trans }}</span>{{ process.client.telephone }}</span>
+                {% endif %}
+                {% if process.client.cars is defined %}
+                    <span class="d-block"><span class="sr-only">{{ 'process.table.cars'|trans }}</span>
+                        {% for car in process.client.cars %}
+                            <div>{{ car.registrationNumber }}</div>
+                        {% endfor %}
+                    </span>
                 {% endif %}
             </div>
         </div>
