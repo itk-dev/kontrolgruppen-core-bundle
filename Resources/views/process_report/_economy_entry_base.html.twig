@@ -10,7 +10,7 @@
         {% for economyEntry in economyEntries %}
         <tr>
             <td>{{ economyEntry.text }}</td>
-            <td>{{ economyEntry.date|date('d-m-y') }}</td>
+            <td>{{ economyEntry.date|localizeddate('short', 'none') }}</td>
             <td>{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
         </tr>
         {% else %}

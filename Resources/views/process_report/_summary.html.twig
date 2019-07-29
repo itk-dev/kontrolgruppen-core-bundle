@@ -6,15 +6,15 @@
         </tr>
         <tr>
             <td>{{ 'process_report.report.summary.process_created_at'|trans }}:</td>
-            <td>{{ process.createdAt|date('d-m-Y') }}</td>
+            <td>{{ process.createdAt|localizeddate('short', 'none') }}</td>
         </tr>
         <tr>
             <td>{{ 'process_report.report.summary.process_updated_at'|trans }}:</td>
-            <td>{{ process.updatedAt|date('d-m-Y') }}</td>
+            <td>{{ process.updatedAt|localizeddate('short', 'none') }}</td>
         </tr>
         <tr>
             <td>{{ 'process_report.report.summary.process_completed_at'|trans }}:</td>
-            <td>{{ process.completedAt|date('d-m-Y') }}</td>
+            <td>{{ process.completedAt|localizeddate('short', 'none') }}</td>
         </tr>
         <tr>
             <td>{{ 'process_report.report.summary.process_created_by'|trans }}:</td>

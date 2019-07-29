@@ -3,7 +3,7 @@
     <table>
         {% for journalEntry in journalEntries %}
         <tr>
-            <td>{{ journalEntry.createdAt|date('d.m.y') }}</td>
+            <td>{{ journalEntry.createdAt|localizeddate('short', 'none') }}</td>
             <td>{{ journalEntry.title }}</td>
         </tr>
         <tr>

@@ -12,7 +12,7 @@
     {% for economyEntry in economyEntries %}
         <tr>
             <td>{{ economyEntry.service }}</td>
-            <td>{{ economyEntry.periodFrom|date('d-m-y') }} - {{ economyEntry.periodTo|date('d-m-y') }}</td>
+            <td>{{ economyEntry.periodFrom|localizeddate('short', 'none') }} - {{ economyEntry.periodTo|localizeddate('short', 'none') }}</td>
             <td>{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
             <td>{{ enumTranslation(economyEntry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>
             <td>{{ economyEntry.repaymentAmount|localizedcurrency('DKK') }}</td>
