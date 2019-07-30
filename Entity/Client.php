@@ -73,19 +73,19 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
      * @ORM\Column(type="boolean", nullable=true)
      * @Gedmo\Versioned()
      */
-    private $selfEmployed;
+    private $receivesPublicAid;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      * @Gedmo\Versioned()
      */
-    private $worksInMajorCompany;
+    private $employed;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      * @Gedmo\Versioned()
      */
-    private $notEmployed;
+    private $hasOwnCompany;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -208,38 +208,38 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
         return $this;
     }
 
-    public function getSelfEmployed(): ?bool
+    public function getHasOwnCompany(): ?bool
     {
-        return $this->selfEmployed;
+        return $this->hasOwnCompany;
     }
 
-    public function setSelfEmployed(?bool $selfEmployed): self
+    public function setHasOwnCompany(?bool $hasOwnCompany): self
     {
-        $this->selfEmployed = $selfEmployed;
+        $this->hasOwnCompany = $hasOwnCompany;
 
         return $this;
     }
 
-    public function getWorksInMajorCompany(): ?bool
+    public function getReceivesPublicAid(): ?bool
     {
-        return $this->worksInMajorCompany;
+        return $this->receivesPublicAid;
     }
 
-    public function setWorksInMajorCompany(?bool $worksInMajorCompany): self
+    public function setReceivesPublicAid(?bool $receivesPublicAid): self
     {
-        $this->worksInMajorCompany = $worksInMajorCompany;
+        $this->receivesPublicAid = $receivesPublicAid;
 
         return $this;
     }
 
-    public function getNotEmployed(): ?bool
+    public function getEmployed(): ?bool
     {
-        return $this->notEmployed;
+        return $this->employed;
     }
 
-    public function setNotEmployed(?bool $notEmployed): self
+    public function setEmployed(?bool $employed): self
     {
-        $this->notEmployed = $notEmployed;
+        $this->employed = $employed;
 
         return $this;
     }

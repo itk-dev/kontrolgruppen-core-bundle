@@ -42,14 +42,14 @@ class ClientType extends AbstractType
             ->add('numberOfChildren', null, [
                 'label' => 'client.form.number_of_children',
             ])
-            ->add('selfEmployed', null, [
-                'label' => 'client.form.self_employed',
+            ->add('receivesPublicAid', null, [
+                'label' => 'client.form.receives_public_aid',
             ])
-            ->add('worksInMajorCompany', null, [
-                'label' => 'client.form.works_in_major_company',
+            ->add('employed', null, [
+                'label' => 'client.form.employed',
             ])
-            ->add('notEmployed', null, [
-                'label' => 'client.form.not_employed',
+            ->add('hasOwnCompany', null, [
+                'label' => 'client.form.has_own_company',
             ])
             ->add('hasDriversLicense', null, [
                 'label' => 'client.form.has_drivers_license',
