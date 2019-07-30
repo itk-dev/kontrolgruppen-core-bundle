@@ -107,7 +107,7 @@ openssl req -x509 -sha256 -nodes -days 1460 -newkey rsa:2048 \
     -subj "/C=DK/L=Aarhus/O=Kontrolgruppen/CN=kontrolgruppen.example.com/emailAddress=info@kontrolgruppen.example.com"
 ```
 
-and download metadata from your identitity provider (IdP) to `saml/idp/ids.xml`.
+and download metadata from your identitity provider (IdP) to `saml/idp/idp.xml`.
 
 ## Sign in from command line
 
