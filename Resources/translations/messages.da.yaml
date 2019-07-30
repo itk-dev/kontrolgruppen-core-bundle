@@ -689,6 +689,21 @@ service_economy_entry:
     form:
         update: Gem
 
+sidebar:
+    client:
+        employment: Ansættelsesforhold
+        transport: Transport
+        cars: Biler
+        has_drivers_license: Har kørekort
+        has_own_company: Egen virksomhed
+        receives_public_aid: Offentlig forsørgelse
+        employed: Ansat
+        telephone: Telefonnummer
+        address: Adresse
+        cpr: CPR nummer
+        name: Navn
+        car_shared_ownership: Fælles ejet
+
 weighted_conclusion:
     form:
         update: Gem
