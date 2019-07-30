@@ -549,6 +549,7 @@ process_type:
         title: Rediger sagstype
     form:
         conclusion_class: Konklusionstype
+        channels: Tilkoblede kanaler
         hide_in_dashboard: Skjul på dashboard
         name: Navn
         net_default_value: Netto standardværdi
@@ -564,6 +565,7 @@ process_type:
         title: Sagstype
     table:
         conclusion_class: Konklusionstype
+        channels: Tilkoblede kanaler
         hide_in_dashboard: Skjul på dashboard
         id: ID
         name: Navn

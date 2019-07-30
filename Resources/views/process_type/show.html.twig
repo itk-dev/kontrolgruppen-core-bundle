@@ -29,6 +29,14 @@
                 </td>
             </tr>
             <tr>
+                <th>{{ 'process_type.table.channels'|trans }}</th>
+                <td>
+                    {% for channel in process_type.channels %}
+                        {{ channel }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
                 <th>{{ 'process_type.table.hide_in_dashboard'|trans }}</th>
                 <td>
                     {{ process_type.hideInDashboard|yes_no }}
