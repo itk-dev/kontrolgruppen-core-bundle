@@ -56,6 +56,10 @@ class ProcessTypeType extends AbstractType
                 'label' => 'process_type.form.services',
                 'attr' => ['class' => 'select2'],
             ])
+            ->add('channels', null, [
+                'label' => 'process_type.form.channels',
+                'attr' => ['class' => 'select2'],
+            ])
             ->add('hideInDashboard', null, [
                 'label' => 'process_type.form.hide_in_dashboard',
             ])
