@@ -28,6 +28,12 @@ class Configuration implements ConfigurationInterface
             ->end()
         ;
 
+        $treeBuilder->getRootNode()
+            ->children()
+            ->variableNode('exports')->end()
+            ->end()
+            ;
+
         return $treeBuilder;
     }
 }

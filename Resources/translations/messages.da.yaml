@@ -519,6 +519,8 @@ process_status:
         title: Rediger sagsstatus
     form:
         name: Navn
+        is_forward_to_another_authority: Videresendes til anden myndighed
+        is_forward_to_another_authority_help: Marker om denne status gør at sagen videresendes til anden myndighed
         process_types: Sagstyper
         update: Gem
         label: Vælg sagsstatus
@@ -534,6 +536,7 @@ process_status:
     table:
         id: ID
         name: Navn
+        is_forward_to_another_authority: Videresendes til anden myndighed
         process_types: Tilkoblede sagstyper
     select:
         label: Sagsstatus
@@ -756,3 +759,12 @@ service_economy_entry:
 weighted_conclusion:
     form:
         update: Gem
+
+export:
+  index:
+    title: Eksportér data
+  name: Eksport
+  date_period: Periode
+  run:
+    xlsx: Eksportér (XLSX)
+    csv: Eksportér (CSV)
