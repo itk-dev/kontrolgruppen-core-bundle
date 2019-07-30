@@ -11,6 +11,8 @@
 namespace Kontrolgruppen\CoreBundle\DependencyInjection;
 
 use Kontrolgruppen\CoreBundle\Export\Manager;
+use Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator;
+use Kontrolgruppen\CoreBundle\Security\UserManager;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -37,6 +39,16 @@ class KontrolgruppenCoreExtension extends Extension implements PrependExtensionI
 
         $definition = $container->getDefinition(Manager::class);
         $definition->replaceArgument('$configuration', ['exports' => $config['exports'] ?? []]);
+
+        $definition = $container->getDefinition(UserManager::class);
+        if (isset($config['user_class'])) {
+            $definition->replaceArgument('$class', $config['user_class']);
+        }
+
+        $definition = $container->getDefinition(SAMLAuthenticator::class);
+        if (isset($config['saml']['php_saml_settings'])) {
+            $definition->replaceArgument('$settings', $config['saml']['php_saml_settings']);
+        }
     }
 
     public function prepend(ContainerBuilder $container)
@@ -46,7 +58,6 @@ class KontrolgruppenCoreExtension extends Extension implements PrependExtensionI
             [
                 'default_path' => '%kernel.project_dir%/vendor/kontrolgruppen/core-bundle/Resources/views',
                 'paths' => [
-                    '%kernel.project_dir%/vendor/kontrolgruppen/core-bundle/Resources/FOSUserBundle/views' => 'FOSUser',
                     '%kernel.project_dir%/vendor/kontrolgruppen/core-bundle/Resources/views' => 'KontrolgruppenCoreBundle',
                 ],
             ]
