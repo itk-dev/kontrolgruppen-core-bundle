@@ -16,7 +16,7 @@
                     </button>
                 </form>
             {% endif %}
-            <a href="TODO: report path" class="btn btn-sm btn-outline-secondary float-right ml-3"><i
+            <a href="{{ path('process_report_index', {'process': process.id}) }}" class="btn btn-sm btn-outline-secondary float-right ml-3"><i
                     class="fas {{ iconClass('report') }} mr-2"></i>{{ 'process.btns.create_report'|trans }}</a>
             {% if not process.completedAt %}
                 <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-sm btn-outline-warning float-right ml-3"><i

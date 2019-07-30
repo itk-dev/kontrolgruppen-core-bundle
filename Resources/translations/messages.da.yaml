@@ -337,6 +337,7 @@ menu:
         revenue: Provenu
         service: Ydelser
         log: Log
+        report: Rapport
 
 navigation:
     main:
@@ -571,6 +572,72 @@ process_type:
         services: Tilkoblede ydelser
     btns:
         create_new: Opret ny sagstype
+
+process_report:
+    index:
+        title: Sagsrapport
+    form:
+        submit: Hent rapport
+        choices:
+            placeholder: Valgmuligheder
+            internal_notes: Med interne notater
+            only_summary: Kun sagsopsummering
+    report:
+        title: Sagsrapport
+        summary:
+            process_case_number: Sagsnummer
+            process_created_at: Sag oprettet
+            process_updated_at: Sidst redigeret
+            process_completed_at: Sag afsluttet
+            process_created_by: Sag oprettet af
+            process_case_worker: Sagsbehandler
+            process_status: Status
+            process_type: Type
+            service: Ydelse
+            channel: Kanal
+        client:
+            title: Klientoplysninger
+            first_name: Fornavn
+            last_name: Efternavn
+            cpr: CPR
+            address: Adresse
+            postal_code: Postnummer
+            telephone: Telefon
+            number_of_children: Antal børn
+            self_employed: Driver selvstændig virksomhed
+            works_in_major_company: Ansat i større virksomhed
+            not_employed: Ikke i arbejde
+            has_drivers_license: Har kørekort
+            has_car: Har bil
+        journal:
+            title: Journal
+        economy:
+            title: Økonomi
+            account:
+                title: Konti
+            arrear:
+                title: Restance
+            service:
+                title: Ydelse
+                service: Ydelse
+                amount: Beløb
+                period: Periode
+                period_from: Fra
+                period_to: Til
+                amount_period: Beløbsperiode
+                repayment_amount: Tilbagebetalingsbeløb
+            base:
+                text: Tekst
+                date: Dato
+                amount: Beløb
+        conclusion:
+            title: Konklusion
+            base:
+                conclusion: Konklusion
+            weighted:
+                conclusion: Konklusion
+                arguments_for: Argumenter for
+                arguments_against: Argumenter imod
 
 quick_link:
     edit:
