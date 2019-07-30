@@ -10,17 +10,14 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
-use Kontrolgruppen\CoreBundle\DBAL\Types\EconomyEntryEnumType;
-use Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
-use Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository;
-use Kontrolgruppen\CoreBundle\Service\ConclusionService;
-use Mpdf\Mpdf;
+use Kontrolgruppen\CoreBundle\Service\ReportService;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -36,9 +33,7 @@ class ProcessReportController extends BaseController
         Request $request,
         Process $process,
         TranslatorInterface $translator,
-        EconomyEntryRepository $economyEntryRepository,
-        ConclusionService $conclusionService,
-        JournalEntryRepository $journalEntryRepository
+        ReportService $reportService
     ): Response {
         $form = $this->createFormBuilder()
             ->add('options', ChoiceType::class, [
@@ -58,61 +53,13 @@ class ProcessReportController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
-            $viewData = [
-                'process' => $process,
-                'choice' => $formData['options'],
-            ];
+            $pathToReportFile = $reportService->generateProcessReport($process, $formData['options']);
 
-            $viewData['economyEntries'] = [
-                'service' => $economyEntryRepository->findBy([
-                    'process' => $process,
-                    'type' => EconomyEntryEnumType::SERVICE,
-                ]),
-                'account' => $economyEntryRepository->findBy([
-                   'process' => $process,
-                   'type' => EconomyEntryEnumType::ACCOUNT,
-                ]),
-                'arrear' => $economyEntryRepository->findBy([
-                   'process' => $process,
-                   'type' => EconomyEntryEnumType::ARREAR,
-                ]),
-            ];
+            $response = new BinaryFileResponse($pathToReportFile);
+            $response->deleteFileAfterSend(true);
+            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
 
-            $qb = $journalEntryRepository->createQueryBuilder('journalEntry');
-            $qb
-                ->select('journalEntry')
-                ->where('journalEntry.process = :process')
-                ->setParameter('process', $process)
-                ->andWhere('journalEntry.type = :note')
-                ->setParameter('note', JournalEntryEnumType::NOTE);
-
-            if ('internal_notes' === $formData['options']) {
-                $qb
-                    ->orWhere('journalEntry.type = :internal')
-                    ->setParameter('internal', JournalEntryEnumType::INTERNAL_NOTE);
-            }
-
-            $viewData['journalEntries'] = $qb->getQuery()->getArrayResult();
-
-            $viewData['conclusionTemplate'] = $conclusionService->getTemplate(
-                \get_class($process->getConclusion()),
-                '',
-                '@KontrolgruppenCore/process_report/'
-            );
-
-            $report = $this->renderView('@KontrolgruppenCore/process_report/_report.html.twig', $viewData);
-
-            // @TODO Should probably be in a Service
-            $mpdf = new Mpdf();
-            $mpdf->WriteHTML($report);
-
-            $filename = sprintf(
-                '%s-%s.pdf',
-                strtolower($translator->trans('process_report.report.title')),
-                $process->getCaseNumber()
-            );
-
-            $mpdf->Output($filename, 'D');
+            return $response;
         }
 
         $data = [
