@@ -6,13 +6,13 @@
                     {% if process.clientCPR is defined %}
                         <span class="d-block"><span class="sr-only">{{ 'sidebar.client.cpr'|trans }}</span>{{ process.clientCPR }}</span>
                     {% endif %}
-                    {% if process.client.firstName is not empty %}
+                    {% if process.client.firstName is defined %}
                         <span class="d-block"><span
                                 class="sr-only">{{ 'sidebar.client.name'|trans }}</span>{{ process.client.firstName }} {{ process.client.lastName }}</span>
                     {% endif %}
                 </div>
                 <div class="mb-3">
-                    {% if process.client.address is not empty %}
+                    {% if process.client.address is defined %}
                         <span class="d-block"><span
                                 class="sr-only">{{ 'sidebar.client.address'|trans }}</span>{{ process.client.address }}, {{ process.client.postalCode }} {{ process.client.city }}</span>
                     {% endif %}
@@ -24,13 +24,13 @@
                 <div class="mb-3">
                     <h3>{{ 'sidebar.client.employment'|trans }}</h3>
 
-                    {% if process.client.receivesPublicAid %}
+                    {% if process.client.receivesPublicAid is defined and process.client.receivesPublicAid %}
                         <span class="d-block">{{ 'sidebar.client.receives_public_aid'|trans }}</span>
                     {% endif %}
-                    {% if process.client.employed %}
+                    {% if process.client.employed is defined and process.client.employed %}
                         <span class="d-block">{{ 'sidebar.client.employed'|trans }}</span>
                     {% endif %}
-                    {% if process.client.hasOwnCompany %}
+                    {% if process.client.hasOwnCompany is defined and process.client.hasOwnCompany %}
                         <span class="d-block">{{ 'sidebar.client.has_own_company'|trans }}</span>
                     {% endif %}
                 </div>
@@ -38,7 +38,7 @@
                 <div class="mb-3">
                     <h3>{{ 'sidebar.client.transport'|trans }}</h3>
 
-                    {% if process.client.hasOwnCompany %}
+                    {% if process.client.hasOwnCompany is defined and process.client.hasOwnCompany %}
                         <span class="d-block">{{ 'sidebar.client.has_drivers_license'|trans }}</span>
                     {% endif %}
 
