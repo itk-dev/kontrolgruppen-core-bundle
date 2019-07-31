@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class ExportController.
  *
- * @Route("/export", name="export_")
+ * @Route("/admin/export", name="export_")
  */
 class ExportController extends BaseController
 {
@@ -59,6 +59,7 @@ class ExportController extends BaseController
         return $this->render(
             '@KontrolgruppenCore/export/index.html.twig',
             [
+                'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
                 'exports' => $exports,
                 'parameterForms' => $parameterForms,
             ]
@@ -145,7 +146,7 @@ class ExportController extends BaseController
         $parameters = $export->getParameters();
 
         // Use a named builder to namespace the parameter form values.
-        $builder = $this->get('form.factory')->createNamedBuilder('parameters_'.$this->getExportKey($export));
+        $builder = $this->formFactory->createNamedBuilder('parameters_'.$this->getExportKey($export));
         foreach ($parameters as $name => $config) {
             $type = $config['type'] ?? null;
             $typeOptions = $config['type_options'] ?? [];

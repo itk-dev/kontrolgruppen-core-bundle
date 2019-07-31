@@ -16,6 +16,7 @@ use Kontrolgruppen\CoreBundle\Form\JournalEntryType;
 use Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessLogEntryRepository;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -53,7 +54,7 @@ class JournalEntryController extends BaseController
         FilterBuilderUpdaterInterface $lexikBuilderUpdater,
         SessionInterface $session,
         LogManager $logManager,
-        ProcessLogEntryRepository $processLogEntryRepository
+        FormFactoryInterface $formFactory
     ): Response {
         $journalEntry = new JournalEntry();
         $journalEntry->setProcess($process);
@@ -74,8 +75,7 @@ class JournalEntryController extends BaseController
             );
         }
 
-        $filterForm = $this->get('form.factory')
-            ->create(JournalFilterType::class);
+        $filterForm = $formFactory->create(JournalFilterType::class);
 
         $sortDirection = $request->query->get('sort_direction') ?: null;
 
