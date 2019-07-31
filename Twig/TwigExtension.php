@@ -51,7 +51,6 @@ class TwigExtension extends AbstractExtension
         return [
             new TwigFilter('yes_no', [$this, 'booleanYesNoFilter']),
             new TwigFilter('true_false', [$this, 'booleanTrueFalseFilter']),
-            new TwigFilter('court_decision', [$this, 'booleanCourtDecisionFilter']),
         ];
     }
 
@@ -67,19 +66,6 @@ class TwigExtension extends AbstractExtension
             new TwigFunction('camelCaseToUnderscore', [$this, 'camelCaseToUnderscore']),
             new TwigFunction('urlToProcessRelatedClass', [$this, 'urlToProcessRelatedClass']),
         ];
-    }
-
-    public function booleanCourtDecisionFilter($value)
-    {
-        if (null === $value) {
-            return $this->translator->trans('common.boolean.null');
-        }
-
-        if ($value) {
-            return $this->translator->trans('common.boolean.in_favor');
-        }
-
-        return $this->translator->trans('common.boolean.not_in_favor');
     }
 
     public function booleanTrueFalseFilter($value)

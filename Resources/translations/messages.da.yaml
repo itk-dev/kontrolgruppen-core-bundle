@@ -125,8 +125,6 @@ common:
         No: Nej
         yes: ja
         no: nej
-        in_favor: Medhold
-        not_in_favor: Afvist
     choice_all: Alle
     enum:
         date_interval:
@@ -179,6 +177,10 @@ conclusion:
     types:
         base: Basal
         weighted: Argumenter for/imod
+
+court_decision:
+    'true': Medhold
+    'false': Afvist
 
 dashboard:
     index:

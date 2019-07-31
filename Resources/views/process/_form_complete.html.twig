@@ -59,7 +59,7 @@
                         <strong class="text-danger">{{ 'common.empty_field_value'|trans }}</strong>
                         <a class="ml-3" href="{{ path('process_edit', {id: process.id, referer: app.request.pathinfo}) }}">{{ 'common.actions.edit'|trans }}</a>
                     {% else %}
-                        <strong>{{ process.courtDecision|court_decision }}</strong>
+                        <strong>{{ process.courtDecision ? 'court_decision.true'|trans : 'court_decision.false'|trans }}</strong>
                     {% endif %}
                 </div>
             </div>

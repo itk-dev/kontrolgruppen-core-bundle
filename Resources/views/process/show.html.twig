@@ -78,7 +78,7 @@
                     <div class="col-6 col-lg-3">
                         <dl class="row">
                             <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.court_decision'|trans }}</dd>
-                            <dt class="col-sm-12">{{ process.courtDecision|court_decision }}</dt>
+                            <dt class="col-sm-12">{{ process.courtDecision ? 'court_decision.true'|trans : 'court_decision.false'|trans }}</dt>
                         </dl>
                     </div>
                 </div>

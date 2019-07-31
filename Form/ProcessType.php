@@ -78,8 +78,8 @@ class ProcessType extends AbstractType
                 'label' => 'process.form.court_decision',
                 'choices' => [
                     null => null,
-                    'common.boolean.in_favor' => true,
-                    'common.boolean.not_in_favor' => false,
+                    'court_decision.true' => true,
+                    'court_decision.false' => false,
                 ],
             ])
         ;
