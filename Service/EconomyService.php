@@ -39,7 +39,11 @@ class EconomyService
      */
     public function calculateRevenue(Process $process)
     {
-        $netMultiplier = $process->getProcessType()->getNetDefaultValue();
+        // Get locked net value if set, else fall back to process type net value.
+        $netMultiplier = $process->getLockedNetValue();
+        if ($netMultiplier == null) {
+            $netMultiplier = $process->getProcessType()->getNetDefaultValue();
+        }
 
         $serviceEconomyEntries = $this->economyEntryRepository->findBy([
             'process' => $process,

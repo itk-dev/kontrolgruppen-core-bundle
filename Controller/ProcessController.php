@@ -265,6 +265,7 @@ class ProcessController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $process->setLockedNetValue($process->getProcessType()->getNetDefaultValue());
             $process->setCompletedAt(new \DateTime());
             $em = $this->getDoctrine()->getManager();
             $em->persist($process);
@@ -297,6 +298,7 @@ class ProcessController extends BaseController
     public function resume(Request $request, Process $process): Response
     {
         $process->setCompletedAt(null);
+        $process->setLockedNetValue(null);
         $em = $this->getDoctrine()->getManager();
         $em->persist($process);
         $em->flush();
