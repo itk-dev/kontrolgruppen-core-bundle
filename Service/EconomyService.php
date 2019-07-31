@@ -41,7 +41,7 @@ class EconomyService
     {
         // Get locked net value if set, else fall back to process type net value.
         $netMultiplier = $process->getLockedNetValue();
-        if ($netMultiplier == null) {
+        if (null === $netMultiplier) {
             $netMultiplier = $process->getProcessType()->getNetDefaultValue();
         }
 
