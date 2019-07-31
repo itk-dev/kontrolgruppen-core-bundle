@@ -51,7 +51,7 @@ class TwigExtension extends AbstractExtension
         return [
             new TwigFilter('yes_no', [$this, 'booleanYesNoFilter']),
             new TwigFilter('true_false', [$this, 'booleanTrueFalseFilter']),
-            new TwigFilter('court_decision', [$this, 'booleanCourtDecisionFilter'])
+            new TwigFilter('court_decision', [$this, 'booleanCourtDecisionFilter']),
         ];
     }
 

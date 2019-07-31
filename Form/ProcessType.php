@@ -80,7 +80,7 @@ class ProcessType extends AbstractType
                     null => null,
                     'common.boolean.in_favor' => true,
                     'common.boolean.not_in_favor' => false,
-                ]
+                ],
             ])
         ;
 
