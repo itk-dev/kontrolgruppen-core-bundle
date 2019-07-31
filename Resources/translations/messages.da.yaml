@@ -178,6 +178,10 @@ conclusion:
         base: Basal
         weighted: Argumenter for/imod
 
+court_decision:
+    'true': Medhold
+    'false': Afvist
+
 dashboard:
     index:
         title: Dashboard
@@ -384,6 +388,7 @@ process:
             save: Gem ny status
         channel: Kanal
         client_cpr: Klient CPR
+        court_decision: Rettens afgørelse
         police_report: Er sagen politianmeldt?
         process_status: Sagsstatus
         process_type: Sagstype
@@ -409,6 +414,7 @@ process:
         client_last_name: Efternavn
         client_name: Klient navn
         client_telephone: Klient telefonnummer
+        court_decision: Rettens afgørelse
         id: ID
         internal_note: Seneste interne notater
         journal: Journal
