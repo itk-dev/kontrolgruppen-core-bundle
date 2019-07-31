@@ -7,7 +7,7 @@
             <td>{{ journalEntry.title }}</td>
         </tr>
         <tr>
-            <td colspan="2">{{ journalEntry.body }}</td>
+            <td colspan="2">{{ journalEntry.body|raw }}</td>
         </tr>
         {% endfor %}
     </table>

@@ -606,9 +606,9 @@ process_report:
             postal_code: Postnummer
             telephone: Telefon
             number_of_children: Antal børn
-            self_employed: Driver selvstændig virksomhed
-            works_in_major_company: Ansat i større virksomhed
-            not_employed: Ikke i arbejde
+            employed: Ansat
+            has_own_company: Egen virksomhed
+            receives_public_aid: Offentlig forsørgelse
             has_drivers_license: Har kørekort
             has_car: Har bil
         journal:
