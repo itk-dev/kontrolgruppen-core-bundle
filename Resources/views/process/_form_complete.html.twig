@@ -12,13 +12,15 @@
                     {{ 'process.complete.processing_time'|trans }}
                 </div>
                 <div class="col-12 col-sm-6">
-                    <strong>{{ process.createdAt|date('d. F Y') }} – {{ 'now'|date('d. F Y') }}
+                    <strong>
+                        {{ process.createdAt|localizeddate('short', 'none', null, null, 'd. MMMM yyyy') }} – {{ 'now'|localizeddate('short', 'none', null, null, 'd. MMMM yyyy') }}
 
-                    {# @see https://stackoverflow.com/questions/15657687/twig-date-difference #}
-                    {% set start_date = process.createdAt %}
-                    {% set end_date = 'now' %}
-                    {% set days = date(end_date).diff(date(start_date)).days + 1 %}
-                    ({{ 'process.complete.processing_time_value'|transchoice(days, {'%days%': days}) }})</strong>
+                        {# @see https://stackoverflow.com/questions/15657687/twig-date-difference #}
+                        {% set start_date = process.createdAt %}
+                        {% set end_date = 'now' %}
+                        {% set days = date(end_date).diff(date(start_date)).days + 1 %}
+                        ({{ 'process.complete.processing_time_value'|transchoice(days, {'%days%': days}) }})
+                    </strong>
                 </div>
             </div>
         </li>
@@ -57,7 +59,7 @@
                         <strong class="text-danger">{{ 'common.empty_field_value'|trans }}</strong>
                         <a class="ml-3" href="{{ path('process_edit', {id: process.id, referer: app.request.pathinfo}) }}">{{ 'common.actions.edit'|trans }}</a>
                     {% else %}
-                        <strong>{{ process.courtDecision|yes_no }}</strong>
+                        <strong>{{ process.courtDecision|court_decision }}</strong>
                     {% endif %}
                 </div>
             </div>

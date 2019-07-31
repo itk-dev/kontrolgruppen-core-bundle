@@ -74,6 +74,14 @@ class ProcessType extends AbstractType
                     'common.boolean.no' => false,
                 ],
             ])
+            ->add('courtDecision', ChoiceType::class, [
+                'label' => 'process.form.court_decision',
+                'choices' => [
+                    null => null,
+                    'common.boolean.in_favor' => true,
+                    'common.boolean.not_in_favor' => false,
+                ]
+            ])
         ;
 
         $formModifier = function (FormInterface $form, ProcessTypeEntity $processType = null) {

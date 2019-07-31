@@ -35,12 +35,6 @@
                 <div class="row">
                     <div class="col-6 col-lg-3">
                         <dl class="row">
-                            <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.created_by'|trans }}</dd>
-                            <dt class="col-sm-12">{{ process.createdBy }}</dt>
-                        </dl>
-                    </div>
-                    <div class="col-6 col-lg-3">
-                        <dl class="row">
                             <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.created_at'|trans }}</dd>
                             <dt class="col-sm-12">{{ process.createdAt|localizeddate('short', 'none') }}</dt>
                         </dl>
@@ -79,6 +73,12 @@
                         <dl class="row">
                             <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.police_report'|trans }}</dd>
                             <dt class="col-sm-12">{{ process.policeReport|yes_no }}</dt>
+                        </dl>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <dl class="row">
+                            <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.court_decision'|trans }}</dd>
+                            <dt class="col-sm-12">{{ process.courtDecision|court_decision }}</dt>
                         </dl>
                     </div>
                 </div>
