@@ -92,7 +92,7 @@ class Export extends AbstractExport
                 $process->getProcessType() ? $process->getProcessType()->getName() : null,
                 $process->getService() ? $process->getService()->getName() : null,
                 $this->formatBoolean($process->getClient() && $process->getClient()->getHasOwnCompany()),
-                $this->formatAmount($revenue['collectiveNetSum'] ?? 0),
+                $this->formatAmount($revenue['repaymentSum'] ?? 0),
                 $this->formatAmount($revenue['futureSavingsSum'] ?? 0),
                 $this->formatBoolean($process->getProcessStatus() && $process->getProcessStatus()->getIsForwardToAnotherAuthority()),
                 $this->formatBoolean($process->getPoliceReport()),
