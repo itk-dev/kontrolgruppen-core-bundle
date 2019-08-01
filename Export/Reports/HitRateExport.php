@@ -11,12 +11,8 @@
 namespace Kontrolgruppen\CoreBundle\Export\Reports;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
-use Kontrolgruppen\CoreBundle\Service\EconomyService;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class HitRateExport extends AbstractExport
 {
@@ -59,7 +55,7 @@ class HitRateExport extends AbstractExport
                 ];
             }
 
-            $hitRate[$process->getChannel()->getName()]['processes'] += 1;
+            ++$hitRate[$process->getChannel()->getName()]['processes'];
             $hitRate[$process->getChannel()->getName()]['won'] +=
                 $process->getCourtDecision() ? 1 : 0;
         }
@@ -71,7 +67,7 @@ class HitRateExport extends AbstractExport
                 $key,
                 $value['processes'],
                 $value['won'],
-                "" . ($value['hitRate'] * 100) . "%",
+                ($value['hitRate'] * 100).' %',
             ]);
         }
     }

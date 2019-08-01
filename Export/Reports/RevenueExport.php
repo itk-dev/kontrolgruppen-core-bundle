@@ -11,12 +11,9 @@
 namespace Kontrolgruppen\CoreBundle\Export\Reports;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class RevenueExport extends AbstractExport
 {
@@ -47,7 +44,7 @@ class RevenueExport extends AbstractExport
             'Samlet tilbagebetalingskrav',
             'Samlet fremadrettet besparelse',
             'Samlet provenu',
-            'Provenu pr. sag'
+            'Provenu pr. sag',
         ]);
 
         $revenue = [];
@@ -64,7 +61,7 @@ class RevenueExport extends AbstractExport
                 ];
             }
 
-            $revenue[$process->getService()->getName()]['processes'] += 1;
+            ++$revenue[$process->getService()->getName()]['processes'];
             $revenue[$process->getService()->getName()]['collectiveRepaymentSum'] += $processRevenue['repaymentSum'];
             $revenue[$process->getService()->getName()]['collectiveFutureSavingsSum'] += $processRevenue['futureSavingsSum'];
             $revenue[$process->getService()->getName()]['collectiveRevenueSum'] = $processRevenue['repaymentSum'] + $processRevenue['futureSavingsSum'];

@@ -141,16 +141,16 @@ class ExportController extends BaseController
                     $html = ob_get_clean();
 
                     // Extract body content.
-                    $d = new \DOMDocument;
-                    $mock = new \DOMDocument;
+                    $d = new \DOMDocument();
+                    $mock = new \DOMDocument();
                     $d->loadHTML($html);
                     $body = $d->getElementsByTagName('body')->item(0);
-                    foreach ($body->childNodes as $child){
-                        if ($child->tagName == 'style') {
+                    foreach ($body->childNodes as $child) {
+                        if ('style' === $child->tagName) {
                             continue;
                         }
 
-                        if ($child->tagName == 'table') {
+                        if ('table' === $child->tagName) {
                             $child->setAttribute('class', 'table table-responsive');
                         }
 
@@ -171,7 +171,7 @@ class ExportController extends BaseController
 
             $response->headers->set('Content-Type', $contentType);
             $response->headers->set('Content-Disposition', 'attachment; filename="'.$filename.'"');
-            $response->headers->set('Cache-Control','max-age=0');
+            $response->headers->set('Cache-Control', 'max-age=0');
 
             return $response;
         } catch (\Exception $exception) {

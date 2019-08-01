@@ -174,12 +174,12 @@ abstract class AbstractExport
 
     protected function writeRow(array $row, array $style = null)
     {
-        $this->latestRow += 1;
+        ++$this->latestRow;
 
         foreach ($row as $key => $cell) {
             $this->sheet->setCellValueByColumnAndRow($key + 1, $this->latestRow, $cell);
             $styleCell = $this->sheet->getStyleByColumnAndRow($key + 1, $this->latestRow);
-            if ($style != null) {
+            if (null !== $style) {
                 $styleCell->applyFromArray($style);
             }
         }
