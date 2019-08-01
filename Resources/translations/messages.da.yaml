@@ -104,6 +104,7 @@ client:
         transportation: Transport
 common:
     actions:
+        back: Gå tilbage
         close: Luk
         create: Opret ny
         confirm:
@@ -785,10 +786,14 @@ weighted_conclusion:
         update: Gem
 
 export:
-  index:
-    title: Eksportér data
-  name: Eksport
-  date_period: Periode
-  run:
-    xlsx: Eksportér (XLSX)
-    csv: Eksportér (CSV)
+    show:
+        title: Vis rapport
+    index:
+        title: Eksportér rapport
+    name: Rapporter
+    date_period: Periode
+    run:
+        xlsx: Eksportér (XLSX)
+        csv: Eksportér (CSV)
+        html: Vis
+        pdf: Eksportér (PDF)

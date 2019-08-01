@@ -10,11 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Export;
 
-use Box\Spout\Common\Entity\Style\Color;
-use Box\Spout\Common\Entity\Style\Style;
-use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
-use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
-use Box\Spout\Writer\WriterInterface;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 abstract class AbstractExport
@@ -25,8 +21,13 @@ abstract class AbstractExport
     /** @var array */
     protected $parameters;
 
-    /** @var WriterInterface */
-    protected $writer;
+    /** @var Spreadsheet */
+    protected $spreadsheet;
+
+    /** @var \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet */
+    protected $sheet;
+
+    protected $latestRow = 0;
 
     /**
      * Constructor.
@@ -100,10 +101,11 @@ abstract class AbstractExport
     /**
      * Write report data to a writer.
      */
-    public function write(array $parameters, WriterInterface $writer)
+    public function write(array $parameters, Spreadsheet $spreadsheet)
     {
         $this->parameters = $parameters;
-        $this->writer = $writer;
+        $this->spreadsheet = $spreadsheet;
+        $this->sheet = $this->spreadsheet->getActiveSheet();
         $this->writeData();
     }
 
@@ -120,13 +122,15 @@ abstract class AbstractExport
     protected function writeTitle($title, $colSpan = 1)
     {
         if (null === $this->titleStyle) {
-            $this->titleStyle = (new StyleBuilder())
-                ->setFontBold()
-                ->setFontSize(24)
-                ->build();
+            $this->titleStyle = [
+                'font' => [
+                    'bold' => true,
+                    'size' => 24,
+                ],
+            ];
         }
 
-        $this->writer->addRowWithStyle([$title], $this->titleStyle);
+        $this->writeRow([$title], $this->titleStyle);
     }
 
     protected $headerStyle;
@@ -137,9 +141,11 @@ abstract class AbstractExport
     protected function writeHeader(array $data)
     {
         if (null === $this->headerStyle) {
-            $this->headerStyle = (new StyleBuilder())
-                ->setFontBold()
-                ->build();
+            $this->headerStyle = [
+                'font' => [
+                    'bold' => true,
+                ],
+            ];
         }
 
         $this->writeRow($data, $this->headerStyle);
@@ -150,22 +156,33 @@ abstract class AbstractExport
     protected function writeFooter(array $data)
     {
         if (null === $this->footerStyle) {
-            $this->footerStyle = (new StyleBuilder())
-                ->setFontBold()
-                ->setBackgroundColor(Color::rgb(0xDD, 0xDD, 0xDD))
-                ->build();
+            $this->footerStyle = [
+                'font' => [
+                    'bold' => true,
+                ],
+                'fill' => [
+                    'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                    'color' => [
+                        'argb' => 'FFDDDDDD',
+                    ],
+                ],
+            ];
         }
 
         $this->writeRow($data, $this->footerStyle);
     }
 
-    protected function writeRow(array $data, Style $style = null)
+    protected function writeRow(array $row, array $style = null)
     {
-        $cells = array_map(function ($value) use ($style) {
-            return WriterEntityFactory::createCell($value, $style);
-        }, $data);
-        $row = WriterEntityFactory::createRow($cells);
-        $this->writer->addRow($row);
+        $this->latestRow += 1;
+
+        foreach ($row as $key => $cell) {
+            $this->sheet->setCellValueByColumnAndRow($key + 1, $this->latestRow, $cell);
+            $styleCell = $this->sheet->getStyleByColumnAndRow($key + 1, $this->latestRow);
+            if ($style != null) {
+                $styleCell->applyFromArray($style);
+            }
+        }
     }
 
     protected function formatBoolean(bool $value)

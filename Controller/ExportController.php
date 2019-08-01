@@ -10,15 +10,17 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
-use Box\Spout\Common\Type;
-use Box\Spout\Writer\Common\Creator\WriterFactory;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Export\Manager;
 use Kontrolgruppen\CoreBundle\Service\MenuService;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Border;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 /**
  * Class ExportController.
@@ -72,7 +74,7 @@ class ExportController extends BaseController
      *   name="run",
      *   defaults={"_format": "xlsx"},
      *   requirements={
-     *     "_format": "xlsx|csv",
+     *     "_format": "xlsx|csv|html|pdf",
      *   }
      * )
      */
@@ -100,21 +102,78 @@ class ExportController extends BaseController
         $parameters = $form->getData();
 
         $filename = preg_replace('/[^a-z0-9_]/i', '-', $export->getFilename($parameters));
-        $type = Type::XLSX;
-        switch ($_format) {
-            case 'csv':
-                $type = Type::CSV;
-                break;
-        }
-        $filename .= '.'.$type;
 
-        $writer = WriterFactory::createFromType($type);
+        $styleArray = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => Border::BORDER_THIN,
+                ],
+            ],
+        ];
+
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->getDefaultStyle()->applyFromArray($styleArray);
 
         try {
-            $writer->openToBrowser($filename);
-            $export->write($parameters, $writer);
-            $writer->close();
-            exit;
+            $export->write($parameters, $spreadsheet);
+
+            switch ($_format) {
+                case 'csv':
+                    $filename .= '.csv';
+                    $contentType = 'text/csv';
+                    $writer = IOFactory::createWriter($spreadsheet, 'Csv');
+                    break;
+                case 'xlsx':
+                    $filename .= '.xlsx';
+                    $contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+                    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+                    break;
+                case 'pdf':
+                    $filename .= '.pdf';
+                    $contentType = 'application/pdf';
+                    $writer = IOFactory::createWriter($spreadsheet, 'Mpdf');
+                    break;
+                case 'html':
+                default:
+                    $writer = IOFactory::createWriter($spreadsheet, 'Html');
+                    ob_start();
+                    $writer->save('php://output');
+                    $html = ob_get_clean();
+
+                    // Extract body content.
+                    $d = new \DOMDocument;
+                    $mock = new \DOMDocument;
+                    $d->loadHTML($html);
+                    $body = $d->getElementsByTagName('body')->item(0);
+                    foreach ($body->childNodes as $child){
+                        if ($child->tagName == 'style') {
+                            continue;
+                        }
+
+                        if ($child->tagName == 'table') {
+                            $child->setAttribute('class', 'table table-responsive');
+                        }
+
+                        $mock->appendChild($mock->importNode($child, true));
+                    }
+
+                    return $this->render('@KontrolgruppenCore/export/show.html.twig', [
+                        'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
+                        'table' => $mock->saveHTML(),
+                    ]);
+            }
+
+            $response = new StreamedResponse(
+                function () use ($writer) {
+                    $writer->save('php://output');
+                }
+            );
+
+            $response->headers->set('Content-Type', $contentType);
+            $response->headers->set('Content-Disposition', 'attachment; filename="'.$filename.'"');
+            $response->headers->set('Cache-Control','max-age=0');
+
+            return $response;
         } catch (\Exception $exception) {
             $this->addFlash('danger', 'Error during export: '.$exception->getMessage());
 
