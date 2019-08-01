@@ -332,7 +332,7 @@ menu:
         client: Klient
         conclusion: Konklusion
         economy: Økonomi
-        export: Eksport
+        export: Rapporter
         journal: Journal
         process_number: 'Sag: %processNumber%'
         process_show: Sagsopsummering

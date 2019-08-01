@@ -188,6 +188,14 @@ class MenuService
     {
         return [
             $this->createMenuItem(
+                'export',
+                1 === preg_match(
+                    '/^\/admin\/export\/.*$/',
+                    $path
+                ),
+                'export_index'
+            ),
+            $this->createMenuItem(
                 'process_type',
                 1 === preg_match(
                     '/^\/admin\/process_type\/.*$/',
@@ -234,14 +242,6 @@ class MenuService
                     $path
                 ),
                 'quick_link_index'
-            ),
-            $this->createMenuItem(
-                'export',
-                1 === preg_match(
-                    '/^\/admin\/export\/.*$/',
-                    $path
-                ),
-                'export_index'
             ),
         ];
     }
