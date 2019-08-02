@@ -60,21 +60,6 @@ class MenuService
                 (false !== $this->startsWith($path, '/process/')),
                 'process_index'
             ),
-            // @TODO: Implement these.
-            /*
-            'profile' => $this->createGlobalNavItem(
-                'profile',
-                '/profile/',
-                'profile',
-                (false !== $this->startsWith($path, '/profile/'))
-            ),
-            'users' => $this->createGlobalNavItem(
-                'users',
-                '/users/',
-                'users',
-                (false !== $this->startsWith($path, '/profile/'))
-            ),
-            */
             'admin' => $this->createGlobalNavItem(
                 'admin',
                 'admin',
@@ -202,6 +187,14 @@ class MenuService
     public function getAdminMenu($path)
     {
         return [
+            $this->createMenuItem(
+                'export',
+                1 === preg_match(
+                    '/^\/admin\/export\/.*$/',
+                    $path
+                ),
+                'export_index'
+            ),
             $this->createMenuItem(
                 'process_type',
                 1 === preg_match(
