@@ -797,3 +797,6 @@ export:
         csv: Eksportér (CSV)
         html: Vis
         pdf: Eksportér (PDF)
+
+prevent_cpr:
+    cpr_in_content: 'Indeholder følgende CPR-numre (fjern venligst): %list%'
