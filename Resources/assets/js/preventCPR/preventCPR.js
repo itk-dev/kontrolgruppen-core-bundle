@@ -1,4 +1,4 @@
-/* global alert:readonly */
+/* global alert:readonly kontrolgruppenMessages:readonly */
 /**
  * Prevent CPR numbers in text field. Displays an alert.
  */
@@ -8,7 +8,7 @@
         let inputElements = $(this);
 
         self.options = $.extend({
-            text: 'Indeholder følgende CPR numre (fjern venligst): '
+            text: ('prevent_cpr.cpr_in_content' in kontrolgruppenMessages) ? kontrolgruppenMessages['prevent_cpr.cpr_in_content'] : 'Indeholder følgende CPR-numre (fjern venligst): %list'
         }, options);
 
         function checkInputField (event, inputElement) {
@@ -29,9 +29,9 @@
                 event.preventDefault(event);
 
                 // Display error, and how to correct.
-                alert(self.options.text + matches.reduce(function (accumulator, currentValue) {
+                alert(self.options.text.replace('%list%', matches.reduce(function (accumulator, currentValue) {
                     return accumulator !== '' ? accumulator + ', ' + currentValue : currentValue;
-                }));
+                })));
             }
         }
 
