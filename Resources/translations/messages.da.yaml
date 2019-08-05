@@ -439,6 +439,7 @@ process:
         complete: Afslut sag
         resume: Genoptag sag
     completed_message: Sagen er afsluttet og kan ikke længere redigeres
+    is_completed: Afsluttet?
 
 process_log:
     index:
