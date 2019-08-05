@@ -15,7 +15,6 @@ use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Event\Doctrine\ORM\OnReadEventArgs;
 use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessCompleteType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;

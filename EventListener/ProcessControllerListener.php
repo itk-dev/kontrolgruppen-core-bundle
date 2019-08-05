@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\EventListener;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -43,7 +51,7 @@ class ProcessControllerListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::CONTROLLER => 'onKernelController'
+            KernelEvents::CONTROLLER => 'onKernelController',
         ];
     }
 
@@ -56,14 +64,12 @@ class ProcessControllerListener implements EventSubscriberInterface
          * This is not usual in Symfony but it may happen.
          * If it is a class, it comes in array format
          */
-        if (!is_array($controller)) {
+        if (!\is_array($controller)) {
             return;
         }
 
         if ($controller[0] instanceof ProcessController) {
-
             if ($event->getRequest()->isMethod('GET') && $event->getRequest()->attributes->has('id')) {
-
                 $processId = $event->getRequest()->attributes->get('id');
 
                 // If the request is coming from inside the Process route group, we dont
@@ -71,7 +77,8 @@ class ProcessControllerListener implements EventSubscriberInterface
                 // the Process the first time.
                 if (!$this->isRequestOriginatingFromProcessRouteGroup(
                     $event->getRequest(),
-                    $event->getRequest()->attributes->get('id'))
+                    $event->getRequest()->attributes->get('id')
+                )
                 ) {
                     $process = $this->processRepository->find($processId);
 
@@ -87,7 +94,8 @@ class ProcessControllerListener implements EventSubscriberInterface
      * Checks if a given request originates from a route in the given Process route group.
      *
      * @param Request $request
-     * @param int $processId
+     * @param int     $processId
+     *
      * @return bool
      */
     private function isRequestOriginatingFromProcessRouteGroup(Request $request, int $processId): bool
@@ -96,13 +104,11 @@ class ProcessControllerListener implements EventSubscriberInterface
 
         $referer = $request->headers->get('referer');
         if (!empty($referer)) {
-
             $refererRequestUri = Request::create($referer)->getRequestUri();
 
             $pattern = sprintf('/process\/%s/', $processId);
 
             if (preg_match($pattern, $refererRequestUri)) {
-
                 $inGroup = true;
             }
         }
