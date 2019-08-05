@@ -16,7 +16,7 @@ use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 
 class HitRateExport extends AbstractExport
 {
-    protected $title = 'Hit rate';
+    protected $title = 'Hitrate';
 
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
@@ -42,7 +42,7 @@ class HitRateExport extends AbstractExport
             'Kanal',
             'Antal afsluttede sager',
             'Vundne',
-            'Hit rate',
+            'Hitrate',
         ]);
 
         $hitRate = [];
