@@ -115,6 +115,16 @@ class Process extends AbstractEntity
      */
     private $policeReport;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $courtDecision;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $lockedNetValue;
+
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
@@ -398,6 +408,30 @@ class Process extends AbstractEntity
     public function setPoliceReport(?bool $policeReport): self
     {
         $this->policeReport = $policeReport;
+
+        return $this;
+    }
+
+    public function getCourtDecision(): ?bool
+    {
+        return $this->courtDecision;
+    }
+
+    public function setCourtDecision(?bool $courtDecision): self
+    {
+        $this->courtDecision = $courtDecision;
+
+        return $this;
+    }
+
+    public function getLockedNetValue(): ?float
+    {
+        return $this->lockedNetValue;
+    }
+
+    public function setLockedNetValue(?float $lockedNetValue): self
+    {
+        $this->lockedNetValue = $lockedNetValue;
 
         return $this;
     }

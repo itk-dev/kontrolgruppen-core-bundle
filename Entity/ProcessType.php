@@ -51,11 +51,17 @@ class ProcessType extends AbstractTaxonomy
      */
     private $netDefaultValue;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Channel", inversedBy="processTypes")
+     */
+    private $channels;
+
     public function __construct()
     {
         $this->processes = new ArrayCollection();
         $this->processStatuses = new ArrayCollection();
         $this->services = new ArrayCollection();
+        $this->channels = new ArrayCollection();
     }
 
     /**
@@ -173,6 +179,32 @@ class ProcessType extends AbstractTaxonomy
     public function setNetDefaultValue(float $netDefaultValue): self
     {
         $this->netDefaultValue = $netDefaultValue;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Channel[]
+     */
+    public function getChannels(): Collection
+    {
+        return $this->channels;
+    }
+
+    public function addChannel(Channel $channel): self
+    {
+        if (!$this->channels->contains($channel)) {
+            $this->channels[] = $channel;
+        }
+
+        return $this;
+    }
+
+    public function removeChannel(Channel $channel): self
+    {
+        if ($this->channels->contains($channel)) {
+            $this->channels->removeElement($channel);
+        }
 
         return $this;
     }

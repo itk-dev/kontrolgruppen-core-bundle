@@ -104,6 +104,7 @@ client:
         transportation: Transport
 common:
     actions:
+        back: Gå tilbage
         close: Luk
         create: Opret ny
         confirm:
@@ -177,6 +178,10 @@ conclusion:
     types:
         base: Basal
         weighted: Argumenter for/imod
+
+court_decision:
+    'true': Medhold
+    'false': Afvist
 
 dashboard:
     index:
@@ -327,6 +332,7 @@ menu:
         client: Klient
         conclusion: Konklusion
         economy: Økonomi
+        export: Rapporter
         journal: Journal
         process_number: 'Sag: %processNumber%'
         process_show: Sagsopsummering
@@ -384,6 +390,7 @@ process:
             save: Gem ny status
         channel: Kanal
         client_cpr: Klient CPR
+        court_decision: Rettens afgørelse
         police_report: Er sagen politianmeldt?
         process_status: Sagsstatus
         process_type: Sagstype
@@ -409,6 +416,7 @@ process:
         client_last_name: Efternavn
         client_name: Klient navn
         client_telephone: Klient telefonnummer
+        court_decision: Rettens afgørelse
         id: ID
         internal_note: Seneste interne notater
         journal: Journal
@@ -431,6 +439,7 @@ process:
         complete: Afslut sag
         resume: Genoptag sag
     completed_message: Sagen er afsluttet og kan ikke længere redigeres
+    is_completed: Afsluttet?
 
 process_log:
     index:
@@ -549,6 +558,7 @@ process_type:
         title: Rediger sagstype
     form:
         conclusion_class: Konklusionstype
+        channels: Tilkoblede kanaler
         hide_in_dashboard: Skjul på dashboard
         name: Navn
         net_default_value: Netto standardværdi
@@ -564,6 +574,7 @@ process_type:
         title: Sagstype
     table:
         conclusion_class: Konklusionstype
+        channels: Tilkoblede kanaler
         hide_in_dashboard: Skjul på dashboard
         id: ID
         name: Navn
@@ -604,9 +615,9 @@ process_report:
             postal_code: Postnummer
             telephone: Telefon
             number_of_children: Antal børn
-            self_employed: Driver selvstændig virksomhed
-            works_in_major_company: Ansat i større virksomhed
-            not_employed: Ikke i arbejde
+            employed: Ansat
+            has_own_company: Egen virksomhed
+            receives_public_aid: Offentlig forsørgelse
             has_drivers_license: Har kørekort
             has_car: Har bil
         journal:
@@ -776,10 +787,17 @@ weighted_conclusion:
         update: Gem
 
 export:
-  index:
-    title: Eksportér data
-  name: Eksport
-  date_period: Periode
-  run:
-    xlsx: Eksportér (XLSX)
-    csv: Eksportér (CSV)
+    show:
+        title: Vis rapport
+    index:
+        title: Eksportér rapport
+    name: Rapporter
+    date_period: Periode
+    run:
+        xlsx: Eksportér (XLSX)
+        csv: Eksportér (CSV)
+        html: Vis
+        pdf: Eksportér (PDF)
+
+prevent_cpr:
+    cpr_in_content: 'Indeholder følgende CPR-numre (fjern venligst): %list%'

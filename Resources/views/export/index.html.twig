@@ -49,6 +49,8 @@
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary" formaction="{{ path('export_run', {_format: 'html'}) }}">{{ 'export.run.html'|trans }}</button>
+            <button type="submit" class="btn btn-primary" formaction="{{ path('export_run', {_format: 'pdf'}) }}">{{ 'export.run.pdf'|trans }}</button>
             <button type="submit" class="btn btn-primary" formaction="{{ path('export_run', {_format: 'xlsx'}) }}">{{ 'export.run.xlsx'|trans }}</button>
             <button type="submit" class="btn btn-primary" formaction="{{ path('export_run', {_format: 'csv'}) }}">{{ 'export.run.csv'|trans }}</button>
         </div>

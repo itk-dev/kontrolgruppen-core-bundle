@@ -11,6 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\Form;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Repository\ChannelRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,13 +25,15 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 class ProcessType extends AbstractType
 {
     protected $serviceRepository;
+    protected $channelRepository;
 
     /**
      * ProcessType constructor.
      */
-    public function __construct(ServiceRepository $serviceRepository)
+    public function __construct(ServiceRepository $serviceRepository, ChannelRepository $channelRepository)
     {
         $this->serviceRepository = $serviceRepository;
+        $this->channelRepository = $channelRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -50,6 +53,9 @@ class ProcessType extends AbstractType
             ])
             ->add('channel', null, [
                 'label' => 'process.form.channel',
+                'attr' => [
+                    'disabled' => 'disabled',
+                ],
             ])
             ->add('reason', null, [
                 'label' => 'process.form.reason',
@@ -68,6 +74,14 @@ class ProcessType extends AbstractType
                     'common.boolean.no' => false,
                 ],
             ])
+            ->add('courtDecision', ChoiceType::class, [
+                'label' => 'process.form.court_decision',
+                'choices' => [
+                    null => null,
+                    'court_decision.true' => true,
+                    'court_decision.false' => false,
+                ],
+            ])
         ;
 
         $formModifier = function (FormInterface $form, ProcessTypeEntity $processType = null) {
@@ -77,6 +91,17 @@ class ProcessType extends AbstractType
                 $form->remove('service');
                 $form->add('service', ChoiceType::class, [
                     'label' => 'process.form.service',
+                    'choices' => $choices,
+                    'choice_label' => function ($choice, $key, $value) {
+                        return $choice->getName();
+                    },
+                ]);
+
+                $choices = $this->getChannelChoices($processType);
+
+                $form->remove('channel');
+                $form->add('channel', ChoiceType::class, [
+                    'label' => 'process.form.channel',
                     'choices' => $choices,
                     'choice_label' => function ($choice, $key, $value) {
                         return $choice->getName();
@@ -105,6 +130,11 @@ class ProcessType extends AbstractType
     private function getServiceChoices(ProcessTypeEntity $processType)
     {
         return $this->serviceRepository->getByProcessType($processType);
+    }
+
+    private function getChannelChoices(ProcessTypeEntity $processType)
+    {
+        return $this->channelRepository->getByProcessType($processType);
     }
 
     public function configureOptions(OptionsResolver $resolver)
