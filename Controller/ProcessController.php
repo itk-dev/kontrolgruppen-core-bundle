@@ -174,10 +174,6 @@ class ProcessController extends BaseController
      */
     public function show(Request $request, Process $process): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $eventManager = $this->getDoctrine()->getManager()->getEventManager();
-        $eventManager->dispatchEvent('onRead', new OnReadEventArgs($entityManager, $process));
-
         // Latest journal entries.
         $latestJournalEntries = $this->getDoctrine()->getRepository(
             JournalEntry::class
