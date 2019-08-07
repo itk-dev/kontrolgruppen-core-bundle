@@ -12,8 +12,12 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
+use Kontrolgruppen\CoreBundle\Export\Logs\ProcessLogExport;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -21,6 +25,9 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProcessLogController extends BaseController
 {
+    private $latestRow = 0;
+    private $sheet;
+
     /**
      * @Route("/", name="process_log_index", methods={"GET","POST"})
      */
@@ -43,5 +50,34 @@ class ProcessLogController extends BaseController
             'process' => $process,
             'logEntriesPagination' => $logEntriesPagination,
         ]);
+    }
+
+    /**
+     * @Route("/export", name="process_log_export", methods={"GET"})
+     */
+    public function export(
+        ProcessLogExport $processLogExport,
+        Process $process
+    ): Response {
+        $spreadsheet = new Spreadsheet();
+
+        $processLogExport->write(['process' => $process], $spreadsheet);
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+
+        $response = new StreamedResponse(
+            function () use ($writer) {
+                $writer->save('php://output');
+            }
+        );
+
+        $contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        $filename = 'log.xlsx';
+
+        $response->headers->set('Content-Type', $contentType);
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.$filename.'"');
+        $response->headers->set('Cache-Control', 'max-age=0');
+
+        return $response;
     }
 }

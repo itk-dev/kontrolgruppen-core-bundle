@@ -444,6 +444,7 @@ process:
 process_log:
     index:
         title: Ændringslog
+        export: Eksportér
     revision:
         headline: Ændringslog
         action_type:
@@ -481,6 +482,7 @@ process_log:
                     reason: Årsag
                     police_report: Politianmeldt
                     case_worker: Sagsbehandler
+                    completed_at: Afsluttet
                 client:
                     first_name: Fornavn
                     last_name: Efternavn

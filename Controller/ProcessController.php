@@ -15,7 +15,6 @@ use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Event\Doctrine\ORM\OnReadEventArgs;
 use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessCompleteType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
@@ -174,10 +173,6 @@ class ProcessController extends BaseController
      */
     public function show(Request $request, Process $process): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $eventManager = $this->getDoctrine()->getManager()->getEventManager();
-        $eventManager->dispatchEvent('onRead', new OnReadEventArgs($entityManager, $process));
-
         // Latest journal entries.
         $latestJournalEntries = $this->getDoctrine()->getRepository(
             JournalEntry::class
