@@ -91,7 +91,6 @@ class ProcessControllerListener implements EventSubscriberInterface
 
         if (\in_array(\get_class($controller[0]), $controllers)) {
             if ($event->getRequest()->isMethod('GET')) {
-
                 /** @var Process $process */
                 $process = $event->getRequest()->attributes->get('process');
 

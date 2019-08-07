@@ -17,7 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * Class ProcessLogExport
+ * Class ProcessLogExport.
  */
 class ProcessLogExport extends AbstractExport
 {
@@ -31,8 +31,7 @@ class ProcessLogExport extends AbstractExport
         EntityManagerInterface $entityManager,
         TranslatorInterface $translator,
         ProcessLogTranslatorService $processLogTranslatorService
-    )
-    {
+    ) {
         parent::__construct();
         $this->entityManager = $entityManager;
         $this->processLogTranslatorService = $processLogTranslatorService;

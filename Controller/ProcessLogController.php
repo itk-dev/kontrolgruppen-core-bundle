@@ -59,7 +59,6 @@ class ProcessLogController extends BaseController
         ProcessLogExport $processLogExport,
         Process $process
     ): Response {
-
         $spreadsheet = new Spreadsheet();
 
         $processLogExport->write(['process' => $process], $spreadsheet);
