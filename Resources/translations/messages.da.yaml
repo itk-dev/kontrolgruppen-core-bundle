@@ -652,7 +652,9 @@ process_report:
                 arguments_against: Argumenter imod
         car:
             title: Biler
-
+            registration_number: Registreringsnummer
+            shared_owner_ship: Fællesejet
+            notes: Noter
 quick_link:
     edit:
         title: Rediger genvej
