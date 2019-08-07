@@ -172,13 +172,15 @@ abstract class AbstractExport
         $this->writeRow($data, $this->footerStyle);
     }
 
-    protected function writeRow(array $row, array $style = null)
+    protected function writeRow(array $row, array $style = null, int $indent = 0)
     {
         ++$this->latestRow;
 
         foreach ($row as $key => $cell) {
-            $this->sheet->setCellValueByColumnAndRow($key + 1, $this->latestRow, $cell);
-            $styleCell = $this->sheet->getStyleByColumnAndRow($key + 1, $this->latestRow);
+            $columnIndex = $key + 1 + $indent;
+
+            $this->sheet->setCellValueByColumnAndRow($columnIndex, $this->latestRow, $cell);
+            $styleCell = $this->sheet->getStyleByColumnAndRow($columnIndex, $this->latestRow);
             if (null !== $style) {
                 $styleCell->applyFromArray($style);
             }
