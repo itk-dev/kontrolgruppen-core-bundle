@@ -110,4 +110,9 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
 
         return $qb->getQuery();
     }
+
+    public function getAllLogEntries(Process $process)
+    {
+        return $this->getLatestEntriesQuery($process)->getResult();
+    }
 }
