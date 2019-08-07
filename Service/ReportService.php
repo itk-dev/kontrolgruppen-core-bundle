@@ -83,6 +83,12 @@ class ReportService
                 ->setParameter('internal', JournalEntryEnumType::INTERNAL_NOTE);
         }
 
+        if ('only_summary' === $choice) {
+            $qb
+                ->setMaxResults(5)
+                ->orderBy('journalEntry.createdAt', 'desc');
+        }
+
         $viewData['journalEntries'] = $qb->getQuery()->getArrayResult();
 
         $viewData['conclusionTemplate'] = $this->conclusionService->getTemplate(
