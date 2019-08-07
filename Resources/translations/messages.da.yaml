@@ -594,6 +594,7 @@ process_report:
         choices:
             placeholder: Valgmuligheder
             internal_notes: Med interne notater
+            no_internal_notes: Uden interne notater
             only_summary: Kun sagsopsummering
     report:
         title: Sagsrapport
@@ -651,7 +652,11 @@ process_report:
                 conclusion: Konklusion
                 arguments_for: Argumenter for
                 arguments_against: Argumenter imod
-
+        car:
+            title: Biler
+            registration_number: Registreringsnummer
+            shared_owner_ship: Fællesejet
+            notes: Noter
 quick_link:
     edit:
         title: Rediger genvej
