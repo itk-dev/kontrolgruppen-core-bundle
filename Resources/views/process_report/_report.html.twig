@@ -11,10 +11,16 @@
 
 {% if choice == 'only_summary' %}
     {% include('@KontrolgruppenCoreBundle/process_report/_summary.html.twig') %}
+    <br />
+    {% include('@KontrolgruppenCoreBundle/process_report/_client.html.twig') %}
+    <br />
+    {% include('@KontrolgruppenCoreBundle/process_report/_car.html.twig') %}
 {% else %}
     {% include('@KontrolgruppenCoreBundle/process_report/_summary.html.twig') %}
     <br/>
     {% include('@KontrolgruppenCoreBundle/process_report/_client.html.twig') %}
+    <br />
+    {% include('@KontrolgruppenCoreBundle/process_report/_car.html.twig') %}
     <br/>
     {% include('@KontrolgruppenCoreBundle/process_report/_economy.html.twig') %}
     <br/>
