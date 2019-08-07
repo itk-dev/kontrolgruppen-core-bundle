@@ -1,0 +1,24 @@
+{% if process.client.cars is not empty %}
+<div class="border">
+    <h2>{{ 'process_report.report.car.title'|trans }}</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>{{ 'process_report.report.car.registration_number'|trans }}</th>
+                <th>{{ 'process_report.report.car.shared_owner_ship'|trans }}</th>
+                <th>{{ 'process_report.report.car.notes'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for car in process.client.cars %}
+            <tr>
+                <td>{{ car.registrationNumber }}</td>
+                <td>{{ car.sharedOwnerShip|yes_no }}</td>
+                <td>{{ car.notes }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}

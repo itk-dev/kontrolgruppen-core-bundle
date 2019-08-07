@@ -7,21 +7,20 @@
     {{ encore_entry_link_tags('processReport') }}
 </head>
 <body>
-<h1>{{ 'process_report.report.title'|trans }}</h1>
+    <h1>{{ 'process_report.report.title'|trans }}</h1>
 
-{% if choice == 'only_summary' %}
     {% include('@KontrolgruppenCoreBundle/process_report/_summary.html.twig') %}
-{% else %}
-    {% include('@KontrolgruppenCoreBundle/process_report/_summary.html.twig') %}
-    <br/>
+    <br />
     {% include('@KontrolgruppenCoreBundle/process_report/_client.html.twig') %}
-    <br/>
-    {% include('@KontrolgruppenCoreBundle/process_report/_economy.html.twig') %}
-    <br/>
+    <br />
+    {% include('@KontrolgruppenCoreBundle/process_report/_car.html.twig') %}
+    <br />
     {% include('@KontrolgruppenCoreBundle/process_report/_journal.html.twig') %}
-    <br/>
-    {% include(conclusionTemplate) %}
-{% endif %}
-
+    {% if choice != 'only_summary' %}
+        <br/>
+        {% include('@KontrolgruppenCoreBundle/process_report/_economy.html.twig') %}
+        <br/>
+        {% include(conclusionTemplate) %}
+    {% endif %}
 </body>
 </html>

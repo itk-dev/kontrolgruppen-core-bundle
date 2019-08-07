@@ -39,6 +39,7 @@ class ProcessReportController extends BaseController
             ->add('options', ChoiceType::class, [
                 'label' => $translator->trans('process_report.form.choices.placeholder'),
                 'choices' => [
+                    $translator->trans('process_report.form.choices.no_internal_notes') => 'no_internal_notes',
                     $translator->trans('process_report.form.choices.internal_notes') => 'internal_notes',
                     $translator->trans('process_report.form.choices.only_summary') => 'only_summary',
                 ],
