@@ -11,7 +11,16 @@
 namespace Kontrolgruppen\CoreBundle\EventListener;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Kontrolgruppen\CoreBundle\Controller\ClientController;
+use Kontrolgruppen\CoreBundle\Controller\ConclusionController;
+use Kontrolgruppen\CoreBundle\Controller\EconomyEntryController;
+use Kontrolgruppen\CoreBundle\Controller\JournalEntryController;
 use Kontrolgruppen\CoreBundle\Controller\ProcessController;
+use Kontrolgruppen\CoreBundle\Controller\ProcessLogController;
+use Kontrolgruppen\CoreBundle\Controller\ProcessReminderController;
+use Kontrolgruppen\CoreBundle\Controller\ProcessReportController;
+use Kontrolgruppen\CoreBundle\Controller\RevenueController;
+use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Event\Doctrine\ORM\OnReadEventArgs;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -68,20 +77,32 @@ class ProcessControllerListener implements EventSubscriberInterface
             return;
         }
 
-        if ($controller[0] instanceof ProcessController) {
-            if ($event->getRequest()->isMethod('GET') && $event->getRequest()->attributes->has('id')) {
-                $processId = $event->getRequest()->attributes->get('id');
+        $controllers = [
+            ProcessController::class,
+            ProcessLogController::class,
+            ProcessReminderController::class,
+            ProcessReportController::class,
+            RevenueController::class,
+            ClientController::class,
+            ConclusionController::class,
+            EconomyEntryController::class,
+            JournalEntryController::class,
+        ];
+
+        if (\in_array(\get_class($controller[0]), $controllers)) {
+            if ($event->getRequest()->isMethod('GET')) {
+
+                /** @var Process $process */
+                $process = $event->getRequest()->attributes->get('process');
 
                 // If the request is coming from inside the Process route group, we dont
                 // dispatch the onRead event, as it already has been dispatched when visiting
                 // the Process the first time.
                 if (!$this->isRequestOriginatingFromProcessRouteGroup(
                     $event->getRequest(),
-                    $event->getRequest()->attributes->get('id')
+                    $process->getId()
                 )
                 ) {
-                    $process = $this->processRepository->find($processId);
-
                     $entityManager = $this->doctrine->getManager();
                     $eventManager = $entityManager->getEventManager();
                     $eventManager->dispatchEvent('onRead', new OnReadEventArgs($entityManager, $process));
