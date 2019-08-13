@@ -56,6 +56,18 @@ class ProcessType extends AbstractTaxonomy
      */
     private $channels;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessStatus")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $defaultProcessStatus;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessStatus")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $defaultProcessStatusOnEmptyCaseWorker;
+
     public function __construct()
     {
         $this->processes = new ArrayCollection();
@@ -205,6 +217,30 @@ class ProcessType extends AbstractTaxonomy
         if ($this->channels->contains($channel)) {
             $this->channels->removeElement($channel);
         }
+
+        return $this;
+    }
+
+    public function getDefaultProcessStatus(): ?ProcessStatus
+    {
+        return $this->defaultProcessStatus;
+    }
+
+    public function setDefaultProcessStatus(?ProcessStatus $defaultProcessStatus): self
+    {
+        $this->defaultProcessStatus = $defaultProcessStatus;
+
+        return $this;
+    }
+
+    public function getDefaultProcessStatusOnEmptyCaseWorker(): ?ProcessStatus
+    {
+        return $this->defaultProcessStatusOnEmptyCaseWorker;
+    }
+
+    public function setDefaultProcessStatusOnEmptyCaseWorker(?ProcessStatus $defaultProcessStatusOnEmptyCaseWorker): self
+    {
+        $this->defaultProcessStatusOnEmptyCaseWorker = $defaultProcessStatusOnEmptyCaseWorker;
 
         return $this;
     }

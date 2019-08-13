@@ -10,8 +10,10 @@
 
 namespace Kontrolgruppen\CoreBundle\Form;
 
+use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType;
 use Kontrolgruppen\CoreBundle\Event\GetConclusionTypesEvent;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -70,6 +72,18 @@ class ProcessTypeType extends AbstractType
             ->add('netDefaultValue', PercentType::class, [
                 'label' => 'process_type.form.net_default_value',
                 'scale' => 2,
+            ])
+            ->add('defaultProcessStatus', EntityType::class, [
+                'class' => ProcessStatus::class,
+                'choice_label' => 'name',
+                'label' => 'process_type.form.default_process_status',
+                'help' => 'process_type.form.default_process_status_help',
+            ])
+            ->add('defaultProcessStatusOnEmptyCaseWorker', EntityType::class, [
+                'class' => ProcessStatus::class,
+                'choice_label' => 'name',
+                'label' => 'process_type.form.default_process_status_on_empty_case_worker',
+                'help' => 'process_type.form.default_process_status_on_empty_case_worker_help',
             ])
         ;
     }
