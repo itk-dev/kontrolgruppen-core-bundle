@@ -89,10 +89,9 @@ class ProcessManager
         return $process;
     }
 
-    private function decideStatusForProcess(Process $process) {
-
+    private function decideStatusForProcess(Process $process)
+    {
         if (empty($process->getCaseWorker())) {
-
             return $process->getProcessType()->getDefaultProcessStatusOnEmptyCaseWorker();
         }
 
