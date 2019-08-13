@@ -80,18 +80,23 @@ class ProcessManager
         }
         $process->setCaseNumber($this->getNewCaseNumber());
 
-        if (empty($process->getProcessStatus())) {
-
-            $process->setProcessStatus(
-                $process->getProcessType()->getDefaultProcessStatus()
-            );
-        }
+        $process->setProcessStatus($this->decideStatusForProcess($process));
 
         $conclusionClass = $process->getProcessType()->getConclusionClass();
         $conclusion = new $conclusionClass();
         $process->setConclusion($conclusion);
 
         return $process;
+    }
+
+    private function decideStatusForProcess(Process $process) {
+
+        if (empty($process->getCaseWorker())) {
+
+            return $process->getProcessType()->getDefaultProcessStatusOnEmptyCaseWorker();
+        }
+
+        return $process->getProcessType()->getDefaultProcessStatus();
     }
 
     /**

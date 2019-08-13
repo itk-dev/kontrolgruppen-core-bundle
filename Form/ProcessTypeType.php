@@ -79,6 +79,12 @@ class ProcessTypeType extends AbstractType
                 'label' => 'process_type.form.default_process_status',
                 'help' => 'process_type.form.default_process_status_help',
             ])
+            ->add('defaultProcessStatusOnEmptyCaseWorker', EntityType::class, [
+                'class' => ProcessStatus::class,
+                'choice_label' => 'name',
+                'label' => 'process_type.form.default_process_status_on_empty_case_worker',
+                'help' => 'process_type.form.default_process_status_on_empty_case_worker_help',
+            ])
         ;
     }
 
