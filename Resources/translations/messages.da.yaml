@@ -566,6 +566,8 @@ process_type:
         net_default_value: Netto standardværdi
         process_statuses: Tilkoblede sagsstatusser
         services: Tilkoblede ydelser
+        default_process_status: Standard sagsstatus
+        default_process_status_help: Hvis der ikke sættes en ny status for en ny sag af denne type, sættes sagens status automatisk til denne
         update: Gem
     index:
         title: Sagstyper
