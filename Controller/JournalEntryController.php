@@ -110,6 +110,12 @@ class JournalEntryController extends BaseController
             $result = $logManager->attachLogEntriesToJournalEntries($result);
         }
 
+        $onlyShowProcessStatusChanges = $request->query->get('only_show_status') ?: null;
+
+        if (!empty($onlyShowProcessStatusChanges)) {
+            $result = [];
+        }
+
         $result = $logManager->attachProcessStatusChangesToJournalEntries(
             $result,
             $process,

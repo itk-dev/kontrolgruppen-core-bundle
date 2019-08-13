@@ -32,6 +32,11 @@
                     value="{{ sortDirection }}" {% if sortDirection == app.request.get('sort_direction') %} selected="selected"{% endif %}>{{ ('journal_entry.table.filter.sort_' ~ sortDirection)|trans }}</option>
             {% endfor %}
         </select>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="onlyStatusCheckbox" value="true" />
+            <label class="form-check-lab" for="onlyStatusCheckbox">{{ 'journal_entry.table.filter.only_status_label'|trans }}</label>
+        </div>
     </form>
 
     {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list_with_logs.html.twig' %}
