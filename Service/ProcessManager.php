@@ -80,6 +80,13 @@ class ProcessManager
         }
         $process->setCaseNumber($this->getNewCaseNumber());
 
+        if (empty($process->getProcessStatus())) {
+
+            $process->setProcessStatus(
+                $process->getProcessType()->getDefaultProcessStatus()
+            );
+        }
+
         $conclusionClass = $process->getProcessType()->getConclusionClass();
         $conclusion = new $conclusionClass();
         $process->setConclusion($conclusion);
