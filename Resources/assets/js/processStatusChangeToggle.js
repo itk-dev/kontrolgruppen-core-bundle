@@ -1,8 +1,7 @@
 $(document).ready(function () {
-
     let searchParams = new URLSearchParams(window.location.search);
-    if (searchParams.has('only_show_status')) {
 
+    if (searchParams.has('only_show_status')) {
         let onlyShowStatus = searchParams.get('only_show_status');
 
         if ('true' == onlyShowStatus) {
@@ -13,9 +12,7 @@ $(document).ready(function () {
     }
 
     $('#onlyStatusCheckbox').on('change', function() {
-
         if($(this).is(":checked")) {
-
             $('#journal_filter_type').prop('disabled', function(i, v) { return !v });
 
             let onlyStatus = $('#onlyStatusCheckbox').val();
