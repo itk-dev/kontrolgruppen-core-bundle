@@ -86,33 +86,33 @@ class JournalEntryController extends BaseController
             $sortDirection = $sessionSortDirection ?: 'desc';
         }
 
-        // initialize a query builder
-        $qb = $journalEntryRepository->createQueryBuilder('e', 'e.id');
-
-        if ($request->query->has($filterForm->getName())) {
-            // manually bind values from the request
-            $filterForm->submit($request->query->get($filterForm->getName()));
-
-            // build the query from the given form object
-            $lexikBuilderUpdater->addFilterConditions($filterForm, $qb);
-        }
-
-        $qb->andWhere('e.process = :process');
-        $qb->setParameter('process', $process);
-
-        $qb->orderBy('e.id', $sortDirection);
-
-        $result = $qb->getQuery()->getArrayResult();
-
-        // Attach log entries.
-        // Only attach log entries if user is granted ROLE_ADMIN.
-        if ($this->isGranted('ROLE_ADMIN', $this->getUser())) {
-            $result = $logManager->attachLogEntriesToJournalEntries($result);
-        }
-
         $onlyShowProcessStatusChanges = $request->query->get('only_show_status') ?: null;
 
-        if (!empty($onlyShowProcessStatusChanges)) {
+        if (empty($onlyShowProcessStatusChanges)) {
+            // initialize a query builder
+            $qb = $journalEntryRepository->createQueryBuilder('e', 'e.id');
+
+            if ($request->query->has($filterForm->getName())) {
+                // manually bind values from the request
+                $filterForm->submit($request->query->get($filterForm->getName()));
+
+                // build the query from the given form object
+                $lexikBuilderUpdater->addFilterConditions($filterForm, $qb);
+            }
+
+            $qb->andWhere('e.process = :process');
+            $qb->setParameter('process', $process);
+
+            $qb->orderBy('e.id', $sortDirection);
+
+            $result = $qb->getQuery()->getArrayResult();
+
+            // Attach log entries.
+            // Only attach log entries if user is granted ROLE_ADMIN.
+            if ($this->isGranted('ROLE_ADMIN', $this->getUser())) {
+                $result = $logManager->attachLogEntriesToJournalEntries($result);
+            }
+        } else {
             $result = [];
         }
 
