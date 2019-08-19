@@ -71,9 +71,7 @@ class ProcessManager
         $processes = new ArrayCollection($processes);
 
         foreach ($processes as $process) {
-
             if (!$unvisitedProcesses->contains($process)) {
-
                 $process->setVisitedByCaseWorker(true);
             }
         }
