@@ -126,7 +126,7 @@ class Process extends AbstractEntity
     private $lockedNetValue;
 
     /**
-     * @var bool $isVisitedByCaseWorker
+     * @var bool
      */
     private $visitedByCaseWorker = false;
 
