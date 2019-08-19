@@ -125,6 +125,11 @@ class Process extends AbstractEntity
      */
     private $lockedNetValue;
 
+    /**
+     * @var bool $isVisitedByCaseWorker
+     */
+    private $visitedByCaseWorker = false;
+
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
@@ -434,5 +439,15 @@ class Process extends AbstractEntity
         $this->lockedNetValue = $lockedNetValue;
 
         return $this;
+    }
+
+    public function getVisitedByCaseWorker(): bool
+    {
+        return $this->visitedByCaseWorker;
+    }
+
+    public function setVisitedByCaseWorker(bool $visited)
+    {
+        $this->visitedByCaseWorker = $visited;
     }
 }

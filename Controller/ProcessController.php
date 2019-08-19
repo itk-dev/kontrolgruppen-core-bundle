@@ -19,6 +19,7 @@ use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessCompleteType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
+use Kontrolgruppen\CoreBundle\Repository\UserRepository;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -40,7 +41,9 @@ class ProcessController extends BaseController
         ProcessRepository $processRepository,
         FilterBuilderUpdaterInterface $lexikBuilderUpdater,
         PaginatorInterface $paginator,
-        FormFactoryInterface $formFactory
+        FormFactoryInterface $formFactory,
+        ProcessManager $processManager,
+        UserRepository $userRepository
     ): Response {
         $filterForm = $formFactory->create(ProcessFilterType::class);
 
@@ -97,8 +100,18 @@ class ProcessController extends BaseController
 
         $query = $qb->getQuery();
 
+        $caseWorker = (!empty($selectedCaseWorker->getData()))
+            ? $userRepository->find($selectedCaseWorker->getData())
+            : $this->getUser();
+
+        $notVisitedProcesses = $processManager->getUsersUnvisitedProcesses($caseWorker);
+        $processes = $processManager->markProcessesAsUnvisited(
+            $notVisitedProcesses,
+            $query->getResult()
+        );
+
         $pagination = $paginator->paginate(
-            $query,
+            $processes,
             $request->query->get('page', 1),
             50
         );
