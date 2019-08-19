@@ -304,6 +304,7 @@ journal_entry:
             sort_label: Sortering
             sort_desc: Nyeste først
             sort_asc: Ældste først
+            only_status_label: Vis kun sagsstatus ændringer
 journal_quickview:
     title: Seneste indlæg i journal
     actions:
