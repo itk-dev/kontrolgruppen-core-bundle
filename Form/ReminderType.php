@@ -28,7 +28,7 @@ class ReminderType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => false,
                 'format' => 'dd/MM yyyy HH:mm',
-                'attr' => ['class' => 'js-datepicker'],
+                'attr' => ['class' => 'js-datepicker', 'data-toggle' => 'datetimepicker'],
                 'help' => 'reminder.form.date_help',
             ])
         ;
