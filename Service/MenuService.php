@@ -243,6 +243,14 @@ class MenuService
                 ),
                 'quick_link_index'
             ),
+            $this->createMenuItem(
+                'account',
+                1 === preg_match(
+                    '/^\/admin\/account\/.*$/',
+                    $path
+                ),
+                'account_index'
+            ),
         ];
     }
 

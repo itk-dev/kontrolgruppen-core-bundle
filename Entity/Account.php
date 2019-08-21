@@ -1,0 +1,56 @@
+<?php
+
+namespace Kontrolgruppen\CoreBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+/**
+ * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\AccountRepository")
+ * @Gedmo\Loggable()
+ */
+class Account extends AbstractTaxonomy
+{
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\BaseEconomyEntry", mappedBy="account")
+     */
+    private $baseEconomyEntries;
+
+    public function __construct()
+    {
+        $this->baseEconomyEntries = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|BaseEconomyEntry[]
+     */
+    public function getBaseEconomyEntries(): Collection
+    {
+        return $this->baseEconomyEntries;
+    }
+
+    public function addBaseEconomyEntry(BaseEconomyEntry $baseEconomyEntry): self
+    {
+        if (!$this->baseEconomyEntries->contains($baseEconomyEntry)) {
+            $this->baseEconomyEntries[] = $baseEconomyEntry;
+            $baseEconomyEntry->setAccount($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBaseEconomyEntry(BaseEconomyEntry $baseEconomyEntry): self
+    {
+        if ($this->baseEconomyEntries->contains($baseEconomyEntry)) {
+            $this->baseEconomyEntries->removeElement($baseEconomyEntry);
+            // set the owning side to null (unless already changed)
+            if ($baseEconomyEntry->getAccount() === $this) {
+                $baseEconomyEntry->setAccount(null);
+            }
+        }
+
+        return $this;
+    }
+}

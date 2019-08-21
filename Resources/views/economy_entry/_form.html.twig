@@ -18,13 +18,16 @@
             <small id="service_economy_entry_monthpicker_help" class="form-text text-muted">{{ 'economy_entry.form.service.monthpicker_help'|trans }}</small>
         </div>
     {% else %}
-        <div class="col-4">
+        <div class="col-3">
+            {{ form_row(form.account) }}
+        </div>
+        <div class="col-3">
             {{ form_row(form.text) }}
         </div>
-        <div class="col-4">
+        <div class="col-3">
             {{ form_row(form.date) }}
         </div>
-        <div class="col-4">
+        <div class="col-3">
             {{ form_row(form.amount) }}
         </div>
     {% endif %}

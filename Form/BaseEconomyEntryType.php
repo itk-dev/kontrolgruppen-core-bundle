@@ -26,6 +26,10 @@ class BaseEconomyEntryType extends AbstractType
                 'label' => false,
                 'attr' => ['class' => 'd-none'],
             ])
+            ->add('account', null, [
+                'label' => 'economy_entry.form.base.account',
+                'help' => 'economy_entry.form.base.account_help',
+            ])
             ->add('text', null, [
                 'label' => 'economy_entry.form.base.text',
                 'help' => 'economy_entry.form.base.text_help',

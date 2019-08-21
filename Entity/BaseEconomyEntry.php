@@ -12,6 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use \Kontrolgruppen\CoreBundle\Entity\Account;
 
 /**
  * @ORM\Entity
@@ -30,6 +31,11 @@ class BaseEconomyEntry extends EconomyEntry
      * @Gedmo\Versioned()
      */
     private $date;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Kontrolgruppen\CoreBundle\Entity\Account", inversedBy="baseEconomyEntries")
+     */
+    private $account;
 
     public function getId(): ?int
     {
@@ -56,6 +62,18 @@ class BaseEconomyEntry extends EconomyEntry
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getAccount(): ?Account
+    {
+        return $this->account;
+    }
+
+    public function setAccount(?Account $account): self
+    {
+        $this->account = $account;
 
         return $this;
     }
