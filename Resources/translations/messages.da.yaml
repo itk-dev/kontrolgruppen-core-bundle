@@ -723,15 +723,15 @@ revenue:
     subtitle: Tilbagebetalingskrav overfor klient
     table:
         repayment:
-            net_sum_title: Netto samlet tilbagebetalingskrav i kr (KL).
-            sum_title: Samlet tilbagebetalingskrav i kr.
+            net_sum_title: Netto samlet tilbagebetalingskrav i kr.
+            sum_title: Samlet tilbagebetalingskrav i kr (KL).
             no_records_found: Ingen tilbagebetalingskrav
         future_savings:
-            net_sum_title: Netto fremadrettet besparelse i kr (KL).
-            sum_title: Samlet fremadrettet besparelse i kr.
+            net_sum_title: Netto fremadrettet besparelse i kr.
+            sum_title: Samlet fremadrettet besparelse i kr (KL).
             no_records_found: Ingen fremadrettet besparelse
         collective_net_sum:
-            title: Samlet nettoopgørelse (KL)
+            title: Samlet nettoopgørelse
     title: Provenu
 
 search:
