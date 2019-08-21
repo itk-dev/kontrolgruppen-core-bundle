@@ -137,7 +137,7 @@ common:
             internal_note: Internt notat
             note: Notat
         economy_entry:
-            service: Ydelse
+            service: Ydelse/Indkomst
             account: Konti
             arrear: Restance
         economy_entry_amount_period:
@@ -209,7 +209,7 @@ economy:
     headline:
         economy_entries_account: Konti
         economy_entries_arrear: Restance
-        economy_entries_service: Ydelse
+        economy_entries_service: Ydelse/Indkomst
     show:
         title: Økonomi
     table:
@@ -225,7 +225,7 @@ economy:
             period_from: Fra
             period_to: Til
             repayment_amount: Tilbagebetalingskrav
-            service: Ydelse
+            service: Ydelse/Indkomst
 
 economy_entry:
     edit:
@@ -252,7 +252,7 @@ economy_entry:
             monthpicker_headline: Vælg periode
             period_from: Fra
             period_to: Til
-            service: Ydelse
+            service: Ydelse/Indkomst
             service_help: Vælg hvilken ydelse registreringen gælder for
             repayment_amount: Tilbagebetalingskrav
             repayment_amount_help: Skriv det samlede tilbagebetalingskrav for registreringen
