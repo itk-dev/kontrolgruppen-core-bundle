@@ -20,11 +20,7 @@
             </thead>
             <tbody>
             {% for process in pagination %}
-                {% if not process.visitedByCaseWorker() %}
-                <tr class="not-visited">
-                {% else %}
-                <tr>
-                {% endif %}
+                <tr{% if not process.visitedByCaseWorker() %} class="not-visited"{% endif %}>
                     <td>
                         <a href="{{ path('process_show', {'id': process.id}) }}">{{ process.caseNumber }}
                         {% if process.completedAt %}
