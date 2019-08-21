@@ -29,16 +29,8 @@ class RevenueController extends BaseController
     {
         $parameters = [];
 
-        $formBuilder = $this->createFormBuilder();
-        $form = $formBuilder->getForm();
+        $parameters['revenue'] = $economyService->calculateRevenue($process);
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $parameters['revenue'] = $economyService->calculateRevenue($process);
-        }
-
-        $parameters['revenueForm'] = $form->createView();
         $parameters['menuItems'] = $this->menuService->getProcessMenu($request->getPathInfo(), $process);
         $parameters['process'] = $process;
 
