@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Service;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType;
@@ -61,6 +62,20 @@ class ProcessManager
             ->setParameter('username', $user->getUsername());
 
         return $query->execute();
+    }
+
+    public function markProcessesAsUnvisited(array $unvisitedProcesses, array $processes)
+    {
+        $unvisitedProcesses = new ArrayCollection($unvisitedProcesses);
+        $processes = new ArrayCollection($processes);
+
+        foreach ($processes as $process) {
+            if (!$unvisitedProcesses->contains($process)) {
+                $process->setVisitedByCaseWorker(true);
+            }
+        }
+
+        return $processes;
     }
 
     /**

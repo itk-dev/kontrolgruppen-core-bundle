@@ -76,8 +76,15 @@ class DashboardController extends BaseController
 
         $query = $qb->getQuery();
 
+        $notVisitedProcesses = $processManager->getUsersUnvisitedProcesses($this->getUser());
+
+        $myProcesses = $processManager->markProcessesAsUnvisited(
+            $notVisitedProcesses,
+            $query->getResult()
+        );
+
         $pagination = $paginator->paginate(
-            $query,
+            $myProcesses,
             $request->query->get('page', 1),
             $limit
         );
@@ -87,8 +94,6 @@ class DashboardController extends BaseController
             'choices' => DateIntervalType::getChoices(),
             'label' => 'dashboard.coming_reminders.label',
         ])->getForm();
-
-        $notVisitedProcesses = $processManager->getUsersUnvisitedProcesses($this->getUser());
 
         return $this->render('@KontrolgruppenCore/dashboard/index.html.twig', [
             'reminders' => $reminderRepository->findActiveUserReminders($this->getUser()),
