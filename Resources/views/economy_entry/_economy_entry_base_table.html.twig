@@ -12,8 +12,8 @@
             <tbody>
             {% for economyEntry in economyEntries %}
                 <tr>
-                    <td>{{ economyEntry.account }}</td>
-                    <td><a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.accountNumber }}</a></td>
+                    <td><a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.account }}</a></td>
+                    <td>{{ economyEntry.accountNumber }}</td>
                     <td>{{ economyEntry.date|localizeddate('short', 'none') }}</td>
                     <td class="text-right">{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
                 </tr>
