@@ -207,7 +207,7 @@ economy:
     actions:
         create: Opret ny registrering
     headline:
-        economy_entries_account: Konti
+        economy_entries_account: R75 oplysninger
         economy_entries_arrear: Restance
         economy_entries_service: Ydelse/Indkomst
     show:

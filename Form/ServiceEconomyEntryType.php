@@ -59,10 +59,6 @@ class ServiceEconomyEntryType extends AbstractType
                 'label' => 'economy_entry.form.service.amount',
                 'help' => 'economy_entry.form.service.amount_help',
             ])
-            ->add('repaymentAmount', null, [
-                'label' => 'economy_entry.form.service.repayment_amount',
-                'help' => 'economy_entry.form.service.repayment_amount_help',
-            ])
         ;
     }
 
