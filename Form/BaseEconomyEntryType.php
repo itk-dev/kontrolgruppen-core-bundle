@@ -30,9 +30,9 @@ class BaseEconomyEntryType extends AbstractType
                 'label' => 'economy_entry.form.base.account',
                 'help' => 'economy_entry.form.base.account_help',
             ])
-            ->add('text', null, [
-                'label' => 'economy_entry.form.base.text',
-                'help' => 'economy_entry.form.base.text_help',
+            ->add('accountNumber', null, [
+                'label' => 'economy_entry.form.base.account_number',
+                'help' => 'economy_entry.form.base.account_number_help',
             ])
             ->add('date', null, [
                 'label' => 'economy_entry.form.base.date',

@@ -216,7 +216,7 @@ economy:
         base:
             amount: Beløb
             date: Dato
-            text: Tekst
+            account_number: Kontonummer
             type: Type
             account: Konto
         service:
@@ -237,8 +237,8 @@ economy_entry:
             amount_help: Vælg beløb for registrering
             date: Dato
             date_help: Vælg en dato for registreringen
-            text: Tekst
-            text_help: Beskriv registreringen
+            account_number: Kontonummer
+            account_number_help: Kontonummer for konto
             type: Type
             type_help: Vælg registreringstype
             account: Konto
@@ -525,7 +525,7 @@ process_log:
                 base_economy_entry:
                     amount: Beløb
                     type: Type
-                    text: Tekst
+                    account_number: Kontonummer
                     date: Dato
                     arrear: Restance
                     account: Konto
@@ -650,7 +650,7 @@ process_report:
                 amount_period: Beløbsperiode
                 repayment_amount: Tilbagebetalingsbeløb
             base:
-                text: Tekst
+                account_number: Kontonummer
                 date: Dato
                 amount: Beløb
         conclusion:

@@ -21,10 +21,10 @@ use \Kontrolgruppen\CoreBundle\Entity\Account;
 class BaseEconomyEntry extends EconomyEntry
 {
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      * @Gedmo\Versioned()
      */
-    private $text;
+    private $accountNumber;
 
     /**
      * @ORM\Column(type="datetime")
@@ -42,14 +42,14 @@ class BaseEconomyEntry extends EconomyEntry
         return $this->id;
     }
 
-    public function getText(): ?string
+    public function getAccountNumber(): ?int
     {
-        return $this->text;
+        return $this->accountNumber;
     }
 
-    public function setText(string $text): self
+    public function setAccountNumber(int $accountNumber): self
     {
-        $this->text = $text;
+        $this->accountNumber = $accountNumber;
 
         return $this;
     }
