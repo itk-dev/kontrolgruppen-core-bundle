@@ -248,7 +248,7 @@ economy_entry:
             amount_help: Vælg beløb for registrering
             amount_period: Beløbsinterval
             amount_period_help: Vælg hvor ofte beløbet udbetales
-            monthpicker: Periode
+            monthpicker: Periode (Valgfri)
             monthpicker_help: Vælg hvilken periode registreringen gælder for
             monthpicker_cancelbutton_text: Annullér
             monthpicker_applybutton_text: Vælg

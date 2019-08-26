@@ -26,13 +26,13 @@ class ServiceEconomyEntry extends EconomyEntry
     private $service;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
      * @Gedmo\Versioned()
      */
     private $periodFrom;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
      * @Gedmo\Versioned()
      */
     private $periodTo;
@@ -62,7 +62,7 @@ class ServiceEconomyEntry extends EconomyEntry
         return $this->periodFrom;
     }
 
-    public function setPeriodFrom(\DateTime $periodFrom): self
+    public function setPeriodFrom(?\DateTime $periodFrom): self
     {
         $this->periodFrom = $periodFrom;
 
@@ -74,7 +74,7 @@ class ServiceEconomyEntry extends EconomyEntry
         return $this->periodTo;
     }
 
-    public function setPeriodTo(\DateTime $periodTo): self
+    public function setPeriodTo(?\DateTime $periodTo): self
     {
         $this->periodTo = $periodTo;
 

@@ -56,8 +56,6 @@ library.add(
 );
 dom.watch();
 
-require('./monthpicker/monthpicker');
-require('./monthpicker/monthpicker.css');
 require('jquery-confirm');
 
 // https://tempusdominus.github.io/bootstrap-4

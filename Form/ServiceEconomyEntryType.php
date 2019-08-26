@@ -36,18 +36,18 @@ class ServiceEconomyEntryType extends AbstractType
                 'label' => false,
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'MM/yyyy',
+                'format' => 'dd.MM.yyyy',
                 'attr' => [
-                    'class' => 'js-monthpicker-from d-none',
+                    'class' => 'd-none',
                 ],
             ])
             ->add('periodTo', null, [
                 'label' => false,
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'MM/yyyy',
+                'format' => 'dd.MM.yyyy',
                 'attr' => [
-                    'class' => 'js-monthpicker-to d-none',
+                    'class' => 'd-none',
                 ],
             ])
             ->add('amountPeriod', ChoiceType::class, [
