@@ -349,6 +349,7 @@ menu:
         log: Log
         report: Rapport
         account: Konti
+        income_type: Indkomsttype
 
 navigation:
     main:
@@ -836,3 +837,22 @@ account:
         name: Navn
     btns:
         create_new: Opret ny konto
+
+income_type:
+    edit:
+        title: Rediger indkomsttype
+    form:
+        name: Navn
+        update: Gem
+    index:
+        title: Indkomsttyper
+    menu_title: Indkomsttyper
+    new:
+        title: Opret indkomsttype
+    show:
+        title: Indkomsttype
+    table:
+        id: ID
+        name: Navn
+    btns:
+        create_new: Opret ny indkomsttype

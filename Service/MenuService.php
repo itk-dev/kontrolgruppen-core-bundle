@@ -251,6 +251,14 @@ class MenuService
                 ),
                 'account_index'
             ),
+            $this->createMenuItem(
+                'income_type',
+                1 === preg_match(
+                    '/^\/admin\/income_type\/.*$/',
+                    $path
+                ),
+                'income_type_index'
+            ),
         ];
     }
 
