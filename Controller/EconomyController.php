@@ -55,7 +55,6 @@ class EconomyController extends BaseController
 
         $parameters['economyEntriesService'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::SERVICE]);
         $parameters['economyEntriesAccount'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::ACCOUNT]);
-        $parameters['economyEntriesArrear'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::ARREAR]);
 
         return $this->render(
             '@KontrolgruppenCore/economy/show.html.twig',
