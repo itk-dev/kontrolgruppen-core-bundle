@@ -137,9 +137,10 @@ common:
             internal_note: Internt notat
             note: Notat
         economy_entry:
-            service: Ydelse/Indkomst
+            service: Ydelse
             account: Konti
             arrear: Restance
+            income: Indkomst
         economy_entry_amount_period:
             pr_month: pr. måned
             pr_3_month: pr. 3. måned
@@ -208,8 +209,8 @@ economy:
         create: Opret ny registrering
     headline:
         economy_entries_account: R75 oplysninger
-        economy_entries_arrear: Restance
-        economy_entries_service: Ydelse/Indkomst
+        economy_entries_income: Indkomst
+        economy_entries_service: Ydelse
     show:
         title: Økonomi
     table:
@@ -226,7 +227,14 @@ economy:
             period_from: Fra
             period_to: Til
             repayment_amount: Tilbagebetalingskrav
-            service: Ydelse/Indkomst
+            service: Ydelse
+        income:
+            amount: Beløb
+            amount_period: Beløbsinterval
+            period: Periode
+            period_from: Fra
+            period_to: Til
+            income_type: Indkomsttype
 
 economy_entry:
     edit:
@@ -255,10 +263,19 @@ economy_entry:
             monthpicker_headline: Vælg periode
             period_from: Fra
             period_to: Til
-            service: Ydelse/Indkomst
+            service: Ydelse
             service_help: Vælg hvilken ydelse registreringen gælder for
             repayment_amount: Tilbagebetalingskrav
             repayment_amount_help: Skriv det samlede tilbagebetalingskrav for registreringen
+        income:
+            income_type: Indkomsttype
+            income_type_help: Vælg hvilken indkomsttype registreringen gælder for
+            amount: Beløb
+            amount_help: Vælg beløb for registrering
+            amount_period: Beløbsinterval
+            amount_period_help: Vælg hvor ofte beløbet udbetales
+            monthpicker: Periode (Valgfri)
+            monthpicker_help: Vælg hvilken periode registreringen gælder for
         type: Type
         type_help: Vælg hvilken type registrering du vil oprette
 

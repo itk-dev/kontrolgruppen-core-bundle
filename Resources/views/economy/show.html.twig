@@ -33,6 +33,10 @@
     <h2>{{ 'economy.headline.economy_entries_service'|trans }}</h2>
     {% include '@KontrolgruppenCore/economy_entry/_economy_entry_service_table.html.twig' with {economyEntries: economyEntriesService} %}
 
+    <h2>{{ 'economy.headline.economy_entries_income'|trans }}</h2>
+    {% include '@KontrolgruppenCore/economy_entry/_economy_entry_income_table.html.twig' with {economyEntries: economyEntriesIncome} %}
+
+
     <h2>{{ 'economy.headline.economy_entries_account'|trans }}</h2>
     {% include '@KontrolgruppenCore/economy_entry/_economy_entry_base_table.html.twig' with {economyEntries: economyEntriesAccount} %}
 {% endblock %}
@@ -58,6 +62,11 @@
                 $('#service_economy_entry_datepicker_modal').modal();
             });
 
+            $('#income_economy_entry_datepicker').click(function() {
+
+                $('#income_economy_entry_datepicker_modal').modal();
+            });
+
             $('.datepicker-period').datetimepicker({
                 inline: true,
                 format: 'L',
@@ -75,12 +84,23 @@
 
             $('#datepicker_period_save').click(function() {
 
-                let from = $('#service_economy_entry_periodFrom').val();
-                let to = $('#service_economy_entry_periodTo').val();
+                if ($('#service_economy_entry_periodFrom').val()) {
+                    let from = $('#service_economy_entry_periodFrom').val();
+                    let to = $('#service_economy_entry_periodTo').val();
 
-                $('#service_economy_entry_datepicker').text(from + ' - ' + to);
+                    $('#service_economy_entry_datepicker').text(from + ' - ' + to);
 
-                $('#service_economy_entry_datepicker_modal').modal('toggle');
+                    $('#service_economy_entry_datepicker_modal').modal('toggle');
+                }
+
+                if ($('#income_economy_entry_periodFrom').val()) {
+                    let from = $('#income_economy_entry_periodFrom').val();
+                    let to = $('#income_economy_entry_periodTo').val();
+
+                    $('#income_economy_entry_datepicker').text(from + ' - ' + to);
+
+                    $('#income_economy_entry_datepicker_modal').modal('toggle');
+                }
             });
         });
     </script>

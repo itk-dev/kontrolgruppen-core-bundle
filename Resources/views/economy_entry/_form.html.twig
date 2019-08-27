@@ -45,6 +45,52 @@
                 </div>
             </div>
         </div>
+    {% elseif form.vars.id == 'income_economy_entry' %}
+        <div class="col-4">
+            {{ form_row(form.incomeType) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.amountPeriod) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.amount) }}
+        </div>
+        <div class="form-group col-12">
+            <label for="service_economy_entry_datepicker">{{ 'economy_entry.form.income.monthpicker'|trans }}</label>
+            <div class="form-control" id="income_economy_entry_datepicker"></div>
+            <small id="income_economy_entry_datepicker_help" class="form-text text-muted">{{ 'economy_entry.form.income.monthpicker_help'|trans }}</small>
+        </div>
+
+        <div class="modal fade" id="income_economy_entry_datepicker_modal" tabindex="-1"role="dialog" aria-labelledby="income_economy_entry_datepicker_modal_label" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-header" id="income_economy_entry_datepicker_modal_label">{{ 'economy_entry.form.income.monthpicker'|trans }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="overflow:hidden">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div id="datepicker_from" class="datepicker-period" data-target-input="#income_economy_entry_periodFrom"></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div id="datepicker_to" class="datepicker-period"  data-target-input="#income_economy_entry_periodTo"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'common.actions.close'|trans }}</button>
+                        <button id="datepicker_period_save" type="button" class="btn btn-primary">{{ 'common.actions.save'|trans }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% else %}
         <div class="col-3">
             {{ form_row(form.account) }}

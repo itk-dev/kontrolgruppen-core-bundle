@@ -10,7 +10,9 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Kontrolgruppen\CoreBundle\Entity\IncomeEconomyEntry;
 use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
+use Kontrolgruppen\CoreBundle\Form\IncomeEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\ServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -54,6 +56,7 @@ class EconomyController extends BaseController
         $parameters['process'] = $process;
 
         $parameters['economyEntriesService'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::SERVICE]);
+        $parameters['economyEntriesIncome'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::INCOME]);
         $parameters['economyEntriesAccount'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::ACCOUNT]);
 
         return $this->render(
@@ -77,6 +80,8 @@ class EconomyController extends BaseController
             $chosenType = $request->request->get('base_economy_entry')['type'];
         } elseif (!$chosenType && $request->request->has('service_economy_entry')) {
             $chosenType = $request->request->get('service_economy_entry')['type'];
+        } elseif (!$chosenType && $request->request->has('income_economy_entry')) {
+            $chosenType = $request->request->get('income_economy_entry')['type'];
         }
 
         // Add given form if a type has been chosen.
@@ -85,6 +90,10 @@ class EconomyController extends BaseController
                 $economyEntry = new ServiceEconomyEntry();
                 $economyEntry->setType($chosenType);
                 $form = $this->createForm(ServiceEconomyEntryType::class, $economyEntry);
+            } else if (EconomyEntryEnumType::INCOME === $chosenType) {
+                $economyEntry = new IncomeEconomyEntry();
+                $economyEntry->setType($chosenType);
+                $form = $this->createForm(IncomeEconomyEntryType::class, $economyEntry);
             } else {
                 $economyEntry = new BaseEconomyEntry();
                 $economyEntry->setType($chosenType);
