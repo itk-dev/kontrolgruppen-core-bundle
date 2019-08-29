@@ -147,3 +147,12 @@ aside {
         }
     }
 }
+
+/* Not visited cases */
+.not-visited, .table-striped tbody tr.not-visited {
+    font-weight: bold;
+    background-color: rgba(0, 123, 255, .1);
+    border-left: 3px solid $primary;
+    border-bottom: 1px solid $gray-100;
+    border-top: 1px solid $gray-100;
+}
