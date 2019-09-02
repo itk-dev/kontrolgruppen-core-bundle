@@ -211,6 +211,7 @@ economy:
         economy_entries_account: R75 oplysninger
         economy_entries_income: Indkomst
         economy_entries_service: Ydelse
+        revenue_calculation: Klargør provenu beregning
     show:
         title: Økonomi
     table:
@@ -235,7 +236,12 @@ economy:
             period_from: Fra
             period_to: Til
             income_type: Indkomsttype
-
+        revenue:
+            service: Ydelse
+            future_savings_amount: Fremtidig besparelse (pr. år)
+            future_savings_period: Periode
+            repayment_amount: Tilbagebetalingskrav
+            repayment_period: Periode
 economy_entry:
     edit:
         title: Rediger registrering

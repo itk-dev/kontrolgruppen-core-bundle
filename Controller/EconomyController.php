@@ -13,6 +13,7 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Kontrolgruppen\CoreBundle\Entity\IncomeEconomyEntry;
 use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
 use Kontrolgruppen\CoreBundle\Form\IncomeEconomyEntryType;
+use Kontrolgruppen\CoreBundle\Form\RevenueServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\ServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -58,6 +59,29 @@ class EconomyController extends BaseController
         $parameters['economyEntriesService'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::SERVICE]);
         $parameters['economyEntriesIncome'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::INCOME]);
         $parameters['economyEntriesAccount'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::ACCOUNT]);
+
+        $parameters['revenueForms'] = [];
+        foreach ($parameters['economyEntriesService'] as $serviceEconomyEntry) {
+
+            $action = $this->generateUrl(
+                'economy_entry_store_revenue',
+                [
+                    'process' => $serviceEconomyEntry->getProcess(),
+                    'id' => $serviceEconomyEntry->getId()
+                ]
+            );
+
+            $revenueForm = $this->container->get('form.factory')->createNamedBuilder(
+                'revenue_entry_'.$serviceEconomyEntry->getId(),
+                RevenueServiceEconomyEntryType::class,
+                $serviceEconomyEntry,
+                [
+                    'action' => $action,
+                ]
+            )->getForm();
+
+            $parameters['revenueForms'][] = $revenueForm->createView();
+        }
 
         return $this->render(
             '@KontrolgruppenCore/economy/show.html.twig',

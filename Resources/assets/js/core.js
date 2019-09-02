@@ -34,6 +34,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faDoorClosed } from '@fortawesome/free-solid-svg-icons/faDoorClosed';
 import { faDoorOpen } from '@fortawesome/free-solid-svg-icons/faDoorOpen';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons/faUserCircle';
+import { faSave } from '@fortawesome/free-solid-svg-icons/faSave';
 
 const $ = require('jquery');
 global.$ = global.jQuery = $;
@@ -52,7 +53,7 @@ library.add(
     faUserPlus, faArchive, faEye, faPencilAlt, faHouseDamage, faFileDownload,
     faPrint, faCheck, faLayerGroup, faSort, faSortUp, faSortDown, faCalendar,
     faArrowUp, faArrowDown, faChevronRight, faChevronLeft, faCalendarCheck,
-    faTrash, faTimes, faEyeSlash, faDoorClosed, faDoorOpen, faUserCircle
+    faTrash, faTimes, faEyeSlash, faDoorClosed, faDoorOpen, faUserCircle, faSave
 );
 dom.watch();
 

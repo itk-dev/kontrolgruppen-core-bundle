@@ -13,6 +13,7 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Kontrolgruppen\CoreBundle\Entity\EconomyEntry;
 use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
 use Kontrolgruppen\CoreBundle\Form\BaseEconomyEntryType;
+use Kontrolgruppen\CoreBundle\Form\RevenueServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\ServiceEconomyEntryType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -90,5 +91,34 @@ class EconomyEntryController extends BaseController
         }
 
         return $this->redirectToRoute('economy_show', ['process' => $process]);
+    }
+
+    /**
+     * @Route("/{id}/storeRevenue", name="economy_entry_store_revenue", methods={"POST"})
+     */
+    public function storeRevenueForEconomyEntry(Request $request, Process $process, ServiceEconomyEntry $serviceEconomyEntry)
+    {
+        $form = $this->container->get('form.factory')->createNamedBuilder(
+            'revenue_entry_'.$serviceEconomyEntry->getId(),
+            RevenueServiceEconomyEntryType::class,
+            $serviceEconomyEntry
+        )->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute(
+                'economy_show',
+                [
+                    'process' => $process->getId(),
+                ]
+            );
+        }
+
+        echo $serviceEconomyEntry->getId();
+        return new Response("It did not work at all!!!");
     }
 }
