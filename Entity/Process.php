@@ -130,12 +130,18 @@ class Process extends AbstractEntity
      */
     private $visitedByCaseWorker = false;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\LockedNetValue", mappedBy="process")
+     */
+    private $lockedNetValues;
+
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
         $this->journalEntries = new ArrayCollection();
         $this->economyEntries = new ArrayCollection();
         $this->logEntries = new ArrayCollection();
+        $this->lockedNetValues = new ArrayCollection();
     }
 
     public function getCompletedAt(): ?\DateTime
@@ -449,5 +455,36 @@ class Process extends AbstractEntity
     public function setVisitedByCaseWorker(bool $visited)
     {
         $this->visitedByCaseWorker = $visited;
+    }
+
+    /**
+     * @return Collection|LockedNetValue[]
+     */
+    public function getLockedNetValues(): Collection
+    {
+        return $this->lockedNetValues;
+    }
+
+    public function addLockedNetValue(LockedNetValue $lockedNetValue): self
+    {
+        if (!$this->lockedNetValues->contains($lockedNetValue)) {
+            $this->lockedNetValues[] = $lockedNetValue;
+            $lockedNetValue->setProcess($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLockedNetValue(LockedNetValue $lockedNetValue): self
+    {
+        if ($this->lockedNetValues->contains($lockedNetValue)) {
+            $this->lockedNetValues->removeElement($lockedNetValue);
+            // set the owning side to null (unless already changed)
+            if ($lockedNetValue->getProcess() === $this) {
+                $lockedNetValue->setProcess(null);
+            }
+        }
+
+        return $this;
     }
 }

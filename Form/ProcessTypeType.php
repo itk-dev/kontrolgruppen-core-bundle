@@ -69,10 +69,6 @@ class ProcessTypeType extends AbstractType
                 'choices' => $choices,
                 'label' => 'process_type.form.conclusion_class',
             ])
-            ->add('netDefaultValue', PercentType::class, [
-                'label' => 'process_type.form.net_default_value',
-                'scale' => 2,
-            ])
             ->add('defaultProcessStatus', EntityType::class, [
                 'class' => ProcessStatus::class,
                 'choice_label' => 'name',

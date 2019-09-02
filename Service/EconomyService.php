@@ -14,6 +14,7 @@ use Kontrolgruppen\CoreBundle\DBAL\Types\EconomyEntryEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
 use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
+use Kontrolgruppen\CoreBundle\Repository\LockedNetValueRepository;
 
 /**
  * Class EconomyService.
@@ -21,13 +22,15 @@ use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
 class EconomyService
 {
     private $economyEntryRepository;
+    private $lockedNetValueRepository;
 
     /**
      * EconomyService constructor.
      */
-    public function __construct(EconomyEntryRepository $economyEntryRepository)
+    public function __construct(EconomyEntryRepository $economyEntryRepository, LockedNetValueRepository $lockedNetValueRepository)
     {
         $this->economyEntryRepository = $economyEntryRepository;
+        $this->lockedNetValueRepository = $lockedNetValueRepository;
     }
 
     /**
@@ -39,21 +42,22 @@ class EconomyService
      */
     public function calculateRevenue(Process $process)
     {
-        // Get locked net value if set, else fall back to process type net value.
-        $netMultiplier = $process->getLockedNetValue();
-        if (null === $netMultiplier) {
-            $netMultiplier = $process->getProcessType()->getNetDefaultValue();
-        }
-
         $serviceEconomyEntries = $this->economyEntryRepository->findBy([
             'process' => $process,
             'type' => EconomyEntryEnumType::SERVICE,
         ]);
 
-        $result = array_reduce($serviceEconomyEntries, function ($carry, ServiceEconomyEntry $entry) use ($netMultiplier) {
+        $result = array_reduce($serviceEconomyEntries, function ($carry, ServiceEconomyEntry $entry) use ($process) {
             if (null !== $entry->getRepaymentAmount()) {
                 $carry['entries'][] = $entry;
                 $carry['repaymentSum'] = $carry['repaymentSum'] + $entry->getRepaymentAmount();
+
+                $lockedNetValue = $this->lockedNetValueRepository->findBy(['process' => $process, 'service' => $entry->getService()]);
+
+                $netMultiplier = (!empty($lockedNetValue))
+                                    ? $lockedNetValue[0]->getValue()
+                                    : $entry->getService()->getNetDefaultValue();
+
                 $carry['netRepaymentSum'] = $carry['netRepaymentSum'] + ($entry->getRepaymentAmount() * $netMultiplier);
 
                 if (!isset($carry['repaymentSums'][$entry->getService()->getName()])) {
@@ -92,7 +96,6 @@ class EconomyService
         ]);
 
         $result['collectiveNetSum'] = $result['netRepaymentSum'] + $result['netFutureSavingsSum'];
-        $result['netMultiplier'] = $netMultiplier;
 
         return $result;
     }

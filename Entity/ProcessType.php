@@ -47,11 +47,6 @@ class ProcessType extends AbstractTaxonomy
     private $services;
 
     /**
-     * @ORM\Column(type="float")
-     */
-    private $netDefaultValue;
-
-    /**
      * @ORM\ManyToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Channel", inversedBy="processTypes")
      */
     private $channels;
@@ -179,18 +174,6 @@ class ProcessType extends AbstractTaxonomy
         if ($this->services->contains($service)) {
             $this->services->removeElement($service);
         }
-
-        return $this;
-    }
-
-    public function getNetDefaultValue(): ?float
-    {
-        return $this->netDefaultValue;
-    }
-
-    public function setNetDefaultValue(float $netDefaultValue): self
-    {
-        $this->netDefaultValue = $netDefaultValue;
 
         return $this;
     }

@@ -787,6 +787,7 @@ service:
         title: Rediger ydelse
     form:
         name: Navn
+        net_default_value: Netto standardværdi
         process_types: Tilkoblede sagstyper
         update: Gem
     index:
