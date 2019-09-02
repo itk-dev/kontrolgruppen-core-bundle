@@ -61,16 +61,15 @@ class EconomyService
                 }
                 $carry['repaymentSums'][$entry->getService()->getName()] = $carry['repaymentSums'][$entry->getService()->getName()] + $entry->getRepaymentAmount();
 
-                // Calcalute yearly future savings.
-                $futureSavings = $entry->getAmount() / $entry->getAmountPeriod() * 12.0;
-
-                $carry['futureSavingsSum'] = $carry['futureSavingsSum'] + $futureSavings;
+                // Calculate yearly future savings
+                $carry['futureSavingsSum'] = $carry['futureSavingsSum'] + $entry->getFutureSavingsAmount();
+                $carry['netFutureSavingsSum'] = $carry['netFutureSavingsSum'] + ($entry->getFutureSavingsAmount() * $netMultiplier);
 
                 if (!isset($carry['futureSavingsSums'][$entry->getService()->getName()])) {
                     $carry['futureSavingsSums'][$entry->getService()->getName()] = 0;
                 }
-                $carry['futureSavingsSums'][$entry->getService()->getName()] = $carry['futureSavingsSums'][$entry->getService()->getName()] + $futureSavings;
-                $carry['netFutureSavingsSum'] = $carry['netFutureSavingsSum'] + $futureSavings * $netMultiplier;
+
+                $carry['futureSavingsSums'][$entry->getService()->getName()] = $carry['futureSavingsSums'][$entry->getService()->getName()] + $entry->getFutureSavingsAmount();
             }
 
             return $carry;
