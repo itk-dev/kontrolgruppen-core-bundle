@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     // Disabling other possibilities than already selected.
     $('select.readonly option:not(:selected)').attr('disabled', true);
     $('select:not([readonly]) option').removeAttr('disabled');
@@ -7,8 +6,7 @@ $(document).ready(function () {
     // Period modals
     let periodModalTriggerElement;
 
-    $('.period-modal-trigger').click(function() {
-
+    $('.period-modal-trigger').click(function () {
         periodModalTriggerElement = $(this);
 
         $('#period-modal-from').data('target-input', $(periodModalTriggerElement).data('target-input-from'));
@@ -31,14 +29,12 @@ $(document).ready(function () {
         $('#period-modal').modal();
     });
 
-    $('#period-modal-close-button').click(function() {
-
-        $('#period-modal-from').datetimepicker("destroy");
-        $('#period-modal-to').datetimepicker("destroy");
+    $('#period-modal-close-button').click(function () {
+        $('#period-modal-from').datetimepicker('destroy');
+        $('#period-modal-to').datetimepicker('destroy');
     });
 
-    $('#period-modal-save-button').click(function() {
-
+    $('#period-modal-save-button').click(function () {
         let from = $(periodModalTriggerElement.data('target-input-from')).val();
         let to = $(periodModalTriggerElement.data('target-input-to')).val();
 
@@ -50,8 +46,7 @@ $(document).ready(function () {
         $('#period-modal-to').datetimepicker('destroy');
     });
 
-    $('#period-modal-from').on('change.datetimepicker', function(event) {
-
+    $('#period-modal-from').on('change.datetimepicker', function (event) {
         $('#period-modal-to').datetimepicker('date', event.date.add('1', 'year'));
     });
 });
