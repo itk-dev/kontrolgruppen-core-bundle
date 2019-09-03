@@ -108,17 +108,13 @@ class EconomyEntryController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute(
-                'economy_show',
-                [
-                    'process' => $process->getId(),
-                ]
-            );
         }
 
-        echo $serviceEconomyEntry->getId();
-
-        return new Response('It did not work at all!!!');
+        return $this->redirectToRoute(
+            '/process/{process)/economy',
+            [
+                'process' => $process->getId()
+            ]
+        );
     }
 }
