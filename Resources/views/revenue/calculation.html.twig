@@ -17,13 +17,13 @@
                 <td>{{ form_widget(revenueForm.service) }}</td>
                 <td>{{ form_widget(revenueForm.futureSavingsAmount) }}</td>
                 <td>
-                    <div class="form-control future-savings-datepicker" data-target-modal="#future-savings-modal-{{ revenueForm.vars.value }}" data-target-input-from="#{{ revenueForm.futureSavingsPeriodFrom.vars.id }}" data-target-input-to="#{{ revenueForm.futureSavingsPeriodTo.vars.id }}">
+                    <div class="form-control period-modal-trigger" data-target-input-from="#{{ revenueForm.futureSavingsPeriodFrom.vars.id }}" data-target-input-to="#{{ revenueForm.futureSavingsPeriodTo.vars.id }}">
                         {{ revenueForm.futureSavingsPeriodFrom.vars.value }}-{{ revenueForm.futureSavingsPeriodTo.vars.value }}
                     </div>
                 </td>
                 <td>{{ form_widget(revenueForm.repaymentAmount) }}</td>
                 <td>
-                    <div class="form-control repayment-datepicker" data-target-modal="#repayment-modal-{{ revenueForm.vars.value }}" data-target-input-from="#{{ revenueForm.repaymentPeriodFrom.vars.id }}" data-target-input-to="#{{ revenueForm.repaymentPeriodTo.vars.id }}">
+                    <div class="form-control period-modal-trigger" data-target-input-from="#{{ revenueForm.repaymentPeriodFrom.vars.id }}" data-target-input-to="#{{ revenueForm.repaymentPeriodTo.vars.id }}">
                         {{ revenueForm.repaymentPeriodFrom.vars.value }}-{{ revenueForm.repaymentPeriodTo.vars.value }}
                     </div>
                 </td>
@@ -32,8 +32,6 @@
                         <span class="fa {{ iconClass('save') }} fa-sm" aria-hidden="true"></span>
                     </button>
                 </td>
-                {% include '@KontrolgruppenCore/revenue/_future_savings_datepicker_modal.html.twig' with {revenueForm: revenueForm} %}
-                {% include '@KontrolgruppenCore/revenue/_repayment_datepicker_modal.html.twig' with {revenueForm: revenueForm} %}
             {{ form_end(revenueForm) }}
             </tr>
         {% else %}
@@ -44,4 +42,6 @@
         </tbody>
     </table>
 </div>
+
+{% include '@KontrolgruppenCore/revenue/_period_modal.html.twig' %}
 

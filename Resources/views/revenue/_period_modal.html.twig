@@ -1,0 +1,30 @@
+<div class="modal fade" id="period-modal" tabindex="-1"role="dialog" aria-labelledby="period-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-header" id="period-modal-label">{{ 'economy.table.revenue.period'|trans }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="overflow:hidden">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div id="period-modal-from" class="datetimepicker-period" data-target-input=""></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div id="period-modal-to" class="datetimepicker-period"  data-target-input=""></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="period-modal-close-button" type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'common.actions.close'|trans }}</button>
+                <button id="period-modal-save-button" type="button" class="btn btn-primary">{{ 'common.actions.save'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>

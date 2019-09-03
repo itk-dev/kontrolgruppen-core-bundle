@@ -111,7 +111,7 @@ class EconomyEntryController extends BaseController
         }
 
         return $this->redirectToRoute(
-            '/process/{process)/economy',
+            'economy_show',
             [
                 'process' => $process->getId()
             ]

@@ -46,6 +46,7 @@
 
 {% block javascripts %}
     {{ parent() }}
+    {{ encore_entry_script_tags('prepareRevenueCalculation') }}
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -105,60 +106,6 @@
                     $('#income_economy_entry_datepicker_modal').modal('toggle');
                 }
             });
-
-            let futureSavingsInput;
-            let futureSavingsModalId;
-            let repaymentInput;
-            let repaymentModalId;
-
-            $('.future-savings-datepicker').click(function() {
-
-                futureSavingsInput = $(this);
-                futureSavingsModalId = futureSavingsInput.data('target-modal');
-
-                $(futureSavingsModalId + ' .datepicker-from').on('change.datetimepicker', function(event) {
-
-                    $(futureSavingsModalId + ' .datepicker-to').datetimepicker('date', event.date.add('1', 'year'));
-                });
-
-                $(futureSavingsModalId).modal();
-            });
-
-            $('.repayment-datepicker').click(function() {
-
-                repaymentInput = $(this);
-                repaymentModalId = repaymentInput.data('target-modal');
-
-                $(repaymentModalId + ' .datepicker-from').on('change.datetimepicker', function(event) {
-
-                    $(repaymentModalId + ' .datepicker-to').datetimepicker('date', event.date.add('1', 'year'));
-                });
-
-                $(repaymentModalId).modal();
-            });
-
-            $('.future_savings_period_datepicker_save').click(function(event) {
-
-                let from = $(futureSavingsInput.data('target-input-from')).val();
-                let to = $(futureSavingsInput.data('target-input-to')).val();
-
-                futureSavingsInput.text(from + ' - ' + to);
-
-                $(futureSavingsModalId).modal('toggle');
-            });
-
-            $('.repayment_period_datepicker_save').click(function(event) {
-
-                let from = $(repaymentInput.data('target-input-from')).val();
-                let to = $(repaymentInput.data('target-input-to')).val();
-
-                repaymentInput.text(from + ' - ' + to);
-
-                $(repaymentModalId).modal('toggle');
-            });
-
-            $('select.readonly option:not(:selected)').attr('disabled', true);
-            $('select:not([readonly]) option').removeAttr('disabled');
         });
     </script>
 {% endblock %}

@@ -242,6 +242,7 @@ economy:
             future_savings_period: Periode
             repayment_amount: Tilbagebetalingskrav
             repayment_period: Periode
+            period: Periode
 economy_entry:
     edit:
         title: Rediger registrering
