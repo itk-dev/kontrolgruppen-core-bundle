@@ -3,22 +3,10 @@
 {% block title %}{{ 'revenue.title'|trans }}{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-12">
-            <h1>{{ 'revenue.title'|trans }}</h1>
-            {{ form_start(revenueForm) }}
-                {{ form_widget(revenueForm) }}
-                <button class="btn btn-primary m-1">{{ 'revenue.calculate_button'|trans }}</button>
-            {{ form_end(revenueForm) }}
-        </div>
-    </div>
     {% if revenue is defined %}
         <div class="row">
             <div class="col">
                 <p>{{ 'revenue.subtitle'|trans }}</p>
-            </div>
-            <div class="col text-right">
-                <p>{{ 'revenue.net_multiplier'|trans }}: <strong>{{ revenue.netMultiplier|localizednumber('percent') }}</strong></p>
             </div>
         </div>
         <div class="table-responsive">
@@ -33,10 +21,10 @@
                         <td>{{ 'revenue.table.repayment.net_sum_title'|trans }}</td>
                         <td class="text-right">{{ revenue.netRepaymentSum|localizedcurrency('DKK') }}</td>
                     </tr>
-                    {% for key,repaymentSum in revenue.repaymentSums %}
+                    {% for key,data in revenue.repaymentSums %}
                         <tr>
-                            <td>{{ key }}</td>
-                            <td class="text-right">{{ repaymentSum|localizedcurrency('DKK') }}</td>
+                            <td>{{ key }} ({{ data.netMultiplier }}%)</td>
+                            <td class="text-right">{{ data.sum|localizedcurrency('DKK') }}</td>
                         </tr>
                     {% endfor %}
                 {% else %}
@@ -60,10 +48,10 @@
                         <td>{{ 'revenue.table.future_savings.net_sum_title'|trans }}</td>
                         <td class="text-right">{{ revenue.netFutureSavingsSum|localizedcurrency('DKK') }}</td>
                     </tr>
-                    {% for key,futureSavingsSum in revenue.futureSavingsSums %}
+                    {% for key,data in revenue.futureSavingsSums %}
                         <tr>
-                            <td>{{ key }}</td>
-                            <td class="text-right">{{ futureSavingsSum|localizedcurrency('DKK') }}</td>
+                            <td>{{ key }} ({{ data.netMultiplier }}%)</td>
+                            <td class="text-right">{{ data.sum|localizedcurrency('DKK') }}</td>
                         </tr>
                     {% endfor %}
                 {% else %}

@@ -11,14 +11,14 @@
 namespace Kontrolgruppen\CoreBundle\Form;
 
 use Kontrolgruppen\CoreBundle\DBAL\Types\EconomyEntryAmountPeriodEnumType;
-use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
+use Kontrolgruppen\CoreBundle\Entity\IncomeEconomyEntry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ServiceEconomyEntryType extends AbstractType
+class IncomeEconomyEntryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -28,9 +28,9 @@ class ServiceEconomyEntryType extends AbstractType
                 'label' => false,
                 'attr' => ['class' => 'd-none'],
             ])
-            ->add('service', null, [
-                'label' => 'economy_entry.form.service.service',
-                'help' => 'economy_entry.form.service.service_help',
+            ->add('incomeType', null, [
+                'label' => 'economy_entry.form.income.income_type',
+                'help' => 'economy_entry.form.income.income_type_help',
             ])
             ->add('periodFrom', null, [
                 'label' => false,
@@ -51,13 +51,13 @@ class ServiceEconomyEntryType extends AbstractType
                 ],
             ])
             ->add('amountPeriod', ChoiceType::class, [
-                'label' => 'economy_entry.form.service.amount_period',
+                'label' => 'economy_entry.form.income.amount_period',
                 'choices' => EconomyEntryAmountPeriodEnumType::getChoices(),
-                'help' => 'economy_entry.form.service.amount_period_help',
+                'help' => 'economy_entry.form.income.amount_period_help',
             ])
             ->add('amount', null, [
-                'label' => 'economy_entry.form.service.amount',
-                'help' => 'economy_entry.form.service.amount_help',
+                'label' => 'economy_entry.form.income.amount',
+                'help' => 'economy_entry.form.income.amount_help',
             ])
         ;
     }
@@ -65,7 +65,7 @@ class ServiceEconomyEntryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ServiceEconomyEntry::class,
+            'data_class' => IncomeEconomyEntry::class,
         ]);
     }
 }

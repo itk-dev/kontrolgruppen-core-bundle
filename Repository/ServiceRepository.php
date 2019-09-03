@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Repository;
 
+use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType;
 use Kontrolgruppen\CoreBundle\Entity\Service;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -33,6 +34,17 @@ class ServiceRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('service', 'service.id')
             ->where(':processType MEMBER OF service.processTypes')
             ->setParameter('processType', $processType)
+            ->getQuery();
+
+        return $qb->getResult();
+    }
+
+    public function getByProcess(Process $process)
+    {
+        $qb = $this->createQueryBuilder('service', 'service.id')
+            ->join('\Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry', 'e', 'WITH', 'e.service = service')
+            ->where('e.process = :process')
+            ->setParameter('process', $process)
             ->getQuery();
 
         return $qb->getResult();

@@ -243,6 +243,22 @@ class MenuService
                 ),
                 'quick_link_index'
             ),
+            $this->createMenuItem(
+                'account',
+                1 === preg_match(
+                    '/^\/admin\/account\/.*$/',
+                    $path
+                ),
+                'account_index'
+            ),
+            $this->createMenuItem(
+                'income_type',
+                1 === preg_match(
+                    '/^\/admin\/income_type\/.*$/',
+                    $path
+                ),
+                'income_type_index'
+            ),
         ];
     }
 

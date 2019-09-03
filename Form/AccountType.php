@@ -10,28 +10,18 @@
 
 namespace Kontrolgruppen\CoreBundle\Form;
 
-use Kontrolgruppen\CoreBundle\Entity\Service;
+use Kontrolgruppen\CoreBundle\Entity\Account;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ServiceType extends AbstractType
+class AccountType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('name', null, [
-                'label' => 'service.form.name',
-            ])
-            ->add('netDefaultValue', PercentType::class, [
-                'label' => 'service.form.net_default_value',
-                'scale' => 2,
-            ])
-            ->add('processTypes', null, [
-                'label' => 'service.form.process_types',
-                'by_reference' => false,
-                'attr' => ['class' => 'select2'],
+                'label' => 'account.form.name',
             ])
         ;
     }
@@ -39,7 +29,7 @@ class ServiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Service::class,
+            'data_class' => Account::class,
         ]);
     }
 }

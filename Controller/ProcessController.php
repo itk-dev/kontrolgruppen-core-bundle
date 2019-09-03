@@ -14,11 +14,13 @@ use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
+use Kontrolgruppen\CoreBundle\Entity\LockedNetValue;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessCompleteType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
+use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
@@ -260,7 +262,7 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}/complete", name="process_complete", methods={"GET","POST"})
      */
-    public function complete(Request $request, Process $process): Response
+    public function complete(Request $request, Process $process, ServiceRepository $serviceRepository): Response
     {
         if (null !== $process->getCompletedAt()) {
             return $this->redirectToRoute(
@@ -273,7 +275,18 @@ class ProcessController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $process->setLockedNetValue($process->getProcessType()->getNetDefaultValue());
+            $em = $this->getDoctrine()->getManager();
+
+            $services = $serviceRepository->getByProcess($process);
+            foreach ($services as $service) {
+                $lockedNetValue = new LockedNetValue();
+                $lockedNetValue->setService($service);
+                $lockedNetValue->setProcess($process);
+                $lockedNetValue->setValue($service->getNetDefaultValue());
+
+                $em->persist($lockedNetValue);
+            }
+
             $process->setCompletedAt(new \DateTime());
             $em = $this->getDoctrine()->getManager();
             $em->persist($process);

@@ -10,7 +10,10 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Kontrolgruppen\CoreBundle\Entity\IncomeEconomyEntry;
 use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
+use Kontrolgruppen\CoreBundle\Form\IncomeEconomyEntryType;
+use Kontrolgruppen\CoreBundle\Form\RevenueServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\ServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -54,8 +57,33 @@ class EconomyController extends BaseController
         $parameters['process'] = $process;
 
         $parameters['economyEntriesService'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::SERVICE]);
+        $parameters['economyEntriesIncome'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::INCOME]);
         $parameters['economyEntriesAccount'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::ACCOUNT]);
-        $parameters['economyEntriesArrear'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::ARREAR]);
+
+        $parameters['revenueForms'] = [];
+        foreach ($parameters['economyEntriesService'] as $serviceEconomyEntry) {
+            $action = $this->generateUrl(
+                'economy_entry_store_revenue',
+                [
+                    'process' => $serviceEconomyEntry->getProcess(),
+                    'id' => $serviceEconomyEntry->getId(),
+                ]
+            );
+
+            $revenueForm = $this->container->get('form.factory')->createNamedBuilder(
+                'revenue_entry_'.$serviceEconomyEntry->getId(),
+                RevenueServiceEconomyEntryType::class,
+                $serviceEconomyEntry
+            )->getForm();
+
+            $revenueForm->handleRequest($request);
+
+            if ($revenueForm->isSubmitted() && $revenueForm->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+            }
+
+            $parameters['revenueForms'][] = $revenueForm->createView();
+        }
 
         return $this->render(
             '@KontrolgruppenCore/economy/show.html.twig',
@@ -78,6 +106,8 @@ class EconomyController extends BaseController
             $chosenType = $request->request->get('base_economy_entry')['type'];
         } elseif (!$chosenType && $request->request->has('service_economy_entry')) {
             $chosenType = $request->request->get('service_economy_entry')['type'];
+        } elseif (!$chosenType && $request->request->has('income_economy_entry')) {
+            $chosenType = $request->request->get('income_economy_entry')['type'];
         }
 
         // Add given form if a type has been chosen.
@@ -86,6 +116,10 @@ class EconomyController extends BaseController
                 $economyEntry = new ServiceEconomyEntry();
                 $economyEntry->setType($chosenType);
                 $form = $this->createForm(ServiceEconomyEntryType::class, $economyEntry);
+            } elseif (EconomyEntryEnumType::INCOME === $chosenType) {
+                $economyEntry = new IncomeEconomyEntry();
+                $economyEntry->setType($chosenType);
+                $form = $this->createForm(IncomeEconomyEntryType::class, $economyEntry);
             } else {
                 $economyEntry = new BaseEconomyEntry();
                 $economyEntry->setType($chosenType);

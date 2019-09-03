@@ -151,6 +151,8 @@ class TwigExtension extends AbstractExtension
                 return 'fa-door-open';
             case 'user':
                 return 'fa-user-circle';
+            case 'save':
+                return 'fa-save';
             default:
                 return '';
         }

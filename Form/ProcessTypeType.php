@@ -19,7 +19,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\PercentType;
 
 class ProcessTypeType extends AbstractType
 {
@@ -68,10 +67,6 @@ class ProcessTypeType extends AbstractType
             ->add('conclusionClass', ChoiceType::class, [
                 'choices' => $choices,
                 'label' => 'process_type.form.conclusion_class',
-            ])
-            ->add('netDefaultValue', PercentType::class, [
-                'label' => 'process_type.form.net_default_value',
-                'scale' => 2,
             ])
             ->add('defaultProcessStatus', EntityType::class, [
                 'class' => ProcessStatus::class,

@@ -140,6 +140,7 @@ common:
             service: Ydelse
             account: Konti
             arrear: Restance
+            income: Indkomst
         economy_entry_amount_period:
             pr_month: pr. måned
             pr_3_month: pr. 3. måned
@@ -207,17 +208,19 @@ economy:
     actions:
         create: Opret ny registrering
     headline:
-        economy_entries_account: Konti
-        economy_entries_arrear: Restance
+        economy_entries_account: R75 oplysninger
+        economy_entries_income: Indkomst
         economy_entries_service: Ydelse
+        revenue_calculation: Klargør provenu beregning
     show:
         title: Økonomi
     table:
         base:
             amount: Beløb
             date: Dato
-            text: Tekst
+            account_number: Kontonummer
             type: Type
+            account: Konto
         service:
             amount: Beløb
             amount_period: Beløbsinterval
@@ -226,7 +229,20 @@ economy:
             period_to: Til
             repayment_amount: Tilbagebetalingskrav
             service: Ydelse
-
+        income:
+            amount: Beløb
+            amount_period: Beløbsinterval
+            period: Periode
+            period_from: Fra
+            period_to: Til
+            income_type: Indkomsttype
+        revenue:
+            service: Ydelse
+            future_savings_amount: Fremtidig besparelse (pr. år)
+            future_savings_period: Periode
+            repayment_amount: Tilbagebetalingskrav
+            repayment_period: Periode
+            period: Periode
 economy_entry:
     edit:
         title: Rediger registrering
@@ -236,16 +252,18 @@ economy_entry:
             amount_help: Vælg beløb for registrering
             date: Dato
             date_help: Vælg en dato for registreringen
-            text: Tekst
-            text_help: Beskriv registreringen
+            account_number: Kontonummer
+            account_number_help: Kontonummer for konto
             type: Type
             type_help: Vælg registreringstype
+            account: Konto
+            account_help: Vælg konto beløb er registreret på
         service:
             amount: Beløb
             amount_help: Vælg beløb for registrering
             amount_period: Beløbsinterval
             amount_period_help: Vælg hvor ofte beløbet udbetales
-            monthpicker: Periode
+            monthpicker: Periode (Valgfri)
             monthpicker_help: Vælg hvilken periode registreringen gælder for
             monthpicker_cancelbutton_text: Annullér
             monthpicker_applybutton_text: Vælg
@@ -256,6 +274,15 @@ economy_entry:
             service_help: Vælg hvilken ydelse registreringen gælder for
             repayment_amount: Tilbagebetalingskrav
             repayment_amount_help: Skriv det samlede tilbagebetalingskrav for registreringen
+        income:
+            income_type: Indkomsttype
+            income_type_help: Vælg hvilken indkomsttype registreringen gælder for
+            amount: Beløb
+            amount_help: Vælg beløb for registrering
+            amount_period: Beløbsinterval
+            amount_period_help: Vælg hvor ofte beløbet udbetales
+            monthpicker: Periode (Valgfri)
+            monthpicker_help: Vælg hvilken periode registreringen gælder for
         type: Type
         type_help: Vælg hvilken type registrering du vil oprette
 
@@ -345,6 +372,8 @@ menu:
         service: Ydelser
         log: Log
         report: Rapport
+        account: Konti
+        income_type: Indkomsttype
 
 navigation:
     main:
@@ -521,7 +550,7 @@ process_log:
                 base_economy_entry:
                     amount: Beløb
                     type: Type
-                    text: Tekst
+                    account_number: Kontonummer
                     date: Dato
                     arrear: Restance
                     account: Konto
@@ -646,7 +675,7 @@ process_report:
                 amount_period: Beløbsperiode
                 repayment_amount: Tilbagebetalingsbeløb
             base:
-                text: Tekst
+                account_number: Kontonummer
                 date: Dato
                 amount: Beløb
         conclusion:
@@ -723,15 +752,15 @@ revenue:
     subtitle: Tilbagebetalingskrav overfor klient
     table:
         repayment:
-            net_sum_title: Netto samlet tilbagebetalingskrav i kr (KL).
-            sum_title: Samlet tilbagebetalingskrav i kr.
+            net_sum_title: Netto samlet tilbagebetalingskrav i kr.
+            sum_title: Samlet tilbagebetalingskrav i kr (KL).
             no_records_found: Ingen tilbagebetalingskrav
         future_savings:
-            net_sum_title: Netto fremadrettet besparelse i kr (KL).
-            sum_title: Samlet fremadrettet besparelse i kr.
+            net_sum_title: Netto fremadrettet besparelse i kr.
+            sum_title: Samlet fremadrettet besparelse i kr (KL).
             no_records_found: Ingen fremadrettet besparelse
         collective_net_sum:
-            title: Samlet nettoopgørelse (KL)
+            title: Samlet nettoopgørelse
     title: Provenu
 
 search:
@@ -759,6 +788,7 @@ service:
         title: Rediger ydelse
     form:
         name: Navn
+        net_default_value: Netto standardværdi
         process_types: Tilkoblede sagstyper
         update: Gem
     index:
@@ -813,3 +843,41 @@ export:
 
 prevent_cpr:
     cpr_in_content: 'Indeholder følgende CPR-numre (fjern venligst): %list%'
+
+account:
+    edit:
+        title: Rediger konto
+    form:
+        name: Navn
+        update: Gem
+    index:
+        title: Konti
+    menu_title: Konti
+    new:
+        title: Opret konto
+    show:
+        title: Konto
+    table:
+        id: ID
+        name: Navn
+    btns:
+        create_new: Opret ny konto
+
+income_type:
+    edit:
+        title: Rediger indkomsttype
+    form:
+        name: Navn
+        update: Gem
+    index:
+        title: Indkomsttyper
+    menu_title: Indkomsttyper
+    new:
+        title: Opret indkomsttype
+    show:
+        title: Indkomsttype
+    table:
+        id: ID
+        name: Navn
+    btns:
+        create_new: Opret ny indkomsttype
