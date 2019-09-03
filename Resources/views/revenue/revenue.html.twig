@@ -21,10 +21,10 @@
                         <td>{{ 'revenue.table.repayment.net_sum_title'|trans }}</td>
                         <td class="text-right">{{ revenue.netRepaymentSum|localizedcurrency('DKK') }}</td>
                     </tr>
-                    {% for key,repaymentSum in revenue.repaymentSums %}
+                    {% for key,data in revenue.repaymentSums %}
                         <tr>
-                            <td>{{ key }}</td>
-                            <td class="text-right">{{ repaymentSum|localizedcurrency('DKK') }}</td>
+                            <td>{{ key }} ({{ data.netMultiplier }}%)</td>
+                            <td class="text-right">{{ data.sum|localizedcurrency('DKK') }}</td>
                         </tr>
                     {% endfor %}
                 {% else %}
@@ -48,10 +48,10 @@
                         <td>{{ 'revenue.table.future_savings.net_sum_title'|trans }}</td>
                         <td class="text-right">{{ revenue.netFutureSavingsSum|localizedcurrency('DKK') }}</td>
                     </tr>
-                    {% for key,futureSavingsSum in revenue.futureSavingsSums %}
+                    {% for key,data in revenue.futureSavingsSums %}
                         <tr>
-                            <td>{{ key }}</td>
-                            <td class="text-right">{{ futureSavingsSum|localizedcurrency('DKK') }}</td>
+                            <td>{{ key }} ({{ data.netMultiplier }}%)</td>
+                            <td class="text-right">{{ data.sum|localizedcurrency('DKK') }}</td>
                         </tr>
                     {% endfor %}
                 {% else %}
