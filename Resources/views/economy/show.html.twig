@@ -116,6 +116,11 @@
                 futureSavingsInput = $(this);
                 futureSavingsModalId = futureSavingsInput.data('target-modal');
 
+                $(futureSavingsModalId + ' .datepicker-from').on('change.datetimepicker', function(event) {
+
+                    $(futureSavingsModalId + ' .datepicker-to').datetimepicker('date', event.date.add('1', 'year'));
+                });
+
                 $(futureSavingsModalId).modal();
             });
 
@@ -123,6 +128,11 @@
 
                 repaymentInput = $(this);
                 repaymentModalId = repaymentInput.data('target-modal');
+
+                $(repaymentModalId + ' .datepicker-from').on('change.datetimepicker', function(event) {
+
+                    $(repaymentModalId + ' .datepicker-to').datetimepicker('date', event.date.add('1', 'year'));
+                });
 
                 $(repaymentModalId).modal();
             });
