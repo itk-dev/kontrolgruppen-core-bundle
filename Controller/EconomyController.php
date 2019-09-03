@@ -79,7 +79,6 @@ class EconomyController extends BaseController
             $revenueForm->handleRequest($request);
 
             if ($revenueForm->isSubmitted() && $revenueForm->isValid()) {
-
                 $this->getDoctrine()->getManager()->flush();
             }
 
