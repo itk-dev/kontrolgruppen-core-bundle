@@ -75,16 +75,6 @@ class ServiceEconomyEntry extends EconomyEntry
      */
     private $repaymentPeriodTo;
 
-    public function __construct()
-    {
-        $this->futureSavingsAmount = 0;
-        $this->futureSavingsPeriodFrom = new \DateTime();
-        $this->futureSavingsPeriodTo = new \DateTime();
-        $this->repaymentAmount = 0;
-        $this->repaymentPeriodFrom = new \DateTime();
-        $this->repaymentPeriodTo = new \DateTime();
-    }
-
     public function getService(): ?Service
     {
         return $this->service;
