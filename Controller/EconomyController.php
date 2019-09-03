@@ -73,11 +73,15 @@ class EconomyController extends BaseController
             $revenueForm = $this->container->get('form.factory')->createNamedBuilder(
                 'revenue_entry_'.$serviceEconomyEntry->getId(),
                 RevenueServiceEconomyEntryType::class,
-                $serviceEconomyEntry,
-                [
-                    'action' => $action,
-                ]
+                $serviceEconomyEntry
             )->getForm();
+
+            $revenueForm->handleRequest($request);
+
+            if ($revenueForm->isSubmitted() && $revenueForm->isValid()) {
+
+                $this->getDoctrine()->getManager()->flush();
+            }
 
             $parameters['revenueForms'][] = $revenueForm->createView();
         }

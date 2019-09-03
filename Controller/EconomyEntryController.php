@@ -92,29 +92,4 @@ class EconomyEntryController extends BaseController
 
         return $this->redirectToRoute('economy_show', ['process' => $process]);
     }
-
-    /**
-     * @Route("/{id}/storeRevenue", name="economy_entry_store_revenue", methods={"POST"})
-     */
-    public function storeRevenueForEconomyEntry(Request $request, Process $process, ServiceEconomyEntry $serviceEconomyEntry)
-    {
-        $form = $this->container->get('form.factory')->createNamedBuilder(
-            'revenue_entry_'.$serviceEconomyEntry->getId(),
-            RevenueServiceEconomyEntryType::class,
-            $serviceEconomyEntry
-        )->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-        }
-
-        return $this->redirectToRoute(
-            'economy_show',
-            [
-                'process' => $process->getId(),
-            ]
-        );
-    }
 }
