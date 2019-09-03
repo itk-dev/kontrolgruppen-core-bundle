@@ -107,7 +107,6 @@ class EconomyEntryController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute(
@@ -119,6 +118,7 @@ class EconomyEntryController extends BaseController
         }
 
         echo $serviceEconomyEntry->getId();
-        return new Response("It did not work at all!!!");
+
+        return new Response('It did not work at all!!!');
     }
 }

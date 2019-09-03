@@ -275,13 +275,11 @@ class ProcessController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $em = $this->getDoctrine()->getManager();
 
             $services = $serviceRepository->getByProcess($process);
             foreach ($services as $service) {
-
-                $lockedNetValue  = new LockedNetValue();
+                $lockedNetValue = new LockedNetValue();
                 $lockedNetValue->setService($service);
                 $lockedNetValue->setProcess($process);
                 $lockedNetValue->setValue($service->getNetDefaultValue());

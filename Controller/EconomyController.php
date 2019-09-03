@@ -62,12 +62,11 @@ class EconomyController extends BaseController
 
         $parameters['revenueForms'] = [];
         foreach ($parameters['economyEntriesService'] as $serviceEconomyEntry) {
-
             $action = $this->generateUrl(
                 'economy_entry_store_revenue',
                 [
                     'process' => $serviceEconomyEntry->getProcess(),
-                    'id' => $serviceEconomyEntry->getId()
+                    'id' => $serviceEconomyEntry->getId(),
                 ]
             );
 
@@ -114,7 +113,7 @@ class EconomyController extends BaseController
                 $economyEntry = new ServiceEconomyEntry();
                 $economyEntry->setType($chosenType);
                 $form = $this->createForm(ServiceEconomyEntryType::class, $economyEntry);
-            } else if (EconomyEntryEnumType::INCOME === $chosenType) {
+            } elseif (EconomyEntryEnumType::INCOME === $chosenType) {
                 $economyEntry = new IncomeEconomyEntry();
                 $economyEntry->setType($chosenType);
                 $form = $this->createForm(IncomeEconomyEntryType::class, $economyEntry);

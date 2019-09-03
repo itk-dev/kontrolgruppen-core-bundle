@@ -25,8 +25,8 @@ class RevenueServiceEconomyEntryType extends AbstractType
                 'help' => 'economy_entry.form.service.service_help',
                 'attr' => [
                     'readonly' => true,
-                    'class' => 'readonly'
-                ]
+                    'class' => 'readonly',
+                ],
             ])
             ->add('futureSavingsPeriodFrom', null, [
                 'label' => false,
@@ -78,7 +78,7 @@ class RevenueServiceEconomyEntryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ServiceEconomyEntry::class
+            'data_class' => ServiceEconomyEntry::class,
         ]);
     }
 }

@@ -12,7 +12,6 @@ namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use \Kontrolgruppen\CoreBundle\Entity\Account;
 
 /**
  * @ORM\Entity
