@@ -62,14 +62,6 @@ class EconomyController extends BaseController
 
         $parameters['revenueForms'] = [];
         foreach ($parameters['economyEntriesService'] as $serviceEconomyEntry) {
-            $action = $this->generateUrl(
-                'economy_entry_store_revenue',
-                [
-                    'process' => $serviceEconomyEntry->getProcess(),
-                    'id' => $serviceEconomyEntry->getId(),
-                ]
-            );
-
             $revenueForm = $this->container->get('form.factory')->createNamedBuilder(
                 'revenue_entry_'.$serviceEconomyEntry->getId(),
                 RevenueServiceEconomyEntryType::class,
