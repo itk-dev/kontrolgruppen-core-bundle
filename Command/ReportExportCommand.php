@@ -118,10 +118,6 @@ class ReportExportCommand extends Command
         $outputFilename = $input->getOption('output-filename');
         $save = $input->getOption('save') || null !== $outputFilename;
 
-        header('content-type: text/plain');
-        echo var_export([$save, $outputFilename], true);
-        die(__FILE__.':'.__LINE__.':'.__METHOD__);
-
         if (!$save) {
             // Dump to stdout.
             $this->exportManager
