@@ -10,10 +10,14 @@
 
 namespace Kontrolgruppen\CoreBundle\Export;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Kontrolgruppen\CoreBundle\Entity\BIExport;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,6 +30,12 @@ class Manager
     /** @var \Symfony\Component\DependencyInjection\Container */
     protected $container;
 
+    /** @var EntityManagerInterface */
+    protected $entityManager;
+
+    /** @var Filesystem */
+    protected $filesystem;
+
     /**
      * The configuration.
      *
@@ -36,9 +46,11 @@ class Manager
     /**
      * Constructor.
      */
-    public function __construct(ContainerInterface $container, array $configuration = [])
+    public function __construct(ContainerInterface $container, EntityManagerInterface $entityManager, Filesystem $filesystem, array $configuration = [])
     {
         $this->container = $container;
+        $this->entityManager = $entityManager;
+        $this->filesystem = $filesystem;
         $this->configuration = $configuration;
     }
 
@@ -69,9 +81,13 @@ class Manager
      */
     public function getExport($service)
     {
-        $export = $this->container->get($service);
+        try {
+            $export = $this->container->get($service);
 
-        return $export instanceof AbstractExport ? $export : null;
+            return $export instanceof AbstractExport ? $export : null;
+        } catch (ServiceNotFoundException $exception) {
+            return null;
+        }
     }
 
     /**
@@ -106,6 +122,51 @@ class Manager
         $writer = IOFactory::createWriter($spreadsheet, $type);
 
         return $writer;
+    }
+
+    /**
+     * Run export and save result to file or dump to stdout.
+     *
+     * @param AbstractExport $export
+     * @param $parameters
+     * @param string      $format
+     * @param string|null $filename
+     *                              Filename to save report to. If null, a filename will be generated.
+     *
+     * @return BIExport|null
+     *
+     *@throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     */
+    public function save(AbstractExport $export, array $parameters, string $format, string $filename = null)
+    {
+        if (null === $filename) {
+            // BI people seem to like timestamps in filenames …
+            $filename = uniqid((new \DateTime())->format('Ymd\THis\-'), true).'-'.$export->getFilename($parameters).'.'.$format;
+        }
+
+        if (!empty($this->configuration['export_directory'])
+            && !$this->filesystem->isAbsolutePath($filename)) {
+            $directory = rtrim($this->configuration['export_directory'], '/');
+            $filename = $directory.'/'.$filename;
+        }
+
+        $directory = \dirname($filename);
+        if (!$this->filesystem->exists($directory)) {
+            $this->filesystem->mkdir($directory);
+        }
+
+        $writer = $this->run($export, $parameters, $format);
+
+        $writer->save($filename);
+
+        $export = (new BIExport())
+            ->setFilename($filename)
+            ->setReport($export);
+        $this->entityManager->persist($export);
+        $this->entityManager->flush();
+
+        return $export;
     }
 
     /**
@@ -180,6 +241,18 @@ class Manager
         }
 
         return $exportParameters;
+    }
+
+    public function deleteBIExport(BIExport $export)
+    {
+        try {
+            $this->entityManager->remove($export);
+            $this->entityManager->flush();
+        } catch (\Exception $exception) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

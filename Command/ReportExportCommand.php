@@ -19,6 +19,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ReportExportCommand extends Command
@@ -34,15 +36,25 @@ class ReportExportCommand extends Command
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
+    /** @var Filesystem */
+    private $filesystem;
+
+    /** @var ParameterBagInterface */
+    private $parameters;
+
     public function __construct(
         Manager $exportManager,
         UserRepository $userRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        Filesystem $filesystem,
+        ParameterBagInterface $parameters
     ) {
         parent::__construct();
         $this->exportManager = $exportManager;
         $this->userRepository = $userRepository;
         $this->entityManager = $entityManager;
+        $this->filesystem = $filesystem;
+        $this->parameters = $parameters;
     }
 
     public function configure()
@@ -55,7 +67,10 @@ class ReportExportCommand extends Command
                 InputArgument::OPTIONAL,
                 'The export parameters (space-separated name=value pairs)'
             )
-            ->addOption('format', null, InputOption::VALUE_REQUIRED, 'The export format', 'csv');
+            ->addOption('debug-parameters', null, InputOption::VALUE_NONE, 'Dump parsed parameters to console.')
+            ->addOption('format', null, InputOption::VALUE_REQUIRED, 'The export format', 'csv')
+            ->addOption('save', null, InputOption::VALUE_NONE, 'Save the export result to file. If --output-filename is not specified a unique filename will be generated.')
+            ->addOption('output-filename', null, InputOption::VALUE_REQUIRED, 'Filename to save export result to (implies --save).');
     }
 
     public function getHelp()
@@ -91,9 +106,32 @@ class ReportExportCommand extends Command
             throw new RuntimeException('Invalid export: '.$exportClass);
         }
         $parameters = $input->getArgument('parameters');
+        $parameters = $this->exportManager->getExportParameters($export, $parameters ?? '');
+
+        if ($input->getOption('debug-parameters')) {
+            $output->writeln(json_encode($parameters, JSON_PRETTY_PRINT));
+
+            return;
+        }
         $format = $input->getOption('format');
 
-        $writer = $this->exportManager->run($export, $parameters, $format);
-        $writer->save('php://output');
+        $outputFilename = $input->getOption('output-filename');
+        $save = $input->getOption('save') || null !== $outputFilename;
+
+        header('content-type: text/plain');
+        echo var_export([$save, $outputFilename], true);
+        die(__FILE__.':'.__LINE__.':'.__METHOD__);
+
+        if (!$save) {
+            // Dump to stdout.
+            $this->exportManager
+                ->run($export, $parameters, $format, $save)
+                ->save('php://output');
+        } else {
+            $result = $this->exportManager->save($export, $parameters, $format, $outputFilename);
+            if ($output->isVerbose()) {
+                $output->writeln(sprintf('Result written to file: %s', $result->getFilename()));
+            }
+        }
     }
 }

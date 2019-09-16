@@ -881,3 +881,12 @@ income_type:
         name: Navn
     btns:
         create_new: Opret ny indkomsttype
+
+bi:
+    title: Business Intelligence™
+    export:
+        createdAt: Oprettet
+        report: Rapport
+    download_export: Hent
+    delete_export: Slet
+    delete_export_confirm: Bekræft sletning af rapport.

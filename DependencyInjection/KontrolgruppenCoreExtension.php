@@ -38,7 +38,10 @@ class KontrolgruppenCoreExtension extends Extension implements PrependExtensionI
         $container->setParameter('kontrolgruppen_core.net_default_value', $config['net_default_value']);
 
         $definition = $container->getDefinition(Manager::class);
-        $definition->replaceArgument('$configuration', ['exports' => $config['exports'] ?? []]);
+        $definition->replaceArgument('$configuration', [
+            'exports' => $config['exports'] ?? [],
+            'export_directory' => $config['export_directory'] ?? null,
+        ]);
 
         $definition = $container->getDefinition(UserManager::class);
         if (isset($config['user_class'])) {
