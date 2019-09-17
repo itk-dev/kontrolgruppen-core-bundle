@@ -22,7 +22,6 @@
                     <td><a href="{{ path('process_type_show', {'id': process_type.id}) }}">{{ process_type.name }}</a></td>
                     <td>{{ process_type.hideInDashboard|yes_no }}</td>
                     <td>{{ conclusionClassTranslation(process_type.conclusionClass) }}</td>
-                    <td>{{ process_type.netDefaultValue|localizednumber('percent') }}</td>
                     <td class="text-right">
                         <a href="{{ path('process_type_show', {'id': process_type.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip"
                            data-placement="top" title="{{ 'common.actions.show'|trans }}">
