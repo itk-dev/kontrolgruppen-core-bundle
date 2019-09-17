@@ -26,6 +26,9 @@ class Export extends AbstractExport
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
+    /** @var EconomyService */
+    private $economyService;
+
     public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService)
     {
         parent::__construct();
