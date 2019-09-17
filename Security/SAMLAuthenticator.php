@@ -90,10 +90,33 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
             ));
         }
 
-        $username = $auth->getNameId();
+        $username = $this->getUsername($auth);
         $user = $userProvider->getUser($username, $credentials);
 
         return $user;
+    }
+
+    /**
+     * Get username.
+     *
+     * @param Auth $auth
+     *
+     * @return string
+     */
+    private function getUsername(Auth $auth)
+    {
+        if (isset($this->settings['username_attribute_name'])) {
+            $attribute = $auth->getAttribute($this->settings['username_attribute_name']);
+            if (!empty($attribute)) {
+                $username = reset($attribute);
+                if (!empty($username)) {
+                    return $username;
+                }
+            }
+        }
+
+        // Fallback.
+        return $auth->getNameId();
     }
 
     public function checkCredentials($credentials, UserInterface $user)
