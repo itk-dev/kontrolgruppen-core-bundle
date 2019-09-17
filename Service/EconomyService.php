@@ -103,6 +103,7 @@ class EconomyService
         ]);
 
         $result['netCollectiveSum'] = $result['netRepaymentSum'] + $result['netFutureSavingsSum'];
+        $result['collectiveSum'] = $result['repaymentSum'] + $result['futureSavingsSum'];
 
         return $result;
     }
