@@ -593,7 +593,6 @@ process_type:
         channels: Tilkoblede kanaler
         hide_in_dashboard: Skjul på dashboard
         name: Navn
-        net_default_value: Netto standardværdi
         process_statuses: Tilkoblede sagsstatusser
         services: Tilkoblede ydelser
         default_process_status: Standard sagsstatus
@@ -614,7 +613,6 @@ process_type:
         hide_in_dashboard: Skjul på dashboard
         id: ID
         name: Navn
-        net_default_value: Netto standardværdi
         process_statuses: Tilkoblede sagsstatusser
         services: Tilkoblede ydelser
     btns:
