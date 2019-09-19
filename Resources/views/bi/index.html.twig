@@ -1,0 +1,40 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'dashboard.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1 class="mb-3">{{ 'bi.title'|trans }}</h1>
+
+    {% if exports|default(false) %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ 'bi.export.createdAt'|trans }}</th>
+                    <th>{{ 'bi.export.report'|trans }}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for export in exports %}
+                    <tr>
+                        <td>{{ export.createdAt|localizeddate }}</td>
+                        <td>{{ export.report.title|default('–') }}</td>
+                        <td>
+                            <a href="{{ path('bi_download', {export: export.id}) }}" class="btn btn-primary btn-sm">{{ 'bi.download_export'|trans }}</a>
+                            {% if delete_form|default(false) %}
+                                {# @TODO: Fix this styling hack! #}
+                                <div style="display: inline-block">
+                                    {{ form_start(delete_form, {action: path('bi_delete', {export: export.id})}) }}
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm({{ 'bi.delete_export_confirm'|trans|json_encode }})">{{ 'bi.delete_export'|trans }}</button>
+                                    {{ form_end(delete_form) }}
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning">{{ 'bi.no_exports'|trans }}</div>
+    {% endif %}
+{% endblock %}

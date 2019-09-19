@@ -118,3 +118,36 @@ bin/console bin/console kontrolgruppen:user:login --help
 ```
 
 for details.
+
+## Business Intelligence™
+
+Users with role `ROLE_BI` can access and download reports from `/bi/`. Reports
+should be run regularly by using `cron` or similar means to execute the
+`kontrolgruppen:report:export` cli command.
+
+Run
+
+```sh
+bin/console kontrolgruppen:report:export --help
+```
+
+to see details on command parameters and available reports (defined in the
+`kontrolgruppen_core.exports` configuration).
+
+### Example
+
+```sh
+bin/console kontrolgruppen:report:export admin@example.com \
+	'Kontrolgruppen\CoreBundle\Export\KL\Export' \
+	--parameters='startdate=-1 month enddate=now'
+```
+
+### Protip
+
+Use `--debug-parameters` to see what the parameter values actually are:
+
+```
+bin/console kontrolgruppen:report:export admin@example.com \
+	'Kontrolgruppen\CoreBundle\Export\KL\Export' \
+	--parameters='startdate=-1 month enddate=now' --debug-parameters
+```

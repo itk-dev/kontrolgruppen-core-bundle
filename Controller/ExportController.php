@@ -13,14 +13,11 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Export\Manager;
 use Kontrolgruppen\CoreBundle\Service\MenuService;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Style\Border;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 
 /**
  * Class ExportController.
@@ -100,42 +97,26 @@ class ExportController extends BaseController
         // Use namespaced form values (cf. $this->buildParameterForm).
         $form->submit($request->get($form->getName()));
         $parameters = $form->getData();
-
         $filename = preg_replace('/[^a-z0-9_]/i', '-', $export->getFilename($parameters));
 
-        $styleArray = [
-            'borders' => [
-                'allBorders' => [
-                    'borderStyle' => Border::BORDER_THIN,
-                ],
-            ],
-        ];
-
-        $spreadsheet = new Spreadsheet();
-        $spreadsheet->getDefaultStyle()->applyFromArray($styleArray);
-
         try {
-            $export->write($parameters, $spreadsheet);
+            $writer = $this->exportManager->run($export, $parameters, $_format);
 
             switch ($_format) {
                 case 'csv':
                     $filename .= '.csv';
                     $contentType = 'text/csv';
-                    $writer = IOFactory::createWriter($spreadsheet, 'Csv');
                     break;
                 case 'xlsx':
                     $filename .= '.xlsx';
                     $contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-                    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
                     break;
                 case 'pdf':
                     $filename .= '.pdf';
                     $contentType = 'application/pdf';
-                    $writer = IOFactory::createWriter($spreadsheet, 'Mpdf');
                     break;
                 case 'html':
                 default:
-                    $writer = IOFactory::createWriter($spreadsheet, 'Html');
                     ob_start();
                     $writer->save('php://output');
                     $html = ob_get_clean();
@@ -158,8 +139,8 @@ class ExportController extends BaseController
                     }
 
                     return $this->render('@KontrolgruppenCore/export/show.html.twig', [
-                        'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
-                        'table' => $mock->saveHTML(),
+                       'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
+                       'table' => $mock->saveHTML(),
                     ]);
             }
 

@@ -31,7 +31,8 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder->getRootNode()
             ->children()
-            ->variableNode('exports')->end()
+            ->variableNode('exports')->info('List of export services')->end()
+            ->scalarNode('export_directory')->info('Where to save export results')->isRequired()->end()
             ->end()
             ;
 

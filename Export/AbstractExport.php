@@ -13,7 +13,7 @@ namespace Kontrolgruppen\CoreBundle\Export;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-abstract class AbstractExport
+abstract class AbstractExport implements \JsonSerializable
 {
     /** @var string */
     protected $title;
@@ -214,5 +214,12 @@ abstract class AbstractExport
     protected function formatAmount($number, $decimals = 2)
     {
         return $this->formatNumber($number, $decimals);
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'title' => $this->getTitle(),
+        ];
     }
 }

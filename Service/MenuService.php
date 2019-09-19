@@ -11,6 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\Service;
 
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Kontrolgruppen\CoreBundle\Twig\TwigExtension;
@@ -24,6 +25,7 @@ class MenuService
     protected $translator;
     protected $router;
     protected $twigExtension;
+    protected $authorizationChecker;
 
     /**
      * MenuService constructor.
@@ -31,11 +33,13 @@ class MenuService
     public function __construct(
         TranslatorInterface $translator,
         RouterInterface $router,
-        TwigExtension $twigExtension
+        TwigExtension $twigExtension,
+        AuthorizationCheckerInterface $authorizationChecker
     ) {
         $this->translator = $translator;
         $this->router = $router;
         $this->twigExtension = $twigExtension;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -47,26 +51,37 @@ class MenuService
      */
     public function getGlobalNavMenu($path)
     {
-        return [
-            'dashboard' => $this->createGlobalNavItem(
-                'dashboard',
-                'dashboard',
-                ('/' === $path),
-                'dashboard_index'
-            ),
-            'process' => $this->createGlobalNavItem(
-                'process',
-                'process',
-                (false !== $this->startsWith($path, '/process/')),
-                'process_index'
-            ),
-            'admin' => $this->createGlobalNavItem(
-                'admin',
-                'admin',
-                (false !== $this->startsWith($path, '/admin/')),
-                'admin_index'
-            ),
-        ];
+        $menu['dashboard'] = $this->createGlobalNavItem(
+            'dashboard',
+            'dashboard',
+            ('/' === $path),
+            'dashboard_index'
+        );
+
+        $menu['process'] = $this->createGlobalNavItem(
+            'process',
+            'process',
+            false !== $this->startsWith($path, '/process/'),
+            'process_index'
+        );
+
+        if ($this->authorizationChecker->isGranted('ROLE_BI')) {
+            $menu['bi'] = $this->createGlobalNavItem(
+                'bi',
+                'bi',
+                false !== $this->startsWith($path, '/bi/'),
+                'bi_index'
+            );
+        }
+
+        $menu['admin'] = $this->createGlobalNavItem(
+            'admin',
+            'admin',
+            false !== $this->startsWith($path, '/admin/'),
+            'admin_index'
+        );
+
+        return $menu;
     }
 
     /**
