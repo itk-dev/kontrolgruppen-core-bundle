@@ -1,4 +1,4 @@
-{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
 
 {% block title %}{{ 'process.index.title'|trans }}{% endblock %}
 
@@ -17,10 +17,6 @@
     {% include '@KontrolgruppenCore/process/_process_table_pagination.html.twig' %}
 
     {% include '@KontrolgruppenCore/journal_entry/_modal_quick_view.html.twig' %}
-{% endblock %}
-
-{% block sidebar_right %}
-    {{ include('@KontrolgruppenCore/process/_sidebar_activity.html.twig') }}
 {% endblock %}
 
 {% block javascripts %}

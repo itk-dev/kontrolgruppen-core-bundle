@@ -118,11 +118,6 @@ class ProcessController extends BaseController
             50
         );
 
-        // Get latest log entries
-        $recentActivity = $this->getDoctrine()->getRepository(
-            ProcessLogEntry::class
-        )->getLatestEntriesByLevel(ProcessLogEntryLevelEnumType::NOTICE, 10);
-
         return $this->render(
             '@KontrolgruppenCore/process/index.html.twig',
             [
@@ -133,7 +128,6 @@ class ProcessController extends BaseController
                 'pagination' => $pagination,
                 'form' => $filterForm->createView(),
                 'query' => $query,
-                'recentActivity' => $recentActivity,
             ]
         );
     }
