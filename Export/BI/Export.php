@@ -50,7 +50,6 @@ class Export extends AbstractExport
             'CPR-nummer',
             'Antal børn',
             'Antal biler',
-            'Oprettet status',
             'Sagstype',
             'Sagsstatus',
             'Dato for sagsstatus',
@@ -84,18 +83,15 @@ class Export extends AbstractExport
                 }
             );
             $latestLogEntry = reset($logEntries);
-            $firstLogEntry = end($logEntries);
 
             $this->writeRow([
-                new \DateTime(), // 'Udtræksdato'
+                $this->formatDate(new \DateTime()), // 'Udtræksdato'
                 $process->getCaseNumber(), // 'Sagsnummer'
                 $process->getCreatedAt(), // 'Oprettet dato'
-                // @TODO How do we/they identify a case worker?
                 $process->getCaseWorker() ? $process->getCaseWorker()->getUsername() : null, // 'Sagsbehandler'
                 $process->getClientCPR(), // 'CPR-nummer'
                 $process->getClient() ? $process->getClient()->getNumberOfChildren() : null, // 'Antal børn'
                 $process->getClient() ? $process->getClient()->getCars()->count() : null, // 'Antal biler'
-                $firstLogEntry ? $firstLogEntry->getLogEntry()->getLoggedAt() : null, // 'Oprettet status'
                 $process->getProcessType() ? $process->getProcessType()->getName() : null, // 'Sagstype'
                 $process->getProcessStatus() ? $process->getProcessStatus()->getName() : null, // 'Sagsstatus'
                 $latestLogEntry ? $latestLogEntry->getLogEntry()->getLoggedAt() : null, // 'Dato for sagsstatus'
