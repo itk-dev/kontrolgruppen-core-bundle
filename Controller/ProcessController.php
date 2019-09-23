@@ -161,7 +161,7 @@ class ProcessController extends BaseController
             $entityManager->persist($client);
             $entityManager->flush();
 
-            return $this->redirectToRoute('process_index');
+            return $this->redirectToRoute('client_show', ['process' => $process]);
         }
 
         // Get latest log entries

@@ -13,8 +13,10 @@ namespace Kontrolgruppen\CoreBundle\Form;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProcessCompleteType extends AbstractType
 {
@@ -34,6 +36,30 @@ class ProcessCompleteType extends AbstractType
             ->add('processStatus', null, [
                 'label' => 'process.complete.status',
                 'required' => true,
+            ])
+            ->add('policeReport', ChoiceType::class, [
+                'label' => 'process.form.police_report',
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(),
+                ],
+                'choices' => [
+                    null => null,
+                    'common.boolean.yes' => true,
+                    'common.boolean.no' => false,
+                ],
+            ])
+            ->add('courtDecision', ChoiceType::class, [
+                'label' => 'process.form.court_decision',
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(),
+                ],
+                'choices' => [
+                    null => null,
+                    'court_decision.true' => true,
+                    'court_decision.false' => false,
+                ],
             ])
         ;
     }

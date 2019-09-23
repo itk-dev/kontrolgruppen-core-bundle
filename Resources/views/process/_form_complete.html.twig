@@ -40,12 +40,7 @@
                     {{ 'process.complete.police_report'|trans }}
                 </div>
                 <div class="col-12 col-sm-6">
-                    {% if process.policeReport is null %}
-                        <strong class="text-danger">{{ 'common.empty_field_value'|trans }}</strong>
-                        <a class="ml-3" href="{{ path('process_edit', {id: process.id, referer: app.request.pathinfo}) }}">{{ 'common.actions.edit'|trans }}</a>
-                    {% else %}
-                        <strong>{{ process.policeReport|yes_no }}</strong>
-                    {% endif %}
+                    {{ form_widget(form.policeReport) }}
                 </div>
             </div>
         </li>
@@ -55,12 +50,7 @@
                     {{ 'process.complete.court_decision'|trans }}
                 </div>
                 <div class="col-12 col-sm-6">
-                    {% if (process.courtDecision|default(null)) is null %}
-                        <strong class="text-danger">{{ 'common.empty_field_value'|trans }}</strong>
-                        <a class="ml-3" href="{{ path('process_edit', {id: process.id, referer: app.request.pathinfo}) }}">{{ 'common.actions.edit'|trans }}</a>
-                    {% else %}
-                        <strong>{{ process.courtDecision ? 'court_decision.true'|trans : 'court_decision.false'|trans }}</strong>
-                    {% endif %}
+                    {{ form_widget(form.courtDecision) }}
                 </div>
             </div>
         </li>
