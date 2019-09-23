@@ -211,7 +211,7 @@ economy:
         economy_entries_account: R75 oplysninger
         economy_entries_income: Indkomst
         economy_entries_service: Ydelse
-        revenue_calculation: Klargør provenu beregning
+        revenue_calculation: Provenu beregning
     show:
         title: Økonomi
     table:
