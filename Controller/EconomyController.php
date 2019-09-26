@@ -16,7 +16,9 @@ use Kontrolgruppen\CoreBundle\Form\IncomeEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\RevenueServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\ServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Kontrolgruppen\CoreBundle\Entity\Process;
@@ -61,6 +63,7 @@ class EconomyController extends BaseController
         $parameters['economyEntriesAccount'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::ACCOUNT]);
 
         $parameters['revenueForms'] = [];
+        $revenueFormErrors = [];
         foreach ($parameters['economyEntriesService'] as $serviceEconomyEntry) {
             $revenueForm = $this->container->get('form.factory')->createNamedBuilder(
                 'revenue_entry_'.$serviceEconomyEntry->getId(),
@@ -74,7 +77,20 @@ class EconomyController extends BaseController
                 $this->getDoctrine()->getManager()->flush();
             }
 
+            if ($revenueForm->isSubmitted() && !$revenueForm->isValid()) {
+
+                $revenueFormErrors[] = $revenueForm->getName();
+            }
+
             $parameters['revenueForms'][] = $revenueForm->createView();
+        }
+
+        if (!empty($revenueFormErrors)) {
+
+            $response = new JsonResponse($revenueFormErrors);
+            $response->setStatusCode(400);
+
+            return $response;
         }
 
         return $this->render(

@@ -243,6 +243,8 @@ economy:
             repayment_amount: Tilbagebetalingskrav
             repayment_period: Periode
             period: Periode
+            save: Gem tabel
+            missing_period: Ugyldig periode
 economy_entry:
     edit:
         title: Rediger registrering
