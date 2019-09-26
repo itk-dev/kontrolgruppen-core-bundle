@@ -12,6 +12,7 @@
 
 .main-container {
     margin-top: $navbarHeight;
+    margin-bottom: calc( (#{$spacer} + #{$navbarHeight}) * -1 );
 }
 
 /*
