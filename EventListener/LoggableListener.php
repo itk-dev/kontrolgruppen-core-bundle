@@ -15,6 +15,7 @@ use Gedmo\Loggable\Entity\LogEntry;
 use Gedmo\Loggable\LoggableListener as BaseLoggableListener;
 use Gedmo\Loggable\Mapping\Event\LoggableAdapter;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
+use Kontrolgruppen\CoreBundle\Entity\Conclusion;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLoggableInterface;
@@ -113,6 +114,11 @@ class LoggableListener extends BaseLoggableListener
      */
     protected function createLogEntry($action, $object, LoggableAdapter $ea)
     {
+        // We dont want to log creation of Conclusions, as they only clutter the logs.
+        if (parent::ACTION_CREATE === $action && is_subclass_of($object, Conclusion::class)) {
+            return;
+        }
+
         $logEntry = parent::createLogEntry($action, $object, $ea);
 
         if (!empty($logEntry)) {
