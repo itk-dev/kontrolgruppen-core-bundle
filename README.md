@@ -114,7 +114,7 @@ and download metadata from your identity provider (IdP) to `saml/idp/idp.xml`.
 Rather than signing in via SAML, you can get a sign in url from the command line. Run
 
 ```sh
-bin/console bin/console kontrolgruppen:user:login --help
+bin/console kontrolgruppen:user:login --help
 ```
 
 for details.

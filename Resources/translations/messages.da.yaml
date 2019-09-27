@@ -291,6 +291,7 @@ economy_entry:
 journal_entry:
     actions:
         create: Opret nyt indlæg
+        hide: Skjul
     edit:
         title: Rediger journal
     form:

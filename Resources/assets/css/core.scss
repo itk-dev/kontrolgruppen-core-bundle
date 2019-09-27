@@ -12,6 +12,7 @@
 
 .main-container {
     margin-top: $navbarHeight;
+    margin-bottom: calc( (#{$spacer} + #{$navbarHeight}) * -1 );
 }
 
 /*
@@ -155,4 +156,23 @@ aside {
     border-left: 3px solid $primary;
     border-bottom: 1px solid $gray-100;
     border-top: 1px solid $gray-100;
+}
+
+/* Toggle btn add new journal entry */
+
+*[data-toggle="collapse"][aria-expanded="false"] {
+    .show {
+        display: block;
+    }
+    .hide {
+        display: none;
+    }
+}
+*[data-toggle="collapse"][aria-expanded="true"] {
+    .show {
+        display: none;
+    }
+    .hide {
+        display: block;
+    }
 }

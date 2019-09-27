@@ -6,8 +6,10 @@
     <div class="row">
         <div class="col-12">
             <h1 class="float-left">{{ 'journal_entry.index.title'|trans }}</h1>
-            <button data-toggle="collapse" data-target="#journalEntryNew" aria-expanded="false"
-                    class="btn btn-success btn-lg float-right">{{ 'journal_entry.actions.create'|trans }}</button>
+            <span data-toggle="collapse" data-target="#journalEntryNew" aria-expanded="false">
+                <button data-toggle="button" aria-pressed="false" autocomplete="off"
+                    class="btn btn-success btn-lg float-right"><span class="show">{{ 'journal_entry.actions.create'|trans }}</span><span class="hide">{{ 'journal_entry.actions.hide'|trans }}</span></button>
+            </span>
         </div>
         <div class="col-12 collapse" id="journalEntryNew">
             <div class="bg-light border-bottom p-3 mb-3">
@@ -16,6 +18,10 @@
                 <div class="form-group text-right">
                     <button class="btn btn-success pl-5 pr-5">{{ 'common.actions.save'|trans }}</button>
                 </div>
+
+
+
+
                 {{ form_end(journalEntryForm) }}
             </div>
         </div>
