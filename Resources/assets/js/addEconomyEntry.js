@@ -33,12 +33,10 @@ $(document).ready(function () {
     });
 
     $('#datepicker_period_save').click(function () {
-
         let periodFrom = $('#service_economy_entry_periodFrom');
         let periodTo = $('#service_economy_entry_periodTo');
 
         if (periodFrom.val() && periodTo.val()) {
-
             $('#service_economy_entry_datepicker').text(periodFrom.val() + ' - ' + periodTo.val());
 
             $('#service_economy_entry_datepicker_modal').modal('toggle');
