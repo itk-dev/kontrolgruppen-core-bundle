@@ -16,7 +16,7 @@ $(document).ready(function () {
             inline: true,
             format: 'L',
             useCurrent: false,
-            defaultDate: false
+            defaultDate: false,
         });
 
         $('#period-modal-to').datetimepicker({
@@ -47,7 +47,7 @@ $(document).ready(function () {
     });
 
     $('#period-modal-from').on('change.datetimepicker', function (event) {
-        $('#period-modal-to').datetimepicker('date', event.date.add('1', 'year'));
+        //$('#period-modal-to').datetimepicker('date', event.date.add('1', 'year'));
     });
 
     $('#save-revenue-calculation-button').on('click', function(event) {
