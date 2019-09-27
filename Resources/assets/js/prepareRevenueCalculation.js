@@ -46,10 +46,6 @@ $(document).ready(function () {
         $('#period-modal-to').datetimepicker('destroy');
     });
 
-    $('#period-modal-from').on('change.datetimepicker', function (event) {
-        //$('#period-modal-to').datetimepicker('date', event.date.add('1', 'year'));
-    });
-
     $('#save-revenue-calculation-button').on('click', function(event) {
 
         let dirtyForms = new Map();
