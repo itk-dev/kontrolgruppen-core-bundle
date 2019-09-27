@@ -32,7 +32,7 @@ class RevenueServiceEconomyEntryType extends AbstractType
                 'label' => false,
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'dd.MM.yyyy',
+                'format' => 'MM.yyyy',
                 'required' => false,
                 'attr' => [
                     'class' => 'd-none future-savings-period-from',
@@ -42,7 +42,7 @@ class RevenueServiceEconomyEntryType extends AbstractType
                 'label' => false,
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'dd.MM.yyyy',
+                'format' => 'MM.yyyy',
                 'required' => false,
                 'attr' => [
                     'class' => 'd-none future-savings-period-to',
@@ -56,7 +56,7 @@ class RevenueServiceEconomyEntryType extends AbstractType
                 'label' => false,
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'dd.MM.yyyy',
+                'format' => 'MM.yyyy',
                 'required' => false,
                 'attr' => [
                     'class' => 'd-none repayment-period-from',
@@ -66,7 +66,7 @@ class RevenueServiceEconomyEntryType extends AbstractType
                 'label' => false,
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'dd.MM.yyyy',
+                'format' => 'MM.yyyy',
                 'required' => false,
                 'attr' => [
                     'class' => 'd-none repayment-period-to',

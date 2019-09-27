@@ -14,14 +14,14 @@ $(document).ready(function () {
 
         $('#period-modal-from').datetimepicker({
             inline: true,
-            format: 'L',
+            format: 'MM.YYYY',
             useCurrent: false,
             defaultDate: false,
         });
 
         $('#period-modal-to').datetimepicker({
             inline: true,
-            format: 'L',
+            format: 'MM.YYYY',
             useCurrent: false,
             defaultDate: false
         });
