@@ -18,7 +18,6 @@ use Kontrolgruppen\CoreBundle\Form\ServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Kontrolgruppen\CoreBundle\Entity\Process;
@@ -78,7 +77,6 @@ class EconomyController extends BaseController
             }
 
             if ($revenueForm->isSubmitted() && !$revenueForm->isValid()) {
-
                 $revenueFormErrors[] = $revenueForm->getName();
             }
 
@@ -86,7 +84,6 @@ class EconomyController extends BaseController
         }
 
         if (!empty($revenueFormErrors)) {
-
             $response = new JsonResponse($revenueFormErrors);
             $response->setStatusCode(400);
 
