@@ -289,7 +289,9 @@ economy_entry:
 journal_entry:
     actions:
         create: Opret nyt indlæg
+        edit: Rediger indlæg
         hide: Skjul
+        show: Vis indlæg
     edit:
         title: Rediger journal
     form:

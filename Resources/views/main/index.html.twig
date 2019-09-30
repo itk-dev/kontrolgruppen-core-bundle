@@ -62,7 +62,7 @@
                     </li>
 
                     <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
-                        <a class="btn {% if activeUserReminders|length > 0 %}btn-warning{% else %}btn-secondary{% endif %} btn-sm btn-block"
+                        <a class="btn {% if activeUserReminders|length > 0 %}btn-warning{% else %}btn-secondary{% endif %} btn-sm btn-block " data-toggle="tooltip" title="{{ 'dashboard.reminders.title'|trans }}"
                            href="{{ path('user_reminder_index') }}" role="button">
                             <i class="fas {{ iconClass('reminder') }} mr-2"></i><strong>{{ 'navigation.main.reminders.number_of_reminders'|trans({'%numberOfReminders%': activeUserReminders}) }}</strong>
                         </a>
