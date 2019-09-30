@@ -663,9 +663,7 @@ process_report:
         economy:
             title: Økonomi
             account:
-                title: Konti
-            arrear:
-                title: Restance
+                title: R75-oplysninger
             service:
                 title: Ydelse
                 service: Ydelse
@@ -679,6 +677,13 @@ process_report:
                 account_number: Kontonummer
                 date: Dato
                 amount: Beløb
+                account: Konto
+            income:
+                title: Indkomst
+                type: Type
+                period: Periode
+                amount: Beløb
+                amount_period: Beløbsinterval
         conclusion:
             title: Konklusion
             base:
