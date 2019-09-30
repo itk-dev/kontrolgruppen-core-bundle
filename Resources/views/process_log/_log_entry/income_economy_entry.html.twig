@@ -1,0 +1,12 @@
+<ul class="list-group">
+    {% if amount is defined %}
+        <li class="list-group-item">
+            {{ 'process_log.revision.table.log_entry.income_economy.amount'|trans }}: {{ amount|localizedcurrency('DKK') }}
+        </li>
+    {% endif %}
+    {% if type is defined %}
+        <li class="list-group-item">
+            {{ 'process_log.revision.table.log_entry.income_economy.type'|trans }}: {{ ('process_log.revision.table.log_entry.income_economy_entry.' ~ type|lower)|trans }}
+        </li>
+    {% endif %}
+</ul>

@@ -501,6 +501,7 @@ process_log:
                 client: Klient
                 service_economy_entry: Ydelse registrering
                 base_economy_entry: Konto registrering
+                income_economy_entry: Indkomst registrering
             log_entry:
                 type: Type
                 process:
@@ -555,6 +556,12 @@ process_log:
                     date: Dato
                     arrear: Restance
                     account: Konto
+                income_economy:
+                    amount: Beløb
+                    type: Type
+                    income: Indkomst
+                income_economy_entry:
+                    income: Indkomst
 
 process_status:
     edit:
