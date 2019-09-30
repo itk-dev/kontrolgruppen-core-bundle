@@ -49,7 +49,7 @@ class EconomyEntryController extends BaseController
     {
         if ($economyEntry instanceof ServiceEconomyEntry) {
             $form = $this->createForm(ServiceEconomyEntryType::class, $economyEntry);
-        } else if ($economyEntry instanceof IncomeEconomyEntry) {
+        } elseif ($economyEntry instanceof IncomeEconomyEntry) {
             $form = $this->createForm(IncomeEconomyEntryType::class, $economyEntry);
         } else {
             $form = $this->createForm(BaseEconomyEntryType::class, $economyEntry);
