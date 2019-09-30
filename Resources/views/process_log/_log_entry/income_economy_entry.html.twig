@@ -9,4 +9,19 @@
             {{ 'process_log.revision.table.log_entry.income_economy.type'|trans }}: {{ ('process_log.revision.table.log_entry.income_economy_entry.' ~ type|lower)|trans }}
         </li>
     {% endif %}
+    {% if amountPeriod is defined %}
+        <li class="list-group-item">
+            {{ 'process_log.revision.table.log_entry.service_economy_entry.amount_period'|trans }}: {{ enumTranslation(amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}
+        </li>
+    {% endif %}
+    {% if periodFrom is defined %}
+        <li class="list-group-item">
+            {{ 'process_log.revision.table.log_entry.service_economy_entry.period_from'|trans }}: {{ periodFrom ? periodFrom|date('d-m-Y h:m') }}
+        </li>
+    {% endif %}
+    {% if periodTo is defined %}
+        <li class="list-group-item">
+            {{ 'process_log.revision.table.log_entry.service_economy_entry.period_to'|trans }}: {{ periodTo ? periodTo|date('d-m-Y h:m') }}
+        </li>
+    {% endif %}
 </ul>
