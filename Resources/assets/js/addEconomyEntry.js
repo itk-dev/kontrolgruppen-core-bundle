@@ -33,13 +33,22 @@ $(document).ready(function () {
     });
 
     $('#datepicker_period_save').click(function () {
-        let periodFrom = $('#service_economy_entry_periodFrom');
-        let periodTo = $('#service_economy_entry_periodTo');
+        let serviceEconomyPeriodFrom = $('#service_economy_entry_periodFrom');
+        let serviceEconomyPeriodTo = $('#service_economy_entry_periodTo');
 
-        if (periodFrom.val() && periodTo.val()) {
-            $('#service_economy_entry_datepicker').text(periodFrom.val() + ' - ' + periodTo.val());
+        if (serviceEconomyPeriodFrom.val() && serviceEconomyPeriodTo.val()) {
+            $('#service_economy_entry_datepicker').text(serviceEconomyPeriodFrom.val() + ' - ' + serviceEconomyPeriodTo.val());
 
             $('#service_economy_entry_datepicker_modal').modal('toggle');
+        }
+
+        let incomeEconomyPeriodFrom = $('#income_economy_entry_periodFrom');
+        let incomeEconomyPeriodTo = $('#income_economy_entry_periodTo');
+
+        if (incomeEconomyPeriodFrom.val() && incomeEconomyPeriodTo.val()) {
+            $('#income_economy_entry_datepicker').text(incomeEconomyPeriodFrom.val() + ' - ' + incomeEconomyPeriodTo.val());
+
+            $('#income_economy_entry_datepicker_modal').modal('toggle');
         }
     });
 });
