@@ -433,6 +433,7 @@ process:
         process_type: Sagstype
         service: Ydelse
         update: Gem
+        status: Status
     index:
         title: Sager
     menu_title: Sager
@@ -469,6 +470,10 @@ process:
             show_all_types: Alle sagstyper
             show_all_status: Alle sagsstatusser
             show_all_case_worker: Alle sagsbehandlere
+            status:
+                open: Åbne sager
+                completed: Afsluttet sager
+                show_all: Alle sager
     tooltip: Liste med alle sager
     btns:
         create_new: Opret ny sag
