@@ -1,7 +1,8 @@
 <table>
     <thead>
         <tr>
-            <th>{{ 'process_report.report.economy.base.text'|trans }}</th>
+            <th>{{ 'process_report.report.economy.base.account'|trans }}</th>
+            <th>{{ 'process_report.report.economy.base.account_number'|trans }}</th>
             <th>{{ 'process_report.report.economy.base.date'|trans }}</th>
             <th>{{ 'process_report.report.economy.base.amount'|trans }}</th>
         </tr>
@@ -9,7 +10,8 @@
     <tbody>
         {% for economyEntry in economyEntries %}
         <tr>
-            <td>{{ economyEntry.text }}</td>
+            <td>{{ economyEntry.account.name }}</td>
+            <td>{{ economyEntry.accountNumber }}</td>
             <td>{{ economyEntry.date|localizeddate('short', 'none') }}</td>
             <td>{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
         </tr>

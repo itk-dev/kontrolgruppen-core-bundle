@@ -63,9 +63,9 @@ class ReportService
                 'process' => $process,
                 'type' => EconomyEntryEnumType::ACCOUNT,
             ]),
-            'arrear' => $this->economyEntryRepository->findBy([
+            'income' => $this->economyEntryRepository->findBy([
                 'process' => $process,
-                'type' => EconomyEntryEnumType::ARREAR,
+                'type' => EconomyEntryEnumType::INCOME,
             ]),
         ];
 
