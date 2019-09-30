@@ -102,17 +102,17 @@ class ProcessFilterType extends AbstractType
             'label_attr' => ['class' => 'sr-only'],
             'attr' => ['class' => 'form-control-sm'],
             'choice_translation_domain' => false,
-            'apply_filter' => function(QueryInterface $filterQuery, $field, $values) {
+            'apply_filter' => function (QueryInterface $filterQuery, $field, $values) {
                 if (empty($values['value'])) {
                     return null;
                 }
 
                 $expression = $filterQuery->getExpr();
 
-                return ($values['value'] == 'open')
+                return ('open' === $values['value'])
                     ? $filterQuery->createCondition($expression->isNull($field))
                     : $filterQuery->createCondition($expression->isNotNull($field));
-            }
+            },
         ]);
     }
 
