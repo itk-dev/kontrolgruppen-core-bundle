@@ -160,7 +160,7 @@ aside {
 
 /* Toggle btn add new journal entry */
 
-*[data-toggle="collapse"][aria-expanded="false"] {
+*[data-toggle="button"][aria-pressed="false"] {
     .show {
         display: block;
     }
@@ -168,7 +168,7 @@ aside {
         display: none;
     }
 }
-*[data-toggle="collapse"][aria-expanded="true"] {
+*[data-toggle="button"][aria-pressed="true"] {
     .show {
         display: none;
     }
