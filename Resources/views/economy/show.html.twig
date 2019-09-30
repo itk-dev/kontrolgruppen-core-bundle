@@ -6,8 +6,10 @@
     <div class="row">
         <div class="col-12">
             <h1 class="float-left">{{ 'economy.show.title'|trans }}</h1>
-            <button data-toggle="collapse" data-target="#economyEntryNew" aria-expanded="{{ collapse_economy_entry_form }}"
-                    class="btn btn-success btn-lg float-right">{{ 'economy.actions.create'|trans }}</button>
+            <span data-toggle="collapse" data-target="#economyEntryNew" aria-expanded="{{ collapse_economy_entry_form ? 'false' : 'true' }}">
+                <button data-toggle="button" aria-pressed="{{ collapse_economy_entry_form ? 'false' : 'true' }}" autocomplete="off"
+                    class="btn btn-success btn-lg float-right"><span class="show">{{ 'economy.actions.create'|trans }}</span><span class="hide">{{ 'journal_entry.actions.hide'|trans }}</span></button>
+            </span>
         </div>
         <div class="col-12 collapse {{ collapse_economy_entry_form ? '' : 'show' }}" id="economyEntryNew">
             <div class="bg-light border-bottom p-3 mb-3">
