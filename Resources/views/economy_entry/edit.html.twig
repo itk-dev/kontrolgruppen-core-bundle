@@ -14,19 +14,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.js-itkdev-monthpicker').monthpicker($('.js-monthpicker-from'), $('.js-monthpicker-to'), {
-                headline: "{{ 'economy_entry.form.service.monthpicker_headline'|trans }}",
-                applyButtonText: "{{ 'economy_entry.form.service.monthpicker_applybutton_text'|trans }}",
-                cancelButtonText: "{{ 'economy_entry.form.service.monthpicker_cancelbutton_text'|trans }}"
-            });
-        });
-
-        // Apply datetimepicker to all js-datepicker elements.
-        $('.js-datepicker').datetimepicker({
-            format: 'DD/MM YYYY'
-        });
-    </script>
+    {{ encore_entry_script_tags('addEconomyEntry') }}
 {% endblock %}

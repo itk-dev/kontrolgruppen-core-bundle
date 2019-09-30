@@ -16,6 +16,10 @@ base_economy_entry:
     form:
         update: Gem
 
+income_economy_entry:
+    form:
+        update: Gem
+
 channel:
     edit:
         title: Rediger kanal

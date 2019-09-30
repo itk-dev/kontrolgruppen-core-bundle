@@ -33,20 +33,20 @@ $(document).ready(function () {
     });
 
     $('#datepicker_period_save').click(function () {
-        if ($('#service_economy_entry_periodFrom').val()) {
-            let from = $('#service_economy_entry_periodFrom').val();
-            let to = $('#service_economy_entry_periodTo').val();
+        let serviceEconomyPeriodFrom = $('#service_economy_entry_periodFrom');
+        let serviceEconomyPeriodTo = $('#service_economy_entry_periodTo');
 
-            $('#service_economy_entry_datepicker').text(from + ' - ' + to);
+        if (serviceEconomyPeriodFrom.val() && serviceEconomyPeriodTo.val()) {
+            $('#service_economy_entry_datepicker').text(serviceEconomyPeriodFrom.val() + ' - ' + serviceEconomyPeriodTo.val());
 
             $('#service_economy_entry_datepicker_modal').modal('toggle');
         }
 
-        if ($('#income_economy_entry_periodFrom').val()) {
-            let from = $('#income_economy_entry_periodFrom').val();
-            let to = $('#income_economy_entry_periodTo').val();
+        let incomeEconomyPeriodFrom = $('#income_economy_entry_periodFrom');
+        let incomeEconomyPeriodTo = $('#income_economy_entry_periodTo');
 
-            $('#income_economy_entry_datepicker').text(from + ' - ' + to);
+        if (incomeEconomyPeriodFrom.val() && incomeEconomyPeriodTo.val()) {
+            $('#income_economy_entry_datepicker').text(incomeEconomyPeriodFrom.val() + ' - ' + incomeEconomyPeriodTo.val());
 
             $('#income_economy_entry_datepicker_modal').modal('toggle');
         }
