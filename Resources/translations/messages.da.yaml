@@ -352,6 +352,7 @@ global_nav:
         profile: Profil
         users: Brugere
         admin: Indstillinger
+        bi: Business Intelligence
 
     tooltip:
         dashboard: Få et hurtigt sagsoverblik
@@ -359,6 +360,7 @@ global_nav:
         profile: Dine profil informationer
         users: Viser alle brugere på systemet
         admin: Se og administre system indstillinger
+        bi: BI Exports
 
 menu:
     menu_title:
