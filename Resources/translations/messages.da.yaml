@@ -393,8 +393,10 @@ navigation:
 
 process:
     actions:
+        label:
         reminders: Påmindelser
         journal_quickview: Senest i journal
+
     complete:
         cancel: Fortryd afslutning
         case_worker: Sagsbehandler
