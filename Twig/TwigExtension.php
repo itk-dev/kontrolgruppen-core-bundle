@@ -153,6 +153,8 @@ class TwigExtension extends AbstractExtension
                 return 'fa-user-circle';
             case 'save':
                 return 'fa-save';
+            case 'bi':
+                return 'fa-chart-pie';
             default:
                 return '';
         }
