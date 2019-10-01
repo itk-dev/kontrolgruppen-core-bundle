@@ -12,7 +12,11 @@ namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+/**
+ * @UniqueEntity("name")
+ */
 abstract class AbstractTaxonomy extends AbstractEntity
 {
     /**

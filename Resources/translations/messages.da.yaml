@@ -1,9 +1,22 @@
+activity:
+    event:
+        process_created: Sag oprettet
+        process_completed: Sag afsluttet
+
 admin:
     index:
         title: System indstillinger
         lead: Rediger og tilpas systemets indstillinger.
 
 base_conclusion:
+    form:
+        update: Gem
+
+base_economy_entry:
+    form:
+        update: Gem
+
+income_economy_entry:
     form:
         update: Gem
 
@@ -26,37 +39,77 @@ channel:
     btns:
         create_new: Opret ny kanal
 
+reason:
+    edit:
+        title: Rediger årsag
+    form:
+        name: Navn
+        update: Gem
+    index:
+        title: Årsager
+    menu_title: Årsager
+    new:
+        title: Opret årsag
+    show:
+        title: Årsag
+    table:
+        id: ID
+        name: Navn
+    btns:
+        create_new: Opret ny årsag
+
 client:
     edit:
         title: Rediger klient
     form:
         address: Adresse
-        car_registration_number: Bils registreringsnummer
+        car:
+            registration_number: Registreringsnummer
+            shared_ownership: Fællesejet
+            notes: Noter
+            add: Tilføj bil
+            remove: Fjern bil
+        cars: Biler
         city: By
         cpr: CPR nummer
         first_name: Fornavn
+        has_drivers_license: Har kørekort
+        has_car: Har bil
         id: ID
         last_name: Efternavn
+        employed: Ansat
         number_of_children: Antal børn
         postal_code: Postnummer
+        receives_public_aid: Offentlig forsørgelse
         telephone: Telefon
         update: Gem
+        has_own_company: Egen virksomhed
     show:
         title: Klient
     table:
         address: Adresse
-        car_registration_number: Bils registreringsnummer
+        car:
+            shared_ownership: Fællesejet
+        cars: Biler
         city: By
         cpr: CPR nummer
         first_name: Fornavn
         id: ID
         last_name: Efternavn
+        employed: Ansat
         number_of_children: Antal børn
         postal_code: Postnummer
+        receives_public_aid: Offentlig forsørgelse
         telephone: Telefon
-
+        has_own_company: Egen virksomhed
+    sections:
+        generel_info: Generel information
+        employment: Ansættelsesforhold
+        transportation: Transport
 common:
     actions:
+        back: Gå tilbage
+        close: Luk
         create: Opret ny
         confirm:
             delete: Er du sikker på at du vil slette dette?
@@ -68,17 +121,16 @@ common:
         done: Udført
     back_to_list: Tilbage til liste
     boolean:
-        'true': Ja
-        'false': Nej
+        'null': ''
+        'True': Sandt
+        'False': Falsk
+        'true': sandt
+        'false': falsk
+        Yes: Ja
+        No: Nej
+        yes: ja
+        no: nej
     choice_all: Alle
-    day:
-        monday: Mandag
-        tuesday: Tirsdag
-        wednesday: Onsdag
-        thursday: Torsdag
-        friday: Fredag
-        saturday: Lørdag
-        sunday: Søndag
     enum:
         date_interval:
             this_week: Denne uge
@@ -88,7 +140,18 @@ common:
         journal_entry:
             internal_note: Internt notat
             note: Notat
-    no_records_found: Ingen indgange fundet
+        economy_entry:
+            service: Ydelse
+            account: Konti
+            arrear: Restance
+            income: Indkomst
+        economy_entry_amount_period:
+            pr_month: pr. måned
+            pr_3_month: pr. 3. måned
+            pr_6_month: pr. halvår
+            pr_year: pr. år
+    no_records_found: Ingen forekomster endnu
+    no_sensitive_information_warning: KUN DEMO - Indtast ingen personfølsomme data
     table:
         actions: Handlinger
         created_at: Oprettet
@@ -97,6 +160,8 @@ common:
         updated_by: Opdateret af
         by: af
     title: Kontrolgruppen
+    loading: Henter data ...
+    empty_field_value: Feltet er ikke udfyldt
 
 conclusion:
     edit:
@@ -119,12 +184,17 @@ conclusion:
         base: Basal
         weighted: Argumenter for/imod
 
+court_decision:
+    'true': Medhold
+    'false': Afvist
+
 dashboard:
     index:
         title: Dashboard
     menu_title: Dashboard
     tooltip: 'Din oversigt'
     my_processes:
+        limit: Antal synlige sager
         title: Mine sager
     not_assigned:
         title: Ikke tildelte sager
@@ -136,10 +206,96 @@ dashboard:
         label: Kommende påmindelser
     latest_activity:
         title: Seneste aktivitet
+        title_short: Aktivitet
+
+economy:
+    actions:
+        create: Opret ny registrering
+    headline:
+        economy_entries_account: R75 oplysninger
+        economy_entries_income: Indkomst
+        economy_entries_service: Ydelse
+        revenue_calculation: Klargør provenu beregning
+    show:
+        title: Økonomi
+    table:
+        base:
+            amount: Beløb
+            date: Dato
+            account_number: Kontonummer
+            type: Type
+            account: Konto
+        service:
+            amount: Beløb
+            amount_period: Beløbsinterval
+            period: Periode
+            period_from: Fra
+            period_to: Til
+            repayment_amount: Tilbagebetalingskrav
+            service: Ydelse
+        income:
+            amount: Beløb
+            amount_period: Beløbsinterval
+            period: Periode
+            period_from: Fra
+            period_to: Til
+            income_type: Indkomsttype
+        revenue:
+            service: Ydelse
+            future_savings_amount: Fremtidig besparelse (pr. år)
+            future_savings_period: Periode
+            repayment_amount: Tilbagebetalingskrav
+            repayment_period: Periode
+            period: Periode
+economy_entry:
+    edit:
+        title: Rediger registrering
+    form:
+        base:
+            amount: Beløb
+            amount_help: Vælg beløb for registrering
+            date: Dato
+            date_help: Vælg en dato for registreringen
+            account_number: Kontonummer
+            account_number_help: Kontonummer for konto
+            type: Type
+            type_help: Vælg registreringstype
+            account: Konto
+            account_help: Vælg konto beløb er registreret på
+        service:
+            amount: Beløb
+            amount_help: Vælg beløb for registrering
+            amount_period: Beløbsinterval
+            amount_period_help: Vælg hvor ofte beløbet udbetales
+            monthpicker: Periode (Valgfri)
+            monthpicker_help: Vælg hvilken periode registreringen gælder for
+            monthpicker_cancelbutton_text: Annullér
+            monthpicker_applybutton_text: Vælg
+            monthpicker_headline: Vælg periode
+            period_from: Fra
+            period_to: Til
+            service: Ydelse
+            service_help: Vælg hvilken ydelse registreringen gælder for
+            repayment_amount: Tilbagebetalingskrav
+            repayment_amount_help: Skriv det samlede tilbagebetalingskrav for registreringen
+        income:
+            income_type: Indkomsttype
+            income_type_help: Vælg hvilken indkomsttype registreringen gælder for
+            amount: Beløb
+            amount_help: Vælg beløb for registrering
+            amount_period: Beløbsinterval
+            amount_period_help: Vælg hvor ofte beløbet udbetales
+            monthpicker: Periode (Valgfri)
+            monthpicker_help: Vælg hvilken periode registreringen gælder for
+        type: Type
+        type_help: Vælg hvilken type registrering du vil oprette
 
 journal_entry:
     actions:
         create: Opret nyt indlæg
+        edit: Rediger indlæg
+        hide: Skjul
+        show: Vis indlæg
     edit:
         title: Rediger journal
     form:
@@ -151,6 +307,25 @@ journal_entry:
         title: Journal
     new:
         title: Opret nyt journalindlæg
+    new_process_status: Ny status
+    process_status_changed: Sagsstatus ændret
+    revision:
+        action: Hændelse
+        actions:
+            revisions: Vis rettelser
+        action_type:
+            create: Oprettet
+            update: Ændret
+        change_key:
+            body: Tekst
+            title: Overskrift
+            type: Type
+        headline: Hændelseslog
+        table:
+            action: Hændelse
+            date: Dato
+            change_key: Felt
+            change: Ændring
     show:
         title: Journal
     table:
@@ -163,6 +338,7 @@ journal_entry:
             sort_label: Sortering
             sort_desc: Nyeste først
             sort_asc: Ældste først
+            only_status_label: Vis kun sagsstatus ændringer
 journal_quickview:
     title: Seneste indlæg i journal
     actions:
@@ -176,6 +352,7 @@ global_nav:
         profile: Profil
         users: Brugere
         admin: Indstillinger
+        bi: Business Intelligence
 
     tooltip:
         dashboard: Få et hurtigt sagsoverblik
@@ -183,12 +360,16 @@ global_nav:
         profile: Dine profil informationer
         users: Viser alle brugere på systemet
         admin: Se og administre system indstillinger
+        bi: BI Exports
 
 menu:
     menu_title:
+        reason: Årsager
         channel: Kanaler
         client: Klient
         conclusion: Konklusion
+        economy: Økonomi
+        export: Rapporter
         journal: Journal
         process_number: 'Sag: %processNumber%'
         process_show: Sagsopsummering
@@ -196,7 +377,12 @@ menu:
         process_type: Sagstyper
         quick_link: Genveje
         reminder: Påmindelser
+        revenue: Provenu
         service: Ydelser
+        log: Log
+        report: Rapport
+        account: Konti
+        income_type: Indkomsttype
 
 navigation:
     main:
@@ -209,21 +395,49 @@ navigation:
 
 process:
     actions:
+        label:
         reminders: Påmindelser
         journal_quickview: Senest i journal
+
+    complete:
+        cancel: Fortryd afslutning
+        case_worker: Sagsbehandler
+        complete: Afslut sag
+        confirm: Er du sikker på at du vil afslutte sagen?
+        court_decision: Rettens afgørelse
+        police_report: Sagen er politianmeldt
+        processing_time: Sagens behandlingstid
+        processing_time_value: 'En dag|%days% dage'
+        # # @see https://symfony.com/doc/current/translation/message_format.html#pluralization
+        # processing_time_value: >
+        #   {days, plural,
+        #       =0 {Nul dage}
+        #       one {én dag}
+        #       other {%days% dage}
+        #   }
+        status: Status ved sagens afslutning
+        submit: Godkend afslutning af sag
+        title: Afslut sag %case_number%
+        process_completed: Sag afsluttet
+    resume:
+        confirm: Er du sikker på at du vil genoptage sagen?
     edit:
         title: Rediger sag
     form:
         case_worker: Sagbehandler
+        reason: Årsag
         change_process_status:
             placeholder: Vælg sagsstatus
             save: Gem ny status
         channel: Kanal
         client_cpr: Klient CPR
+        court_decision: Rettens afgørelse
+        police_report: Er sagen politianmeldt?
         process_status: Sagsstatus
         process_type: Sagstype
         service: Ydelse
         update: Gem
+        status: Status
     index:
         title: Sager
     menu_title: Sager
@@ -237,16 +451,22 @@ process:
         case_number: Sagsnummer
         case_worker: Sagsbehandler
         channel: Kanal
+        reason: Årsag
         client_adress: Klient adresse
         client_cpr: Klient CPR
+        client_first_name: Fornavn
+        client_last_name: Efternavn
         client_name: Klient navn
         client_telephone: Klient telefonnummer
+        court_decision: Rettens afgørelse
         id: ID
         internal_note: Seneste interne notater
         journal: Journal
         note: Seneste notater
+        police_report: Er sagen politianmeldt?
         process_status: Status
         process_type: Type
+        processing_time: Sagens behandlingstid
         reminders: Påmindelser
         reminders_open: Vis påmindelser
         service: Ydelse
@@ -254,16 +474,117 @@ process:
             show_all_types: Alle sagstyper
             show_all_status: Alle sagsstatusser
             show_all_case_worker: Alle sagsbehandlere
+            status:
+                open: Åbne sager
+                completed: Afsluttet sager
+                show_all: Alle sager
     tooltip: Liste med alle sager
     btns:
         create_new: Opret ny sag
         create_report: Sagsrapport
+        complete: Afslut sag
+        resume: Genoptag sag
+    completed_message: Sagen er afsluttet og kan ikke længere redigeres
+    is_completed: Afsluttet?
+
+process_log:
+    index:
+        title: Ændringslog
+        export: Eksportér
+    revision:
+        headline: Ændringslog
+        action_type:
+            create: oprettet
+            read: vist
+            remove: slettet
+            update: ændret
+        table:
+            action: Hændelse
+            action_view: Vis detaljer
+            action_hide: Skjul detaljer
+            actions: Handlinger
+            date: Dato
+            change_key: Felt
+            change: Ændring
+            user: Bruger
+            object_types:
+                journal_entry: Journal
+                process: Sag
+                base_conclusion: Konklusion
+                weighted_conclusion: Konklusion
+                reminder: Påmindelse
+                client: Klient
+                service_economy_entry: Ydelse registrering
+                base_economy_entry: Konto registrering
+                income_economy_entry: Indkomst registrering
+            log_entry:
+                type: Type
+                process:
+                    case_number: Sagsnummer
+                    client_cpr: Klient CPR
+                    channel: Kanal
+                    service: Ydelse
+                    process_type: Type
+                    process_status: Status
+                    reason: Årsag
+                    police_report: Politianmeldt
+                    case_worker: Sagsbehandler
+                    completed_at: Afsluttet
+                client:
+                    first_name: Fornavn
+                    last_name: Efternavn
+                    address: Adresse
+                    postal_code: Postnummer
+                    city: By
+                    telephone: Telefon
+                    number_of_children: Antal børn
+                    car_registration_number: Bil registeringsnummer
+                    has_own_company: Egen virksomhed
+                    employed: Ansat
+                    receives_public_aid: Offentlig forsørgelse
+                journal_entry:
+                    title: Titel
+                    body: Tekst
+                    type: Type
+                base_conclusion:
+                    conclusion: Konklusion
+                weighted_conclusion:
+                    arguments_for: Argumenter for
+                    arguments_against: Argumenter imod
+                    conclusion: Konklusion
+                reminder:
+                    message: Besked
+                    date: Dato og tidspunkt
+                    finished: Afsluttet
+                service_economy_entry:
+                    amount: Beløb
+                    type: Type
+                    period_from: Fra
+                    period_to: Til
+                    amount_period: Beløbsinterval
+                    repayment_amount: Tilbagebetalingskrav
+                    service: Ydelse
+                base_economy_entry:
+                    amount: Beløb
+                    type: Type
+                    account_number: Kontonummer
+                    date: Dato
+                    arrear: Restance
+                    account: Konto
+                income_economy:
+                    amount: Beløb
+                    type: Type
+                    income: Indkomst
+                income_economy_entry:
+                    income: Indkomst
 
 process_status:
     edit:
         title: Rediger sagsstatus
     form:
         name: Navn
+        is_forward_to_another_authority: Videresendes til anden myndighed
+        is_forward_to_another_authority_help: Marker om denne status gør at sagen videresendes til anden myndighed
         process_types: Sagstyper
         update: Gem
         label: Vælg sagsstatus
@@ -279,19 +600,28 @@ process_status:
     table:
         id: ID
         name: Navn
+        is_forward_to_another_authority: Videresendes til anden myndighed
         process_types: Tilkoblede sagstyper
     select:
         label: Sagsstatus
     btns:
         create_new: Opret ny sagsstatus
 
+
 process_type:
     edit:
         title: Rediger sagstype
     form:
         conclusion_class: Konklusionstype
+        channels: Tilkoblede kanaler
+        hide_in_dashboard: Skjul på dashboard
         name: Navn
-        process_statuses: Sagsstatusser
+        process_statuses: Tilkoblede sagsstatusser
+        services: Tilkoblede ydelser
+        default_process_status: Standard sagsstatus
+        default_process_status_help: Hvis der ikke sættes en ny status for en ny sag af denne type, sættes sagens status automatisk til denne
+        default_process_status_on_empty_case_worker: Sagsstatus hvis der ikke vælges en sagsbehandler for en ny sag
+        default_process_status_on_empty_case_worker_help: Hvis der ikke vælges en sagsbehandler når en ny sag oprettes, sættes sagen automatisk til denne status
         update: Gem
     index:
         title: Sagstyper
@@ -302,12 +632,91 @@ process_type:
         title: Sagstype
     table:
         conclusion_class: Konklusionstype
+        channels: Tilkoblede kanaler
+        hide_in_dashboard: Skjul på dashboard
         id: ID
         name: Navn
         process_statuses: Tilkoblede sagsstatusser
+        services: Tilkoblede ydelser
     btns:
         create_new: Opret ny sagstype
 
+process_report:
+    index:
+        title: Sagsrapport
+    form:
+        submit: Hent rapport
+        choices:
+            placeholder: Valgmuligheder
+            internal_notes: Med interne notater
+            no_internal_notes: Uden interne notater
+            only_summary: Kun sagsopsummering
+    report:
+        title: Sagsrapport
+        summary:
+            process_case_number: Sagsnummer
+            process_created_at: Sag oprettet
+            process_updated_at: Sidst redigeret
+            process_completed_at: Sag afsluttet
+            process_created_by: Sag oprettet af
+            process_case_worker: Sagsbehandler
+            process_status: Status
+            process_type: Type
+            service: Ydelse
+            channel: Kanal
+        client:
+            title: Klientoplysninger
+            first_name: Fornavn
+            last_name: Efternavn
+            cpr: CPR
+            address: Adresse
+            postal_code: Postnummer
+            telephone: Telefon
+            number_of_children: Antal børn
+            employed: Ansat
+            has_own_company: Egen virksomhed
+            receives_public_aid: Offentlig forsørgelse
+            has_drivers_license: Har kørekort
+            has_car: Har bil
+        journal:
+            title: Journal
+        economy:
+            title: Økonomi
+            account:
+                title: R75-oplysninger
+            service:
+                title: Ydelse
+                service: Ydelse
+                amount: Beløb
+                period: Periode
+                period_from: Fra
+                period_to: Til
+                amount_period: Beløbsperiode
+                repayment_amount: Tilbagebetalingsbeløb
+            base:
+                account_number: Kontonummer
+                date: Dato
+                amount: Beløb
+                account: Konto
+            income:
+                title: Indkomst
+                type: Type
+                period: Periode
+                amount: Beløb
+                amount_period: Beløbsinterval
+        conclusion:
+            title: Konklusion
+            base:
+                conclusion: Konklusion
+            weighted:
+                conclusion: Konklusion
+                arguments_for: Argumenter for
+                arguments_against: Argumenter imod
+        car:
+            title: Biler
+            registration_number: Registreringsnummer
+            shared_owner_ship: Fællesejet
+            notes: Noter
 quick_link:
     edit:
         title: Rediger genvej
@@ -315,6 +724,8 @@ quick_link:
         name: Navn
         href: Link
         update: Gem
+        weight: Vægt
+        weight_help: Vægten bestemmer, hvor elementet placeres på listen over genveje. Lavere værdier kommer først.
     index:
         title: Genveje
     menu_title: Genveje
@@ -326,6 +737,7 @@ quick_link:
         href: Link
         id: ID
         name: Navn
+        weight: Vægt
     btns:
         create_new: Opret ny genvej
 
@@ -336,6 +748,7 @@ reminder:
         title: Rediger påmindelse
     form:
         date: Dato
+        date_help: Vælg hvornår påmindelsen skal aktiveres
         time: Tidspunkt
         finished: Afsluttet
         message: Besked
@@ -359,11 +772,50 @@ reminder:
     show:
         title: Påmindelse
 
+revenue:
+    calculate_button: Vis provenu
+    net_multiplier: Nettoprocent
+    subtitle: Tilbagebetalingskrav overfor klient
+    table:
+        repayment:
+            net_sum_title: Netto samlet tilbagebetalingskrav i kr.
+            sum_title: Samlet tilbagebetalingskrav i kr (KL).
+            no_records_found: Ingen tilbagebetalingskrav
+        future_savings:
+            net_sum_title: Netto fremadrettet besparelse i kr.
+            sum_title: Samlet fremadrettet besparelse i kr (KL).
+            no_records_found: Ingen fremadrettet besparelse
+        collective_net_sum:
+            title: Samlet nettoopgørelse
+    title: Provenu
+
+search:
+    headline: Søgning
+    loading_results: Søger ...
+    no_results_found: Søgning på %searchTerm% gav ingen resultater.
+    results_for: '%numberOfResults% resultater for søgning på: %searchTerm%'
+    table:
+        case_number: Sagsnummer
+        case_worker: Sagsbehandler
+        channel: Kanal
+        client_adress: Adresse
+        client_cpr: CPR
+        client_first_name: Fornavn
+        client_last_name: Efternavn
+        client_telephone: Telefon
+        process_status: Status
+        process_type: Type
+        reminders: Påmindelser
+        service: Ydelse
+    total_results: 'Antal resultater: %numberOfResults%.'
+
 service:
     edit:
         title: Rediger ydelse
     form:
         name: Navn
+        net_default_value: Netto standardværdi
+        process_types: Tilkoblede sagstyper
         update: Gem
     index:
         title: Ydelser
@@ -375,14 +827,92 @@ service:
     table:
         id: ID
         name: Navn
+        process_types: Tilkoblede sagstyper
     btns:
         create_new: Opret ny ydelse
+
+service_economy_entry:
+    form:
+        update: Gem
+
+sidebar:
+    client:
+        employment: Ansættelsesforhold
+        transport: Transport
+        cars: Biler
+        has_drivers_license: Har kørekort
+        has_own_company: Egen virksomhed
+        receives_public_aid: Offentlig forsørgelse
+        employed: Ansat
+        telephone: Telefonnummer
+        address: Adresse
+        cpr: CPR nummer
+        name: Navn
+        car_shared_ownership: Fælles ejet
 
 weighted_conclusion:
     form:
         update: Gem
 
-activity:
-    event:
-        process_created: Sag oprettet
-        process_completed: Sag afsluttet
+export:
+    show:
+        title: Vis rapport
+    index:
+        title: Eksportér rapport
+    name: Rapporter
+    date_period: Periode
+    run:
+        xlsx: Eksportér (XLSX)
+        csv: Eksportér (CSV)
+        html: Vis
+        pdf: Eksportér (PDF)
+
+prevent_cpr:
+    cpr_in_content: 'Indeholder følgende CPR-numre (fjern venligst): %list%'
+
+account:
+    edit:
+        title: Rediger konto
+    form:
+        name: Navn
+        update: Gem
+    index:
+        title: Konti
+    menu_title: Konti
+    new:
+        title: Opret konto
+    show:
+        title: Konto
+    table:
+        id: ID
+        name: Navn
+    btns:
+        create_new: Opret ny konto
+
+income_type:
+    edit:
+        title: Rediger indkomsttype
+    form:
+        name: Navn
+        update: Gem
+    index:
+        title: Indkomsttyper
+    menu_title: Indkomsttyper
+    new:
+        title: Opret indkomsttype
+    show:
+        title: Indkomsttype
+    table:
+        id: ID
+        name: Navn
+    btns:
+        create_new: Opret ny indkomsttype
+
+bi:
+    title: Business Intelligence™
+    export:
+        createdAt: Oprettet
+        report: Rapport
+    download_export: Hent
+    delete_export: Slet
+    delete_export_confirm: Bekræft sletning af rapport.

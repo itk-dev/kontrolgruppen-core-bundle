@@ -18,7 +18,7 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository")
  * @Gedmo\Loggable()
  */
-class JournalEntry extends AbstractEntity
+class JournalEntry extends AbstractEntity implements ProcessLoggableInterface
 {
     /**
      * @ORM\Column(type="string", length=255)
@@ -28,6 +28,7 @@ class JournalEntry extends AbstractEntity
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Gedmo\Versioned()
      */
     private $body;
 
@@ -40,6 +41,7 @@ class JournalEntry extends AbstractEntity
     /**
      * @ORM\Column(name="type", type="JournalEntryEnumType", nullable=false)
      * @DoctrineAssert\Enum(entity="Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType")
+     * @Gedmo\Versioned()
      */
     protected $type;
 

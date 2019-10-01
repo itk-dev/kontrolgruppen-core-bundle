@@ -6,8 +6,10 @@
     <div class="row">
         <div class="col-12">
             <h1 class="float-left">{{ 'journal_entry.index.title'|trans }}</h1>
-            <button data-toggle="collapse" data-target="#journalEntryNew" aria-expanded="false"
-                    class="btn btn-success btn-lg float-right">{{ 'journal_entry.actions.create'|trans }}</button>
+            <span data-toggle="collapse" data-target="#journalEntryNew" aria-expanded="false">
+                <button data-toggle="button" aria-pressed="false" autocomplete="off"
+                    class="btn btn-success btn-lg float-right"><span class="show">{{ 'journal_entry.actions.create'|trans }}</span><span class="hide">{{ 'journal_entry.actions.hide'|trans }}</span></button>
+            </span>
         </div>
         <div class="col-12 collapse" id="journalEntryNew">
             <div class="bg-light border-bottom p-3 mb-3">
@@ -16,6 +18,10 @@
                 <div class="form-group text-right">
                     <button class="btn btn-success pl-5 pr-5">{{ 'common.actions.save'|trans }}</button>
                 </div>
+
+
+
+
                 {{ form_end(journalEntryForm) }}
             </div>
         </div>
@@ -32,19 +38,27 @@
                     value="{{ sortDirection }}" {% if sortDirection == app.request.get('sort_direction') %} selected="selected"{% endif %}>{{ ('journal_entry.table.filter.sort_' ~ sortDirection)|trans }}</option>
             {% endfor %}
         </select>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="onlyStatusCheckbox" value="true" />
+            <label class="form-check-lab" for="onlyStatusCheckbox">{{ 'journal_entry.table.filter.only_status_label'|trans }}</label>
+        </div>
     </form>
 
-    {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list.html.twig' %}
+    {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list_with_logs.html.twig' %}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
 
-    <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/sortSubmit.js') }}"></script>
+    {{ encore_entry_script_tags('sortSubmit') }}
 
     <script type="text/javascript">
         $('#pagination-sort-select').on('change', function () {
             window.location.href = $(this).find('option:selected').attr('href');
         });
     </script>
+
+    {{ encore_entry_script_tags('journalRevisionToggle') }}
+    {{ encore_entry_script_tags('processStatusChangeToggle') }}
 {% endblock %}

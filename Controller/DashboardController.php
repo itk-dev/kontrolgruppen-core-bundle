@@ -13,6 +13,7 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Kontrolgruppen\CoreBundle\DBAL\Types\DateIntervalType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ReminderRepository;
+use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
@@ -27,7 +28,7 @@ class DashboardController extends BaseController
     /**
      * @Route("", name="dashboard_index")
      */
-    public function index(Request $request, ReminderRepository $reminderRepository, ProcessRepository $processRepository, PaginatorInterface $paginator, SessionInterface $session)
+    public function index(Request $request, ReminderRepository $reminderRepository, ProcessRepository $processRepository, PaginatorInterface $paginator, SessionInterface $session, ProcessManager $processManager)
     {
         $filterFormBuilder = $this->createFormBuilder();
         $filterFormBuilder->add('limit', ChoiceType::class, [
@@ -37,7 +38,9 @@ class DashboardController extends BaseController
                 '10' => 10,
                 '50' => 50,
             ],
+            'choice_translation_domain' => false,
             'label_attr' => ['class' => 'sr-only'],
+            'label' => 'dashboard.my_processes.limit',
         ]);
         $filterForm = $filterFormBuilder->getForm();
 
@@ -56,23 +59,35 @@ class DashboardController extends BaseController
             $filterForm->get('limit')->setData($limit);
         }
 
+        // Only find current user's processes.
         $qb->where('e.caseWorker = :caseWorker');
         $qb->setParameter(':caseWorker', $this->getUser());
         $qb->orderBy('e.id', 'DESC');
 
+        // Only find processes where the processType.hideInDashboard is not true.
+        $qb->leftJoin('e.processType', 'processType');
+        $qb->addSelect('partial processType.{id,name,hideInDashboard}');
+        $qb->andWhere(
+            $qb->expr()->orX(
+                $qb->expr()->isNull('processType.hideInDashboard'),
+                $qb->expr()->eq('processType.hideInDashboard', 'false')
+            )
+        );
+
         $query = $qb->getQuery();
 
+        $notVisitedProcesses = $processManager->getUsersUnvisitedProcesses($this->getUser());
+
+        $myProcesses = $processManager->markProcessesAsUnvisited(
+            $notVisitedProcesses,
+            $query->getResult()
+        );
+
         $pagination = $paginator->paginate(
-            $query,
+            $myProcesses,
             $request->query->get('page', 1),
             $limit
         );
-
-        $qb = $processRepository->createQueryBuilder('e');
-        $qb->select('count(e.id)');
-        $qb->where('e.caseWorker = :caseWorker');
-        $qb->setParameter(':caseWorker', $this->getUser());
-        $myProcessesLength = $qb->getQuery()->getSingleScalarResult();
 
         // Coming reminders form.
         $comingReminderForm = $this->createFormBuilder()->add('date_interval', ChoiceType::class, [
@@ -86,7 +101,7 @@ class DashboardController extends BaseController
             'myProcesses' => $pagination,
             'comingReminderForm' => $comingReminderForm->createView(),
             'myProcessesFilterForm' => $filterForm->createView(),
-            'myProcessesLength' => $myProcessesLength,
+            'notVisitedProcesses' => $notVisitedProcesses,
         ]);
     }
 }

@@ -11,3 +11,10 @@
 
     <a href="{{ path('process_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('processForm') }}
+    {{ encore_entry_script_tags('inputCPR') }}
+{% endblock %}

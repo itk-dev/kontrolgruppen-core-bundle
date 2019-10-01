@@ -26,4 +26,14 @@ class QuickLinkRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, QuickLink::class);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    {
+        $orderBy = null === $orderBy ? ['weight' => 'ASC'] : $orderBy;
+
+        return parent::findBy($criteria, $orderBy, $limit, $offset);
+    }
 }

@@ -1,6 +1,9 @@
-fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
-
 controllers:
     resource: "@KontrolgruppenCoreBundle/Controller"
     type: annotation
+
+cli_login:
+    path: /cli-login
+
+logout:
+    path: /logout

@@ -1,0 +1,11 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'account.new.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'account.new.title'|trans }}</h1>
+
+    {{ include('@KontrolgruppenCore/account/_form.html.twig') }}
+
+    <a href="{{ path('account_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+{% endblock %}

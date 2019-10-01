@@ -10,57 +10,58 @@
 
 namespace Kontrolgruppen\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ClientRepository")
+ * @Gedmo\Loggable()
  */
-class Client extends AbstractEntity
+class Client extends AbstractEntity implements ProcessLoggableInterface
 {
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $cpr;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Gedmo\Versioned()
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Gedmo\Versioned()
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Gedmo\Versioned()
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Gedmo\Versioned()
      */
     private $postalCode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Gedmo\Versioned()
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Gedmo\Versioned()
      */
     private $telephone;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Gedmo\Versioned()
      */
     private $numberOfChildren;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $carRegistrationNumber;
 
     /**
      * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="client", cascade={"persist", "remove"})
@@ -68,21 +69,47 @@ class Client extends AbstractEntity
      */
     private $process;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned()
+     */
+    private $receivesPublicAid;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned()
+     */
+    private $employed;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned()
+     */
+    private $hasOwnCompany;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $hasDriversLicense;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $hasCar;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Car", mappedBy="client", orphanRemoval=true, cascade={"persist", "remove"})
+     */
+    private $cars;
+
+    public function __construct()
+    {
+        $this->cars = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getCpr(): ?string
-    {
-        return $this->cpr;
-    }
-
-    public function setCpr(string $cpr): self
-    {
-        $this->cpr = $cpr;
-
-        return $this;
     }
 
     public function getFirstName(): ?string
@@ -169,18 +196,6 @@ class Client extends AbstractEntity
         return $this;
     }
 
-    public function getCarRegistrationNumber(): ?string
-    {
-        return $this->carRegistrationNumber;
-    }
-
-    public function setCarRegistrationNumber(?string $carRegistrationNumber): self
-    {
-        $this->carRegistrationNumber = $carRegistrationNumber;
-
-        return $this;
-    }
-
     public function getProcess(): ?Process
     {
         return $this->process;
@@ -189,6 +204,97 @@ class Client extends AbstractEntity
     public function setProcess(Process $process): self
     {
         $this->process = $process;
+
+        return $this;
+    }
+
+    public function getHasOwnCompany(): ?bool
+    {
+        return $this->hasOwnCompany;
+    }
+
+    public function setHasOwnCompany(?bool $hasOwnCompany): self
+    {
+        $this->hasOwnCompany = $hasOwnCompany;
+
+        return $this;
+    }
+
+    public function getReceivesPublicAid(): ?bool
+    {
+        return $this->receivesPublicAid;
+    }
+
+    public function setReceivesPublicAid(?bool $receivesPublicAid): self
+    {
+        $this->receivesPublicAid = $receivesPublicAid;
+
+        return $this;
+    }
+
+    public function getEmployed(): ?bool
+    {
+        return $this->employed;
+    }
+
+    public function setEmployed(?bool $employed): self
+    {
+        $this->employed = $employed;
+
+        return $this;
+    }
+
+    public function getHasDriversLicense(): ?bool
+    {
+        return $this->hasDriversLicense;
+    }
+
+    public function setHasDriversLicense(?bool $hasDriversLicense): self
+    {
+        $this->hasDriversLicense = $hasDriversLicense;
+
+        return $this;
+    }
+
+    public function getHasCar(): ?bool
+    {
+        return $this->hasCar;
+    }
+
+    public function setHasCar(?bool $hasCar): self
+    {
+        $this->hasCar = $hasCar;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Car[]
+     */
+    public function getCars(): Collection
+    {
+        return $this->cars;
+    }
+
+    public function addCar(Car $car): self
+    {
+        if (!$this->cars->contains($car)) {
+            $this->cars[] = $car;
+            $car->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCar(Car $car): self
+    {
+        if ($this->cars->contains($car)) {
+            $this->cars->removeElement($car);
+            // set the owning side to null (unless already changed)
+            if ($car->getClient() === $this) {
+                $car->setClient(null);
+            }
+        }
 
         return $this;
     }

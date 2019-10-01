@@ -5,5 +5,16 @@
 {% block content %}
     <h1>{{ 'client.edit.title'|trans }}</h1>
 
+    <div class="form-group">
+        <label for="client_process_clientCPR">{{ 'client.form.cpr'|trans }}</label>
+        <input type="text" id="client_process_clientCPR" disabled="disabled" value="{{ process.clientCPR }}" class="form-control">
+    </div>
+
     {{ include('@KontrolgruppenCore/client/_form.html.twig', {'button_label': 'Update'}) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('cars') }}
 {% endblock %}

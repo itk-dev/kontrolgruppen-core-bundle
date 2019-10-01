@@ -1,0 +1,24 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'income_type.show.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'income_type.show.title'|trans }}</h1>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-borderless thead-light">
+            <tbody>
+            <tr>
+                <th>{{ 'income_type.table.name'|trans }}</th>
+                <td>{{ incomeType.name }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ path('income_type_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+
+    <a href="{{ path('income_type_edit', {'id': incomeType.id}) }}" class="btn btn-primary float-right pr-5 pl-5">{{ 'common.actions.edit'|trans }}</a>
+
+    {{ include('@KontrolgruppenCore/income_type/_delete_form.html.twig') }}
+{% endblock %}

@@ -3,11 +3,13 @@
 {% block title %}{{ 'journal_entry.edit.title'|trans }}{% endblock %}
 
 {% block content %}
-    <h1>{{ 'journal_entry.edit.title'|trans }}</h1>
+  <h1>{{ 'journal_entry.edit.title'|trans }}</h1>
 
-    {{ include('@KontrolgruppenCore/journal_entry/_form.html.twig', {'button_label': 'Update'}) }}
+  {{ include('@KontrolgruppenCore/journal_entry/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('journal_entry_index', {'process': process.id}) }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+  <a href="{{ path('journal_entry_index', {'process': process.id}) }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
 
-    {{ include('@KontrolgruppenCore/journal_entry/_delete_form.html.twig') }}
+  {{ include('@KontrolgruppenCore/journal_entry/_delete_form.html.twig') }}
+
+  {% include '@KontrolgruppenCore/journal_entry/_log_entries.html.twig' %}
 {% endblock %}

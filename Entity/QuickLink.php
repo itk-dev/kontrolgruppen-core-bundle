@@ -24,6 +24,11 @@ class QuickLink extends AbstractTaxonomy
      */
     private $href;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $weight;
+
     public function getHref(): ?string
     {
         return $this->href;
@@ -32,6 +37,18 @@ class QuickLink extends AbstractTaxonomy
     public function setHref(string $href): self
     {
         $this->href = $href;
+
+        return $this;
+    }
+
+    public function getWeight(): ?int
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(?int $weight): self
+    {
+        $this->weight = $weight;
 
         return $this;
     }

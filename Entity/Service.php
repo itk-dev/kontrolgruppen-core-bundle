@@ -26,9 +26,26 @@ class Service extends AbstractTaxonomy
      */
     private $processes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessType", mappedBy="services")
+     */
+    private $processTypes;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $netDefaultValue;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\LockedNetValue", mappedBy="service")
+     */
+    private $lockedNetValues;
+
     public function __construct()
     {
         $this->processes = new ArrayCollection();
+        $this->processTypes = new ArrayCollection();
+        $this->lockedNetValues = new ArrayCollection();
     }
 
     /**
@@ -56,6 +73,77 @@ class Service extends AbstractTaxonomy
             // set the owning side to null (unless already changed)
             if ($process->getService() === $this) {
                 $process->setService(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProcessType[]
+     */
+    public function getProcessTypes(): Collection
+    {
+        return $this->processTypes;
+    }
+
+    public function addProcessType(ProcessType $processType): self
+    {
+        if (!$this->processTypes->contains($processType)) {
+            $this->processTypes[] = $processType;
+            $processType->addService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProcessType(ProcessType $processType): self
+    {
+        if ($this->processTypes->contains($processType)) {
+            $this->processTypes->removeElement($processType);
+            $processType->removeService($this);
+        }
+
+        return $this;
+    }
+
+    public function getNetDefaultValue(): ?float
+    {
+        return $this->netDefaultValue;
+    }
+
+    public function setNetDefaultValue(float $netDefaultValue): self
+    {
+        $this->netDefaultValue = $netDefaultValue;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|LockedNetValue[]
+     */
+    public function getLockedNetValues(): Collection
+    {
+        return $this->lockedNetValues;
+    }
+
+    public function addLockedNetValue(LockedNetValue $lockedNetValue): self
+    {
+        if (!$this->lockedNetValues->contains($lockedNetValue)) {
+            $this->lockedNetValues[] = $lockedNetValue;
+            $lockedNetValue->setService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLockedNetValue(LockedNetValue $lockedNetValue): self
+    {
+        if ($this->lockedNetValues->contains($lockedNetValue)) {
+            $this->lockedNetValues->removeElement($lockedNetValue);
+            // set the owning side to null (unless already changed)
+            if ($lockedNetValue->getService() === $this) {
+                $lockedNetValue->setService(null);
             }
         }
 

@@ -1,4 +1,4 @@
-{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
 
 {% block title %}{{ 'process.new.title'|trans }}{% endblock %}
 
@@ -14,3 +14,14 @@
     </div>
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+
+    {# Set variable that triggers that services are loaded for the currently selected process type #}
+    <script type="text/javascript">
+        window.PROCESS_FORM_JAVASCRIPT_RUN_FIRST = true;
+    </script>
+    {{ encore_entry_script_tags('processForm') }}
+
+    {{ encore_entry_script_tags('inputCPR') }}
+{% endblock %}

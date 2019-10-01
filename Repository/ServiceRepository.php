@@ -10,6 +10,8 @@
 
 namespace Kontrolgruppen\CoreBundle\Repository;
 
+use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessType;
 use Kontrolgruppen\CoreBundle\Entity\Service;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -25,5 +27,26 @@ class ServiceRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Service::class);
+    }
+
+    public function getByProcessType(ProcessType $processType)
+    {
+        $qb = $this->createQueryBuilder('service', 'service.id')
+            ->where(':processType MEMBER OF service.processTypes')
+            ->setParameter('processType', $processType)
+            ->getQuery();
+
+        return $qb->getResult();
+    }
+
+    public function getByProcess(Process $process)
+    {
+        $qb = $this->createQueryBuilder('service', 'service.id')
+            ->join('\Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry', 'e', 'WITH', 'e.service = service')
+            ->where('e.process = :process')
+            ->setParameter('process', $process)
+            ->getQuery();
+
+        return $qb->getResult();
     }
 }

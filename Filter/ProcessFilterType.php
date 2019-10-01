@@ -13,6 +13,7 @@ namespace Kontrolgruppen\CoreBundle\Filter;
 use Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessTypeRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
+use Lexik\Bundle\FormFilterBundle\Filter\Query\QueryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -62,6 +63,7 @@ class ProcessFilterType extends AbstractType
             'label_attr' => ['class' => 'sr-only'],
             'placeholder' => $this->translator->trans('process.table.filter.show_all_types'),
             'attr' => ['class' => 'form-control-sm ml-auto mr-3'],
+            'choice_translation_domain' => false,
         ]);
 
         $builder->add('processStatus', Filters\ChoiceFilterType::class, [
@@ -74,6 +76,7 @@ class ProcessFilterType extends AbstractType
             'label_attr' => ['class' => 'sr-only'],
             'placeholder' => $this->translator->trans('process.table.filter.show_all_status'),
             'attr' => ['class' => 'form-control-sm mr-3'],
+            'choice_translation_domain' => false,
         ]);
 
         $builder->add('caseWorker', Filters\ChoiceFilterType::class, [
@@ -85,7 +88,31 @@ class ProcessFilterType extends AbstractType
             'label' => 'process.form.case_worker',
             'label_attr' => ['class' => 'sr-only'],
             'placeholder' => $this->translator->trans('process.table.filter.show_all_case_worker'),
+            'attr' => ['class' => 'form-control-sm mr-3'],
+            'choice_translation_domain' => false,
+        ]);
+
+        $builder->add('completedAt', Filters\ChoiceFilterType::class, [
+            'choices' => [
+              $this->translator->trans('process.table.filter.status.open') => 'open',
+              $this->translator->trans('process.table.filter.status.completed') => 'completed',
+            ],
+            'placeholder' => $this->translator->trans('process.table.filter.status.show_all'),
+            'label' => 'process.form.status',
+            'label_attr' => ['class' => 'sr-only'],
             'attr' => ['class' => 'form-control-sm'],
+            'choice_translation_domain' => false,
+            'apply_filter' => function (QueryInterface $filterQuery, $field, $values) {
+                if (empty($values['value'])) {
+                    return null;
+                }
+
+                $expression = $filterQuery->getExpr();
+
+                return ('open' === $values['value'])
+                    ? $filterQuery->createCondition($expression->isNull($field))
+                    : $filterQuery->createCondition($expression->isNotNull($field));
+            },
         ]);
     }
 

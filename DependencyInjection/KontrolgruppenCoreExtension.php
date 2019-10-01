@@ -10,6 +10,9 @@
 
 namespace Kontrolgruppen\CoreBundle\DependencyInjection;
 
+use Kontrolgruppen\CoreBundle\Export\Manager;
+use Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator;
+use Kontrolgruppen\CoreBundle\Security\UserManager;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -28,6 +31,27 @@ class KontrolgruppenCoreExtension extends Extension implements PrependExtensionI
             new FileLocator(__DIR__.'/../Resources/config')
         );
         $loader->load('services.yaml');
+
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter('kontrolgruppen_core.net_default_value', $config['net_default_value']);
+
+        $definition = $container->getDefinition(Manager::class);
+        $definition->replaceArgument('$configuration', [
+            'exports' => $config['exports'] ?? [],
+            'export_directory' => $config['export_directory'] ?? null,
+        ]);
+
+        $definition = $container->getDefinition(UserManager::class);
+        if (isset($config['user_class'])) {
+            $definition->replaceArgument('$class', $config['user_class']);
+        }
+
+        $definition = $container->getDefinition(SAMLAuthenticator::class);
+        if (isset($config['saml']['php_saml_settings'])) {
+            $definition->replaceArgument('$settings', $config['saml']['php_saml_settings']);
+        }
     }
 
     public function prepend(ContainerBuilder $container)
@@ -37,8 +61,16 @@ class KontrolgruppenCoreExtension extends Extension implements PrependExtensionI
             [
                 'default_path' => '%kernel.project_dir%/vendor/kontrolgruppen/core-bundle/Resources/views',
                 'paths' => [
-                    '%kernel.project_dir%/vendor/kontrolgruppen/core-bundle/Resources/FOSUserBundle/views' => 'FOSUser',
                     '%kernel.project_dir%/vendor/kontrolgruppen/core-bundle/Resources/views' => 'KontrolgruppenCoreBundle',
+                ],
+            ]
+        );
+
+        $container->prependExtensionConfig(
+            'stof_doctrine_extensions',
+            [
+                'class' => [
+                    'loggable' => 'Kontrolgruppen\CoreBundle\EventListener\LoggableListener',
                 ],
             ]
         );

@@ -1,0 +1,57 @@
+<ul class="list-group">
+    {% if firstName is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.client.first_name'|trans }}: {{ firstName ?: '-' }}
+    </li>
+    {% endif %}
+    {% if lastName is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.client.last_name'|trans }}: {{ lastName ?: '-' }}
+    </li>
+    {% endif %}
+    {% if address is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.client.address'|trans }}: {{ address ?: '-' }}
+    </li>
+    {% endif %}
+    {% if postalCode is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.client.postal_code'|trans }}: {{ postalCode ?: '-' }}
+    </li>
+    {% endif %}
+    {% if city is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.client.city'|trans }}: {{ city ?: '-' }}
+    </li>
+    {% endif %}
+    {% if telephone is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.client.telephone'|trans }}: {{ telephone ?: '-' }}
+    </li>
+    {% endif %}
+    {% if numberOfChildren is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.client.number_of_children'|trans }}: {{ numberOfChildren ?: '-' }}
+    </li>
+    {% endif %}
+    {% if carRegistrationNumber is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.client.car_registration_number'|trans }}: {{ carRegistrationNumber ?: '-' }}
+    </li>
+    {% endif %}
+    {% if receivesPublicAid is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.client.receives_public_aid'|trans }}: {{ receivesPublicAid|yes_no }}
+    </li>
+    {% endif %}
+    {% if employed is defined %}
+        <li class="list-group-item">
+            {{ 'process_log.revision.table.log_entry.client.employed'|trans }}: {{ employed|yes_no }}
+        </li>
+    {% endif %}
+    {% if hasOwnCompany is defined %}
+        <li class="list-group-item">
+            {{ 'process_log.revision.table.log_entry.client.has_own_company'|trans }}: {{ hasOwnCompany|yes_no }}
+        </li>
+    {% endif %}
+</ul>

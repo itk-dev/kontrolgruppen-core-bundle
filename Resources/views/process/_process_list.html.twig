@@ -5,13 +5,19 @@
         <table class="table table-striped table-hover table-borderless">
             <tbody>
             {% for process in processes|slice(0, max_iterations) %}
-                <tr>
-                    <td><a href="{{ path('process_show', {'id': process.id}) }}">{{ process.caseNumber }}</a></td>
-                    <td>{{ process.processType }}</td>
+                <tr{% if not process.visitedByCaseWorker() %} class="not-visited"{% endif %}>
+                    <td>
+                        <a href="{{ path('process_show', {'id': process.id}) }}" class="mr-1">{{ process.caseNumber }}</a>
+                        {% if process.completedAt %}
+                            <span class="badge badge-secondary">{{ 'process.complete.process_completed'|trans }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="d-none d-sm-table-cell">{{ process.processType }}</td>
                     <td>{{ process.clientCPR }}</td>
-                    <td>{{ process.caseWorker }}</td>
-                    <td>{{ process.channel }}</td>
-                    <td>{{ process.service }}</td>
+                    <td>{{ process.client.firstName }} {{ process.client.lastName }}</td>
+                    <td class="d-none d-lg-table-cell">{{ process.caseWorker }}</td>
+                    <td class="d-none d-xl-table-cell">{{ process.channel }}</td>
+                    <td class="d-none d-lg-table-cell">{{ process.service }}</td>
                     <td class="text-right">
                         {% include '@KontrolgruppenCore/process/_process_actions.html.twig' %}
                     </td>

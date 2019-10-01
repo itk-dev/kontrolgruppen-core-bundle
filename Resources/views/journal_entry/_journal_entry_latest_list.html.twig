@@ -3,7 +3,7 @@
         {% for journalEntry in journalEntries %}
             <div class="row bg-light mb-2">
                 <div class="col-2 pt-2">
-                    <span class="text-muted d-block">{{ journalEntry.createdAt|date('d/m Y') }}</span>
+                    <span class="text-muted d-block">{{ journalEntry.createdAt|localizeddate('short', 'none') }}</span>
                 </div>
                 <div class="col-8 pt-2">
                     <p class="mb-0"><strong><a
@@ -11,14 +11,16 @@
                     </p>
                 </div>
                 <div class="col-2 pt-2 text-right">
-                    <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': journalEntry.process.id}) }}" class="btn btn-sm btn-dark"
-                       data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
-                        <i class="fas {{ iconClass('show') }} fa-inverse"></i>
-                    </a>
-                    <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': journalEntry.process.id}) }}" class="btn btn-sm btn-primary"
-                       data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
-                        <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
-                    </a>
+                    {% if not journalEntry.process.completedAt %}
+                        <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': journalEntry.process.id}) }}" class="btn btn-sm btn-dark"
+                        data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
+                            <i class="fas {{ iconClass('show') }} fa-inverse"></i>
+                        </a>
+                        <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': journalEntry.process.id}) }}" class="btn btn-sm btn-primary"
+                        data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
+                            <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
+                        </a>
+                    {% endif %}
                 </div>
                 <div class="col-2 pb-2">
                     {% if journalEntry.type == 'NOTE' %}

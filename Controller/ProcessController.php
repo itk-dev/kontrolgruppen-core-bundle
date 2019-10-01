@@ -11,17 +11,24 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Knp\Component\Pager\PaginatorInterface;
+use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
+use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
+use Kontrolgruppen\CoreBundle\Entity\LockedNetValue;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
+use Kontrolgruppen\CoreBundle\Form\ProcessCompleteType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
+use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
+use Kontrolgruppen\CoreBundle\Repository\UserRepository;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
+use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Symfony\Component\Routing\Annotation\Route;
-use Kontrolgruppen\CoreBundle\Entity\Client;
-use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 
 /**
  * @Route("/process")
@@ -35,9 +42,12 @@ class ProcessController extends BaseController
         Request $request,
         ProcessRepository $processRepository,
         FilterBuilderUpdaterInterface $lexikBuilderUpdater,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        FormFactoryInterface $formFactory,
+        ProcessManager $processManager,
+        UserRepository $userRepository
     ): Response {
-        $filterForm = $this->get('form.factory')->create(ProcessFilterType::class);
+        $filterForm = $formFactory->create(ProcessFilterType::class);
 
         $results = [];
 
@@ -78,6 +88,9 @@ class ProcessController extends BaseController
         $qb->leftJoin('e.channel', 'channel');
         $qb->addSelect('partial channel.{id,name}');
 
+        $qb->leftJoin('e.reason', 'reason');
+        $qb->addSelect('partial reason.{id,name}');
+
         $qb->leftJoin('e.service', 'service');
         $qb->addSelect('partial service.{id,name}');
 
@@ -89,8 +102,18 @@ class ProcessController extends BaseController
 
         $query = $qb->getQuery();
 
+        $caseWorker = (!empty($selectedCaseWorker->getData()))
+            ? $userRepository->find($selectedCaseWorker->getData())
+            : $this->getUser();
+
+        $notVisitedProcesses = $processManager->getUsersUnvisitedProcesses($caseWorker);
+        $processes = $processManager->markProcessesAsUnvisited(
+            $notVisitedProcesses,
+            $query->getResult()
+        );
+
         $pagination = $paginator->paginate(
-            $query,
+            $processes,
             $request->query->get('page', 1),
             50
         );
@@ -112,8 +135,10 @@ class ProcessController extends BaseController
     /**
      * @Route("/new", name="process_new", methods={"GET","POST"})
      */
-    public function new(Request $request, ProcessManager $processManager): Response
-    {
+    public function new(
+        Request $request,
+        ProcessManager $processManager
+    ): Response {
         $process = new Process();
         $form = $this->createForm(ProcessType::class, $process);
         $form->handleRequest($request);
@@ -125,14 +150,18 @@ class ProcessController extends BaseController
             $entityManager->persist($process);
 
             $client = new Client();
-            $client->setCpr($process->getClientCPR());
             $process->setClient($client);
 
             $entityManager->persist($client);
             $entityManager->flush();
 
-            return $this->redirectToRoute('process_index');
+            return $this->redirectToRoute('client_show', ['process' => $process]);
         }
+
+        // Get latest log entries
+        $recentActivity = $this->getDoctrine()->getRepository(
+            ProcessLogEntry::class
+        )->getLatestEntriesByLevel(ProcessLogEntryLevelEnumType::NOTICE, 10);
 
         return $this->render(
             '@KontrolgruppenCore/process/new.html.twig',
@@ -143,6 +172,7 @@ class ProcessController extends BaseController
                 ),
                 'process' => $process,
                 'form' => $form->createView(),
+                'recentActivity' => $recentActivity,
             ]
         );
     }
@@ -175,14 +205,18 @@ class ProcessController extends BaseController
      */
     public function edit(Request $request, Process $process): Response
     {
+        if (null !== $process->getCompletedAt() && !$this->isGranted('ROLE_ADMIN')) {
+            $this->redirectToRoute('process_show', ['id' => $process->getId()]);
+        }
+
         $form = $this->createForm(ProcessType::class, $process);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute(
-                'process_index',
+            return $this->redirectToReferer(
+                'process_show',
                 [
                     'id' => $process->getId(),
                 ]
@@ -217,5 +251,73 @@ class ProcessController extends BaseController
         }
 
         return $this->redirectToRoute('process_index');
+    }
+
+    /**
+     * @Route("/{id}/complete", name="process_complete", methods={"GET","POST"})
+     */
+    public function complete(Request $request, Process $process, ServiceRepository $serviceRepository): Response
+    {
+        if (null !== $process->getCompletedAt()) {
+            return $this->redirectToRoute(
+                'process_show',
+                ['id' => $process->getId()]
+            );
+        }
+
+        $form = $this->createForm(ProcessCompleteType::class, $process);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $services = $serviceRepository->getByProcess($process);
+            foreach ($services as $service) {
+                $lockedNetValue = new LockedNetValue();
+                $lockedNetValue->setService($service);
+                $lockedNetValue->setProcess($process);
+                $lockedNetValue->setValue($service->getNetDefaultValue());
+
+                $em->persist($lockedNetValue);
+            }
+
+            $process->setCompletedAt(new \DateTime());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($process);
+            $em->flush();
+
+            return $this->redirectToRoute(
+                'process_show',
+                [
+                    'id' => $process->getId(),
+                ]
+            );
+        }
+
+        return $this->render(
+            '@KontrolgruppenCore/process/complete.html.twig',
+            [
+                'menuItems' => $this->menuService->getProcessMenu(
+                    $request->getPathInfo(),
+                    $process
+                ),
+                'process' => $process,
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/{id}/resume", name="process_resume", methods={"POST"})
+     */
+    public function resume(Request $request, Process $process): Response
+    {
+        $process->setCompletedAt(null);
+        $process->setLockedNetValue(null);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($process);
+        $em->flush();
+
+        return $this->redirectToRoute('process_show', ['id' => $process->getId()]);
     }
 }

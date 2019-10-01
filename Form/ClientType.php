@@ -11,6 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\Form;
 
 use Kontrolgruppen\CoreBundle\Entity\Client;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,9 +21,6 @@ class ClientType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('cpr', null, [
-                'label' => 'client.form.cpr',
-            ])
             ->add('firstName', null, [
                 'label' => 'client.form.first_name',
             ])
@@ -44,8 +42,28 @@ class ClientType extends AbstractType
             ->add('numberOfChildren', null, [
                 'label' => 'client.form.number_of_children',
             ])
-            ->add('carRegistrationNumber', null, [
-                'label' => 'client.form.car_registration_number',
+            ->add('receivesPublicAid', null, [
+                'label' => 'client.form.receives_public_aid',
+            ])
+            ->add('employed', null, [
+                'label' => 'client.form.employed',
+            ])
+            ->add('hasOwnCompany', null, [
+                'label' => 'client.form.has_own_company',
+            ])
+            ->add('hasDriversLicense', null, [
+                'label' => 'client.form.has_drivers_license',
+            ])
+            ->add('hasCar', null, [
+                'label' => 'client.form.has_car',
+            ])
+            ->add('cars', CollectionType::class, [
+                'entry_type' => CarType::class,
+                'entry_options' => ['label' => false],
+                'label' => 'client.form.cars',
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
             ])
         ;
     }

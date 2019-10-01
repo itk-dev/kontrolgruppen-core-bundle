@@ -36,10 +36,39 @@ class ProcessType extends AbstractTaxonomy
      */
     private $conclusionClass;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $hideInDashboard;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="processTypes")
+     */
+    private $services;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Channel", inversedBy="processTypes")
+     */
+    private $channels;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessStatus")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $defaultProcessStatus;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessStatus")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $defaultProcessStatusOnEmptyCaseWorker;
+
     public function __construct()
     {
         $this->processes = new ArrayCollection();
         $this->processStatuses = new ArrayCollection();
+        $this->services = new ArrayCollection();
+        $this->channels = new ArrayCollection();
     }
 
     /**
@@ -107,6 +136,94 @@ class ProcessType extends AbstractTaxonomy
     public function setConclusionClass(string $conclusionClass): self
     {
         $this->conclusionClass = $conclusionClass;
+
+        return $this;
+    }
+
+    public function getHideInDashboard(): ?bool
+    {
+        return $this->hideInDashboard;
+    }
+
+    public function setHideInDashboard(?bool $hideInDashboard): self
+    {
+        $this->hideInDashboard = $hideInDashboard;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Service[]
+     */
+    public function getServices(): Collection
+    {
+        return $this->services;
+    }
+
+    public function addService(Service $service): self
+    {
+        if (!$this->services->contains($service)) {
+            $this->services[] = $service;
+        }
+
+        return $this;
+    }
+
+    public function removeService(Service $service): self
+    {
+        if ($this->services->contains($service)) {
+            $this->services->removeElement($service);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Channel[]
+     */
+    public function getChannels(): Collection
+    {
+        return $this->channels;
+    }
+
+    public function addChannel(Channel $channel): self
+    {
+        if (!$this->channels->contains($channel)) {
+            $this->channels[] = $channel;
+        }
+
+        return $this;
+    }
+
+    public function removeChannel(Channel $channel): self
+    {
+        if ($this->channels->contains($channel)) {
+            $this->channels->removeElement($channel);
+        }
+
+        return $this;
+    }
+
+    public function getDefaultProcessStatus(): ?ProcessStatus
+    {
+        return $this->defaultProcessStatus;
+    }
+
+    public function setDefaultProcessStatus(?ProcessStatus $defaultProcessStatus): self
+    {
+        $this->defaultProcessStatus = $defaultProcessStatus;
+
+        return $this;
+    }
+
+    public function getDefaultProcessStatusOnEmptyCaseWorker(): ?ProcessStatus
+    {
+        return $this->defaultProcessStatusOnEmptyCaseWorker;
+    }
+
+    public function setDefaultProcessStatusOnEmptyCaseWorker(?ProcessStatus $defaultProcessStatusOnEmptyCaseWorker): self
+    {
+        $this->defaultProcessStatusOnEmptyCaseWorker = $defaultProcessStatusOnEmptyCaseWorker;
 
         return $this;
     }

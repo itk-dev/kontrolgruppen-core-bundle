@@ -1,0 +1,21 @@
+{% block economy_entry_list %}
+    <div class="mb-3 p-3">
+        {% for economyEntry in economyEntries %}
+            <div class="mb-2">
+                <div class="row bg-light">
+                    <div class="col-2 pt-2">
+                        <span class="text-muted d-block">{{ economyEntry.text }}</span>
+                    </div>
+                    <div class="col-2 pt-2">
+                        <span class="text-muted d-block">{{ economyEntry.date|localizeddate('short', 'none') }}</span>
+                    </div>
+                    <div class="col-2 pt-2">
+                        <span class="text-muted d-block">{{ economyEntry.amount|localizedcurrency('DKK') }}</span>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            {{ 'common.no_records_found'|trans }}
+        {% endfor %}
+    </div>
+{% endblock %}

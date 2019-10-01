@@ -1,0 +1,12 @@
+<div class="border">
+    <h2>{{ 'process_report.report.economy.title'|trans }}</h2>
+
+    <h3>{{ 'process_report.report.economy.service.title'|trans }}</h3>
+    {% include '@KontrolgruppenCore/process_report/_economy_entry_service.html.twig' with {economyEntries: economyEntries.service} %}
+
+    <h3>{{ 'process_report.report.economy.income.title'|trans }}</h3>
+    {% include '@KontrolgruppenCore/process_report/_economy_entry_income.html.twig' with {economyEntries: economyEntries.income} %}
+
+    <h3>{{ 'process_report.report.economy.account.title'|trans }}</h3>
+    {% include '@KontrolgruppenCore/process_report/_economy_entry_base.html.twig' with {economyEntries: economyEntries.account} %}
+</div>

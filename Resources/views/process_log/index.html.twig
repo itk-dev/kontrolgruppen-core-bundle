@@ -1,0 +1,19 @@
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+
+{% block title %}{{ 'process_log.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h1 class="float-left">{{ 'process_log.index.title'|trans }}</h1>
+            <a href="{{ path('process_log_export', {'process': process}) }}" class="btn btn-sm btn-outline-secondary float-right ml-3">
+                <i class="fas {{ iconClass('report') }} mr-2"></i>
+                {{ 'process_log.index.export'|trans }}
+            </a>
+        </div>
+    </div>
+
+
+    {% include '@KontrolgruppenCore/process_log/_log_entries.html.twig' %}
+
+{% endblock %}

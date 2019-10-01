@@ -35,8 +35,8 @@ class ClientController extends BaseController
         // Make sure a client has been created for the process.
         if (!isset($client)) {
             $client = new Client();
-            $client->setCpr($process->getClientCPR());
             $client->setProcess($process);
+            $process->setClient($client);
 
             $this->getDoctrine()->getManager()->persist($client);
             $this->getDoctrine()->getManager()->flush();

@@ -1,4 +1,4 @@
-{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
 
 {% block title %}{{ 'process.index.title'|trans }}{% endblock %}
 
@@ -19,13 +19,9 @@
     {% include '@KontrolgruppenCore/journal_entry/_modal_quick_view.html.twig' %}
 {% endblock %}
 
-{% block sidebar_right %}
-    {{ include('@KontrolgruppenCore/process/_sidebar_activity.html.twig') }}
-{% endblock %}
-
 {% block javascripts %}
     {{ parent() }}
 
-    <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/processFilters.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/kontrolgruppencore/build/journalQuickview.js') }}"></script>
+    {{ encore_entry_script_tags('processFilters') }}
+    {{ encore_entry_script_tags('journalQuickview') }}
 {% endblock %}

@@ -15,3 +15,23 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    Kontrolgruppen\CoreBundle\Export\Manager:
+        arguments:
+            $configuration: ~
+
+    # Exports
+    Kontrolgruppen\CoreBundle\Export\:
+        resource: '../../Export/*/*'
+        # Exports must be public to load them dynamically (by id) in the Export
+        # manager.
+        public: true
+
+    Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator:
+        arguments:
+            $router: '@router.default'
+            $settings: ~
+
+    Kontrolgruppen\CoreBundle\Security\UserManager:
+        arguments:
+            $objectManager: '@doctrine.orm.entity_manager'
+            $class: ~

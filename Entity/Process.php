@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Kontrolgruppen\CoreBundle\Validator as KontrolgruppenAssert;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ProcessRepository")
@@ -22,38 +23,59 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Process extends AbstractEntity
 {
     /**
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Gedmo\Versioned()
+     */
+    private $completedAt;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\User", inversedBy="processes")
+     * @Gedmo\Versioned()
      */
     private $caseWorker;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Gedmo\Versioned()
      */
     private $caseNumber;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @KontrolgruppenAssert\CPR
+     * @Gedmo\Versioned()
      */
     private $clientCPR;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Channel", inversedBy="processes")
+     * @Gedmo\Versioned()
      */
     private $channel;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Reason", inversedBy="processes")
+     * @Gedmo\Versioned()
+     */
+    private $reason;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="processes")
+     * @Gedmo\Versioned()
      */
     private $service;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessType", inversedBy="processes")
      * @ORM\JoinColumn(name="process_type_id", referencedColumnName="id", nullable=false)
+     * @Gedmo\Versioned()
      */
     private $processType;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessStatus", inversedBy="processes")
+     * @Gedmo\Versioned()
      */
     private $processStatus;
 
@@ -77,10 +99,61 @@ class Process extends AbstractEntity
      */
     private $conclusion;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\EconomyEntry", mappedBy="process", orphanRemoval=true)
+     */
+    private $economyEntries;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry", mappedBy="process", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $logEntries;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Gedmo\Versioned()
+     */
+    private $policeReport;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $courtDecision;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $lockedNetValue;
+
+    /**
+     * @var bool
+     */
+    private $visitedByCaseWorker = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\LockedNetValue", mappedBy="process")
+     */
+    private $lockedNetValues;
+
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
         $this->journalEntries = new ArrayCollection();
+        $this->economyEntries = new ArrayCollection();
+        $this->logEntries = new ArrayCollection();
+        $this->lockedNetValues = new ArrayCollection();
+    }
+
+    public function getCompletedAt(): ?\DateTime
+    {
+        return $this->completedAt;
+    }
+
+    public function setCompletedAt(?\DateTime $completedAt): self
+    {
+        $this->completedAt = $completedAt;
+
+        return $this;
     }
 
     public function getCaseWorker(): ?User
@@ -127,6 +200,18 @@ class Process extends AbstractEntity
     public function setChannel(?Channel $channel): self
     {
         $this->channel = $channel;
+
+        return $this;
+    }
+
+    public function getReason(): ?Reason
+    {
+        return $this->reason;
+    }
+
+    public function setReason(?Reason $reason): self
+    {
+        $this->reason = $reason;
 
         return $this;
     }
@@ -259,6 +344,145 @@ class Process extends AbstractEntity
         $newProcess = null === $conclusion ? null : $this;
         if ($newProcess !== $conclusion->getProcess()) {
             $conclusion->setProcess($newProcess);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EconomyEntry[]
+     */
+    public function getEconomyEntries(): Collection
+    {
+        return $this->economyEntries;
+    }
+
+    public function addEconomyEntry(EconomyEntry $economyEntry): self
+    {
+        if (!$this->economyEntries->contains($economyEntry)) {
+            $this->economyEntries[] = $economyEntry;
+            $economyEntry->setProcess($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEconomyEntry(EconomyEntry $economyEntry): self
+    {
+        if ($this->economyEntries->contains($economyEntry)) {
+            $this->economyEntries->removeElement($economyEntry);
+            // set the owning side to null (unless already changed)
+            if ($economyEntry->getProcess() === $this) {
+                $economyEntry->setProcess(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProcessLogEntry[]
+     */
+    public function getLogEntries(): Collection
+    {
+        return $this->logEntries;
+    }
+
+    public function addLogEntry(ProcessLogEntry $logEntry): self
+    {
+        if (!$this->logEntries->contains($logEntry)) {
+            $this->logEntries[] = $logEntry;
+            $logEntry->setProcess($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLogEntry(ProcessLogEntry $logEntry): self
+    {
+        if ($this->logEntries->contains($logEntry)) {
+            $this->logEntries->removeElement($logEntry);
+            // set the owning side to null (unless already changed)
+            if ($logEntry->getProcess() === $this) {
+                $logEntry->setProcess(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPoliceReport(): ?bool
+    {
+        return $this->policeReport;
+    }
+
+    public function setPoliceReport(?bool $policeReport): self
+    {
+        $this->policeReport = $policeReport;
+
+        return $this;
+    }
+
+    public function getCourtDecision(): ?bool
+    {
+        return $this->courtDecision;
+    }
+
+    public function setCourtDecision(?bool $courtDecision): self
+    {
+        $this->courtDecision = $courtDecision;
+
+        return $this;
+    }
+
+    public function getLockedNetValue(): ?float
+    {
+        return $this->lockedNetValue;
+    }
+
+    public function setLockedNetValue(?float $lockedNetValue): self
+    {
+        $this->lockedNetValue = $lockedNetValue;
+
+        return $this;
+    }
+
+    public function getVisitedByCaseWorker(): bool
+    {
+        return $this->visitedByCaseWorker;
+    }
+
+    public function setVisitedByCaseWorker(bool $visited)
+    {
+        $this->visitedByCaseWorker = $visited;
+    }
+
+    /**
+     * @return Collection|LockedNetValue[]
+     */
+    public function getLockedNetValues(): Collection
+    {
+        return $this->lockedNetValues;
+    }
+
+    public function addLockedNetValue(LockedNetValue $lockedNetValue): self
+    {
+        if (!$this->lockedNetValues->contains($lockedNetValue)) {
+            $this->lockedNetValues[] = $lockedNetValue;
+            $lockedNetValue->setProcess($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLockedNetValue(LockedNetValue $lockedNetValue): self
+    {
+        if ($this->lockedNetValues->contains($lockedNetValue)) {
+            $this->lockedNetValues->removeElement($lockedNetValue);
+            // set the owning side to null (unless already changed)
+            if ($lockedNetValue->getProcess() === $this) {
+                $lockedNetValue->setProcess(null);
+            }
         }
 
         return $this;

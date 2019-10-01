@@ -11,6 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\Service;
 
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Kontrolgruppen\CoreBundle\Twig\TwigExtension;
@@ -24,6 +25,7 @@ class MenuService
     protected $translator;
     protected $router;
     protected $twigExtension;
+    protected $authorizationChecker;
 
     /**
      * MenuService constructor.
@@ -31,11 +33,13 @@ class MenuService
     public function __construct(
         TranslatorInterface $translator,
         RouterInterface $router,
-        TwigExtension $twigExtension
+        TwigExtension $twigExtension,
+        AuthorizationCheckerInterface $authorizationChecker
     ) {
         $this->translator = $translator;
         $this->router = $router;
         $this->twigExtension = $twigExtension;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -47,41 +51,37 @@ class MenuService
      */
     public function getGlobalNavMenu($path)
     {
-        return [
-            'dashboard' => $this->createGlobalNavItem(
-                'dashboard',
-                'dashboard',
-                ('/' === $path),
-                'dashboard_index'
-            ),
-            'process' => $this->createGlobalNavItem(
-                'process',
-                'process',
-                (false !== $this->startsWith($path, '/process/')),
-                'process_index'
-            ),
-            // @TODO: Implement these.
-            /*
-            'profile' => $this->createGlobalNavItem(
-                'profile',
-                '/profile/',
-                'profile',
-                (false !== $this->startsWith($path, '/profile/'))
-            ),
-            'users' => $this->createGlobalNavItem(
-                'users',
-                '/users/',
-                'users',
-                (false !== $this->startsWith($path, '/profile/'))
-            ),
-            */
-            'admin' => $this->createGlobalNavItem(
-                'admin',
-                'admin',
-                (false !== $this->startsWith($path, '/admin/')),
-                'admin_index'
-            ),
-        ];
+        $menu['dashboard'] = $this->createGlobalNavItem(
+            'dashboard',
+            'dashboard',
+            ('/' === $path),
+            'dashboard_index'
+        );
+
+        $menu['process'] = $this->createGlobalNavItem(
+            'process',
+            'process',
+            false !== $this->startsWith($path, '/process/'),
+            'process_index'
+        );
+
+        if ($this->authorizationChecker->isGranted('ROLE_BI')) {
+            $menu['bi'] = $this->createGlobalNavItem(
+                'bi',
+                'bi',
+                false !== $this->startsWith($path, '/bi/'),
+                'bi_index'
+            );
+        }
+
+        $menu['admin'] = $this->createGlobalNavItem(
+            'admin',
+            'admin',
+            false !== $this->startsWith($path, '/admin/'),
+            'admin_index'
+        );
+
+        return $menu;
     }
 
     /**
@@ -94,27 +94,30 @@ class MenuService
      */
     public function getProcessMenu(string $path, Process $process = null)
     {
+        $items = [];
         if (isset($process) && null !== $process->getId()) {
-            return [
-                [
-                    'name' => $this->translator->trans('menu.menu_title.process_number', [
-                        '%processNumber%' => $process->getCaseNumber(),
-                    ]),
-                    'disabled' => true,
-                    'active' => false,
-                    'path' => '#',
-                    'hide_from_mobile_menu' => true,
-                ],
-                $this->createMenuItem(
-                    'process_show',
-                    1 === preg_match(
-                        '/^\/process\/[0-9]+$/',
-                        $path
-                    ),
-                    'process_show',
-                    ['id' => $process->getId()]
+            $items[] = [
+                'name' => $this->translator->trans('menu.menu_title.process_number', [
+                    '%processNumber%' => $process->getCaseNumber(),
+                ]),
+                'disabled' => true,
+                'active' => false,
+                'path' => '#',
+                'hide_from_mobile_menu' => true,
+            ];
+
+            $items[] = $this->createMenuItem(
+                'process_show',
+                1 === preg_match(
+                    '/^\/process\/[0-9]+$/',
+                    $path
                 ),
-                $this->createMenuItem(
+                'process_show',
+                ['id' => $process->getId()]
+            );
+
+            if (null === $process->getCompletedAt()) {
+                $items[] = $this->createMenuItem(
                     'client',
                     1 === preg_match(
                         '/^\/process\/[0-9]+\/client.*$/',
@@ -122,8 +125,9 @@ class MenuService
                     ),
                     'client_show',
                     ['process' => $process]
-                ),
-                $this->createMenuItem(
+                );
+
+                $items[] = $this->createMenuItem(
                     'reminder',
                     1 === preg_match(
                         '/^\/process\/[0-9]+\/reminder\/.*$/',
@@ -131,8 +135,9 @@ class MenuService
                     ),
                     'reminder_index',
                     ['process' => $process]
-                ),
-                $this->createMenuItem(
+                );
+
+                $items[] = $this->createMenuItem(
                     'journal',
                     1 === preg_match(
                         '/^\/process\/[0-9]+\/journal\/.*$/',
@@ -140,8 +145,29 @@ class MenuService
                     ),
                     'journal_entry_index',
                     ['process' => $process]
-                ),
-                $this->createMenuItem(
+                );
+
+                $items[] = $this->createMenuItem(
+                    'economy',
+                    1 === preg_match(
+                        '/^\/process\/[0-9]+\/economy.*$/',
+                        $path
+                    ),
+                    'economy_show',
+                    ['process' => $process]
+                );
+
+                $items[] = $this->createMenuItem(
+                    'revenue',
+                    1 === preg_match(
+                        '/^\/process\/[0-9]+\/revenue.*$/',
+                        $path
+                    ),
+                    'economy_revenue',
+                    ['process' => $process]
+                );
+
+                $items[] = $this->createMenuItem(
                     'conclusion',
                     1 === preg_match(
                         '/^\/process\/[0-9]+\/conclusion.*$/',
@@ -149,11 +175,21 @@ class MenuService
                     ),
                     'conclusion_show',
                     ['process' => $process]
-                ),
-            ];
+                );
+
+                $items[] = $this->createMenuItem(
+                    'log',
+                    1 === preg_match(
+                        '/^\/process\/[0-9]+\/log.*$/',
+                        $path
+                    ),
+                    'process_log_index',
+                    ['process' => $process]
+                );
+            }
         }
 
-        return [];
+        return $items;
     }
 
     /**
@@ -166,6 +202,14 @@ class MenuService
     public function getAdminMenu($path)
     {
         return [
+            $this->createMenuItem(
+                'export',
+                1 === preg_match(
+                    '/^\/admin\/export\/.*$/',
+                    $path
+                ),
+                'export_index'
+            ),
             $this->createMenuItem(
                 'process_type',
                 1 === preg_match(
@@ -181,6 +225,14 @@ class MenuService
                     $path
                 ),
                 'process_status_index'
+            ),
+            $this->createMenuItem(
+                'reason',
+                1 === preg_match(
+                    '/^\/admin\/reason\/.*$/',
+                    $path
+                ),
+                'reason_index'
             ),
             $this->createMenuItem(
                 'channel',
@@ -205,6 +257,22 @@ class MenuService
                     $path
                 ),
                 'quick_link_index'
+            ),
+            $this->createMenuItem(
+                'account',
+                1 === preg_match(
+                    '/^\/admin\/account\/.*$/',
+                    $path
+                ),
+                'account_index'
+            ),
+            $this->createMenuItem(
+                'income_type',
+                1 === preg_match(
+                    '/^\/admin\/income_type\/.*$/',
+                    $path
+                ),
+                'income_type_index'
             ),
         ];
     }

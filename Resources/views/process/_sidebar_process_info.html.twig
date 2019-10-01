@@ -2,22 +2,60 @@
     <div class="row">
         <div class="col">
             <div class="bg-light p-3">
-                <p>{{ 'process.summary.title'|trans }}</p>
-                {% if process.clientCPR is defined %}
-                    <span class="d-block text-muted"><span class="sr-only">{{ 'process.table.client_cpr'|trans }}</span>{{ process.clientCPR }}</span>
+                <div class="mb-3">
+                    {% if process.clientCPR|default(false) %}
+                        <span class="d-block"><span class="sr-only">{{ 'sidebar.client.cpr'|trans }}</span>{{ process.clientCPR }}</span>
+                    {% endif %}
+                    {% if process.client.firstName|default(false) %}
+                        <span class="d-block"><span
+                                class="sr-only">{{ 'sidebar.client.name'|trans }}</span>{{ process.client.firstName }} {{ process.client.lastName }}</span>
+                    {% endif %}
+                </div>
+
+                {% if process.client|default(false) %}
+                <div class="mb-3">
+                    {% if process.client.address|default(false) %}
+                        <span class="d-block">
+                            <span class="sr-only">{{ 'sidebar.client.address'|trans }}</span>
+                            <div>{{ process.client.address }}</div>
+                            <div>{{ process.client.postalCode }} {{ process.client.city }}</div>
+                        </span>
+                    {% endif %}
+                    {% if process.client.telephone|default(false) %}
+                        <span class="d-block"><span class="sr-only">{{ 'sidebar.client.telephone'|trans }}</span>{{ process.client.telephone }}</span>
+                    {% endif %}
+                </div>
                 {% endif %}
-                {% if process.client.firstName is defined %}
-                    <span class="d-block text-muted"><span
-                            class="sr-only">{{ 'process.table.client_name'|trans }}</span>{{ process.client.firstName }} {{ process.client.lastName }}</span>
-                {% endif %}
-                {% if process.client.address is defined %}
-                    <span class="d-block text-muted"><span
-                            class="sr-only">{{ 'process.table.client_adress'|trans }}</span>{{ process.client.address }}, {{ process.client.postalCode }} {{ process.client.city }}</span>
-                {% endif %}
-                {% if process.client.telephone is defined %}
-                    <span class="d-block text-muted"><span
-                            class="sr-only">{{ 'process.table.client_telephone'|trans }}</span>{{ process.client.telephone }}</span>
-                {% endif %}
+
+                <div class="mb-3">
+                    <h3>{{ 'sidebar.client.employment'|trans }}</h3>
+
+                    {% if process.client.receivesPublicAid|default(false) %}
+                        <span class="d-block">{{ 'sidebar.client.receives_public_aid'|trans }}</span>
+                    {% endif %}
+                    {% if process.client.employed|default(false) %}
+                        <span class="d-block">{{ 'sidebar.client.employed'|trans }}</span>
+                    {% endif %}
+                    {% if process.client.hasOwnCompany|default(false) %}
+                        <span class="d-block">{{ 'sidebar.client.has_own_company'|trans }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <h3>{{ 'sidebar.client.transport'|trans }}</h3>
+
+                    {% if process.client.hasOwnCompany|default(false) %}
+                        <span class="d-block">{{ 'sidebar.client.has_drivers_license'|trans }}</span>
+                    {% endif %}
+
+                    {% if process.client.cars|default(false) %}
+                        <span class="d-block"><span class="sr-only">{{ 'sidebar.client.cars'|trans }}</span>
+                        {% for car in process.client.cars %}
+                            <div>{{ car.registrationNumber }}{% if car.sharedOwnership|default(false) %} ({{ 'sidebar.client.car_shared_ownership'|trans }}){% endif %}</div>
+                        {% endfor %}
+                    </span>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

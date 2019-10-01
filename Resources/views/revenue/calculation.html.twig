@@ -1,0 +1,47 @@
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-borderless thead-light">
+        <thead>
+        <tr>
+            <th>{{ 'economy.table.revenue.service'|trans }}</th>
+            <th>{{ 'economy.table.revenue.future_savings_amount'|trans }}</th>
+            <th>{{ 'economy.table.revenue.future_savings_period'|trans }}</th>
+            <th>{{ 'economy.table.revenue.repayment_amount'|trans }}</th>
+            <th>{{ 'economy.table.revenue.repayment_period'|trans }}</th>
+            <th class="text-right"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for revenueForm in revenueForms %}
+            <tr>
+            {{ form_start(revenueForm, {'attr': {'class': 'form-row'}}) }}
+                <td>{{ form_widget(revenueForm.service) }}</td>
+                <td>{{ form_widget(revenueForm.futureSavingsAmount) }}</td>
+                <td>
+                    <div class="form-control period-modal-trigger" data-target-input-from="#{{ revenueForm.futureSavingsPeriodFrom.vars.id }}" data-target-input-to="#{{ revenueForm.futureSavingsPeriodTo.vars.id }}">
+                        {{ revenueForm.futureSavingsPeriodFrom.vars.value }}-{{ revenueForm.futureSavingsPeriodTo.vars.value }}
+                    </div>
+                </td>
+                <td>{{ form_widget(revenueForm.repaymentAmount) }}</td>
+                <td>
+                    <div class="form-control period-modal-trigger" data-target-input-from="#{{ revenueForm.repaymentPeriodFrom.vars.id }}" data-target-input-to="#{{ revenueForm.repaymentPeriodTo.vars.id }}">
+                        {{ revenueForm.repaymentPeriodFrom.vars.value }}-{{ revenueForm.repaymentPeriodTo.vars.value }}
+                    </div>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary btn-sm float-right">
+                        <span class="fa {{ iconClass('save') }} fa-sm" aria-hidden="true"></span>
+                    </button>
+                </td>
+            {{ form_end(revenueForm) }}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">{{ 'common.no_records_found'|trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% include '@KontrolgruppenCore/revenue/_period_modal.html.twig' %}
+

@@ -1,0 +1,13 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'reason.edit.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'reason.edit.title'|trans }}</h1>
+
+    {{ include('@KontrolgruppenCore/reason/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('reason_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+
+    {{ include('@KontrolgruppenCore/reason/_delete_form.html.twig') }}
+{% endblock %}

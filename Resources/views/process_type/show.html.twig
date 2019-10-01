@@ -9,12 +9,42 @@
         <table class="table table-striped table-hover table-borderless thead-light">
             <tbody>
             <tr>
-                <th>{{ 'process_type.table.id'|trans }}</th>
-                <td>{{ process_type.id }}</td>
-            </tr>
-            <tr>
                 <th>{{ 'process_type.table.name'|trans }}</th>
                 <td>{{ process_type.name }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'process_type.table.process_statuses'|trans }}</th>
+                <td>
+                    {% for processStatus in process_type.processStatuses %}
+                        {{ processStatus }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'process_type.table.services'|trans }}</th>
+                <td>
+                    {% for service in process_type.services %}
+                        {{ service }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'process_type.table.channels'|trans }}</th>
+                <td>
+                    {% for channel in process_type.channels %}
+                        {{ channel }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'process_type.table.hide_in_dashboard'|trans }}</th>
+                <td>
+                    {{ process_type.hideInDashboard|yes_no }}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'process_type.table.conclusion_class'|trans }}</th>
+                <td>{{ conclusionClassTranslation(process_type.conclusionClass) }}</td>
             </tr>
             </tbody>
         </table>

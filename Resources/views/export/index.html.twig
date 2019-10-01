@@ -1,0 +1,65 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'export.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1 class="mb-3">{{ 'export.index.title'|trans }}</h1>
+
+    <form action="{{ path('export_run') }}" class="form-horizontal">
+    <div class="form-group">
+      <label for="export" class="col-sm-2 control-label">{{ 'export.name'|trans }}</label>
+      <div class="col-sm-10">
+        <select name="export" class="form-control" id="export" required>
+          {% for key, export in exports %}
+            <option value="{{ key }}">{{ export.title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    {% for name, form in parameterForms %}
+        {% form_theme form with 'bootstrap_3_horizontal_layout.html.twig' %}
+        <div class="export-parameters" id="export-parameters-{{ name }}" style="display: none">
+            {# Show startdate and enddate in a single row called "Period" #}
+            {% if 'startdate' in form|keys and 'enddate' in form|keys %}
+                <div class="form-group">
+                    <label class="col-sm-2 control-label required">{{ 'export.date_period'|trans }}</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{ (form_widget(form.startdate)) }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ (form_widget(form.enddate)) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% elseif 'date' in form|keys %}
+                {{ (form_row(form.date)) }}
+            {% endif %}
+
+            {% for key, field in form %}
+                {% if not (key matches '{^(start|end)?date$}') %}
+                    {{ (form_row(field)) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary" formaction="{{ path('export_run', {_format: 'html'}) }}">{{ 'export.run.html'|trans }}</button>
+            <button type="submit" class="btn btn-primary" formaction="{{ path('export_run', {_format: 'pdf'}) }}">{{ 'export.run.pdf'|trans }}</button>
+            <button type="submit" class="btn btn-primary" formaction="{{ path('export_run', {_format: 'xlsx'}) }}">{{ 'export.run.xlsx'|trans }}</button>
+            <button type="submit" class="btn btn-primary" formaction="{{ path('export_run', {_format: 'csv'}) }}">{{ 'export.run.csv'|trans }}</button>
+        </div>
+    </div>
+
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('export') }}
+{% endblock %}

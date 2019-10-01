@@ -14,6 +14,8 @@ use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Filter\JournalFilterType;
 use Kontrolgruppen\CoreBundle\Form\JournalEntryType;
 use Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository;
+use Kontrolgruppen\CoreBundle\Service\LogManager;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -29,21 +31,36 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/latest", name="journal_entry_latest", methods={"GET"})
      */
-    public function getLatestJournalEntries(Process $process, JournalEntryRepository $journalEntryRepository)
-    {
-        return $this->render('@KontrolgruppenCore/journal_entry/_journal_entry_latest_list.html.twig', [
-            'journalEntries' => $journalEntryRepository->findBy(['process' => $process]),
-        ]);
+    public function getLatestJournalEntries(
+        Process $process,
+        JournalEntryRepository $journalEntryRepository
+    ) {
+        return $this->render(
+            '@KontrolgruppenCore/journal_entry/_journal_entry_latest_list.html.twig',
+            [
+                'journalEntries' => $journalEntryRepository->findBy(['process' => $process]),
+            ]
+        );
     }
 
     /**
      * @Route("/", name="journal_entry_index", methods={"GET","POST"})
      */
-    public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process, FilterBuilderUpdaterInterface $lexikBuilderUpdater, SessionInterface $session): Response
-    {
+    public function index(
+        Request $request,
+        JournalEntryRepository $journalEntryRepository,
+        Process $process,
+        FilterBuilderUpdaterInterface $lexikBuilderUpdater,
+        SessionInterface $session,
+        LogManager $logManager,
+        FormFactoryInterface $formFactory
+    ): Response {
         $journalEntry = new JournalEntry();
         $journalEntry->setProcess($process);
-        $journalEntryForm = $this->createForm(JournalEntryType::class, $journalEntry);
+        $journalEntryForm = $this->createForm(
+            JournalEntryType::class,
+            $journalEntry
+        );
         $journalEntryForm->handleRequest($request);
 
         if ($journalEntryForm->isSubmitted() && $journalEntryForm->isValid()) {
@@ -51,10 +68,13 @@ class JournalEntryController extends BaseController
             $entityManager->persist($journalEntry);
             $entityManager->flush();
 
-            return $this->redirectToRoute('journal_entry_index', ['process' => $process->getId()]);
+            return $this->redirectToRoute(
+                'journal_entry_index',
+                ['process' => $process->getId()]
+            );
         }
 
-        $filterForm = $this->get('form.factory')->create(JournalFilterType::class);
+        $filterForm = $formFactory->create(JournalFilterType::class);
 
         $sortDirection = $request->query->get('sort_direction') ?: null;
 
@@ -66,35 +86,55 @@ class JournalEntryController extends BaseController
             $sortDirection = $sessionSortDirection ?: 'desc';
         }
 
-        $qb = null;
+        $onlyShowProcessStatusChanges = $request->query->get('only_show_status') ?: null;
 
-        if ($request->query->has($filterForm->getName())) {
-            // manually bind values from the request
-            $filterForm->submit($request->query->get($filterForm->getName()));
-
+        if (empty($onlyShowProcessStatusChanges)) {
             // initialize a query builder
-            $qb = $journalEntryRepository->createQueryBuilder('e');
+            $qb = $journalEntryRepository->createQueryBuilder('e', 'e.id');
 
-            // build the query from the given form object
-            $lexikBuilderUpdater->addFilterConditions($filterForm, $qb);
+            if ($request->query->has($filterForm->getName())) {
+                // manually bind values from the request
+                $filterForm->submit($request->query->get($filterForm->getName()));
+
+                // build the query from the given form object
+                $lexikBuilderUpdater->addFilterConditions($filterForm, $qb);
+            }
+
+            $qb->andWhere('e.process = :process');
+            $qb->setParameter('process', $process);
+
+            $qb->orderBy('e.id', $sortDirection);
+
+            $result = $qb->getQuery()->getArrayResult();
+
+            // Attach log entries.
+            // Only attach log entries if user is granted ROLE_ADMIN.
+            if ($this->isGranted('ROLE_ADMIN', $this->getUser())) {
+                $result = $logManager->attachLogEntriesToJournalEntries($result);
+            }
         } else {
-            $qb = $journalEntryRepository->createQueryBuilder('e');
+            $result = [];
         }
 
-        $qb->andWhere('e.process = :process');
-        $qb->setParameter('process', $process);
+        $result = $logManager->attachProcessStatusChangesToJournalEntries(
+            $result,
+            $process,
+            $sortDirection
+        );
 
-        $qb->orderBy('e.id', $sortDirection);
-
-        $query = $qb->getQuery();
-
-        return $this->render('@KontrolgruppenCore/journal_entry/index.html.twig', [
-            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
-            'form' => $filterForm->createView(),
-            'journalEntries' => $query->execute(),
-            'journalEntryForm' => $journalEntryForm->createView(),
-            'process' => $process,
-        ]);
+        return $this->render(
+            '@KontrolgruppenCore/journal_entry/index.html.twig',
+            [
+                'menuItems' => $this->menuService->getProcessMenu(
+                    $request->getPathInfo(),
+                    $process
+                ),
+                'form' => $filterForm->createView(),
+                'entries' => $result,
+                'journalEntryForm' => $journalEntryForm->createView(),
+                'process' => $process,
+            ]
+        );
     }
 
     /**
@@ -102,6 +142,10 @@ class JournalEntryController extends BaseController
      */
     public function new(Request $request, Process $process): Response
     {
+        if (null !== $process->getCompletedAt() && !$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('process_show', ['id' => $process->getId()]);
+        }
+
         $journalEntry = new JournalEntry();
         $journalEntry->setProcess($process);
         $form = $this->createForm(JournalEntryType::class, $journalEntry);
@@ -112,34 +156,63 @@ class JournalEntryController extends BaseController
             $entityManager->persist($journalEntry);
             $entityManager->flush();
 
-            return $this->redirectToRoute('journal_entry_index', ['process' => $process->getId()]);
+            return $this->redirectToRoute(
+                'journal_entry_index',
+                ['process' => $process->getId()]
+            );
         }
 
-        return $this->render('@KontrolgruppenCore/journal_entry/new.html.twig', [
-            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
-            'journalEntry' => $journalEntry,
-            'process' => $process,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            '@KontrolgruppenCore/journal_entry/new.html.twig',
+            [
+                'menuItems' => $this->menuService->getProcessMenu(
+                    $request->getPathInfo(),
+                    $process
+                ),
+                'journalEntry' => $journalEntry,
+                'process' => $process,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
      * @Route("/{id}", name="journal_entry_show", methods={"GET"})
      */
-    public function show(Request $request, JournalEntry $journalEntry, Process $process): Response
-    {
-        return $this->render('@KontrolgruppenCore/journal_entry/show.html.twig', [
-            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
-            'journalEntry' => $journalEntry,
-            'process' => $process,
-        ]);
+    public function show(
+        Request $request,
+        JournalEntry $journalEntry,
+        Process $process,
+        LogManager $logManager
+    ): Response {
+        // Attach log entries.
+        // Only attach log entries if user is granted ROLE_ADMIN.
+        if ($this->isGranted('ROLE_ADMIN', $this->getUser())) {
+            $journalEntry = $logManager->attachLogEntriesToJournalEntry($journalEntry);
+        }
+
+        return $this->render(
+            '@KontrolgruppenCore/journal_entry/show.html.twig',
+            [
+                'menuItems' => $this->menuService->getProcessMenu(
+                    $request->getPathInfo(),
+                    $process
+                ),
+                'journalEntry' => $journalEntry,
+                'process' => $process,
+            ]
+        );
     }
 
     /**
      * @Route("/{id}/edit", name="journal_entry_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, JournalEntry $journalEntry, Process $process): Response
-    {
+    public function edit(
+        Request $request,
+        JournalEntry $journalEntry,
+        Process $process,
+        LogManager $logManager
+    ): Response {
         $form = $this->createForm(JournalEntryType::class, $journalEntry);
         $form->handleRequest($request);
 
@@ -152,20 +225,38 @@ class JournalEntryController extends BaseController
             ]);
         }
 
-        return $this->render('@KontrolgruppenCore/journal_entry/edit.html.twig', [
-            'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
-            'journalEntry' => $journalEntry,
-            'process' => $process,
-            'form' => $form->createView(),
-        ]);
+        // Attach log entries.
+        // Only attach log entries if user is granted ROLE_ADMIN.
+        if ($this->isGranted('ROLE_ADMIN', $this->getUser())) {
+            $journalEntry = $logManager->attachLogEntriesToJournalEntry($journalEntry);
+        }
+
+        return $this->render(
+            '@KontrolgruppenCore/journal_entry/edit.html.twig',
+            [
+                'menuItems' => $this->menuService->getProcessMenu(
+                    $request->getPathInfo(),
+                    $process
+                ),
+                'journalEntry' => $journalEntry,
+                'process' => $process,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
      * @Route("/{id}", name="journal_entry_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, JournalEntry $journalEntry, Process $process): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$journalEntry->getId(), $request->request->get('_token'))) {
+    public function delete(
+        Request $request,
+        JournalEntry $journalEntry,
+        Process $process
+    ): Response {
+        if ($this->isCsrfTokenValid(
+            'delete'.$journalEntry->getId(),
+            $request->request->get('_token')
+        )) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($journalEntry);
             $entityManager->flush();
