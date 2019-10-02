@@ -243,9 +243,8 @@ economy:
         revenue:
             service: Ydelse
             future_savings_amount: Fremtidig besparelse (pr. md)
-            future_savings_period: Periode
             repayment_amount: Tilbagebetalingskrav (pr. md)
-            repayment_period: Periode
+            amount: Beløb
             period: Periode
             save: Gem tabel
             missing_period: Ugyldig periode
