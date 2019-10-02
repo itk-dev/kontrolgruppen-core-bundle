@@ -21,7 +21,7 @@ class ProcessLogEntry extends AbstractEntity
 {
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="logEntries")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $process;
 
