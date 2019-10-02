@@ -1,11 +1,35 @@
-{% if process is defined %}
-    {% if not process.completedAt %}
-        {% if changeProcessStatusForm is defined %}
-            {{ form(changeProcessStatusForm, {'attr': {'id': 'process_status_form'}}) }}
+<div class="row">
+    <div class="col">
+        {% if not process.completedAt %}
+            <a href="{{ path('process_complete', {'id': process.id}) }}" class="btn btn-sm btn-outline-danger float-right ml-3"><i
+                    class="fas {{ iconClass('process-complete') }} mr-2"></i>{{ 'process.btns.complete'|trans }}</a>
+        {% elseif is_granted('ROLE_ADMIN') %}
+            <form method="post" action="{{ path('process_resume', {'id': process.id}) }}" data-yes-no-message="{{ 'process.resume.confirm'|trans }}">
+                <button class="btn btn-sm btn-outline-danger float-right ml-3">
+                    <i class="fas {{ iconClass('process-resume') }} mr-2"></i>{{ 'process.btns.resume'|trans }}
+                </button>
+            </form>
         {% endif %}
-    {% else %}
-        <div class="bg-light rounded-sm p-3 mb-3">
-            {{ process.processStatus }}
-        </div>
-    {% endif %}
-{% endif %}
+        <a href="{{ path('process_report_index', {'process': process.id}) }}" class="btn btn-sm btn-outline-secondary float-right ml-3"><i
+                class="fas {{ iconClass('report') }} mr-2"></i>{{ 'process.btns.create_report'|trans }}</a>
+        {% if not process.completedAt %}
+            <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-sm btn-outline-warning float-right ml-3"><i
+                    class="fas {{ iconClass('reminder') }} mr-2"></i>{{ 'reminder.btns.create'|trans }}</a>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        {% if process is defined %}
+            {% if not process.completedAt %}
+                {% if changeProcessStatusForm is defined %}
+                    {{ form(changeProcessStatusForm, {'attr': {'id': 'process_status_form'}}) }}
+                {% endif %}
+            {% else %}
+                <div class="bg-light rounded-sm p-3 mb-3">
+                    {{ process.processStatus }}
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
