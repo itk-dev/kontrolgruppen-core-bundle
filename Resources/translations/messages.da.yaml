@@ -16,6 +16,10 @@ base_economy_entry:
     form:
         update: Gem
 
+income_economy_entry:
+    form:
+        update: Gem
+
 channel:
     edit:
         title: Rediger kanal
@@ -291,7 +295,9 @@ economy_entry:
 journal_entry:
     actions:
         create: Opret nyt indlæg
+        edit: Rediger indlæg
         hide: Skjul
+        show: Vis indlæg
     edit:
         title: Rediger journal
     form:
@@ -348,6 +354,7 @@ global_nav:
         profile: Profil
         users: Brugere
         admin: Indstillinger
+        bi: Business Intelligence
 
     tooltip:
         dashboard: Få et hurtigt sagsoverblik
@@ -355,6 +362,7 @@ global_nav:
         profile: Dine profil informationer
         users: Viser alle brugere på systemet
         admin: Se og administre system indstillinger
+        bi: BI Exports
 
 menu:
     menu_title:
@@ -389,8 +397,10 @@ navigation:
 
 process:
     actions:
+        label:
         reminders: Påmindelser
         journal_quickview: Senest i journal
+
     complete:
         cancel: Fortryd afslutning
         case_worker: Sagsbehandler
@@ -429,6 +439,7 @@ process:
         process_type: Sagstype
         service: Ydelse
         update: Gem
+        status: Status
     index:
         title: Sager
     menu_title: Sager
@@ -465,6 +476,10 @@ process:
             show_all_types: Alle sagstyper
             show_all_status: Alle sagsstatusser
             show_all_case_worker: Alle sagsbehandlere
+            status:
+                open: Åbne sager
+                completed: Afsluttet sager
+                show_all: Alle sager
     tooltip: Liste med alle sager
     btns:
         create_new: Opret ny sag
@@ -503,6 +518,7 @@ process_log:
                 client: Klient
                 service_economy_entry: Ydelse registrering
                 base_economy_entry: Konto registrering
+                income_economy_entry: Indkomst registrering
             log_entry:
                 type: Type
                 process:
@@ -557,6 +573,12 @@ process_log:
                     date: Dato
                     arrear: Restance
                     account: Konto
+                income_economy:
+                    amount: Beløb
+                    type: Type
+                    income: Indkomst
+                income_economy_entry:
+                    income: Indkomst
 
 process_status:
     edit:
@@ -663,9 +685,7 @@ process_report:
         economy:
             title: Økonomi
             account:
-                title: Konti
-            arrear:
-                title: Restance
+                title: R75-oplysninger
             service:
                 title: Ydelse
                 service: Ydelse
@@ -679,6 +699,13 @@ process_report:
                 account_number: Kontonummer
                 date: Dato
                 amount: Beløb
+                account: Konto
+            income:
+                title: Indkomst
+                type: Type
+                period: Periode
+                amount: Beløb
+                amount_period: Beløbsinterval
         conclusion:
             title: Konklusion
             base:

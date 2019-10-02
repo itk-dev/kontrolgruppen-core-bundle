@@ -105,7 +105,7 @@ class Process extends AbstractEntity
     private $economyEntries;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry", mappedBy="process", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry", mappedBy="process", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $logEntries;
 

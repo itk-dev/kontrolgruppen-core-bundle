@@ -11,7 +11,9 @@
         </div>
         <div class="form-group col-12">
             <label for="service_economy_entry_datepicker">{{ 'economy_entry.form.service.monthpicker'|trans }}</label>
-            <div class="form-control" id="service_economy_entry_datepicker"></div>
+            <div class="form-control" id="service_economy_entry_datepicker">
+                {{ form.periodFrom.vars.value }}-{{ form.periodTo.vars.value }}
+            </div>
             <small id="service_economy_entry_datepicker_help" class="form-text text-muted">{{ 'economy_entry.form.service.monthpicker_help'|trans }}</small>
         </div>
 
@@ -57,7 +59,9 @@
         </div>
         <div class="form-group col-12">
             <label for="service_economy_entry_datepicker">{{ 'economy_entry.form.income.monthpicker'|trans }}</label>
-            <div class="form-control" id="income_economy_entry_datepicker"></div>
+            <div class="form-control" id="income_economy_entry_datepicker">
+                {{ form.periodFrom.vars.value }}-{{ form.periodTo.vars.value }}
+            </div>
             <small id="income_economy_entry_datepicker_help" class="form-text text-muted">{{ 'economy_entry.form.income.monthpicker_help'|trans }}</small>
         </div>
 
