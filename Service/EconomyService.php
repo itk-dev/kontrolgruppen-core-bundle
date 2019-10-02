@@ -58,7 +58,7 @@ class EconomyService
                                     ? $lockedNetValue[0]->getValue()
                                     : $entry->getService()->getNetDefaultValue();
 
-                $carry['netRepaymentSum'] = $carry['netRepaymentSum'] + ($entry->getRepaymentAmount() * $netMultiplier);
+                $carry['netRepaymentSum'] = $carry['netRepaymentSum'] + ($entry->getRepaymentAmount() * $netMultiplier) * $this->getMonthsBetweenDates($entry->getRepaymentPeriodFrom(), $entry->getRepaymentPeriodTo());
 
                 if (!isset($carry['repaymentSums'][$entry->getService()->getName()])) {
                     $carry['repaymentSums'][$entry->getService()->getName()] = 0;
@@ -70,7 +70,7 @@ class EconomyService
 
                 // Calculate yearly future savings
                 $carry['futureSavingsSum'] = $carry['futureSavingsSum'] + $entry->getFutureSavingsAmount();
-                $carry['netFutureSavingsSum'] = $carry['netFutureSavingsSum'] + ($entry->getFutureSavingsAmount() * $netMultiplier);
+                $carry['netFutureSavingsSum'] = $carry['netFutureSavingsSum'] + ($entry->getFutureSavingsAmount() * $netMultiplier) * $this->getMonthsBetweenDates($entry->getFutureSavingsPeriodFrom(), $entry->getFutureSavingsPeriodTo());
 
                 if (!isset($carry['futureSavingsSums'][$entry->getService()->getName()])) {
                     $carry['futureSavingsSums'][$entry->getService()->getName()] = 0;
@@ -106,5 +106,13 @@ class EconomyService
         $result['collectiveSum'] = $result['repaymentSum'] + $result['futureSavingsSum'];
 
         return $result;
+    }
+
+    private function getMonthsBetweenDates(\DateTime $from, \DateTime $to)
+    {
+        $interval = \DateInterval::createFromDateString('1 month');
+        $period = new \DatePeriod($from, $interval, $to);
+
+        return iterator_count($period);
     }
 }
