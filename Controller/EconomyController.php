@@ -83,6 +83,8 @@ class EconomyController extends BaseController
             $parameters['revenueForms'][] = $revenueForm->createView();
         }
 
+        // Forms are submitted in an ajax request, so if anything bad happens, we need to send an answer
+        // that can be handled.
         if (!empty($revenueFormErrors)) {
             $response = new JsonResponse($revenueFormErrors);
             $response->setStatusCode(400);

@@ -46,6 +46,8 @@ $(document).ready(function () {
         $('#period-modal-to').datetimepicker('destroy');
     });
 
+    // Each row in the table on the page is a form. Instead of manually submitting every form, we have a button handler
+    // that submits each form by ajax and render errors in the UI. Only form which contains new data is submitted though.
     $('#save-revenue-calculation-button').on('click', function (event) {
         let dirtyForms = new Map();
 
