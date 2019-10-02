@@ -32,18 +32,20 @@ class RevenueServiceEconomyEntryType extends AbstractType
                 'label' => false,
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'dd.MM.yyyy',
+                'format' => 'MM.yy',
+                'required' => false,
                 'attr' => [
-                    'class' => 'd-none',
+                    'class' => 'd-none future-savings-period-from',
                 ],
             ])
             ->add('futureSavingsPeriodTo', null, [
                 'label' => false,
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'dd.MM.yyyy',
+                'format' => 'MM.yy',
+                'required' => false,
                 'attr' => [
-                    'class' => 'd-none',
+                    'class' => 'd-none future-savings-period-to',
                 ],
             ])
             ->add('futureSavingsAmount', null, [
@@ -54,18 +56,20 @@ class RevenueServiceEconomyEntryType extends AbstractType
                 'label' => false,
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'dd.MM.yyyy',
+                'format' => 'MM.yy',
+                'required' => false,
                 'attr' => [
-                    'class' => 'd-none',
+                    'class' => 'd-none repayment-period-from',
                 ],
             ])
             ->add('repaymentPeriodTo', null, [
                 'label' => false,
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'dd.MM.yyyy',
+                'format' => 'MM.yy',
+                'required' => false,
                 'attr' => [
-                    'class' => 'd-none',
+                    'class' => 'd-none repayment-period-to',
                 ],
             ])
             ->add('repaymentAmount', null, [

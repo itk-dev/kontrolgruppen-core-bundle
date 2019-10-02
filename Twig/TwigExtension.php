@@ -155,6 +155,10 @@ class TwigExtension extends AbstractExtension
                 return 'fa-save';
             case 'calendar':
                 return 'fa-calendar';
+            case 'error':
+                return 'fa-times';
+            case 'bi':
+                return 'fa-chart-pie';
             default:
                 return '';
         }

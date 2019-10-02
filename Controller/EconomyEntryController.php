@@ -11,8 +11,10 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\EconomyEntry;
+use Kontrolgruppen\CoreBundle\Entity\IncomeEconomyEntry;
 use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
 use Kontrolgruppen\CoreBundle\Form\BaseEconomyEntryType;
+use Kontrolgruppen\CoreBundle\Form\IncomeEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\ServiceEconomyEntryType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,6 +49,8 @@ class EconomyEntryController extends BaseController
     {
         if ($economyEntry instanceof ServiceEconomyEntry) {
             $form = $this->createForm(ServiceEconomyEntryType::class, $economyEntry);
+        } elseif ($economyEntry instanceof IncomeEconomyEntry) {
+            $form = $this->createForm(IncomeEconomyEntryType::class, $economyEntry);
         } else {
             $form = $this->createForm(BaseEconomyEntryType::class, $economyEntry);
         }

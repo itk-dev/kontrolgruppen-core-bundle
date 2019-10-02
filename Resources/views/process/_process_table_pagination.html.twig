@@ -9,13 +9,13 @@
             <tr>
                 <th>{{ knp_pagination_sortable(pagination, 'process.table.case_number'|trans , 'e.caseNumber')|raw }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'process.table.client_cpr'|trans , 'e.clientCPR')|raw }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'process.table.case_worker'|trans , 'caseWorker.id')|raw }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'process.table.channel'|trans , 'channel.id')|raw }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'process.table.reason'|trans , 'reason.id')|raw }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'process.table.process_type'|trans , 'processType.id')|raw }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'process.table.service'|trans , 'service.id')|raw }}</th>
+                <th class="d-none d-lg-table-cell">{{ knp_pagination_sortable(pagination, 'process.table.case_worker'|trans , 'caseWorker.id')|raw }}</th>
+                <th class="d-none d-lg-table-cell">{{ knp_pagination_sortable(pagination, 'process.table.channel'|trans , 'channel.id')|raw }}</th>
+                <th class="d-none d-md-table-cell">{{ knp_pagination_sortable(pagination, 'process.table.reason'|trans , 'reason.id')|raw }}</th>
+                <th class="d-none d-sm-table-cell">{{ knp_pagination_sortable(pagination, 'process.table.process_type'|trans , 'processType.id')|raw }}</th>
+                <th class="d-none d-sm-table-cell">{{ knp_pagination_sortable(pagination, 'process.table.service'|trans , 'service.id')|raw }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'process.table.process_status'|trans , 'processStatus.id')|raw }}</th>
-                <th class="float-right">{{ 'common.table.actions'|trans }}</th>
+                <th class="text-right">{{ 'common.table.actions'|trans }}</th>
             </tr>
             </thead>
             <tbody>
@@ -28,11 +28,11 @@
                         {% endif %}</a>
                     </td>
                     <td>{{ process.clientCPR }}</td>
-                    <td>{{ process.caseWorker }}</td>
-                    <td>{{ process.channel }}</td>
-                    <td>{{ process.reason }}</td>
-                    <td>{{ process.processType }}</td>
-                    <td>{{ process.service }}</td>
+                    <td class="d-none d-lg-table-cell">{{ process.caseWorker }}</td>
+                    <td class="d-none d-lg-table-cell">{{ process.channel }}</td>
+                    <td class="d-none d-md-table-cell">{{ process.reason }}</td>
+                    <td class="d-none d-sm-table-cell">{{ process.processType }}</td>
+                    <td class="d-none d-sm-table-cell">{{ process.service }}</td>
                     <td>{{ process.processStatus }}</td>
                     <td class="text-right">
                         {% include '@KontrolgruppenCore/process/_process_actions.html.twig' %}
