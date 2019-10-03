@@ -116,7 +116,7 @@ class BaseController extends AbstractController
                     'label' => 'process.form.change_process_status.save',
                     'attr' => [
                         'style' => 'display: none',
-                        'class' => 'btn-sm btn-primary mt-1'
+                        'class' => 'btn-sm btn-primary mt-1',
                     ],
                 ]
             )

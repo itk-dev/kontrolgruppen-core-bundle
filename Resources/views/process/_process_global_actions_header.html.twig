@@ -23,7 +23,7 @@
         {% if process is defined %}
             {% if not process.completedAt %}
                 {% if changeProcessStatusForm is defined %}
-                    {{ form(changeProcessStatusForm, {'attr': {'id': 'process_status_form','class': 'mt-2'}}) }}
+                    {{ form(changeProcessStatusForm, {'attr': {'id': 'process_status_form', 'class': 'mt-2'}}) }}
                 {% endif %}
             {% else %}
                 <div class="bg-light rounded-sm p-3 mt-2">
