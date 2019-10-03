@@ -7,12 +7,23 @@
                     <p class="mb-0">{{ journalEntry.createdAt|localizeddate('short', 'none') }}</p>
                 </div>
                 <div class="col-12 col-sm-8 col-lg-10 pt-2">
-                        {% if not process.completedAt %}
-                            <strong><a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="text-dark">{{ journalEntry.title }}</a></strong>
-                        {% else %}
-                            <strong>{{ journalEntry.title }}</strong>
-                        {% endif %}
-                    </p>
+                    {% if not process.completedAt %}
+                        <strong><a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="text-dark">{{ journalEntry.title }}</a></strong>
+                    {% else %}
+                        <strong>{{ journalEntry.title }}</strong>
+                    {% endif %}
+                    <div class="collapse" id="journal-entry-content-{{ journalEntry.id }}">
+                        {{ journalEntry.body|raw }}
+                    </div>
+                    <a href="#journal-entry-content-{{ journalEntry.id }}" class="text-secondary"
+                        role="button" data-toggle="collapse" aria-expanded="false" aria-controls="journal-entry-content-{{ journalEntry.id }}">
+                        <span class="show">
+                            Vis mere <i class="fas {{ iconClass('show') }} fa-fw"></i>
+                        </span>
+                        <span class="hide">
+                            Vis mindre <i class="fas {{ iconClass('hide') }} fa-fw"></i>
+                        </span>
+                    </a>
                 </div>
                 <div class="col-4 col-lg-2 pt-2">
                     {% if journalEntry.type == 'NOTE' %}
@@ -26,24 +37,11 @@
                 </div>
                 <div class="col-4 col-lg-6 pt-2 text-right">
                     {% if not process.completedAt %}
-                        <a href="#journal-entry-content-{{ journalEntry.id }}" class="btn btn-sm btn-dark mb-1"
-                           data-toggle="collapse" role="button" aria-expanded="false" aria-controls="journal-entry-content-{{ journalEntry.id }}" title="{{ 'common.actions.show'|trans }}">
-                            <i class="fas {{ iconClass('show') }} fa-inverse fa-fw"></i>
-                        </a>
                         <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-primary mb-1"
                         data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
                             <i class="fas {{ iconClass('edit') }} fa-inverse fa-fw"></i></a>
                         </a>
                     {% endif %}
-                </div>
-                <div class="col-4 col-lg-4 pt-2 collapse" id="journal-entry-content-{{ journalEntry.id }}">
-                    <div class="row">
-                        <div class="col">
-                            {{ journalEntry.body|raw }}
-                        </div>
-                    </div>
-
-                    {% include '@KontrolgruppenCore/journal_entry/_log_entries.html.twig' %}
                 </div>
             </div>
         {% else %}
