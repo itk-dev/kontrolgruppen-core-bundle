@@ -15,32 +15,32 @@
             <th class="w-20">{{ 'economy.table.revenue.service'|trans }}</th>
             <th colspan="2">{{ 'economy.table.revenue.future_savings_amount'|trans }}</th>
             <th colspan="2">{{ 'economy.table.revenue.repayment_amount'|trans }}</th>
-            <th class="text-right"></th>
         </tr>
         </thead>
         <tbody>
         {% for revenueForm in revenueForms %}
             <tr>
-            {{ form_start(revenueForm, {'attr': {'class': 'form-row'}}) }}
+                {{ form_start(revenueForm, {'attr': {'class': 'form-row'}}) }}
+
                 <td>{{ form_widget(revenueForm.service) }}</td>
-                <td class="w-10">{{ form_widget(revenueForm.futureSavingsAmount, {'attr': {'placeholder': 'economy.table.revenue.amount'|trans }}) }}</td>
-                <td class="w-30">
+                <td>{{ form_widget(revenueForm.futureSavingsAmount, {'attr': {'placeholder': 'economy.table.revenue.amount'|trans }}) }}</td>
+                <td>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text"><span class="fa {{ iconClass('calendar') }} fa-sm" aria-hidden="true"></span></div>
                         </div>
-                        <div class="form-control period-modal-trigger" data-target-input-from="#{{ revenueForm.futureSavingsPeriodFrom.vars.id }}" data-target-input-to="#{{ revenueForm.futureSavingsPeriodTo.vars.id }}">
+                        <div class="form-control period-modal-trigger text-truncate" data-target-input-from="#{{ revenueForm.futureSavingsPeriodFrom.vars.id }}" data-target-input-to="#{{ revenueForm.futureSavingsPeriodTo.vars.id }}">
                             {{ revenueForm.futureSavingsPeriodFrom.vars.value }}-{{ revenueForm.futureSavingsPeriodTo.vars.value }}
                         </div>
                     </div>
                 </td>
-                <td class="w-10">{{ form_widget(revenueForm.repaymentAmount, {'attr': {'placeholder': 'economy.table.revenue.amount'|trans }}) }}</td>
-                <td class="w-30">
+                <td>{{ form_widget(revenueForm.repaymentAmount, {'attr': {'placeholder': 'economy.table.revenue.amount'|trans }}) }}</td>
+                <td>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text"><span class="fa {{ iconClass('calendar') }} fa-sm" aria-hidden="true"></span></div>
                         </div>
-                        <div class="form-control period-modal-trigger" data-target-input-from="#{{ revenueForm.repaymentPeriodFrom.vars.id }}" data-target-input-to="#{{ revenueForm.repaymentPeriodTo.vars.id }}">
+                        <div class="form-control period-modal-trigger text-truncate" data-target-input-from="#{{ revenueForm.repaymentPeriodFrom.vars.id }}" data-target-input-to="#{{ revenueForm.repaymentPeriodTo.vars.id }}">
                             {{ revenueForm.repaymentPeriodFrom.vars.value }}-{{ revenueForm.repaymentPeriodTo.vars.value }}
                         </div>
                     </div>
