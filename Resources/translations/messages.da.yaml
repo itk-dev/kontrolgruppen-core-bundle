@@ -769,7 +769,7 @@ reminder:
         option:
             7days: de næste 7 dage
     btns:
-        create: Opret ny påmindelse
+        create: Ny påmindelse
     show:
         title: Påmindelse
 
