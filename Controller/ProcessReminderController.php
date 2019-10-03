@@ -41,7 +41,9 @@ class ProcessReminderController extends BaseController
     {
         $reminder = new Reminder();
         $reminder->setProcess($process);
-        $reminder->setDate((new \DateTime())->setTime(8, 0));
+        $reminder->setDate(
+            (new \DateTime())->setTime(8, 0)->modify('+1 day')
+        );
         $form = $this->createForm(ReminderType::class, $reminder);
         $form->handleRequest($request);
 
