@@ -14,8 +14,8 @@
                 <tr>
                     <td><a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.service }}</a></td>
                     <td>
-                        {{ economyEntry.periodFrom ? economyEntry.periodFrom|localizeddate('none', 'none', null, null, 'dd.MM.yyyy') }} -
-                        {{ economyEntry.periodTo ? economyEntry.periodTo|localizeddate('none', 'none', null, null, 'dd.MM.yyyy') }}
+                        {{ economyEntry.periodFrom ? economyEntry.periodFrom|simple_date('short') }} -
+                        {{ economyEntry.periodTo ? economyEntry.periodTo|simple_date('short') }}
                     </td>
                     <td>{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
                     <td class="w-20 text-right">{{ enumTranslation(economyEntry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>

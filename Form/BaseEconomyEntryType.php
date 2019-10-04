@@ -13,6 +13,7 @@ namespace Kontrolgruppen\CoreBundle\Form;
 use Kontrolgruppen\CoreBundle\Entity\BaseEconomyEntry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -38,13 +39,15 @@ class BaseEconomyEntryType extends AbstractType
                 'label' => 'economy_entry.form.base.date',
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'dd/MM yyyy HH:mm',
+                'format' => 'dd-MM-yyyy HH:mm',
                 'attr' => ['class' => 'js-datepicker'],
                 'help' => 'economy_entry.form.base.date_help',
             ])
-            ->add('amount', null, [
+            ->add('amount', MoneyType::class, [
                 'label' => 'economy_entry.form.base.amount',
                 'help' => 'economy_entry.form.base.amount_help',
+                'currency' => 'DKK',
+                'grouping' => true,
             ])
         ;
     }

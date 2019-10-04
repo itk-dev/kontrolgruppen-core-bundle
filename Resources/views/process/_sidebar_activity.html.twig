@@ -5,7 +5,7 @@
                 <a href="{{ urlToProcessRelatedClass(log.logEntry.objectClass, log.logEntry.objectId, log.process.id) }}" class="list-group-item list-group-item-action list-group-item-light">
                     <div class="row">
                         <div class="col-12 col-xl-6">
-                            <span class="text-muted small">{{ log.logEntry.loggedAt|date('d-m-Y') }}</span>
+                            <span class="text-muted small">{{ log.logEntry.loggedAt|simple_date('short') }}</span>
                         </div>
                         {# TODO: Hide case number when on a given case. #}
                         <div class="col-12 col-xl-6">

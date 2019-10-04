@@ -6,22 +6,6 @@
     <div class="row">
         <div class="col">
             <h1 class="float-left">{{ 'process.show.title'|trans }} {{ process.caseNumber }}</h1>
-            {% if not process.completedAt %}
-                <a href="{{ path('process_complete', {'id': process.id}) }}" class="btn btn-sm btn-outline-danger float-right ml-3"><i
-                        class="fas {{ iconClass('process-complete') }} mr-2"></i>{{ 'process.btns.complete'|trans }}</a>
-            {% elseif is_granted('ROLE_ADMIN') %}
-                <form method="post" action="{{ path('process_resume', {'id': process.id}) }}" data-yes-no-message="{{ 'process.resume.confirm'|trans }}">
-                    <button class="btn btn-sm btn-outline-danger float-right ml-3">
-                        <i class="fas {{ iconClass('process-resume') }} mr-2"></i>{{ 'process.btns.resume'|trans }}
-                    </button>
-                </form>
-            {% endif %}
-            <a href="{{ path('process_report_index', {'process': process.id}) }}" class="btn btn-sm btn-outline-secondary float-right ml-3"><i
-                    class="fas {{ iconClass('report') }} mr-2"></i>{{ 'process.btns.create_report'|trans }}</a>
-            {% if not process.completedAt %}
-                <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-sm btn-outline-warning float-right ml-3"><i
-                        class="fas {{ iconClass('reminder') }} mr-2"></i>{{ 'reminder.btns.create'|trans }}</a>
-            {% endif %}
         </div>
     </div>
 
@@ -36,13 +20,13 @@
                     <div class="col-6 col-lg-3">
                         <dl class="row">
                             <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.created_at'|trans }}</dd>
-                            <dt class="col-sm-12">{{ process.createdAt|localizeddate('short', 'none') }}</dt>
+                            <dt class="col-sm-12">{{ process.createdAt|simple_date('short') }}</dt>
                         </dl>
                     </div>
                     <div class="col-6 col-lg-3">
                         <dl class="row">
                             <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.updated_at'|trans }}</dd>
-                            <dt class="col-sm-12">{{ process.updatedAt|localizeddate('short', 'none') }} {{ 'common.table.by'|trans }} {{ process.updatedBy }}</dt>
+                            <dt class="col-sm-12">{{ process.updatedAt|simple_date('short') }} {{ 'common.table.by'|trans }} {{ process.updatedBy }}</dt>
                         </dl>
                     </div>
                     <div class="col-6 col-lg-3">

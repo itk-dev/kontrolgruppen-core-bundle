@@ -4,15 +4,26 @@
         {% for journalEntry in journalEntries|slice(0, max_iterations) %}
             <div class="row bg-light mb-2 pb-2">
                 <div class="col-12 col-sm-4 col-lg-2 pt-2">
-                    <p class="mb-0">{{ journalEntry.createdAt|localizeddate('short', 'none') }}</p>
+                    <p class="mb-0">{{ journalEntry.createdAt|simple_date('short') }}</p>
                 </div>
                 <div class="col-12 col-sm-8 col-lg-10 pt-2">
-                        {% if not process.completedAt %}
-                            <strong><a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="text-dark">{{ journalEntry.title }}</a></strong>
-                        {% else %}
-                            <strong>{{ journalEntry.title }}</strong>
-                        {% endif %}
-                    </p>
+                    {% if not process.completedAt %}
+                        <strong><a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="text-dark">{{ journalEntry.title }}</a></strong>
+                    {% else %}
+                        <strong>{{ journalEntry.title }}</strong>
+                    {% endif %}
+                    <div class="collapse" id="journal-entry-content-{{ journalEntry.id }}">
+                        {{ journalEntry.body|raw }}
+                    </div>
+                    <a href="#journal-entry-content-{{ journalEntry.id }}" class="text-secondary"
+                        role="button" data-toggle="collapse" aria-expanded="false" aria-controls="journal-entry-content-{{ journalEntry.id }}">
+                        <span class="show">
+                            {{ 'journal_entry.headline_list.show_more'|trans }} <i class="fas {{ iconClass('show') }} fa-fw"></i>
+                        </span>
+                        <span class="hide">
+                            {{ 'journal_entry.headline_list.show_less'|trans }} <i class="fas {{ iconClass('hide') }} fa-fw"></i>
+                        </span>
+                    </a>
                 </div>
                 <div class="col-4 col-lg-2 pt-2">
                     {% if journalEntry.type == 'NOTE' %}
@@ -26,10 +37,6 @@
                 </div>
                 <div class="col-4 col-lg-6 pt-2 text-right">
                     {% if not process.completedAt %}
-                        <a href="{{ path('journal_entry_show', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-dark mb-1"
-                        data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
-                            <i class="fas {{ iconClass('show') }} fa-inverse fa-fw"></i>
-                        </a>
                         <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}" class="btn btn-sm btn-primary mb-1"
                         data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
                             <i class="fas {{ iconClass('edit') }} fa-inverse fa-fw"></i></a>

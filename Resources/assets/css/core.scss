@@ -158,9 +158,9 @@ aside {
     border-top: 1px solid $gray-100;
 }
 
-/* Toggle btn add new journal entry */
-
-*[data-toggle="button"][aria-pressed="false"] {
+/* Toggle btn text while toggle, collapse etc. */
+*[data-toggle="button"][aria-pressed="false"],
+*[data-toggle="collapse"][aria-expanded="false"] {
     .show {
         display: block;
     }
@@ -168,7 +168,8 @@ aside {
         display: none;
     }
 }
-*[data-toggle="button"][aria-pressed="true"] {
+*[data-toggle="button"][aria-pressed="true"],
+*[data-toggle="collapse"][aria-expanded="true"] {
     .show {
         display: none;
     }

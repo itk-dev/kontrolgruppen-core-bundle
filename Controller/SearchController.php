@@ -32,18 +32,18 @@ class SearchController extends BaseController
         $qb = $processRepository->createQueryBuilder('e');
         $qb->leftJoin('e.client', 'client');
         $qb->addSelect('client');
+        $qb->leftJoin('e.caseWorker', 'caseWorker');
+        $qb->addSelect('partial caseWorker.{id,username}');
         $qb->where('e.caseNumber LIKE :search');
         $qb->orWhere('e.clientCPR LIKE :search');
         $qb->orWhere('client.firstName LIKE :search');
         $qb->orWhere('client.lastName LIKE :search');
         $qb->orWhere('client.telephone LIKE :search');
         $qb->orWhere('client.address LIKE :search');
+        $qb->orWhere('caseWorker.username LIKE :search');
         $qb->setParameter(':search', '%'.$search.'%');
 
         // Add sortable fields.
-        $qb->leftJoin('e.caseWorker', 'caseWorker');
-        $qb->addSelect('partial caseWorker.{id}');
-
         $qb->leftJoin('e.channel', 'channel');
         $qb->addSelect('partial channel.{id,name}');
 

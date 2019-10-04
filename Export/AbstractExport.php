@@ -58,6 +58,7 @@ abstract class AbstractExport implements \JsonSerializable
                     'data' => new \DateTime('first day of January'),
                     'label' => 'Start date',
                     'widget' => 'single_text',
+                    'format' => 'dd-MM-yyyy',
                 ],
             ],
             'enddate' => [
@@ -66,6 +67,7 @@ abstract class AbstractExport implements \JsonSerializable
                     'data' => new \DateTime('last day of December'),
                     'label' => 'End date',
                     'widget' => 'single_text',
+                    'format' => 'dd-MM-yyyy',
                 ],
             ],
         ];
@@ -195,9 +197,22 @@ abstract class AbstractExport implements \JsonSerializable
     /**
      * Format a date.
      */
-    protected function formatDate(\DateTime $date)
+    protected function formatDate(\DateTime $date, $format = 'short')
     {
-        return $date->format('d-m-Y');
+        $date = (is_a($date, \DateTime::class))
+                ? $date
+                : new \DateTime(strtotime($date));
+
+        switch ($format) {
+            case 'short':
+                return $date->format('d-m-Y');
+                break;
+            case 'long':
+                return $date->format('d-m-Y H:i');
+                break;
+            default:
+                return $this->formatDate($date, 'short');
+        }
     }
 
     /**
