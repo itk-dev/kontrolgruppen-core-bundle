@@ -21,12 +21,12 @@
     {% endif %}
     {% if periodFrom is defined %}
     <li class="list-group-item">
-        {{ 'process_log.revision.table.log_entry.service_economy_entry.period_from'|trans }}: {{ periodFrom|date('d-m-Y h:m') }}
+        {{ 'process_log.revision.table.log_entry.service_economy_entry.period_from'|trans }}: {{ periodFrom|simple_date('long') }}
     </li>
     {% endif %}
     {% if periodTo is defined %}
     <li class="list-group-item">
-        {{ 'process_log.revision.table.log_entry.service_economy_entry.period_to'|trans }}: {{ periodTo|date('d-m-Y h:m') }}
+        {{ 'process_log.revision.table.log_entry.service_economy_entry.period_to'|trans }}: {{ periodTo|simple_date('long') }}
     </li>
     {% endif %}
 </ul>

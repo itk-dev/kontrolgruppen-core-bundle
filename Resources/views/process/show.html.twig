@@ -20,13 +20,13 @@
                     <div class="col-6 col-lg-3">
                         <dl class="row">
                             <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.created_at'|trans }}</dd>
-                            <dt class="col-sm-12">{{ process.createdAt|localizeddate('short', 'none') }}</dt>
+                            <dt class="col-sm-12">{{ process.createdAt|simple_date('short') }}</dt>
                         </dl>
                     </div>
                     <div class="col-6 col-lg-3">
                         <dl class="row">
                             <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.updated_at'|trans }}</dd>
-                            <dt class="col-sm-12">{{ process.updatedAt|localizeddate('short', 'none') }} {{ 'common.table.by'|trans }} {{ process.updatedBy }}</dt>
+                            <dt class="col-sm-12">{{ process.updatedAt|simple_date('short') }} {{ 'common.table.by'|trans }} {{ process.updatedBy }}</dt>
                         </dl>
                     </div>
                     <div class="col-6 col-lg-3">

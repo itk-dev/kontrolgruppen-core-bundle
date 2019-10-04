@@ -14,7 +14,7 @@
                 <tr>
                     <td><a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.account }}</a></td>
                     <td>{{ economyEntry.accountNumber }}</td>
-                    <td>{{ economyEntry.date|localizeddate('short', 'none') }}</td>
+                    <td>{{ economyEntry.date|simple_date('short') }}</td>
                     <td class="text-right">{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
                 </tr>
             {% else %}

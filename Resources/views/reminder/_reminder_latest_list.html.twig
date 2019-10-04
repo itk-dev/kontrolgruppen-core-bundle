@@ -1,6 +1,6 @@
 <div class="list-group">
     {% for day,dateReminders in reminders %}
-        <span>{{ day|localizeddate('none', 'none', null, null, 'EEEE dd/MM/yyyy') }}</span>
+        <span>{{ day|simple_date('short') }}</span>
         {% for reminder in dateReminders %}
             <a href="{{ path('reminder_show', {'id': reminder.id, 'process': reminder.process.id}) }}"
                class="list-group-item list-group-item-action list-group-item-warning{% if not reminder.finished and reminder.date|date('d-m-Y') < "now"|date('d-m-Y') %}list-group-item-warning{% endif %}">
