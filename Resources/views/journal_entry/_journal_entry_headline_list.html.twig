@@ -18,10 +18,10 @@
                     <a href="#journal-entry-content-{{ journalEntry.id }}" class="text-secondary"
                         role="button" data-toggle="collapse" aria-expanded="false" aria-controls="journal-entry-content-{{ journalEntry.id }}">
                         <span class="show">
-                            Vis mere <i class="fas {{ iconClass('show') }} fa-fw"></i>
+                            {{ 'journal_entry.headline_list.show_more'|trans }} <i class="fas {{ iconClass('show') }} fa-fw"></i>
                         </span>
                         <span class="hide">
-                            Vis mindre <i class="fas {{ iconClass('hide') }} fa-fw"></i>
+                            {{ 'journal_entry.headline_list.show_less'|trans }} <i class="fas {{ iconClass('hide') }} fa-fw"></i>
                         </span>
                     </a>
                 </div>
