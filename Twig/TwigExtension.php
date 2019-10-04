@@ -70,8 +70,8 @@ class TwigExtension extends AbstractExtension
         ];
     }
 
-    public function simpleDateFilter(Environment $env, $date, $format = 'long') {
-
+    public function simpleDateFilter(Environment $env, $date, $format = 'long')
+    {
         $date = twig_date_converter($env, $date);
 
         switch ($format) {

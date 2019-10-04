@@ -204,7 +204,6 @@ abstract class AbstractExport implements \JsonSerializable
                 : new \DateTime(strtotime($date));
 
         switch ($format) {
-
             case 'short':
                 return $date->format('d-m-Y');
                 break;
