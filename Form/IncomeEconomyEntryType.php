@@ -15,6 +15,7 @@ use Kontrolgruppen\CoreBundle\Entity\IncomeEconomyEntry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -55,9 +56,11 @@ class IncomeEconomyEntryType extends AbstractType
                 'choices' => EconomyEntryAmountPeriodEnumType::getChoices(),
                 'help' => 'economy_entry.form.income.amount_period_help',
             ])
-            ->add('amount', null, [
+            ->add('amount', MoneyType::class, [
                 'label' => 'economy_entry.form.income.amount',
                 'help' => 'economy_entry.form.income.amount_help',
+                'currency' => 'DKK',
+                'grouping' => true,
             ])
         ;
     }

@@ -12,6 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Form;
 
 use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -48,9 +49,11 @@ class RevenueServiceEconomyEntryType extends AbstractType
                     'class' => 'd-none future-savings-period-to',
                 ],
             ])
-            ->add('futureSavingsAmount', null, [
+            ->add('futureSavingsAmount', MoneyType::class, [
                 'label' => 'economy_entry.form.service.future_savings_amount',
                 'help' => 'economy_entry.form.service.future_savings_amount_help',
+                'currency' => 'DKK',
+                'grouping' => true,
             ])
             ->add('repaymentPeriodFrom', null, [
                 'label' => false,
@@ -72,9 +75,11 @@ class RevenueServiceEconomyEntryType extends AbstractType
                     'class' => 'd-none repayment-period-to',
                 ],
             ])
-            ->add('repaymentAmount', null, [
+            ->add('repaymentAmount', MoneyType::class, [
                 'label' => 'economy_entry.form.service.repayment_amount',
                 'help' => 'economy_entry.form.service.repayment_amount_help',
+                'currency' => 'DKK',
+                'grouping' => true,
             ])
         ;
     }
