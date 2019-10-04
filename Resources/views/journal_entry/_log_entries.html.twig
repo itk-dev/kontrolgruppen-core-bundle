@@ -18,7 +18,7 @@
                         </thead>
                         {% for log in journalEntry.logs %}
                             <tr>
-                            <td>{{ log.loggedAt|localizeddate('short', 'none') }}</td>
+                            <td>{{ log.loggedAt|simple_date('short') }}</td>
                             <td>{{ ('journal_entry.revision.action_type.' ~ (log.action|lower))|trans }}</td>
 
                             {% for changeKey, change in log.data %}

@@ -6,7 +6,7 @@
     {% endif %}
     {% if date is defined %}
     <li class="list-group-item">
-        {{ 'process_log.revision.table.log_entry.reminder.date'|trans }}: {{ date|localizeddate('short') }}
+        {{ 'process_log.revision.table.log_entry.reminder.date'|trans }}: {{ date|simple_date('long') }}
     </li>
     {% endif %}
     {% if finished is defined %}

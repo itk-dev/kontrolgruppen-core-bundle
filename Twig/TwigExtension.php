@@ -15,6 +15,7 @@ use Kontrolgruppen\CoreBundle\Entity\Process;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Kontrolgruppen\CoreBundle\Service\ConclusionService;
+use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -51,6 +52,7 @@ class TwigExtension extends AbstractExtension
         return [
             new TwigFilter('yes_no', [$this, 'booleanYesNoFilter']),
             new TwigFilter('true_false', [$this, 'booleanTrueFalseFilter']),
+            new TwigFilter('simple_date', [$this, 'simpleDateFilter'], ['needs_environment' => true]),
         ];
     }
 
@@ -66,6 +68,22 @@ class TwigExtension extends AbstractExtension
             new TwigFunction('camelCaseToUnderscore', [$this, 'camelCaseToUnderscore']),
             new TwigFunction('urlToProcessRelatedClass', [$this, 'urlToProcessRelatedClass']),
         ];
+    }
+
+    public function simpleDateFilter(Environment $env, $date, $format = 'long')
+    {
+        $date = twig_date_converter($env, $date);
+
+        switch ($format) {
+            case 'short':
+                return $date->format('d-m-Y');
+                break;
+            case 'long':
+                return $date->format('d-m-Y H:i');
+                break;
+            default:
+                return $this->simpleDateFilter($env, $date, 'long');
+        }
     }
 
     public function booleanTrueFalseFilter($value)

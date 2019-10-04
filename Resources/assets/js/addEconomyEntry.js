@@ -19,7 +19,7 @@ $(document).ready(function () {
 
     $('.datepicker-period').datetimepicker({
         inline: true,
-        format: 'L',
+        format: 'DD-MM-YYYY',
         useCurrent: false,
         defaultDate: false
     });

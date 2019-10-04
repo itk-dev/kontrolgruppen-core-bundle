@@ -36,7 +36,7 @@ class ServiceEconomyEntryType extends AbstractType
                 'label' => false,
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'dd.MM.yyyy',
+                'format' => 'dd-MM-yyyy',
                 'attr' => [
                     'class' => 'd-none',
                 ],
@@ -45,7 +45,7 @@ class ServiceEconomyEntryType extends AbstractType
                 'label' => false,
                 'widget' => 'single_text',
                 'html5' => false,
-                'format' => 'dd.MM.yyyy',
+                'format' => 'dd-MM-yyyy',
                 'attr' => [
                     'class' => 'd-none',
                 ],
