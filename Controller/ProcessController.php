@@ -22,6 +22,7 @@ use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
+use Kontrolgruppen\CoreBundle\Service\LogManager;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -180,12 +181,16 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}", name="process_show", methods={"GET", "POST"})
      */
-    public function show(Request $request, Process $process): Response
+    public function show(Request $request, Process $process, LogManager $logManager): Response
     {
         // Latest journal entries.
         $latestJournalEntries = $this->getDoctrine()->getRepository(
             JournalEntry::class
         )->getLatestEntries($process);
+
+        if ($this->isGranted('ROLE_ADMIN', $this->getUser())) {
+            $latestJournalEntries = $logManager->attachLogEntriesToJournalEntries($latestJournalEntries);
+        }
 
         return $this->render(
             '@KontrolgruppenCore/process/show.html.twig',

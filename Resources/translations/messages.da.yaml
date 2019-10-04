@@ -340,6 +340,9 @@ journal_entry:
             sort_desc: Nyeste først
             sort_asc: Ældste først
             only_status_label: Vis kun sagsstatus ændringer
+    headline_list:
+        show_more: Vis mere
+        show_less: Vis mindre
 journal_quickview:
     title: Seneste indlæg i journal
     actions:
