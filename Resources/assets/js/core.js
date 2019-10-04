@@ -152,4 +152,19 @@ $(function () {
             });
         });
     });
+
+    // Show alert when user is leaving a dirty form unsubmitted
+    let isSubmitting = false;
+
+    $('form').submit(function () {
+        isSubmitting = true;
+    });
+
+    $('form').data('initial-state', $('form').serialize());
+
+    $(window).on('beforeunload', function () {
+        if (!isSubmitting && $('form').serialize() !== $('form').data('initial-state')) {
+            return 'You have unsaved changes which will not be saved.'; // This will not be shown, but Chrome requires a return value.
+        }
+    });
 });
