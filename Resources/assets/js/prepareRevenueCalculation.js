@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    // Hide revenue submit button when no forms present en revenue table
+    if ($('#revenue-calculation-table').find('form').length === 0) {
+        $('#save-revenue-calculation-button').hide();
+    }
+
     // Disabling other possibilities than already selected.
     $('select.readonly option:not(:selected)').attr('disabled', true);
     $('select:not([readonly]) option').removeAttr('disabled');
