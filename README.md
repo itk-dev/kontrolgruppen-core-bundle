@@ -6,6 +6,12 @@ Kontrolgruppen core bundle.
 
 Submodule of Kontrolgruppen. Run `yarn install` in your project root to build assets.
 
+## Environment
+Set the site name in the .env file:
+```ini
+site_name=your-site-name
+```
+
 ## SAML
 
 Configuration of SAML login must be done with configuration under `kontrolgruppen_core.saml`.
