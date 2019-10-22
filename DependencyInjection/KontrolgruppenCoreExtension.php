@@ -56,6 +56,8 @@ class KontrolgruppenCoreExtension extends Extension implements PrependExtensionI
 
     public function prepend(ContainerBuilder $container)
     {
+        $container->setParameter('site_name', '%env(SITE_NAME)%');
+
         $container->loadFromExtension(
             'twig',
             [
