@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Client;
@@ -24,8 +25,10 @@ use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
+use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
@@ -46,8 +49,25 @@ class ProcessController extends BaseController
         PaginatorInterface $paginator,
         FormFactoryInterface $formFactory,
         ProcessManager $processManager,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        UserSettingsService $userSettingsService
     ): Response {
+
+        $userSettings = $this->getUser()->getUserSettings();
+
+        $result = $userSettingsService->handleProcessIndexRequest($request, $userSettings);
+
+        if (!empty($result)) {
+
+            return $this->redirectToRoute(
+                'process_index', [
+                    'sort' => $result['sort'],
+                    'direction' => $result['direction'],
+                    'page' => $request->query->get('page'),
+                ]
+            );
+        }
+
         $filterForm = $formFactory->create(ProcessFilterType::class);
 
         $results = [];
