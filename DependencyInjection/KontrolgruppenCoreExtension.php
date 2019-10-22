@@ -56,12 +56,17 @@ class KontrolgruppenCoreExtension extends Extension implements PrependExtensionI
 
     public function prepend(ContainerBuilder $container)
     {
+        $container->setParameter('site_name', '%env(SITE_NAME)%');
+
         $container->loadFromExtension(
             'twig',
             [
                 'default_path' => '%kernel.project_dir%/vendor/kontrolgruppen/core-bundle/Resources/views',
                 'paths' => [
                     '%kernel.project_dir%/vendor/kontrolgruppen/core-bundle/Resources/views' => 'KontrolgruppenCoreBundle',
+                ],
+                'globals' => [
+                    'site_name' => '%site_name%',
                 ],
             ]
         );
