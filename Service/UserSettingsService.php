@@ -1,8 +1,14 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
 
 namespace Kontrolgruppen\CoreBundle\Service;
-
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\Entity\UserSettings;
@@ -18,7 +24,7 @@ class UserSettingsService
     }
 
     /**
-     * Returns an array with information about user preferred sorting information structured like this:
+     * Returns an array with information about user preferred sorting information structured like this:.
      *
      * [
      *     'sort' => 'key', // e.g. caseWorker.id
@@ -32,8 +38,9 @@ class UserSettingsService
      * If both the request and the data storage contains information about sorting and they differ, the information
      * from the request will override the stored information and be persisted. The return value will then be null.
      *
-     * @param Request $request
+     * @param Request      $request
      * @param UserSettings $userSettings
+     *
      * @return array|null
      */
     public function handleProcessIndexRequest(Request $request, UserSettings $userSettings): ?array
@@ -44,10 +51,8 @@ class UserSettingsService
         // Check if there is sort and direction persisted
         // If not we may want to save user selected sort and direction
         if (empty($userSettings->getProcessIndexSort())) {
-
             // Nothing selected so no need to persist anything
             if (empty($sort) || empty($direction)) {
-
                 return null;
             }
 
@@ -63,14 +68,12 @@ class UserSettingsService
 
         // If sort and direction is not present in the query, we return the persisted sort and direction
         if (empty($sort) || empty($direction)) {
-
             return $persistedSortAndDirection;
         }
 
         // If sort and direction is present in the query and they differ from the persisted sort and direction, we will
         // save the new selection of sort and direction
-        if ($sort != $persistedSortAndDirection['sort'] || $direction != $persistedSortAndDirection['direction']) {
-
+        if ($sort !== $persistedSortAndDirection['sort'] || $direction !== $persistedSortAndDirection['direction']) {
             $userSettings->setProcessIndexSort($sort, $direction);
 
             $this->entityManager->persist($userSettings);

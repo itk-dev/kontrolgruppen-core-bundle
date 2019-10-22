@@ -182,7 +182,6 @@ class User implements UserInterface
     public function getUserSettings(): ?UserSettings
     {
         if (!empty($this->userSettings)) {
-
             return $this->userSettings;
         }
 
