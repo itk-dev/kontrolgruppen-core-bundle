@@ -9,7 +9,7 @@ Submodule of Kontrolgruppen. Run `yarn install` in your project root to build as
 ## Environment
 Set the site name in the .env file:
 ```ini
-site_name=your-site-name
+SITE_NAME=your-site-name
 ```
 
 ## SAML
