@@ -447,6 +447,7 @@ process:
     menu_title: Sager
     new:
         title: Opret sag
+        unique_error: Noget gik galt. Prøv venligst igen.
     show:
         title: Sag
     summary:
