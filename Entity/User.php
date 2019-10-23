@@ -147,6 +147,11 @@ class User implements UserInterface
     private $cliLoginToken;
 
     /**
+     * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\UserSettings", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $userSettings;
+
+    /**
      * @return mixed
      */
     public function getCliLoginToken()
@@ -172,5 +177,29 @@ class User implements UserInterface
     public function __toString()
     {
         return (string) $this->getUsername();
+    }
+
+    public function getUserSettings(): ?UserSettings
+    {
+        if (!empty($this->userSettings)) {
+            return $this->userSettings;
+        }
+
+        $userSettings = new UserSettings();
+        $this->setUserSettings($userSettings);
+
+        return $userSettings;
+    }
+
+    public function setUserSettings(UserSettings $userSettings): self
+    {
+        $this->userSettings = $userSettings;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $userSettings->getUser()) {
+            $userSettings->setUser($this);
+        }
+
+        return $this;
     }
 }
