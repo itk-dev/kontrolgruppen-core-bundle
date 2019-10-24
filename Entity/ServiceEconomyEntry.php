@@ -12,10 +12,14 @@ namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Kontrolgruppen\CoreBundle\Validator\FutureSavings;
+use Kontrolgruppen\CoreBundle\Validator\Repayment;
 
 /**
  * @ORM\Entity
  * @Gedmo\Loggable()
+ * @FutureSavings
+ * @Repayment
  */
 class ServiceEconomyEntry extends EconomyEntry
 {
@@ -46,32 +50,32 @@ class ServiceEconomyEntry extends EconomyEntry
     private $amountPeriod;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $futureSavingsAmount;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $futureSavingsPeriodFrom;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $futureSavingsPeriodTo;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $repaymentAmount;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $repaymentPeriodFrom;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $repaymentPeriodTo;
 
@@ -140,7 +144,7 @@ class ServiceEconomyEntry extends EconomyEntry
         return $this->futureSavingsPeriodFrom;
     }
 
-    public function setFutureSavingsPeriodFrom(\DateTimeInterface $futureSavingsPeriodFrom): self
+    public function setFutureSavingsPeriodFrom(?\DateTimeInterface $futureSavingsPeriodFrom): self
     {
         $this->futureSavingsPeriodFrom = $futureSavingsPeriodFrom;
 
@@ -152,7 +156,7 @@ class ServiceEconomyEntry extends EconomyEntry
         return $this->futureSavingsPeriodTo;
     }
 
-    public function setFutureSavingsPeriodTo(\DateTimeInterface $futureSavingsPeriodTo): self
+    public function setFutureSavingsPeriodTo(?\DateTimeInterface $futureSavingsPeriodTo): self
     {
         $this->futureSavingsPeriodTo = $futureSavingsPeriodTo;
 
@@ -176,7 +180,7 @@ class ServiceEconomyEntry extends EconomyEntry
         return $this->repaymentPeriodFrom;
     }
 
-    public function setRepaymentPeriodFrom(\DateTimeInterface $repaymentPeriodFrom): self
+    public function setRepaymentPeriodFrom(?\DateTimeInterface $repaymentPeriodFrom): self
     {
         $this->repaymentPeriodFrom = $repaymentPeriodFrom;
 
@@ -188,7 +192,7 @@ class ServiceEconomyEntry extends EconomyEntry
         return $this->repaymentPeriodTo;
     }
 
-    public function setRepaymentPeriodTo(\DateTimeInterface $repaymentPeriodTo): self
+    public function setRepaymentPeriodTo(?\DateTimeInterface $repaymentPeriodTo): self
     {
         $this->repaymentPeriodTo = $repaymentPeriodTo;
 

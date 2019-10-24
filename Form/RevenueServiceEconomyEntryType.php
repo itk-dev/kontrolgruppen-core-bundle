@@ -54,6 +54,10 @@ class RevenueServiceEconomyEntryType extends AbstractType
                 'help' => 'economy_entry.form.service.future_savings_amount_help',
                 'currency' => 'DKK',
                 'grouping' => true,
+                'required' => false,
+                'attr' => [
+                    'class' => 'future-savings-amount',
+                ],
             ])
             ->add('repaymentPeriodFrom', null, [
                 'label' => false,
@@ -80,6 +84,10 @@ class RevenueServiceEconomyEntryType extends AbstractType
                 'help' => 'economy_entry.form.service.repayment_amount_help',
                 'currency' => 'DKK',
                 'grouping' => true,
+                'required' => false,
+                'attr' => [
+                    'class' => 'repayment-amount',
+                ],
             ])
         ;
     }
