@@ -1,5 +1,13 @@
 <div id="empty-period-error-message" data-message="{{ 'economy.table.revenue.missing_period'|trans }}"></div>
 
+<div id="revenue-calculation-table-success" class="alert alert-success d-none" role="alert">
+    {{ 'economy.table.revenue.success'|trans }}
+</div>
+
+<div id="revenue-calculation-table-error" class="alert alert-danger d-none" role="alert">
+    {{ 'economy.table.revenue.error'|trans }}
+</div>
+
 <div class="table-responsive">
 
     <table id="revenue-calculation-table" class="table table-striped table-hover table-borderless thead-light">
