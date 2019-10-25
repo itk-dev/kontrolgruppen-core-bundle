@@ -93,7 +93,10 @@ class ProcessManager
             $process = new Process();
             $process->setProcessType($processType);
         }
+
         $process->setCaseNumber($this->getNewCaseNumber());
+
+        $process = $this->enforceUniqueCaseNumber($process);
 
         $process->setProcessStatus($this->decideStatusForProcess($process));
 
@@ -124,5 +127,20 @@ class ProcessManager
         $caseNumber = str_pad(\count($casesInYear) + 1, 5, '0', STR_PAD_LEFT);
 
         return date('y').'-'.$caseNumber;
+    }
+
+    private function enforceUniqueCaseNumber(Process $process): Process
+    {
+        $duplicateProcess = $this->processRepository->findBy(
+            ['caseNumber' => $process->getCaseNumber()]
+        );
+
+        if (empty($duplicateProcess)) {
+            return $process;
+        }
+
+        $process->setCaseNumber($this->getNewCaseNumber());
+
+        return $this->enforceUniqueCaseNumber($process);
     }
 }

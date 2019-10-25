@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    // Hide revenue submit button when no forms present en revenue table
+    if ($('#revenue-calculation-table').find('form').length === 0) {
+        $('#save-revenue-calculation-button').hide();
+    }
+
     // Disabling other possibilities than already selected.
     $('select.readonly option:not(:selected)').attr('disabled', true);
     $('select:not([readonly]) option').removeAttr('disabled');
@@ -40,6 +45,9 @@ $(document).ready(function () {
 
         periodModalTriggerElement.text(from + '-' + to);
 
+        let amountElement = $(periodModalTriggerElement.data('amount-input'));
+        amountElement.prop('required', true);
+
         $('#period-modal').modal('toggle');
 
         $('#period-modal-from').datetimepicker('destroy');
@@ -73,25 +81,15 @@ $(document).ready(function () {
             }
 
             let futureSavingsPeriodDummy = $(form.parentElement).find('.future-savings-period');
-            let futureSavingsPeriodFromInput;
             let futureSavingsPeriodToInput;
             let repaymentPeriodDummy = $(form.parentElement).find('.repayment-period');
             let repaymentPeriodToInput;
-            let repaymentPeriodFromInput;
+            let futureSavingsAmount;
+            let repaymentAmount;
 
             form.elements.forEach(function (element) {
-                if (element.classList.contains('future-savings-period-from')) {
-                    futureSavingsPeriodFromInput = element;
-                    return true;
-                }
-
                 if (element.classList.contains('future-savings-period-to')) {
                     futureSavingsPeriodToInput = element;
-                    return true;
-                }
-
-                if (element.classList.contains('repayment-period-from')) {
-                    repaymentPeriodFromInput = element;
                     return true;
                 }
 
@@ -99,15 +97,25 @@ $(document).ready(function () {
                     repaymentPeriodToInput = element;
                     return true;
                 }
+
+                if (element.classList.contains('future-savings-amount')) {
+                    futureSavingsAmount = element;
+                    return true;
+                }
+
+                if (element.classList.contains('repayment-amount')) {
+                    repaymentAmount = element;
+                    return true;
+                }
             });
 
-            if (futureSavingsPeriodFromInput.value === '' || futureSavingsPeriodToInput.value === '') {
+            if ($.trim(futureSavingsAmount.value).length && futureSavingsPeriodToInput.value === '') {
                 futureSavingsPeriodDummy.tooltip({ 'title': $('#empty-period-error-message').data('message') });
                 futureSavingsPeriodDummy.tooltip('show');
                 return false;
             }
 
-            if (repaymentPeriodFromInput.value === '' || repaymentPeriodToInput === '') {
+            if (repaymentAmount.value !== '' && repaymentPeriodToInput.value === '') {
                 repaymentPeriodDummy.tooltip({ 'title': $('#empty-period-error-message').data('message') });
                 repaymentPeriodDummy.tooltip('show');
                 return false;
@@ -120,19 +128,25 @@ $(document).ready(function () {
                     $('#revenue-table-save-success').addClass('d-none');
                     $('#revenue-table-save-fail').addClass('d-none');
                     $('#revenue-table-spinner').removeClass('d-none');
+                    $('#revenue-calculation-table-success').addClass('d-none');
+                    $('#revenue-calculation-table-error').addClass('d-none');
                 },
                 success: function (data) {
                     $('#revenue-table-spinner').addClass('d-none');
                     $('#revenue-table-save-success').removeClass('d-none');
                     $(form).parent('tr').removeClass('table-danger');
+                    $(form).parent('tr').addClass('table-success');
+                    $('#revenue-calculation-table-success').removeClass('d-none');
                 },
                 error: function (data) {
                     $('#revenue-table-spinner').addClass('d-none');
                     $('#revenue-table-save-fail').removeClass('d-none');
+                    $('#revenue-calculation-table-error').removeClass('d-none');
 
                     let errorForms = JSON.parse(data.responseText);
                     errorForms.forEach(function (item) {
                         $('form[name="' + item + '"]').parent('tr').addClass('table-danger');
+                        $('form[name="' + item + '"]').parent('tr').removeClass('table-success');
                     });
                 }
             });
