@@ -45,6 +45,9 @@ $(document).ready(function () {
 
         periodModalTriggerElement.text(from + '-' + to);
 
+        let amountElement = $(periodModalTriggerElement.data('amount-input'));
+        amountElement.prop('required', true);
+
         $('#period-modal').modal('toggle');
 
         $('#period-modal-from').datetimepicker('destroy');
@@ -78,25 +81,15 @@ $(document).ready(function () {
             }
 
             let futureSavingsPeriodDummy = $(form.parentElement).find('.future-savings-period');
-            let futureSavingsPeriodFromInput;
             let futureSavingsPeriodToInput;
             let repaymentPeriodDummy = $(form.parentElement).find('.repayment-period');
             let repaymentPeriodToInput;
-            let repaymentPeriodFromInput;
+            let futureSavingsAmount;
+            let repaymentAmount;
 
             form.elements.forEach(function (element) {
-                if (element.classList.contains('future-savings-period-from')) {
-                    futureSavingsPeriodFromInput = element;
-                    return true;
-                }
-
                 if (element.classList.contains('future-savings-period-to')) {
                     futureSavingsPeriodToInput = element;
-                    return true;
-                }
-
-                if (element.classList.contains('repayment-period-from')) {
-                    repaymentPeriodFromInput = element;
                     return true;
                 }
 
@@ -104,15 +97,25 @@ $(document).ready(function () {
                     repaymentPeriodToInput = element;
                     return true;
                 }
+
+                if (element.classList.contains('future-savings-amount')) {
+                    futureSavingsAmount = element;
+                    return true;
+                }
+
+                if (element.classList.contains('repayment-amount')) {
+                    repaymentAmount = element;
+                    return true;
+                }
             });
 
-            if (futureSavingsPeriodFromInput.value === '' || futureSavingsPeriodToInput.value === '') {
+            if ($.trim(futureSavingsAmount.value).length && futureSavingsPeriodToInput.value === '') {
                 futureSavingsPeriodDummy.tooltip({ 'title': $('#empty-period-error-message').data('message') });
                 futureSavingsPeriodDummy.tooltip('show');
                 return false;
             }
 
-            if (repaymentPeriodFromInput.value === '' || repaymentPeriodToInput === '') {
+            if (repaymentAmount.value !== '' && repaymentPeriodToInput.value === '') {
                 repaymentPeriodDummy.tooltip({ 'title': $('#empty-period-error-message').data('message') });
                 repaymentPeriodDummy.tooltip('show');
                 return false;

@@ -30,7 +30,7 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text"><span class="fa {{ iconClass('calendar') }} fa-sm" aria-hidden="true"></span></div>
                         </div>
-                        <div class="form-control period-modal-trigger text-truncate" data-target-input-from="#{{ revenueForm.futureSavingsPeriodFrom.vars.id }}" data-target-input-to="#{{ revenueForm.futureSavingsPeriodTo.vars.id }}">
+                        <div class="form-control period-modal-trigger text-truncate future-savings-period" data-amount-input="#{{ revenueForm.futureSavingsAmount.vars.id }}" data-target-input-from="#{{ revenueForm.futureSavingsPeriodFrom.vars.id }}" data-target-input-to="#{{ revenueForm.futureSavingsPeriodTo.vars.id }}">
                             {{ revenueForm.futureSavingsPeriodFrom.vars.value }}-{{ revenueForm.futureSavingsPeriodTo.vars.value }}
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text"><span class="fa {{ iconClass('calendar') }} fa-sm" aria-hidden="true"></span></div>
                         </div>
-                        <div class="form-control period-modal-trigger text-truncate" data-target-input-from="#{{ revenueForm.repaymentPeriodFrom.vars.id }}" data-target-input-to="#{{ revenueForm.repaymentPeriodTo.vars.id }}">
+                        <div class="form-control period-modal-trigger text-truncate repayment-period" data-amount-input="#{{ revenueForm.repaymentAmount.vars.id }}" data-target-input-from="#{{ revenueForm.repaymentPeriodFrom.vars.id }}" data-target-input-to="#{{ revenueForm.repaymentPeriodTo.vars.id }}">
                             {{ revenueForm.repaymentPeriodFrom.vars.value }}-{{ revenueForm.repaymentPeriodTo.vars.value }}
                         </div>
                     </div>
