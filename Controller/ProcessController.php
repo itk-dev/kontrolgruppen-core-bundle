@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Client;
@@ -26,11 +27,14 @@ use Kontrolgruppen\CoreBundle\Service\LogManager;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/process")
@@ -155,7 +159,9 @@ class ProcessController extends BaseController
      */
     public function new(
         Request $request,
-        ProcessManager $processManager
+        ProcessManager $processManager,
+        TranslatorInterface $translator,
+        LoggerInterface $logger
     ): Response {
         $process = new Process();
         $form = $this->createForm(ProcessType::class, $process);
@@ -164,14 +170,7 @@ class ProcessController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $process = $processManager->newProcess($process);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($process);
-
-            $client = new Client();
-            $process->setClient($client);
-
-            $entityManager->persist($client);
-            $entityManager->flush();
+            $process = $this->storeProcess($process, $translator, $logger);
 
             return $this->redirectToRoute('client_show', ['process' => $process]);
         }
@@ -193,6 +192,29 @@ class ProcessController extends BaseController
                 'recentActivity' => $recentActivity,
             ]
         );
+    }
+
+    private function storeProcess(Process $process, TranslatorInterface $translator, LoggerInterface $logger): Process
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($process);
+
+        $client = new Client();
+        $process->setClient($client);
+        $entityManager->persist($client);
+
+        try {
+            $entityManager->flush();
+        } catch (UniqueConstraintViolationException $e) {
+            $logger->log(LogLevel::ERROR, $e);
+
+            $this->addFlash(
+                'danger',
+                $translator->trans('process.new.unique_error')
+            );
+        }
+
+        return $process;
     }
 
     /**
