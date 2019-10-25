@@ -125,19 +125,25 @@ $(document).ready(function () {
                     $('#revenue-table-save-success').addClass('d-none');
                     $('#revenue-table-save-fail').addClass('d-none');
                     $('#revenue-table-spinner').removeClass('d-none');
+                    $('#revenue-calculation-table-success').addClass('d-none');
+                    $('#revenue-calculation-table-error').addClass('d-none');
                 },
                 success: function (data) {
                     $('#revenue-table-spinner').addClass('d-none');
                     $('#revenue-table-save-success').removeClass('d-none');
                     $(form).parent('tr').removeClass('table-danger');
+                    $(form).parent('tr').addClass('table-success');
+                    $('#revenue-calculation-table-success').removeClass('d-none');
                 },
                 error: function (data) {
                     $('#revenue-table-spinner').addClass('d-none');
                     $('#revenue-table-save-fail').removeClass('d-none');
+                    $('#revenue-calculation-table-error').removeClass('d-none');
 
                     let errorForms = JSON.parse(data.responseText);
                     errorForms.forEach(function (item) {
                         $('form[name="' + item + '"]').parent('tr').addClass('table-danger');
+                        $('form[name="' + item + '"]').parent('tr').removeClass('table-success');
                     });
                 }
             });

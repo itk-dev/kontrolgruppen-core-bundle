@@ -248,6 +248,8 @@ economy:
             period: Periode
             save: Gem tabel
             missing_period: Ugyldig periode
+            success: Ændringerne blev gemt
+            error: Ændringerne kunne ikke gemmes
 economy_entry:
     edit:
         title: Rediger registrering
