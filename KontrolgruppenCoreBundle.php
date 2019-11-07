@@ -10,8 +10,14 @@
 
 namespace Kontrolgruppen\CoreBundle;
 
+use Kontrolgruppen\CoreBundle\DependencyInjection\Compiler\CompilerPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class KontrolgruppenCoreBundle extends Bundle
 {
+    public function build(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new CompilerPass());
+    }
 }
