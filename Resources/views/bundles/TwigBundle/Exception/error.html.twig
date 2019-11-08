@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid main-container">
+        <h1 class="exception-status">
+            <span class="exception-status-text">{{ status_text|trans }}</span>
+            <small class="text-muted">(<span class="exception-status-code">{{ status_code }}</span>)</small>
+        </h1>
+
+        {% if exception.message|default(false) %}
+            <p class="lead exception-message">{{ exception.message }}</p>
+        {% endif %}
+
+        <p>
+            <a href="{{ path('dashboard_index') }}">Return to dashboard</a>
+        </p>
+    </div>
+{% endblock %}
