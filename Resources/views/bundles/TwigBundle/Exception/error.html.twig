@@ -8,7 +8,6 @@
                     <code>{{ status_code }}<br>
                     {{ status_text|trans }}</code>
                 </h1>
-
                 <p class="lead">
                     {% if exception.message|default(false) %}
                         <p class="lead exception-message">{{ exception.message }}</p>
