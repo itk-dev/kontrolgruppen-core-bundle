@@ -177,3 +177,11 @@ aside {
         display: block;
     }
 }
+
+/* Have tableheads align top */
+.table thead th {
+    vertical-align: top;
+}
+
+/* Style process type select */
+
