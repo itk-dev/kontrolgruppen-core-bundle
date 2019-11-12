@@ -106,7 +106,7 @@ class BaseController extends AbstractController
                     'label' => 'process.form.process_status',
                     'label_attr' => ['class' => 'sr-only'],
                     'placeholder' => 'process.form.change_process_status.placeholder',
-                    'attr' => ['class' => 'btn btn-lg btn-outline-primary btn-block form-control-sm'],
+                    'attr' => ['class' => 'form-control-lg process-type-select'],
                 ]
             )
             ->add(
