@@ -1,18 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container-fluid main-container">
-        <h1 class="exception-status">
-            <span class="exception-status-text">{{ status_text|trans }}</span>
-            <small class="text-muted">(<span class="exception-status-code">{{ status_code }}</span>)</small>
-        </h1>
-
-        {% if exception.message|default(false) %}
-            <p class="lead exception-message">{{ exception.message }}</p>
-        {% endif %}
-
-        <p>
-            <a href="{{ path('dashboard_index') }}">Return to dashboard</a>
-        </p>
+    <div class="container-fluid">
+        <div class="row align-items-center justify-content-center">
+            <div class="col col-sm-6 col-md-4 text-center mt-5">
+                <h1 class="exception-status display-4">
+                    <code>{{ status_code }}<br>
+                    {{ status_text|trans }}</code>
+                </h1>
+                <p class="lead">
+                    {% if exception.message|default(false) %}
+                        <p class="lead exception-message">{{ exception.message }}</p>
+                    {% endif %}
+                </p>
+                <p>
+                    {{ 'Contact the site administrator if this error persists.'|trans }} <a href="{{ path('dashboard_index') }}">{{ 'Return to the dashboard'|trans }}</a>
+                </p>
+            </div>
+        </div>
     </div>
 {% endblock %}
