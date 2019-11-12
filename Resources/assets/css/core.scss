@@ -185,3 +185,13 @@ aside {
 
 /* Style process type select */
 
+.form-control.process-type-select {
+    border-color: $primary;
+    color: $primary;
+    transition: background-color .1s cubic-bezier(.455, .03, .515, .955), color .1s cubic-bezier(.455, .03, .515, .955);
+    &:hover {
+        background-color: $primary;
+        color: $white;
+        transition: background-color .2s cubic-bezier(.455, .03, .515, .955), color .2s cubic-bezier(.455, .03, .515, .955);
+    }
+}
