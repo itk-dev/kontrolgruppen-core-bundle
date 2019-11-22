@@ -16,10 +16,10 @@ use Kontrolgruppen\CoreBundle\Entity\QuickLink;
 use Kontrolgruppen\CoreBundle\Entity\Reminder;
 use Kontrolgruppen\CoreBundle\Service\MenuService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class BaseController extends AbstractController
 {
@@ -38,12 +38,6 @@ class BaseController extends AbstractController
      * Render view.
      *
      * Attaches menu and quick links.
-     *
-     * @param string                                          $view
-     * @param array                                           $parameters
-     * @param \Symfony\Component\HttpFoundation\Response|null $response
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -131,13 +125,6 @@ class BaseController extends AbstractController
         }
     }
 
-    /**
-     * @param string $route
-     * @param array  $parameters
-     * @param int    $status
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
     protected function redirectToReferer(string $route, array $parameters = [], int $status = 302): RedirectResponse
     {
         // Check for referer in query string.

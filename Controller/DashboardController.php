@@ -10,15 +10,15 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\DBAL\Types\DateIntervalType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ReminderRepository;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Routing\Annotation\Route;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class DashboardController.

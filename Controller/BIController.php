@@ -54,8 +54,6 @@ class BIController extends BaseController
 
     /**
      * @Route("/download/{export}", name="download")
-     *
-     * @param BIExport $export
      */
     public function download(BIExport $export)
     {
@@ -86,8 +84,6 @@ class BIController extends BaseController
 
     /**
      * @Route("/delete/{export}", name="delete", methods={"DELETE"})
-     *
-     * @param BIExport $export
      *
      * @Security("has_role('ROLE_ADMIN')")
      */

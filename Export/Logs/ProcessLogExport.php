@@ -10,11 +10,11 @@
 
 namespace Kontrolgruppen\CoreBundle\Export\Logs;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Service\ProcessLogTranslatorService;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class ProcessLogExport.

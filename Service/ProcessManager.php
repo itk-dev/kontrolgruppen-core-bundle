@@ -14,8 +14,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType;
-use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Entity\User;
+use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 
 class ProcessManager
 {
@@ -37,8 +37,6 @@ class ProcessManager
 
     /**
      * Find open processes assigned to user that has not been visited by the user.
-     *
-     * @param \Kontrolgruppen\CoreBundle\Entity\User $user
      *
      * @return mixed
      */
@@ -80,8 +78,6 @@ class ProcessManager
 
     /**
      * Create new process.
-     *
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process|null $process
      *
      * @return \Kontrolgruppen\CoreBundle\Entity\Process
      */

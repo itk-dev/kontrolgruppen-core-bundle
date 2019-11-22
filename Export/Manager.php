@@ -93,9 +93,7 @@ class Manager
     /**
      * Run export.
      *
-     * @param AbstractExport $export
-     * @param string|array   $parameters
-     * @param string         $format
+     * @param string|array $parameters
      *
      * @return \PhpOffice\PhpSpreadsheet\Writer\IWriter
      *
@@ -127,9 +125,7 @@ class Manager
     /**
      * Run export and save result to file or dump to stdout.
      *
-     * @param AbstractExport $export
      * @param $parameters
-     * @param string      $format
      * @param string|null $filename
      *                              Filename to save report to. If null, a filename will be generated.
      *
@@ -172,8 +168,6 @@ class Manager
     /**
      * Get writer type form format string.
      *
-     * @param string $format
-     *
      * @return string
      */
     private function getWriterType(string $format)
@@ -202,8 +196,6 @@ class Manager
      *
      * The input must be a space-separated list of name=value pairs, e.g. "start=now end=+1 day"
      *
-     * @param string $spec
-     *
      * @return array
      */
     public function parseExportParameters(string $spec)
@@ -222,8 +214,7 @@ class Manager
     /**
      * Get typed export parameters based on the parameters defined by the export.
      *
-     * @param AbstractExport $export
-     * @param string|array   $parameters
+     * @param string|array $parameters
      *
      * @return array
      *

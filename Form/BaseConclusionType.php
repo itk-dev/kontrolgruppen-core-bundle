@@ -10,11 +10,11 @@
 
 namespace Kontrolgruppen\CoreBundle\Form;
 
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Kontrolgruppen\CoreBundle\Entity\BaseConclusion;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class BaseConclusionType extends AbstractType
 {
