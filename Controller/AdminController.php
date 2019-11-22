@@ -11,8 +11,8 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Service\MenuService;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class AdminController.

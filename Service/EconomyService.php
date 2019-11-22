@@ -36,8 +36,6 @@ class EconomyService
     /**
      * Calculate the revenue for a given process.
      *
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
-     *
      * @return array
      */
     public function calculateRevenue(Process $process)

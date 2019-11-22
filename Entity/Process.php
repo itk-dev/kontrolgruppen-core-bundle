@@ -15,6 +15,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Kontrolgruppen\CoreBundle\Validator as KontrolgruppenAssert;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ProcessRepository")
@@ -486,5 +488,17 @@ class Process extends AbstractEntity
         }
 
         return $this;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validateCourtDecision(ExecutionContextInterface $context, $payload)
+    {
+        if (true === $this->getPoliceReport() && null === $this->getCourtDecision()) {
+            $context->buildViolation('Court decision is required when police report is true')
+                ->atPath('courtDecision')
+                ->addViolation();
+        }
     }
 }

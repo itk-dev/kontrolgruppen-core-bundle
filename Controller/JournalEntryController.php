@@ -11,17 +11,17 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
+use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Filter\JournalFilterType;
 use Kontrolgruppen\CoreBundle\Form\JournalEntryType;
 use Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
+use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Kontrolgruppen\CoreBundle\Entity\Process;
-use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 
 /**
  * @Route("/process/{process}/journal")

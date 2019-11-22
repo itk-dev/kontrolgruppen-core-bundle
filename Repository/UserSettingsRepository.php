@@ -10,9 +10,9 @@
 
 namespace Kontrolgruppen\CoreBundle\Repository;
 
-use Kontrolgruppen\CoreBundle\Entity\UserSettings;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Kontrolgruppen\CoreBundle\Entity\UserSettings;
 
 /**
  * @method UserSettings|null find($id, $lockMode = null, $lockVersion = null)

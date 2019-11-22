@@ -37,11 +37,6 @@ class UserSettingsService
      *
      * If both the request and the data storage contains information about sorting and they differ, the information
      * from the request will override the stored information and be persisted. The return value will then be null.
-     *
-     * @param Request      $request
-     * @param UserSettings $userSettings
-     *
-     * @return array|null
      */
     public function handleProcessIndexRequest(Request $request, UserSettings $userSettings): ?array
     {

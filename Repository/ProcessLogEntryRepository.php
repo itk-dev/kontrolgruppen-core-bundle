@@ -10,11 +10,11 @@
 
 namespace Kontrolgruppen\CoreBundle\Repository;
 
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**

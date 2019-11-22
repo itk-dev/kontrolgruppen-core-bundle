@@ -10,13 +10,13 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Event\GetConclusionTemplateEvent;
 use Kontrolgruppen\CoreBundle\Service\ConclusionService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Kontrolgruppen\CoreBundle\Entity\Process;
 
 /**
  * @Route("/process/{process}/conclusion")

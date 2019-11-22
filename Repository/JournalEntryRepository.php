@@ -10,12 +10,12 @@
 
 namespace Kontrolgruppen\CoreBundle\Repository;
 
-use Kontrolgruppen\CoreBundle\Service\LogManager;
-use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType;
+use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
+use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Service\LogManager;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method JournalEntry|null find($id, $lockMode = null, $lockVersion = null)

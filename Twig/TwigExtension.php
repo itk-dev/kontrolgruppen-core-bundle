@@ -10,17 +10,17 @@
 
 namespace Kontrolgruppen\CoreBundle\Twig;
 
+use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Conclusion;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Service\ConclusionService;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Kontrolgruppen\CoreBundle\Service\ConclusionService;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Twig\TwigFilter;
-use Exception;
+use Twig\TwigFunction;
 
 class TwigExtension extends AbstractExtension
 {

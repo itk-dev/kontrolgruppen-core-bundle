@@ -112,11 +112,6 @@ class ProcessControllerListener implements EventSubscriberInterface
 
     /**
      * Checks if a given request originates from a route in the given Process route group.
-     *
-     * @param Request $request
-     * @param int     $processId
-     *
-     * @return bool
      */
     private function isRequestOriginatingFromProcessRouteGroup(Request $request, int $processId): bool
     {

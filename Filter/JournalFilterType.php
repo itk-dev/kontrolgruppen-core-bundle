@@ -14,11 +14,11 @@ use Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessTypeRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
+use Lexik\Bundle\FormFilterBundle\Filter\Form\Type as Filters;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
-use Lexik\Bundle\FormFilterBundle\Filter\Form\Type as Filters;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class JournalFilterType extends AbstractType
@@ -31,11 +31,6 @@ class JournalFilterType extends AbstractType
 
     /**
      * ProcessFilterType constructor.
-     *
-     * @param ProcessTypeRepository   $processTypeRepository
-     * @param ProcessStatusRepository $processStatusRepository
-     * @param UserRepository          $userRepository
-     * @param Security                $security
      */
     public function __construct(
         ProcessTypeRepository $processTypeRepository,

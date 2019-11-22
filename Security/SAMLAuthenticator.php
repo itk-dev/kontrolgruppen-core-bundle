@@ -83,11 +83,7 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         }
 
         if (!$userProvider instanceof SAMLUserProvider) {
-            throw new \RuntimeException(sprintf(
-                'Invalid user provider: %s is not an instance of %s',
-                \get_class($userProvider),
-                SAMLUserProvider::class
-            ));
+            throw new \RuntimeException(sprintf('Invalid user provider: %s is not an instance of %s', \get_class($userProvider), SAMLUserProvider::class));
         }
 
         $username = $this->getUsername($auth);
@@ -98,8 +94,6 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
 
     /**
      * Get username.
-     *
-     * @param Auth $auth
      *
      * @return string
      */

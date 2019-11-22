@@ -25,8 +25,6 @@ class OnReadEventArgs extends EventArgs
 
     /**
      * Constructor.
-     *
-     * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em, Process $process)
     {

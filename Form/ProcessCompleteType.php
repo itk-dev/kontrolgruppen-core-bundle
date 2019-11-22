@@ -16,7 +16,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProcessCompleteType extends AbstractType
 {
@@ -40,9 +39,6 @@ class ProcessCompleteType extends AbstractType
             ->add('policeReport', ChoiceType::class, [
                 'label' => 'process.form.police_report',
                 'required' => true,
-                'constraints' => [
-                    new NotBlank(),
-                ],
                 'choices' => [
                     null => null,
                     'common.boolean.yes' => true,
@@ -51,10 +47,7 @@ class ProcessCompleteType extends AbstractType
             ])
             ->add('courtDecision', ChoiceType::class, [
                 'label' => 'process.form.court_decision',
-                'required' => true,
-                'constraints' => [
-                    new NotBlank(),
-                ],
+                'required' => false,
                 'choices' => [
                     null => null,
                     'court_decision.true' => true,
