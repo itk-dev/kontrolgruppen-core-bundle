@@ -10,10 +10,10 @@
 
 namespace Kontrolgruppen\CoreBundle\Repository;
 
-use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method ProcessStatus|null find($id, $lockMode = null, $lockVersion = null)

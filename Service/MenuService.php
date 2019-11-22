@@ -10,12 +10,12 @@
 
 namespace Kontrolgruppen\CoreBundle\Service;
 
+use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Twig\TwigExtension;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Kontrolgruppen\CoreBundle\Twig\TwigExtension;
-use Kontrolgruppen\CoreBundle\Entity\Process;
 
 /**
  * Class MenuService.
@@ -87,7 +87,6 @@ class MenuService
     /**
      * Get the process menu.
      *
-     * @param string  $path
      * @param Process $process
      *
      * @return array

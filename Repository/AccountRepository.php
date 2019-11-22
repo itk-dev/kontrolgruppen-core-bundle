@@ -10,8 +10,8 @@
 
 namespace Kontrolgruppen\CoreBundle\Repository;
 
-use Kontrolgruppen\CoreBundle\Entity\Account;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Kontrolgruppen\CoreBundle\Entity\Account;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**

@@ -20,8 +20,6 @@ class GetConclusionTypesEvent extends Event
 
     /**
      * GetConclusionTypesEvent constructor.
-     *
-     * @param array $types
      */
     public function __construct(array $types = [])
     {

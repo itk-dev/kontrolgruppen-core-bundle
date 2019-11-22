@@ -10,11 +10,11 @@
 
 namespace Kontrolgruppen\CoreBundle\Form;
 
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Kontrolgruppen\CoreBundle\Entity\WeightedConclusion;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class WeightedConclusionType extends AbstractType
 {

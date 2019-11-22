@@ -11,8 +11,8 @@
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Kontrolgruppen\CoreBundle\Entity\Reason;
 use Kontrolgruppen\CoreBundle\Entity\Channel;
+use Kontrolgruppen\CoreBundle\Entity\Reason;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**

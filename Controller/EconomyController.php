@@ -10,22 +10,22 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Kontrolgruppen\CoreBundle\DBAL\Types\EconomyEntryEnumType;
+use Kontrolgruppen\CoreBundle\Entity\BaseEconomyEntry;
+use Kontrolgruppen\CoreBundle\Entity\EconomyEntry;
 use Kontrolgruppen\CoreBundle\Entity\IncomeEconomyEntry;
+use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
+use Kontrolgruppen\CoreBundle\Form\BaseEconomyEntryType;
+use Kontrolgruppen\CoreBundle\Form\EconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\IncomeEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\RevenueServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\ServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Entity\EconomyEntry;
-use Kontrolgruppen\CoreBundle\Form\EconomyEntryType;
-use Kontrolgruppen\CoreBundle\DBAL\Types\EconomyEntryEnumType;
-use Kontrolgruppen\CoreBundle\Entity\BaseEconomyEntry;
-use Kontrolgruppen\CoreBundle\Form\BaseEconomyEntryType;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class EconomyController.
@@ -99,8 +99,6 @@ class EconomyController extends BaseController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
      * @param $chosenType
      * @param $parameters
      *
@@ -150,9 +148,6 @@ class EconomyController extends BaseController
 
     /**
      * Handles the economy entry form.
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse parameters for the form, or redirects on success
      */

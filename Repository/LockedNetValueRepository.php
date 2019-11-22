@@ -10,8 +10,8 @@
 
 namespace Kontrolgruppen\CoreBundle\Repository;
 
-use Kontrolgruppen\CoreBundle\Entity\LockedNetValue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Kontrolgruppen\CoreBundle\Entity\LockedNetValue;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**

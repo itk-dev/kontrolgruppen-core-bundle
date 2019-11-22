@@ -13,12 +13,12 @@ namespace Kontrolgruppen\CoreBundle\Filter;
 use Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessTypeRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
+use Lexik\Bundle\FormFilterBundle\Filter\Form\Type as Filters;
 use Lexik\Bundle\FormFilterBundle\Filter\Query\QueryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
-use Lexik\Bundle\FormFilterBundle\Filter\Form\Type as Filters;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ProcessFilterType extends AbstractType
@@ -31,11 +31,6 @@ class ProcessFilterType extends AbstractType
 
     /**
      * ProcessFilterType constructor.
-     *
-     * @param ProcessTypeRepository   $processTypeRepository
-     * @param ProcessStatusRepository $processStatusRepository
-     * @param UserRepository          $userRepository
-     * @param Security                $security
      */
     public function __construct(
         ProcessTypeRepository $processTypeRepository,

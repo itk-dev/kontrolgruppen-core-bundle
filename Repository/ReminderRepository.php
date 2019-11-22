@@ -10,11 +10,11 @@
 
 namespace Kontrolgruppen\CoreBundle\Repository;
 
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Kontrolgruppen\CoreBundle\DBAL\Types\DateIntervalType;
 use Kontrolgruppen\CoreBundle\Entity\Reminder;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Kontrolgruppen\CoreBundle\Entity\User;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Reminder|null find($id, $lockMode = null, $lockVersion = null)
@@ -32,8 +32,6 @@ class ReminderRepository extends ServiceEntityRepository
     /**
      * Find all reminders for user.
      *
-     * @param \Kontrolgruppen\CoreBundle\Entity\User $user
-     *
      * @return mixed
      */
     public function findAllUserReminders(User $user)
@@ -49,8 +47,6 @@ class ReminderRepository extends ServiceEntityRepository
 
     /**
      * Find active reminders for user.
-     *
-     * @param \Kontrolgruppen\CoreBundle\Entity\User $user
      *
      * @return mixed
      */
@@ -79,8 +75,6 @@ class ReminderRepository extends ServiceEntityRepository
     /**
      * Count the number of active reminders for user.
      *
-     * @param \Kontrolgruppen\CoreBundle\Entity\User $user
-     *
      * @return mixed
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -108,9 +102,8 @@ class ReminderRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param \Kontrolgruppen\CoreBundle\Entity\User $user
-     * @param string                                 $interval   from DateIntervalType
-     * @param bool                                   $sortByDate
+     * @param string $interval   from DateIntervalType
+     * @param bool   $sortByDate
      *
      * @return mixed
      *

@@ -13,9 +13,9 @@ namespace Kontrolgruppen\CoreBundle\EventListener;
 use Kontrolgruppen\CoreBundle\Entity\BaseConclusion;
 use Kontrolgruppen\CoreBundle\Entity\WeightedConclusion;
 use Kontrolgruppen\CoreBundle\Event\GetConclusionTemplateEvent;
+use Kontrolgruppen\CoreBundle\Event\GetConclusionTypesEvent;
 use Kontrolgruppen\CoreBundle\Service\ConclusionService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Kontrolgruppen\CoreBundle\Event\GetConclusionTypesEvent;
 
 class ConclusionListener implements EventSubscriberInterface
 {
@@ -23,8 +23,6 @@ class ConclusionListener implements EventSubscriberInterface
 
     /**
      * ConclusionListener constructor.
-     *
-     * @param \Kontrolgruppen\CoreBundle\Service\ConclusionService $conclusionService
      */
     public function __construct(ConclusionService $conclusionService)
     {
@@ -46,8 +44,6 @@ class ConclusionListener implements EventSubscriberInterface
 
     /**
      * Supply conclusion types.
-     *
-     * @param GetConclusionTypesEvent $event
      */
     public function onGetConclusionTypes(GetConclusionTypesEvent $event)
     {
