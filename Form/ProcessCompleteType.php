@@ -40,9 +40,6 @@ class ProcessCompleteType extends AbstractType
             ->add('policeReport', ChoiceType::class, [
                 'label' => 'process.form.police_report',
                 'required' => true,
-                'constraints' => [
-                    new NotBlank(),
-                ],
                 'choices' => [
                     null => null,
                     'common.boolean.yes' => true,
@@ -51,10 +48,7 @@ class ProcessCompleteType extends AbstractType
             ])
             ->add('courtDecision', ChoiceType::class, [
                 'label' => 'process.form.court_decision',
-                'required' => true,
-                'constraints' => [
-                    new NotBlank(),
-                ],
+                'required' => false,
                 'choices' => [
                     null => null,
                     'court_decision.true' => true,
