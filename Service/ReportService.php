@@ -73,15 +73,17 @@ class ReportService
         $qb
             ->select('journalEntry')
             ->where('journalEntry.process = :process')
-            ->setParameter('process', $process)
-            ->andWhere('journalEntry.type = :note')
-            ->setParameter('note', JournalEntryEnumType::NOTE);
+            ->setParameter('process', $process);
+
+        $journalTypes = [JournalEntryEnumType::NOTE];
 
         if ('internal_notes' === $choice) {
-            $qb
-                ->orWhere('journalEntry.type = :internal')
-                ->setParameter('internal', JournalEntryEnumType::INTERNAL_NOTE);
+            $journalTypes[] = JournalEntryEnumType::INTERNAL_NOTE;
         }
+
+        $qb
+            ->andWhere('journalEntry.type IN (:journalTypes)')
+            ->setParameter(':journalTypes', $journalTypes);
 
         if ('only_summary' === $choice) {
             $qb
