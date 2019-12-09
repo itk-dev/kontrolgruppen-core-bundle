@@ -671,6 +671,7 @@ process_report:
             process_type: Type
             service: Ydelse
             channel: Kanal
+            process_not_completed: Ikke afsluttet
         client:
             title: Klientoplysninger
             first_name: Fornavn
