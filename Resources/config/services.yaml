@@ -35,3 +35,9 @@ services:
         arguments:
             $objectManager: '@doctrine.orm.entity_manager'
             $class: ~
+
+    Kontrolgruppen\CoreBundle\CPR\FaellesSQLCprService:
+        arguments:
+            $serviceUrl: '%env(CPR_SERVICE_URL)%'
+
+    Kontrolgruppen\CoreBundle\CPR\CprServiceInterface: '@Kontrolgruppen\CoreBundle\CPR\FaellesSQLCprService'
