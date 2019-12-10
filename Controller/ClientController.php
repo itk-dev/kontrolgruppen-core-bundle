@@ -36,7 +36,7 @@ class ClientController extends BaseController
         $changeProcessStatusForm = $this->createChangeProcessStatusForm($process);
         $this->handleChangeProcessStatusForm($request, $changeProcessStatusForm);
 
-        $cpr = \str_replace('-', '', $process->getClientCPR());
+        $cpr = str_replace('-', '', $process->getClientCPR());
 
         // Make sure a client has been created for the process.
         if (!isset($client)) {
@@ -104,7 +104,7 @@ class ClientController extends BaseController
     public function update(Request $request, Process $process, CprServiceInterface $cprService, LoggerInterface $logger, TranslatorInterface $translator): Response
     {
         $client = $process->getClient();
-        $cpr = \str_replace('-', '', $process->getClientCPR());
+        $cpr = str_replace('-', '', $process->getClientCPR());
 
         try {
             $client = $cprService->populateClient($cpr, $client);

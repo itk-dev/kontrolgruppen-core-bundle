@@ -204,7 +204,7 @@ class ProcessController extends BaseController
 
         $client = new Client();
 
-        $cpr = \str_replace('-', '', $process->getClientCPR());
+        $cpr = str_replace('-', '', $process->getClientCPR());
         try {
             $client = $cprService->populateClient($cpr, $client);
         } catch (CprException $e) {

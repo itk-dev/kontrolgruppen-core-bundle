@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
 
 namespace Kontrolgruppen\CoreBundle\CPR;
 
@@ -9,7 +16,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class FaellesSQLCprService implements CprServiceInterface
 {
-    private CONST CITIZEN_ENDPOINT = 'citizen';
+    private const CITIZEN_ENDPOINT = 'citizen';
 
     private $serviceUrl;
     private $httpClient;
@@ -21,14 +28,15 @@ class FaellesSQLCprService implements CprServiceInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function find(int $cpr): array
     {
-        $url = sprintf('%s/%s/%s', $this->serviceUrl,self::CITIZEN_ENDPOINT, $cpr);
+        $url = sprintf('%s/%s/%s', $this->serviceUrl, self::CITIZEN_ENDPOINT, $cpr);
 
         try {
             $response = $this->httpClient->request('GET', $url);
+
             return json_decode($response->getContent(), true);
         } catch (TransportExceptionInterface $e) {
             throw new CprException($e->getMessage());
@@ -36,14 +44,13 @@ class FaellesSQLCprService implements CprServiceInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function populateClient(int $cpr, Client $client): Client
     {
         $cprResult = $this->find($cpr);
 
         if (!empty($cprResult)) {
-
             $client->setFirstName($cprResult['Fornavn']);
             $client->setLastName($cprResult['Efternavn']);
             $client->setAddress($this->generateAddressString($cprResult));
@@ -56,17 +63,17 @@ class FaellesSQLCprService implements CprServiceInterface
 
     private function generateAddressString($cprResult): string
     {
-        $address  = $cprResult['Vejnavn'];
-        $address .= ' ' . $cprResult['Husnr'];
+        $address = $cprResult['Vejnavn'];
+        $address .= ' '.$cprResult['Husnr'];
 
-        $address .= (!empty($cprResult['Etage'])) ? ' ' . $cprResult['Etage'] : '';
-        $address .= (!empty($cprResult['Side'])) ? ' ' . $cprResult['Side'] : '';
+        $address .= (!empty($cprResult['Etage'])) ? ' '.$cprResult['Etage'] : '';
+        $address .= (!empty($cprResult['Side'])) ? ' '.$cprResult['Side'] : '';
 
         return $address;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function isNewClientInfoAvailable(int $cpr, Client $client): bool
     {
@@ -85,8 +92,7 @@ class FaellesSQLCprService implements CprServiceInterface
         ];
 
         foreach ($comparisons as $key => $value) {
-
-            if (\strtolower(\trim($key)) !== \strtolower(\trim($value))) {
+            if (strtolower(trim($key)) !== strtolower(trim($value))) {
                 return true;
             }
         }
