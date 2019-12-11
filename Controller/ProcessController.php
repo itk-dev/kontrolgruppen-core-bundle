@@ -12,6 +12,8 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Knp\Component\Pager\PaginatorInterface;
+use Kontrolgruppen\CoreBundle\CPR\Cpr;
+use Kontrolgruppen\CoreBundle\CPR\CprException;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
@@ -24,6 +26,7 @@ use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
+use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
@@ -161,7 +164,8 @@ class ProcessController extends BaseController
         Request $request,
         ProcessManager $processManager,
         TranslatorInterface $translator,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        CprServiceInterface $cprService
     ): Response {
         $process = new Process();
         $form = $this->createForm(ProcessType::class, $process);
@@ -170,7 +174,7 @@ class ProcessController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $process = $processManager->newProcess($process);
 
-            $process = $this->storeProcess($process, $translator, $logger);
+            $process = $this->storeProcess($process, $translator, $logger, $cprService);
 
             return $this->redirectToRoute('client_show', ['process' => $process]);
         }
@@ -194,12 +198,19 @@ class ProcessController extends BaseController
         );
     }
 
-    private function storeProcess(Process $process, TranslatorInterface $translator, LoggerInterface $logger): Process
+    private function storeProcess(Process $process, TranslatorInterface $translator, LoggerInterface $logger, CprServiceInterface $cprService): Process
     {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($process);
 
         $client = new Client();
+
+        try {
+            $client = $cprService->populateClient(new Cpr($process->getClientCPR()), $client);
+        } catch (CprException $e) {
+            $logger->error($e);
+        }
+
         $process->setClient($client);
         $entityManager->persist($client);
 
