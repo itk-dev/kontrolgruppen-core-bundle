@@ -39,7 +39,7 @@ class FaellesSQLCprService implements CprServiceInterface
 
             return json_decode($response->getContent(), true);
         } catch (TransportExceptionInterface $e) {
-            throw new CprException($e->getMessage());
+            throw new CprException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
