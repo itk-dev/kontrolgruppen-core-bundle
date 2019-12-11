@@ -11,6 +11,10 @@
 namespace Kontrolgruppen\CoreBundle\CPR;
 
 use Kontrolgruppen\CoreBundle\Entity\Client;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -36,9 +40,8 @@ class FaellesSQLCprService implements CprServiceInterface
 
         try {
             $response = $this->httpClient->request('GET', $url);
-
-            return json_decode($response->getContent(), true);
-        } catch (TransportExceptionInterface $e) {
+            return $response->toArray();
+        } catch (TransportExceptionInterface | ClientExceptionInterface | DecodingExceptionInterface | RedirectionExceptionInterface | ServerExceptionInterface $e) {
             throw new CprException($e->getMessage(), $e->getCode(), $e);
         }
     }
