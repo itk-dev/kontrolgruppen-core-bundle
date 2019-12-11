@@ -21,9 +21,9 @@ class FaellesSQLCprService implements CprServiceInterface
     private $serviceUrl;
     private $httpClient;
 
-    public function __construct(HttpClientInterface $httpClient, $serviceUrl)
+    public function __construct(HttpClientInterface $httpClient, $cprServiceUrl)
     {
-        $this->serviceUrl = $serviceUrl;
+        $this->serviceUrl = $cprServiceUrl;
         $this->httpClient = $httpClient;
     }
 
