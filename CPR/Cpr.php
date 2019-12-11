@@ -1,8 +1,14 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
 
 namespace Kontrolgruppen\CoreBundle\CPR;
-
 
 class Cpr
 {
@@ -23,11 +29,11 @@ class Cpr
             throw new \InvalidArgumentException('$cpr can only contain numbers');
         }
 
-        if (intval($cpr) < 0) {
+        if ((int) $cpr < 0) {
             throw new \InvalidArgumentException('$cpr cannot be negative');
         }
 
-        if (strlen($cpr) !== 10) {
+        if (10 !== \strlen($cpr)) {
             throw new \InvalidArgumentException('$cpr must contain exactly 10 digits');
         }
 

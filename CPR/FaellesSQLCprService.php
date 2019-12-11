@@ -40,6 +40,7 @@ class FaellesSQLCprService implements CprServiceInterface
 
         try {
             $response = $this->httpClient->request('GET', $url);
+
             return $response->toArray();
         } catch (TransportExceptionInterface | ClientExceptionInterface | DecodingExceptionInterface | RedirectionExceptionInterface | ServerExceptionInterface $e) {
             throw new CprException($e->getMessage(), $e->getCode(), $e);
