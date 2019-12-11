@@ -12,6 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Knp\Component\Pager\PaginatorInterface;
+use Kontrolgruppen\CoreBundle\CPR\Cpr;
 use Kontrolgruppen\CoreBundle\CPR\CprException;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Client;
@@ -204,9 +205,8 @@ class ProcessController extends BaseController
 
         $client = new Client();
 
-        $cpr = str_replace('-', '', $process->getClientCPR());
         try {
-            $client = $cprService->populateClient($cpr, $client);
+            $client = $cprService->populateClient(new Cpr($process->getClientCPR()), $client);
         } catch (CprException $e) {
             $logger->error($e);
         }

@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Kontrolgruppen\CoreBundle\CPR\Cpr;
 use Kontrolgruppen\CoreBundle\CPR\CprException;
 use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\Process;
@@ -36,14 +37,12 @@ class ClientController extends BaseController
         $changeProcessStatusForm = $this->createChangeProcessStatusForm($process);
         $this->handleChangeProcessStatusForm($request, $changeProcessStatusForm);
 
-        $cpr = str_replace('-', '', $process->getClientCPR());
-
         // Make sure a client has been created for the process.
         if (!isset($client)) {
             $client = new Client();
 
             try {
-                $client = $cprService->populateClient($cpr, $client);
+                $client = $cprService->populateClient(new Cpr($process->getClientCPR()), $client);
             } catch (CprException $e) {
                 $logger->error($e);
             }
@@ -58,7 +57,7 @@ class ClientController extends BaseController
         $newInfoAvailable = false;
 
         try {
-            $newInfoAvailable = $cprService->isNewClientInfoAvailable($cpr, $client);
+            $newInfoAvailable = $cprService->isNewClientInfoAvailable(new Cpr($process->getClientCPR()), $client);
         } catch (CprException $e) {
             $logger->error($e);
         }
@@ -104,10 +103,9 @@ class ClientController extends BaseController
     public function update(Request $request, Process $process, CprServiceInterface $cprService, LoggerInterface $logger, TranslatorInterface $translator): Response
     {
         $client = $process->getClient();
-        $cpr = str_replace('-', '', $process->getClientCPR());
 
         try {
-            $client = $cprService->populateClient($cpr, $client);
+            $client = $cprService->populateClient(new Cpr($process->getClientCPR()), $client);
             $this->addFlash('success', $translator->trans('client.show.client_updated'));
         } catch (CprException $e) {
             $this->addFlash('danger', $translator->trans('client.show.client_not_updated'));

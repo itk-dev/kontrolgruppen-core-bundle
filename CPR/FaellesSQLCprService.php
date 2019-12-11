@@ -34,7 +34,7 @@ class FaellesSQLCprService implements CprServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function find(int $cpr): array
+    public function find(Cpr $cpr): array
     {
         $url = sprintf('%s/%s/%s', $this->serviceUrl, self::CITIZEN_ENDPOINT, $cpr);
 
@@ -49,7 +49,7 @@ class FaellesSQLCprService implements CprServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function populateClient(int $cpr, Client $client): Client
+    public function populateClient(Cpr $cpr, Client $client): Client
     {
         $cprResult = $this->find($cpr);
 
@@ -78,7 +78,7 @@ class FaellesSQLCprService implements CprServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function isNewClientInfoAvailable(int $cpr, Client $client): bool
+    public function isNewClientInfoAvailable(Cpr $cpr, Client $client): bool
     {
         $cprResult = $this->find($cpr);
 

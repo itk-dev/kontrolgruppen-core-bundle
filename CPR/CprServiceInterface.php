@@ -21,7 +21,7 @@ interface CprServiceInterface
      *
      * @throws CprException
      */
-    public function find(int $cpr): array;
+    public function find(Cpr $cpr): array;
 
     /**
      * Populates client with information from the CPR service. If no data is found via the service the client
@@ -34,7 +34,7 @@ interface CprServiceInterface
      *
      * @throws CprException
      */
-    public function populateClient(int $cpr, Client $client): Client;
+    public function populateClient(Cpr $cpr, Client $client): Client;
 
     /**
      * @param int    $cpr
@@ -44,5 +44,5 @@ interface CprServiceInterface
      *
      * @throws CprException
      */
-    public function isNewClientInfoAvailable(int $cpr, Client $client): bool;
+    public function isNewClientInfoAvailable(Cpr $cpr, Client $client): bool;
 }
