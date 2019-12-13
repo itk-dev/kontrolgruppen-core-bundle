@@ -61,18 +61,19 @@ class ProcessController extends BaseController
 
         $result = $userSettingsService->handleProcessIndexRequest($request, $userSettings);
 
+        $filterForm = $formFactory->create(ProcessFilterType::class);
+
         if (!empty($result)) {
             return $this->redirectToRoute(
                 'process_index',
                 [
+                    $filterForm->getName() => $request->query->get($filterForm->getName()),
                     'sort' => $result['sort'],
                     'direction' => $result['direction'],
                     'page' => $request->query->get('page'),
                 ]
             );
         }
-
-        $filterForm = $formFactory->create(ProcessFilterType::class);
 
         $results = [];
 
