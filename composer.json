@@ -32,7 +32,8 @@
         "symfony/webpack-encore-bundle": "^1.6",
         "twig/extensions": "^1.5",
         "mpdf/mpdf": "^8.0.2",
-        "phpoffice/phpspreadsheet": "^1.8"
+        "phpoffice/phpspreadsheet": "^1.8",
+        "symfony/http-client": "4.3.*"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.1",

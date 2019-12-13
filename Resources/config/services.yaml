@@ -2,6 +2,8 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $cprServiceUrl: '%env(CPR_SERVICE_URL)%'
 
     Kontrolgruppen\CoreBundle\:
         resource: '../../*'
@@ -35,3 +37,6 @@ services:
         arguments:
             $objectManager: '@doctrine.orm.entity_manager'
             $class: ~
+
+    Kontrolgruppen\CoreBundle\CPR\CprServiceInterface:
+        class: 'Kontrolgruppen\CoreBundle\CPR\FaellesSQLCprService'
