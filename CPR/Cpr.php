@@ -25,7 +25,7 @@ class Cpr
             $cpr = str_replace('-', '', $cpr);
         }
 
-        if (!filter_var($cpr, FILTER_VALIDATE_INT)) {
+        if (!preg_match('/^\d{10}$/', $cpr)) {
             throw new \InvalidArgumentException('$cpr can only contain numbers');
         }
 
