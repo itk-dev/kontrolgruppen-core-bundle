@@ -15,19 +15,19 @@ use Kontrolgruppen\CoreBundle\Entity\Client;
 interface CprServiceInterface
 {
     /**
-     * @param int $cpr
+     * @param Cpr $cpr
      *
-     * @return array
+     * @return CprServiceResult
      *
      * @throws CprException
      */
-    public function find(Cpr $cpr): array;
+    public function find(Cpr $cpr): CprServiceResult;
 
     /**
      * Populates client with information from the CPR service. If no data is found via the service the client
      * object is returned without being changed.
      *
-     * @param int    $cpr
+     * @param Cpr    $cpr
      * @param Client $client
      *
      * @return Client
@@ -37,7 +37,7 @@ interface CprServiceInterface
     public function populateClient(Cpr $cpr, Client $client): Client;
 
     /**
-     * @param int    $cpr
+     * @param Cpr    $cpr
      * @param Client $client
      *
      * @return bool
