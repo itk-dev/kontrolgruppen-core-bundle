@@ -30,7 +30,11 @@ class DashboardController extends BaseController
      */
     public function index(Request $request, ReminderRepository $reminderRepository, ProcessRepository $processRepository, PaginatorInterface $paginator, SessionInterface $session, ProcessManager $processManager)
     {
-        $filterFormBuilder = $this->createFormBuilder();
+        $filterFormBuilder = $this->createFormBuilder(null, [
+            'attr' => [
+                'id' => 'dashboard_process_limit',
+            ],
+        ]);
         $filterFormBuilder->add('limit', ChoiceType::class, [
             'choices' => [
                 '2' => 2,
