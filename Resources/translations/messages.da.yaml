@@ -676,6 +676,7 @@ process_report:
             service: Ydelse
             channel: Kanal
             process_not_completed: Ikke afsluttet
+
         client:
             title: Klientoplysninger
             first_name: Fornavn
@@ -718,6 +719,7 @@ process_report:
                 amount_period: Beløbsinterval
         conclusion:
             title: Konklusion
+            not_found: Ingen konklusion
             base:
                 conclusion: Konklusion
             weighted:

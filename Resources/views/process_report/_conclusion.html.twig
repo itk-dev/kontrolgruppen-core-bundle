@@ -1,0 +1,8 @@
+<div class="border">
+    <h2>{{ 'process_report.report.conclusion.title'|trans }}</h2>
+    {% if conclusionTemplate is defined %}
+        {% include(conclusionTemplate) %}
+    {% else %}
+        {{ 'process_report.report.conclusion.not_found'|trans }}
+    {% endif %}
+</div>
