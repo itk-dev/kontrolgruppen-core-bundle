@@ -10,60 +10,50 @@
 
 namespace Kontrolgruppen\CoreBundle\CPR;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 class FaellesSQLCprServiceResult implements CprServiceResult
 {
     private $serviceResult;
 
     public function __construct(array $serviceResult)
     {
-        $this->setServiceResult($serviceResult);
+        $optionsResolver = new OptionsResolver();
+        $this->configureOptions($optionsResolver);
+
+        $this->serviceResult = $optionsResolver->resolve($serviceResult);
     }
 
-    private function setServiceResult(array $serviceResult)
+    public function configureOptions(OptionsResolver $optionsResolver)
     {
-        // The schema array describes which keys are expected to be present in the result and whether values has to be
-        // to be present for the key. True means the value has to be present.
-        $schema = [
-            'Fornavn' => true,
-            'Efternavn' => true,
-            'Vejnavn' => true,
-            'HusNr' => true,
-            'Etage' => false,
-            'Side' => false,
-            'Postnummer' => true,
-            'Postdistrikt' => true,
-        ];
+        $optionsResolver->setDefined([
+            'CPR',
+            'Bynavn',
+            'Mellemnavn',
+            'PostnummerOgBy',
+            'Adresseringsadresse',
+            'Adresseringsnavn',
+        ]);
 
-        $missingKeys = [];
-        $missingRequiredValues = [];
-        foreach ($schema as $key => $required) {
-            if (!\array_key_exists($key, $serviceResult)) {
-                $missingKeys[] = $key;
-            } elseif ($required && empty($serviceResult[$key])) {
-                $missingRequiredValues[] = $key;
-            }
-        }
+        $optionsResolver->setRequired([
+            'Fornavn',
+            'Efternavn',
+            'Vejnavn',
+            'HusNr',
+            'Etage',
+            'Side',
+            'Postnummer',
+            'Postdistrikt',
+        ]);
 
-        $errors = [];
-        if (!empty($missingKeys)) {
-            $errors[] = sprintf(
-                'Result does not have expected key(s) present: %s',
-                implode(', ', $missingKeys)
-            );
-        }
-
-        if (!empty($missingRequiredValues)) {
-            $errors[] = sprintf(
-                'Result is missing values for following required key(s): %s',
-                implode(', ', $missingRequiredValues)
-            );
-        }
-
-        if (!empty($errors)) {
-            throw new \InvalidArgumentException(implode(', ', $errors));
-        }
-
-        $this->serviceResult = $serviceResult;
+        $optionsResolver->setAllowedTypes('Fornavn', 'string');
+        $optionsResolver->setAllowedTypes('Efternavn', 'string');
+        $optionsResolver->setAllowedTypes('Vejnavn', 'string');
+        $optionsResolver->setAllowedTypes('HusNr', 'string');
+        $optionsResolver->setAllowedTypes('Etage', ['null', 'string']);
+        $optionsResolver->setAllowedTypes('Side', ['null', 'string']);
+        $optionsResolver->setAllowedTypes('Postnummer', 'string');
+        $optionsResolver->setAllowedTypes('Postdistrikt', 'string');
     }
 
     public function getFirstName(): string
