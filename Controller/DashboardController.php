@@ -74,6 +74,8 @@ class DashboardController extends BaseController
             )
         );
 
+        $qb->andWhere('e.completedAt is null');
+
         $query = $qb->getQuery();
 
         $notVisitedProcesses = $processManager->getUsersUnvisitedProcesses($this->getUser());
