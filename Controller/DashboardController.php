@@ -32,8 +32,8 @@ class DashboardController extends BaseController
     {
         $filterFormBuilder = $this->createFormBuilder(null, [
             'attr' => [
-                'id' => 'dashboard_process_limit'
-            ]
+                'id' => 'dashboard_process_limit',
+            ],
         ]);
         $filterFormBuilder->add('limit', ChoiceType::class, [
             'choices' => [
