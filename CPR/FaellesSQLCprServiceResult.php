@@ -10,18 +10,32 @@
 
 namespace Kontrolgruppen\CoreBundle\CPR;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 class FaellesSQLCprServiceResult implements CprServiceResult
 {
     private $serviceResult;
 
     public function __construct(array $serviceResult)
     {
-        $this->setServiceResult($serviceResult);
+        $optionsResolver = new OptionsResolver();
+        $this->configureOptions($optionsResolver);
+
+        $this->serviceResult = $optionsResolver->resolve($serviceResult);
     }
 
-    private function setServiceResult(array $serviceResult)
+    public function configureOptions(OptionsResolver $optionsResolver)
     {
-        $schema = [
+        $optionsResolver->setDefined([
+            'CPR',
+            'Bynavn',
+            'Mellemnavn',
+            'PostnummerOgBy',
+            'Adresseringsadresse',
+            'Adresseringsnavn',
+        ]);
+
+        $optionsResolver->setRequired([
             'Fornavn',
             'Efternavn',
             'Vejnavn',
@@ -29,43 +43,35 @@ class FaellesSQLCprServiceResult implements CprServiceResult
             'Etage',
             'Side',
             'Postnummer',
-            'Bynavn',
-        ];
+            'Postdistrikt',
+        ]);
 
-        $missingKeys = [];
-        foreach ($schema as $key) {
-            if (!\array_key_exists($key, $serviceResult)) {
-                $missingKeys[] = $key;
-            }
-        }
-
-        if (!empty($missingKeys)) {
-            $message = sprintf(
-                'Result does not have expected key(s) present: %s',
-                implode(', ', $missingKeys)
-            );
-            throw new \InvalidArgumentException($message);
-        }
-
-        $this->serviceResult = $serviceResult;
+        $optionsResolver->setAllowedTypes('Fornavn', 'string');
+        $optionsResolver->setAllowedTypes('Efternavn', 'string');
+        $optionsResolver->setAllowedTypes('Vejnavn', 'string');
+        $optionsResolver->setAllowedTypes('HusNr', 'string');
+        $optionsResolver->setAllowedTypes('Etage', ['null', 'string']);
+        $optionsResolver->setAllowedTypes('Side', ['null', 'string']);
+        $optionsResolver->setAllowedTypes('Postnummer', 'string');
+        $optionsResolver->setAllowedTypes('Postdistrikt', 'string');
     }
 
-    public function getFirstName(): ?string
+    public function getFirstName(): string
     {
         return $this->serviceResult['Fornavn'];
     }
 
-    public function getLastName(): ?string
+    public function getLastName(): string
     {
         return $this->serviceResult['Efternavn'];
     }
 
-    public function getStreetName(): ?string
+    public function getStreetName(): string
     {
         return $this->serviceResult['Vejnavn'];
     }
 
-    public function getHouseNumber(): ?string
+    public function getHouseNumber(): string
     {
         return $this->serviceResult['HusNr'];
     }
@@ -80,13 +86,13 @@ class FaellesSQLCprServiceResult implements CprServiceResult
         return $this->serviceResult['Side'];
     }
 
-    public function getPostalCode(): ?string
+    public function getPostalCode(): string
     {
         return $this->serviceResult['Postnummer'];
     }
 
-    public function getCity(): ?string
+    public function getCity(): string
     {
-        return $this->serviceResult['Bynavn'];
+        return $this->serviceResult['Postdistrikt'];
     }
 }
