@@ -75,17 +75,12 @@
 .navbar .form-control {
     padding: .75rem 1rem;
     border-width: 0;
+    opacity: .75;
 }
-
-.form-control-dark {
-    color: #fff;
-    background-color: rgba(255, 255, 255, .1);
-    border-color: rgba(255, 255, 255, .1);
-}
-
-.form-control-dark:focus {
+.navbar .form-control:focus {
     border-color: transparent;
     box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+    opacity: 1;
 }
 
 h1 {
