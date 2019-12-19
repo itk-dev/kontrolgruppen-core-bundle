@@ -93,11 +93,13 @@ class ReportService
 
         $viewData['journalEntries'] = $qb->getQuery()->getArrayResult();
 
-        $viewData['conclusionTemplate'] = $this->conclusionService->getTemplate(
-            \get_class($process->getConclusion()),
-            '',
-            '@KontrolgruppenCore/process_report/'
-        );
+        if (!empty($process->getConclusion())) {
+            $viewData['conclusionTemplate'] = $this->conclusionService->getTemplate(
+                \get_class($process->getConclusion()),
+                '',
+                '@KontrolgruppenCore/process_report/'
+            );
+        }
 
         $reportHtml = $this->twig->render('@KontrolgruppenCore/process_report/_report.html.twig', $viewData);
 
