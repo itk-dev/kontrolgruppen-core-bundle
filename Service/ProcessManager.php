@@ -126,7 +126,7 @@ class ProcessManager
 
         $caseNumberCounter = (!empty($lastCase))
             ? $this->getCaseNumberCounterFromProcess($lastCase)
-            : 0; 
+            : 0;
 
         $caseNumber = str_pad($caseNumberCounter + 1, 5, '0', STR_PAD_LEFT);
 
