@@ -121,14 +121,17 @@ class ProcessManager
     {
         $casesInYear = $this->processRepository->findAllFromYear(date('Y'));
 
-        /** @var Process $lastCase */
-        $lastCase = end($casesInYear);
+        $highestCaseCounter = 0;
 
-        $caseNumberCounter = (!empty($lastCase))
-            ? $this->getCaseNumberCounterFromProcess($lastCase)
-            : 0;
+        /** @var Process $process */
+        foreach ($casesInYear as $process) {
+            $caseCounter = $this->getCaseNumberCounterFromProcess($process);
+            if ($caseCounter > $highestCaseCounter) {
+                $highestCaseCounter = $caseCounter;
+            }
+        }
 
-        $caseNumber = str_pad($caseNumberCounter + 1, 5, '0', STR_PAD_LEFT);
+        $caseNumber = str_pad($highestCaseCounter + 1, 5, '0', STR_PAD_LEFT);
 
         return date('y').'-'.$caseNumber;
     }
