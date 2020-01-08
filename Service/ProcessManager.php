@@ -120,9 +120,25 @@ class ProcessManager
     public function getNewCaseNumber()
     {
         $casesInYear = $this->processRepository->findAllFromYear(date('Y'));
-        $caseNumber = str_pad(\count($casesInYear) + 1, 5, '0', STR_PAD_LEFT);
+
+        /** @var Process $lastCase */
+        $lastCase = end($casesInYear);
+
+        $caseNumberCounter = (!empty($lastCase))
+            ? $this->getCaseNumberCounterFromProcess($lastCase)
+            : 0; 
+
+        $caseNumber = str_pad($caseNumberCounter + 1, 5, '0', STR_PAD_LEFT);
 
         return date('y').'-'.$caseNumber;
+    }
+
+    private function getCaseNumberCounterFromProcess(Process $process)
+    {
+        $positionOfDash = strpos($process->getCaseNumber(), '-');
+        $processCounter = (int) substr($process->getCaseNumber(), $positionOfDash + 1);
+
+        return $processCounter;
     }
 
     private function enforceUniqueCaseNumber(Process $process): Process
