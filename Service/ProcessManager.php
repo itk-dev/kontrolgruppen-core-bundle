@@ -21,6 +21,7 @@ class ProcessManager
 {
     private $processRepository;
     private $entityManager;
+    private $lockService;
 
     /**
      * ProcessManager constructor.
@@ -29,10 +30,12 @@ class ProcessManager
      */
     public function __construct(
         ProcessRepository $processRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        LockService $lockService
     ) {
         $this->processRepository = $processRepository;
         $this->entityManager = $entityManager;
+        $this->lockService = $lockService;
     }
 
     /**
@@ -133,7 +136,17 @@ class ProcessManager
 
         $caseNumber = str_pad($highestCaseCounter + 1, 5, '0', STR_PAD_LEFT);
 
-        return date('y').'-'.$caseNumber;
+        $completeCaseNumber = date('y').'-'.$caseNumber;
+
+        $this->lockService->createLock($completeCaseNumber);
+        $this->lockService->acquire($completeCaseNumber);
+
+        if (!$this->lockService->isAcquired($completeCaseNumber)) {
+
+            return $this->getNewCaseNumber();
+        }
+
+        return $completeCaseNumber;
     }
 
     private function getCaseNumberCounterFromProcess(Process $process)

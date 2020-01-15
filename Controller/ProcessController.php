@@ -27,6 +27,7 @@ use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
 use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
+use Kontrolgruppen\CoreBundle\Service\LockService;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
@@ -166,7 +167,8 @@ class ProcessController extends BaseController
         ProcessManager $processManager,
         TranslatorInterface $translator,
         LoggerInterface $logger,
-        CprServiceInterface $cprService
+        CprServiceInterface $cprService,
+        LockService $lockService
     ): Response {
         $process = new Process();
         $form = $this->createForm(ProcessType::class, $process);
@@ -175,7 +177,16 @@ class ProcessController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $process = $processManager->newProcess($process);
 
+            $lockService->createLock($process->getCaseNumber());
+
+            if (!$lockService->isAcquired($process->getCaseNumber())) {
+
+                throw new \RuntimeException('Lock was not acquired.');
+            }
+
             $process = $this->storeProcess($process, $translator, $logger, $cprService);
+
+            $lockService->release($process->getCaseNumber());
 
             return $this->redirectToRoute('client_show', ['process' => $process]);
         }
