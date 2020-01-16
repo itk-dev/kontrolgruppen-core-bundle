@@ -218,7 +218,6 @@ class JournalEntryController extends BaseController
         Process $process,
         LogManager $logManager
     ): Response {
-
         $this->denyAccessUnlessGranted('edit', $process);
 
         $form = $this->createForm(JournalEntryType::class, $journalEntry);
@@ -261,7 +260,6 @@ class JournalEntryController extends BaseController
         JournalEntry $journalEntry,
         Process $process
     ): Response {
-
         $this->denyAccessUnlessGranted('edit', $process);
 
         if ($this->isCsrfTokenValid(

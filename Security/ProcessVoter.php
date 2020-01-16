@@ -1,8 +1,14 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
 
 namespace Kontrolgruppen\CoreBundle\Security;
-
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\User;
@@ -24,12 +30,12 @@ class ProcessVoter extends Voter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::VIEW, self::EDIT])) {
+        if (!\in_array($attribute, [self::VIEW, self::EDIT])) {
             return false;
         }
 
@@ -42,7 +48,7 @@ class ProcessVoter extends Voter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {

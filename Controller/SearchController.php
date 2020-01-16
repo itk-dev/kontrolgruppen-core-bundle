@@ -102,7 +102,7 @@ class SearchController extends BaseController
             $qb->expr()->concat(
                 $qb->expr()->concat('client.firstName', $qb->expr()->literal(' ')),
                 'client.lastName'
-            ) . '= :search'
+            ).'= :search'
         );
         $qb->setParameter(':search', $search);
 
