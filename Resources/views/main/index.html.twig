@@ -150,7 +150,7 @@
 
                 {% set _sidebar_right = block('sidebar_right') %}
                 {% if _sidebar_right is not empty %}
-                    <aside role="sidebar-right" class="d-none d-md-block order-md-0 order-lg-1 d-lg-flex flex-lg-column flex-grow-1 p-3 w100 w-lg-30">
+                    <aside role="sidebar-right" class="sidebar-right d-none d-md-block order-md-0 order-lg-1 d-lg-flex flex-lg-column flex-grow-1 p-3 w100 w-lg-30">
                         {{ _sidebar_right|raw }}
                     </aside>
                 {% endif %}
