@@ -190,3 +190,9 @@ aside {
         transition: background-color .2s cubic-bezier(.455, .03, .515, .955), color .2s cubic-bezier(.455, .03, .515, .955);
     }
 }
+
+/* Disabled style for div with form-control */
+div.form-control.disabled {
+    background-color: #e9ecef;
+    opacity: 1;
+}

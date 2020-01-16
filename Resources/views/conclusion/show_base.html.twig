@@ -7,5 +7,7 @@
     <div class="mt-3">
         {{ conclusion.conclusion|raw }}
     </div>
-    <a href="{{ path('conclusion_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
+    {% if is_granted('edit', process) %}
+        <a href="{{ path('conclusion_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
+    {% endif %}
 {% endblock %}
