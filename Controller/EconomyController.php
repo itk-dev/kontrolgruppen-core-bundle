@@ -41,19 +41,22 @@ class EconomyController extends BaseController
     {
         $parameters = [];
 
-        // Check for result of type form.
-        $formResult = $this->handleEconomyEntryFormRequest($request, $process);
-        $parameters['economy_entry_form'] = $formResult['form'];
+        if ($this->isGranted('edit', $process)) {
+            // Check for result of type form.
+            $formResult = $this->handleEconomyEntryFormRequest($request, $process);
+            $parameters['economy_entry_form'] = $formResult['form'];
 
-        // Handle entity form.
-        $chosenType = isset($formResult['chosenType']) ? $formResult['chosenType'] : null;
-        $entityFormResult = $this->handleEntityForm($request, $process, $chosenType, $parameters);
+            // Handle entity form.
+            $chosenType = isset($formResult['chosenType']) ? $formResult['chosenType'] : null;
+            $entityFormResult = $this->handleEntityForm($request, $process, $chosenType, $parameters);
 
-        if ($entityFormResult instanceof RedirectResponse) {
-            return $entityFormResult;
+            if ($entityFormResult instanceof RedirectResponse) {
+                return $entityFormResult;
+            }
+
+            $parameters['collapse_economy_entry_form'] = !isset($formResult['submitted']) || !$formResult['submitted'];
         }
 
-        $parameters['collapse_economy_entry_form'] = !isset($formResult['submitted']) || !$formResult['submitted'];
         $parameters['menuItems'] = $this->menuService->getProcessMenu($request->getPathInfo(), $process);
         $parameters['process'] = $process;
 
@@ -70,14 +73,16 @@ class EconomyController extends BaseController
                 $serviceEconomyEntry
             )->getForm();
 
-            $revenueForm->handleRequest($request);
+            if ($this->isGranted('edit', $process)) {
+                $revenueForm->handleRequest($request);
 
-            if ($revenueForm->isSubmitted() && $revenueForm->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
-            }
+                if ($revenueForm->isSubmitted() && $revenueForm->isValid()) {
+                    $this->getDoctrine()->getManager()->flush();
+                }
 
-            if ($revenueForm->isSubmitted() && !$revenueForm->isValid()) {
-                $revenueFormErrors[] = $revenueForm->getName();
+                if ($revenueForm->isSubmitted() && !$revenueForm->isValid()) {
+                    $revenueFormErrors[] = $revenueForm->getName();
+                }
             }
 
             $parameters['revenueForms'][] = $revenueForm->createView();

@@ -29,6 +29,10 @@ class SearchController extends BaseController
     {
         $search = $request->query->get('search');
 
+        if ($this->isGranted('ROLE_EXTERNAL')) {
+            return $this->redirectToRoute('search_external', ['search' => $search]);
+        }
+
         $qb = $processRepository->createQueryBuilder('e');
         $qb->leftJoin('e.client', 'client');
         $qb->addSelect('client');
@@ -67,6 +71,65 @@ class SearchController extends BaseController
           'align' => 'center',
           'size' => 'small',
           'style' => 'bottom',
+        ]);
+
+        return $this->render(
+            '@KontrolgruppenCore/search/index.html.twig',
+            [
+                'pagination' => $pagination,
+                'search' => $search,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/external", name="search_external")
+     */
+    public function external(Request $request, ProcessRepository $processRepository, PaginatorInterface $paginator)
+    {
+        $search = $request->query->get('search');
+
+        $qb = $processRepository->createQueryBuilder('e');
+        $qb->leftJoin('e.client', 'client');
+        $qb->addSelect('client');
+        $qb->leftJoin('e.caseWorker', 'caseWorker');
+        $qb->addSelect('partial caseWorker.{id,username}');
+        $qb->where('e.caseNumber = :search');
+        $qb->orWhere('e.clientCPR = :search');
+        $qb->orWhere('client.telephone = :search');
+        $qb->orWhere('client.address = :search');
+        $qb->orWhere(
+            $qb->expr()->concat(
+                $qb->expr()->concat('client.firstName', $qb->expr()->literal(' ')),
+                'client.lastName'
+            ) . '= :search'
+        );
+        $qb->setParameter(':search', $search);
+
+        // Add sortable fields.
+        $qb->leftJoin('e.channel', 'channel');
+        $qb->addSelect('partial channel.{id,name}');
+
+        $qb->leftJoin('e.service', 'service');
+        $qb->addSelect('partial service.{id,name}');
+
+        $qb->leftJoin('e.processType', 'processType');
+        $qb->addSelect('partial processType.{id,name}');
+
+        $qb->leftJoin('e.processStatus', 'processStatus');
+        $qb->addSelect('partial processStatus.{id,name}');
+
+        $query = $qb->getQuery();
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            50
+        );
+        $pagination->setCustomParameters([
+            'align' => 'center',
+            'size' => 'small',
+            'style' => 'bottom',
         ]);
 
         return $this->render(

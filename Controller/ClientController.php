@@ -76,6 +76,8 @@ class ClientController extends BaseController
      */
     public function edit(Request $request, Process $process): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         $client = $process->getClient();
 
         $form = $this->createForm(ClientType::class, $client);
@@ -102,6 +104,8 @@ class ClientController extends BaseController
      */
     public function update(Request $request, Process $process, CprServiceInterface $cprService, LoggerInterface $logger, TranslatorInterface $translator): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         $client = $process->getClient();
 
         try {

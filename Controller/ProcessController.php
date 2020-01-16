@@ -33,6 +33,7 @@ use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -169,6 +170,9 @@ class ProcessController extends BaseController
         CprServiceInterface $cprService
     ): Response {
         $process = new Process();
+
+        $this->denyAccessUnlessGranted('edit', $process);
+
         $form = $this->createForm(ProcessType::class, $process);
         $form->handleRequest($request);
 
@@ -258,6 +262,7 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="process_edit", methods={"GET","POST"})
+     * @IsGranted("edit", subject="process")
      */
     public function edit(Request $request, Process $process): Response
     {
@@ -294,6 +299,7 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}", name="process_delete", methods={"DELETE"})
+     * @IsGranted("edit", subject="process")
      */
     public function delete(Request $request, Process $process): Response
     {
@@ -311,6 +317,7 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}/complete", name="process_complete", methods={"GET","POST"})
+     * @IsGranted("edit", subject="process")
      */
     public function complete(Request $request, Process $process, ServiceRepository $serviceRepository): Response
     {
@@ -365,6 +372,7 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}/resume", name="process_resume", methods={"POST"})
+     * @IsGranted("edit", subject="process")
      */
     public function resume(Request $request, Process $process): Response
     {

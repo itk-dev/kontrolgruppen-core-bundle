@@ -15,9 +15,17 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RevenueServiceEconomyEntryType extends AbstractType
 {
+    private $authorizationChecker;
+
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+    {
+        $this->authorizationChecker = $authorizationChecker;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -55,6 +63,7 @@ class RevenueServiceEconomyEntryType extends AbstractType
                 'currency' => 'DKK',
                 'grouping' => true,
                 'required' => false,
+                'disabled' => $this->authorizationChecker->isGranted('ROLE_EXTERNAL'),
                 'attr' => [
                     'class' => 'future-savings-amount',
                 ],
@@ -85,6 +94,7 @@ class RevenueServiceEconomyEntryType extends AbstractType
                 'currency' => 'DKK',
                 'grouping' => true,
                 'required' => false,
+                'disabled' => $this->authorizationChecker->isGranted('ROLE_EXTERNAL'),
                 'attr' => [
                     'class' => 'repayment-amount',
                 ],
