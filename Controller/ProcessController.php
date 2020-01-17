@@ -33,7 +33,6 @@ use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -262,10 +261,11 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="process_edit", methods={"GET","POST"})
-     * @IsGranted("edit", subject="process")
      */
     public function edit(Request $request, Process $process): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         if (null !== $process->getCompletedAt() && !$this->isGranted('ROLE_ADMIN')) {
             $this->redirectToRoute('process_show', ['id' => $process->getId()]);
         }
@@ -299,10 +299,11 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}", name="process_delete", methods={"DELETE"})
-     * @IsGranted("edit", subject="process")
      */
     public function delete(Request $request, Process $process): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         if ($this->isCsrfTokenValid(
             'delete'.$process->getId(),
             $request->request->get('_token')
@@ -317,10 +318,11 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}/complete", name="process_complete", methods={"GET","POST"})
-     * @IsGranted("edit", subject="process")
      */
     public function complete(Request $request, Process $process, ServiceRepository $serviceRepository): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         if (null !== $process->getCompletedAt()) {
             return $this->redirectToRoute(
                 'process_show',
@@ -372,10 +374,11 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}/resume", name="process_resume", methods={"POST"})
-     * @IsGranted("edit", subject="process")
      */
     public function resume(Request $request, Process $process): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         $process->setCompletedAt(null);
         $process->setLockedNetValue(null);
         $em = $this->getDoctrine()->getManager();
