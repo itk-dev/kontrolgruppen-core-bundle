@@ -193,8 +193,7 @@ aside {
 
 /* Disabled style for div with form-control */
 div.form-control.disabled {
-    background-color: #e9ecef;
-    opacity: 1;
+    background-color: $input-disabled-bg;
 }
 
 .sidebar-right {
