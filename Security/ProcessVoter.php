@@ -85,7 +85,7 @@ class ProcessVoter extends Voter
             return true;
         }
 
-        if ($this->security->isGranted('ROLE_EXTERNAL')) {
+        if ($this->security->isGranted('ROLE_PROCESS_VIEW')) {
             return true;
         }
 

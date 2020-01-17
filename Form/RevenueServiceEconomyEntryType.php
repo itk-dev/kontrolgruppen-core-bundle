@@ -63,7 +63,7 @@ class RevenueServiceEconomyEntryType extends AbstractType
                 'currency' => 'DKK',
                 'grouping' => true,
                 'required' => false,
-                'disabled' => $this->authorizationChecker->isGranted('ROLE_EXTERNAL'),
+                'disabled' => $this->authorizationChecker->isGranted('ROLE_PROCESS_VIEW'),
                 'attr' => [
                     'class' => 'future-savings-amount',
                 ],
@@ -94,7 +94,7 @@ class RevenueServiceEconomyEntryType extends AbstractType
                 'currency' => 'DKK',
                 'grouping' => true,
                 'required' => false,
-                'disabled' => $this->authorizationChecker->isGranted('ROLE_EXTERNAL'),
+                'disabled' => $this->authorizationChecker->isGranted('ROLE_PROCESS_VIEW'),
                 'attr' => [
                     'class' => 'repayment-amount',
                 ],
