@@ -38,11 +38,13 @@
                        data-placement="top" title="{{ 'journal_entry.actions.show'|trans }}">
                         <i class="fas {{ iconClass('show') }} fa-inverse fa-fw"></i>
                     </a>
-                    <a href="{{ path('journal_entry_edit', {'id': entry.id, 'process': process.id}) }}" class="btn btn-sm btn-primary mb-1"
-                       data-toggle="tooltip"
-                       data-placement="top" title="{{ 'journal_entry.actions.edit'|trans }}">
-                        <i class="fas {{ iconClass('edit') }} fa-inverse fa-fw"></i></a>
-                    </a>
+                    {% if is_granted('edit', process) %}
+                        <a href="{{ path('journal_entry_edit', {'id': entry.id, 'process': process.id}) }}" class="btn btn-sm btn-primary mb-1"
+                           data-toggle="tooltip"
+                           data-placement="top" title="{{ 'journal_entry.actions.edit'|trans }}">
+                            <i class="fas {{ iconClass('edit') }} fa-inverse fa-fw"></i></a>
+                        </a>
+                    {% endif %}
                 </div>
                 <div class="col-sm-3 pb-2">
                     <span class="text-muted d-block small">{{ entry.createdBy }}</span>

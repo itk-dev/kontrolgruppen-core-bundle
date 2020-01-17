@@ -2,31 +2,35 @@
     <div class="col-12">
 
         <div class="btn-group" role="group" aria-label="Process actions">
-            {% if not process.completedAt %}
-                <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-sm btn-outline-warning text-truncate"><i
-                        class="fas {{ iconClass('reminder') }} mr-2"></i>{{ 'reminder.btns.create'|trans }}</a>
+            {% if is_granted('edit', process) %}
+                {% if not process.completedAt %}
+                    <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-sm btn-outline-warning text-truncate"><i
+                            class="fas {{ iconClass('reminder') }} mr-2"></i>{{ 'reminder.btns.create'|trans }}</a>
+                {% endif %}
             {% endif %}
             <a href="{{ path('process_report_index', {'process': process.id}) }}" class="btn btn-sm btn-outline-secondary text-truncate"><i
                     class="fas {{ iconClass('report') }} mr-2"></i>{{ 'process.btns.create_report'|trans }}</a>
-            {% if not process.completedAt %}
-                <a href="{{ path('process_complete', {'id': process.id}) }}" class="btn btn-sm btn-outline-danger text-truncate"><i
-                        class="fas {{ iconClass('process-complete') }} mr-2"></i>{{ 'process.btns.complete'|trans }}</a>
-            {% elseif is_granted('ROLE_ADMIN') %}
-                <form method="post" action="{{ path('process_resume', {'id': process.id}) }}" data-yes-no-message="{{ 'process.resume.confirm'|trans }}">
-                    <button class="btn btn-sm btn-outline-danger">
-                        <i class="fas {{ iconClass('process-resume') }} mr-2"></i>{{ 'process.btns.resume'|trans }}
-                    </button>
-                </form>
+            {% if is_granted('edit', process) %}
+                {% if not process.completedAt %}
+                    <a href="{{ path('process_complete', {'id': process.id}) }}" class="btn btn-sm btn-outline-danger text-truncate"><i
+                            class="fas {{ iconClass('process-complete') }} mr-2"></i>{{ 'process.btns.complete'|trans }}</a>
+                {% elseif is_granted('ROLE_ADMIN') %}
+                    <form method="post" action="{{ path('process_resume', {'id': process.id}) }}" data-yes-no-message="{{ 'process.resume.confirm'|trans }}">
+                        <button class="btn btn-sm btn-outline-danger">
+                            <i class="fas {{ iconClass('process-resume') }} mr-2"></i>{{ 'process.btns.resume'|trans }}
+                        </button>
+                    </form>
+                {% endif %}
             {% endif %}
         </div>
 
         {% if process is defined %}
-            {% if not process.completedAt %}
+            {% if not process.completedAt and is_granted('edit', process) %}
                 {% if changeProcessStatusForm is defined %}
                     {{ form(changeProcessStatusForm, {'attr': {'id': 'process_status_form', 'class': 'mt-2'}}) }}
                 {% endif %}
             {% else %}
-                <div class="bg-light rounded-sm p-3 mt-2">
+                <div class="bg-light rounded-sm p-3 mt-2 mb-2">
                     {{ process.processStatus }}
                 </div>
             {% endif %}

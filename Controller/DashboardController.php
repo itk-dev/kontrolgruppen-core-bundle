@@ -30,6 +30,10 @@ class DashboardController extends BaseController
      */
     public function index(Request $request, ReminderRepository $reminderRepository, ProcessRepository $processRepository, PaginatorInterface $paginator, SessionInterface $session, ProcessManager $processManager)
     {
+        if ($this->isGranted('ROLE_PROCESS_VIEW')) {
+            return $this->redirectToRoute('search_external');
+        }
+
         $filterFormBuilder = $this->createFormBuilder(null, [
             'attr' => [
                 'id' => 'dashboard_process_limit',

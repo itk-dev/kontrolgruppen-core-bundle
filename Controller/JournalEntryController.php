@@ -61,17 +61,20 @@ class JournalEntryController extends BaseController
             JournalEntryType::class,
             $journalEntry
         );
-        $journalEntryForm->handleRequest($request);
 
-        if ($journalEntryForm->isSubmitted() && $journalEntryForm->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($journalEntry);
-            $entityManager->flush();
+        if ($this->isGranted('edit', $process)) {
+            $journalEntryForm->handleRequest($request);
 
-            return $this->redirectToRoute(
-                'journal_entry_index',
-                ['process' => $process->getId()]
-            );
+            if ($journalEntryForm->isSubmitted() && $journalEntryForm->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($journalEntry);
+                $entityManager->flush();
+
+                return $this->redirectToRoute(
+                    'journal_entry_index',
+                    ['process' => $process->getId()]
+                );
+            }
         }
 
         $filterForm = $formFactory->create(JournalFilterType::class);
@@ -142,6 +145,8 @@ class JournalEntryController extends BaseController
      */
     public function new(Request $request, Process $process): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         if (null !== $process->getCompletedAt() && !$this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('process_show', ['id' => $process->getId()]);
         }
@@ -213,6 +218,8 @@ class JournalEntryController extends BaseController
         Process $process,
         LogManager $logManager
     ): Response {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         $form = $this->createForm(JournalEntryType::class, $journalEntry);
         $form->handleRequest($request);
 
@@ -253,6 +260,8 @@ class JournalEntryController extends BaseController
         JournalEntry $journalEntry,
         Process $process
     ): Response {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         if ($this->isCsrfTokenValid(
             'delete'.$journalEntry->getId(),
             $request->request->get('_token')
