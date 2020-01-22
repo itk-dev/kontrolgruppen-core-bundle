@@ -40,6 +40,7 @@ class SAMLUserProvider implements UserProviderInterface
 
     /**
      * @param string $username
+     * @param string $displayName
      * @param array  $credentials
      *
      * @return UserInterface|null
@@ -47,13 +48,14 @@ class SAMLUserProvider implements UserProviderInterface
      * @throws \OneLogin\Saml2\Error
      * @throws \OneLogin\Saml2\ValidationError
      */
-    public function getUser(string $username, array $credentials)
+    public function getUser(string $username, string $displayName, array $credentials)
     {
         $user = $this->userManager->findUserByUsername($username);
 
         if (null === $user) {
             $user = $this->userManager->createUser();
             $user->setUsername($username);
+            $user->setName($displayName);
         }
 
         $roles = $this->saml->getRoles($credentials['SAMLResponse']);
