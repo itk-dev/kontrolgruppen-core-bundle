@@ -47,7 +47,7 @@
                     {% endif %}
                 </div>
                 <div class="col-sm-3 pb-2">
-                    <span class="text-muted d-block small">{{ entry.createdBy }}</span>
+                    <span class="text-muted d-block small" {% if entry.creatorName is defined %}data-toggle="tooltip" data-placement="top" title="{{ entry.creatorName }}"{% endif %}>{{ entry.createdBy }}</span>
                     {% if entry.type == 'NOTE' %}
                         <span class="badge badge-info">{{ 'common.enum.journal_entry.note'|trans }}</span>
                     {% elseif entry.type == 'INTERNAL_NOTE' %}
