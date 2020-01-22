@@ -56,10 +56,13 @@ class ClientController extends BaseController
 
         $newInfoAvailable = false;
 
-        try {
-            $newInfoAvailable = $cprService->isNewClientInfoAvailable(new Cpr($process->getClientCPR()), $client);
-        } catch (CprException $e) {
-            $logger->error($e);
+        if ($this->isGranted('edit', $process)) {
+
+            try {
+                $newInfoAvailable = $cprService->isNewClientInfoAvailable(new Cpr($process->getClientCPR()), $client);
+            } catch (CprException $e) {
+                $logger->error($e);
+            }
         }
 
         return $this->render('@KontrolgruppenCore/client/show.html.twig', [
