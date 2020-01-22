@@ -57,7 +57,6 @@ class ClientController extends BaseController
         $newInfoAvailable = false;
 
         if ($this->isGranted('edit', $process)) {
-
             try {
                 $newInfoAvailable = $cprService->isNewClientInfoAvailable(new Cpr($process->getClientCPR()), $client);
             } catch (CprException $e) {
