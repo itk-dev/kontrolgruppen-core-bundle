@@ -3,10 +3,12 @@
 {% block title %}{{ 'client.show.title'|trans }}{% endblock %}
 
 {% block content %}
-    {% if newClientInfoAvailable %}
-        <div class="alert alert-info" role="alert">
-            {{ 'client.show.new_info_available'|trans }} <a href="{{ path('client_update', {'process': process}) }}" class="alert-link">{{ 'client.show.update_client'|trans }}</a>
-        </div>
+    {% if is_granted('edit', client.process) %}
+        {% if newClientInfoAvailable %}
+            <div class="alert alert-info" role="alert">
+                {{ 'client.show.new_info_available'|trans }} <a href="{{ path('client_update', {'process': process}) }}" class="alert-link">{{ 'client.show.update_client'|trans }}</a>
+            </div>
+        {% endif %}
     {% endif %}
 
     <h1>{{ 'client.show.title'|trans }}</h1>
@@ -91,5 +93,7 @@
         </div>
     </div>
 
-    <a href="{{ path('client_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
+    {% if is_granted('edit', process) %}
+        <a href="{{ path('client_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
+    {% endif %}
 {% endblock %}

@@ -47,6 +47,8 @@ class EconomyEntryController extends BaseController
      */
     public function edit(Process $process, EconomyEntry $economyEntry, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         if ($economyEntry instanceof ServiceEconomyEntry) {
             $form = $this->createForm(ServiceEconomyEntryType::class, $economyEntry);
         } elseif ($economyEntry instanceof IncomeEconomyEntry) {
@@ -87,6 +89,8 @@ class EconomyEntryController extends BaseController
      */
     public function delete(Request $request, EconomyEntry $economyEntry, Process $process): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         if ($this->isCsrfTokenValid('delete'.$economyEntry->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($economyEntry);

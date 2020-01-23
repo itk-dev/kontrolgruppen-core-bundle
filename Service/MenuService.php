@@ -126,15 +126,17 @@ class MenuService
                     ['process' => $process]
                 );
 
-                $items[] = $this->createMenuItem(
-                    'reminder',
-                    1 === preg_match(
-                        '/^\/process\/[0-9]+\/reminder\/.*$/',
-                        $path
-                    ),
-                    'reminder_index',
-                    ['process' => $process]
-                );
+                if ($this->authorizationChecker->isGranted('edit', $process)) {
+                    $items[] = $this->createMenuItem(
+                        'reminder',
+                        1 === preg_match(
+                            '/^\/process\/[0-9]+\/reminder\/.*$/',
+                            $path
+                        ),
+                        'reminder_index',
+                        ['process' => $process]
+                    );
+                }
 
                 $items[] = $this->createMenuItem(
                     'journal',
@@ -176,15 +178,17 @@ class MenuService
                     ['process' => $process]
                 );
 
-                $items[] = $this->createMenuItem(
-                    'log',
-                    1 === preg_match(
-                        '/^\/process\/[0-9]+\/log.*$/',
-                        $path
-                    ),
-                    'process_log_index',
-                    ['process' => $process]
-                );
+                if ($this->authorizationChecker->isGranted('edit', $process)) {
+                    $items[] = $this->createMenuItem(
+                        'log',
+                        1 === preg_match(
+                            '/^\/process\/[0-9]+\/log.*$/',
+                            $path
+                        ),
+                        'process_log_index',
+                        ['process' => $process]
+                    );
+                }
             }
         }
 
