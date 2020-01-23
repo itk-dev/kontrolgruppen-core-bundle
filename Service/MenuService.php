@@ -74,12 +74,14 @@ class MenuService
             );
         }
 
-        $menu['admin'] = $this->createGlobalNavItem(
-            'admin',
-            'admin',
-            false !== $this->startsWith($path, '/admin/'),
-            'admin_index'
-        );
+        if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+            $menu['admin'] = $this->createGlobalNavItem(
+                'admin',
+                'admin',
+                false !== $this->startsWith($path, '/admin/'),
+                'admin_index'
+            );
+        }
 
         return $menu;
     }
@@ -178,7 +180,7 @@ class MenuService
                     ['process' => $process]
                 );
 
-                if ($this->authorizationChecker->isGranted('edit', $process)) {
+                if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
                     $items[] = $this->createMenuItem(
                         'log',
                         1 === preg_match(
