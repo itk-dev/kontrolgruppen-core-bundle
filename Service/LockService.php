@@ -22,7 +22,6 @@ class LockService
 
     public function __construct(StoreInterface $store)
     {
-        //$store = new SemaphoreStore();
         $this->factory = new Factory($store);
     }
 
