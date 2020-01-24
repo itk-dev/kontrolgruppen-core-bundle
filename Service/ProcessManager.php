@@ -108,6 +108,7 @@ class ProcessManager
         $resourceToLock = 'case-number';
 
         $this->lockService->createLock($resourceToLock);
+        // Acquire a blocking lock (cf. https://symfony.com/doc/current/components/lock.html#blocking-locks).
         $this->lockService->acquire($resourceToLock, true);
 
         if (!$this->lockService->isAcquired($resourceToLock)) {
