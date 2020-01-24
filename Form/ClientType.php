@@ -12,6 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Form;
 
 use Kontrolgruppen\CoreBundle\Entity\Client;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -42,20 +43,50 @@ class ClientType extends AbstractType
             ->add('numberOfChildren', null, [
                 'label' => 'client.form.number_of_children',
             ])
-            ->add('receivesPublicAid', null, [
+            ->add('receivesPublicAid', ChoiceType::class, [
                 'label' => 'client.form.receives_public_aid',
+                'choices' => [
+                    'common.empty_field_value' => null,
+                    'common.boolean.Yes' => true,
+                    'common.boolean.No' => false,
+                ],
+                'preferred_choices' => ['null'],
             ])
-            ->add('employed', null, [
+            ->add('employed', ChoiceType::class, [
                 'label' => 'client.form.employed',
+                'choices' => [
+                    'common.empty_field_value' => null,
+                    'common.boolean.Yes' => true,
+                    'common.boolean.No' => false,
+                ],
+                'preferred_choices' => ['null'],
             ])
-            ->add('hasOwnCompany', null, [
+            ->add('hasOwnCompany', ChoiceType::class, [
                 'label' => 'client.form.has_own_company',
+                'choices' => [
+                    'common.empty_field_value' => null,
+                    'common.boolean.Yes' => true,
+                    'common.boolean.No' => false,
+                ],
+                'preferred_choices' => ['null'],
             ])
-            ->add('hasDriversLicense', null, [
+            ->add('hasDriversLicense', ChoiceType::class, [
                 'label' => 'client.form.has_drivers_license',
+                'choices' => [
+                    'common.empty_field_value' => null,
+                    'common.boolean.Yes' => true,
+                    'common.boolean.No' => false,
+                ],
+                'preferred_choices' => ['null'],
             ])
-            ->add('hasCar', null, [
+            ->add('hasCar', ChoiceType::class, [
                 'label' => 'client.form.has_car',
+                'choices' => [
+                    'common.empty_field_value' => null,
+                    'common.boolean.Yes' => true,
+                    'common.boolean.No' => false,
+                ],
+                'preferred_choices' => ['null'],
             ])
             ->add('cars', CollectionType::class, [
                 'entry_type' => CarType::class,

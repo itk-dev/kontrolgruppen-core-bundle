@@ -56,6 +56,8 @@ class ConclusionController extends BaseController
      */
     public function edit(Request $request, Process $process, ConclusionService $conclusionService, EventDispatcherInterface $dispatcher): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         $conclusion = $process->getConclusion();
 
         $form = $this->createForm($conclusionService->getEntityFormType($conclusion), $conclusion);

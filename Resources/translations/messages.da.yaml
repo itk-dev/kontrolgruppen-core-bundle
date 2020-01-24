@@ -86,6 +86,10 @@ client:
         has_own_company: Egen virksomhed
     show:
         title: Klient
+        client_updated: Klient blev opdateret
+        client_not_updated: Klient kunne ikke opdateres
+        new_info_available: Nye klientoplysninger tilgængelige.
+        update_client: Tryk her for at opdatere
     table:
         address: Adresse
         car:
@@ -671,6 +675,8 @@ process_report:
             process_type: Type
             service: Ydelse
             channel: Kanal
+            process_not_completed: Ikke afsluttet
+
         client:
             title: Klientoplysninger
             first_name: Fornavn
@@ -713,6 +719,7 @@ process_report:
                 amount_period: Beløbsinterval
         conclusion:
             title: Konklusion
+            not_found: Ingen konklusion
             base:
                 conclusion: Konklusion
             weighted:

@@ -12,6 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\DBAL\Types\DateIntervalType;
+use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ReminderRepository;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
@@ -30,7 +31,15 @@ class DashboardController extends BaseController
      */
     public function index(Request $request, ReminderRepository $reminderRepository, ProcessRepository $processRepository, PaginatorInterface $paginator, SessionInterface $session, ProcessManager $processManager)
     {
-        $filterFormBuilder = $this->createFormBuilder();
+        if (!$this->isGranted('edit', new Process())) {
+            return $this->redirectToRoute('search_external');
+        }
+
+        $filterFormBuilder = $this->createFormBuilder(null, [
+            'attr' => [
+                'id' => 'dashboard_process_limit',
+            ],
+        ]);
         $filterFormBuilder->add('limit', ChoiceType::class, [
             'choices' => [
                 '2' => 2,
@@ -73,6 +82,8 @@ class DashboardController extends BaseController
                 $qb->expr()->eq('processType.hideInDashboard', 'false')
             )
         );
+
+        $qb->andWhere('e.completedAt is null');
 
         $query = $qb->getQuery();
 

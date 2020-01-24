@@ -12,7 +12,13 @@
             <tbody>
             {% for economyEntry in economyEntries %}
                 <tr>
-                    <td><a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.account }}</a></td>
+                    <td>
+                        {% if is_granted('edit', process) %}
+                            <a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.account }}</a>
+                        {% else %}
+                            {{ economyEntry.account }}
+                        {% endif %}
+                    </td>
                     <td>{{ economyEntry.accountNumber }}</td>
                     <td>{{ economyEntry.date|simple_date('short') }}</td>
                     <td class="text-right">{{ economyEntry.amount|localizedcurrency('DKK') }}</td>

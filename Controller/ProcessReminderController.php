@@ -27,6 +27,8 @@ class ProcessReminderController extends BaseController
      */
     public function index(Request $request, Process $process): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         return $this->render('@KontrolgruppenCore/reminder/index.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'reminders' => $process->getReminders(),
@@ -39,6 +41,8 @@ class ProcessReminderController extends BaseController
      */
     public function new(Request $request, Process $process): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         $reminder = new Reminder();
         $reminder->setProcess($process);
         $reminder->setDate(
@@ -68,6 +72,8 @@ class ProcessReminderController extends BaseController
      */
     public function show(Request $request, Reminder $reminder, Process $process): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         return $this->render('@KontrolgruppenCore/reminder/show.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'reminder' => $reminder,
@@ -80,6 +86,8 @@ class ProcessReminderController extends BaseController
      */
     public function edit(Request $request, Reminder $reminder, Process $process): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         $form = $this->createForm(ReminderType::class, $reminder);
 
         // Add finished for edit form only.
@@ -111,6 +119,8 @@ class ProcessReminderController extends BaseController
      */
     public function delete(Request $request, Reminder $reminder, Process $process): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         if ($this->isCsrfTokenValid('delete'.$reminder->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($reminder);
@@ -127,6 +137,8 @@ class ProcessReminderController extends BaseController
      */
     public function finishReminder(Reminder $reminder, Process $process)
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         $reminder->setFinished(true);
 
         $entityManager = $this->getDoctrine()->getManager();

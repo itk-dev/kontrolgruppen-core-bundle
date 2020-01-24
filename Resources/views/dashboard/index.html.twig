@@ -60,6 +60,7 @@
 {% block javascripts %}
     {{ parent() }}
 
+    {{ encore_entry_script_tags('dashboard') }}
     {{ encore_entry_script_tags('reminderLatest') }}
     {{ encore_entry_script_tags('journalQuickview') }}
 {% endblock %}

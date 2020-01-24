@@ -14,7 +14,7 @@
         </tr>
         <tr>
             <td>{{ 'process_report.report.summary.process_completed_at'|trans }}:</td>
-            <td>{{ process.completedAt|localizeddate('short', 'none') }}</td>
+            <td>{% if process.completedAt is not empty %}{{ process.completedAt|localizeddate('short', 'none') }}{% else %}{{ 'process_report.report.summary.process_not_completed'|trans }}{% endif %}</td>
         </tr>
         <tr>
             <td>{{ 'process_report.report.summary.process_created_by'|trans }}:</td>
