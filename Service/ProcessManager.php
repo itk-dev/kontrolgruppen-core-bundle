@@ -12,16 +12,24 @@ namespace Kontrolgruppen\CoreBundle\Service;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Kontrolgruppen\CoreBundle\CPR\Cpr;
+use Kontrolgruppen\CoreBundle\CPR\CprException;
+use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
+use Kontrolgruppen\CoreBundle\Entity\Client;
+use Kontrolgruppen\CoreBundle\Entity\Conclusion;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType;
 use Kontrolgruppen\CoreBundle\Entity\User;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
+use Psr\Log\LoggerInterface;
 
 class ProcessManager
 {
     private $processRepository;
     private $entityManager;
     private $lockService;
+    private $cprService;
+    private $logger;
 
     /**
      * ProcessManager constructor.
@@ -31,11 +39,15 @@ class ProcessManager
     public function __construct(
         ProcessRepository $processRepository,
         EntityManagerInterface $entityManager,
-        LockService $lockService
+        LockService $lockService,
+        CprServiceInterface $cprService,
+        LoggerInterface $logger
     ) {
         $this->processRepository = $processRepository;
         $this->entityManager = $entityManager;
         $this->lockService = $lockService;
+        $this->cprService = $cprService;
+        $this->logger = $logger;
     }
 
     /**
@@ -93,15 +105,24 @@ class ProcessManager
             $process->setProcessType($processType);
         }
 
+        $resourceToLock = 'case-number';
+
+        $this->lockService->createLock($resourceToLock);
+        $this->lockService->acquire($resourceToLock, true);
+
+        if (!$this->lockService->isAcquired($resourceToLock)) {
+            throw new \RuntimeException('Could not acquire lock when creating a new Process.');
+        }
+
         $process->setCaseNumber($this->getNewCaseNumber());
-
-        $process = $this->enforceUniqueCaseNumber($process);
-
         $process->setProcessStatus($this->decideStatusForProcess($process));
+        $process->setConclusion($this->createConclusionForProcess($process));
+        $process->setClient($this->createClientForProcess($process));
 
-        $conclusionClass = $process->getProcessType()->getConclusionClass();
-        $conclusion = new $conclusionClass();
-        $process->setConclusion($conclusion);
+        $this->entityManager->persist($process);
+        $this->entityManager->flush();
+
+        $this->lockService->release($resourceToLock);
 
         return $process;
     }
@@ -136,16 +157,7 @@ class ProcessManager
 
         $caseNumber = str_pad($highestCaseCounter + 1, 5, '0', STR_PAD_LEFT);
 
-        $completeCaseNumber = date('y').'-'.$caseNumber;
-
-        $this->lockService->createLock($completeCaseNumber);
-        $this->lockService->acquire($completeCaseNumber);
-
-        if (!$this->lockService->isAcquired($completeCaseNumber)) {
-            return $this->getNewCaseNumber();
-        }
-
-        return $completeCaseNumber;
+        return date('y').'-'.$caseNumber;
     }
 
     private function getCaseNumberCounterFromProcess(Process $process)
@@ -156,18 +168,23 @@ class ProcessManager
         return $processCounter;
     }
 
-    private function enforceUniqueCaseNumber(Process $process): Process
+    private function createConclusionForProcess(Process $process): Conclusion
     {
-        $duplicateProcess = $this->processRepository->findBy(
-            ['caseNumber' => $process->getCaseNumber()]
-        );
+        $conclusionClass = $process->getProcessType()->getConclusionClass();
 
-        if (empty($duplicateProcess)) {
-            return $process;
+        return new $conclusionClass();
+    }
+
+    private function createClientForProcess(Process $process): Client
+    {
+        $client = new Client();
+
+        try {
+            $client = $this->cprService->populateClient(new Cpr($process->getClientCPR()), $client);
+        } catch (CprException $e) {
+            $this->logger->error($e);
         }
 
-        $process->setCaseNumber($this->getNewCaseNumber());
-
-        return $this->enforceUniqueCaseNumber($process);
+        return $client;
     }
 }

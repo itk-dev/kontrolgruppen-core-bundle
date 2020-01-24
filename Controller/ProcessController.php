@@ -164,11 +164,7 @@ class ProcessController extends BaseController
      */
     public function new(
         Request $request,
-        ProcessManager $processManager,
-        TranslatorInterface $translator,
-        LoggerInterface $logger,
-        CprServiceInterface $cprService,
-        LockService $lockService
+        ProcessManager $processManager
     ): Response {
         $process = new Process();
 
@@ -179,17 +175,6 @@ class ProcessController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $process = $processManager->newProcess($process);
-
-            $lockService->createLock($process->getCaseNumber());
-
-            if (!$lockService->isAcquired($process->getCaseNumber())) {
-                throw new \RuntimeException('Lock was not acquired.');
-            }
-
-            $process = $this->storeProcess($process, $translator, $logger, $cprService);
-
-            $lockService->release($process->getCaseNumber());
-
             return $this->redirectToRoute('client_show', ['process' => $process]);
         }
 
@@ -210,36 +195,6 @@ class ProcessController extends BaseController
                 'recentActivity' => $recentActivity,
             ]
         );
-    }
-
-    private function storeProcess(Process $process, TranslatorInterface $translator, LoggerInterface $logger, CprServiceInterface $cprService): Process
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($process);
-
-        $client = new Client();
-
-        try {
-            $client = $cprService->populateClient(new Cpr($process->getClientCPR()), $client);
-        } catch (CprException $e) {
-            $logger->error($e);
-        }
-
-        $process->setClient($client);
-        $entityManager->persist($client);
-
-        try {
-            $entityManager->flush();
-        } catch (UniqueConstraintViolationException $e) {
-            $logger->log(LogLevel::ERROR, $e);
-
-            $this->addFlash(
-                'danger',
-                $translator->trans('process.new.unique_error')
-            );
-        }
-
-        return $process;
     }
 
     /**
