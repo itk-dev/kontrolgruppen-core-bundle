@@ -21,52 +21,54 @@
 
             <div class="collapse navbar-collapse col-lg-7 col-xl-6" id="navbarNav">
                 <ul class="navbar-nav ml-0 ml-lg-auto p-3 p-lg-0">
-                    <li class="nav-item dropdown mr-0 mr-sm-3 mb-3 mb-lg-0">
-                        <a class="btn btn-sm btn-light dropdown-toggle btn-block" href="#" id="navbarQuicklinksDropdown" role="button" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            {{ 'navigation.main.quick_links'|trans }}
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarQuicklinksDropdown">
-                            {% for quickLink in quickLinks %}
-                                <a class="dropdown-item" href="{{ quickLink.href }}" target="_blank">{{ quickLink.name }}</a>
+                    {% if is_granted(['ROLE_SAGSBEHANDLER']) %}
+                        <li class="nav-item dropdown mr-0 mr-sm-3 mb-3 mb-lg-0">
+                            <a class="btn btn-sm btn-light dropdown-toggle btn-block" href="#" id="navbarQuicklinksDropdown" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                {{ 'navigation.main.quick_links'|trans }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarQuicklinksDropdown">
+                                {% for quickLink in quickLinks %}
+                                    <a class="dropdown-item" href="{{ quickLink.href }}" target="_blank">{{ quickLink.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </li>
+
+                        {% block globalmenu_mobile %}
+                            {% for globalMenuItem in globalMenuItems %}
+                                <li class="nav-item d-lg-none">
+                                    <a class="nav-link" href="{{ globalMenuItem.path }}">
+                                        <i class="fas {{ globalMenuItem.icon }} text-light mr-3 mr-lg-none"></i>{{ globalMenuItem.name }}
+                                    </a>
+                                </li>
                             {% endfor %}
-                        </div>
-                    </li>
+                        {% endblock %}
 
-                    {% block globalmenu_mobile %}
-                        {% for globalMenuItem in globalMenuItems %}
-                            <li class="nav-item d-lg-none">
-                                <a class="nav-link" href="{{ globalMenuItem.path }}">
-                                    <i class="fas {{ globalMenuItem.icon }} text-light mr-3 mr-lg-none"></i>{{ globalMenuItem.name }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    {% endblock %}
+                        {% block navigation_mobile %}
+                            {% if menuItems is defined %}
+                                {% for menuItem in menuItems %}
+                                    {% if menuItem.hide_from_mobile_menu is not defined or not menuItem.hide_from_mobile_menu %}
+                                        <li class="nav-item d-lg-none">
+                                            <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
+                                                {{ menuItem.name }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endblock %}
 
-                    {% block navigation_mobile %}
-                        {% if menuItems is defined %}
-                            {% for menuItem in menuItems %}
-                                {% if menuItem.hide_from_mobile_menu is not defined or not menuItem.hide_from_mobile_menu %}
-                                    <li class="nav-item d-lg-none">
-                                        <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
-                                            {{ menuItem.name }}
-                                        </a>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    {% endblock %}
+                        <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
+                            <a class="btn btn-sm btn-success btn-block" role="button" href="{{ path('process_new') }}">{{ 'navigation.main.new_process'|trans }}</a>
+                        </li>
 
-                    <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
-                        <a class="btn btn-sm btn-success btn-block" role="button" href="{{ path('process_new') }}">{{ 'navigation.main.new_process'|trans }}</a>
-                    </li>
-
-                    <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
-                        <a class="btn {% if activeUserReminders|length > 0 %}btn-warning{% else %}btn-secondary{% endif %} btn-sm btn-block " data-toggle="tooltip" title="{{ 'dashboard.reminders.title'|trans }}"
-                           href="{{ path('user_reminder_all') }}" role="button">
-                            <i class="fas {{ iconClass('reminder') }} mr-2"></i><strong>{{ 'navigation.main.reminders.number_of_reminders'|trans({'%numberOfReminders%': activeUserReminders}) }}</strong>
-                        </a>
-                    </li>
+                        <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
+                            <a class="btn {% if activeUserReminders|length > 0 %}btn-warning{% else %}btn-secondary{% endif %} btn-sm btn-block " data-toggle="tooltip" title="{{ 'dashboard.reminders.title'|trans }}"
+                               href="{{ path('user_reminder_all') }}" role="button">
+                                <i class="fas {{ iconClass('reminder') }} mr-2"></i><strong>{{ 'navigation.main.reminders.number_of_reminders'|trans({'%numberOfReminders%': activeUserReminders}) }}</strong>
+                            </a>
+                        </li>
+                    {% endif %}
                 </ul>
                 {% if app.user.username|default(false) %}
                     <span class="nav-text text-muted p-2">
@@ -81,6 +83,7 @@
         <div class="row">
             <div class="d-flex w-100 flex-column flex-lg-row">
 
+                {% if is_granted(['ROLE_SAGSBEHANDLER']) %}
                 <nav class="d-none d-lg-flex bg-dark">
                     {% block globalmenu_sidebar %}
                         <div class="globalmenu">
@@ -99,6 +102,7 @@
                         </div>
                     {% endblock %}
                 </nav>
+                {% endif %}
 
                 {% block navigation_sidebar %}
                     {% if menuItems is defined %}
@@ -146,7 +150,7 @@
 
                 {% set _sidebar_right = block('sidebar_right') %}
                 {% if _sidebar_right is not empty %}
-                    <aside role="sidebar-right" class="d-none d-md-block order-md-0 order-lg-1 d-lg-flex flex-lg-column flex-grow-1 p-3 w100 w-lg-30">
+                    <aside role="sidebar-right" class="sidebar-right d-none d-md-block order-md-0 order-lg-1 d-lg-flex flex-lg-column flex-grow-1 p-3 w100 w-lg-30">
                         {{ _sidebar_right|raw }}
                     </aside>
                 {% endif %}

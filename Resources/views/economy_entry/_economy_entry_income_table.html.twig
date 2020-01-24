@@ -12,7 +12,13 @@
             <tbody>
             {% for economyEntry in economyEntries %}
                 <tr>
-                    <td><a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.incomeType }}</a></td>
+                    <td>
+                        {% if is_granted('edit', process) %}
+                            <a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.incomeType }}</a>
+                        {% else %}
+                            {{ economyEntry.incomeType }}
+                        {% endif %}
+                    </td>
                     <td>
                         {{ economyEntry.periodFrom ? economyEntry.periodFrom|simple_date('short') }} -
                         {{ economyEntry.periodTo ? economyEntry.periodTo|simple_date('short') }}

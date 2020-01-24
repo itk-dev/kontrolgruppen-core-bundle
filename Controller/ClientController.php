@@ -56,10 +56,12 @@ class ClientController extends BaseController
 
         $newInfoAvailable = false;
 
-        try {
-            $newInfoAvailable = $cprService->isNewClientInfoAvailable(new Cpr($process->getClientCPR()), $client);
-        } catch (CprException $e) {
-            $logger->error($e);
+        if ($this->isGranted('edit', $process)) {
+            try {
+                $newInfoAvailable = $cprService->isNewClientInfoAvailable(new Cpr($process->getClientCPR()), $client);
+            } catch (CprException $e) {
+                $logger->error($e);
+            }
         }
 
         return $this->render('@KontrolgruppenCore/client/show.html.twig', [
@@ -76,6 +78,8 @@ class ClientController extends BaseController
      */
     public function edit(Request $request, Process $process): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         $client = $process->getClient();
 
         $form = $this->createForm(ClientType::class, $client);
@@ -102,6 +106,8 @@ class ClientController extends BaseController
      */
     public function update(Request $request, Process $process, CprServiceInterface $cprService, LoggerInterface $logger, TranslatorInterface $translator): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         $client = $process->getClient();
 
         try {

@@ -171,6 +171,9 @@ class ProcessController extends BaseController
         LockService $lockService
     ): Response {
         $process = new Process();
+
+        $this->denyAccessUnlessGranted('edit', $process);
+
         $form = $this->createForm(ProcessType::class, $process);
         $form->handleRequest($request);
 
@@ -272,6 +275,8 @@ class ProcessController extends BaseController
      */
     public function edit(Request $request, Process $process): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         if (null !== $process->getCompletedAt() && !$this->isGranted('ROLE_ADMIN')) {
             $this->redirectToRoute('process_show', ['id' => $process->getId()]);
         }
@@ -308,6 +313,8 @@ class ProcessController extends BaseController
      */
     public function delete(Request $request, Process $process): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         if ($this->isCsrfTokenValid(
             'delete'.$process->getId(),
             $request->request->get('_token')
@@ -325,6 +332,8 @@ class ProcessController extends BaseController
      */
     public function complete(Request $request, Process $process, ServiceRepository $serviceRepository): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         if (null !== $process->getCompletedAt()) {
             return $this->redirectToRoute(
                 'process_show',
@@ -379,6 +388,8 @@ class ProcessController extends BaseController
      */
     public function resume(Request $request, Process $process): Response
     {
+        $this->denyAccessUnlessGranted('edit', $process);
+
         $process->setCompletedAt(null);
         $process->setLockedNetValue(null);
         $em = $this->getDoctrine()->getManager();
