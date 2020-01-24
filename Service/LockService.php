@@ -13,15 +13,16 @@ namespace Kontrolgruppen\CoreBundle\Service;
 use Symfony\Component\Lock\Factory;
 use Symfony\Component\Lock\Lock;
 use Symfony\Component\Lock\Store\SemaphoreStore;
+use Symfony\Component\Lock\StoreInterface;
 
 class LockService
 {
     private $factory;
     private $locks = [];
 
-    public function __construct()
+    public function __construct(StoreInterface $store)
     {
-        $store = new SemaphoreStore();
+        //$store = new SemaphoreStore();
         $this->factory = new Factory($store);
     }
 
