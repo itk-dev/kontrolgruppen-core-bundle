@@ -1,8 +1,14 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
 
 namespace Kontrolgruppen\CoreBundle\Service;
-
 
 use Symfony\Component\Lock\Factory;
 use Symfony\Component\Lock\Lock;
@@ -24,8 +30,8 @@ class LockService
         return $this->factory;
     }
 
-    public function createLock(string $resource): Lock {
-
+    public function createLock(string $resource): Lock
+    {
         if (\array_key_exists($resource, $this->locks) && $this->locks[$resource] instanceof Lock) {
             return $this->locks[$resource];
         }

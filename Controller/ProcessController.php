@@ -183,7 +183,6 @@ class ProcessController extends BaseController
             $lockService->createLock($process->getCaseNumber());
 
             if (!$lockService->isAcquired($process->getCaseNumber())) {
-
                 throw new \RuntimeException('Lock was not acquired.');
             }
 

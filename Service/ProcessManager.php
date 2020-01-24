@@ -142,7 +142,6 @@ class ProcessManager
         $this->lockService->acquire($completeCaseNumber);
 
         if (!$this->lockService->isAcquired($completeCaseNumber)) {
-
             return $this->getNewCaseNumber();
         }
 
