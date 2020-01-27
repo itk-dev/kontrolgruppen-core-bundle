@@ -40,3 +40,6 @@ services:
 
     Kontrolgruppen\CoreBundle\CPR\CprServiceInterface:
         class: 'Kontrolgruppen\CoreBundle\CPR\FaellesSQLCprService'
+
+    Kontrolgruppen\CoreBundle\Service\LockService:
+        arguments: ['@lock.store.semaphore']

@@ -163,10 +163,7 @@ class ProcessController extends BaseController
      */
     public function new(
         Request $request,
-        ProcessManager $processManager,
-        TranslatorInterface $translator,
-        LoggerInterface $logger,
-        CprServiceInterface $cprService
+        ProcessManager $processManager
     ): Response {
         $process = new Process();
 
@@ -177,9 +174,6 @@ class ProcessController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $process = $processManager->newProcess($process);
-
-            $process = $this->storeProcess($process, $translator, $logger, $cprService);
-
             return $this->redirectToRoute('client_show', ['process' => $process]);
         }
 
@@ -200,36 +194,6 @@ class ProcessController extends BaseController
                 'recentActivity' => $recentActivity,
             ]
         );
-    }
-
-    private function storeProcess(Process $process, TranslatorInterface $translator, LoggerInterface $logger, CprServiceInterface $cprService): Process
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($process);
-
-        $client = new Client();
-
-        try {
-            $client = $cprService->populateClient(new Cpr($process->getClientCPR()), $client);
-        } catch (CprException $e) {
-            $logger->error($e);
-        }
-
-        $process->setClient($client);
-        $entityManager->persist($client);
-
-        try {
-            $entityManager->flush();
-        } catch (UniqueConstraintViolationException $e) {
-            $logger->log(LogLevel::ERROR, $e);
-
-            $this->addFlash(
-                'danger',
-                $translator->trans('process.new.unique_error')
-            );
-        }
-
-        return $process;
     }
 
     /**
