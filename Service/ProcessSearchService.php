@@ -17,7 +17,6 @@ use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 
 class ProcessSearchService
 {
-    private $authorizationChecker;
     private $paginator;
     private $processRepository;
 
@@ -31,14 +30,18 @@ class ProcessSearchService
     {
         $qb = $this->getQueryBuilder();
 
-        $qb->where('e.caseNumber LIKE :search');
-        $qb->orWhere('e.clientCPR LIKE :search');
-        $qb->orWhere('client.firstName LIKE :search');
-        $qb->orWhere('client.lastName LIKE :search');
-        $qb->orWhere('client.telephone LIKE :search');
-        $qb->orWhere('client.address LIKE :search');
-        $qb->orWhere('caseWorker.username LIKE :search');
-        $qb->setParameter(':search', '%'.$search.'%');
+        $fieldMatches = $this->getFieldMatches($search);
+
+        if (count($fieldMatches) > 0) {
+            $qb = $this->applyFieldSearch($qb, $fieldMatches);
+        }
+        else {
+            $qb->orWhere('client.firstName LIKE :search');
+            $qb->orWhere('client.lastName LIKE :search');
+            $qb->orWhere('client.address LIKE :search');
+            $qb->orWhere('caseWorker.username LIKE :search');
+            $qb->setParameter(':search', '%'.$search.'%');
+        }
 
         return $this->paginator->paginate(
             $qb->getQuery(),
@@ -51,23 +54,87 @@ class ProcessSearchService
     {
         $qb = $this->getQueryBuilder();
 
-        $qb->where('e.caseNumber = :search');
-        $qb->orWhere('e.clientCPR = :search');
-        $qb->orWhere('client.telephone = :search');
-        $qb->orWhere('client.address = :search');
-        $qb->orWhere(
-            $qb->expr()->concat(
-                $qb->expr()->concat('client.firstName', $qb->expr()->literal(' ')),
-                'client.lastName'
-            ).'= :search'
-        );
-        $qb->setParameter(':search', $search);
+        $fieldMatches = $this->getFieldMatches($search);
+
+        if (count($fieldMatches) > 0) {
+            $qb = $this->applyFieldSearch($qb, $fieldMatches);
+        }
+        else {
+            $qb->orWhere('client.address = :search');
+            $qb->orWhere(
+                $qb->expr()->concat(
+                    $qb->expr()
+                        ->concat('client.firstName', $qb->expr()->literal(' ')),
+                    'client.lastName'
+                ).'= :search'
+            );
+            $qb->setParameter(':search', $search);
+        }
 
         return $this->paginator->paginate(
             $qb->getQuery(),
             $page,
             $limit
         );
+    }
+
+    private function applyFieldSearch(QueryBuilder $queryBuilder, array $matches): QueryBuilder
+    {
+        if (isset($matches['caseNumber'])) {
+            $queryBuilder->orWhere('e.caseNumber = :search_case_number_alternative');
+            $queryBuilder->setParameter(':search_case_number_alternative', $matches['caseNumber']);
+        }
+        if (isset($matches['cpr'])) {
+            $queryBuilder->orWhere('e.clientCPR = :search_cpr_alternative');
+            $queryBuilder->setParameter(':search_cpr_alternative', $matches['cpr']);
+        }
+        if (isset($matches['telephone'])) {
+            $queryBuilder->orWhere('e.telephone = :search_telephone_alternative');
+            $queryBuilder->setParameter(':search_telephone_alternative', $matches['telephone']);
+        }
+
+        return $queryBuilder;
+    }
+
+    /**
+     * Get possible matches between fields and the search.
+     *
+     * @param string $search
+     *   The search string.
+     * @return array
+     */
+    private function getFieldMatches(string $search): array
+    {
+        preg_match('/^\d{2}-?\d{5}$/', $search, $possibleCaseNumberMatches);
+        preg_match('/^\d{6}-?\d{4}$/', $search, $possibleCPRMatches);
+        preg_match('/^\d{8}$/', $search, $possiblePhoneNumberMatches);
+
+        $result = [];
+        if (count($possibleCaseNumberMatches) === 1) {
+            $match = $possibleCaseNumberMatches[0];
+
+            // Add '-' if missing.
+            if (strlen($match) === 7) {
+                $match = substr($match, 0, 2).'-'.substr($match, 2, 5);
+            }
+
+            $result['caseNumber'] = $match;
+        }
+        if (count($possibleCPRMatches) === 1) {
+            $match = $possibleCPRMatches[0];
+
+            // Add '-' if missing.
+            if (strlen($match) === 10) {
+                $match = substr($match, 0, 6).'-'.substr($match, 6, 4);
+            }
+
+            $result['cpr'] = $match;
+        }
+        if (count($possiblePhoneNumberMatches) === 1) {
+            $result['telephone'] = $possiblePhoneNumberMatches[0];
+        }
+
+        return $result;
     }
 
     private function getQueryBuilder(): QueryBuilder

@@ -27,7 +27,7 @@ class SearchController extends BaseController
     /**
      * @Route("/", name="search_index")
      */
-    public function index(Request $request, ProcessRepository $processRepository, PaginatorInterface $paginator, ProcessSearchService $processSearchService)
+    public function index(Request $request, ProcessSearchService $processSearchService)
     {
         $search = $request->query->get('search');
 
@@ -58,7 +58,7 @@ class SearchController extends BaseController
     /**
      * @Route("/external", name="search_external")
      */
-    public function external(Request $request, ProcessRepository $processRepository, PaginatorInterface $paginator, ProcessSearchService $processSearchService)
+    public function external(Request $request, ProcessSearchService $processSearchService)
     {
         $search = $request->query->get('search');
         $pagination = $processSearchService->single(
