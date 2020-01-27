@@ -67,6 +67,7 @@ class ClientController extends BaseController
         return $this->render('@KontrolgruppenCore/client/show.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'client' => $process->getClient(),
+            'editable' => $this->isGranted('edit', $process) && $process->getCompletedAt() === null,
             'changeProcessStatusForm' => $changeProcessStatusForm->createView(),
             'process' => $process,
             'newClientInfoAvailable' => $newInfoAvailable,
@@ -79,6 +80,13 @@ class ClientController extends BaseController
     public function edit(Request $request, Process $process): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
+
+        // Redirect to show if process is completed.
+        if ($process->getCompletedAt() !== null) {
+            return $this->redirectToRoute('client_show', [
+                'process' => $process->getId(),
+            ]);
+        }
 
         $client = $process->getClient();
 
@@ -95,6 +103,7 @@ class ClientController extends BaseController
 
         return $this->render('@KontrolgruppenCore/client/edit.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
+            'editable' => $this->isGranted('edit', $process) && $process->getCompletedAt() === null,
             'client' => $client,
             'form' => $form->createView(),
             'process' => $process,
