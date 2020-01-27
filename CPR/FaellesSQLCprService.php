@@ -38,7 +38,7 @@ class FaellesSQLCprService extends AbstractCprService implements CprServiceInter
         $url = sprintf('%s/%s/%s', $this->serviceUrl, self::CITIZEN_ENDPOINT, $cpr);
 
         try {
-            $response = $this->httpClient->request('GET', $url);
+            $response = $this->httpClient->request('GET', $url, ['timeout' => 2]);
 
             return new FaellesSQLCprServiceResult($response->toArray());
         } catch (TransportExceptionInterface | ClientExceptionInterface | DecodingExceptionInterface | RedirectionExceptionInterface | ServerExceptionInterface | \InvalidArgumentException $e) {
