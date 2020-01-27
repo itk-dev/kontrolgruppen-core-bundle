@@ -932,3 +932,4 @@ bi:
     download_export: Hent
     delete_export: Slet
     delete_export_confirm: Bekræft sletning af rapport.
+    no_exports: Ingen eksporter fundet
