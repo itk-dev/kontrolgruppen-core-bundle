@@ -363,6 +363,7 @@ global_nav:
         users: Brugere
         admin: Indstillinger
         bi: Business Intelligence
+        search_external: Søgning
 
     tooltip:
         dashboard: Få et hurtigt sagsoverblik
@@ -371,6 +372,7 @@ global_nav:
         users: Viser alle brugere på systemet
         admin: Se og administre system indstillinger
         bi: BI Exports
+        search_external: Søgning
 
 menu:
     menu_title:
