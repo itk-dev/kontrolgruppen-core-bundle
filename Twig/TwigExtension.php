@@ -10,7 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\Twig;
 
-use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Conclusion;
 use Kontrolgruppen\CoreBundle\Entity\Process;
@@ -26,7 +25,6 @@ class TwigExtension extends AbstractExtension
 {
     private $conclusionService;
     private $translator;
-    private $doctrine;
     private $urlGenerator;
 
     /**
@@ -34,18 +32,15 @@ class TwigExtension extends AbstractExtension
      *
      * @param \Kontrolgruppen\CoreBundle\Service\ConclusionService $conclusionService
      * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
-     * @param \Doctrine\Persistence\ManagerRegistry $doctrine
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         ConclusionService $conclusionService,
         TranslatorInterface $translator,
-        ManagerRegistry $doctrine,
         UrlGeneratorInterface $urlGenerator
     ) {
         $this->conclusionService = $conclusionService;
         $this->translator = $translator;
-        $this->doctrine = $doctrine;
         $this->urlGenerator = $urlGenerator;
     }
 
