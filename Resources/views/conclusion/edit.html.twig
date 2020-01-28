@@ -5,5 +5,7 @@
 {% block content %}
     <h1>{{ 'conclusion.edit.title'|trans }}</h1>
 
-    {{ include('@KontrolgruppenCore/conclusion/_form.html.twig', {'button_label': 'Update'}) }}
+    {% if canEdit %}
+        {{ include('@KontrolgruppenCore/conclusion/_form.html.twig', {'button_label': 'Update'}) }}
+    {% endif %}
 {% endblock %}
