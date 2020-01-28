@@ -56,3 +56,21 @@ jobs:
             - name: phpcsfixerr
               run: |
                   composer actions/phpcsfixer
+
+    twigcs:
+        name: TwigCS
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+            - name: Setup PHP, with composer and extensions
+              uses: shivammathur/setup-php@master
+              with:
+                  php-version: 7.3
+                  extension-csv: ctype, iconv, json
+                  coverage: none
+            - name: Install Dependencies
+              run: |
+                  composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+            - name: twigcs
+              run: |
+                  composer actions/twigcs
