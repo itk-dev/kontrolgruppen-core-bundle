@@ -10,7 +10,6 @@
 return [
     'backward_compatibility_checks' => false,
     'target_php_version' => 7.2,
-   
     'dead_code_detection' => true,
     'ignore_undeclared_functions_with_known_signatures' => false,
     'whitelist_issue_types' => [
@@ -18,10 +17,16 @@ return [
        'PhanDeprecatedFunctionInternal',
        'PhanInvalidConstantFQSEN',
     ],
+    'directory_list' => [
+        '.',
+    ],
     'exclude_analysis_directory_list' => [
         'vendor/',
         'tests/',
         'Resources/',
+    ],
+    'analyzed_file_extensions' => [
+        'php',
     ],
     'exclude_file_regex' => '@^vendor/.*/(tests|Tests)/@',
 ];
