@@ -132,13 +132,15 @@ class BaseController extends AbstractController
      *   The route to redirect to
      * @param array $routeParams
      *   The parameters to the redirect
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function redirectOnProcessComplete(Process $process, string $route, array $routeParams = [])
     {
-        if ($process->getCompletedAt() !== null) {
+        if (null !== $process->getCompletedAt()) {
             // @TODO: Fix translation.
             $this->addFlash('warning', 'The case is completed and can therefore not be edited.');
+
             return $this->redirectToRoute('', $routeParams);
         }
     }

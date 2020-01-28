@@ -57,7 +57,7 @@ class JournalEntryController extends BaseController
     ): Response {
         $journalEntryFormView = null;
 
-        if ($process->getCompletedAt() === null) {
+        if (null === $process->getCompletedAt()) {
             if ($this->isGranted('edit', $process)) {
                 $journalEntry = new JournalEntry();
                 $journalEntry->setProcess($process);
@@ -138,7 +138,7 @@ class JournalEntryController extends BaseController
                     $request->getPathInfo(),
                     $process
                 ),
-                'canEdit' => $this->isGranted('edit', $process) && $process->getCompletedAt() === null,
+                'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
                 'form' => $filterForm->createView(),
                 'entries' => $result,
                 'journalEntryForm' => $journalEntryFormView,
@@ -218,7 +218,7 @@ class JournalEntryController extends BaseController
                     $request->getPathInfo(),
                     $process
                 ),
-                'canEdit' => $this->isGranted('edit', $process) && $process->getCompletedAt() === null,
+                'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
                 'journalEntry' => $journalEntry,
                 'process' => $process,
             ]
@@ -272,7 +272,7 @@ class JournalEntryController extends BaseController
                     $request->getPathInfo(),
                     $process
                 ),
-                'canEdit' => $this->isGranted('edit', $process) && $process->getCompletedAt() === null,
+                'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
                 'journalEntry' => $journalEntry,
                 'process' => $process,
                 'form' => $form->createView(),

@@ -95,7 +95,7 @@ class EconomyEntryController extends BaseController
         $this->denyAccessUnlessGranted('edit', $process);
 
         // Redirect to show if process is completed.
-        if ($process->getCompletedAt() !== null) {
+        if (null !== $process->getCompletedAt()) {
             return $this->redirectToRoute('economy_show', [
                 'process' => $process->getId(),
             ]);

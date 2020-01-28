@@ -41,7 +41,7 @@ class EconomyController extends BaseController
     {
         $parameters = [];
 
-        $canEdit = $this->isGranted('edit', $process) && $process->getCompletedAt() === null;
+        $canEdit = $this->isGranted('edit', $process) && null === $process->getCompletedAt();
         $parameters['canEdit'] = $canEdit;
 
         if ($canEdit) {

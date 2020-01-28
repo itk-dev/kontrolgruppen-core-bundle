@@ -48,7 +48,7 @@ class ConclusionController extends BaseController
 
         return $this->render($template, [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
-            'canEdit' => $this->isGranted('edit', $process) && $process->getCompletedAt() === null,
+            'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
             'conclusion' => $process->getConclusion(),
             'process' => $process,
         ]);
@@ -65,14 +65,14 @@ class ConclusionController extends BaseController
         $options = [];
 
         // Disable the form if the process is completed.
-        if ($process->getCompletedAt() !== null) {
+        if (null !== $process->getCompletedAt()) {
             $options['disabled'] = true;
         }
 
         $form = $this->createForm($conclusionService->getEntityFormType($conclusion), $conclusion, $options);
 
         // Only handle form if the process is not completed.
-        if ($process->getCompletedAt() === null) {
+        if (null === $process->getCompletedAt()) {
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -91,7 +91,7 @@ class ConclusionController extends BaseController
         return $this->render($template, [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'conclusion' => $conclusion,
-            'canEdit' => $this->isGranted('edit', $process) && $process->getCompletedAt() === null,
+            'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
             'form' => $form->createView(),
             'process' => $process,
         ]);
