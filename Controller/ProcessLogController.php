@@ -25,9 +25,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProcessLogController extends BaseController
 {
-    private $latestRow = 0;
-    private $sheet;
-
     /**
      * @Route("/", name="process_log_index", methods={"GET","POST"})
      */

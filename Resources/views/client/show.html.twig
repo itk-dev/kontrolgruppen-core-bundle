@@ -15,6 +15,10 @@
 
     <h1>{{ 'client.show.title'|trans }}</h1>
 
+    {% if process.completedAt %}
+        <div class="alert alert-warning">{{ 'process.completed_message'|trans }}</div>
+    {% endif %}
+
     <h2>{{ 'client.sections.generel_info'|trans }}</h2>
     <div class="row mb-3">
         <div class="col-12 col-sm-6">

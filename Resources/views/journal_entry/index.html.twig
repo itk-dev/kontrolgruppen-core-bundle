@@ -25,6 +25,15 @@
                     {{ form_end(journalEntryForm) }}
                 </div>
             </div>
+        {% else %}
+            <div class="col-12">
+                <h1 class="float-left">{{ 'journal_entry.index.title'|trans }}</h1>
+            </div>
+        {% endif %}
+        {% if process.completedAt %}
+            <div class="col-12">
+                <div class="alert alert-warning">{{ 'process.completed_message'|trans }}</div>
+            </div>
         {% endif %}
     </div>
 
