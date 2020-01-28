@@ -38,9 +38,12 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.1",
-        "friendsofphp/php-cs-fixer": "^2.14",
-        "friendsoftwig/twigcs": "^3.1",
-        "phan/phan": "^1.2",
+        "drenso/phan-extensions": "^2.5",
+        "escapestudios/symfony2-coding-standard": "^3.11",
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "friendsoftwig/twigcs": "^3.2",
+        "phan/phan": "^2.4",
+        "phpmd/phpmd": "^2.8",
         "squizlabs/php_codesniffer": "^3.4"
     },
     "config": {
@@ -52,18 +55,22 @@
         }
     },
     "scripts": {
+        "check": [
+            "@check-coding-standards"
+        ],
         "check-coding-standards/php-cs-fixer": [
-            "php-cs-fixer --config=.php_cs.dist fix --dry-run"
+            "php-cs-fixer --config=.php_cs.dist fix --dry-run --format=checkstyle"
         ],
         "check-coding-standards/phpcs": [
             "phpcs --standard=phpcs.xml.dist"
         ],
         "check-coding-standards/twigcs": [
-            "twigcs lint Resources/"
+            "twigcs lint Resources/views"
         ],
         "check-coding-standards": [
             "@check-coding-standards/php-cs-fixer",
-            "@check-coding-standards/phpcs"
+            "@check-coding-standards/phpcs",
+            "@check-coding-standards/twigcs"
         ],
         "apply-coding-standards/php-cs-fixer": [
             "php-cs-fixer --config=.php_cs.dist fix"
@@ -75,13 +82,23 @@
             "@apply-coding-standards/php-cs-fixer",
             "@apply-coding-standards/phpcs"
         ],
-        "checkcs": [
-            "php-cs-fixer --config=.php_cs.dist fix --dry-run --diff",
-            "@check-coding-standards/phpcs",
-            "@check-coding-standards/twigcs"
+        "phan": [
+            "./vendor/bin/phan --allow-polyfill-parser"
         ],
-        "applycs": [
-            "@apply-coding-standards"
+        "md":[
+            "./vendor/bin/phpmd ./src/ text cleancode,codesize,controversial,design,naming,unusedcode --suffixes php"
+        ],
+        "actions/phpcs": [
+            "phpcs --standard=phpcs.xml.dist --report=checkstyle"
+        ],
+        "actions/phpcsfixer": [
+            "php-cs-fixer --config=.php_cs.dist fix --dry-run --diff --diff-format=udiff"
+        ],
+        "actions/twigcs": [
+            "twigcs lint Resources/views"
+        ],
+        "actions/phan": [
+            "./vendor/bin/phan --no-progress-bar --allow-polyfill-parser"
         ]
     }
 }
