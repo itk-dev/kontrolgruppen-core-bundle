@@ -12,7 +12,6 @@ namespace Kontrolgruppen\CoreBundle\Service;
 
 use Symfony\Component\Lock\Factory;
 use Symfony\Component\Lock\Lock;
-use Symfony\Component\Lock\Store\SemaphoreStore;
 use Symfony\Component\Lock\StoreInterface;
 
 class LockService

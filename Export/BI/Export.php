@@ -38,6 +38,11 @@ class Export extends AbstractExport
         $this->processLogEntryRepository = $processLogEntryRepository;
     }
 
+    public function getParameters()
+    {
+        return [];
+    }
+
     public function writeData()
     {
         $processes = $this->getProcesses();
@@ -121,14 +126,6 @@ class Export extends AbstractExport
     {
         $queryBuilder = $this->entityManager->getRepository(Process::class)
             ->createQueryBuilder('p');
-
-        $startDate = $this->parameters['startdate'] ?? new \DateTime('2001-01-01');
-        $endDate = $this->parameters['enddate'] ?? new \DateTime('2100-01-01');
-
-        $queryBuilder
-            ->andWhere('p.createdAt BETWEEN :startdate AND :enddate')
-            ->setParameter('startdate', $startDate)
-            ->setParameter('enddate', $endDate);
 
         return $queryBuilder->getQuery()->execute();
     }

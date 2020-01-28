@@ -10,12 +10,8 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Knp\Component\Pager\PaginatorInterface;
-use Kontrolgruppen\CoreBundle\CPR\Cpr;
-use Kontrolgruppen\CoreBundle\CPR\CprException;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
-use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\LockedNetValue;
 use Kontrolgruppen\CoreBundle\Entity\Process;
@@ -26,18 +22,14 @@ use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
-use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
-use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/process")
@@ -174,6 +166,7 @@ class ProcessController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $process = $processManager->newProcess($process);
+
             return $this->redirectToRoute('client_show', ['process' => $process]);
         }
 

@@ -64,7 +64,7 @@ class BaseController extends AbstractController
         $parameters['path'] = $path;
 
         // Add global navigation.
-        $parameters['globalMenuItems'] = $this->menuService->getGlobalNavMenu($path);
+        $parameters['globalMenuItems'] = $this->getGlobalNavMenu($path);
 
         if ('process_complete' !== $request->get('_route')) {
             // If this is a route beneath the proces/{id}/, attach changeProcessStatusForm.
@@ -88,6 +88,11 @@ class BaseController extends AbstractController
         }
 
         return parent::render($view, $parameters, $response);
+    }
+
+    protected function getGlobalNavMenu(string $path = '/')
+    {
+        return $this->menuService->getGlobalNavMenu($path);
     }
 
     public function createChangeProcessStatusForm($process)

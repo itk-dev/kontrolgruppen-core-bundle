@@ -51,19 +51,30 @@ class MenuService
      */
     public function getGlobalNavMenu($path)
     {
-        $menu['dashboard'] = $this->createGlobalNavItem(
-            'dashboard',
-            'dashboard',
-            ('/' === $path),
-            'dashboard_index'
-        );
+        $menu = [];
 
-        $menu['process'] = $this->createGlobalNavItem(
-            'process',
-            'process',
-            false !== $this->startsWith($path, '/process/'),
-            'process_index'
-        );
+        if ($this->authorizationChecker->isGranted('ROLE_SAGSBEHANDLER')) {
+            $menu['dashboard'] = $this->createGlobalNavItem(
+                'dashboard',
+                'dashboard',
+                ('/' === $path),
+                'dashboard_index'
+            );
+
+            $menu['process'] = $this->createGlobalNavItem(
+                'process',
+                'process',
+                false !== $this->startsWith($path, '/process/'),
+                'process_index'
+            );
+        } elseif ($this->authorizationChecker->isGranted('ROLE_PROCESS_VIEW')) {
+            $menu['search_external'] = $this->createGlobalNavItem(
+                'search_external',
+                'search-external',
+                false !== $this->startsWith($path, '/process/'),
+                'search_external'
+            );
+        }
 
         if ($this->authorizationChecker->isGranted('ROLE_BI')) {
             $menu['bi'] = $this->createGlobalNavItem(
