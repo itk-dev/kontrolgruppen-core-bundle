@@ -177,8 +177,6 @@ class TwigExtension extends AbstractExtension
                 return 'fa-times';
             case 'bi':
                 return 'fa-chart-pie';
-            case 'bi':
-                return 'fa-chart-pie';
             case 'search-external':
                 return 'fa-search';
             default:
