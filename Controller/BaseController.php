@@ -128,9 +128,9 @@ class BaseController extends AbstractController
      *
      * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
      *   The process
-     * @param string $route
+     * @param string                                    $route
      *   The route to redirect to
-     * @param array $routeParams
+     * @param array                                     $routeParams
      *   The parameters to the redirect
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse

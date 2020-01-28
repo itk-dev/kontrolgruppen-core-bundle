@@ -245,7 +245,10 @@ class JournalEntryController extends BaseController
         }
 
         // Redirect to show if process is completed.
-        $this->redirectOnProcessComplete($process, 'journal_entry_show', ['id' => $journalEntry->getId(), 'process' => $process->getId()]);
+        $this->redirectOnProcessComplete($process, 'journal_entry_show', [
+            'id' => $journalEntry->getId(),
+            'process' => $process->getId(),
+        ]);
 
         $form = $this->createForm(JournalEntryType::class, $journalEntry);
         $form->handleRequest($request);
