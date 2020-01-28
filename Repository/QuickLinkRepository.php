@@ -12,7 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Kontrolgruppen\CoreBundle\Entity\QuickLink;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method QuickLink|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,7 +22,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class QuickLinkRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, QuickLink::class);
     }

@@ -15,7 +15,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method ProcessLogEntry|null find($id, $lockMode = null, $lockVersion = null)
@@ -28,7 +28,7 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
     protected $paginator;
 
     public function __construct(
-        RegistryInterface $registry,
+        ManagerRegistry $registry,
         PaginatorInterface $paginator
     ) {
         parent::__construct($registry, ProcessLogEntry::class);

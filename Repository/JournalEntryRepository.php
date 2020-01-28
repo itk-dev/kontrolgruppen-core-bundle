@@ -15,7 +15,7 @@ use Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method JournalEntry|null find($id, $lockMode = null, $lockVersion = null)
@@ -27,7 +27,7 @@ class JournalEntryRepository extends ServiceEntityRepository
 {
     protected $logManager;
 
-    public function __construct(RegistryInterface $registry, LogManager $logManager)
+    public function __construct(ManagerRegistry $registry, LogManager $logManager)
     {
         $this->logManager = $logManager;
 
