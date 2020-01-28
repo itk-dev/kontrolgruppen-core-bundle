@@ -11,9 +11,9 @@
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
-use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method ProcessStatus|null find($id, $lockMode = null, $lockVersion = null)

@@ -11,8 +11,8 @@
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Kontrolgruppen\CoreBundle\Entity\Client;
 use Doctrine\Persistence\ManagerRegistry;
+use Kontrolgruppen\CoreBundle\Entity\Client;
 
 /**
  * @method Client|null find($id, $lockMode = null, $lockVersion = null)

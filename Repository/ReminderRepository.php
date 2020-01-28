@@ -11,10 +11,10 @@
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Kontrolgruppen\CoreBundle\DBAL\Types\DateIntervalType;
 use Kontrolgruppen\CoreBundle\Entity\Reminder;
 use Kontrolgruppen\CoreBundle\Entity\User;
-use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Reminder|null find($id, $lockMode = null, $lockVersion = null)

@@ -11,8 +11,8 @@
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Kontrolgruppen\CoreBundle\Entity\BIExport;
 use Doctrine\Persistence\ManagerRegistry;
+use Kontrolgruppen\CoreBundle\Entity\BIExport;
 
 /**
  * @method BIExport|null find($id, $lockMode = null, $lockVersion = null)

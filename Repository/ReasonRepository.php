@@ -11,9 +11,9 @@
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Kontrolgruppen\CoreBundle\Entity\Channel;
 use Kontrolgruppen\CoreBundle\Entity\Reason;
-use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Channel|null find($id, $lockMode = null, $lockVersion = null)

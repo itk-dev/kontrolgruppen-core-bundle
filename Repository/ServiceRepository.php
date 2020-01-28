@@ -11,10 +11,10 @@
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType;
 use Kontrolgruppen\CoreBundle\Entity\Service;
-use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Service|null find($id, $lockMode = null, $lockVersion = null)
