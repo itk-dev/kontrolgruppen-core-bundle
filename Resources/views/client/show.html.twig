@@ -3,7 +3,7 @@
 {% block title %}{{ 'client.show.title'|trans }}{% endblock %}
 
 {% block content %}
-    {% if editable %}
+    {% if canEdit %}
         {% if is_granted('edit', client.process) %}
             {% if newClientInfoAvailable %}
                 <div class="alert alert-info" role="alert">
@@ -95,9 +95,7 @@
         </div>
     </div>
 
-    {% if editable %}
-        {% if is_granted('edit', process) %}
-            <a href="{{ path('client_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
-        {% endif %}
+    {% if canEdit %}
+        <a href="{{ path('client_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
     {% endif %}
 {% endblock %}

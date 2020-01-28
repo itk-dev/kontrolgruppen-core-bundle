@@ -10,7 +10,7 @@
         <input type="text" id="client_process_clientCPR" disabled="disabled" value="{{ process.clientCPR }}" class="form-control">
     </div>
 
-    {% if editable %}
+    {% if canEdit %}
         {{ include('@KontrolgruppenCore/client/_form.html.twig', {'button_label': 'Update'}) }}
     {% endif %}
 {% endblock %}

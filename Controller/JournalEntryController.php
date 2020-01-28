@@ -55,25 +55,31 @@ class JournalEntryController extends BaseController
         LogManager $logManager,
         FormFactoryInterface $formFactory
     ): Response {
-        $journalEntry = new JournalEntry();
-        $journalEntry->setProcess($process);
-        $journalEntryForm = $this->createForm(
-            JournalEntryType::class,
-            $journalEntry
-        );
+        $journalEntryFormView = null;
 
-        if ($this->isGranted('edit', $process)) {
-            $journalEntryForm->handleRequest($request);
-
-            if ($journalEntryForm->isSubmitted() && $journalEntryForm->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($journalEntry);
-                $entityManager->flush();
-
-                return $this->redirectToRoute(
-                    'journal_entry_index',
-                    ['process' => $process->getId()]
+        if ($process->getCompletedAt() === null) {
+            if ($this->isGranted('edit', $process)) {
+                $journalEntry = new JournalEntry();
+                $journalEntry->setProcess($process);
+                $journalEntryForm = $this->createForm(
+                    JournalEntryType::class,
+                    $journalEntry
                 );
+
+                $journalEntryForm->handleRequest($request);
+
+                if ($journalEntryForm->isSubmitted() && $journalEntryForm->isValid()) {
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($journalEntry);
+                    $entityManager->flush();
+
+                    return $this->redirectToRoute(
+                        'journal_entry_index',
+                        ['process' => $process->getId()]
+                    );
+                }
+
+                $journalEntryFormView = $journalEntryForm->createView();
             }
         }
 
@@ -132,9 +138,10 @@ class JournalEntryController extends BaseController
                     $request->getPathInfo(),
                     $process
                 ),
+                'canEdit' => $this->isGranted('edit', $process) && $process->getCompletedAt() === null,
                 'form' => $filterForm->createView(),
                 'entries' => $result,
-                'journalEntryForm' => $journalEntryForm->createView(),
+                'journalEntryForm' => $journalEntryFormView,
                 'process' => $process,
             ]
         );
@@ -147,8 +154,8 @@ class JournalEntryController extends BaseController
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
-        if (null !== $process->getCompletedAt() && !$this->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('process_show', ['id' => $process->getId()]);
+        if (null !== $process->getCompletedAt()) {
+            return $this->redirectToRoute('journal_entry_index', ['process' => $process->getId()]);
         }
 
         $journalEntry = new JournalEntry();
@@ -190,6 +197,14 @@ class JournalEntryController extends BaseController
         Process $process,
         LogManager $logManager
     ): Response {
+        // If opening a journal entry that does not belong to the process, redirect to index.
+        if ($journalEntry->getProcess() !== $process) {
+            return $this->redirectToRoute(
+                'journal_entry_index',
+                ['process' => $process->getId()]
+            );
+        }
+
         // Attach log entries.
         // Only attach log entries if user is granted ROLE_ADMIN.
         if ($this->isGranted('ROLE_ADMIN', $this->getUser())) {
@@ -203,6 +218,7 @@ class JournalEntryController extends BaseController
                     $request->getPathInfo(),
                     $process
                 ),
+                'canEdit' => $this->isGranted('edit', $process) && $process->getCompletedAt() === null,
                 'journalEntry' => $journalEntry,
                 'process' => $process,
             ]
@@ -219,6 +235,18 @@ class JournalEntryController extends BaseController
         LogManager $logManager
     ): Response {
         $this->denyAccessUnlessGranted('edit', $process);
+
+        // If opening a journal entry that does not belong to the process, redirect to index.
+        if ($journalEntry->getProcess() !== $process) {
+            return $this->redirectToRoute(
+                'journal_entry_index',
+                ['process' => $process->getId()]
+            );
+        }
+
+        if (null !== $process->getCompletedAt()) {
+            return $this->redirectToRoute('journal_entry_show', ['id' => $journalEntry->getId(), 'process' => $process->getId()]);
+        }
 
         $form = $this->createForm(JournalEntryType::class, $journalEntry);
         $form->handleRequest($request);
@@ -245,6 +273,7 @@ class JournalEntryController extends BaseController
                     $request->getPathInfo(),
                     $process
                 ),
+                'canEdit' => $this->isGranted('edit', $process) && $process->getCompletedAt() === null,
                 'journalEntry' => $journalEntry,
                 'process' => $process,
                 'form' => $form->createView(),
@@ -261,6 +290,12 @@ class JournalEntryController extends BaseController
         Process $process
     ): Response {
         $this->denyAccessUnlessGranted('edit', $process);
+
+        // If trying to delete a journal entry that does not belong to the process, redirect to index.
+        if ($journalEntry->getProcess() !== $process ||
+            null !== $process->getCompletedAt()) {
+            return $this->redirectToRoute('journal_entry_index', ['process' => $process->getId()]);
+        }
 
         if ($this->isCsrfTokenValid(
             'delete'.$journalEntry->getId(),
