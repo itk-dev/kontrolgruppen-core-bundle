@@ -23,7 +23,7 @@ use Kontrolgruppen\CoreBundle\Entity\LockedNetValue;
 class LockedNetValueRepository extends ServiceEntityRepository
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(ManagerRegistry $registry)
     {

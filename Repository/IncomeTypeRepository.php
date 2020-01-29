@@ -23,7 +23,7 @@ use Kontrolgruppen\CoreBundle\Entity\IncomeType;
 class IncomeTypeRepository extends ServiceEntityRepository
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(ManagerRegistry $registry)
     {

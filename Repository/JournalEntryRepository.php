@@ -46,6 +46,7 @@ class JournalEntryRepository extends ServiceEntityRepository
      * Get latest entries of type note.
      *
      * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *
      * @return array
      */
     public function getLatestNoteEntries(Process $process)
@@ -57,6 +58,7 @@ class JournalEntryRepository extends ServiceEntityRepository
      * Get latest entries of type internal note.
      *
      * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *
      * @return array
      */
     public function getLatestInternalNoteEntries(Process $process)

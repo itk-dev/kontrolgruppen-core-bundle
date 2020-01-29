@@ -23,7 +23,7 @@ use Kontrolgruppen\CoreBundle\Entity\QuickLink;
 class QuickLinkRepository extends ServiceEntityRepository
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(ManagerRegistry $registry)
     {

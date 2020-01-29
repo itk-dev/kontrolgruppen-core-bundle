@@ -23,7 +23,7 @@ use Doctrine\Persistence\ManagerRegistry;
 class IncomeEconomyEntryRepository extends ServiceEntityRepository
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(ManagerRegistry $registry)
     {

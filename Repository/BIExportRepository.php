@@ -23,7 +23,7 @@ use Kontrolgruppen\CoreBundle\Entity\BIExport;
 class BIExportRepository extends ServiceEntityRepository
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(ManagerRegistry $registry)
     {

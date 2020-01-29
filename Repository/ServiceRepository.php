@@ -25,7 +25,7 @@ use Kontrolgruppen\CoreBundle\Entity\Service;
 class ServiceRepository extends ServiceEntityRepository
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -52,7 +52,7 @@ class ServiceRepository extends ServiceEntityRepository
     }
 
     /**
-     * Get services for a process
+     * Get services for a process.
      *
      * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
      *   The process

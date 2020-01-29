@@ -30,7 +30,7 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
     /**
      * ProcessLogEntryRepository constructor.
      *
-     * @param \Doctrine\Persistence\ManagerRegistry $registry
+     * @param \Doctrine\Persistence\ManagerRegistry   $registry
      *   The registry
      * @param \Knp\Component\Pager\PaginatorInterface $paginator
      *   The paginator
@@ -48,10 +48,11 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
      *
      * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
      *   The process the logs belong to
-     * @param int $page
+     * @param int                                       $page
      *   The pagination page
-     * @param int $limit
+     * @param int                                       $limit
      *   The limit on number of results
+     *
      * @return \Knp\Component\Pager\Pagination\PaginationInterface
      *   The pagination result
      */
@@ -70,12 +71,13 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
     /**
      * Get the latest entries by log level.
      *
-     * @param string $level
+     * @param string                                         $level
      *   The log level
-     * @param int $limit
+     * @param int                                            $limit
      *   The limit on number of results
      * @param \Kontrolgruppen\CoreBundle\Entity\Process|null $process
      *   The process the logs belong to
+     *
      * @return array
      *   The latest log entries
      */
@@ -114,8 +116,9 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
      *
      * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
      *   The process the logs belong to
-     * @param $level
+     * @param                                           $level
      *   The log level
+     *
      * @return \Doctrine\ORM\Query
      *   The query
      */
@@ -142,6 +145,7 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
      *
      * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
      *   The process the logs belong to
+     *
      * @return \Doctrine\ORM\Query
      *   The query
      */
@@ -166,6 +170,7 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
      *
      * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
      *   The process the logs belong to
+     *
      * @return mixed
      *   The result
      */

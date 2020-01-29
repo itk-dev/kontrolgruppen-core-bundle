@@ -30,8 +30,8 @@ class TwigExtension extends AbstractExtension
     /**
      * TwigExtension constructor.
      *
-     * @param \Kontrolgruppen\CoreBundle\Service\ConclusionService $conclusionService
-     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
+     * @param \Kontrolgruppen\CoreBundle\Service\ConclusionService       $conclusionService
+     * @param \Symfony\Contracts\Translation\TranslatorInterface         $translator
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      */
     public function __construct(

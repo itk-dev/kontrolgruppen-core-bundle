@@ -23,7 +23,7 @@ use Kontrolgruppen\CoreBundle\Entity\Account;
 class AccountRepository extends ServiceEntityRepository
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(ManagerRegistry $registry)
     {

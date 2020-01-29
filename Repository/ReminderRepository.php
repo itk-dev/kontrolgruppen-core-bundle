@@ -25,7 +25,7 @@ use Kontrolgruppen\CoreBundle\Entity\User;
 class ReminderRepository extends ServiceEntityRepository
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -115,9 +115,9 @@ class ReminderRepository extends ServiceEntityRepository
      *
      * @param \Kontrolgruppen\CoreBundle\Entity\User $user
      *   The user
-     * @param string $interval
+     * @param string                                 $interval
      *   The interval (from DateIntervalType)
-     * @param bool $sortByDate
+     * @param bool                                   $sortByDate
      *   Sort by date
      *
      * @return mixed

@@ -24,7 +24,7 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 class ProcessStatusRepository extends ServiceEntityRepository
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(ManagerRegistry $registry)
     {

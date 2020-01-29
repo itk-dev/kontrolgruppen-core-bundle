@@ -24,7 +24,7 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessType;
 class ChannelRepository extends ServiceEntityRepository
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(ManagerRegistry $registry)
     {

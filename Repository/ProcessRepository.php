@@ -23,7 +23,7 @@ use Kontrolgruppen\CoreBundle\Entity\Process;
 class ProcessRepository extends ServiceEntityRepository
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(ManagerRegistry $registry)
     {
