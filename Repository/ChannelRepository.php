@@ -23,11 +23,22 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessType;
  */
 class ChannelRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Channel::class);
     }
 
+    /**
+     * Get channels by process type.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\ProcessType $processType
+     *   The process type
+     *
+     * @return mixed
+     */
     public function getByProcessType(ProcessType $processType)
     {
         $qb = $this->createQueryBuilder('channel', 'channel.id')

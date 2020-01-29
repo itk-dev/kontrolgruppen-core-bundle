@@ -22,6 +22,9 @@ use Kontrolgruppen\CoreBundle\Entity\Car;
  */
 class CarRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Car::class);

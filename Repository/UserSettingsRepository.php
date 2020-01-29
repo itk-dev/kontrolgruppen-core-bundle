@@ -22,6 +22,9 @@ use Kontrolgruppen\CoreBundle\Entity\UserSettings;
  */
 class UserSettingsRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, UserSettings::class);

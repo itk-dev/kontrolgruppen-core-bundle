@@ -22,6 +22,9 @@ use Kontrolgruppen\CoreBundle\Entity\Conclusion;
  */
 class ConclusionRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Conclusion::class);

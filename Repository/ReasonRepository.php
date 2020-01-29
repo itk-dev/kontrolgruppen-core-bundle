@@ -23,6 +23,9 @@ use Kontrolgruppen\CoreBundle\Entity\Reason;
  */
 class ReasonRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Reason::class);

@@ -22,24 +22,36 @@ use Kontrolgruppen\CoreBundle\Entity\Process;
  */
 class ProcessRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Process::class);
     }
 
+    /**
+     * Get all processes from a given year.
+     *
+     * @param $year
+     *   The creation year
+     *
+     * @return mixed
+     *   The processes
+     *
+     * @throws \Exception
+     *   Datetime exception
+     */
     public function findAllFromYear($year)
     {
         $from = new \DateTime($year.'-01-01 00:00:00');
         $to = new \DateTime($year.'-12-31 23:59:59');
 
         $qb = $this->createQueryBuilder('e');
-        $qb
-            ->andWhere('e.createdAt BETWEEN :from AND :to')
+        $qb->andWhere('e.createdAt BETWEEN :from AND :to')
             ->setParameter('from', $from)
-            ->setParameter('to', $to)
-        ;
-        $result = $qb->getQuery()->getResult();
+            ->setParameter('to', $to);
 
-        return $result;
+        return $qb->getQuery()->getResult();
     }
 }

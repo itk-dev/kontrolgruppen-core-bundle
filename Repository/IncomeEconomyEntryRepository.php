@@ -22,6 +22,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class IncomeEconomyEntryRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, IncomeEconomyEntry::class);

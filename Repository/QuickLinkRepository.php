@@ -22,6 +22,9 @@ use Kontrolgruppen\CoreBundle\Entity\QuickLink;
  */
 class QuickLinkRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, QuickLink::class);

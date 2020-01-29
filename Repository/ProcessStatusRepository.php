@@ -23,15 +23,27 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
  */
 class ProcessStatusRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ProcessStatus::class);
     }
 
+    /**
+     * Get process statuses that are available for the process.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *   The process
+     *
+     * @return mixed
+     *   The process statuses that are available for the process
+     */
     public function getAvailableForProcess(Process $process)
     {
         $qb = $this->createQueryBuilder('p')
-            ->where(':process MEMBER OF p.processes ')
+            ->where(':process MEMBER OF p.processes')
             ->setParameter('process', $process)
             ->getQuery();
 

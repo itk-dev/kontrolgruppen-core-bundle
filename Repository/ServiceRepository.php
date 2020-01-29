@@ -24,11 +24,23 @@ use Kontrolgruppen\CoreBundle\Entity\Service;
  */
 class ServiceRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Service::class);
     }
 
+    /**
+     * Get services by process type.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\ProcessType $processType
+     *   The process type
+     *
+     * @return mixed
+     *   Services for a given process type
+     */
     public function getByProcessType(ProcessType $processType)
     {
         $qb = $this->createQueryBuilder('service', 'service.id')
@@ -39,6 +51,15 @@ class ServiceRepository extends ServiceEntityRepository
         return $qb->getResult();
     }
 
+    /**
+     * Get services for a process
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *   The process
+     *
+     * @return mixed
+     *   Services for a process
+     */
     public function getByProcess(Process $process)
     {
         $qb = $this->createQueryBuilder('service', 'service.id')

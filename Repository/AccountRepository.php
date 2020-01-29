@@ -22,6 +22,9 @@ use Kontrolgruppen\CoreBundle\Entity\Account;
  */
 class AccountRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Account::class);

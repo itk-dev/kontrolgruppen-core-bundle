@@ -22,6 +22,9 @@ use Kontrolgruppen\CoreBundle\Entity\EconomyEntry;
  */
 class EconomyEntryRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, EconomyEntry::class);

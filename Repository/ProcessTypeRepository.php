@@ -22,6 +22,9 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessType;
  */
 class ProcessTypeRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ProcessType::class);

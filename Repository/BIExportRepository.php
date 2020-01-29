@@ -22,6 +22,9 @@ use Kontrolgruppen\CoreBundle\Entity\BIExport;
  */
 class BIExportRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, BIExport::class);

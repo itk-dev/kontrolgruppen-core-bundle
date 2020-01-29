@@ -27,6 +27,14 @@ class JournalEntryRepository extends ServiceEntityRepository
 {
     protected $logManager;
 
+    /**
+     * JournalEntryRepository constructor.
+     *
+     * @param \Doctrine\Persistence\ManagerRegistry         $registry
+     *   The registry
+     * @param \Kontrolgruppen\CoreBundle\Service\LogManager $logManager
+     *   Log manager
+     */
     public function __construct(ManagerRegistry $registry, LogManager $logManager)
     {
         $this->logManager = $logManager;
@@ -34,11 +42,23 @@ class JournalEntryRepository extends ServiceEntityRepository
         parent::__construct($registry, JournalEntry::class);
     }
 
+    /**
+     * Get latest entries of type note.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     * @return array
+     */
     public function getLatestNoteEntries(Process $process)
     {
         return $this->getLatestEntries($process, JournalEntryEnumType::NOTE);
     }
 
+    /**
+     * Get latest entries of type internal note.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     * @return array
+     */
     public function getLatestInternalNoteEntries(Process $process)
     {
         return $this->getLatestEntries($process, JournalEntryEnumType::INTERNAL_NOTE);

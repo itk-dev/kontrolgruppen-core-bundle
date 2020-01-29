@@ -27,6 +27,14 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
 {
     protected $paginator;
 
+    /**
+     * ProcessLogEntryRepository constructor.
+     *
+     * @param \Doctrine\Persistence\ManagerRegistry $registry
+     *   The registry
+     * @param \Knp\Component\Pager\PaginatorInterface $paginator
+     *   The paginator
+     */
     public function __construct(
         ManagerRegistry $registry,
         PaginatorInterface $paginator
@@ -35,6 +43,18 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
         $this->paginator = $paginator;
     }
 
+    /**
+     * Get the latest entries, paginated.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *   The process the logs belong to
+     * @param int $page
+     *   The pagination page
+     * @param int $limit
+     *   The limit on number of results
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
+     *   The pagination result
+     */
     public function getLatestEntriesPaginated(
         Process $process,
         int $page = 1,
@@ -47,6 +67,18 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
         );
     }
 
+    /**
+     * Get the latest entries by log level.
+     *
+     * @param string $level
+     *   The log level
+     * @param int $limit
+     *   The limit on number of results
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process|null $process
+     *   The process the logs belong to
+     * @return array
+     *   The latest log entries
+     */
     public function getLatestEntriesByLevel(
         $level = ProcessLogEntryLevelEnumType::NOTICE,
         $limit = 5,
@@ -77,6 +109,16 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
         return $query->getArrayResult();
     }
 
+    /**
+     * Get the latest log entries.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *   The process the logs belong to
+     * @param $level
+     *   The log level
+     * @return \Doctrine\ORM\Query
+     *   The query
+     */
     public function getLatestLogEntries(Process $process, $level)
     {
         $qb = $this->createQueryBuilder(
@@ -95,6 +137,14 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
         return $qb->getQuery();
     }
 
+    /**
+     * Get the latest entries, as query.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *   The process the logs belong to
+     * @return \Doctrine\ORM\Query
+     *   The query
+     */
     protected function getLatestEntriesQuery(Process $process)
     {
         $qb = $this->createQueryBuilder(
@@ -111,6 +161,14 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
         return $qb->getQuery();
     }
 
+    /**
+     * Get all log entries.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *   The process the logs belong to
+     * @return mixed
+     *   The result
+     */
     public function getAllLogEntries(Process $process)
     {
         return $this->getLatestEntriesQuery($process)->getResult();

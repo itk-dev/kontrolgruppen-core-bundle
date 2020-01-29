@@ -22,6 +22,9 @@ use Kontrolgruppen\CoreBundle\Entity\LockedNetValue;
  */
 class LockedNetValueRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, LockedNetValue::class);

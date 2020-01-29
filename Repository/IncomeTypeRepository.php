@@ -22,6 +22,9 @@ use Kontrolgruppen\CoreBundle\Entity\IncomeType;
  */
 class IncomeTypeRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, IncomeType::class);
