@@ -92,7 +92,7 @@
             <a href="{{ path('process_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
             {% if not process.completedAt %}
                 {% if is_granted('edit', process) %}
-                        <a href="{{ path('process_edit', {'id': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'process.edit.title'|trans }}</a>
+                    <a href="{{ path('process_edit', {'id': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'process.edit.title'|trans }}</a>
                 {% endif %}
                 {% if is_granted('delete', process) %}
                     {{ include('@KontrolgruppenCore/process/_delete_form.html.twig') }}
