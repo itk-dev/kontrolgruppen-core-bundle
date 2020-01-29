@@ -100,6 +100,13 @@ class ProcessVoter extends Voter
         return $this->security->isGranted('ROLE_SAGSBEHANDLER');
     }
 
+    /**
+     * Checks if the provided User entity has the rights to delete a Process
+     *
+     * @param Process $process
+     * @param User $user
+     * @return bool
+     */
     private function canDelete(Process $process, User $user)
     {
         return $this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN']);
