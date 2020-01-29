@@ -11,9 +11,9 @@
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method ProcessStatus|null find($id, $lockMode = null, $lockVersion = null)
@@ -23,15 +23,27 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ProcessStatusRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ProcessStatus::class);
     }
 
+    /**
+     * Get process statuses that are available for the process.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *   The process
+     *
+     * @return mixed
+     *   The process statuses that are available for the process
+     */
     public function getAvailableForProcess(Process $process)
     {
         $qb = $this->createQueryBuilder('p')
-            ->where(':process MEMBER OF p.processes ')
+            ->where(':process MEMBER OF p.processes')
             ->setParameter('process', $process)
             ->getQuery();
 

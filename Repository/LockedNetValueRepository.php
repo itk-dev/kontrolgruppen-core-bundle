@@ -11,8 +11,8 @@
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Kontrolgruppen\CoreBundle\Entity\LockedNetValue;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method LockedNetValue|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,7 +22,10 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class LockedNetValueRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, LockedNetValue::class);
     }
