@@ -4,16 +4,16 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-12">
-            <h1 class="float-left">{{ 'journal_entry.index.title'|trans }}</h1>
-            {% if is_granted('edit', process) %}
+        {% if canEdit %}
+            <div class="col-12">
+                <h1 class="float-left">{{ 'journal_entry.index.title'|trans }}</h1>
                 <span data-toggle="collapse" data-target="#journalEntryNew" aria-expanded="false">
-                    <button data-toggle="button" aria-pressed="false" autocomplete="off"
-                        class="btn btn-success btn-lg float-right"><span class="show">{{ 'journal_entry.actions.create'|trans }}</span><span class="hide">{{ 'journal_entry.actions.hide'|trans }}</span></button>
+                    <button data-toggle="button" aria-pressed="false" autocomplete="off" class="btn btn-success btn-lg float-right">
+                        <span class="show">{{ 'journal_entry.actions.create'|trans }}</span>
+                        <span class="hide">{{ 'journal_entry.actions.hide'|trans }}</span>
+                    </button>
                 </span>
-            {% endif %}
-        </div>
-        {% if is_granted('edit', process) %}
+            </div>
             <div class="col-12 collapse" id="journalEntryNew">
                 <div class="bg-light border-bottom p-3 mb-3">
                     {{ form_start(journalEntryForm) }}
@@ -25,9 +25,17 @@
                     {{ form_end(journalEntryForm) }}
                 </div>
             </div>
+        {% else %}
+            <div class="col-12">
+                <h1 class="float-left">{{ 'journal_entry.index.title'|trans }}</h1>
+            </div>
+        {% endif %}
+        {% if process.completedAt %}
+            <div class="col-12">
+                <div class="alert alert-warning">{{ 'process.completed_message'|trans }}</div>
+            </div>
         {% endif %}
     </div>
-
 
     <form method="get" action="." class="form form-inline js-filters">
         {{ form_rest(form) }}

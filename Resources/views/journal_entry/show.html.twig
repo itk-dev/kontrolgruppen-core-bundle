@@ -18,7 +18,7 @@
     <hr>
 
     <a href="{{ path('journal_entry_index', {'process': process.id}) }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
-    {% if is_granted('edit', process) %}
+    {% if canEdit %}
         <a href="{{ path('journal_entry_edit', {'id': journalEntry.id, 'process': process.id}) }}"
            class="btn btn-primary float-right pr-5 pl-5">{{ 'common.actions.edit'|trans }}</a>
 
