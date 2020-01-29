@@ -259,7 +259,7 @@ class ProcessController extends BaseController
      */
     public function delete(Request $request, Process $process): Response
     {
-        $this->denyAccessUnlessGranted('edit', $process);
+        $this->denyAccessUnlessGranted('delete', $process);
 
         if ($this->isCsrfTokenValid(
             'delete'.$process->getId(),
