@@ -33,7 +33,7 @@ class ProcessLogController extends BaseController
      */
     public function index(Request $request, Process $process): Response
     {
-        $this->denyAccessUnlessGranted('edit', $process);
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         // Latest Log entries
         $logEntriesPagination = $this->getDoctrine()->getRepository(
@@ -61,7 +61,7 @@ class ProcessLogController extends BaseController
         ProcessLogExport $processLogExport,
         Process $process
     ): Response {
-        $this->denyAccessUnlessGranted('edit', $process);
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $spreadsheet = new Spreadsheet();
 
