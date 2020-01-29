@@ -101,7 +101,7 @@ class ProcessVoter extends Voter
     }
 
     /**
-     * Checks if the provided User entity has the rights to delete a Process
+     * Checks if the provided User entity has the rights to delete a Process.
      *
      * @param Process $process
      * @param User    $user
