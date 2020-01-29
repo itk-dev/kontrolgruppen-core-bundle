@@ -21,6 +21,7 @@ class ProcessVoter extends Voter
     // these strings are just invented: you can use anything
     const VIEW = 'view';
     const EDIT = 'edit';
+    const DELETE = 'delete';
 
     private $security;
 
@@ -35,7 +36,7 @@ class ProcessVoter extends Voter
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
-        if (!\in_array($attribute, [self::VIEW, self::EDIT])) {
+        if (!\in_array($attribute, [self::VIEW, self::EDIT, self::DELETE])) {
             return false;
         }
 
@@ -73,6 +74,8 @@ class ProcessVoter extends Voter
                 return $this->canView($process, $user);
             case self::EDIT:
                 return $this->canEdit($process, $user);
+            case self::DELETE:
+                return $this->canDelete($process, $user);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -95,5 +98,10 @@ class ProcessVoter extends Voter
     private function canEdit(Process $post, User $user)
     {
         return $this->security->isGranted('ROLE_SAGSBEHANDLER');
+    }
+
+    private function canDelete(Process $process, User $user)
+    {
+        return $this->security->isGranted(['ROLE_SUPER_ADMIN', 'ROLE_ADMIN']);
     }
 }
