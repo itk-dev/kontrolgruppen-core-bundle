@@ -151,6 +151,9 @@ class User implements UserInterface
      */
     private $userSettings;
 
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         $this->userSettings = new ArrayCollection();
@@ -192,6 +195,11 @@ class User implements UserInterface
         return $this->userSettings;
     }
 
+    /**
+     * @param \Kontrolgruppen\CoreBundle\Entity\UserSettings $userSetting
+     *
+     * @return User
+     */
     public function addUserSetting(UserSettings $userSetting): self
     {
         if (!$this->userSettings->contains($userSetting)) {
@@ -202,6 +210,11 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param \Kontrolgruppen\CoreBundle\Entity\UserSettings $userSetting
+     *
+     * @return User
+     */
     public function removeUserSetting(UserSettings $userSetting): self
     {
         if ($this->userSettings->contains($userSetting)) {

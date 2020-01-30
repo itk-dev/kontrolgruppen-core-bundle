@@ -51,10 +51,12 @@ class ProcessManager
     }
 
     /**
-     * Find open processIds assigned to user that has not been visited by the user.
+     * Find ids of processes assigned to user that have not been visited by the user.
      *
-     * @param array $processIds
+     * @param array                                  $processIds
+     *   The process ids to limit the search to
      * @param \Kontrolgruppen\CoreBundle\Entity\User $user
+     *   The user
      *
      * @return mixed
      */

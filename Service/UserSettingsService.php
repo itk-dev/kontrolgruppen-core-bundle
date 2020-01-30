@@ -29,7 +29,9 @@ class UserSettingsService
      * UserSettingsService constructor.
      *
      * @param \Kontrolgruppen\CoreBundle\Repository\UserSettingsRepository $settingsRepository
-     *  The UserSettings repository
+     *   The UserSettings repository
+     * @param \Doctrine\ORM\EntityManagerInterface                         $entityManager
+     *   The entity manager
      */
     public function __construct(UserSettingsRepository $settingsRepository, EntityManagerInterface $entityManager)
     {
@@ -42,7 +44,7 @@ class UserSettingsService
      *
      * @param \Kontrolgruppen\CoreBundle\Entity\User $user
      *   The user
-     * @param string $settingsKey
+     * @param string                                 $settingsKey
      *   The settings key
      *
      * @return \Kontrolgruppen\CoreBundle\Entity\UserSettings|null
@@ -60,9 +62,9 @@ class UserSettingsService
      *
      * @param \Kontrolgruppen\CoreBundle\Entity\User $user
      *   The user
-     * @param string $settingsKey
+     * @param string                                 $settingsKey
      *   The settings key
-     * @param array $settingValue
+     * @param array                                  $settingValue
      *   The setting value
      */
     public function setSettings(User $user, string $settingsKey, array $settingValue)
