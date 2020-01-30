@@ -147,9 +147,14 @@ class User implements UserInterface
     private $cliLoginToken;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\UserSettings", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\UserSettings", mappedBy="user", orphanRemoval=true)
      */
     private $userSettings;
+
+    public function __construct()
+    {
+        $this->userSettings = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -179,25 +184,32 @@ class User implements UserInterface
         return (string) $this->getUsername();
     }
 
-    public function getUserSettings(): ?UserSettings
+    /**
+     * @return Collection|UserSettings[]
+     */
+    public function getUserSettings(): Collection
     {
-        if (!empty($this->userSettings)) {
-            return $this->userSettings;
-        }
-
-        $userSettings = new UserSettings();
-        $this->setUserSettings($userSettings);
-
-        return $userSettings;
+        return $this->userSettings;
     }
 
-    public function setUserSettings(UserSettings $userSettings): self
+    public function addUserSetting(UserSettings $userSetting): self
     {
-        $this->userSettings = $userSettings;
+        if (!$this->userSettings->contains($userSetting)) {
+            $this->userSettings[] = $userSetting;
+            $userSetting->setUser($this);
+        }
 
-        // set the owning side of the relation if necessary
-        if ($this !== $userSettings->getUser()) {
-            $userSettings->setUser($this);
+        return $this;
+    }
+
+    public function removeUserSetting(UserSettings $userSetting): self
+    {
+        if ($this->userSettings->contains($userSetting)) {
+            $this->userSettings->removeElement($userSetting);
+            // set the owning side to null (unless already changed)
+            if ($userSetting->getUser() === $this) {
+                $userSetting->setUser(null);
+            }
         }
 
         return $this;

@@ -49,27 +49,9 @@ class ProcessController extends BaseController
         UserRepository $userRepository,
         UserSettingsService $userSettingsService
     ): Response {
-        $userSettings = $this->getUser()->getUserSettings();
-
-        $result = $userSettingsService->handleProcessIndexRequest($request, $userSettings);
-
         $filterForm = $formFactory->create(ProcessFilterType::class);
 
-        if (!empty($result)) {
-            return $this->redirectToRoute(
-                'process_index',
-                [
-                    $filterForm->getName() => $request->query->get($filterForm->getName()),
-                    'sort' => $result['sort'],
-                    'direction' => $result['direction'],
-                    'page' => $request->query->get('page'),
-                ]
-            );
-        }
-
-        $results = [];
-
-        $qb = null;
+        $queryBuilder = null;
 
         $selectedCaseWorker = $filterForm->get('caseWorker');
 
@@ -88,53 +70,81 @@ class ProcessController extends BaseController
             $filterForm->submit($formParameters);
 
             // initialize a query builder
-            $qb = $processRepository->createQueryBuilder('e');
+            $queryBuilder = $processRepository->createQueryBuilder('e');
 
             // build the query from the given form object
-            $lexikBuilderUpdater->addFilterConditions($filterForm, $qb);
+            $lexikBuilderUpdater->addFilterConditions($filterForm, $queryBuilder);
         } else {
-            $qb = $processRepository->createQueryBuilder('e');
+            $queryBuilder = $processRepository->createQueryBuilder('e');
 
-            $qb->where('e.caseWorker = :caseWorker');
-            $qb->setParameter(':caseWorker', $this->getUser());
+            $queryBuilder->where('e.caseWorker = :caseWorker');
+            $queryBuilder->setParameter(':caseWorker', $this->getUser());
         }
 
         // Add sortable fields.
-        $qb->leftJoin('e.caseWorker', 'caseWorker');
-        $qb->addSelect('partial caseWorker.{id}');
+        $queryBuilder->leftJoin('e.caseWorker', 'caseWorker');
+        $queryBuilder->addSelect('partial caseWorker.{id}');
 
-        $qb->leftJoin('e.channel', 'channel');
-        $qb->addSelect('partial channel.{id,name}');
+        $queryBuilder->leftJoin('e.channel', 'channel');
+        $queryBuilder->addSelect('partial channel.{id,name}');
 
-        $qb->leftJoin('e.reason', 'reason');
-        $qb->addSelect('partial reason.{id,name}');
+        $queryBuilder->leftJoin('e.reason', 'reason');
+        $queryBuilder->addSelect('partial reason.{id,name}');
 
-        $qb->leftJoin('e.service', 'service');
-        $qb->addSelect('partial service.{id,name}');
+        $queryBuilder->leftJoin('e.service', 'service');
+        $queryBuilder->addSelect('partial service.{id,name}');
 
-        $qb->leftJoin('e.processType', 'processType');
-        $qb->addSelect('partial processType.{id}');
+        $queryBuilder->leftJoin('e.processType', 'processType');
+        $queryBuilder->addSelect('partial processType.{id}');
 
-        $qb->leftJoin('e.processStatus', 'processStatus');
-        $qb->addSelect('partial processStatus.{id}');
+        $queryBuilder->leftJoin('e.processStatus', 'processStatus');
+        $queryBuilder->addSelect('partial processStatus.{id}');
 
-        $query = $qb->getQuery();
+        $formKey = 'process_index.'.$filterForm->getName();
+        /* @var \Kontrolgruppen\CoreBundle\Entity\User $user */
+        $user = $this->getUser();
 
+        $paginatorOptions = [];
+
+        // Get sort and direction from user settings.
+        if (!$request->query->has('sort') || !$request->query->has('direction')) {
+            $userSettings = $userSettingsService->getSettings($user, $formKey)->getSettingsValue();
+
+            if (null !== $userSettings) {
+                $paginatorOptions = [
+                    'defaultSortFieldName' => $userSettings['sort'],
+                    'defaultSortDirection' => $userSettings['direction'],
+                ];
+            } else {
+                // Defaults.
+                $paginatorOptions = [
+                    'defaultSortFieldName' => 'e.caseNumber',
+                    'defaultSortDirection' => 'desc',
+                ];
+            }
+        } else {
+            $userSettingsService->setSettings($user, $formKey, [
+                'sort' => $request->query->get('sort'),
+                'direction' => $request->query->get('direction'),
+            ]);
+        }
+
+        $query = $queryBuilder->getQuery();
+
+        // Get paginated result.
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            50,
+            $paginatorOptions
+        );
+
+        // Find Processes that have not been visited by the assigned CaseWorker.
         $caseWorker = (!empty($selectedCaseWorker->getData()))
             ? $userRepository->find($selectedCaseWorker->getData())
             : $this->getUser();
-
-        $notVisitedProcesses = $processManager->getUsersUnvisitedProcesses($caseWorker);
-        $processes = $processManager->markProcessesAsUnvisited(
-            $notVisitedProcesses,
-            $query->getResult()
-        );
-
-        $pagination = $paginator->paginate(
-            $processes,
-            $request->query->get('page', 1),
-            50
-        );
+        $foundEntries = array_column($query->getArrayResult(), 'id');
+        $notVisitedProcessIds = $processManager->getUsersUnvisitedProcessIds($foundEntries, $caseWorker);
 
         return $this->render(
             '@KontrolgruppenCore/process/index.html.twig',
@@ -142,7 +152,7 @@ class ProcessController extends BaseController
                 'menuItems' => $this->menuService->getProcessMenu(
                     $request->getPathInfo()
                 ),
-                'processes' => $results,
+                'unvisitedProcessIds' => $notVisitedProcessIds,
                 'pagination' => $pagination,
                 'form' => $filterForm->createView(),
                 'query' => $query,

@@ -51,6 +51,38 @@ class ProcessManager
     }
 
     /**
+     * Find open processIds assigned to user that has not been visited by the user.
+     *
+     * @param array $processIds
+     * @param \Kontrolgruppen\CoreBundle\Entity\User $user
+     *
+     * @return mixed
+     */
+    public function getUsersUnvisitedProcessIds(array $processIds, User $user)
+    {
+        $query = $this->entityManager->createQuery(
+            '
+            SELECT p.id
+            FROM Kontrolgruppen\CoreBundle\Entity\Process p
+            WHERE p.caseWorker = :caseWorker
+            AND p.id IN (:processIds)
+            AND NOT EXISTS (
+              SELECT l.id
+              FROM Gedmo\Loggable\Entity\LogEntry l
+              WHERE l.action = \'read\'
+              AND l.username = :username
+              AND p.id = l.objectId
+            )
+            '
+        )
+            ->setParameter('caseWorker', $user)
+            ->setParameter('processIds', $processIds)
+            ->setParameter('username', $user->getUsername());
+
+        return array_column($query->getArrayResult(), 'id');
+    }
+
+    /**
      * Find open processes assigned to user that has not been visited by the user.
      *
      * @return mixed

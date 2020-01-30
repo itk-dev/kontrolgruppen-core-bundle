@@ -25,19 +25,48 @@ class UserSettings
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\User", inversedBy="userSettings", cascade={"persist", "remove"})
+     * @ORM\Column(type="string", length=255)
+     */
+    private $settingsKey;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $settingsValue = [];
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\User", inversedBy="userSettings")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $processIndexSort;
-
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getSettingsKey(): ?string
+    {
+        return $this->settingsKey;
+    }
+
+    public function setSettingsKey(string $settingsKey): self
+    {
+        $this->settingsKey = $settingsKey;
+
+        return $this;
+    }
+
+    public function getSettingsValue(): ?array
+    {
+        return $this->settingsValue;
+    }
+
+    public function setSettingsValue(array $settingsValue): self
+    {
+        $this->settingsValue = $settingsValue;
+
+        return $this;
     }
 
     public function getUser(): ?User
@@ -45,24 +74,9 @@ class UserSettings
         return $this->user;
     }
 
-    public function setUser(User $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getProcessIndexSort(): ?array
-    {
-        return json_decode($this->processIndexSort, true);
-    }
-
-    public function setProcessIndexSort(string $sort, string $direction): self
-    {
-        $this->processIndexSort = json_encode([
-            'sort' => $sort,
-            'direction' => $direction,
-        ]);
 
         return $this;
     }
