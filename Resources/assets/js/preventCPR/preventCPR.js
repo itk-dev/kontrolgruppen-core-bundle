@@ -8,7 +8,7 @@
         let inputElements = $(this);
 
         self.options = $.extend({
-            text: ('prevent_cpr.cpr_in_content' in kontrolgruppenMessages) ? kontrolgruppenMessages['prevent_cpr.cpr_in_content'] : 'Indeholder følgende CPR-numre (fjern venligst): %list'
+            text: ('prevent_cpr.cpr_in_content' in kontrolgruppenMessages) ? kontrolgruppenMessages['prevent_cpr.cpr_in_content'] : "Vi har fundet følgende, der kan være CPR-nummre: %list% \nEr du sikker på at du vil gemme?\n Husk at du ikke må gemme CPR-numre."
         }, options);
 
         function checkInputField (event, inputElement) {
@@ -22,16 +22,19 @@
                 contents = inputElement.val();
             }
 
-            let matches = contents.match(/\d{6}-?\d{4}/g);
+            let matches = contents.match(/[0-3][0-9][0-1][0-9]{3}-?\d{4}/g);
 
             // Prevent submit if CPR in element.
             if (matches) {
-                event.preventDefault(event);
-
                 // Display error, and how to correct.
-                alert(self.options.text.replace('%list%', matches.reduce(function (accumulator, currentValue) {
+                let confirmSubmit = confirm(self.options.text.replace('%list%', matches.reduce(function (accumulator, currentValue) {
                     return accumulator !== '' ? accumulator + ', ' + currentValue : currentValue;
                 })));
+
+                // Only submit if user confirmed the action.
+                if (!confirmSubmit) {
+                    event.preventDefault(event);
+                }
             }
         }
 

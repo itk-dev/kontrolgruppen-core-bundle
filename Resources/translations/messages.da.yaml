@@ -884,7 +884,12 @@ export:
         pdf: Eksportér (PDF)
 
 prevent_cpr:
-    cpr_in_content: 'Indeholder følgende CPR-numre (fjern venligst): %list%'
+    cpr_in_content: "Vi har fundet følgende, der kan være CPR-nummre:\n
+                     \n
+                     %list%\n
+                     \n
+                     Er du sikker på at du vil gemme?\n
+                     Husk at du ikke må gemme CPR-numre."
 
 account:
     edit:
