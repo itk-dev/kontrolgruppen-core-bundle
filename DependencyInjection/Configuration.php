@@ -14,6 +14,9 @@ use Kontrolgruppen\CoreBundle\Entity\User;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+/**
+ * Class Configuration.
+ */
 class Configuration implements ConfigurationInterface
 {
     /**

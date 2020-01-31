@@ -12,6 +12,9 @@ namespace Kontrolgruppen\CoreBundle\DBAL\Types;
 
 use Fresh\DoctrineEnumBundle\DBAL\Types\AbstractEnumType;
 
+/**
+ * Class JournalEntryEnumType.
+ */
 final class JournalEntryEnumType extends AbstractEnumType
 {
     public const NOTE = 'NOTE';

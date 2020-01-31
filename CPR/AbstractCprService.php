@@ -12,6 +12,9 @@ namespace Kontrolgruppen\CoreBundle\CPR;
 
 use Kontrolgruppen\CoreBundle\Entity\Client;
 
+/**
+ * Class AbstractCprService.
+ */
 abstract class AbstractCprService implements CprServiceInterface
 {
     /**
@@ -62,6 +65,11 @@ abstract class AbstractCprService implements CprServiceInterface
         return false;
     }
 
+    /**
+     * @param CprServiceResult $result
+     *
+     * @return string
+     */
     private function generateAddressString(CprServiceResult $result): string
     {
         $address = $result->getStreetName();

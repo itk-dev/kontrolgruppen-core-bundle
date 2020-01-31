@@ -12,6 +12,9 @@ namespace Kontrolgruppen\CoreBundle\DBAL\Types;
 
 use Fresh\DoctrineEnumBundle\DBAL\Types\AbstractEnumType;
 
+/**
+ * Class ProcessLogEntryLevelEnumType.
+ */
 class ProcessLogEntryLevelEnumType extends AbstractEnumType
 {
     public const INFO = 'INFO';

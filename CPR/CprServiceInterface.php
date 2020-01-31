@@ -12,6 +12,9 @@ namespace Kontrolgruppen\CoreBundle\CPR;
 
 use Kontrolgruppen\CoreBundle\Entity\Client;
 
+/**
+ * Interface CprServiceInterface.
+ */
 interface CprServiceInterface
 {
     /**

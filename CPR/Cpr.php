@@ -10,15 +10,26 @@
 
 namespace Kontrolgruppen\CoreBundle\CPR;
 
+/**
+ * Class Cpr.
+ */
 class Cpr
 {
     private $cpr;
 
+    /**
+     * Cpr constructor.
+     *
+     * @param string $cpr
+     */
     public function __construct(string $cpr)
     {
         $this->setCpr($cpr);
     }
 
+    /**
+     * @param string $cpr
+     */
     private function setCpr(string $cpr)
     {
         if (strpos($cpr, '-')) {
