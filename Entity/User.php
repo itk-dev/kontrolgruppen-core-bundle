@@ -18,6 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\UserRepository")
+ *
  * @Gedmo\Loggable()
  */
 class User implements UserInterface

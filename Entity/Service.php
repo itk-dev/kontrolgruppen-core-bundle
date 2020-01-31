@@ -17,6 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ServiceRepository")
+ *
  * @Gedmo\Loggable()
  */
 class Service extends AbstractTaxonomy

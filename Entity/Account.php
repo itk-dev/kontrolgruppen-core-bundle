@@ -17,6 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\AccountRepository")
+ *
  * @Gedmo\Loggable()
  */
 class Account extends AbstractTaxonomy

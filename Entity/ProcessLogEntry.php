@@ -33,6 +33,7 @@ class ProcessLogEntry extends AbstractEntity
 
     /**
      * @ORM\Column(name="level", type="ProcessLogEntryLevelEnumType", nullable=false)
+     *
      * @DoctrineAssert\Enum(entity="Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType")
      */
     private $level;

@@ -18,6 +18,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
+ *
  * @Gedmo\Loggable()
  *
  * This is an empty conclusion type, which should be inherited from for different
@@ -27,6 +28,7 @@ class EconomyEntry extends AbstractEntity implements ProcessLoggableInterface
 {
     /**
      * @ORM\Column(type="float", nullable=false)
+     *
      * @Gedmo\Versioned()
      */
     private $amount;
@@ -39,7 +41,9 @@ class EconomyEntry extends AbstractEntity implements ProcessLoggableInterface
 
     /**
      * @ORM\Column(name="type", type="EconomyEntryEnumType", nullable=false)
+     *
      * @DoctrineAssert\Enum(entity="Kontrolgruppen\CoreBundle\DBAL\Types\EconomyEntryEnumType")
+     *
      * @Gedmo\Versioned()
      */
     private $type;

@@ -20,50 +20,60 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ProcessRepository")
+ *
  * @Gedmo\Loggable()
  */
 class Process extends AbstractEntity
 {
     /**
      * @var \DateTime|null
+     *
      * @ORM\Column(type="datetime", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $completedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\User", inversedBy="processes")
+     *
      * @Gedmo\Versioned()
      */
     private $caseWorker;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     *
      * @Gedmo\Versioned()
      */
     private $caseNumber;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @KontrolgruppenAssert\CPR
+     *
      * @Gedmo\Versioned()
      */
     private $clientCPR;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Channel", inversedBy="processes")
+     *
      * @Gedmo\Versioned()
      */
     private $channel;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Reason", inversedBy="processes")
+     *
      * @Gedmo\Versioned()
      */
     private $reason;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="processes")
+     *
      * @Gedmo\Versioned()
      */
     private $service;
@@ -71,12 +81,14 @@ class Process extends AbstractEntity
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessType", inversedBy="processes")
      * @ORM\JoinColumn(name="process_type_id", referencedColumnName="id", nullable=false)
+     *
      * @Gedmo\Versioned()
      */
     private $processType;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessStatus", inversedBy="processes")
+     *
      * @Gedmo\Versioned()
      */
     private $processStatus;
@@ -113,6 +125,7 @@ class Process extends AbstractEntity
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $policeReport;

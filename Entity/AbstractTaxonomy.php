@@ -21,6 +21,7 @@ abstract class AbstractTaxonomy extends AbstractEntity
 {
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @Gedmo\Versioned
      */
     protected $name;

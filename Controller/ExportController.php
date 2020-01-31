@@ -139,8 +139,8 @@ class ExportController extends BaseController
                     }
 
                     return $this->render('@KontrolgruppenCore/export/show.html.twig', [
-                       'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
-                       'table' => $mock->saveHTML(),
+                        'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
+                        'table' => $mock->saveHTML(),
                     ]);
             }
 

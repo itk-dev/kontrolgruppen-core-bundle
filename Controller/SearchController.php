@@ -41,9 +41,9 @@ class SearchController extends BaseController
             50
         );
         $pagination->setCustomParameters([
-          'align' => 'center',
-          'size' => 'small',
-          'style' => 'bottom',
+            'align' => 'center',
+            'size' => 'small',
+            'style' => 'bottom',
         ]);
 
         return $this->render(

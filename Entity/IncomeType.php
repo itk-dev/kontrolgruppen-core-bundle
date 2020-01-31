@@ -17,6 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\IncomeTypeRepository")
+ *
  * @Gedmo\Loggable()
  */
 class IncomeType extends AbstractTaxonomy

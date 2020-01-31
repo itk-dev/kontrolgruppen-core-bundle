@@ -17,6 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository")
+ *
  * @Gedmo\Loggable()
  */
 class ProcessStatus extends AbstractTaxonomy
@@ -33,6 +34,7 @@ class ProcessStatus extends AbstractTaxonomy
 
     /**
      * @ORM\Column(type="boolean")
+     *
      * @Gedmo\Versioned
      */
     private $isForwardToAnotherAuthority = false;
