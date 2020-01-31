@@ -15,24 +15,28 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
+ *
  * @Gedmo\Loggable()
  */
 class WeightedConclusion extends Conclusion
 {
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $argumentsFor;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $argumentsAgainst;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $conclusion;

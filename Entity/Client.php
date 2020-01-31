@@ -17,48 +17,56 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ClientRepository")
+ *
  * @Gedmo\Loggable()
  */
 class Client extends AbstractEntity implements ProcessLoggableInterface
 {
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $postalCode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $telephone;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $numberOfChildren;
@@ -71,18 +79,21 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $receivesPublicAid;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $employed;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $hasOwnCompany;

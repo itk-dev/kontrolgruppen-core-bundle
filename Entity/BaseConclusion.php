@@ -15,12 +15,14 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
+ *
  * @Gedmo\Loggable()
  */
 class BaseConclusion extends Conclusion
 {
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $conclusion;

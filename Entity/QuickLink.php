@@ -15,6 +15,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\QuickLinkRepository")
+ *
  * @Gedmo\Loggable()
  */
 class QuickLink extends AbstractTaxonomy

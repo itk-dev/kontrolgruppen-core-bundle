@@ -15,18 +15,21 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
+ *
  * @Gedmo\Loggable()
  */
 class BaseEconomyEntry extends EconomyEntry
 {
     /**
      * @ORM\Column(type="integer")
+     *
      * @Gedmo\Versioned()
      */
     private $accountNumber;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @Gedmo\Versioned()
      */
     private $date;

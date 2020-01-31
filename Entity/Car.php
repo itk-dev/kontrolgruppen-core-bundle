@@ -15,24 +15,28 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\CarRepository")
+ *
  * @Gedmo\Loggable()
  */
 class Car extends AbstractEntity
 {
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @Gedmo\Versioned()
      */
     private $registrationNumber;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $sharedOwnership;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $notes;

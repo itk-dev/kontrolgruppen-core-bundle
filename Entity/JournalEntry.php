@@ -16,18 +16,21 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository")
+ *
  * @Gedmo\Loggable()
  */
 class JournalEntry extends AbstractEntity implements ProcessLoggableInterface
 {
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @Gedmo\Versioned()
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $body;
@@ -40,7 +43,9 @@ class JournalEntry extends AbstractEntity implements ProcessLoggableInterface
 
     /**
      * @ORM\Column(name="type", type="JournalEntryEnumType", nullable=false)
+     *
      * @DoctrineAssert\Enum(entity="Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType")
+     *
      * @Gedmo\Versioned()
      */
     protected $type;

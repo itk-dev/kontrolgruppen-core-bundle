@@ -17,8 +17,11 @@ use Kontrolgruppen\CoreBundle\Validator\Repayment;
 
 /**
  * @ORM\Entity
+ *
  * @Gedmo\Loggable()
+ *
  * @FutureSavings
+ *
  * @Repayment
  */
 class ServiceEconomyEntry extends EconomyEntry
@@ -31,18 +34,21 @@ class ServiceEconomyEntry extends EconomyEntry
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $periodFrom;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $periodTo;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     *
      * @Gedmo\Versioned()
      *
      * How many months does the amount cover. Defaults to 1.
