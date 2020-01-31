@@ -28,6 +28,14 @@ class Cpr
     }
 
     /**
+     * @return mixed
+     */
+    public function __toString()
+    {
+        return $this->cpr;
+    }
+
+    /**
      * @param string $cpr
      */
     private function setCpr(string $cpr)
@@ -49,10 +57,5 @@ class Cpr
         }
 
         $this->cpr = $cpr;
-    }
-
-    public function __toString()
-    {
-        return $this->cpr;
     }
 }

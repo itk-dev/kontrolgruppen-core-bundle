@@ -27,6 +27,9 @@ class Account extends AbstractTaxonomy
      */
     private $baseEconomyEntries;
 
+    /**
+     * Account constructor.
+     */
     public function __construct()
     {
         $this->baseEconomyEntries = new ArrayCollection();

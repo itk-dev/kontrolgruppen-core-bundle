@@ -13,7 +13,7 @@ namespace Kontrolgruppen\CoreBundle\CPR;
 /**
  * Interface CprServiceResult.
  */
-interface CprServiceResult
+interface CprServiceResultInterface
 {
     /**
      * @return string

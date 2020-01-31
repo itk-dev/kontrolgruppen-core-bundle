@@ -32,6 +32,9 @@ class Channel extends AbstractTaxonomy
      */
     private $processTypes;
 
+    /**
+     * Channel constructor.
+     */
     public function __construct()
     {
         $this->processes = new ArrayCollection();

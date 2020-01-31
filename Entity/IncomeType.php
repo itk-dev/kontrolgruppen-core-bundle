@@ -27,6 +27,9 @@ class IncomeType extends AbstractTaxonomy
      */
     private $incomeEconomyEntries;
 
+    /**
+     * IncomeType constructor.
+     */
     public function __construct()
     {
         $this->incomeEconomyEntries = new ArrayCollection();

@@ -14,8 +14,14 @@ use Kontrolgruppen\CoreBundle\DependencyInjection\Compiler\CompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+/**
+ * Class KontrolgruppenCoreBundle.
+ */
 class KontrolgruppenCoreBundle extends Bundle
 {
+    /**
+     * {@inheritdoc}
+     */
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new CompilerPass());

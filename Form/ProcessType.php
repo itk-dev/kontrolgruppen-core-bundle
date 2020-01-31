@@ -122,6 +122,16 @@ class ProcessType extends AbstractType
     }
 
     /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => Process::class,
+        ]);
+    }
+
+    /**
      * @param ProcessTypeEntity $processType
      *
      * @return mixed
@@ -139,15 +149,5 @@ class ProcessType extends AbstractType
     private function getChannelChoices(ProcessTypeEntity $processType)
     {
         return $this->channelRepository->getByProcessType($processType);
-    }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => Process::class,
-        ]);
     }
 }

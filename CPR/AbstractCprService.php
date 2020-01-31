@@ -66,11 +66,11 @@ abstract class AbstractCprService implements CprServiceInterface
     }
 
     /**
-     * @param CprServiceResult $result
+     * @param CprServiceResultInterface $result
      *
      * @return string
      */
-    private function generateAddressString(CprServiceResult $result): string
+    private function generateAddressString(CprServiceResultInterface $result): string
     {
         $address = $result->getStreetName();
         $address .= ' '.$result->getHouseNumber();

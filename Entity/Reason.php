@@ -27,6 +27,9 @@ class Reason extends AbstractTaxonomy
      */
     private $processes;
 
+    /**
+     * Reason constructor.
+     */
     public function __construct()
     {
         $this->processes = new ArrayCollection();

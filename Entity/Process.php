@@ -150,6 +150,9 @@ class Process extends AbstractEntity
      */
     private $lockedNetValues;
 
+    /**
+     * Process constructor.
+     */
     public function __construct()
     {
         $this->reminders = new ArrayCollection();

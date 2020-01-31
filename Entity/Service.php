@@ -42,6 +42,9 @@ class Service extends AbstractTaxonomy
      */
     private $lockedNetValues;
 
+    /**
+     * Service constructor.
+     */
     public function __construct()
     {
         $this->processes = new ArrayCollection();

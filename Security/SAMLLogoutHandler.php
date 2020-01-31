@@ -40,11 +40,8 @@ class SAMLLogoutHandler implements LogoutHandlerInterface
      *
      * @throws \OneLogin\Saml2\Error
      */
-    public function logout(
-        Request $request,
-        Response $response,
-        TokenInterface $token
-    ) {
+    public function logout(Request $request, Response $response, TokenInterface $token)
+    {
         if ($this->saml->supportsSingleLogout()) {
             $this->saml->getAuth()->logout();
         }

@@ -113,6 +113,9 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
      */
     private $cars;
 
+    /**
+     * Client constructor.
+     */
     public function __construct()
     {
         $this->cars = new ArrayCollection();

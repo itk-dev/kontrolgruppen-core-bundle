@@ -54,10 +54,8 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
      *
      * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function start(
-        Request $request,
-        AuthenticationException $authException = null
-    ) {
+    public function start(Request $request, AuthenticationException $authException = null)
+    {
         $url = $this->router->generate('saml_login');
 
         return new RedirectResponse($url);
@@ -166,10 +164,8 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
      *
      * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response|null
      */
-    public function onAuthenticationFailure(
-        Request $request,
-        AuthenticationException $exception
-    ) {
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    {
         $request->attributes->set(Security::AUTHENTICATION_ERROR, $exception);
 
         return new RedirectResponse('/');
@@ -182,11 +178,8 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
      *
      * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response|null
      */
-    public function onAuthenticationSuccess(
-        Request $request,
-        TokenInterface $token,
-        $providerKey
-    ) {
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    {
         // @TODO: Redirect to originally requested url.
         return new RedirectResponse('/');
     }

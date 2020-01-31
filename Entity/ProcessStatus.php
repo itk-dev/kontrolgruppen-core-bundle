@@ -39,6 +39,9 @@ class ProcessStatus extends AbstractTaxonomy
      */
     private $isForwardToAnotherAuthority = false;
 
+    /**
+     * ProcessStatus constructor.
+     */
     public function __construct()
     {
         $this->processes = new ArrayCollection();

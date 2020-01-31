@@ -64,6 +64,9 @@ class ProcessType extends AbstractTaxonomy
      */
     private $defaultProcessStatusOnEmptyCaseWorker;
 
+    /**
+     * ProcessType constructor.
+     */
     public function __construct()
     {
         $this->processes = new ArrayCollection();

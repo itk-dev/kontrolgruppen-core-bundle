@@ -42,14 +42,14 @@ class FaellesSQLCprService extends AbstractCprService implements CprServiceInter
     /**
      * {@inheritdoc}
      */
-    public function find(Cpr $cpr): CprServiceResult
+    public function find(Cpr $cpr): CprServiceResultInterface
     {
         $url = sprintf('%s/%s/%s', $this->serviceUrl, self::CITIZEN_ENDPOINT, $cpr);
 
         try {
             $response = $this->httpClient->request('GET', $url, ['timeout' => 2]);
 
-            return new FaellesSQLCprServiceResult($response->toArray());
+            return new FaellesSQLCprServiceResultInterface($response->toArray());
         } catch (TransportExceptionInterface | ClientExceptionInterface | DecodingExceptionInterface | RedirectionExceptionInterface | ServerExceptionInterface | \InvalidArgumentException $e) {
             throw new CprException($e->getMessage(), $e->getCode(), $e);
         }
