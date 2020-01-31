@@ -21,6 +21,9 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
+/**
+ * Class TwigExtension.
+ */
 class TwigExtension extends AbstractExtension
 {
     private $conclusionService;
@@ -44,6 +47,9 @@ class TwigExtension extends AbstractExtension
         $this->urlGenerator = $urlGenerator;
     }
 
+    /**
+     * @return array|TwigFilter[]
+     */
     public function getFilters()
     {
         return [
@@ -53,6 +59,9 @@ class TwigExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @return array|TwigFunction[]
+     */
     public function getFunctions()
     {
         return [
@@ -67,6 +76,13 @@ class TwigExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @param Environment $env
+     * @param             $date
+     * @param string      $format
+     *
+     * @return string
+     */
     public function simpleDateFilter(Environment $env, $date, $format = 'long')
     {
         $date = twig_date_converter($env, $date);
@@ -83,6 +99,11 @@ class TwigExtension extends AbstractExtension
         }
     }
 
+    /**
+     * @param $value
+     *
+     * @return string
+     */
     public function booleanTrueFalseFilter($value)
     {
         if (null === $value) {
@@ -96,6 +117,11 @@ class TwigExtension extends AbstractExtension
         return $this->translator->trans('common.boolean.false');
     }
 
+    /**
+     * @param $value
+     *
+     * @return string
+     */
     public function booleanYesNoFilter($value)
     {
         if (null === $value) {
@@ -109,6 +135,12 @@ class TwigExtension extends AbstractExtension
         return $this->translator->trans('common.boolean.no');
     }
 
+    /**
+     * @param string $value
+     * @param        $enum
+     *
+     * @return string
+     */
     public function getEnumTranslation(string $value, $enum)
     {
         $className = 'Kontrolgruppen\\CoreBundle\\DBAL\\Types\\'.$enum;
@@ -116,11 +148,21 @@ class TwigExtension extends AbstractExtension
         return $this->translator->trans(($className)::TRANSLATIONS[$value]);
     }
 
+    /**
+     * @param string $className
+     *
+     * @return string
+     */
     public function getConclusionClassTranslation(string $className)
     {
         return $this->conclusionService->getTranslation($className);
     }
 
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
     public function getIconClass(string $name)
     {
         switch ($name) {
@@ -181,6 +223,11 @@ class TwigExtension extends AbstractExtension
         }
     }
 
+    /**
+     * @param string $camelCaseString
+     *
+     * @return string
+     */
     public function camelCaseToUnderscore(string $camelCaseString)
     {
         $result = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $camelCaseString));
@@ -190,6 +237,12 @@ class TwigExtension extends AbstractExtension
 
     /**
      * @TODO: Handle cases where there is not a show route for the given entity.
+     *
+     * @param string $class
+     * @param int    $id
+     * @param int    $processId
+     *
+     * @return string
      */
     public function urlToProcessRelatedClass(string $class, int $id, int $processId)
     {

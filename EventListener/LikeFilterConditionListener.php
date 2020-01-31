@@ -13,6 +13,9 @@ namespace Kontrolgruppen\CoreBundle\EventListener;
 use Lexik\Bundle\FormFilterBundle\Event\GetFilterConditionEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+/**
+ * Class LikeFilterConditionListener.
+ */
 class LikeFilterConditionListener implements EventSubscriberInterface
 {
     /**
@@ -28,6 +31,9 @@ class LikeFilterConditionListener implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param GetFilterConditionEvent $event
+     */
     public function onGetFilterCondition(GetFilterConditionEvent $event)
     {
         $expr = $event->getFilterQuery()->getExpr();

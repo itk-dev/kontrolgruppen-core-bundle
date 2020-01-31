@@ -20,18 +20,27 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class ProcessTypeType.
+ */
 class ProcessTypeType extends AbstractType
 {
     private $dispatcher;
 
     /**
      * ProcessTypeType constructor.
+     *
+     * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(EventDispatcherInterface $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $event = new GetConclusionTypesEvent();
@@ -83,6 +92,9 @@ class ProcessTypeType extends AbstractType
         ;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

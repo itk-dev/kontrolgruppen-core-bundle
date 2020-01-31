@@ -13,6 +13,9 @@ namespace Kontrolgruppen\CoreBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
+/**
+ * Class SAMLUserProvider.
+ */
 class SAMLUserProvider implements UserProviderInterface
 {
     /** @var \Kontrolgruppen\CoreBundle\Service\UserManagerInterface */
@@ -21,12 +24,27 @@ class SAMLUserProvider implements UserProviderInterface
     /** @var \Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator */
     private $saml;
 
+    /**
+     * SAMLUserProvider constructor.
+     *
+     * @param UserManagerInterface $userManager
+     * @param SAMLAuthenticator    $saml
+     */
     public function __construct(UserManagerInterface $userManager, SAMLAuthenticator $saml)
     {
         $this->userManager = $userManager;
         $this->saml = $saml;
     }
 
+    /**
+     * @param string $username
+     * @param array  $credentials
+     *
+     * @return UserInterface|null
+     *
+     * @throws \OneLogin\Saml2\Error
+     * @throws \OneLogin\Saml2\ValidationError
+     */
     public function getUser(string $username, array $credentials)
     {
         $user = $this->userManager->findUserByUsername($username);
@@ -44,11 +62,21 @@ class SAMLUserProvider implements UserProviderInterface
         return $user;
     }
 
+    /**
+     * @param string $username
+     *
+     * @return UserInterface|void
+     */
     public function loadUserByUsername($username)
     {
         throw new \RuntimeException('Lazy programmer exception: '.__METHOD__.' not implemented!');
     }
 
+    /**
+     * @param UserInterface $user
+     *
+     * @return UserInterface|null
+     */
     public function refreshUser(UserInterface $user)
     {
         if (!$user instanceof UserInterface) {
@@ -66,6 +94,11 @@ class SAMLUserProvider implements UserProviderInterface
         return $reloadedUser;
     }
 
+    /**
+     * @param string $class
+     *
+     * @return bool
+     */
     public function supportsClass($class)
     {
         $userClass = $this->userManager->getClass();

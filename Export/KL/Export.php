@@ -19,6 +19,9 @@ use Kontrolgruppen\CoreBundle\Service\EconomyService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
+/**
+ * Class Export.
+ */
 class Export extends AbstractExport
 {
     protected $title = 'KL';
@@ -29,6 +32,14 @@ class Export extends AbstractExport
     /** @var EconomyService */
     private $economyService;
 
+    /**
+     * Export constructor.
+     *
+     * @param EntityManagerInterface $entityManager
+     * @param EconomyService         $economyService
+     *
+     * @throws \Exception
+     */
     public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService)
     {
         parent::__construct();
@@ -36,6 +47,9 @@ class Export extends AbstractExport
         $this->economyService = $economyService;
     }
 
+    /**
+     * @return array
+     */
     public function getParameters()
     {
         return parent::getParameters() + [
@@ -118,6 +132,8 @@ class Export extends AbstractExport
 
     /**
      * @return Process[]
+     *
+     * @throws \Exception
      */
     private function getProcesses()
     {

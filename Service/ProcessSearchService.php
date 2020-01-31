@@ -15,18 +15,34 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 
+/**
+ * Class ProcessSearchService.
+ */
 class ProcessSearchService
 {
     private $authorizationChecker;
     private $paginator;
     private $processRepository;
 
+    /**
+     * ProcessSearchService constructor.
+     *
+     * @param PaginatorInterface $paginator
+     * @param ProcessRepository  $processRepository
+     */
     public function __construct(PaginatorInterface $paginator, ProcessRepository $processRepository)
     {
         $this->paginator = $paginator;
         $this->processRepository = $processRepository;
     }
 
+    /**
+     * @param     $search
+     * @param int $page
+     * @param int $limit
+     *
+     * @return PaginationInterface
+     */
     public function all($search, int $page = 1, $limit = 50): PaginationInterface
     {
         $qb = $this->getQueryBuilder();
@@ -47,6 +63,13 @@ class ProcessSearchService
         );
     }
 
+    /**
+     * @param     $search
+     * @param int $page
+     * @param int $limit
+     *
+     * @return PaginationInterface
+     */
     public function single($search, int $page = 1, $limit = 50): PaginationInterface
     {
         $qb = $this->getQueryBuilder();
@@ -70,6 +93,9 @@ class ProcessSearchService
         );
     }
 
+    /**
+     * @return QueryBuilder
+     */
     private function getQueryBuilder(): QueryBuilder
     {
         $qb = $this->processRepository->createQueryBuilder('e');

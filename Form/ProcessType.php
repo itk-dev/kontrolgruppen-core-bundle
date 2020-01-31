@@ -22,6 +22,9 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class ProcessType.
+ */
 class ProcessType extends AbstractType
 {
     protected $serviceRepository;
@@ -29,6 +32,9 @@ class ProcessType extends AbstractType
 
     /**
      * ProcessType constructor.
+     *
+     * @param ServiceRepository $serviceRepository
+     * @param ChannelRepository $channelRepository
      */
     public function __construct(ServiceRepository $serviceRepository, ChannelRepository $channelRepository)
     {
@@ -36,6 +42,10 @@ class ProcessType extends AbstractType
         $this->channelRepository = $channelRepository;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -111,16 +121,29 @@ class ProcessType extends AbstractType
         );
     }
 
+    /**
+     * @param ProcessTypeEntity $processType
+     *
+     * @return mixed
+     */
     private function getServiceChoices(ProcessTypeEntity $processType)
     {
         return $this->serviceRepository->getByProcessType($processType);
     }
 
+    /**
+     * @param ProcessTypeEntity $processType
+     *
+     * @return mixed
+     */
     private function getChannelChoices(ProcessTypeEntity $processType)
     {
         return $this->channelRepository->getByProcessType($processType);
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

@@ -14,10 +14,18 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\Entity\UserSettings;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class UserSettingsService.
+ */
 class UserSettingsService
 {
     private $entityManager;
 
+    /**
+     * UserSettingsService constructor.
+     *
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -25,18 +33,20 @@ class UserSettingsService
 
     /**
      * Returns an array with information about user preferred sorting information structured like this:.
-     *
      * [
      *     'sort' => 'key', // e.g. caseWorker.id
      *     'direction' => 'direction' // desc or asc
      * ]
-     *
      * If no user preferred sorting exists and the request contains information about sorting the method will
      * persist the request information as user preferred sorting. The return value will then be null as there aren't
      * any new information about sorting available.
-     *
      * If both the request and the data storage contains information about sorting and they differ, the information
      * from the request will override the stored information and be persisted. The return value will then be null.
+     *
+     * @param Request      $request
+     * @param UserSettings $userSettings
+     *
+     * @return array|null
      */
     public function handleProcessIndexRequest(Request $request, UserSettings $userSettings): ?array
     {

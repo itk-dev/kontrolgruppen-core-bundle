@@ -21,6 +21,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * Class JournalFilterType.
+ */
 class JournalFilterType extends AbstractType
 {
     private $processTypeRepository;
@@ -31,6 +34,12 @@ class JournalFilterType extends AbstractType
 
     /**
      * ProcessFilterType constructor.
+     *
+     * @param ProcessTypeRepository   $processTypeRepository
+     * @param ProcessStatusRepository $processStatusRepository
+     * @param UserRepository          $userRepository
+     * @param Security                $security
+     * @param TranslatorInterface     $translator
      */
     public function __construct(
         ProcessTypeRepository $processTypeRepository,
@@ -46,6 +55,10 @@ class JournalFilterType extends AbstractType
         $this->translator = $translator;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('type', Filters\ChoiceFilterType::class, [
@@ -57,11 +70,17 @@ class JournalFilterType extends AbstractType
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'journal_filter';
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

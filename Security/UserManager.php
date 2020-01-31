@@ -13,6 +13,9 @@ namespace Kontrolgruppen\CoreBundle\Security;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Class UserManager.
+ */
 class UserManager implements UserManagerInterface
 {
     /** @var \Doctrine\ORM\EntityManagerInterface */
@@ -23,6 +26,9 @@ class UserManager implements UserManagerInterface
 
     /**
      * LogManager constructor.
+     *
+     * @param ObjectManager $objectManager
+     * @param string        $class
      */
     public function __construct(ObjectManager $objectManager, string $class)
     {
@@ -30,6 +36,9 @@ class UserManager implements UserManagerInterface
         $this->class = $class;
     }
 
+    /**
+     * @return mixed|UserInterface
+     */
     public function createUser()
     {
         $class = $this->getClass();
@@ -38,31 +47,54 @@ class UserManager implements UserManagerInterface
         return $user;
     }
 
+    /**
+     * @param UserInterface $user
+     */
     public function deleteUser(UserInterface $user)
     {
         throw new \RuntimeException('Lazy programmer exception: '.__METHOD__.' not implemented!');
     }
 
+    /**
+     * @param array $criteria
+     *
+     * @return UserInterface|null
+     */
     public function findUserBy(array $criteria)
     {
         return $this->getRepository()->findOneBy($criteria);
     }
 
+    /**
+     * @param string $username
+     *
+     * @return UserInterface|null
+     */
     public function findUserByUsername($username)
     {
         return $this->findUserBy(['username' => $username]);
     }
 
+    /**
+     * @return \Traversable|void
+     */
     public function findUsers()
     {
         throw new \RuntimeException('Lazy programmer exception: '.__METHOD__.' not implemented!');
     }
 
+    /**
+     * @param UserInterface $user
+     */
     public function reloadUser(UserInterface $user)
     {
         throw new \RuntimeException('Lazy programmer exception: '.__METHOD__.' not implemented!');
     }
 
+    /**
+     * @param UserInterface $user
+     * @param bool          $andFlush
+     */
     public function updateUser(UserInterface $user, bool $andFlush = true)
     {
         $this->objectManager->persist($user);
@@ -85,7 +117,7 @@ class UserManager implements UserManagerInterface
     }
 
     /**
-     * @return ObjectRepository
+     * @return \Doctrine\Persistence\ObjectRepository
      */
     protected function getRepository()
     {

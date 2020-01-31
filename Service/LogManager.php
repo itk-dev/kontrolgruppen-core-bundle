@@ -16,6 +16,9 @@ use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Repository\ProcessLogEntryRepository;
 
+/**
+ * Class LogManager.
+ */
 class LogManager
 {
     protected $entityManager;
@@ -23,6 +26,9 @@ class LogManager
 
     /**
      * LogManager constructor.
+     *
+     * @param EntityManagerInterface    $entityManager
+     * @param ProcessLogEntryRepository $processLogEntryRepository
      */
     public function __construct(EntityManagerInterface $entityManager, ProcessLogEntryRepository $processLogEntryRepository)
     {
@@ -30,6 +36,13 @@ class LogManager
         $this->processLogEntryRepository = $processLogEntryRepository;
     }
 
+    /**
+     * @param $result
+     * @param $process
+     * @param $sortDirection
+     *
+     * @return array
+     */
     public function attachProcessStatusChangesToJournalEntries($result, $process, $sortDirection)
     {
         // Merged log entries into result.
@@ -60,6 +73,11 @@ class LogManager
         return $result;
     }
 
+    /**
+     * @param $journalEntries
+     *
+     * @return mixed
+     */
     public function attachLogEntriesToJournalEntries($journalEntries)
     {
         $journalEntryIds = array_reduce(
@@ -88,6 +106,11 @@ class LogManager
         return $journalEntries;
     }
 
+    /**
+     * @param $journalEntry
+     *
+     * @return mixed
+     */
     public function attachLogEntriesToJournalEntry($journalEntry)
     {
         $qb = $this->entityManager->createQueryBuilder('log');

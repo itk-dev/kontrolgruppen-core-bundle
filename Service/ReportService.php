@@ -32,6 +32,17 @@ class ReportService
     private $translator;
     private $twig;
 
+    /**
+     * ReportService constructor.
+     *
+     * @param ConclusionService      $conclusionService
+     * @param EconomyEntryRepository $economyEntryRepository
+     * @param Environment            $twig
+     * @param JournalEntryRepository $journalEntryRepository
+     * @param TranslatorInterface    $translator
+     *
+     * @throws \Mpdf\MpdfException
+     */
     public function __construct(
         ConclusionService $conclusionService,
         EconomyEntryRepository $economyEntryRepository,
@@ -47,6 +58,17 @@ class ReportService
         $this->twig = $twig;
     }
 
+    /**
+     * @param Process $process
+     * @param string  $choice
+     *
+     * @return string
+     *
+     * @throws \Mpdf\MpdfException
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function generateProcessReport(Process $process, string $choice = 'only_summary'): string
     {
         $viewData = [

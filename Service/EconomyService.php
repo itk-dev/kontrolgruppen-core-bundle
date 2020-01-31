@@ -26,6 +26,9 @@ class EconomyService
 
     /**
      * EconomyService constructor.
+     *
+     * @param EconomyEntryRepository   $economyEntryRepository
+     * @param LockedNetValueRepository $lockedNetValueRepository
      */
     public function __construct(EconomyEntryRepository $economyEntryRepository, LockedNetValueRepository $lockedNetValueRepository)
     {
@@ -35,6 +38,8 @@ class EconomyService
 
     /**
      * Calculate the revenue for a given process.
+     *
+     * @param Process $process
      *
      * @return array
      */
@@ -112,6 +117,12 @@ class EconomyService
         return $result;
     }
 
+    /**
+     * @param \DateTime $from
+     * @param \DateTime $to
+     *
+     * @return int
+     */
     private function getMonthsBetweenDates(\DateTime $from, \DateTime $to)
     {
         $interval = \DateInterval::createFromDateString('1 month');

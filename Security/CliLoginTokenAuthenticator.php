@@ -21,10 +21,18 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
+/**
+ * Class CliLoginTokenAuthenticator.
+ */
 class CliLoginTokenAuthenticator extends AbstractGuardAuthenticator
 {
     private $em;
 
+    /**
+     * CliLoginTokenAuthenticator constructor.
+     *
+     * @param EntityManagerInterface $em
+     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
@@ -34,6 +42,10 @@ class CliLoginTokenAuthenticator extends AbstractGuardAuthenticator
      * Called on every request to decide if this authenticator should be
      * used for the request. Returning false will cause this authenticator
      * to be skipped.
+     *
+     * @param Request $request
+     *
+     * @return bool
      */
     public function supports(Request $request)
     {
@@ -43,6 +55,10 @@ class CliLoginTokenAuthenticator extends AbstractGuardAuthenticator
     /**
      * Called on every request. Return whatever credentials you want to
      * be passed to getUser() as $credentials.
+     *
+     * @param Request $request
+     *
+     * @return array
      */
     public function getCredentials(Request $request)
     {
@@ -51,6 +67,12 @@ class CliLoginTokenAuthenticator extends AbstractGuardAuthenticator
         ];
     }
 
+    /**
+     * @param mixed                 $credentials
+     * @param UserProviderInterface $userProvider
+     *
+     * @return User|object|UserInterface|void|null
+     */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         $cliLoginToken = $credentials['cliLoginToken'];
@@ -73,11 +95,24 @@ class CliLoginTokenAuthenticator extends AbstractGuardAuthenticator
         return $user;
     }
 
+    /**
+     * @param mixed         $credentials
+     * @param UserInterface $user
+     *
+     * @return bool
+     */
     public function checkCredentials($credentials, UserInterface $user)
     {
         return true;
     }
 
+    /**
+     * @param Request        $request
+     * @param TokenInterface $token
+     * @param string         $providerKey
+     *
+     * @return RedirectResponse|Response|null
+     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         $destination = $request->get('destination') ?? '/';
@@ -85,6 +120,12 @@ class CliLoginTokenAuthenticator extends AbstractGuardAuthenticator
         return new RedirectResponse($destination);
     }
 
+    /**
+     * @param Request                 $request
+     * @param AuthenticationException $exception
+     *
+     * @return Response|null
+     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         return new Response(strtr($exception->getMessageKey(), $exception->getMessageData()), Response::HTTP_FORBIDDEN);
@@ -92,11 +133,17 @@ class CliLoginTokenAuthenticator extends AbstractGuardAuthenticator
 
     /**
      * Called when authentication is needed, but it's not sent.
+     *
+     * @param Request                      $request
+     * @param AuthenticationException|null $authException
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
     }
 
+    /**
+     * @return bool
+     */
     public function supportsRememberMe()
     {
         return false;

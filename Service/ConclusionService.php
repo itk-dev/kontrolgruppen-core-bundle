@@ -32,11 +32,23 @@ class ConclusionService
         $this->translator = $translator;
     }
 
+    /**
+     * @param AbstractEntity $entity
+     *
+     * @return string|string[]
+     */
     public function getEntityFormType(AbstractEntity $entity)
     {
         return str_replace('Entity', 'Form', \get_class($entity).'Type');
     }
 
+    /**
+     * @param        $class
+     * @param string $action
+     * @param string $basePath
+     *
+     * @return bool|string
+     */
     public function getTemplate($class, $action = 'show', $basePath = '@KontrolgruppenCore/conclusion/')
     {
         // Making sure path has a trailing slash
@@ -52,6 +64,11 @@ class ConclusionService
         return false;
     }
 
+    /**
+     * @param $class
+     *
+     * @return string
+     */
     public function getTranslation($class)
     {
         switch ($class) {
@@ -62,6 +79,9 @@ class ConclusionService
         }
     }
 
+    /**
+     * @return array
+     */
     public function getConclusionTypes()
     {
         $types = [];

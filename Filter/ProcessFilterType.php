@@ -21,6 +21,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * Class ProcessFilterType.
+ */
 class ProcessFilterType extends AbstractType
 {
     private $processTypeRepository;
@@ -31,6 +34,12 @@ class ProcessFilterType extends AbstractType
 
     /**
      * ProcessFilterType constructor.
+     *
+     * @param ProcessTypeRepository   $processTypeRepository
+     * @param ProcessStatusRepository $processStatusRepository
+     * @param UserRepository          $userRepository
+     * @param Security                $security
+     * @param TranslatorInterface     $translator
      */
     public function __construct(
         ProcessTypeRepository $processTypeRepository,
@@ -46,6 +55,10 @@ class ProcessFilterType extends AbstractType
         $this->translator = $translator;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('processType', Filters\ChoiceFilterType::class, [
@@ -111,11 +124,17 @@ class ProcessFilterType extends AbstractType
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getBlockPrefix()
     {
         return 'process_filter';
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

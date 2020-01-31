@@ -27,6 +27,15 @@ class ProcessLogExport extends AbstractExport
     private $processLogTranslatorService;
     private $translator;
 
+    /**
+     * ProcessLogExport constructor.
+     *
+     * @param EntityManagerInterface      $entityManager
+     * @param TranslatorInterface         $translator
+     * @param ProcessLogTranslatorService $processLogTranslatorService
+     *
+     * @throws \Exception
+     */
     public function __construct(
         EntityManagerInterface $entityManager,
         TranslatorInterface $translator,
