@@ -32,6 +32,10 @@ class EconomyEntryController extends BaseController
 
     /**
      * EconomyEntryController constructor.
+     *
+     * @param RequestStack      $requestStack
+     * @param MenuService       $menuService
+     * @param EconomyController $economyController
      */
     public function __construct(
         RequestStack $requestStack,
@@ -44,6 +48,15 @@ class EconomyEntryController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="economy_entry_edit", methods={"GET","POST"})
+     *
+     * @param Process      $process
+     * @param EconomyEntry $economyEntry
+     * @param Request      $request
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function edit(Process $process, EconomyEntry $economyEntry, Request $request): Response
     {
@@ -89,6 +102,12 @@ class EconomyEntryController extends BaseController
 
     /**
      * @Route("/{id}", name="economy_entry_delete", methods={"DELETE"})
+     *
+     * @param Request      $request
+     * @param EconomyEntry $economyEntry
+     * @param Process      $process
+     *
+     * @return Response
      */
     public function delete(Request $request, EconomyEntry $economyEntry, Process $process): Response
     {

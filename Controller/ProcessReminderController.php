@@ -24,6 +24,14 @@ class ProcessReminderController extends BaseController
 {
     /**
      * @Route("/", name="reminder_index", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param Process $process
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(Request $request, Process $process): Response
     {
@@ -38,6 +46,14 @@ class ProcessReminderController extends BaseController
 
     /**
      * @Route("/new", name="reminder_new", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param Process $process
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function new(Request $request, Process $process): Response
     {
@@ -69,6 +85,15 @@ class ProcessReminderController extends BaseController
 
     /**
      * @Route("/{id}", name="reminder_show", methods={"GET"})
+     *
+     * @param Request  $request
+     * @param Reminder $reminder
+     * @param Process  $process
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function show(Request $request, Reminder $reminder, Process $process): Response
     {
@@ -83,6 +108,15 @@ class ProcessReminderController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="reminder_edit", methods={"GET","POST"})
+     *
+     * @param Request  $request
+     * @param Reminder $reminder
+     * @param Process  $process
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function edit(Request $request, Reminder $reminder, Process $process): Response
     {
@@ -116,6 +150,12 @@ class ProcessReminderController extends BaseController
 
     /**
      * @Route("/{id}", name="reminder_delete", methods={"DELETE"})
+     *
+     * @param Request  $request
+     * @param Reminder $reminder
+     * @param Process  $process
+     *
+     * @return Response
      */
     public function delete(Request $request, Reminder $reminder, Process $process): Response
     {
@@ -134,6 +174,11 @@ class ProcessReminderController extends BaseController
 
     /**
      * @Route("{id}/finish", name="reminder_finish", methods={"GET", "POST"})
+     *
+     * @param Reminder $reminder
+     * @param Process  $process
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function finishReminder(Reminder $reminder, Process $process)
     {

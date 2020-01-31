@@ -24,9 +24,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class SAMLController extends AbstractController
 {
-    /** @var \Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator */
+    /** @var SAMLAuthenticator */
     private $saml;
 
+    /**
+     * SAMLController constructor.
+     *
+     * @param SAMLAuthenticator $saml
+     */
     public function __construct(SAMLAuthenticator $saml)
     {
         $this->saml = $saml;
@@ -34,6 +39,10 @@ class SAMLController extends AbstractController
 
     /**
      * @Route("/login", name="saml_login")
+     *
+     * @param Request $request
+     *
+     * @throws Error
      */
     public function login(Request $request)
     {
@@ -45,6 +54,8 @@ class SAMLController extends AbstractController
 
     /**
      * @Route("/acs", name="saml_acs")
+     *
+     * @param Request $request
      */
     public function acs(Request $request)
     {

@@ -28,6 +28,14 @@ class BIController extends BaseController
 {
     /**
      * @Route("/", name="index")
+     *
+     * @param BIExportRepository            $repository
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(BIExportRepository $repository, AuthorizationCheckerInterface $authorizationChecker)
     {
@@ -44,6 +52,9 @@ class BIController extends BaseController
         return $this->render('@KontrolgruppenCore/bi/index.html.twig', $parameters);
     }
 
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function createDeleteForm()
     {
         return $this->createFormBuilder()
@@ -54,6 +65,10 @@ class BIController extends BaseController
 
     /**
      * @Route("/download/{export}", name="download")
+     *
+     * @param BIExport $export
+     *
+     * @return BinaryFileResponse
      */
     public function download(BIExport $export)
     {
@@ -68,6 +83,11 @@ class BIController extends BaseController
         return new BinaryFileResponse($filename, 200, $headers);
     }
 
+    /**
+     * @param $filename
+     *
+     * @return string
+     */
     private function getContentType($filename)
     {
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
@@ -86,6 +106,12 @@ class BIController extends BaseController
      * @Route("/delete/{export}", name="delete", methods={"DELETE"})
      *
      * @Security("has_role('ROLE_ADMIN')")
+     *
+     * @param BIExport            $export
+     * @param Manager             $manager
+     * @param TranslatorInterface $translator
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function delete(BIExport $export, Manager $manager, TranslatorInterface $translator)
     {

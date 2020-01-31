@@ -27,6 +27,14 @@ class ProcessLogController extends BaseController
 {
     /**
      * @Route("/", name="process_log_index", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param Process $process
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(Request $request, Process $process): Response
     {
@@ -53,6 +61,13 @@ class ProcessLogController extends BaseController
 
     /**
      * @Route("/export", name="process_log_export", methods={"GET"})
+     *
+     * @param ProcessLogExport $processLogExport
+     * @param Process          $process
+     *
+     * @return Response
+     *
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
     public function export(
         ProcessLogExport $processLogExport,

@@ -27,6 +27,18 @@ class DashboardController extends BaseController
 {
     /**
      * @Route("", name="dashboard_index")
+     *
+     * @param Request            $request
+     * @param ReminderRepository $reminderRepository
+     * @param ProcessRepository  $processRepository
+     * @param PaginatorInterface $paginator
+     * @param SessionInterface   $session
+     * @param ProcessManager     $processManager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(Request $request, ReminderRepository $reminderRepository, ProcessRepository $processRepository, PaginatorInterface $paginator, SessionInterface $session, ProcessManager $processManager)
     {

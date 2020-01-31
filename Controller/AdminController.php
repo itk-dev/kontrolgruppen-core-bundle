@@ -23,6 +23,14 @@ class AdminController extends BaseController
 {
     /**
      * @Route("/", name="admin_index")
+     *
+     * @param Request     $request
+     * @param MenuService $menuService
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(Request $request, MenuService $menuService)
     {

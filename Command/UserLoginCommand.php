@@ -19,8 +19,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Routing\RouterInterface;
 
+/**
+ * Class UserLoginCommand.
+ */
 class UserLoginCommand extends Command
 {
+    /**
+     * @var string
+     */
     protected static $defaultName = 'kontrolgruppen:user:login';
 
     /** @var \App\Repository\UserRepository */
@@ -32,6 +38,13 @@ class UserLoginCommand extends Command
     /** @var \Symfony\Component\Routing\RouterInterface */
     private $router;
 
+    /**
+     * UserLoginCommand constructor.
+     *
+     * @param UserRepository         $userRepository
+     * @param EntityManagerInterface $entityManager
+     * @param RouterInterface        $router
+     */
     public function __construct(UserRepository $userRepository, EntityManagerInterface $entityManager, RouterInterface $router)
     {
         parent::__construct();
@@ -40,6 +53,9 @@ class UserLoginCommand extends Command
         $this->router = $router;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function configure()
     {
         $this
@@ -47,6 +63,12 @@ class UserLoginCommand extends Command
             ->addArgument('destination', InputArgument::OPTIONAL, 'The destination');
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int|void
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $username = $input->getArgument('username');

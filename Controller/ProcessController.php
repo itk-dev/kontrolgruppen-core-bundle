@@ -38,6 +38,20 @@ class ProcessController extends BaseController
 {
     /**
      * @Route("/", name="process_index", methods={"GET"})
+     *
+     * @param \Symfony\Component\HttpFoundation\Request                           $request
+     * @param \Kontrolgruppen\CoreBundle\Repository\ProcessRepository             $processRepository
+     * @param \Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface $lexikBuilderUpdater
+     * @param \Knp\Component\Pager\PaginatorInterface                             $paginator
+     * @param \Symfony\Component\Form\FormFactoryInterface                        $formFactory
+     * @param \Kontrolgruppen\CoreBundle\Service\ProcessManager                   $processManager
+     * @param \Kontrolgruppen\CoreBundle\Repository\UserRepository                $userRepository
+     * @param \Kontrolgruppen\CoreBundle\Service\UserSettingsService              $userSettingsService
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(
         Request $request,
@@ -152,6 +166,14 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/new", name="process_new", methods={"GET","POST"})
+     *
+     * @param \Symfony\Component\HttpFoundation\Request         $request
+     * @param \Kontrolgruppen\CoreBundle\Service\ProcessManager $processManager
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function new(
         Request $request,
@@ -191,6 +213,15 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}", name="process_show", methods={"GET", "POST"})
+     *
+     * @param \Symfony\Component\HttpFoundation\Request     $request
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process     $process
+     * @param \Kontrolgruppen\CoreBundle\Service\LogManager $logManager
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function show(Request $request, Process $process, LogManager $logManager): Response
     {
@@ -218,6 +249,14 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="process_edit", methods={"GET","POST"})
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function edit(Request $request, Process $process): Response
     {
@@ -256,6 +295,11 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}", name="process_delete", methods={"DELETE"})
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function delete(Request $request, Process $process): Response
     {
@@ -275,6 +319,15 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}/complete", name="process_complete", methods={"GET","POST"})
+     *
+     * @param \Symfony\Component\HttpFoundation\Request               $request
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process               $process
+     * @param \Kontrolgruppen\CoreBundle\Repository\ServiceRepository $serviceRepository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function complete(Request $request, Process $process, ServiceRepository $serviceRepository): Response
     {
@@ -331,6 +384,11 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}/resume", name="process_resume", methods={"POST"})
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function resume(Request $request, Process $process): Response
     {

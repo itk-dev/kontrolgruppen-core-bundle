@@ -23,8 +23,14 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
+/**
+ * Class ReportExportCommand.
+ */
 class ReportExportCommand extends Command
 {
+    /**
+     * @var string
+     */
     protected static $defaultName = 'kontrolgruppen:report:export';
 
     /** @var \Kontrolgruppen\CoreBundle\Export\Manager */
@@ -42,6 +48,15 @@ class ReportExportCommand extends Command
     /** @var ParameterBagInterface */
     private $parameters;
 
+    /**
+     * ReportExportCommand constructor.
+     *
+     * @param Manager                $exportManager
+     * @param UserRepository         $userRepository
+     * @param EntityManagerInterface $entityManager
+     * @param Filesystem             $filesystem
+     * @param ParameterBagInterface  $parameters
+     */
     public function __construct(
         Manager $exportManager,
         UserRepository $userRepository,
@@ -73,6 +88,9 @@ class ReportExportCommand extends Command
             ->addOption('output-filename', null, InputOption::VALUE_REQUIRED, 'Filename to save export result to (implies --save).');
     }
 
+    /**
+     * @return string
+     */
     public function getHelp()
     {
         $help[] = parent::getHelp();
@@ -95,6 +113,15 @@ class ReportExportCommand extends Command
         return implode(PHP_EOL, $help);
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int|void
+     *
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // @TODO: Run as authenticated user.

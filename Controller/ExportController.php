@@ -26,12 +26,20 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ExportController extends BaseController
 {
-    /** @var \Kontrolgruppen\CoreBundle\Export\Manager */
+    /** @var Manager */
     private $exportManager;
 
-    /** @var \Symfony\Component\Form\FormFactoryInterface */
+    /** @var FormFactoryInterface */
     private $formFactory;
 
+    /**
+     * ExportController constructor.
+     *
+     * @param RequestStack         $requestStack
+     * @param MenuService          $menuService
+     * @param Manager              $exportManager
+     * @param FormFactoryInterface $formFactory
+     */
     public function __construct(
         RequestStack $requestStack,
         MenuService $menuService,
@@ -45,6 +53,13 @@ class ExportController extends BaseController
 
     /**
      * @Route("/", name="index")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(Request $request)
     {
@@ -74,6 +89,13 @@ class ExportController extends BaseController
      *     "_format": "xlsx|csv|html|pdf",
      *   }
      * )
+     *
+     * @param Request $request
+     * @param         $_format
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response|StreamedResponse
+     *
+     * @throws \Exception
      */
     public function run(Request $request, $_format)
     {
@@ -176,11 +198,21 @@ class ExportController extends BaseController
         return $exports;
     }
 
+    /**
+     * @param AbstractExport $export
+     *
+     * @return string
+     */
     private function getExportKey(AbstractExport $export)
     {
         return md5(\get_class($export));
     }
 
+    /**
+     * @param AbstractExport $export
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
     private function buildParameterForm(AbstractExport $export)
     {
         $parameters = $export->getParameters();

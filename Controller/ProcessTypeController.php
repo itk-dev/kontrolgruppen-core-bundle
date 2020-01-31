@@ -24,6 +24,14 @@ class ProcessTypeController extends BaseController
 {
     /**
      * @Route("/", name="process_type_index", methods={"GET"})
+     *
+     * @param Request               $request
+     * @param ProcessTypeRepository $processTypeRepository
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(Request $request, ProcessTypeRepository $processTypeRepository): Response
     {
@@ -35,6 +43,13 @@ class ProcessTypeController extends BaseController
 
     /**
      * @Route("/new", name="process_type_new", methods={"GET","POST"})
+     *
+     * @param Request $request
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function new(Request $request): Response
     {
@@ -59,6 +74,14 @@ class ProcessTypeController extends BaseController
 
     /**
      * @Route("/{id}", name="process_type_show", methods={"GET"})
+     *
+     * @param Request     $request
+     * @param ProcessType $processType
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function show(Request $request, ProcessType $processType): Response
     {
@@ -70,6 +93,14 @@ class ProcessTypeController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="process_type_edit", methods={"GET","POST"})
+     *
+     * @param Request     $request
+     * @param ProcessType $processType
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function edit(Request $request, ProcessType $processType): Response
     {
@@ -93,6 +124,11 @@ class ProcessTypeController extends BaseController
 
     /**
      * @Route("/{id}", name="process_type_delete", methods={"DELETE"})
+     *
+     * @param Request     $request
+     * @param ProcessType $processType
+     *
+     * @return Response
      */
     public function delete(Request $request, ProcessType $processType): Response
     {

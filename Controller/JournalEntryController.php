@@ -30,6 +30,14 @@ class JournalEntryController extends BaseController
 {
     /**
      * @Route("/latest", name="journal_entry_latest", methods={"GET"})
+     *
+     * @param Process                $process
+     * @param JournalEntryRepository $journalEntryRepository
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getLatestJournalEntries(
         Process $process,
@@ -45,6 +53,19 @@ class JournalEntryController extends BaseController
 
     /**
      * @Route("/", name="journal_entry_index", methods={"GET","POST"})
+     *
+     * @param Request                       $request
+     * @param JournalEntryRepository        $journalEntryRepository
+     * @param Process                       $process
+     * @param FilterBuilderUpdaterInterface $lexikBuilderUpdater
+     * @param SessionInterface              $session
+     * @param LogManager                    $logManager
+     * @param FormFactoryInterface          $formFactory
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(
         Request $request,
@@ -149,6 +170,14 @@ class JournalEntryController extends BaseController
 
     /**
      * @Route("/new", name="journal_entry_new", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param Process $process
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function new(Request $request, Process $process): Response
     {
@@ -190,6 +219,16 @@ class JournalEntryController extends BaseController
 
     /**
      * @Route("/{id}", name="journal_entry_show", methods={"GET"})
+     *
+     * @param Request      $request
+     * @param JournalEntry $journalEntry
+     * @param Process      $process
+     * @param LogManager   $logManager
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function show(
         Request $request,
@@ -227,6 +266,16 @@ class JournalEntryController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="journal_entry_edit", methods={"GET","POST"})
+     *
+     * @param Request      $request
+     * @param JournalEntry $journalEntry
+     * @param Process      $process
+     * @param LogManager   $logManager
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function edit(
         Request $request,
@@ -285,6 +334,12 @@ class JournalEntryController extends BaseController
 
     /**
      * @Route("/{id}", name="journal_entry_delete", methods={"DELETE"})
+     *
+     * @param Request      $request
+     * @param JournalEntry $journalEntry
+     * @param Process      $process
+     *
+     * @return Response
      */
     public function delete(
         Request $request,

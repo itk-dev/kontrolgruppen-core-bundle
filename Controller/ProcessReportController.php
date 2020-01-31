@@ -28,6 +28,16 @@ class ProcessReportController extends BaseController
 {
     /**
      * @Route("/", name="process_report_index", methods={"GET","POST"})
+     *
+     * @param Request             $request
+     * @param Process             $process
+     * @param TranslatorInterface $translator
+     * @param ReportService       $reportService
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(
         Request $request,
