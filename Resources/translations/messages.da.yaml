@@ -884,7 +884,7 @@ export:
         pdf: Eksportér (PDF)
 
 prevent_cpr:
-    cpr_in_content: "Vi har fundet følgende, der kan være CPR-nummre:\n
+    cpr_in_content: "Vi har fundet følgende, der kan være CPR-numre:\n
                      \n
                      %list%\n
                      \n
