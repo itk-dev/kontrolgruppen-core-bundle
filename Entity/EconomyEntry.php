@@ -48,16 +48,27 @@ class EconomyEntry extends AbstractEntity implements ProcessLoggableInterface
      */
     private $type;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return float|null
+     */
     public function getAmount(): ?float
     {
         return $this->amount;
     }
 
+    /**
+     * @param float $amount
+     *
+     * @return EconomyEntry
+     */
     public function setAmount(float $amount): self
     {
         $this->amount = $amount;
@@ -65,11 +76,19 @@ class EconomyEntry extends AbstractEntity implements ProcessLoggableInterface
         return $this;
     }
 
+    /**
+     * @return Process|null
+     */
     public function getProcess(): ?Process
     {
         return $this->process;
     }
 
+    /**
+     * @param Process|null $process
+     *
+     * @return EconomyEntry
+     */
     public function setProcess(?Process $process): self
     {
         $this->process = $process;
@@ -77,11 +96,19 @@ class EconomyEntry extends AbstractEntity implements ProcessLoggableInterface
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getType()
     {
         return $this->type;
     }
 
+    /**
+     * @param $type
+     *
+     * @return EconomyEntry
+     */
     public function setType($type): self
     {
         $this->type = $type;

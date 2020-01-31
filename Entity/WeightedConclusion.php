@@ -41,11 +41,19 @@ class WeightedConclusion extends Conclusion
      */
     private $conclusion;
 
+    /**
+     * @return string|null
+     */
     public function getArgumentsFor(): ?string
     {
         return $this->argumentsFor;
     }
 
+    /**
+     * @param string|null $argumentsFor
+     *
+     * @return WeightedConclusion
+     */
     public function setArgumentsFor(?string $argumentsFor): self
     {
         $this->argumentsFor = $argumentsFor;
@@ -53,11 +61,19 @@ class WeightedConclusion extends Conclusion
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getArgumentsAgainst(): ?string
     {
         return $this->argumentsAgainst;
     }
 
+    /**
+     * @param string|null $argumentsAgainst
+     *
+     * @return WeightedConclusion
+     */
     public function setArgumentsAgainst(?string $argumentsAgainst): self
     {
         $this->argumentsAgainst = $argumentsAgainst;
@@ -65,11 +81,19 @@ class WeightedConclusion extends Conclusion
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getConclusion(): ?string
     {
         return $this->conclusion;
     }
 
+    /**
+     * @param string|null $conclusion
+     *
+     * @return WeightedConclusion
+     */
     public function setConclusion(?string $conclusion): self
     {
         $this->conclusion = $conclusion;

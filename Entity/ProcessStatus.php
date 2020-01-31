@@ -53,6 +53,11 @@ class ProcessStatus extends AbstractTaxonomy
         return $this->processes;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return $this
+     */
     public function addProcess(Process $process): self
     {
         if (!$this->processes->contains($process)) {
@@ -63,6 +68,11 @@ class ProcessStatus extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return $this
+     */
     public function removeProcess(Process $process): self
     {
         if ($this->processes->contains($process)) {
@@ -84,6 +94,11 @@ class ProcessStatus extends AbstractTaxonomy
         return $this->processTypes;
     }
 
+    /**
+     * @param ProcessType $processType
+     *
+     * @return $this
+     */
     public function addProcessType(ProcessType $processType): self
     {
         if (!$this->processTypes->contains($processType)) {
@@ -94,6 +109,11 @@ class ProcessStatus extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param ProcessType $processType
+     *
+     * @return $this
+     */
     public function removeProcessType(ProcessType $processType): self
     {
         if ($this->processTypes->contains($processType)) {
@@ -104,11 +124,19 @@ class ProcessStatus extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function getIsForwardToAnotherAuthority(): bool
     {
         return $this->isForwardToAnotherAuthority;
     }
 
+    /**
+     * @param bool $isForwardToAnotherAuthority
+     *
+     * @return $this
+     */
     public function setIsForwardToAnotherAuthority(bool $isForwardToAnotherAuthority): self
     {
         $this->isForwardToAnotherAuthority = $isForwardToAnotherAuthority;

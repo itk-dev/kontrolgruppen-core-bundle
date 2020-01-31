@@ -40,6 +40,11 @@ class Account extends AbstractTaxonomy
         return $this->baseEconomyEntries;
     }
 
+    /**
+     * @param BaseEconomyEntry $baseEconomyEntry
+     *
+     * @return Account
+     */
     public function addBaseEconomyEntry(BaseEconomyEntry $baseEconomyEntry): self
     {
         if (!$this->baseEconomyEntries->contains($baseEconomyEntry)) {
@@ -50,6 +55,11 @@ class Account extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param BaseEconomyEntry $baseEconomyEntry
+     *
+     * @return Account
+     */
     public function removeBaseEconomyEntry(BaseEconomyEntry $baseEconomyEntry): self
     {
         if ($this->baseEconomyEntries->contains($baseEconomyEntry)) {

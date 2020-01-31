@@ -45,6 +45,9 @@ class User implements UserInterface
      */
     private $processes;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,11 @@ class User implements UserInterface
         return (string) $this->username;
     }
 
+    /**
+     * @param string $username
+     *
+     * @return User
+     */
     public function setUsername(string $username): self
     {
         $this->username = $username;
@@ -79,6 +87,11 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param array $roles
+     *
+     * @return User
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -119,6 +132,11 @@ class User implements UserInterface
         return $this->processes ?? new ArrayCollection();
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return User
+     */
     public function addProcess(Process $process): self
     {
         if (!$this->processes->contains($process)) {
@@ -129,6 +147,11 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return User
+     */
     public function removeProcess(Process $process): self
     {
         if ($this->processes->contains($process)) {
@@ -180,6 +203,9 @@ class User implements UserInterface
         return (string) $this->getUsername();
     }
 
+    /**
+     * @return UserSettings|null
+     */
     public function getUserSettings(): ?UserSettings
     {
         if (!empty($this->userSettings)) {
@@ -192,6 +218,11 @@ class User implements UserInterface
         return $userSettings;
     }
 
+    /**
+     * @param UserSettings $userSettings
+     *
+     * @return User
+     */
     public function setUserSettings(UserSettings $userSettings): self
     {
         $this->userSettings = $userSettings;

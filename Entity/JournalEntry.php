@@ -50,16 +50,27 @@ class JournalEntry extends AbstractEntity implements ProcessLoggableInterface
      */
     protected $type;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     *
+     * @return JournalEntry
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -67,11 +78,19 @@ class JournalEntry extends AbstractEntity implements ProcessLoggableInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getBody(): ?string
     {
         return $this->body;
     }
 
+    /**
+     * @param string|null $body
+     *
+     * @return JournalEntry
+     */
     public function setBody(?string $body): self
     {
         $this->body = $body;
@@ -79,11 +98,19 @@ class JournalEntry extends AbstractEntity implements ProcessLoggableInterface
         return $this;
     }
 
+    /**
+     * @return Process|null
+     */
     public function getProcess(): ?Process
     {
         return $this->process;
     }
 
+    /**
+     * @param Process|null $process
+     *
+     * @return JournalEntry
+     */
     public function setProcess(?Process $process): self
     {
         $this->process = $process;
@@ -91,11 +118,17 @@ class JournalEntry extends AbstractEntity implements ProcessLoggableInterface
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getType()
     {
         return $this->type;
     }
 
+    /**
+     * @param $type
+     */
     public function setType($type): void
     {
         $this->type = $type;

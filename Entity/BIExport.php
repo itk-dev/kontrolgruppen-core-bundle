@@ -29,16 +29,27 @@ class BIExport extends AbstractEntity
      */
     private $report = [];
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getFilename(): ?string
     {
         return $this->filename;
     }
 
+    /**
+     * @param string $filename
+     *
+     * @return BIExport
+     */
     public function setFilename(string $filename): self
     {
         $this->filename = $filename;
@@ -46,11 +57,19 @@ class BIExport extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return array|null
+     */
     public function getReport(): ?array
     {
         return $this->report;
     }
 
+    /**
+     * @param $report
+     *
+     * @return BIExport
+     */
     public function setReport($report): self
     {
         if ($report instanceof AbstractExport) {

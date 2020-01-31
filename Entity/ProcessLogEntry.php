@@ -38,11 +38,19 @@ class ProcessLogEntry extends AbstractEntity
      */
     private $level;
 
+    /**
+     * @return string|null
+     */
     public function getLevel(): ?string
     {
         return $this->level;
     }
 
+    /**
+     * @param string $level
+     *
+     * @return ProcessLogEntry
+     */
     public function setLevel(string $level): self
     {
         $this->level = $level;
@@ -50,11 +58,19 @@ class ProcessLogEntry extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return Process|null
+     */
     public function getProcess(): ?Process
     {
         return $this->process;
     }
 
+    /**
+     * @param Process|null $process
+     *
+     * @return ProcessLogEntry
+     */
     public function setProcess(?Process $process): self
     {
         $this->process = $process;
@@ -62,11 +78,19 @@ class ProcessLogEntry extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return LogEntry|null
+     */
     public function getLogEntry(): ?LogEntry
     {
         return $this->logEntry;
     }
 
+    /**
+     * @param LogEntry|null $logEntry
+     *
+     * @return ProcessLogEntry
+     */
     public function setLogEntry(?LogEntry $logEntry): self
     {
         $this->logEntry = $logEntry;

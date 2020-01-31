@@ -57,6 +57,11 @@ class Service extends AbstractTaxonomy
         return $this->processes;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return Service
+     */
     public function addProcess(Process $process): self
     {
         if (!$this->processes->contains($process)) {
@@ -67,6 +72,11 @@ class Service extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return Service
+     */
     public function removeProcess(Process $process): self
     {
         if ($this->processes->contains($process)) {
@@ -88,6 +98,11 @@ class Service extends AbstractTaxonomy
         return $this->processTypes;
     }
 
+    /**
+     * @param ProcessType $processType
+     *
+     * @return Service
+     */
     public function addProcessType(ProcessType $processType): self
     {
         if (!$this->processTypes->contains($processType)) {
@@ -98,6 +113,11 @@ class Service extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param ProcessType $processType
+     *
+     * @return Service
+     */
     public function removeProcessType(ProcessType $processType): self
     {
         if ($this->processTypes->contains($processType)) {
@@ -108,11 +128,19 @@ class Service extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getNetDefaultValue(): ?float
     {
         return $this->netDefaultValue;
     }
 
+    /**
+     * @param float $netDefaultValue
+     *
+     * @return Service
+     */
     public function setNetDefaultValue(float $netDefaultValue): self
     {
         $this->netDefaultValue = $netDefaultValue;
@@ -128,6 +156,11 @@ class Service extends AbstractTaxonomy
         return $this->lockedNetValues;
     }
 
+    /**
+     * @param LockedNetValue $lockedNetValue
+     *
+     * @return Service
+     */
     public function addLockedNetValue(LockedNetValue $lockedNetValue): self
     {
         if (!$this->lockedNetValues->contains($lockedNetValue)) {
@@ -138,6 +171,11 @@ class Service extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param LockedNetValue $lockedNetValue
+     *
+     * @return Service
+     */
     public function removeLockedNetValue(LockedNetValue $lockedNetValue): self
     {
         if ($this->lockedNetValues->contains($lockedNetValue)) {

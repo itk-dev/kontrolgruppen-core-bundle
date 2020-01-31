@@ -46,6 +46,11 @@ class Channel extends AbstractTaxonomy
         return $this->processes;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return Channel
+     */
     public function addProcess(Process $process): self
     {
         if (!$this->processes->contains($process)) {
@@ -56,6 +61,11 @@ class Channel extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return Channel
+     */
     public function removeProcess(Process $process): self
     {
         if ($this->processes->contains($process)) {
@@ -77,6 +87,11 @@ class Channel extends AbstractTaxonomy
         return $this->processTypes;
     }
 
+    /**
+     * @param ProcessType $processType
+     *
+     * @return Channel
+     */
     public function addProcessType(ProcessType $processType): self
     {
         if (!$this->processTypes->contains($processType)) {
@@ -87,6 +102,11 @@ class Channel extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param ProcessType $processType
+     *
+     * @return $this
+     */
     public function removeProcessType(ProcessType $processType): self
     {
         if ($this->processTypes->contains($processType)) {

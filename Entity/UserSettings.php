@@ -35,16 +35,27 @@ class UserSettings
      */
     private $processIndexSort;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * @param User $user
+     *
+     * @return UserSettings
+     */
     public function setUser(User $user): self
     {
         $this->user = $user;
@@ -52,11 +63,20 @@ class UserSettings
         return $this;
     }
 
+    /**
+     * @return array|null
+     */
     public function getProcessIndexSort(): ?array
     {
         return json_decode($this->processIndexSort, true);
     }
 
+    /**
+     * @param string $sort
+     * @param string $direction
+     *
+     * @return UserSettings
+     */
     public function setProcessIndexSort(string $sort, string $direction): self
     {
         $this->processIndexSort = json_encode([

@@ -26,11 +26,19 @@ abstract class AbstractTaxonomy extends AbstractEntity
      */
     protected $name;
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     *
+     * @return AbstractTaxonomy
+     */
     public function setName(string $name): self
     {
         $this->name = $name;

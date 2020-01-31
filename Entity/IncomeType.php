@@ -40,6 +40,11 @@ class IncomeType extends AbstractTaxonomy
         return $this->incomeEconomyEntries;
     }
 
+    /**
+     * @param IncomeEconomyEntry $incomeEconomyEntry
+     *
+     * @return IncomeType
+     */
     public function addIncomeEconomyEntry(IncomeEconomyEntry $incomeEconomyEntry): self
     {
         if (!$this->incomeEconomyEntries->contains($incomeEconomyEntry)) {
@@ -50,6 +55,11 @@ class IncomeType extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param IncomeEconomyEntry $incomeEconomyEntry
+     *
+     * @return IncomeType
+     */
     public function removeIncomeEconomyEntry(IncomeEconomyEntry $incomeEconomyEntry): self
     {
         if ($this->incomeEconomyEntries->contains($incomeEconomyEntry)) {

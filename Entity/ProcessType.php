@@ -80,6 +80,11 @@ class ProcessType extends AbstractTaxonomy
         return $this->processes;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return $this
+     */
     public function addProcess(Process $process): self
     {
         if (!$this->processes->contains($process)) {
@@ -90,6 +95,11 @@ class ProcessType extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return $this
+     */
     public function removeProcess(Process $process): self
     {
         if ($this->processes->contains($process)) {
@@ -111,6 +121,11 @@ class ProcessType extends AbstractTaxonomy
         return $this->processStatuses;
     }
 
+    /**
+     * @param ProcessStatus $processStatus
+     *
+     * @return $this
+     */
     public function addProcessStatus(ProcessStatus $processStatus): self
     {
         if (!$this->processStatuses->contains($processStatus)) {
@@ -120,6 +135,11 @@ class ProcessType extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param ProcessStatus $processStatus
+     *
+     * @return $this
+     */
     public function removeProcessStatus(ProcessStatus $processStatus): self
     {
         if ($this->processStatuses->contains($processStatus)) {
@@ -129,11 +149,19 @@ class ProcessType extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getConclusionClass(): ?string
     {
         return $this->conclusionClass;
     }
 
+    /**
+     * @param string $conclusionClass
+     *
+     * @return $this
+     */
     public function setConclusionClass(string $conclusionClass): self
     {
         $this->conclusionClass = $conclusionClass;
@@ -141,11 +169,19 @@ class ProcessType extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getHideInDashboard(): ?bool
     {
         return $this->hideInDashboard;
     }
 
+    /**
+     * @param bool|null $hideInDashboard
+     *
+     * @return $this
+     */
     public function setHideInDashboard(?bool $hideInDashboard): self
     {
         $this->hideInDashboard = $hideInDashboard;
@@ -161,6 +197,11 @@ class ProcessType extends AbstractTaxonomy
         return $this->services;
     }
 
+    /**
+     * @param Service $service
+     *
+     * @return $this
+     */
     public function addService(Service $service): self
     {
         if (!$this->services->contains($service)) {
@@ -170,6 +211,11 @@ class ProcessType extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param Service $service
+     *
+     * @return $this
+     */
     public function removeService(Service $service): self
     {
         if ($this->services->contains($service)) {
@@ -187,6 +233,11 @@ class ProcessType extends AbstractTaxonomy
         return $this->channels;
     }
 
+    /**
+     * @param Channel $channel
+     *
+     * @return $this
+     */
     public function addChannel(Channel $channel): self
     {
         if (!$this->channels->contains($channel)) {
@@ -196,6 +247,11 @@ class ProcessType extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param Channel $channel
+     *
+     * @return $this
+     */
     public function removeChannel(Channel $channel): self
     {
         if ($this->channels->contains($channel)) {
@@ -205,11 +261,19 @@ class ProcessType extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @return ProcessStatus|null
+     */
     public function getDefaultProcessStatus(): ?ProcessStatus
     {
         return $this->defaultProcessStatus;
     }
 
+    /**
+     * @param ProcessStatus|null $defaultProcessStatus
+     *
+     * @return $this
+     */
     public function setDefaultProcessStatus(?ProcessStatus $defaultProcessStatus): self
     {
         $this->defaultProcessStatus = $defaultProcessStatus;
@@ -217,11 +281,19 @@ class ProcessType extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @return ProcessStatus|null
+     */
     public function getDefaultProcessStatusOnEmptyCaseWorker(): ?ProcessStatus
     {
         return $this->defaultProcessStatusOnEmptyCaseWorker;
     }
 
+    /**
+     * @param ProcessStatus|null $defaultProcessStatusOnEmptyCaseWorker
+     *
+     * @return $this
+     */
     public function setDefaultProcessStatusOnEmptyCaseWorker(?ProcessStatus $defaultProcessStatusOnEmptyCaseWorker): self
     {
         $this->defaultProcessStatusOnEmptyCaseWorker = $defaultProcessStatusOnEmptyCaseWorker;

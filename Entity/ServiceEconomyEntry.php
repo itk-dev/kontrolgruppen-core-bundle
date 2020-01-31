@@ -85,11 +85,19 @@ class ServiceEconomyEntry extends EconomyEntry
      */
     private $repaymentPeriodTo;
 
+    /**
+     * @return Service|null
+     */
     public function getService(): ?Service
     {
         return $this->service;
     }
 
+    /**
+     * @param Service|null $service
+     *
+     * @return ServiceEconomyEntry
+     */
     public function setService(?Service $service): self
     {
         $this->service = $service;
@@ -97,11 +105,19 @@ class ServiceEconomyEntry extends EconomyEntry
         return $this;
     }
 
+    /**
+     * @return \DateTime|null
+     */
     public function getPeriodFrom(): ?\DateTime
     {
         return $this->periodFrom;
     }
 
+    /**
+     * @param \DateTime|null $periodFrom
+     *
+     * @return ServiceEconomyEntry
+     */
     public function setPeriodFrom(?\DateTime $periodFrom): self
     {
         $this->periodFrom = $periodFrom;
@@ -109,11 +125,19 @@ class ServiceEconomyEntry extends EconomyEntry
         return $this;
     }
 
+    /**
+     * @return \DateTime|null
+     */
     public function getPeriodTo(): ?\DateTime
     {
         return $this->periodTo;
     }
 
+    /**
+     * @param \DateTime|null $periodTo
+     *
+     * @return ServiceEconomyEntry
+     */
     public function setPeriodTo(?\DateTime $periodTo): self
     {
         $this->periodTo = $periodTo;
@@ -121,11 +145,19 @@ class ServiceEconomyEntry extends EconomyEntry
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getAmountPeriod(): ?int
     {
         return $this->amountPeriod;
     }
 
+    /**
+     * @param int|null $amountPeriod
+     *
+     * @return ServiceEconomyEntry
+     */
     public function setAmountPeriod(?int $amountPeriod): self
     {
         $this->amountPeriod = $amountPeriod;
@@ -133,11 +165,19 @@ class ServiceEconomyEntry extends EconomyEntry
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getFutureSavingsAmount(): ?float
     {
         return $this->futureSavingsAmount;
     }
 
+    /**
+     * @param float $futureSavingsAmount
+     *
+     * @return ServiceEconomyEntry
+     */
     public function setFutureSavingsAmount(float $futureSavingsAmount): self
     {
         $this->futureSavingsAmount = $futureSavingsAmount;
@@ -145,11 +185,19 @@ class ServiceEconomyEntry extends EconomyEntry
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getFutureSavingsPeriodFrom(): ?\DateTimeInterface
     {
         return $this->futureSavingsPeriodFrom;
     }
 
+    /**
+     * @param \DateTimeInterface|null $futureSavingsPeriodFrom
+     *
+     * @return ServiceEconomyEntry
+     */
     public function setFutureSavingsPeriodFrom(?\DateTimeInterface $futureSavingsPeriodFrom): self
     {
         $this->futureSavingsPeriodFrom = $futureSavingsPeriodFrom;
@@ -157,11 +205,19 @@ class ServiceEconomyEntry extends EconomyEntry
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getFutureSavingsPeriodTo(): ?\DateTimeInterface
     {
         return $this->futureSavingsPeriodTo;
     }
 
+    /**
+     * @param \DateTimeInterface|null $futureSavingsPeriodTo
+     *
+     * @return ServiceEconomyEntry
+     */
     public function setFutureSavingsPeriodTo(?\DateTimeInterface $futureSavingsPeriodTo): self
     {
         $this->futureSavingsPeriodTo = $futureSavingsPeriodTo;
@@ -169,11 +225,19 @@ class ServiceEconomyEntry extends EconomyEntry
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getRepaymentAmount(): ?float
     {
         return $this->repaymentAmount;
     }
 
+    /**
+     * @param float $repaymentAmount
+     *
+     * @return ServiceEconomyEntry
+     */
     public function setRepaymentAmount(float $repaymentAmount): self
     {
         $this->repaymentAmount = $repaymentAmount;
@@ -181,11 +245,19 @@ class ServiceEconomyEntry extends EconomyEntry
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getRepaymentPeriodFrom(): ?\DateTimeInterface
     {
         return $this->repaymentPeriodFrom;
     }
 
+    /**
+     * @param \DateTimeInterface|null $repaymentPeriodFrom
+     *
+     * @return ServiceEconomyEntry
+     */
     public function setRepaymentPeriodFrom(?\DateTimeInterface $repaymentPeriodFrom): self
     {
         $this->repaymentPeriodFrom = $repaymentPeriodFrom;
@@ -193,11 +265,19 @@ class ServiceEconomyEntry extends EconomyEntry
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getRepaymentPeriodTo(): ?\DateTimeInterface
     {
         return $this->repaymentPeriodTo;
     }
 
+    /**
+     * @param \DateTimeInterface|null $repaymentPeriodTo
+     *
+     * @return ServiceEconomyEntry
+     */
     public function setRepaymentPeriodTo(?\DateTimeInterface $repaymentPeriodTo): self
     {
         $this->repaymentPeriodTo = $repaymentPeriodTo;

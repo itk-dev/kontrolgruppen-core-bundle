@@ -40,6 +40,11 @@ class Reason extends AbstractTaxonomy
         return $this->processes;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return $this
+     */
     public function addProcess(Process $process): self
     {
         if (!$this->processes->contains($process)) {
@@ -50,6 +55,11 @@ class Reason extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return $this
+     */
     public function removeProcess(Process $process): self
     {
         if ($this->processes->contains($process)) {
