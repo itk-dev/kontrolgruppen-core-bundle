@@ -52,7 +52,7 @@ class UserManager implements UserManagerInterface
      */
     public function deleteUser(UserInterface $user)
     {
-        throw new \RuntimeException('Lazy programmer exception: '.__METHOD__.' not implemented!');
+        throw new \RuntimeException(sprintf('Lazy programmer exception: %s not implemented!', __METHOD__));
     }
 
     /**
@@ -80,7 +80,7 @@ class UserManager implements UserManagerInterface
      */
     public function findUsers()
     {
-        throw new \RuntimeException('Lazy programmer exception: '.__METHOD__.' not implemented!');
+        throw new \RuntimeException(sprintf('Lazy programmer exception: %s not implemented!', __METHOD__));
     }
 
     /**
@@ -88,7 +88,7 @@ class UserManager implements UserManagerInterface
      */
     public function reloadUser(UserInterface $user)
     {
-        throw new \RuntimeException('Lazy programmer exception: '.__METHOD__.' not implemented!');
+        throw new \RuntimeException(sprintf('Lazy programmer exception: %s not implemented!', __METHOD__));
     }
 
     /**

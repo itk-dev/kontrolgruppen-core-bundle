@@ -122,7 +122,7 @@ class ReportExportCommand extends Command
         $exportClass = $input->getArgument('export');
         $export = $this->exportManager->getExport($exportClass);
         if (null === $export) {
-            throw new RuntimeException('Invalid export: '.$exportClass);
+            throw new RuntimeException(sprintf('Invalid export: %s', $exportClass));
         }
         $parameters = $input->getArgument('parameters');
         $parameters = $this->exportManager->getExportParameters($export, $parameters ?? '');
@@ -140,7 +140,7 @@ class ReportExportCommand extends Command
         if (!$save) {
             // Dump to stdout.
             $this->exportManager
-                ->run($export, $parameters, $format, $save)
+                ->run($export, $parameters, $format)
                 ->save('php://output');
         } else {
             $result = $this->exportManager->save($export, $parameters, $format, $outputFilename);

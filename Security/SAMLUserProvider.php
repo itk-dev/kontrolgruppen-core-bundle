@@ -10,6 +10,8 @@
 
 namespace Kontrolgruppen\CoreBundle\Security;
 
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -18,10 +20,10 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  */
 class SAMLUserProvider implements UserProviderInterface
 {
-    /** @var \Kontrolgruppen\CoreBundle\Service\UserManagerInterface */
+    /** @var UserManagerInterface */
     private $userManager;
 
-    /** @var \Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator */
+    /** @var SAMLAuthenticator */
     private $saml;
 
     /**
@@ -69,7 +71,7 @@ class SAMLUserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        throw new \RuntimeException('Lazy programmer exception: '.__METHOD__.' not implemented!');
+        throw new \RuntimeException(sprintf('Lazy programmer exception: %s not implemented!', __METHOD__));
     }
 
     /**

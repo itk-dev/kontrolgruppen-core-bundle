@@ -289,6 +289,6 @@ class Manager
                 return $format;
         }
 
-        throw new \RuntimeException('Invalid format: '.$format);
+        throw new \RuntimeException(sprintf('Invalid format: %s', $format));
     }
 }
