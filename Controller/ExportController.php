@@ -40,12 +40,8 @@ class ExportController extends BaseController
      * @param Manager              $exportManager
      * @param FormFactoryInterface $formFactory
      */
-    public function __construct(
-        RequestStack $requestStack,
-        MenuService $menuService,
-        Manager $exportManager,
-        FormFactoryInterface $formFactory
-    ) {
+    public function __construct(RequestStack $requestStack, MenuService $menuService, Manager $exportManager, FormFactoryInterface $formFactory)
+    {
         parent::__construct($requestStack, $menuService);
         $this->exportManager = $exportManager;
         $this->formFactory = $formFactory;

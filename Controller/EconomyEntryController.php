@@ -37,11 +37,8 @@ class EconomyEntryController extends BaseController
      * @param MenuService       $menuService
      * @param EconomyController $economyController
      */
-    public function __construct(
-        RequestStack $requestStack,
-        MenuService $menuService,
-        EconomyController $economyController
-    ) {
+    public function __construct(RequestStack $requestStack, MenuService $menuService, EconomyController $economyController)
+    {
         parent::__construct($requestStack, $menuService);
         $this->economyController = $economyController;
     }

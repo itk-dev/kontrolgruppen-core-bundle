@@ -53,16 +53,8 @@ class ProcessController extends BaseController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function index(
-        Request $request,
-        ProcessRepository $processRepository,
-        FilterBuilderUpdaterInterface $lexikBuilderUpdater,
-        PaginatorInterface $paginator,
-        FormFactoryInterface $formFactory,
-        ProcessManager $processManager,
-        UserRepository $userRepository,
-        UserSettingsService $userSettingsService
-    ): Response {
+    public function index(Request $request, ProcessRepository $processRepository, FilterBuilderUpdaterInterface $lexikBuilderUpdater, PaginatorInterface $paginator, FormFactoryInterface $formFactory, ProcessManager $processManager, UserRepository $userRepository, UserSettingsService $userSettingsService): Response
+    {
         $userSettings = $this->getUser()->getUserSettings();
 
         $result = $userSettingsService->handleProcessIndexRequest($request, $userSettings);
@@ -175,10 +167,8 @@ class ProcessController extends BaseController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function new(
-        Request $request,
-        ProcessManager $processManager
-    ): Response {
+    public function new(Request $request, ProcessManager $processManager): Response
+    {
         $process = new Process();
 
         $this->denyAccessUnlessGranted('edit', $process);

@@ -36,10 +36,8 @@ class BaseController extends AbstractController
      * @param RequestStack $requestStack
      * @param MenuService  $menuService
      */
-    public function __construct(
-        RequestStack $requestStack,
-        MenuService $menuService
-    ) {
+    public function __construct(RequestStack $requestStack, MenuService $menuService)
+    {
         $this->requestStack = $requestStack;
         $this->menuService = $menuService;
     }
@@ -57,11 +55,8 @@ class BaseController extends AbstractController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function render(
-        string $view,
-        array $parameters = [],
-        Response $response = null
-    ): Response {
+    public function render(string $view, array $parameters = [], Response $response = null): Response
+    {
         // Set reminders
         $numberOfReminders = $this->getDoctrine()->getRepository(
             Reminder::class

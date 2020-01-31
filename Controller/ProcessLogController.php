@@ -67,12 +67,11 @@ class ProcessLogController extends BaseController
      *
      * @return Response
      *
-     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception*@throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function export(
-        ProcessLogExport $processLogExport,
-        Process $process
-    ): Response {
+    public function export(ProcessLogExport $processLogExport, Process $process): Response
+    {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $spreadsheet = new Spreadsheet();

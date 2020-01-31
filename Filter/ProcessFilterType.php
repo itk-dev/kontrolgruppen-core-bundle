@@ -41,13 +41,8 @@ class ProcessFilterType extends AbstractType
      * @param Security                $security
      * @param TranslatorInterface     $translator
      */
-    public function __construct(
-        ProcessTypeRepository $processTypeRepository,
-        ProcessStatusRepository $processStatusRepository,
-        UserRepository $userRepository,
-        Security $security,
-        TranslatorInterface $translator
-    ) {
+    public function __construct(ProcessTypeRepository $processTypeRepository, ProcessStatusRepository $processStatusRepository, UserRepository $userRepository, Security $security, TranslatorInterface $translator)
+    {
         $this->processTypeRepository = $processTypeRepository;
         $this->processStatusRepository = $processStatusRepository;
         $this->userRepository = $userRepository;

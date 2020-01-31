@@ -38,13 +38,13 @@ class ProcessReportController extends BaseController
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Mpdf\MpdfException
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
-    public function index(
-        Request $request,
-        Process $process,
-        TranslatorInterface $translator,
-        ReportService $reportService
-    ): Response {
+    public function index(Request $request, Process $process, TranslatorInterface $translator, ReportService $reportService): Response
+    {
         $form = $this->createFormBuilder()
             ->add('options', ChoiceType::class, [
                 'label' => $translator->trans('process_report.form.choices.placeholder'),
