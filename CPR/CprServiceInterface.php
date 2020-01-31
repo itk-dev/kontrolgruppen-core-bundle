@@ -21,6 +21,7 @@ interface CprServiceInterface
      * @param Cpr $cpr
      *
      * @return CprServiceResultInterface
+     *
      * @throws CprException
      */
     public function find(Cpr $cpr): CprServiceResultInterface;

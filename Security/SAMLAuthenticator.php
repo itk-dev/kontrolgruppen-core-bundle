@@ -125,29 +125,6 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
     }
 
     /**
-     * Get username.
-     *
-     * @param Auth $auth
-     *
-     * @return string
-     */
-    private function getUsername(Auth $auth)
-    {
-        if (isset($this->settings['username_attribute_name'])) {
-            $attribute = $auth->getAttribute($this->settings['username_attribute_name']);
-            if (!empty($attribute)) {
-                $username = reset($attribute);
-                if (!empty($username)) {
-                    return $username;
-                }
-            }
-        }
-
-        // Fallback.
-        return $auth->getNameId();
-    }
-
-    /**
      * @param mixed         $credentials
      * @param UserInterface $user
      *
@@ -311,5 +288,28 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         }
 
         return $map;
+    }
+
+    /**
+     * Get username.
+     *
+     * @param Auth $auth
+     *
+     * @return string
+     */
+    private function getUsername(Auth $auth)
+    {
+        if (isset($this->settings['username_attribute_name'])) {
+            $attribute = $auth->getAttribute($this->settings['username_attribute_name']);
+            if (!empty($attribute)) {
+                $username = reset($attribute);
+                if (!empty($username)) {
+                    return $username;
+                }
+            }
+        }
+
+        // Fallback.
+        return $auth->getNameId();
     }
 }

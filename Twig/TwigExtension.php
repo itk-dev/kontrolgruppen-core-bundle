@@ -37,11 +37,8 @@ class TwigExtension extends AbstractExtension
      * @param \Symfony\Contracts\Translation\TranslatorInterface         $translator
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      */
-    public function __construct(
-        ConclusionService $conclusionService,
-        TranslatorInterface $translator,
-        UrlGeneratorInterface $urlGenerator
-    ) {
+    public function __construct(ConclusionService $conclusionService, TranslatorInterface $translator, UrlGeneratorInterface $urlGenerator)
+    {
         $this->conclusionService = $conclusionService;
         $this->translator = $translator;
         $this->urlGenerator = $urlGenerator;
@@ -90,10 +87,8 @@ class TwigExtension extends AbstractExtension
         switch ($format) {
             case 'short':
                 return $date->format('d-m-Y');
-                break;
             case 'long':
                 return $date->format('d-m-Y H:i');
-                break;
             default:
                 return $this->simpleDateFilter($env, $date, 'long');
         }
@@ -264,17 +259,17 @@ class TwigExtension extends AbstractExtension
                         'id' => $id,
                     ]
                 );
+            } else {
+                $route = $this->camelCaseToUnderscore($reflectedClass->getShortName()).'_show';
+
+                return $this->urlGenerator->generate(
+                    $route,
+                    [
+                        'id' => $id,
+                        'process' => $processId,
+                    ]
+                );
             }
-
-            $route = $this->camelCaseToUnderscore($reflectedClass->getShortName()).'_show';
-
-            return $this->urlGenerator->generate(
-                $route,
-                [
-                    'id' => $id,
-                    'process' => $processId,
-                ]
-            );
         } catch (Exception $exception) {
             return '#';
         }
