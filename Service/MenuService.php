@@ -35,12 +35,8 @@ class MenuService
      * @param TwigExtension                 $twigExtension
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(
-        TranslatorInterface $translator,
-        RouterInterface $router,
-        TwigExtension $twigExtension,
-        AuthorizationCheckerInterface $authorizationChecker
-    ) {
+    public function __construct(TranslatorInterface $translator, RouterInterface $router, TwigExtension $twigExtension, AuthorizationCheckerInterface $authorizationChecker)
+    {
         $this->translator = $translator;
         $this->router = $router;
         $this->twigExtension = $twigExtension;

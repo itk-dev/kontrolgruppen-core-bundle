@@ -102,16 +102,6 @@ class BaseController extends AbstractController
     }
 
     /**
-     * @param string $path
-     *
-     * @return array
-     */
-    protected function getGlobalNavMenu(string $path = '/')
-    {
-        return $this->menuService->getGlobalNavMenu($path);
-    }
-
-    /**
      * @param $process
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -195,5 +185,15 @@ class BaseController extends AbstractController
         }
 
         return $this->redirectToRoute($route, $parameters, $status);
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return array
+     */
+    protected function getGlobalNavMenu(string $path = '/')
+    {
+        return $this->menuService->getGlobalNavMenu($path);
     }
 }

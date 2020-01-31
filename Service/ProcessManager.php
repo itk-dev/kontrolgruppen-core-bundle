@@ -43,13 +43,8 @@ class ProcessManager
      * @param CprServiceInterface    $cprService
      * @param LoggerInterface        $logger
      */
-    public function __construct(
-        ProcessRepository $processRepository,
-        EntityManagerInterface $entityManager,
-        LockService $lockService,
-        CprServiceInterface $cprService,
-        LoggerInterface $logger
-    ) {
+    public function __construct(ProcessRepository $processRepository, EntityManagerInterface $entityManager, LockService $lockService, CprServiceInterface $cprService, LoggerInterface $logger)
+    {
         $this->processRepository = $processRepository;
         $this->entityManager = $entityManager;
         $this->lockService = $lockService;
@@ -116,10 +111,8 @@ class ProcessManager
      *
      * @throws \Exception
      */
-    public function newProcess(
-        Process $process = null,
-        ProcessType $processType = null
-    ) {
+    public function newProcess(Process $process = null, ProcessType $processType = null)
+    {
         if (null === $process) {
             $process = new Process();
             $process->setProcessType($processType);
@@ -149,20 +142,6 @@ class ProcessManager
     }
 
     /**
-     * @param Process $process
-     *
-     * @return \Kontrolgruppen\CoreBundle\Entity\ProcessStatus|null
-     */
-    private function decideStatusForProcess(Process $process)
-    {
-        if (empty($process->getCaseWorker())) {
-            return $process->getProcessType()->getDefaultProcessStatusOnEmptyCaseWorker();
-        }
-
-        return $process->getProcessType()->getDefaultProcessStatus();
-    }
-
-    /**
      * Generate a new case number.
      *
      * @return string case number of format YY-XXXX where YY is the year and XXXX an increasing counter
@@ -186,6 +165,20 @@ class ProcessManager
         $caseNumber = str_pad($highestCaseCounter + 1, 5, '0', STR_PAD_LEFT);
 
         return date('y').'-'.$caseNumber;
+    }
+
+    /**
+     * @param Process $process
+     *
+     * @return \Kontrolgruppen\CoreBundle\Entity\ProcessStatus|null
+     */
+    private function decideStatusForProcess(Process $process)
+    {
+        if (empty($process->getCaseWorker())) {
+            return $process->getProcessType()->getDefaultProcessStatusOnEmptyCaseWorker();
+        }
+
+        return $process->getProcessType()->getDefaultProcessStatus();
     }
 
     /**

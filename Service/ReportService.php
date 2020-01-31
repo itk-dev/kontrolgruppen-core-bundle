@@ -43,13 +43,8 @@ class ReportService
      *
      * @throws \Mpdf\MpdfException
      */
-    public function __construct(
-        ConclusionService $conclusionService,
-        EconomyEntryRepository $economyEntryRepository,
-        Environment $twig,
-        JournalEntryRepository $journalEntryRepository,
-        TranslatorInterface $translator
-    ) {
+    public function __construct(ConclusionService $conclusionService, EconomyEntryRepository $economyEntryRepository, Environment $twig, JournalEntryRepository $journalEntryRepository, TranslatorInterface $translator)
+    {
         $this->conclusionService = $conclusionService;
         $this->economyEntryRepository = $economyEntryRepository;
         $this->journalEntryRepository = $journalEntryRepository;

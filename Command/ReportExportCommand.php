@@ -57,13 +57,8 @@ class ReportExportCommand extends Command
      * @param Filesystem             $filesystem
      * @param ParameterBagInterface  $parameters
      */
-    public function __construct(
-        Manager $exportManager,
-        UserRepository $userRepository,
-        EntityManagerInterface $entityManager,
-        Filesystem $filesystem,
-        ParameterBagInterface $parameters
-    ) {
+    public function __construct(Manager $exportManager, UserRepository $userRepository, EntityManagerInterface $entityManager, Filesystem $filesystem, ParameterBagInterface $parameters)
+    {
         parent::__construct();
         $this->exportManager = $exportManager;
         $this->userRepository = $userRepository;
@@ -72,6 +67,9 @@ class ReportExportCommand extends Command
         $this->parameters = $parameters;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function configure()
     {
         $this
@@ -114,13 +112,7 @@ class ReportExportCommand extends Command
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int|void
-     *
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     * {@inheritdoc}
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {

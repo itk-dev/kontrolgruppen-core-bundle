@@ -177,34 +177,6 @@ class Manager
     }
 
     /**
-     * Get writer type form format string.
-     *
-     * @param string $format
-     *
-     * @return string
-     */
-    private function getWriterType(string $format)
-    {
-        $format = ucfirst($format);
-
-        switch ($format) {
-            case 'Pdf':
-                return 'Mpdf';
-            case 'Xls':
-            case 'Xlsx':
-            case 'Ods':
-            case 'Csv':
-            case 'Html':
-            case 'Tcpdf':
-            case 'Dompdf':
-            case 'Mpdf':
-                return $format;
-        }
-
-        throw new \RuntimeException('Invalid format: '.$format);
-    }
-
-    /**
      * Parse a string into export parameters.
      *
      * The input must be a space-separated list of name=value pairs, e.g. "start=now end=+1 day"
@@ -290,5 +262,33 @@ class Manager
         }
 
         return $value;
+    }
+
+    /**
+     * Get writer type form format string.
+     *
+     * @param string $format
+     *
+     * @return string
+     */
+    private function getWriterType(string $format)
+    {
+        $format = ucfirst($format);
+
+        switch ($format) {
+            case 'Pdf':
+                return 'Mpdf';
+            case 'Xls':
+            case 'Xlsx':
+            case 'Ods':
+            case 'Csv':
+            case 'Html':
+            case 'Tcpdf':
+            case 'Dompdf':
+            case 'Mpdf':
+                return $format;
+        }
+
+        throw new \RuntimeException('Invalid format: '.$format);
     }
 }

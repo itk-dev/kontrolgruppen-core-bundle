@@ -30,6 +30,10 @@ abstract class AbstractExport implements \JsonSerializable
     /** @var \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet */
     protected $sheet;
 
+    protected $titleStyle;
+    protected $headerStyle;
+    protected $footerStyle;
+
     protected $latestRow = 0;
 
     /**
@@ -54,6 +58,10 @@ abstract class AbstractExport implements \JsonSerializable
 
     /**
      * Get parameters.
+     *
+     * @return array
+     *
+     * @throws \Exception
      */
     public function getParameters()
     {
@@ -129,11 +137,19 @@ abstract class AbstractExport implements \JsonSerializable
     }
 
     /**
+     * @return array|mixed
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'title' => $this->getTitle(),
+        ];
+    }
+
+    /**
      * Write actual data.
      */
     abstract public function writeData();
-
-    protected $titleStyle;
 
     /**
      * Write report title using title format.
@@ -155,8 +171,6 @@ abstract class AbstractExport implements \JsonSerializable
         $this->writeRow([$title], $this->titleStyle);
     }
 
-    protected $headerStyle;
-
     /**
      * Write header using header format.
      *
@@ -174,8 +188,6 @@ abstract class AbstractExport implements \JsonSerializable
 
         $this->writeRow($data, $this->headerStyle);
     }
-
-    protected $footerStyle;
 
     /**
      * @param array $data
@@ -281,15 +293,5 @@ abstract class AbstractExport implements \JsonSerializable
     protected function formatAmount($number, $decimals = 2)
     {
         return $this->formatNumber($number, $decimals);
-    }
-
-    /**
-     * @return array|mixed
-     */
-    public function jsonSerialize()
-    {
-        return [
-            'title' => $this->getTitle(),
-        ];
     }
 }

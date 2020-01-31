@@ -36,17 +36,17 @@ class ProcessLogExport extends AbstractExport
      *
      * @throws \Exception
      */
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        TranslatorInterface $translator,
-        ProcessLogTranslatorService $processLogTranslatorService
-    ) {
+    public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator, ProcessLogTranslatorService $processLogTranslatorService)
+    {
         parent::__construct();
         $this->entityManager = $entityManager;
         $this->processLogTranslatorService = $processLogTranslatorService;
         $this->translator = $translator;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function writeData()
     {
         $this->writeRow([

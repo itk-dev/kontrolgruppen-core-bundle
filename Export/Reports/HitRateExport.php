@@ -45,6 +45,9 @@ class HitRateExport extends AbstractExport
         return parent::getParameters();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function writeData()
     {
         $processes = $this->getProcesses();

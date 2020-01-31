@@ -58,6 +58,9 @@ class Export extends AbstractExport
         return [];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function writeData()
     {
         $processes = $this->getProcesses();

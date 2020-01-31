@@ -84,25 +84,6 @@ class BIController extends BaseController
     }
 
     /**
-     * @param $filename
-     *
-     * @return string
-     */
-    private function getContentType($filename)
-    {
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-
-        switch ($ext) {
-            case 'csv':
-                return 'text/csv';
-            case 'json':
-                return 'application/json';
-        }
-
-        return 'text/plain';
-    }
-
-    /**
      * @Route("/delete/{export}", name="delete", methods={"DELETE"})
      *
      * @Security("has_role('ROLE_ADMIN')")
@@ -123,5 +104,24 @@ class BIController extends BaseController
         }
 
         return $this->redirectToReferer('bi_index');
+    }
+
+    /**
+     * @param $filename
+     *
+     * @return string
+     */
+    private function getContentType($filename)
+    {
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+
+        switch ($ext) {
+            case 'csv':
+                return 'text/csv';
+            case 'json':
+                return 'application/json';
+        }
+
+        return 'text/plain';
     }
 }

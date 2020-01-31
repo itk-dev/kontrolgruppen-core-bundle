@@ -46,6 +46,16 @@ class User implements UserInterface
     private $processes;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $cliLoginToken;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\UserSettings", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $userSettings;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -168,16 +178,6 @@ class User implements UserInterface
 
         return $this;
     }
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $cliLoginToken;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\UserSettings", mappedBy="user", cascade={"persist", "remove"})
-     */
-    private $userSettings;
 
     /**
      * @return mixed
