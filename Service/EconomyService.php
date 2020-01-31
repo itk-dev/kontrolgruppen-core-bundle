@@ -46,16 +46,17 @@ class EconomyService
         ]);
 
         $result = array_reduce($serviceEconomyEntries, function ($carry, ServiceEconomyEntry $entry) use ($process) {
+            $lockedNetValue = $this->lockedNetValueRepository->findOneBy([
+                'process' => $process,
+                'service' => $entry->getService(),
+            ]);
+            $netMultiplier = null !== $lockedNetValue
+                ? $lockedNetValue->getValue()
+                : $entry->getService()->getNetDefaultValue();
+
             if (null !== $entry->getRepaymentAmount()) {
                 $carry['entries'][] = $entry;
                 $carry['repaymentSum'] = $carry['repaymentSum'] + $entry->getRepaymentAmount();
-
-                $lockedNetValue = $this->lockedNetValueRepository->findBy(['process' => $process, 'service' => $entry->getService()]);
-
-                $netMultiplier = (!empty($lockedNetValue))
-                                    ? $lockedNetValue[0]->getValue()
-                                    : $entry->getService()->getNetDefaultValue();
-
                 $carry['netRepaymentSum'] = $carry['netRepaymentSum'] + ($entry->getRepaymentAmount() * $netMultiplier) * $this->getMonthsBetweenDates($entry->getRepaymentPeriodFrom(), $entry->getRepaymentPeriodTo());
 
                 if (!isset($carry['repaymentSums'][$entry->getService()->getName()])) {
