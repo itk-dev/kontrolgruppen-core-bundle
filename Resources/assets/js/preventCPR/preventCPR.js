@@ -8,7 +8,7 @@
         let inputElements = $(this);
 
         self.options = $.extend({
-            text: ('prevent_cpr.cpr_in_content' in kontrolgruppenMessages) ? kontrolgruppenMessages['prevent_cpr.cpr_in_content'] : "Vi har fundet følgende, der kan være CPR-nummre: %list% \nEr du sikker på at du vil gemme?\n Husk at du ikke må gemme CPR-numre."
+            text: ('prevent_cpr.cpr_in_content' in kontrolgruppenMessages) ? kontrolgruppenMessages['prevent_cpr.cpr_in_content'] : "Vi har fundet følgende, der kan være CPR-numre: %list% \nEr du sikker på at du vil gemme?\n Husk at du ikke må gemme CPR-numre."
         }, options);
 
         function checkInputField (event, inputElement) {
