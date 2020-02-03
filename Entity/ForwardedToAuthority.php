@@ -17,6 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ForwardedToAuthorityRepository")
+ *
  * @Gedmo\Loggable()
  */
 class ForwardedToAuthority extends AbstractTaxonomy
@@ -31,6 +32,9 @@ class ForwardedToAuthority extends AbstractTaxonomy
      */
     private $processTypes;
 
+    /**
+     * ForwardedToAuthority constructor.
+     */
     public function __construct()
     {
         $this->processes = new ArrayCollection();

@@ -126,6 +126,11 @@ class ForwardedToAuthorityController extends BaseController
 
     /**
      * @Route("/{id}", name="forwarded_to_authority_delete", methods={"DELETE"})
+     *
+     * @param Request              $request
+     * @param ForwardedToAuthority $forwardedToAuthority
+     *
+     * @return Response
      */
     public function delete(Request $request, ForwardedToAuthority $forwardedToAuthority): Response
     {
