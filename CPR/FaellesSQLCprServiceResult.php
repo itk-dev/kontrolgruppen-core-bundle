@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Class FaellesSQLCprServiceResult.
  */
-class FaellesSQLCprServiceResultInterface implements CprServiceResultInterface
+class FaellesSQLCprServiceResult implements CprServiceResultInterface
 {
     private $serviceResult;
 
