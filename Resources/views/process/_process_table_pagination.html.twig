@@ -20,7 +20,7 @@
             </thead>
             <tbody>
             {% for process in pagination %}
-                <tr{% if not process.visitedByCaseWorker() %} class="not-visited"{% endif %}>
+                <tr{% if process.id in unvisitedProcessIds %} class="not-visited"{% endif %}>
                     <td>
                         <a href="{{ path('process_show', {'id': process.id}) }}">{{ process.caseNumber }}
                         {% if process.completedAt %}
@@ -45,10 +45,6 @@
             {% endfor %}
             </tbody>
         </table>
-
-        {#
-          {{ pagination.getTotalItemCount }}
-        #}
 
         <div class="navigation">
             {{ knp_pagination_render(pagination) }}
