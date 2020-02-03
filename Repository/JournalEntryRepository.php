@@ -11,11 +11,11 @@
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method JournalEntry|null find($id, $lockMode = null, $lockVersion = null)
@@ -27,18 +27,40 @@ class JournalEntryRepository extends ServiceEntityRepository
 {
     protected $logManager;
 
-    public function __construct(RegistryInterface $registry, LogManager $logManager)
+    /**
+     * JournalEntryRepository constructor.
+     *
+     * @param \Doctrine\Persistence\ManagerRegistry         $registry
+     *   The registry
+     * @param \Kontrolgruppen\CoreBundle\Service\LogManager $logManager
+     *   Log manager
+     */
+    public function __construct(ManagerRegistry $registry, LogManager $logManager)
     {
         $this->logManager = $logManager;
 
         parent::__construct($registry, JournalEntry::class);
     }
 
+    /**
+     * Get latest entries of type note.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *
+     * @return array
+     */
     public function getLatestNoteEntries(Process $process)
     {
         return $this->getLatestEntries($process, JournalEntryEnumType::NOTE);
     }
 
+    /**
+     * Get latest entries of type internal note.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *
+     * @return array
+     */
     public function getLatestInternalNoteEntries(Process $process)
     {
         return $this->getLatestEntries($process, JournalEntryEnumType::INTERNAL_NOTE);

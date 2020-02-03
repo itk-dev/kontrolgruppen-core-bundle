@@ -51,19 +51,30 @@ class MenuService
      */
     public function getGlobalNavMenu($path)
     {
-        $menu['dashboard'] = $this->createGlobalNavItem(
-            'dashboard',
-            'dashboard',
-            ('/' === $path),
-            'dashboard_index'
-        );
+        $menu = [];
 
-        $menu['process'] = $this->createGlobalNavItem(
-            'process',
-            'process',
-            false !== $this->startsWith($path, '/process/'),
-            'process_index'
-        );
+        if ($this->authorizationChecker->isGranted('ROLE_SAGSBEHANDLER')) {
+            $menu['dashboard'] = $this->createGlobalNavItem(
+                'dashboard',
+                'dashboard',
+                ('/' === $path),
+                'dashboard_index'
+            );
+
+            $menu['process'] = $this->createGlobalNavItem(
+                'process',
+                'process',
+                false !== $this->startsWith($path, '/process/'),
+                'process_index'
+            );
+        } elseif ($this->authorizationChecker->isGranted('ROLE_PROCESS_VIEW')) {
+            $menu['search_external'] = $this->createGlobalNavItem(
+                'search_external',
+                'search-external',
+                false !== $this->startsWith($path, '/process/'),
+                'search_external'
+            );
+        }
 
         if ($this->authorizationChecker->isGranted('ROLE_BI')) {
             $menu['bi'] = $this->createGlobalNavItem(
@@ -117,80 +128,78 @@ class MenuService
                 ['id' => $process->getId()]
             );
 
-            if (null === $process->getCompletedAt()) {
+            $items[] = $this->createMenuItem(
+                'client',
+                1 === preg_match(
+                    '/^\/process\/[0-9]+\/client.*$/',
+                    $path
+                ),
+                'client_show',
+                ['process' => $process]
+            );
+
+            if ($this->authorizationChecker->isGranted('edit', $process)) {
                 $items[] = $this->createMenuItem(
-                    'client',
+                    'reminder',
                     1 === preg_match(
-                        '/^\/process\/[0-9]+\/client.*$/',
+                        '/^\/process\/[0-9]+\/reminder\/.*$/',
                         $path
                     ),
-                    'client_show',
+                    'reminder_index',
                     ['process' => $process]
                 );
+            }
 
-                if ($this->authorizationChecker->isGranted('edit', $process)) {
-                    $items[] = $this->createMenuItem(
-                        'reminder',
-                        1 === preg_match(
-                            '/^\/process\/[0-9]+\/reminder\/.*$/',
-                            $path
-                        ),
-                        'reminder_index',
-                        ['process' => $process]
-                    );
-                }
+            $items[] = $this->createMenuItem(
+                'journal',
+                1 === preg_match(
+                    '/^\/process\/[0-9]+\/journal\/.*$/',
+                    $path
+                ),
+                'journal_entry_index',
+                ['process' => $process]
+            );
 
+            $items[] = $this->createMenuItem(
+                'economy',
+                1 === preg_match(
+                    '/^\/process\/[0-9]+\/economy.*$/',
+                    $path
+                ),
+                'economy_show',
+                ['process' => $process]
+            );
+
+            $items[] = $this->createMenuItem(
+                'revenue',
+                1 === preg_match(
+                    '/^\/process\/[0-9]+\/revenue.*$/',
+                    $path
+                ),
+                'economy_revenue',
+                ['process' => $process]
+            );
+
+            $items[] = $this->createMenuItem(
+                'conclusion',
+                1 === preg_match(
+                    '/^\/process\/[0-9]+\/conclusion.*$/',
+                    $path
+                ),
+                'conclusion_show',
+                ['process' => $process]
+            );
+
+            if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
                 $items[] = $this->createMenuItem(
-                    'journal',
+                    'log',
                     1 === preg_match(
-                        '/^\/process\/[0-9]+\/journal\/.*$/',
+                        '/^\/process\/[0-9]+\/log.*$/',
                         $path
                     ),
-                    'journal_entry_index',
+                    'process_log_index',
                     ['process' => $process]
                 );
-
-                $items[] = $this->createMenuItem(
-                    'economy',
-                    1 === preg_match(
-                        '/^\/process\/[0-9]+\/economy.*$/',
-                        $path
-                    ),
-                    'economy_show',
-                    ['process' => $process]
-                );
-
-                $items[] = $this->createMenuItem(
-                    'revenue',
-                    1 === preg_match(
-                        '/^\/process\/[0-9]+\/revenue.*$/',
-                        $path
-                    ),
-                    'economy_revenue',
-                    ['process' => $process]
-                );
-
-                $items[] = $this->createMenuItem(
-                    'conclusion',
-                    1 === preg_match(
-                        '/^\/process\/[0-9]+\/conclusion.*$/',
-                        $path
-                    ),
-                    'conclusion_show',
-                    ['process' => $process]
-                );
-
-                if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
-                    $items[] = $this->createMenuItem(
-                        'log',
-                        1 === preg_match(
-                            '/^\/process\/[0-9]+\/log.*$/',
-                            $path
-                        ),
-                        'process_log_index',
-                        ['process' => $process]
-                    );
-                }
             }
         }
 

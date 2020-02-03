@@ -10,12 +10,8 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Knp\Component\Pager\PaginatorInterface;
-use Kontrolgruppen\CoreBundle\CPR\Cpr;
-use Kontrolgruppen\CoreBundle\CPR\CprException;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
-use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\LockedNetValue;
 use Kontrolgruppen\CoreBundle\Entity\Process;
@@ -26,18 +22,14 @@ use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
-use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
-use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/process")
@@ -163,10 +155,7 @@ class ProcessController extends BaseController
      */
     public function new(
         Request $request,
-        ProcessManager $processManager,
-        TranslatorInterface $translator,
-        LoggerInterface $logger,
-        CprServiceInterface $cprService
+        ProcessManager $processManager
     ): Response {
         $process = new Process();
 
@@ -177,8 +166,6 @@ class ProcessController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $process = $processManager->newProcess($process);
-
-            $process = $this->storeProcess($process, $translator, $logger, $cprService);
 
             return $this->redirectToRoute('client_show', ['process' => $process]);
         }
@@ -200,36 +187,6 @@ class ProcessController extends BaseController
                 'recentActivity' => $recentActivity,
             ]
         );
-    }
-
-    private function storeProcess(Process $process, TranslatorInterface $translator, LoggerInterface $logger, CprServiceInterface $cprService): Process
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($process);
-
-        $client = new Client();
-
-        try {
-            $client = $cprService->populateClient(new Cpr($process->getClientCPR()), $client);
-        } catch (CprException $e) {
-            $logger->error($e);
-        }
-
-        $process->setClient($client);
-        $entityManager->persist($client);
-
-        try {
-            $entityManager->flush();
-        } catch (UniqueConstraintViolationException $e) {
-            $logger->log(LogLevel::ERROR, $e);
-
-            $this->addFlash(
-                'danger',
-                $translator->trans('process.new.unique_error')
-            );
-        }
-
-        return $process;
     }
 
     /**
@@ -302,7 +259,7 @@ class ProcessController extends BaseController
      */
     public function delete(Request $request, Process $process): Response
     {
-        $this->denyAccessUnlessGranted('edit', $process);
+        $this->denyAccessUnlessGranted('delete', $process);
 
         if ($this->isCsrfTokenValid(
             'delete'.$process->getId(),

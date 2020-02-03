@@ -11,10 +11,10 @@
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType;
 use Kontrolgruppen\CoreBundle\Entity\Service;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Service|null find($id, $lockMode = null, $lockVersion = null)
@@ -24,11 +24,23 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ServiceRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Service::class);
     }
 
+    /**
+     * Get services by process type.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\ProcessType $processType
+     *   The process type
+     *
+     * @return mixed
+     *   Services for a given process type
+     */
     public function getByProcessType(ProcessType $processType)
     {
         $qb = $this->createQueryBuilder('service', 'service.id')
@@ -39,6 +51,15 @@ class ServiceRepository extends ServiceEntityRepository
         return $qb->getResult();
     }
 
+    /**
+     * Get services for a process.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *   The process
+     *
+     * @return mixed
+     *   Services for a process
+     */
     public function getByProcess(Process $process)
     {
         $qb = $this->createQueryBuilder('service', 'service.id')

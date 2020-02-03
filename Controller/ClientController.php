@@ -12,10 +12,10 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\CPR\Cpr;
 use Kontrolgruppen\CoreBundle\CPR\CprException;
+use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
 use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Form\ClientType;
-use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -67,6 +67,7 @@ class ClientController extends BaseController
         return $this->render('@KontrolgruppenCore/client/show.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'client' => $process->getClient(),
+            'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
             'changeProcessStatusForm' => $changeProcessStatusForm->createView(),
             'process' => $process,
             'newClientInfoAvailable' => $newInfoAvailable,
@@ -79,6 +80,13 @@ class ClientController extends BaseController
     public function edit(Request $request, Process $process): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
+
+        // Redirect to show if process is completed.
+        if (null !== $process->getCompletedAt()) {
+            return $this->redirectToRoute('client_show', [
+                'process' => $process->getId(),
+            ]);
+        }
 
         $client = $process->getClient();
 
@@ -95,6 +103,7 @@ class ClientController extends BaseController
 
         return $this->render('@KontrolgruppenCore/client/edit.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
+            'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
             'client' => $client,
             'form' => $form->createView(),
             'process' => $process,

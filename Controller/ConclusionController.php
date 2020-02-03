@@ -30,6 +30,7 @@ class ConclusionController extends BaseController
     {
         $conclusion = $process->getConclusion();
 
+        // Create conclusion for the given process, if none exist.
         if (null === $conclusion) {
             $conclusionType = $process->getProcessType()->getConclusionClass();
             $conclusion = new $conclusionType();
@@ -41,11 +42,13 @@ class ConclusionController extends BaseController
             $this->getDoctrine()->getManager()->flush();
         }
 
+        // Get template from event.
         $event = new GetConclusionTemplateEvent(\get_class($conclusion), 'show');
         $template = $dispatcher->dispatch(GetConclusionTemplateEvent::NAME, $event)->getTemplate();
 
         return $this->render($template, [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
+            'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
             'conclusion' => $process->getConclusion(),
             'process' => $process,
         ]);
@@ -59,24 +62,36 @@ class ConclusionController extends BaseController
         $this->denyAccessUnlessGranted('edit', $process);
 
         $conclusion = $process->getConclusion();
+        $options = [];
 
-        $form = $this->createForm($conclusionService->getEntityFormType($conclusion), $conclusion);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('conclusion_show', [
-                'process' => $process->getId(),
-            ]);
+        // Disable the form if the process is completed.
+        if (null !== $process->getCompletedAt()) {
+            $options['disabled'] = true;
         }
 
+        $form = $this->createForm($conclusionService->getEntityFormType($conclusion), $conclusion, $options);
+
+        // Only handle form if the process is not completed.
+        if (null === $process->getCompletedAt()) {
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+
+                return $this->redirectToRoute('conclusion_show', [
+                    'process' => $process->getId(),
+                ]);
+            }
+        }
+
+        // Get template from event.
         $event = new GetConclusionTemplateEvent(\get_class($conclusion), 'edit');
         $template = $dispatcher->dispatch(GetConclusionTemplateEvent::NAME, $event)->getTemplate();
 
         return $this->render($template, [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'conclusion' => $conclusion,
+            'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
             'form' => $form->createView(),
             'process' => $process,
         ]);

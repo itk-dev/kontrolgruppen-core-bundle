@@ -144,9 +144,8 @@ class ProcessReminderController extends BaseController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
 
-        return $this->redirectToRoute('reminder_show', [
+        return $this->redirectToRoute('reminder_index', [
             'process' => $process->getId(),
-            'id' => $reminder->getId(),
         ]);
     }
 }

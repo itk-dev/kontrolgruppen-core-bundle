@@ -41,7 +41,10 @@ class EconomyController extends BaseController
     {
         $parameters = [];
 
-        if ($this->isGranted('edit', $process)) {
+        $canEdit = $this->isGranted('edit', $process) && null === $process->getCompletedAt();
+        $parameters['canEdit'] = $canEdit;
+
+        if ($canEdit) {
             // Check for result of type form.
             $formResult = $this->handleEconomyEntryFormRequest($request, $process);
             $parameters['economy_entry_form'] = $formResult['form'];
@@ -67,13 +70,20 @@ class EconomyController extends BaseController
         $parameters['revenueForms'] = [];
         $revenueFormErrors = [];
         foreach ($parameters['economyEntriesService'] as $serviceEconomyEntry) {
+            $options = [];
+
+            if (!$canEdit) {
+                $options['disabled'] = true;
+            }
+
             $revenueForm = $this->container->get('form.factory')->createNamedBuilder(
                 'revenue_entry_'.$serviceEconomyEntry->getId(),
                 RevenueServiceEconomyEntryType::class,
-                $serviceEconomyEntry
+                $serviceEconomyEntry,
+                $options
             )->getForm();
 
-            if ($this->isGranted('edit', $process)) {
+            if ($canEdit) {
                 $revenueForm->handleRequest($request);
 
                 if ($revenueForm->isSubmitted() && $revenueForm->isValid()) {

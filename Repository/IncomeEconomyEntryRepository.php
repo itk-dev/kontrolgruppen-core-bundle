@@ -12,7 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Repository;
 
 use App\Entity\Kontrolgruppen\CoreBundle\Entity\IncomeEconomyEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method IncomeEconomyEntry|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,7 +22,10 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class IncomeEconomyEntryRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, IncomeEconomyEntry::class);
     }

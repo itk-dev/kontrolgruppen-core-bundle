@@ -11,10 +11,10 @@
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Kontrolgruppen\CoreBundle\DBAL\Types\DateIntervalType;
 use Kontrolgruppen\CoreBundle\Entity\Reminder;
 use Kontrolgruppen\CoreBundle\Entity\User;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method Reminder|null find($id, $lockMode = null, $lockVersion = null)
@@ -24,7 +24,10 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ReminderRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Reminder::class);
     }
@@ -33,6 +36,7 @@ class ReminderRepository extends ServiceEntityRepository
      * Find all reminders for user.
      *
      * @return mixed
+     *   The reminders
      */
     public function findAllUserReminders(User $user)
     {
@@ -49,6 +53,9 @@ class ReminderRepository extends ServiceEntityRepository
      * Find active reminders for user.
      *
      * @return mixed
+     *   The active reminders
+     *
+     * @throws \Exception
      */
     public function findActiveUserReminders(User $user)
     {
@@ -76,8 +83,10 @@ class ReminderRepository extends ServiceEntityRepository
      * Count the number of active reminders for user.
      *
      * @return mixed
+     *   Number of active reminders
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
      */
     public function findNumberOfActiveUserReminders(User $user)
     {
@@ -102,8 +111,14 @@ class ReminderRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $interval   from DateIntervalType
-     * @param bool   $sortByDate
+     * Get future user reminders.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\User $user
+     *   The user
+     * @param string                                 $interval
+     *   The interval (from DateIntervalType)
+     * @param bool                                   $sortByDate
+     *   Sort by date
      *
      * @return mixed
      *

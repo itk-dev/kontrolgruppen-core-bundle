@@ -14,7 +14,6 @@ use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Conclusion;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Service\ConclusionService;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
@@ -26,24 +25,22 @@ class TwigExtension extends AbstractExtension
 {
     private $conclusionService;
     private $translator;
-    private $doctrine;
     private $urlGenerator;
 
     /**
      * TwigExtension constructor.
      *
-     * @param $conclusionService
-     * @param $doctrine
+     * @param \Kontrolgruppen\CoreBundle\Service\ConclusionService       $conclusionService
+     * @param \Symfony\Contracts\Translation\TranslatorInterface         $translator
+     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         ConclusionService $conclusionService,
         TranslatorInterface $translator,
-        RegistryInterface $doctrine,
         UrlGeneratorInterface $urlGenerator
     ) {
         $this->conclusionService = $conclusionService;
         $this->translator = $translator;
-        $this->doctrine = $doctrine;
         $this->urlGenerator = $urlGenerator;
     }
 
@@ -177,6 +174,8 @@ class TwigExtension extends AbstractExtension
                 return 'fa-times';
             case 'bi':
                 return 'fa-chart-pie';
+            case 'search-external':
+                return 'fa-search';
             default:
                 return '';
         }

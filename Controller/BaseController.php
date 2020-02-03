@@ -11,6 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
+use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Entity\QuickLink;
 use Kontrolgruppen\CoreBundle\Entity\Reminder;
@@ -64,7 +65,7 @@ class BaseController extends AbstractController
         $parameters['path'] = $path;
 
         // Add global navigation.
-        $parameters['globalMenuItems'] = $this->menuService->getGlobalNavMenu($path);
+        $parameters['globalMenuItems'] = $this->getGlobalNavMenu($path);
 
         if ('process_complete' !== $request->get('_route')) {
             // If this is a route beneath the proces/{id}/, attach changeProcessStatusForm.
@@ -88,6 +89,11 @@ class BaseController extends AbstractController
         }
 
         return parent::render($view, $parameters, $response);
+    }
+
+    protected function getGlobalNavMenu(string $path = '/')
+    {
+        return $this->menuService->getGlobalNavMenu($path);
     }
 
     public function createChangeProcessStatusForm($process)
@@ -115,6 +121,28 @@ class BaseController extends AbstractController
                 ]
             )
             ->getForm();
+    }
+
+    /**
+     * Redirect to route if the process is not editable.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *   The process
+     * @param string                                    $route
+     *   The route to redirect to
+     * @param array                                     $routeParams
+     *   The parameters to the redirect
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function redirectOnProcessComplete(Process $process, string $route, array $routeParams = [])
+    {
+        if (null !== $process->getCompletedAt()) {
+            // @TODO: Fix translation.
+            $this->addFlash('warning', 'The case is completed and can therefore not be edited.');
+
+            return $this->redirectToRoute('', $routeParams);
+        }
     }
 
     public function handleChangeProcessStatusForm($request, $changeProcessStatusForm)

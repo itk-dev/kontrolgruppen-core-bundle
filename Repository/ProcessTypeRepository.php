@@ -11,8 +11,8 @@
 namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * @method ProcessType|null find($id, $lockMode = null, $lockVersion = null)
@@ -22,7 +22,10 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ProcessTypeRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ProcessType::class);
     }
