@@ -61,10 +61,10 @@ class LogManager
         usort($result, function ($a, $b) use ($sortDirection) {
             if ($a['updatedAt'] > $b['updatedAt']) {
                 return 'desc' === $sortDirection ? -1 : 1;
-            } else {
-                if ($a['updatedAt'] < $b['updatedAt']) {
-                    return 'desc' !== $sortDirection ? -1 : 1;
-                }
+            }
+
+            if ($a['updatedAt'] < $b['updatedAt']) {
+                return 'desc' !== $sortDirection ? -1 : 1;
             }
 
             return 0;

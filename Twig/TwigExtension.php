@@ -252,24 +252,25 @@ class TwigExtension extends AbstractExtension
                         'process' => $processId,
                     ]
                 );
-            } elseif (Process::class === $reflectedClass->getName()) {
+            }
+            if (Process::class === $reflectedClass->getName()) {
                 return $this->urlGenerator->generate(
                     'process_show',
                     [
                         'id' => $id,
                     ]
                 );
-            } else {
-                $route = $this->camelCaseToUnderscore($reflectedClass->getShortName()).'_show';
-
-                return $this->urlGenerator->generate(
-                    $route,
-                    [
-                        'id' => $id,
-                        'process' => $processId,
-                    ]
-                );
             }
+
+            $route = $this->camelCaseToUnderscore($reflectedClass->getShortName()).'_show';
+
+            return $this->urlGenerator->generate(
+                $route,
+                [
+                    'id' => $id,
+                    'process' => $processId,
+                ]
+            );
         } catch (Exception $exception) {
             return '#';
         }

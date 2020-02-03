@@ -77,8 +77,8 @@ class SAMLController extends AbstractController
         $errors = $settings->validateMetadata($metadata);
         if (empty($errors)) {
             return new Response($metadata, 200, ['content-type' => 'text/xml']);
-        } else {
-            throw new Error(sprintf('Invalid SP metadata: %s', implode(', ', $errors)), Error::METADATA_SP_INVALID);
         }
+
+        throw new Error(sprintf('Invalid SP metadata: %s', implode(', ', $errors)), Error::METADATA_SP_INVALID);
     }
 }
