@@ -25,15 +25,20 @@ class UserSettings
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\User", inversedBy="userSettings", cascade={"persist", "remove"})
+     * @ORM\Column(type="string", length=255)
+     */
+    private $settingsKey;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $settingsValue = [];
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\User", inversedBy="userSettings")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $processIndexSort;
 
     /**
      * @return int|null
@@ -44,21 +49,21 @@ class UserSettings
     }
 
     /**
-     * @return User|null
+     * @return string|null
      */
-    public function getUser(): ?User
+    public function getSettingsKey(): ?string
     {
-        return $this->user;
+        return $this->settingsKey;
     }
 
     /**
-     * @param User $user
+     * @param string $settingsKey
      *
-     * @return UserSettings
+     * @return \Kontrolgruppen\CoreBundle\Entity\UserSettings
      */
-    public function setUser(User $user): self
+    public function setSettingsKey(string $settingsKey): self
     {
-        $this->user = $user;
+        $this->settingsKey = $settingsKey;
 
         return $this;
     }
@@ -66,23 +71,39 @@ class UserSettings
     /**
      * @return array|null
      */
-    public function getProcessIndexSort(): ?array
+    public function getSettingsValue(): ?array
     {
-        return json_decode($this->processIndexSort, true);
+        return $this->settingsValue;
     }
 
     /**
-     * @param string $sort
-     * @param string $direction
+     * @param array $settingsValue
      *
-     * @return UserSettings
+     * @return \Kontrolgruppen\CoreBundle\Entity\UserSettings
      */
-    public function setProcessIndexSort(string $sort, string $direction): self
+    public function setSettingsValue(array $settingsValue): self
     {
-        $this->processIndexSort = json_encode([
-            'sort' => $sort,
-            'direction' => $direction,
-        ]);
+        $this->settingsValue = $settingsValue;
+
+        return $this;
+    }
+
+    /**
+     * @return \Kontrolgruppen\CoreBundle\Entity\User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param \Kontrolgruppen\CoreBundle\Entity\User|null $user
+     *
+     * @return \Kontrolgruppen\CoreBundle\Entity\UserSettings
+     */
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

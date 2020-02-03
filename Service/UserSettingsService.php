@@ -11,82 +11,78 @@
 namespace Kontrolgruppen\CoreBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Kontrolgruppen\CoreBundle\Entity\User;
 use Kontrolgruppen\CoreBundle\Entity\UserSettings;
-use Symfony\Component\HttpFoundation\Request;
+use Kontrolgruppen\CoreBundle\Repository\UserSettingsRepository;
 
 /**
  * Class UserSettingsService.
+ *
+ * Provides functions for getting/setting a user's settings.
  */
 class UserSettingsService
 {
+    private $settingsRepository;
     private $entityManager;
 
     /**
      * UserSettingsService constructor.
      *
-     * @param EntityManagerInterface $entityManager
+     * @param \Kontrolgruppen\CoreBundle\Repository\UserSettingsRepository $settingsRepository
+     *   The UserSettings repository
+     * @param \Doctrine\ORM\EntityManagerInterface                         $entityManager
+     *   The entity manager
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(UserSettingsRepository $settingsRepository, EntityManagerInterface $entityManager)
     {
+        $this->settingsRepository = $settingsRepository;
         $this->entityManager = $entityManager;
     }
 
     /**
-     * Returns an array with information about user preferred sorting information structured like this:.
-     * [
-     *     'sort' => 'key', // e.g. caseWorker.id
-     *     'direction' => 'direction' // desc or asc
-     * ]
-     * If no user preferred sorting exists and the request contains information about sorting the method will
-     * persist the request information as user preferred sorting. The return value will then be null as there aren't
-     * any new information about sorting available.
-     * If both the request and the data storage contains information about sorting and they differ, the information
-     * from the request will override the stored information and be persisted. The return value will then be null.
+     * Get a settings value for a given user.
      *
-     * @param Request      $request
-     * @param UserSettings $userSettings
+     * @param \Kontrolgruppen\CoreBundle\Entity\User $user
+     *   The user
+     * @param string                                 $settingsKey
+     *   The settings key
      *
-     * @return array|null
+     * @return \Kontrolgruppen\CoreBundle\Entity\UserSettings|null
      */
-    public function handleProcessIndexRequest(Request $request, UserSettings $userSettings): ?array
+    public function getSettings(User $user, string $settingsKey)
     {
-        $sort = $request->query->get('sort');
-        $direction = $request->query->get('direction');
+        return $this->settingsRepository->findOneBy([
+            'user' => $user,
+            'settingsKey' => $settingsKey,
+        ]);
+    }
 
-        // Check if there is sort and direction persisted
-        // If not we may want to save user selected sort and direction
-        if (empty($userSettings->getProcessIndexSort())) {
-            // Nothing selected so no need to persist anything
-            if (empty($sort) || empty($direction)) {
-                return null;
-            }
+    /**
+     * Set a settings value for a given user.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\User $user
+     *   The user
+     * @param string                                 $settingsKey
+     *   The settings key
+     * @param array                                  $settingValue
+     *   The setting value
+     */
+    public function setSettings(User $user, string $settingsKey, array $settingValue)
+    {
+        $settings = $this->settingsRepository->findOneBy([
+            'user' => $user,
+            'settingsKey' => $settingsKey,
+        ]);
 
-            $userSettings->setProcessIndexSort($sort, $direction);
-
-            $this->entityManager->persist($userSettings);
-            $this->entityManager->flush();
-
-            return null;
+        if (null === $settings) {
+            $settings = new UserSettings();
+            $settings->setUser($user);
+            $settings->setSettingsKey($settingsKey);
+            $this->entityManager->persist($settings);
         }
 
-        $persistedSortAndDirection = $userSettings->getProcessIndexSort();
+        $settings->setSettingsValue($settingValue);
 
-        // If sort and direction is not present in the query, we return the persisted sort and direction
-        if (empty($sort) || empty($direction)) {
-            return $persistedSortAndDirection;
-        }
-
-        // If sort and direction is present in the query and they differ from the persisted sort and direction, we will
-        // save the new selection of sort and direction
-        if ($sort !== $persistedSortAndDirection['sort'] || $direction !== $persistedSortAndDirection['direction']) {
-            $userSettings->setProcessIndexSort($sort, $direction);
-
-            $this->entityManager->persist($userSettings);
-            $this->entityManager->flush();
-
-            return null;
-        }
-
-        return null;
+        $this->entityManager->flush();
     }
 }
