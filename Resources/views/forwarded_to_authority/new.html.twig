@@ -1,0 +1,11 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'forwarded_to_authority.new.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'forwarded_to_authority.new.title'|trans }}</h1>
+
+    {{ include('@KontrolgruppenCore/forwarded_to_authority/_form.html.twig') }}
+
+    <a href="{{ path('forwarded_to_authority_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+{% endblock %}

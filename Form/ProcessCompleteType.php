@@ -54,6 +54,11 @@ class ProcessCompleteType extends AbstractType
                     'court_decision.false' => false,
                 ],
             ])
+            ->add('forwardedToAuthorities', null, [
+                'label' => 'service.form.forwarded_to_authorities',
+                'by_reference' => false,
+                'attr' => ['class' => 'select2'],
+            ])
         ;
     }
 
