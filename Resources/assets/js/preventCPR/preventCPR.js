@@ -1,3 +1,5 @@
+/* global kontrolgruppenMessages */
+
 /**
  * Prevent CPR numbers in text field. Displays an alert.
  */
