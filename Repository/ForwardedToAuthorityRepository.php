@@ -23,7 +23,7 @@ use Kontrolgruppen\CoreBundle\Entity\ForwardedToAuthority;
 class ForwardedToAuthorityRepository extends ServiceEntityRepository
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(ManagerRegistry $registry)
     {
