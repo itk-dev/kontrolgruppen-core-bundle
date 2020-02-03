@@ -216,15 +216,9 @@ class User implements UserInterface
     }
 
     /**
-<<<<<<< HEAD
-     * @return UserSettings|null
-     */
-    public function getUserSettings(): ?UserSettings
-=======
      * @return Collection|UserSettings[]
      */
     public function getUserSettings(): Collection
->>>>>>> develop
     {
         return $this->userSettings;
     }
@@ -245,19 +239,11 @@ class User implements UserInterface
     }
 
     /**
-<<<<<<< HEAD
-     * @param UserSettings $userSettings
-     *
-     * @return User
-     */
-    public function setUserSettings(UserSettings $userSettings): self
-=======
      * @param \Kontrolgruppen\CoreBundle\Entity\UserSettings $userSetting
      *
      * @return User
      */
     public function removeUserSetting(UserSettings $userSetting): self
->>>>>>> develop
     {
         if ($this->userSettings->contains($userSetting)) {
             $this->userSettings->removeElement($userSetting);
