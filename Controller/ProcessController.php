@@ -53,16 +53,8 @@ class ProcessController extends BaseController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function index(
-        Request $request,
-        ProcessRepository $processRepository,
-        FilterBuilderUpdaterInterface $lexikBuilderUpdater,
-        PaginatorInterface $paginator,
-        FormFactoryInterface $formFactory,
-        ProcessManager $processManager,
-        UserRepository $userRepository,
-        UserSettingsService $userSettingsService
-    ): Response {
+    public function index(Request $request, ProcessRepository $processRepository, FilterBuilderUpdaterInterface $lexikBuilderUpdater, PaginatorInterface $paginator, FormFactoryInterface $formFactory, ProcessManager $processManager, UserRepository $userRepository, UserSettingsService $userSettingsService): Response
+    {
         $filterForm = $formFactory->create(ProcessFilterType::class);
 
         $queryBuilder = null;
