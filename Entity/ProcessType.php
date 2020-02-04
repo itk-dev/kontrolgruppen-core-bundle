@@ -65,6 +65,11 @@ class ProcessType extends AbstractTaxonomy
     private $defaultProcessStatusOnEmptyCaseWorker;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\ForwardedToAuthority", mappedBy="processTypes")
+     */
+    private $forwardedToAuthorities;
+
+    /**
      * ProcessType constructor.
      */
     public function __construct()
@@ -73,6 +78,7 @@ class ProcessType extends AbstractTaxonomy
         $this->processStatuses = new ArrayCollection();
         $this->services = new ArrayCollection();
         $this->channels = new ArrayCollection();
+        $this->forwardedToAuthorities = new ArrayCollection();
     }
 
     /**
@@ -300,6 +306,44 @@ class ProcessType extends AbstractTaxonomy
     public function setDefaultProcessStatusOnEmptyCaseWorker(?ProcessStatus $defaultProcessStatusOnEmptyCaseWorker): self
     {
         $this->defaultProcessStatusOnEmptyCaseWorker = $defaultProcessStatusOnEmptyCaseWorker;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ForwardedToAuthority[]
+     */
+    public function getForwardedToAuthorities(): Collection
+    {
+        return $this->forwardedToAuthorities;
+    }
+
+    /**
+     * @param ForwardedToAuthority $forwardedToAuthority
+     *
+     * @return ProcessType
+     */
+    public function addForwardedToAuthority(ForwardedToAuthority $forwardedToAuthority): self
+    {
+        if (!$this->forwardedToAuthorities->contains($forwardedToAuthority)) {
+            $this->forwardedToAuthorities[] = $forwardedToAuthority;
+            $forwardedToAuthority->addProcessType($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ForwardedToAuthority $forwardedToAuthority
+     *
+     * @return ProcessType
+     */
+    public function removeForwardedToAuthority(ForwardedToAuthority $forwardedToAuthority): self
+    {
+        if ($this->forwardedToAuthorities->contains($forwardedToAuthority)) {
+            $this->forwardedToAuthorities->removeElement($forwardedToAuthority);
+            $forwardedToAuthority->removeProcessType($this);
+        }
 
         return $this;
     }

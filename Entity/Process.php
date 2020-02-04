@@ -151,6 +151,11 @@ class Process extends AbstractEntity
     private $lockedNetValues;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\ForwardedToAuthority", mappedBy="processes")
+     */
+    private $forwardedToAuthorities;
+
+    /**
      * Process constructor.
      */
     public function __construct()
@@ -160,6 +165,7 @@ class Process extends AbstractEntity
         $this->economyEntries = new ArrayCollection();
         $this->logEntries = new ArrayCollection();
         $this->lockedNetValues = new ArrayCollection();
+        $this->forwardedToAuthorities = new ArrayCollection();
     }
 
     /**
@@ -687,5 +693,43 @@ class Process extends AbstractEntity
                 ->atPath('courtDecision')
                 ->addViolation();
         }
+    }
+
+    /**
+     * @return Collection|ForwardedToAuthority[]
+     */
+    public function getForwardedToAuthorities(): Collection
+    {
+        return $this->forwardedToAuthorities;
+    }
+
+    /**
+     * @param ForwardedToAuthority $forwardedToAuthority
+     *
+     * @return Process
+     */
+    public function addForwardedToAuthority(ForwardedToAuthority $forwardedToAuthority): self
+    {
+        if (!$this->forwardedToAuthorities->contains($forwardedToAuthority)) {
+            $this->forwardedToAuthorities[] = $forwardedToAuthority;
+            $forwardedToAuthority->addProcess($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ForwardedToAuthority $forwardedToAuthority
+     *
+     * @return Process
+     */
+    public function removeForwardedToAuthority(ForwardedToAuthority $forwardedToAuthority): self
+    {
+        if ($this->forwardedToAuthorities->contains($forwardedToAuthority)) {
+            $this->forwardedToAuthorities->removeElement($forwardedToAuthority);
+            $forwardedToAuthority->removeProcess($this);
+        }
+
+        return $this;
     }
 }

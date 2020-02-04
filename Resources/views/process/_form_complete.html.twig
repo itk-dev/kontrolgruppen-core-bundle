@@ -57,6 +57,16 @@
         <li class="list-group-item">
             <div class="row">
                 <div class="col-12 col-sm-6">
+                    {{ 'process.complete.forwarded_to_authority'|trans }}
+                </div>
+                <div class="col-12 col-sm-6">
+                    {{ form_widget(form.forwardedToAuthorities) }}
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-12 col-sm-6">
                     {{ 'process.complete.status'|trans }}
                 </div>
                 <div class="col-12 col-sm-6">

@@ -297,6 +297,27 @@ economy_entry:
         type: Type
         type_help: Vælg hvilken type registrering du vil oprette
 
+forwarded_to_authority:
+    edit:
+        title: Rediger
+    form:
+        name: Navn
+        process_types: Tilkoblede sagstyper
+        update: Gem
+    index:
+        title: Videresendes til anden myndighed
+    menu_title: Videresendes til anden myndighed
+    new:
+        title: Opret
+    show:
+        title: Videresendes til anden myndighed
+    table:
+        id: ID
+        name: Navn
+        process_types: Tilkoblede sagstyper
+    btns:
+        create_new: Opret ny
+
 journal_entry:
     actions:
         create: Opret nyt indlæg
@@ -395,6 +416,7 @@ menu:
         report: Rapport
         account: Konti
         income_type: Indkomsttype
+        forwarded_to_authority: Videresendes til anden myndighed
 
 navigation:
     main:
@@ -417,6 +439,7 @@ process:
         complete: Afslut sag
         confirm: Er du sikker på at du vil afslutte sagen?
         court_decision: Rettens afgørelse
+        forwarded_to_authority: Videresendes til anden myndighed
         police_report: Sagen er politianmeldt
         processing_time: Sagens behandlingstid
         processing_time_value: 'En dag|%days% dage'

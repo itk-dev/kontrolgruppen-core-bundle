@@ -1,4 +1,5 @@
-/* global alert:readonly kontrolgruppenMessages:readonly */
+/* global kontrolgruppenMessages */
+
 /**
  * Prevent CPR numbers in text field. Displays an alert.
  */
@@ -8,7 +9,7 @@
         let inputElements = $(this);
 
         self.options = $.extend({
-            text: ('prevent_cpr.cpr_in_content' in kontrolgruppenMessages) ? kontrolgruppenMessages['prevent_cpr.cpr_in_content'] : "Vi har fundet følgende, der kan være CPR-numre: %list% \nEr du sikker på at du vil gemme?\n Husk at du ikke må gemme CPR-numre."
+            text: ('prevent_cpr.cpr_in_content' in kontrolgruppenMessages) ? kontrolgruppenMessages['prevent_cpr.cpr_in_content'] : 'Vi har fundet følgende, der kan være CPR-numre: %list% \nEr du sikker på at du vil gemme?\n Husk at du ikke må gemme CPR-numre.'
         }, options);
 
         function checkInputField (event, inputElement) {
@@ -27,7 +28,7 @@
             // Prevent submit if CPR in element.
             if (matches) {
                 // Display error, and how to correct.
-                let confirmSubmit = confirm(self.options.text.replace('%list%', matches.reduce(function (accumulator, currentValue) {
+                let confirmSubmit = window.confirm(self.options.text.replace('%list%', matches.reduce(function (accumulator, currentValue) {
                     return accumulator !== '' ? accumulator + ', ' + currentValue : currentValue;
                 })));
 
