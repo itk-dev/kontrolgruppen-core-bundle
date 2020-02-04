@@ -108,7 +108,6 @@ class ProcessController extends BaseController
 
         // Get sort and direction from user settings.
         if (!$request->query->has('sort') || !$request->query->has('direction')) {
-
             $userSettings = $userSettingsService->getSettings($user, $formKey);
 
             if (null !== $userSettings) {
