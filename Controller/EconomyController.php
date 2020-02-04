@@ -15,13 +15,16 @@ use Kontrolgruppen\CoreBundle\Entity\BaseEconomyEntry;
 use Kontrolgruppen\CoreBundle\Entity\EconomyEntry;
 use Kontrolgruppen\CoreBundle\Entity\IncomeEconomyEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\RevenueEntry;
 use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
 use Kontrolgruppen\CoreBundle\Form\BaseEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\EconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\IncomeEconomyEntryType;
+use Kontrolgruppen\CoreBundle\Form\RevenueType;
 use Kontrolgruppen\CoreBundle\Form\RevenueServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\ServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
+use Kontrolgruppen\CoreBundle\Repository\RevenueEntryRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,14 +39,24 @@ class EconomyController extends BaseController
 {
     /**
      * @Route("/", name="economy_show")
+     *
+     * @param Request                $request
+     * @param Process                $process
+     * @param EconomyEntryRepository $economyEntryRepository
+     * @param RevenueEntryRepository $revenueEntryRepository
+     *
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function show(Request $request, Process $process, EconomyEntryRepository $economyEntryRepository)
+    public function show(Request $request, Process $process, EconomyEntryRepository $economyEntryRepository, RevenueEntryRepository $revenueEntryRepository)
     {
         $parameters = [];
 
         $canEdit = $this->isGranted('edit', $process) && null === $process->getCompletedAt();
         $parameters['canEdit'] = $canEdit;
 
+        // If the user can edit, handle forms.
         if ($canEdit) {
             // Check for result of type form.
             $formResult = $this->handleEconomyEntryFormRequest($request, $process);
@@ -68,40 +81,55 @@ class EconomyController extends BaseController
         $parameters['economyEntriesAccount'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::ACCOUNT]);
 
         $parameters['revenueForms'] = [];
-        $revenueFormErrors = [];
-        foreach ($parameters['economyEntriesService'] as $serviceEconomyEntry) {
-            $options = [];
+        $revenueEntryFormErrors = [];
 
-            if (!$canEdit) {
-                $options['disabled'] = true;
-            }
+        // Get RevenueEntries for process.
+        $revenueEntries = $revenueEntryRepository->findBy([
+            'process' => $process,
+        ]);
 
-            $revenueForm = $this->container->get('form.factory')->createNamedBuilder(
-                'revenue_entry_'.$serviceEconomyEntry->getId(),
-                RevenueServiceEconomyEntryType::class,
-                $serviceEconomyEntry,
-                $options
-            )->getForm();
+        $groupedRevenueEntries = [];
 
-            if ($canEdit) {
-                $revenueForm->handleRequest($request);
+        foreach ($revenueEntries as $revenueEntry) {
+            $groupedRevenueEntries[$revenueEntry->getService()->getName()][] = $revenueEntry;
+        }
 
-                if ($revenueForm->isSubmitted() && $revenueForm->isValid()) {
-                    $this->getDoctrine()->getManager()->flush();
+        $revenueFormOptions = [];
+
+        if (!$canEdit) {
+            $revenueFormOptions['disabled'] = true;
+        }
+
+        foreach ($groupedRevenueEntries as $groupKey => $group) {
+            /* @var RevenueEntry $revenueEntry */
+            foreach ($group as $revenueEntry) {
+                $revenueEntryForm = $this->container->get('form.factory')->createNamedBuilder(
+                    'revenue_entry_'.$revenueEntry->getId(),
+                    RevenueType::class,
+                    $revenueEntry,
+                    $revenueFormOptions
+                )->getForm();
+
+                if ($canEdit) {
+                    $revenueEntryForm->handleRequest($request);
+
+                    if ($revenueEntryForm->isSubmitted() && $revenueEntryForm->isValid()) {
+                        $this->getDoctrine()->getManager()->flush();
+                    }
+
+                    if ($revenueEntryForm->isSubmitted() && !$revenueEntryForm->isValid()) {
+                        $revenueEntryFormErrors[] = $revenueEntryForm->getName();
+                    }
                 }
 
-                if ($revenueForm->isSubmitted() && !$revenueForm->isValid()) {
-                    $revenueFormErrors[] = $revenueForm->getName();
-                }
+                $parameters['revenueEntryForms'][$groupKey][] = $revenueEntryForm->createView();
             }
-
-            $parameters['revenueForms'][] = $revenueForm->createView();
         }
 
         // Forms are submitted in an ajax request, so if anything bad happens, we need to send an answer
         // that can be handled.
-        if (!empty($revenueFormErrors)) {
-            $response = new JsonResponse($revenueFormErrors);
+        if (!empty($revenueEntryFormErrors)) {
+            $response = new JsonResponse($revenueEntryFormErrors);
             $response->setStatusCode(400);
 
             return $response;
