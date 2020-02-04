@@ -110,7 +110,7 @@ class ProcessController extends BaseController
         if (!$request->query->has('sort') || !$request->query->has('direction')) {
             $userSettings = $userSettingsService->getSettings($user, $formKey);
 
-            $userSettingsValue = $userSettings !== null ? $userSettings->getSettingsValue() : null;
+            $userSettingsValue = null !== $userSettings ? $userSettings->getSettingsValue() : null;
             $paginatorOptions = null === $userSettingsValue
                 ? [
                     'defaultSortFieldName' => $userSettingsValue['sort'],
