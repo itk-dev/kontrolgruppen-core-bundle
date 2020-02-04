@@ -142,6 +142,11 @@ class Process extends AbstractEntity
      */
     private $forwardedToAuthorities;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\RevenueEntry", mappedBy="process", orphanRemoval=true)
+     */
+    private $revenueEntries;
+
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
@@ -150,6 +155,7 @@ class Process extends AbstractEntity
         $this->logEntries = new ArrayCollection();
         $this->lockedNetValues = new ArrayCollection();
         $this->forwardedToAuthorities = new ArrayCollection();
+        $this->revenueEntries = new ArrayCollection();
     }
 
     public function getCompletedAt(): ?\DateTime
@@ -541,6 +547,47 @@ class Process extends AbstractEntity
         if ($this->forwardedToAuthorities->contains($forwardedToAuthority)) {
             $this->forwardedToAuthorities->removeElement($forwardedToAuthority);
             $forwardedToAuthority->removeProcess($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RevenueEntry[]
+     */
+    public function getRevenueEntries(): Collection
+    {
+        return $this->revenueEntries;
+    }
+
+    /**
+     * @param RevenueEntry $revenueEntry
+     *
+     * @return Process
+     */
+    public function addRevenueEntry(RevenueEntry $revenueEntry): self
+    {
+        if (!$this->revenueEntries->contains($revenueEntry)) {
+            $this->revenueEntries[] = $revenueEntry;
+            $revenueEntry->setProcess($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param RevenueEntry $revenueEntry
+     *
+     * @return Process
+     */
+    public function removeRevenueEntry(RevenueEntry $revenueEntry): self
+    {
+        if ($this->revenueEntries->contains($revenueEntry)) {
+            $this->revenueEntries->removeElement($revenueEntry);
+            // set the owning side to null (unless already changed)
+            if ($revenueEntry->getProcess() === $this) {
+                $revenueEntry->setProcess(null);
+            }
         }
 
         return $this;
