@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New RevenueEntry{% endblock %}
+
+{% block body %}
+    <h1>Create new RevenueEntry</h1>
+
+    {{ include('revenue_entry/_form.html.twig') }}
+
+    <a href="{{ path('revenue_entry_index') }}">back to list</a>
+{% endblock %}
