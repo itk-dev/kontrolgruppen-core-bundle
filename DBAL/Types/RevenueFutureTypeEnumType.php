@@ -13,7 +13,7 @@ namespace Kontrolgruppen\CoreBundle\DBAL\Types;
 use Fresh\DoctrineEnumBundle\DBAL\Types\AbstractEnumType;
 
 /**
- * Class RevenueFutureTypeEnumType
+ * Class RevenueFutureTypeEnumType.
  */
 final class RevenueFutureTypeEnumType extends AbstractEnumType
 {
