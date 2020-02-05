@@ -507,7 +507,7 @@ class Process extends AbstractEntity
      */
     public function validateCourtDecision(ExecutionContextInterface $context, $payload)
     {
-        if (true === $this->getPoliceReport() && null === $this->getCourtDecision()) {
+        if ($this->getCompletedAt() !== null && true === $this->getPoliceReport() && null === $this->getCourtDecision()) {
             $context->buildViolation('Court decision is required when police report is true')
                 ->atPath('courtDecision')
                 ->addViolation();

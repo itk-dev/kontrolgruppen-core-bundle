@@ -49,7 +49,7 @@ class EconomyController extends BaseController
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function show(Request $request, Process $process, EconomyEntryRepository $economyEntryRepository, RevenueEntryRepository $revenueEntryRepository)
+    public function show(Request $request, Process $process, EconomyEntryRepository $economyEntryRepository)
     {
         $parameters = [];
 
@@ -80,12 +80,25 @@ class EconomyController extends BaseController
         $parameters['economyEntriesIncome'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::INCOME]);
         $parameters['economyEntriesAccount'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::ACCOUNT]);
 
+        $services = array_reduce($parameters['economyEntriesService'], function ($carry, ServiceEconomyEntry $element) {
+            $carry[$element->getService()->getId()] = $element->getService();
+            return $carry;
+        }, []);
+        $parameters['services'] = $services;
+
         $form = $this->createForm(RevenueType::class, $process);
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // ... maybe do some form processing, like saving the Task and Tag objects
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->flush();
+            } else {
+                $errors = $form->getErrors();
+
+                // @TODO: Report errors.
+            }
         }
 
         $parameters['revenueForm'] = $form->createView();

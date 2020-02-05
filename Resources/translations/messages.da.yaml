@@ -227,7 +227,7 @@ economy:
         economy_entries_account: R75 oplysninger
         economy_entries_income: Indkomst
         economy_entries_service: Ydelse
-        revenue_calculation: Provenu beregning
+        revenue_calculation: Provenuberegning
     show:
         title: Økonomi
     table:
@@ -257,6 +257,11 @@ economy:
             future_savings_type: Beløbstype
             amount: Beløb (kr.)
             type: Provenutype
+    revenue:
+        add_revenue_repayment: + Tilbagebetalingskrav
+        add_future_savings: + Fremtidig besparelse
+        save: Gem provenuberegning
+        lost_entries: Provenuindgange udenfor registrerede ydelser
 
 economy_entry:
     edit:
