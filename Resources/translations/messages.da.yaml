@@ -254,7 +254,7 @@ economy:
             income_type: Indkomsttype
         revenue_entry:
             service: Ydelse
-            future_savings_type: Type
+            future_savings_type: Beløbstype
             amount: Beløb (kr.)
             type: Provenutype
 

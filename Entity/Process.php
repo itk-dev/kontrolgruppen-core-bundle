@@ -143,7 +143,7 @@ class Process extends AbstractEntity
     private $forwardedToAuthorities;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\RevenueEntry", mappedBy="process", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\RevenueEntry", mappedBy="process", orphanRemoval=true, cascade={"persist"})
      */
     private $revenueEntries;
 

@@ -80,60 +80,15 @@ class EconomyController extends BaseController
         $parameters['economyEntriesIncome'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::INCOME]);
         $parameters['economyEntriesAccount'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::ACCOUNT]);
 
-        $parameters['revenueForms'] = [];
-        $revenueEntryFormErrors = [];
+        $form = $this->createForm(RevenueType::class, $process);
 
-        // Get RevenueEntries for process.
-        $revenueEntries = $revenueEntryRepository->findBy([
-            'process' => $process,
-        ]);
+        $form->handleRequest($request);
 
-        $groupedRevenueEntries = [];
-
-        foreach ($revenueEntries as $revenueEntry) {
-            $groupedRevenueEntries[$revenueEntry->getService()->getName()][] = $revenueEntry;
+        if ($form->isSubmitted() && $form->isValid()) {
+            // ... maybe do some form processing, like saving the Task and Tag objects
         }
 
-        $revenueFormOptions = [];
-
-        if (!$canEdit) {
-            $revenueFormOptions['disabled'] = true;
-        }
-
-        foreach ($groupedRevenueEntries as $groupKey => $group) {
-            /* @var RevenueEntry $revenueEntry */
-            foreach ($group as $revenueEntry) {
-                $revenueEntryForm = $this->container->get('form.factory')->createNamedBuilder(
-                    'revenue_entry_'.$revenueEntry->getId(),
-                    RevenueType::class,
-                    $revenueEntry,
-                    $revenueFormOptions
-                )->getForm();
-
-                if ($canEdit) {
-                    $revenueEntryForm->handleRequest($request);
-
-                    if ($revenueEntryForm->isSubmitted() && $revenueEntryForm->isValid()) {
-                        $this->getDoctrine()->getManager()->flush();
-                    }
-
-                    if ($revenueEntryForm->isSubmitted() && !$revenueEntryForm->isValid()) {
-                        $revenueEntryFormErrors[] = $revenueEntryForm->getName();
-                    }
-                }
-
-                $parameters['revenueEntryForms'][$groupKey][] = $revenueEntryForm->createView();
-            }
-        }
-
-        // Forms are submitted in an ajax request, so if anything bad happens, we need to send an answer
-        // that can be handled.
-        if (!empty($revenueEntryFormErrors)) {
-            $response = new JsonResponse($revenueEntryFormErrors);
-            $response->setStatusCode(400);
-
-            return $response;
-        }
+        $parameters['revenueForm'] = $form->createView();
 
         return $this->render(
             '@KontrolgruppenCore/economy/show.html.twig',
