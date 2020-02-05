@@ -12,8 +12,9 @@ class RevenueEntryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('amount')
             ->add('type')
+            ->add('service')
+            ->add('amount')
             ->add('futureSavingsType')
         ;
     }

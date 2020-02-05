@@ -19,9 +19,14 @@ class RevenueType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('revenue_entries', CollectionType::class, [
-            'entry_type' => RevenueEntry::class,
-            'entry_options' => ['label' => false],
+        $builder->add('revenueEntries', CollectionType::class, [
+            'allow_add' => true,
+            'allow_delete' => true,
+            'entry_options' => [
+                'label' => false,
+            ],
+            'entry_type' => RevenueEntryType::class,
+            'by_reference' => false,
         ]);
     }
 
