@@ -54,14 +54,14 @@
             } else {
                 $('#revenue-lost-entries').show();
             }
-        })
+        });
     });
 
     /**
      * Add remove revenue entry button.
      */
-    function addRemoveRevenueEntryButton($element) {
-        const $removeFormButton = $('<button class="btn btn-sm btn-danger mt-3 mb-3" type="button">'+removeButtonText+'</button>');
+    function addRemoveRevenueEntryButton ($element) {
+        const $removeFormButton = $('<button class="btn btn-sm btn-danger mt-3 mb-3" type="button">' + removeButtonText + '</button>');
         $element.append($removeFormButton);
 
         // When the button is pressed, remove the element.
@@ -82,7 +82,7 @@
      * @param type
      *   The type, either 'FUTURE_SAVINGS' or 'REPAYMENT'
      */
-    function addRevenueEntryForm($defaultHolder, $holder, service, type) {
+    function addRevenueEntryForm ($defaultHolder, $holder, service, type) {
         // Get the data-prototype for revenue entries.
         const prototype = $defaultHolder.data('prototype');
 
@@ -100,13 +100,15 @@
         // Display the form in the page.
         const $element = $(newForm);
 
-        $element.find('.service select option[value="' + service + '"]').prop("selected", "selected");
+        $element.find('.service select option[value="' + service + '"]').prop('selected', 'selected');
         $element.find('.service').hide();
-        $element.find('.type select option[value="' + type + '"]').prop("selected", "selected");
+        $element.find('.type select option[value="' + type + '"]').prop('selected', 'selected');
         $element.find('.type .text').text($element.find('.type option:selected').text());
 
-        if (type === 'REPAYMENT') {
+        if (type !== 'FUTURE_SAVINGS') {
             $element.find('.future-savings-select').hide();
+        } else {
+            $element.find('.future-savings-select select option[value="FIXED_VALUE"]').prop('selected', 'selected');
         }
 
         $holder.append($element);
