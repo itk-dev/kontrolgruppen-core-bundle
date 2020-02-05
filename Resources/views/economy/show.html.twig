@@ -1,12 +1,14 @@
 {% extends '@KontrolgruppenCore/process/main.html.twig' %}
 
 {% macro printRevenueEntryRow(revenueEntry) %}
-    <td>{{ form_widget(revenueEntry.service) }}</td>
-    <td>{{ form_widget(revenueEntry.type) }}</td>
-    <td>{{ form_widget(revenueEntry.amount) }}</td>
-    <td class="future-savings">{{ form_widget(revenueEntry.futureSavingsType) }}</td>
-    <td>
-    </td>
+    <tr class="revenue-entry">
+        <td class="service">{{ form_widget(revenueEntry.service) }}</td>
+        <td class="type"><span style="display: none">{{ form_widget(revenueEntry.type) }}</span><span class="text"></span></td>
+        <td class="amount">{{ form_widget(revenueEntry.amount) }}</td>
+        <td class="future-savings"><span class="future-savings-select">{{ form_widget(revenueEntry.futureSavingsType) }}</span></td>
+        <td>
+        </td>
+    </tr>
 {% endmacro %}
 {% import _self as formMacros %}
 
@@ -70,26 +72,34 @@
     <h2>{{ 'economy.headline.revenue_calculation'|trans }}</h2>
     <div class="table-responsive">
         {{ form_start(revenueForm) }}
-        <table id="revenue-calculation-table" class="table table-striped table-hover table-borderless thead-light">
-            <thead>
-            <tr>
-                <th>{{ 'economy.table.revenue_entry.service'|trans }}</th>
-                <th>{{ 'economy.table.revenue_entry.type'|trans }}</th>
-                <th>{{ 'economy.table.revenue_entry.amount'|trans }}</th>
-                <th>{{ 'economy.table.revenue_entry.future_savings_type'|trans }}</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody class="revenue_entries" data-prototype="{{ formMacros.printRevenueEntryRow(revenueForm.revenueEntries.vars.prototype)|e('html_attr') }}">
-                {% for revenueEntry in revenueForm.revenueEntries %}
-                    <tr>
-                        {{ formMacros.printRevenueEntryRow(revenueEntry) }}
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <button type="submit">Submit</button>
+            {% for service in services %}
+                <div id="service-{{ service.id }}">
+                    <h2 class="float-left text-muted">{{ service.name }}</h2>
+                    <div class="float-right">
+                        <button data-service-id="{{ service.id }}" class="js-add-repayment btn btn-sm btn-outline-info m-2">{{ 'economy.revenue.add_revenue_repayment'|trans }}</button>
+                        <button data-service-id="{{ service.id }}" class="js-add-future-savings btn btn-sm btn-outline-success m-2">{{ 'economy.revenue.add_future_savings'|trans }}</button>
+                    </div>
+                </div>
 
+                <table id="revenue-calculation-table-{{ service.id }}" class="table table-striped table-hover table-borderless thead-light">
+                    <tbody id="service-elements-{{ service.id }}">
+                    </tbody>
+                </table>
+            {% endfor %}
+
+            {# Default table where new entries are created. The javascript moves the elements to the correct service tables #}
+            <div id="revenue-lost-entries" style="display: none;">
+                <h2 class="text-muted">{{ 'economy.revenue.lost_entries'|trans }}</h2>
+                <table id="revenue-calculation-table" class="table table-striped table-hover table-borderless thead-light">
+                    <tbody class="revenue_entries" data-prototype="{{ formMacros.printRevenueEntryRow(revenueForm.revenueEntries.vars.prototype)|e('html_attr') }}">
+                    {% for revenueEntryForm in revenueForm.revenueEntries %}
+                        {{ formMacros.printRevenueEntryRow(revenueEntryForm) }}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {{ form_widget(revenueForm.save, { 'label': 'economy.revenue.save'|trans, 'class': 'btn btn-primary float-right' }) }}
         {{ form_end(revenueForm) }}
     </div>
 {% endblock %}
@@ -102,38 +112,63 @@
 
     {% if canEdit %}
         <script type="text/javascript">
-            var $collectionHolder;
-            var $addButton = $('<button type="button" class="add_revenue_entry_link">Add</button>');
-            var $newButtonElement = $('<tr class="new-element"><td colspan="5"></td></tr>').append($addButton);
+            var $defaultHolder;
 
             // Add buttons to form when the page is loaded.
             $(document).ready(function() {
                 // Get the element that holds the collection.
-                $collectionHolder = $('tbody.revenue_entries');
-
-                // Add the
-                $collectionHolder.append($newButtonElement);
+                $defaultHolder = $('tbody.revenue_entries');
 
                 // Add "remove" buttons to existing entries.
-                $collectionHolder.find('tr:not(.new-element)').each(function() {
+                $defaultHolder.find('tr').each(function() {
                     addRemoveRevenueEntryButton($(this));
                 });
 
                 // Setup index as number of entries. The index is used to name the forms.
-                $collectionHolder.data('index', $collectionHolder.find(':input').length);
+                $defaultHolder.data('index', $defaultHolder.find(':input').length);
 
                 // When add button is pressed, add a new form element.
-                $addButton.on('click', function() {
-                    addRevenueEntryForm($collectionHolder, $newButtonElement);
-                });
-            });
+                $('.js-add-future-savings').on('click', function(event) {
+                    event.stopPropagation();
+                    event.preventDefault();
 
+                    var serviceId = $(this).data('service-id');
+                    addRevenueEntryForm($defaultHolder, $('#revenue-calculation-table-' + serviceId), serviceId, 'FUTURE_SAVINGS');
+                });
+                $('.js-add-repayment').on('click', function(event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+
+                    var serviceId = $(this).data('service-id');
+                    addRevenueEntryForm($defaultHolder, $('#revenue-calculation-table-' + serviceId), serviceId, 'REPAYMENT');
+                });
+
+                // Move entries from default holder table to service tables.
+                $defaultHolder.find('tr.revenue-entry').each(function () {
+                    var $element = $(this);
+                    var selectedServiceId = $element.find('option:selected').val();
+                    var $serviceElement = $('#service-elements-'+selectedServiceId);
+
+                    if ($serviceElement.length === 1) {
+                        $element.find('.service').hide();
+                        if ($element.find('.type select').val() === 'REPAYMENT') {
+                            $element.find('.future-savings-select').hide();
+                        }
+                        $element.find('.type .text').text($element.find('.type option:selected').text());
+
+                        $serviceElement.append($element.detach());
+                    }
+                    else {
+                        $('#revenue-lost-entries').show();
+                    }
+                })
+            });
 
             /**
              * Add remove revenue entry button.
              */
             function addRemoveRevenueEntryButton($element) {
-                var $removeFormButton = $('<button type="button">Remove</button>');
+                var $removeFormButton = $('<button class="btn btn-sm btn-danger mt-3 mb-3" type="button">Remove</button>');
                 $element.append($removeFormButton);
 
                 // When the button is pressed, remove the element.
@@ -145,17 +180,21 @@
             /**
              * Add a new revenue entry form.
              *
-             * @param $collectionHolder
-             *   The element holding the revenue entry forms
-             * @param $newLinkElement
-             *   The new button element
+             * @param $defaultHolder
+             *   The default holder, that also has the form prototype
+             * @param $holder
+             *   The holder to add the new form element to
+             * @param service
+             *   The service to add the revenue entry to
+             * @param type
+             *   The type, either 'FUTURE_SAVINGS' or 'REPAYMENT'
              */
-            function addRevenueEntryForm($collectionHolder, $newLinkElement) {
+            function addRevenueEntryForm($defaultHolder, $holder, service, type) {
                 // Get the data-prototype for revenue entries.
-                var prototype = $collectionHolder.data('prototype');
+                var prototype = $defaultHolder.data('prototype');
 
                 // Get the new index.
-                var index = $collectionHolder.data('index');
+                var index = $defaultHolder.data('index');
 
                 var newForm = prototype;
 
@@ -163,13 +202,22 @@
                 newForm = newForm.replace(/__name__/g, index);
 
                 // Increase the index with one for the next item.
-                $collectionHolder.data('index', index + 1);
+                $defaultHolder.data('index', index + 1);
 
                 // Display the form in the page.
-                var $newFormElement = $('<tr></tr>').append(newForm);
-                $newLinkElement.before($newFormElement);
+                var $element = $(newForm);
 
-                addRemoveRevenueEntryButton($newFormElement);
+                $element.find('.service select option[value="' + service + '"]').prop("selected", "selected");
+                $element.find('.service').hide();
+                $element.find('.type select option[value="' + type + '"]').prop("selected", "selected");
+                $element.find('.type .text').text($element.find('.type option:selected').text());
+
+                if (type === 'REPAYMENT') {
+                    $element.find('.future-savings-select').hide();
+                }
+
+                $holder.append($element);
+                addRemoveRevenueEntryButton($element);
             }
         </script>
     {% endif %}

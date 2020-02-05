@@ -6,6 +6,7 @@ use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\RevenueEntry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,6 +28,11 @@ class RevenueType extends AbstractType
             ],
             'entry_type' => RevenueEntryType::class,
             'by_reference' => false,
+        ]);
+        $builder->add('save', SubmitType::class, [
+            'attr' => [
+                'class' => 'save btn btn-primary float-right',
+            ],
         ]);
     }
 
