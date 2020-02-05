@@ -262,7 +262,7 @@ economy:
         add_future_savings: + Fremtidig besparelse
         save: Gem provenuberegning
         remove: Fjern
-        lost_entries: Provenuindgange udenfor registrerede ydelser
+        lost_entries: Provenuindgange fra slettede ydelser (inkluderes ikke i provenuberegning!)
 
 economy_entry:
     edit:
