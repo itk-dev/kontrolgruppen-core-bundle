@@ -46,10 +46,31 @@ class EconomyService
     /**
      * Calculate the revenue for a given process.
      *
+     * @param Process $process
+     *   The process to calculate revenue for
+     *
      * @return array
+     *   Array of calculated revenue values. See data structure in $defaultResult.
      */
     public function calculateRevenue(Process $process)
     {
+        $defaultResult = [
+            // All entries that are included in the calculation.
+            'entries' => [],
+            // Sum of repayment.
+            'repaymentSum' => 0.0,
+            // Repayment amount sums from each Service. Indexed by service name.
+            'repaymentSums' => [],
+            // Net repayment amount sum.
+            'netRepaymentSum' => 0.0,
+            // Sum of future savings.
+            'futureSavingsSum' => 0.0,
+            // Future savings sums for each Service. Indexed by service name.
+            'futureSavingsSums' => [],
+            // Net future savings sum.
+            'netFutureSavingsSum' => 0.0,
+        ];
+
         $revenueEntries = $this->revenueEntryRepository->findBy([
             'process' => $process,
         ]);
@@ -91,7 +112,7 @@ class EconomyService
 
                     $carry['repaymentSums'][$serviceName] = [
                         'netPercentage' => $netMultiplier * 100,
-                        'sum' => ($carry['repaymentSums'][$serviceName]['sum'] ?? 0) + $amount,
+                        'sum' => ($carry['repaymentSums'][$serviceName]['sum'] ?? 0.0) + $amount,
                     ];
                 }
                 else if ($entry->getType() === RevenueTypeEnumType::FUTURE_SAVINGS) {
@@ -101,29 +122,13 @@ class EconomyService
 
                     $carry['futureSavingsSums'][$serviceName] = [
                         'netPercentage' => $netMultiplier * 100,
-                        'sum' => ($carry['futureSavingsSums'][$serviceName]['sum'] ?? 0) + $calculatedAmount,
+                        'sum' => ($carry['futureSavingsSums'][$serviceName]['sum'] ?? 0.0) + $calculatedAmount,
                     ];
                 }
             }
 
             return $carry;
-        }, [
-            // Entries where the repayment amount has been set.
-            'entries' => [],
-            // Sum of all repayment amounts.
-            'repaymentSum' => 0.0,
-            // Repayment amount sums from each Service.
-            'repaymentSums' => [],
-            // Net repayment amount sum.
-            'netRepaymentSum' => 0.0,
-            // Sum of future savings.
-            // That is all service entries that have a repayment amount set, are assumed to be zero in the future.
-            'futureSavingsSum' => 0.0,
-            // Future savings sums for each Service.
-            'futureSavingsSums' => [],
-            // Net future savings sum.
-            'netFutureSavingsSum' => 0.0,
-        ]);
+        }, $defaultResult);
 
         $result['netCollectiveSum'] = $result['netRepaymentSum'] + $result['netFutureSavingsSum'];
         $result['collectiveSum'] = $result['repaymentSum'] + $result['futureSavingsSum'];
