@@ -261,6 +261,7 @@ economy:
         add_revenue_repayment: + Tilbagebetalingskrav
         add_future_savings: + Fremtidig besparelse
         save: Gem provenuberegning
+        remove: Fjern
         lost_entries: Provenuindgange udenfor registrerede ydelser
 
 economy_entry:
