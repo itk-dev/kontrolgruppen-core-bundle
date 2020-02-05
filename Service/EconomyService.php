@@ -82,6 +82,7 @@ class EconomyService
 
         $services = array_reduce($serviceEconomyEntries, function ($carry, ServiceEconomyEntry $entry) {
             $carry[$entry->getService()->getId()] = $entry->getService();
+
             return $carry;
         }, []);
 
@@ -105,7 +106,7 @@ class EconomyService
                 $serviceName = $entry->getService()->getName();
                 $carry['entries'][] = $entry;
 
-                if ($entry->getType() === RevenueTypeEnumType::REPAYMENT) {
+                if (RevenueTypeEnumType::REPAYMENT === $entry->getType()) {
                     $carry['repaymentSum'] = $carry['repaymentSum'] + $amount;
                     $netAmount = $amount * $netMultiplier;
                     $carry['netRepaymentSum'] = $carry['netRepaymentSum'] + $netAmount;
@@ -114,9 +115,8 @@ class EconomyService
                         'netPercentage' => $netMultiplier * 100,
                         'sum' => ($carry['repaymentSums'][$serviceName]['sum'] ?? 0.0) + $amount,
                     ];
-                }
-                else if ($entry->getType() === RevenueTypeEnumType::FUTURE_SAVINGS) {
-                    $calculatedAmount = $amount * ($entry->getFutureSavingsType() === RevenueFutureTypeEnumType::PR_MND_X_12 ? 12.0 : 1.0);
+                } elseif (RevenueTypeEnumType::FUTURE_SAVINGS === $entry->getType()) {
+                    $calculatedAmount = $amount * (RevenueFutureTypeEnumType::PR_MND_X_12 === $entry->getFutureSavingsType() ? 12.0 : 1.0);
                     $carry['futureSavingsSum'] = $carry['futureSavingsSum'] + $calculatedAmount;
                     $carry['netFutureSavingsSum'] = $carry['netFutureSavingsSum'] + ($calculatedAmount * $netMultiplier);
 

@@ -15,17 +15,14 @@ use Kontrolgruppen\CoreBundle\Entity\BaseEconomyEntry;
 use Kontrolgruppen\CoreBundle\Entity\EconomyEntry;
 use Kontrolgruppen\CoreBundle\Entity\IncomeEconomyEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Entity\RevenueEntry;
 use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
 use Kontrolgruppen\CoreBundle\Form\BaseEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\EconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\IncomeEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\RevenueType;
-use Kontrolgruppen\CoreBundle\Form\RevenueServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\ServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
 use Kontrolgruppen\CoreBundle\Repository\RevenueEntryRepository;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -82,6 +79,7 @@ class EconomyController extends BaseController
 
         $services = array_reduce($parameters['economyEntriesService'], function ($carry, ServiceEconomyEntry $element) {
             $carry[$element->getService()->getId()] = $element->getService();
+
             return $carry;
         }, []);
         $parameters['services'] = $services;
