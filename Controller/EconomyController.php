@@ -40,7 +40,6 @@ class EconomyController extends BaseController
      * @param Request                $request
      * @param Process                $process
      * @param EconomyEntryRepository $economyEntryRepository
-     * @param RevenueEntryRepository $revenueEntryRepository
      *
      * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
