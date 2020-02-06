@@ -84,7 +84,12 @@ class EconomyController extends BaseController
         }, []);
         $parameters['services'] = $services;
 
-        $form = $this->createForm(RevenueType::class, $process);
+        $options = [];
+        if (!$canEdit) {
+            $options = ['disabled' => true];
+        }
+
+        $form = $this->createForm(RevenueType::class, $process, $options);
 
         $form->handleRequest($request);
 

@@ -33,6 +33,7 @@ class RevenueType extends AbstractType
             'entry_options' => [
                 'label' => false,
             ],
+            'label' => false,
             'entry_type' => RevenueEntryType::class,
             'by_reference' => false,
         ]);

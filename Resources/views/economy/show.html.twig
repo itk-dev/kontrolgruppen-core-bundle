@@ -58,14 +58,15 @@
     {% include '@KontrolgruppenCore/economy_entry/_economy_entry_base_table.html.twig' with {economyEntries: economyEntriesAccount} %}
 
     <h2>{{ 'economy.headline.revenue_calculation'|trans }}</h2>
-    {% include '@KontrolgruppenCore/revenue/_revenue_form.html.twig' with {revenueForm: revenueForm, services: services} %}
+    {% include '@KontrolgruppenCore/revenue/_revenue_form.html.twig' with {revenueForm: revenueForm, services: services, canEdit: canEdit} %}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('addEconomyEntry') }}
 
-    {% if canEdit %}
-        {{ encore_entry_script_tags('revenueForm') }}
-    {% endif %}
+    <script type="text/javascript">
+        window.REVENUE_FORM_CAN_EDIT = {{ canEdit ? 'true' : 'false' }};
+    </script>
+    {{ encore_entry_script_tags('revenueForm') }}
 {% endblock %}

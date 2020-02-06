@@ -4,6 +4,7 @@
  * Add javascript to control revenue form.
  */
 (function ($) {
+    const canEdit = window.REVENUE_FORM_CAN_EDIT;
     const removeButtonText = translate('economy.revenue.remove');
 
     // Add buttons to form when the page is loaded.
@@ -13,29 +14,31 @@
         // Get the element that holds the collection.
         $defaultHolder = $('tbody.revenue_entries');
 
-        // Add "remove" buttons to existing entries.
-        $defaultHolder.find('tr').each(function () {
-            addRemoveRevenueEntryButton($(this));
-        });
+        if (canEdit) {
+            // Add "remove" buttons to existing entries.
+            $defaultHolder.find('tr').each(function () {
+                addRemoveRevenueEntryButton($(this));
+            });
 
-        // Setup index as number of entries. The index is used to name the forms.
-        $defaultHolder.data('index', $defaultHolder.find(':input').length);
+            // Setup index as number of entries. The index is used to name the forms.
+            $defaultHolder.data('index', $defaultHolder.find(':input').length);
 
-        // When add button is pressed, add a new form element.
-        $('.js-add-future-savings').on('click', function (event) {
-            event.stopPropagation();
-            event.preventDefault();
+            // When add button is pressed, add a new form element.
+            $('.js-add-future-savings').on('click', function (event) {
+                event.stopPropagation();
+                event.preventDefault();
 
-            const serviceId = $(this).data('service-id');
-            addRevenueEntryForm($defaultHolder, $('#revenue-calculation-table-' + serviceId), serviceId, 'FUTURE_SAVINGS');
-        });
-        $('.js-add-repayment').on('click', function (event) {
-            event.stopPropagation();
-            event.preventDefault();
+                const serviceId = $(this).data('service-id');
+                addRevenueEntryForm($defaultHolder, $('#revenue-calculation-table-' + serviceId), serviceId, 'FUTURE_SAVINGS');
+            });
+            $('.js-add-repayment').on('click', function (event) {
+                event.stopPropagation();
+                event.preventDefault();
 
-            const serviceId = $(this).data('service-id');
-            addRevenueEntryForm($defaultHolder, $('#revenue-calculation-table-' + serviceId), serviceId, 'REPAYMENT');
-        });
+                const serviceId = $(this).data('service-id');
+                addRevenueEntryForm($defaultHolder, $('#revenue-calculation-table-' + serviceId), serviceId, 'REPAYMENT');
+            });
+        }
 
         // Move entries from default holder table to service tables.
         $defaultHolder.find('tr.revenue-entry').each(function () {
@@ -112,6 +115,8 @@
         }
 
         $holder.append($element);
-        addRemoveRevenueEntryButton($element);
+        if (canEdit) {
+            addRemoveRevenueEntryButton($element);
+        }
     }
 }(jQuery));
