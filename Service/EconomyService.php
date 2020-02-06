@@ -69,6 +69,10 @@ class EconomyService
             'futureSavingsSums' => [],
             // Net future savings sum.
             'netFutureSavingsSum' => 0.0,
+            // Sum of net future savings sum and net repayment sum.
+            'netCollectiveSum' => 0.0,
+            // Sum of future savings sum and repayment sum.
+            'collectiveSum' => 0.0,
         ];
 
         $revenueEntries = $this->revenueEntryRepository->findBy([
