@@ -22,7 +22,6 @@ use Kontrolgruppen\CoreBundle\Form\IncomeEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\RevenueType;
 use Kontrolgruppen\CoreBundle\Form\ServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
-use Kontrolgruppen\CoreBundle\Repository\RevenueEntryRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
