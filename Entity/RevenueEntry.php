@@ -107,9 +107,9 @@ class RevenueEntry extends AbstractEntity
     }
 
     /**
-     * @return RevenueTypeEnumType
+     * @return string
      */
-    public function getType(): RevenueTypeEnumType
+    public function getType(): string
     {
         return $this->type;
     }
@@ -127,9 +127,9 @@ class RevenueEntry extends AbstractEntity
     }
 
     /**
-     * @return RevenueFutureTypeEnumType|null
+     * @return string|null
      */
-    public function getFutureSavingsType(): ?RevenueFutureTypeEnumType
+    public function getFutureSavingsType(): ?string
     {
         return $this->futureSavingsType;
     }
