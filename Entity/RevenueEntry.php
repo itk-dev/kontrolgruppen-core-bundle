@@ -11,19 +11,14 @@
 namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kontrolgruppen\CoreBundle\DBAL\Types\RevenueFutureTypeEnumType;
+use Kontrolgruppen\CoreBundle\DBAL\Types\RevenueTypeEnumType;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\RevenueEntryRepository")
  */
-class RevenueEntry
+class RevenueEntry extends AbstractEntity
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="revenueEntries")
      * @ORM\JoinColumn(nullable=false)
@@ -52,14 +47,6 @@ class RevenueEntry
     private $futureSavingsType;
 
     /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
      * @return Process|null
      */
     public function getProcess(): ?Process
@@ -70,7 +57,7 @@ class RevenueEntry
     /**
      * @param Process|null $process
      *
-     * @return $this
+     * @return RevenueEntry
      */
     public function setProcess(?Process $process): self
     {
@@ -90,7 +77,7 @@ class RevenueEntry
     /**
      * @param Service|null $service
      *
-     * @return $this
+     * @return RevenueEntry
      */
     public function setService(?Service $service): self
     {
@@ -110,7 +97,7 @@ class RevenueEntry
     /**
      * @param float $amount
      *
-     * @return $this
+     * @return RevenueEntry
      */
     public function setAmount(float $amount): self
     {
@@ -119,7 +106,10 @@ class RevenueEntry
         return $this;
     }
 
-    public function getType()
+    /**
+     * @return RevenueTypeEnumType
+     */
+    public function getType(): RevenueTypeEnumType
     {
         return $this->type;
     }
@@ -127,7 +117,7 @@ class RevenueEntry
     /**
      * @param $type
      *
-     * @return $this
+     * @return RevenueEntry
      */
     public function setType($type): self
     {
@@ -136,7 +126,10 @@ class RevenueEntry
         return $this;
     }
 
-    public function getFutureSavingsType()
+    /**
+     * @return RevenueFutureTypeEnumType|null
+     */
+    public function getFutureSavingsType(): ?RevenueFutureTypeEnumType
     {
         return $this->futureSavingsType;
     }
@@ -144,7 +137,7 @@ class RevenueEntry
     /**
      * @param $futureSavingsType
      *
-     * @return $this
+     * @return RevenueEntry
      */
     public function setFutureSavingsType($futureSavingsType): self
     {
