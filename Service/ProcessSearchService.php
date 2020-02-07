@@ -36,12 +36,16 @@ class ProcessSearchService
             $qb = $this->applyFieldSearch($qb, $fieldMatches);
         }
         else {
-            $qb->orWhere('client.firstName LIKE :search');
-            $qb->orWhere('client.lastName LIKE :search');
-            $qb->orWhere('client.address LIKE :search');
-            $qb->orWhere('caseWorker.username LIKE :search');
-            $qb->setParameter(':search', '%'.$search.'%');
+            $qb->orWhere('e.caseNumber LIKE :search');
+            $qb->orWhere('e.clientCPR LIKE :search');
+            $qb->orWhere('client.telephone LIKE :search');
         }
+
+        $qb->orWhere('client.firstName LIKE :search');
+        $qb->orWhere('client.lastName LIKE :search');
+        $qb->orWhere('client.address LIKE :search');
+        $qb->orWhere('caseWorker.username LIKE :search');
+        $qb->setParameter(':search', '%'.$search.'%');
 
         return $this->paginator->paginate(
             $qb->getQuery(),
@@ -63,8 +67,10 @@ class ProcessSearchService
             $qb->orWhere('client.address = :search');
             $qb->orWhere(
                 $qb->expr()->concat(
-                    $qb->expr()
-                        ->concat('client.firstName', $qb->expr()->literal(' ')),
+                    $qb->expr()->concat(
+                        'client.firstName',
+                        $qb->expr()->literal(' ')
+                    ),
                     'client.lastName'
                 ).'= :search'
             );
@@ -89,7 +95,7 @@ class ProcessSearchService
             $queryBuilder->setParameter(':search_cpr_alternative', $matches['cpr']);
         }
         if (isset($matches['telephone'])) {
-            $queryBuilder->orWhere('e.telephone = :search_telephone_alternative');
+            $queryBuilder->orWhere('client.telephone = :search_telephone_alternative');
             $queryBuilder->setParameter(':search_telephone_alternative', $matches['telephone']);
         }
 
