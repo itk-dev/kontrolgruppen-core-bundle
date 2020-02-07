@@ -94,7 +94,7 @@ class DashboardController extends BaseController
             $userSettings = $userSettingsService->getSettings($user, $formKey);
             $userSettingsValue = null !== $userSettings ? $userSettings->getSettingsValue() : null;
 
-            if ($userSettingsValue !== null) {
+            if (null !== $userSettingsValue) {
                 $limit = $userSettings->getSettingsValue()['limit'] ?? 5;
             }
 
