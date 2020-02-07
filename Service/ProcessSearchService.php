@@ -35,12 +35,10 @@ class ProcessSearchService
         if (count($fieldMatches) > 0) {
             $qb = $this->applyFieldSearch($qb, $fieldMatches);
         }
-        else {
-            $qb->orWhere('e.caseNumber LIKE :search');
-            $qb->orWhere('e.clientCPR LIKE :search');
-            $qb->orWhere('client.telephone LIKE :search');
-        }
 
+        $qb->orWhere('e.caseNumber LIKE :search');
+        $qb->orWhere('e.clientCPR LIKE :search');
+        $qb->orWhere('client.telephone LIKE :search');
         $qb->orWhere('client.firstName LIKE :search');
         $qb->orWhere('client.lastName LIKE :search');
         $qb->orWhere('client.address LIKE :search');
