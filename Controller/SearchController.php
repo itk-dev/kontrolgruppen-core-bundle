@@ -10,9 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
-use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Service\ProcessSearchService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

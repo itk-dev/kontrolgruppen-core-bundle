@@ -32,7 +32,7 @@ class ProcessSearchService
 
         $fieldMatches = $this->getFieldMatches($search);
 
-        if (count($fieldMatches) > 0) {
+        if (\count($fieldMatches) > 0) {
             $qb = $this->applyFieldSearch($qb, $fieldMatches);
         }
 
@@ -58,10 +58,9 @@ class ProcessSearchService
 
         $fieldMatches = $this->getFieldMatches($search);
 
-        if (count($fieldMatches) > 0) {
+        if (\count($fieldMatches) > 0) {
             $qb = $this->applyFieldSearch($qb, $fieldMatches);
-        }
-        else {
+        } else {
             $qb->orWhere('client.address = :search');
             $qb->orWhere(
                 $qb->expr()->concat(
@@ -82,6 +81,16 @@ class ProcessSearchService
         );
     }
 
+    /**
+     * Add orWhere based on matches.
+     *
+     * @param QueryBuilder $queryBuilder
+     *   The query builder
+     * @param array        $matches
+     *   Array of matches
+     *
+     * @return QueryBuilder
+     */
     private function applyFieldSearch(QueryBuilder $queryBuilder, array $matches): QueryBuilder
     {
         if (isset($matches['caseNumber'])) {
@@ -104,7 +113,8 @@ class ProcessSearchService
      * Get possible matches between fields and the search.
      *
      * @param string $search
-     *   The search string.
+     *   The search string
+     *
      * @return array
      */
     private function getFieldMatches(string $search): array
@@ -114,33 +124,38 @@ class ProcessSearchService
         preg_match('/^\d{8}$/', $search, $possiblePhoneNumberMatches);
 
         $result = [];
-        if (count($possibleCaseNumberMatches) === 1) {
+        if (1 === \count($possibleCaseNumberMatches)) {
             $match = $possibleCaseNumberMatches[0];
 
             // Add '-' if missing.
-            if (strlen($match) === 7) {
+            if (7 === \strlen($match)) {
                 $match = substr($match, 0, 2).'-'.substr($match, 2, 5);
             }
 
             $result['caseNumber'] = $match;
         }
-        if (count($possibleCPRMatches) === 1) {
+        if (1 === \count($possibleCPRMatches)) {
             $match = $possibleCPRMatches[0];
 
             // Add '-' if missing.
-            if (strlen($match) === 10) {
+            if (10 === \strlen($match)) {
                 $match = substr($match, 0, 6).'-'.substr($match, 6, 4);
             }
 
             $result['cpr'] = $match;
         }
-        if (count($possiblePhoneNumberMatches) === 1) {
+        if (1 === \count($possiblePhoneNumberMatches)) {
             $result['telephone'] = $possiblePhoneNumberMatches[0];
         }
 
         return $result;
     }
 
+    /**
+     * Get a query builder for Process.
+     *
+     * @return QueryBuilder
+     */
     private function getQueryBuilder(): QueryBuilder
     {
         $qb = $this->processRepository->createQueryBuilder('e');
