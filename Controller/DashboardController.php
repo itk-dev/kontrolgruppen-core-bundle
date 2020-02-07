@@ -80,6 +80,9 @@ class DashboardController extends BaseController
         /* @var User $user */
         $user = $this->getUser();
 
+        // Default result limit.
+        $limit = 5;
+
         if ($filterForm->isSubmitted() && $filterForm->isValid()) {
             $filterFormData = $filterForm->getData();
             $limit = $filterFormData['limit'];
@@ -92,12 +95,10 @@ class DashboardController extends BaseController
             $userSettingsValue = null !== $userSettings ? $userSettings->getSettingsValue() : null;
 
             if ($userSettingsValue !== null) {
-                $limit = $userSettings->getSettingsValue() ?? null;
-
-                if ($limit !== null) {
-                    $filterForm->get('limit')->setData($limit);
-                }
+                $limit = $userSettings->getSettingsValue()['limit'] ?? 5;
             }
+
+            $filterForm->get('limit')->setData($limit);
         }
 
         // Only find current user's processes.
@@ -119,13 +120,14 @@ class DashboardController extends BaseController
 
         $query = $queryBuilder->getQuery();
 
-        $notVisitedProcesses = $processManager->getUsersUnvisitedProcesses($this->getUser());
+        $notVisitedProcesses = $processManager->getUsersUnvisitedProcesses($user);
 
         $myProcesses = $processManager->markProcessesAsUnvisited(
             $notVisitedProcesses,
             $query->getResult()
         );
 
+        // Get my processes result.
         $pagination = $paginator->paginate(
             $myProcesses,
             $request->query->get('page', 1),
