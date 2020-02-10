@@ -1,0 +1,13 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'forwarded_to_authority.edit.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'forwarded_to_authority.edit.title'|trans }}</h1>
+
+    {{ include('@KontrolgruppenCore/forwarded_to_authority/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('forwarded_to_authority_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+
+    {{ include('@KontrolgruppenCore/forwarded_to_authority/_delete_form.html.twig') }}
+{% endblock %}

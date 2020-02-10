@@ -288,6 +288,14 @@ class MenuService
                 ),
                 'income_type_index'
             ),
+            $this->createMenuItem(
+                'forwarded_to_authority',
+                1 === preg_match(
+                    '/^\/admin\/forwarded_to_authority\/.*$/',
+                    $path
+                ),
+                'forwarded_to_authority_index'
+            ),
         ];
     }
 
