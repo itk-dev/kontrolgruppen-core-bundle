@@ -12,15 +12,6 @@
         </div>
     {% endif %}
 
-    {% if unassignedProcesses|length > 0 %}
-        <div class="mb-3">
-            <h2 class="mb-3"><i
-                    class="fas {{ iconClass('not-assigned') }} mr-3"></i>{{ 'dashboard.not_assigned.title'|trans }} ({{ unassignedProcesses|length }})
-            </h2>
-            {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: unassignedProcesses} %}
-        </div>
-    {% endif %}
-
     {% if myProcesses|length > 0 %}
         <div class="mb-3">
             <div class="row">
@@ -44,8 +35,16 @@
     </div>
     {% endif %}
 
-    {% include '@KontrolgruppenCore/journal_entry/_modal_quick_view.html.twig' %}
+    {% if unassignedProcesses|length > 0 %}
+        <div class="mb-3">
+            <h2 class="mb-3"><i
+                    class="fas {{ iconClass('not-assigned') }} mr-3"></i>{{ 'dashboard.not_assigned.title'|trans }} ({{ unassignedProcesses|length }})
+            </h2>
+            {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: unassignedProcesses} %}
+        </div>
+    {% endif %}
 
+    {% include '@KontrolgruppenCore/journal_entry/_modal_quick_view.html.twig' %}
 {% endblock %}
 
 {% block sidebar_right %}
