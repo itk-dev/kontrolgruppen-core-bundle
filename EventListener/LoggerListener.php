@@ -30,9 +30,9 @@ class LoggerListener implements EventSubscriberInterface
     /**
      * LoggerListener constructor.
      *
-     * @param EntityManagerInterface $entityManager
+     * @param EntityManagerInterface             $entityManager
      * @param AuthorizationCheckerInterface|null $authorizationChecker
-     * @param TokenStorageInterface|null $tokenStorage
+     * @param TokenStorageInterface|null         $tokenStorage
      */
     public function __construct(EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authorizationChecker = null, TokenStorageInterface $tokenStorage = null)
     {
