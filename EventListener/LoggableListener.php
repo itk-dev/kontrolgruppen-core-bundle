@@ -62,6 +62,22 @@ class LoggableListener extends BaseLoggableListener
     }
 
     /**
+     * Set creator name.
+     *
+     * @param $creatorName
+     */
+    public function setCreatorName($creatorName)
+    {
+        if (\is_string($creatorName)) {
+            $this->creatorName = $creatorName;
+        } elseif (\is_object($creatorName) && method_exists($creatorName, 'getUser')) {
+            /** @var User $user */
+            $user = $creatorName->getUser();
+            $this->creatorName = $user->getName();
+        }
+    }
+
+    /**
      * @param object $logEntry
      * @param object $object
      */
@@ -191,16 +207,5 @@ class LoggableListener extends BaseLoggableListener
         }
 
         return $this->actionLevelMapping['default'];
-    }
-
-    public function setCreatorName($creatorName)
-    {
-        if (\is_string($creatorName)) {
-            $this->creatorName = $creatorName;
-        } elseif (\is_object($creatorName) && method_exists($creatorName, 'getUser')) {
-            /** @var User $user */
-            $user = $creatorName->getUser();
-            $this->creatorName = $user->getName();
-        }
     }
 }

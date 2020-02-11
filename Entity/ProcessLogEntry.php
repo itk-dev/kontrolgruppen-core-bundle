@@ -103,6 +103,13 @@ class ProcessLogEntry extends AbstractEntity
         return $this;
     }
 
+    /**
+     * Set creator name.
+     *
+     * @param string|null $name
+     *
+     * @return $this
+     */
     public function setCreatorName(?string $name): self
     {
         $this->creatorName = $name;
@@ -110,6 +117,11 @@ class ProcessLogEntry extends AbstractEntity
         return $this;
     }
 
+    /**
+     * Get creator name.
+     *
+     * @return string|null
+     */
     public function getCreatorName(): ?string
     {
         return $this->creatorName;

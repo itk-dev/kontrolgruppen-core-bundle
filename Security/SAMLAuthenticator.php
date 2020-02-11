@@ -140,6 +140,12 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         return $auth->getNameId();
     }
 
+    /**
+     * Returns the name of the user for displaying purposes.
+     *
+     * @param Auth $auth
+     * @return string
+     */
     private function getDisplayName(Auth $auth): string
     {
         if (isset($this->settings['display_name_attribute_name'])) {

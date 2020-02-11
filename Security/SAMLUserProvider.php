@@ -39,6 +39,8 @@ class SAMLUserProvider implements UserProviderInterface
     }
 
     /**
+     * Get user.
+     *
      * @param string $username
      * @param string $displayName
      * @param array  $credentials

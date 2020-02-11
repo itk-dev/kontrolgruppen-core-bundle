@@ -18,12 +18,24 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
+/**
+ * Class LoggerListener
+ *
+ * @package Kontrolgruppen\CoreBundle\EventListener
+ */
 class LoggerListener implements EventSubscriberInterface
 {
     private $entityManager;
     private $authorizationChecker;
     private $tokenStorage;
 
+    /**
+     * LoggerListener constructor.
+     *
+     * @param EntityManagerInterface $entityManager
+     * @param AuthorizationCheckerInterface|null $authorizationChecker
+     * @param TokenStorageInterface|null $tokenStorage
+     */
     public function __construct(EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authorizationChecker = null, TokenStorageInterface $tokenStorage = null)
     {
         $this->entityManager = $entityManager;
@@ -31,6 +43,11 @@ class LoggerListener implements EventSubscriberInterface
         $this->tokenStorage = $tokenStorage;
     }
 
+    /**
+     * On Kernel Request
+     *
+     * @param KernelEvent $event
+     */
     public function onKernelRequest(KernelEvent $event)
     {
         if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {

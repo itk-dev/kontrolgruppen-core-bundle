@@ -192,6 +192,13 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * Set name.
+     *
+     * @param string $name
+     *
+     * @return $this
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -199,6 +206,11 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * Get name.
+     *
+     * @return string
+     */
     public function getName(): string
     {
         return $this->name;
