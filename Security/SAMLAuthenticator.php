@@ -144,6 +144,7 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
      * Returns the name of the user for displaying purposes.
      *
      * @param Auth $auth
+     *
      * @return string
      */
     private function getDisplayName(Auth $auth): string

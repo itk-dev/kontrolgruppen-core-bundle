@@ -19,9 +19,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
- * Class LoggerListener
- *
- * @package Kontrolgruppen\CoreBundle\EventListener
+ * Class LoggerListener.
  */
 class LoggerListener implements EventSubscriberInterface
 {
@@ -44,7 +42,7 @@ class LoggerListener implements EventSubscriberInterface
     }
 
     /**
-     * On Kernel Request
+     * On Kernel Request.
      *
      * @param KernelEvent $event
      */
