@@ -57,6 +57,7 @@ class ProcessRepository extends ServiceEntityRepository
 
     /**
      * @param \DateTime $sinceDate
+     *
      * @return Process[]
      */
     public function findCompletedSince(\DateTime $since): array
