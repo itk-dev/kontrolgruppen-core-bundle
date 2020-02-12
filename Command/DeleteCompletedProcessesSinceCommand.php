@@ -18,6 +18,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class DeleteCompletedProcessesSinceCommand.
+ */
 class DeleteCompletedProcessesSinceCommand extends Command
 {
     protected static $defaultName = 'kontrolgruppen:process:delete-completed-since';
@@ -25,6 +28,12 @@ class DeleteCompletedProcessesSinceCommand extends Command
     private $entityManager;
     private $sinceDateFormat = 'd-m-Y';
 
+    /**
+     * DeleteCompletedProcessesSinceCommand constructor.
+     *
+     * @param ProcessRepository      $processRepository
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(ProcessRepository $processRepository, EntityManagerInterface $entityManager)
     {
         parent::__construct();
@@ -32,6 +41,9 @@ class DeleteCompletedProcessesSinceCommand extends Command
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * {@inherit}.
+     */
     public function configure()
     {
         $this->addOption(
@@ -52,6 +64,9 @@ class DeleteCompletedProcessesSinceCommand extends Command
         );
     }
 
+    /**
+     * {@inherit}.
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $rawSince = $input->getArgument('since');
@@ -80,7 +95,7 @@ class DeleteCompletedProcessesSinceCommand extends Command
             $this->entityManager->flush();
 
             if ($output->isVerbose()) {
-                $output->writeln(sprintf('%s process(es) deleted.', count($processes)));
+                $output->writeln(sprintf('%s process(es) deleted.', \count($processes)));
             }
         } else {
             if ($output->isVerbose()) {
