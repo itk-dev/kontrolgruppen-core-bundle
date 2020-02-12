@@ -56,7 +56,7 @@ class ProcessRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param \DateTime $sinceDate
+     * @param \DateTime $since
      *
      * @return Process[]
      */

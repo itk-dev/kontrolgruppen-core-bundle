@@ -42,7 +42,7 @@ class DeleteCompletedProcessesSinceCommand extends Command
     }
 
     /**
-     * {@inheritDoc}.
+     * {@inheritdoc}.
      */
     public function configure()
     {
@@ -65,7 +65,7 @@ class DeleteCompletedProcessesSinceCommand extends Command
     }
 
     /**
-     * {@inheritDoc}.
+     * {@inheritdoc}.
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
