@@ -66,17 +66,17 @@ abstract class AbstractCprService implements CprServiceInterface
     {
         $address = $result->getStreetName();
 
-        $address .= null != $result->getHouseNumber()
+        $address .= null !== $result->getHouseNumber()
             ? ' '.$result->getHouseNumber()
             : ''
         ;
 
-        $address .= null != $result->getFloor()
+        $address .= null !== $result->getFloor()
             ? ' '.$result->getFloor()
             : ''
         ;
 
-        $address .= null != $result->getSide()
+        $address .= null !== $result->getSide()
             ? ' '.$result->getSide()
             : ''
         ;
