@@ -62,6 +62,13 @@ abstract class AbstractCprService implements CprServiceInterface
         return false;
     }
 
+    /**
+     * Generate address string.
+     *
+     * @param CprServiceResult $result
+     *
+     * @return string
+     */
     private function generateAddressString(CprServiceResult $result): string
     {
         $address = $result->getStreetName();
