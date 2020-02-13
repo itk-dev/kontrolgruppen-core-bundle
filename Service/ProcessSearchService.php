@@ -33,8 +33,6 @@ class ProcessSearchService
 
         $qb->where('e.caseNumber LIKE :search');
         $qb->orWhere('e.clientCPR LIKE :search');
-        $qb->orWhere('client.firstName LIKE :search');
-        $qb->orWhere('client.lastName LIKE :search');
         $qb->orWhere(
             $qb->expr()->concat(
                 $qb->expr()->concat('client.firstName', $qb->expr()->literal(' ')),
