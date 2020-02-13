@@ -71,6 +71,9 @@ class FaellesSQLCprServiceResult implements CprServiceResult
         return $this->serviceResult['Vejnavn'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getHouseNumber(): ?string
     {
         return $this->serviceResult['HusNr'];

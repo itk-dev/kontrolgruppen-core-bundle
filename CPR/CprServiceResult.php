@@ -18,6 +18,11 @@ interface CprServiceResult
 
     public function getStreetName(): string;
 
+    /**
+     * Get house number.
+     *
+     * @return string|null
+     */
     public function getHouseNumber(): ?string;
 
     public function getFloor(): ?string;
