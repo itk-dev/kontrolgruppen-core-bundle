@@ -104,23 +104,22 @@ class ProcessController extends BaseController
         /* @var \Kontrolgruppen\CoreBundle\Entity\User $user */
         $user = $this->getUser();
 
-        $paginatorOptions = [];
+        $paginatorOptions = [
+            'defaultSortFieldName' => 'e.caseNumber',
+            'defaultSortDirection' => 'desc',
+        ];
 
         // Get sort and direction from user settings.
-        if (!$request->query->has('sort') || !$request->query->has('direction')) {
+        if (!$request->query->has('sort') && !$request->query->has('direction')) {
             $userSettings = $userSettingsService->getSettings($user, $formKey);
 
-            $userSettingsValue = null !== $userSettings ? $userSettings->getSettingsValue() : null;
-            $paginatorOptions = null === $userSettingsValue
-                ? [
+            if ($userSettings && null !== $userSettings->getSettingsValue()) {
+                $userSettingsValue = $userSettings->getSettingsValue();
+                $paginatorOptions = [
                     'defaultSortFieldName' => $userSettingsValue['sort'],
                     'defaultSortDirection' => $userSettingsValue['direction'],
-                ]
-                : [ // defaults
-                    'defaultSortFieldName' => 'e.caseNumber',
-                    'defaultSortDirection' => 'desc',
-                ]
-            ;
+                ];
+            }
         } else {
             $userSettingsService->setSettings($user, $formKey, [
                 'sort' => $request->query->get('sort'),
