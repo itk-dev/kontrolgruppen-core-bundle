@@ -34,7 +34,7 @@ class SearchController extends BaseController
         }
 
         $pagination = $processSearchService->all(
-            $search,
+            $search ?? '',
             $request->query->get('page', 1),
             50
         );
@@ -60,7 +60,7 @@ class SearchController extends BaseController
     {
         $search = $request->query->get('search');
         $pagination = $processSearchService->single(
-            $search,
+            $search ?? '',
             $request->query->get('page', 1),
             50
         );
