@@ -25,7 +25,12 @@ abstract class AbstractCprService implements CprServiceInterface
             return $client;
         }
 
-        $client->setFirstName($result->getFirstName());
+        $firstName = $result->getFirstName();
+        if (null !== $result->getMiddleName()) {
+            $firstName .= ' '.$result->getMiddleName();
+        }
+
+        $client->setFirstName($firstName);
         $client->setLastName($result->getLastName());
         $client->setAddress($this->generateAddressString($result));
         $client->setPostalCode($result->getPostalCode());
@@ -45,8 +50,13 @@ abstract class AbstractCprService implements CprServiceInterface
             return false;
         }
 
+        $firstName = $result->getFirstName();
+        if (null !== $result->getMiddleName()) {
+            $firstName .= ' '.$result->getMiddleName();
+        }
+
         $comparisons = [
-            $client->getFirstName() => $result->getFirstName(),
+            $client->getFirstName() => $firstName,
             $client->getLastName() => $result->getLastName(),
             $client->getAddress() => $this->generateAddressString($result),
             $client->getPostalCode() => $result->getPostalCode(),

@@ -14,6 +14,13 @@ interface CprServiceResult
 {
     public function getFirstName(): string;
 
+    /**
+     * Get middle name.
+     *
+     * @return string|null
+     */
+    public function getMiddleName(): ?string;
+
     public function getLastName(): string;
 
     public function getStreetName(): string;
