@@ -87,22 +87,24 @@ class EconomyController extends BaseController
             $options = ['disabled' => true];
         }
 
-        $form = $this->createForm(RevenueType::class, $process, $options);
+        $revenueForm = $this->createForm(RevenueType::class, $process, $options);
 
-        $form->handleRequest($request);
+        $revenueForm->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
+        if ($revenueForm->isSubmitted()) {
+            if ($revenueForm->isValid()) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->flush();
             } else {
-                $errors = $form->getErrors();
+                $errors = $revenueForm->getErrors();
 
-                // @TODO: Report errors.
+                foreach ($errors as $error) {
+                    $this->addFlash('danger', $error->getMessage());
+                }
             }
         }
 
-        $parameters['revenueForm'] = $form->createView();
+        $parameters['revenueForm'] = $revenueForm->createView();
 
         return $this->render(
             '@KontrolgruppenCore/economy/show.html.twig',

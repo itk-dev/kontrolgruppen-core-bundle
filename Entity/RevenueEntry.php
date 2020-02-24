@@ -109,17 +109,17 @@ class RevenueEntry extends AbstractEntity
     /**
      * @return string
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
     /**
-     * @param $type
+     * @param string $type
      *
      * @return RevenueEntry
      */
-    public function setType($type): self
+    public function setType(string $type): self
     {
         $this->type = $type;
 
