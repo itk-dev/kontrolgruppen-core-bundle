@@ -26,7 +26,16 @@ class ProcessSearchService
         $this->processRepository = $processRepository;
     }
 
-    public function all(string $search, int $page = 1, $limit = 50): PaginationInterface
+    /**
+     * Search fuzzy.
+     *
+     * @param string $search
+     * @param int    $page
+     * @param int    $limit
+     *
+     * @return PaginationInterface
+     */
+    public function searchFuzzy(string $search, int $page = 1, $limit = 50): PaginationInterface
     {
         $qb = $this->getQueryBuilder();
 
@@ -56,7 +65,16 @@ class ProcessSearchService
         );
     }
 
-    public function single(string $search, int $page = 1, $limit = 50): PaginationInterface
+    /**
+     * Search precise.
+     *
+     * @param string $search
+     * @param int    $page
+     * @param int    $limit
+     *
+     * @return PaginationInterface
+     */
+    public function searchPrecise(string $search, int $page = 1, $limit = 50): PaginationInterface
     {
         $qb = $this->getQueryBuilder();
 

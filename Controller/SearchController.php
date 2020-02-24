@@ -33,7 +33,7 @@ class SearchController extends BaseController
             return $this->redirectToRoute('search_external', ['search' => $search]);
         }
 
-        $pagination = $processSearchService->all(
+        $pagination = $processSearchService->searchFuzzy(
             $search ?? '',
             $request->query->get('page', 1),
             50
@@ -59,7 +59,7 @@ class SearchController extends BaseController
     public function external(Request $request, ProcessSearchService $processSearchService)
     {
         $search = $request->query->get('search');
-        $pagination = $processSearchService->single(
+        $pagination = $processSearchService->searchPrecise(
             $search ?? '',
             $request->query->get('page', 1),
             50
