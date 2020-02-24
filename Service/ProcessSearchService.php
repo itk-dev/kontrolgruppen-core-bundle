@@ -26,7 +26,7 @@ class ProcessSearchService
         $this->processRepository = $processRepository;
     }
 
-    public function all($search, int $page = 1, $limit = 50): PaginationInterface
+    public function all(string $search, int $page = 1, $limit = 50): PaginationInterface
     {
         $qb = $this->getQueryBuilder();
 
@@ -39,8 +39,12 @@ class ProcessSearchService
         $qb->orWhere('e.caseNumber LIKE :search');
         $qb->orWhere('e.clientCPR LIKE :search');
         $qb->orWhere('client.telephone LIKE :search');
-        $qb->orWhere('client.firstName LIKE :search');
-        $qb->orWhere('client.lastName LIKE :search');
+        $qb->orWhere(
+            $qb->expr()->concat(
+                $qb->expr()->concat('client.firstName', $qb->expr()->literal(' ')),
+                'client.lastName'
+            ).'LIKE :search'
+        );
         $qb->orWhere('client.address LIKE :search');
         $qb->orWhere('caseWorker.username LIKE :search');
         $qb->setParameter(':search', '%'.$search.'%');
@@ -52,7 +56,7 @@ class ProcessSearchService
         );
     }
 
-    public function single($search, int $page = 1, $limit = 50): PaginationInterface
+    public function single(string $search, int $page = 1, $limit = 50): PaginationInterface
     {
         $qb = $this->getQueryBuilder();
 
