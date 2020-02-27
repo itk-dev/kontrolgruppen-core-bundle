@@ -41,11 +41,17 @@ class Service extends AbstractTaxonomy
      */
     private $lockedNetValues;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\RevenueEntry", mappedBy="service", orphanRemoval=true)
+     */
+    private $revenueEntries;
+
     public function __construct()
     {
         $this->processes = new ArrayCollection();
         $this->processTypes = new ArrayCollection();
         $this->lockedNetValues = new ArrayCollection();
+        $this->revenueEntries = new ArrayCollection();
     }
 
     /**
@@ -144,6 +150,47 @@ class Service extends AbstractTaxonomy
             // set the owning side to null (unless already changed)
             if ($lockedNetValue->getService() === $this) {
                 $lockedNetValue->setService(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RevenueEntry[]
+     */
+    public function getRevenueEntries(): Collection
+    {
+        return $this->revenueEntries;
+    }
+
+    /**
+     * @param RevenueEntry $revenueEntry
+     *
+     * @return Service
+     */
+    public function addRevenueEntry(RevenueEntry $revenueEntry): self
+    {
+        if (!$this->revenueEntries->contains($revenueEntry)) {
+            $this->revenueEntries[] = $revenueEntry;
+            $revenueEntry->setService($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param RevenueEntry $revenueEntry
+     *
+     * @return Service
+     */
+    public function removeRevenueEntry(RevenueEntry $revenueEntry): self
+    {
+        if ($this->revenueEntries->contains($revenueEntry)) {
+            $this->revenueEntries->removeElement($revenueEntry);
+            // set the owning side to null (unless already changed)
+            if ($revenueEntry->getService() === $this) {
+                $revenueEntry->setService(null);
             }
         }
 
