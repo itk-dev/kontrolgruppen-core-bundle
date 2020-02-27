@@ -11,108 +11,132 @@
 namespace Kontrolgruppen\CoreBundle\Service;
 
 use Kontrolgruppen\CoreBundle\DBAL\Types\EconomyEntryEnumType;
+use Kontrolgruppen\CoreBundle\DBAL\Types\RevenueFutureTypeEnumType;
+use Kontrolgruppen\CoreBundle\DBAL\Types\RevenueTypeEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\RevenueEntry;
 use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
 use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
 use Kontrolgruppen\CoreBundle\Repository\LockedNetValueRepository;
+use Kontrolgruppen\CoreBundle\Repository\RevenueEntryRepository;
 
 /**
  * Class EconomyService.
  */
 class EconomyService
 {
-    private $economyEntryRepository;
+    private $revenueEntryRepository;
     private $lockedNetValueRepository;
+    private $economyEntryRepository;
 
     /**
      * EconomyService constructor.
+     *
+     * @param RevenueEntryRepository   $revenueEntryRepository
+     * @param EconomyEntryRepository   $economyEntryRepository
+     * @param LockedNetValueRepository $lockedNetValueRepository
      */
-    public function __construct(EconomyEntryRepository $economyEntryRepository, LockedNetValueRepository $lockedNetValueRepository)
+    public function __construct(RevenueEntryRepository $revenueEntryRepository, EconomyEntryRepository $economyEntryRepository, LockedNetValueRepository $lockedNetValueRepository)
     {
-        $this->economyEntryRepository = $economyEntryRepository;
+        $this->revenueEntryRepository = $revenueEntryRepository;
         $this->lockedNetValueRepository = $lockedNetValueRepository;
+        $this->economyEntryRepository = $economyEntryRepository;
     }
 
     /**
      * Calculate the revenue for a given process.
      *
+     * @param Process $process
+     *   The process to calculate revenue for
+     *
      * @return array
+     *   Array of calculated revenue values. See data structure in $defaultResult.
      */
     public function calculateRevenue(Process $process)
     {
+        $defaultResult = [
+            // All entries that are included in the calculation.
+            'entries' => [],
+            // Sum of repayment.
+            'repaymentSum' => 0.0,
+            // Repayment amount sums from each Service. Indexed by service name.
+            'repaymentSums' => [],
+            // Net repayment amount sum.
+            'netRepaymentSum' => 0.0,
+            // Sum of future savings.
+            'futureSavingsSum' => 0.0,
+            // Future savings sums for each Service. Indexed by service name.
+            'futureSavingsSums' => [],
+            // Net future savings sum.
+            'netFutureSavingsSum' => 0.0,
+            // Sum of net future savings sum and net repayment sum.
+            'netCollectiveSum' => 0.0,
+            // Sum of future savings sum and repayment sum.
+            'collectiveSum' => 0.0,
+        ];
+
+        $revenueEntries = $this->revenueEntryRepository->findBy([
+            'process' => $process,
+        ]);
+
         $serviceEconomyEntries = $this->economyEntryRepository->findBy([
             'process' => $process,
             'type' => EconomyEntryEnumType::SERVICE,
         ]);
 
-        $result = array_reduce($serviceEconomyEntries, function ($carry, ServiceEconomyEntry $entry) use ($process) {
+        $services = array_reduce($serviceEconomyEntries, function ($carry, ServiceEconomyEntry $entry) {
+            $carry[$entry->getService()->getId()] = $entry->getService();
+
+            return $carry;
+        }, []);
+
+        $result = array_reduce($revenueEntries, function ($carry, RevenueEntry $entry) use ($process, $services) {
             $lockedNetValue = $this->lockedNetValueRepository->findOneBy([
                 'process' => $process,
                 'service' => $entry->getService(),
             ]);
+
             $netMultiplier = null !== $lockedNetValue
                 ? $lockedNetValue->getValue()
-                : $entry->getService()->getNetDefaultValue();
+                : ($entry->getService()->getNetDefaultValue() ?? 1.0);
 
-            if (null !== $entry->getRepaymentAmount()) {
-                $carry['entries'][] = $entry;
-                $carry['repaymentSum'] = $carry['repaymentSum'] + $entry->getRepaymentAmount();
-                $carry['netRepaymentSum'] = $carry['netRepaymentSum'] + ($entry->getRepaymentAmount() * $netMultiplier) * $this->getMonthsBetweenDates($entry->getRepaymentPeriodFrom(), $entry->getRepaymentPeriodTo());
-
-                if (!isset($carry['repaymentSums'][$entry->getService()->getName()])) {
-                    $carry['repaymentSums'][$entry->getService()->getName()] = 0;
-                }
-                $carry['repaymentSums'][$entry->getService()->getName()] = [
-                    'netMultiplier' => $netMultiplier * 100,
-                    'sum' => $carry['repaymentSums'][$entry->getService()->getName()]['sum'] + $entry->getRepaymentAmount(),
-                ];
+            // Ignore entry if the service is not in service economy entries.
+            if (!isset($services[$entry->getService()->getId()])) {
+                return $carry;
             }
 
-            if (null !== $entry->getFutureSavingsAmount()) {
-                // Calculate yearly future savings
-                $carry['futureSavingsSum'] = $carry['futureSavingsSum'] + $entry->getFutureSavingsAmount();
-                $carry['netFutureSavingsSum'] = $carry['netFutureSavingsSum'] + ($entry->getFutureSavingsAmount() * $netMultiplier) * $this->getMonthsBetweenDates($entry->getFutureSavingsPeriodFrom(), $entry->getFutureSavingsPeriodTo());
+            if (null !== $entry->getAmount()) {
+                $amount = $entry->getAmount();
+                $serviceName = $entry->getService()->getName();
+                $carry['entries'][] = $entry;
 
-                if (!isset($carry['futureSavingsSums'][$entry->getService()->getName()])) {
-                    $carry['futureSavingsSums'][$entry->getService()->getName()] = 0;
+                if (RevenueTypeEnumType::REPAYMENT === $entry->getType()) {
+                    $carry['repaymentSum'] = $carry['repaymentSum'] + $amount;
+                    $netAmount = $amount * $netMultiplier;
+                    $carry['netRepaymentSum'] = $carry['netRepaymentSum'] + $netAmount;
+
+                    $carry['repaymentSums'][$serviceName] = [
+                        'netPercentage' => $netMultiplier * 100,
+                        'sum' => ($carry['repaymentSums'][$serviceName]['sum'] ?? 0.0) + $amount,
+                    ];
+                } elseif (RevenueTypeEnumType::FUTURE_SAVINGS === $entry->getType()) {
+                    $calculatedAmount = $amount * (RevenueFutureTypeEnumType::PR_MND_X_12 === $entry->getFutureSavingsType() ? 12.0 : 1.0);
+                    $carry['futureSavingsSum'] = $carry['futureSavingsSum'] + $calculatedAmount;
+                    $carry['netFutureSavingsSum'] = $carry['netFutureSavingsSum'] + ($calculatedAmount * $netMultiplier);
+
+                    $carry['futureSavingsSums'][$serviceName] = [
+                        'netPercentage' => $netMultiplier * 100,
+                        'sum' => ($carry['futureSavingsSums'][$serviceName]['sum'] ?? 0.0) + $calculatedAmount,
+                    ];
                 }
-
-                $carry['futureSavingsSums'][$entry->getService()->getName()] = [
-                    'netMultiplier' => $netMultiplier * 100,
-                    'sum' => $carry['futureSavingsSums'][$entry->getService()->getName()]['sum'] + $entry->getFutureSavingsAmount(),
-                ];
             }
 
             return $carry;
-        }, [
-            // Entries where the repayment amount has been set.
-            'entries' => [],
-            // Sum of all repayment amounts.
-            'repaymentSum' => 0.0,
-            // Repayment amount sums from each Service.
-            'repaymentSums' => [],
-            // Net repayment amount sum.
-            'netRepaymentSum' => 0.0,
-            // Sum of future savings.
-            // That is all service entries that have a repayment amount set, are assumed to be zero in the future.
-            'futureSavingsSum' => 0.0,
-            // Future savings sums for each Service.
-            'futureSavingsSums' => [],
-            // Net future savings sum.
-            'netFutureSavingsSum' => 0.0,
-        ]);
+        }, $defaultResult);
 
         $result['netCollectiveSum'] = $result['netRepaymentSum'] + $result['netFutureSavingsSum'];
         $result['collectiveSum'] = $result['repaymentSum'] + $result['futureSavingsSum'];
 
         return $result;
-    }
-
-    private function getMonthsBetweenDates(\DateTime $from, \DateTime $to)
-    {
-        $interval = \DateInterval::createFromDateString('1 month');
-        $period = new \DatePeriod($from, $interval, $to);
-
-        return iterator_count($period);
     }
 }

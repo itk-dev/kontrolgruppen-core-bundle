@@ -10,9 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
-use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Service\ProcessSearchService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,7 +25,7 @@ class SearchController extends BaseController
     /**
      * @Route("/", name="search_index")
      */
-    public function index(Request $request, ProcessRepository $processRepository, PaginatorInterface $paginator, ProcessSearchService $processSearchService)
+    public function index(Request $request, ProcessSearchService $processSearchService)
     {
         $search = $request->query->get('search');
 
@@ -35,8 +33,8 @@ class SearchController extends BaseController
             return $this->redirectToRoute('search_external', ['search' => $search]);
         }
 
-        $pagination = $processSearchService->all(
-            $search,
+        $pagination = $processSearchService->searchFuzzy(
+            $search ?? '',
             $request->query->get('page', 1),
             50
         );
@@ -58,11 +56,11 @@ class SearchController extends BaseController
     /**
      * @Route("/external", name="search_external")
      */
-    public function external(Request $request, ProcessRepository $processRepository, PaginatorInterface $paginator, ProcessSearchService $processSearchService)
+    public function external(Request $request, ProcessSearchService $processSearchService)
     {
         $search = $request->query->get('search');
-        $pagination = $processSearchService->single(
-            $search,
+        $pagination = $processSearchService->searchPrecise(
+            $search ?? '',
             $request->query->get('page', 1),
             50
         );

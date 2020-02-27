@@ -14,11 +14,23 @@ interface CprServiceResult
 {
     public function getFirstName(): string;
 
+    /**
+     * Get middle name.
+     *
+     * @return string|null
+     */
+    public function getMiddleName(): ?string;
+
     public function getLastName(): string;
 
     public function getStreetName(): string;
 
-    public function getHouseNumber(): string;
+    /**
+     * Get house number.
+     *
+     * @return string|null
+     */
+    public function getHouseNumber(): ?string;
 
     public function getFloor(): ?string;
 
