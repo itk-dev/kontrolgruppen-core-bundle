@@ -79,20 +79,13 @@ class DeleteCompletedProcessesSinceCommand extends Command
 
         $processes = $this->processRepository->findCompletedSince($sinceDate);
 
-        if (!empty($input->getOption('dry'))) {
-            foreach ($processes as $process) {
-                $output->writeln($process->getCaseNumber());
-            }
-
-            return;
-        }
-
         if (!empty($processes)) {
-            foreach ($processes as $process) {
-                $this->entityManager->remove($process);
-            }
 
-            $this->entityManager->flush();
+            if (!empty($input->getOption('dry-run'))) {
+                $this->performDryRun($output, $processes);
+            } else {
+                $this->removeProcesses($processes);
+            }
 
             if ($output->isVerbose()) {
                 $output->writeln(sprintf('%s process(es) deleted.', \count($processes)));
@@ -107,5 +100,34 @@ class DeleteCompletedProcessesSinceCommand extends Command
                 );
             }
         }
+    }
+
+    /**
+     * Perform dry run.
+     *
+     * @param OutputInterface $output
+     * @param array $processes
+     */
+    private function performDryRun(OutputInterface $output, array $processes)
+    {
+        $output->writeln('This is a dry run, so none of the following case numbers will actually be deleted.');
+
+        foreach ($processes as $process) {
+            $output->writeln($process->getCaseNumber());
+        }
+    }
+
+    /**
+     * Remove processes.
+     *
+     * @param array $processes
+     */
+    private function removeProcesses(array $processes)
+    {
+        foreach ($processes as $process) {
+            $this->entityManager->remove($process);
+        }
+
+        $this->entityManager->flush();
     }
 }
