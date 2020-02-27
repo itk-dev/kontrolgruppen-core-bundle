@@ -61,6 +61,14 @@ class FaellesSQLCprServiceResult implements CprServiceResult
         return $this->serviceResult['Fornavn'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getMiddleName(): ?string
+    {
+        return $this->serviceResult['Mellemnavn'];
+    }
+
     public function getLastName(): string
     {
         return $this->serviceResult['Efternavn'];

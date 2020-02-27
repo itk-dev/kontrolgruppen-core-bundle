@@ -19,10 +19,9 @@ use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
 use Kontrolgruppen\CoreBundle\Form\BaseEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\EconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\IncomeEconomyEntryType;
-use Kontrolgruppen\CoreBundle\Form\RevenueServiceEconomyEntryType;
+use Kontrolgruppen\CoreBundle\Form\RevenueType;
 use Kontrolgruppen\CoreBundle\Form\ServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,6 +35,14 @@ class EconomyController extends BaseController
 {
     /**
      * @Route("/", name="economy_show")
+     *
+     * @param Request                $request
+     * @param Process                $process
+     * @param EconomyEntryRepository $economyEntryRepository
+     *
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function show(Request $request, Process $process, EconomyEntryRepository $economyEntryRepository)
     {
@@ -44,6 +51,7 @@ class EconomyController extends BaseController
         $canEdit = $this->isGranted('edit', $process) && null === $process->getCompletedAt();
         $parameters['canEdit'] = $canEdit;
 
+        // If the user can edit, handle forms.
         if ($canEdit) {
             // Check for result of type form.
             $formResult = $this->handleEconomyEntryFormRequest($request, $process);
@@ -67,45 +75,36 @@ class EconomyController extends BaseController
         $parameters['economyEntriesIncome'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::INCOME]);
         $parameters['economyEntriesAccount'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::ACCOUNT]);
 
-        $parameters['revenueForms'] = [];
-        $revenueFormErrors = [];
-        foreach ($parameters['economyEntriesService'] as $serviceEconomyEntry) {
-            $options = [];
+        $services = array_reduce($parameters['economyEntriesService'], function ($carry, ServiceEconomyEntry $element) {
+            $carry[$element->getService()->getId()] = $element->getService();
 
-            if (!$canEdit) {
-                $options['disabled'] = true;
-            }
+            return $carry;
+        }, []);
+        $parameters['services'] = $services;
 
-            $revenueForm = $this->container->get('form.factory')->createNamedBuilder(
-                'revenue_entry_'.$serviceEconomyEntry->getId(),
-                RevenueServiceEconomyEntryType::class,
-                $serviceEconomyEntry,
-                $options
-            )->getForm();
-
-            if ($canEdit) {
-                $revenueForm->handleRequest($request);
-
-                if ($revenueForm->isSubmitted() && $revenueForm->isValid()) {
-                    $this->getDoctrine()->getManager()->flush();
-                }
-
-                if ($revenueForm->isSubmitted() && !$revenueForm->isValid()) {
-                    $revenueFormErrors[] = $revenueForm->getName();
-                }
-            }
-
-            $parameters['revenueForms'][] = $revenueForm->createView();
+        $options = [];
+        if (!$canEdit) {
+            $options = ['disabled' => true];
         }
 
-        // Forms are submitted in an ajax request, so if anything bad happens, we need to send an answer
-        // that can be handled.
-        if (!empty($revenueFormErrors)) {
-            $response = new JsonResponse($revenueFormErrors);
-            $response->setStatusCode(400);
+        $revenueForm = $this->createForm(RevenueType::class, $process, $options);
 
-            return $response;
+        $revenueForm->handleRequest($request);
+
+        if ($revenueForm->isSubmitted()) {
+            if ($revenueForm->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->flush();
+            } else {
+                $errors = $revenueForm->getErrors();
+
+                foreach ($errors as $error) {
+                    $this->addFlash('danger', $error->getMessage());
+                }
+            }
         }
+
+        $parameters['revenueForm'] = $revenueForm->createView();
 
         return $this->render(
             '@KontrolgruppenCore/economy/show.html.twig',

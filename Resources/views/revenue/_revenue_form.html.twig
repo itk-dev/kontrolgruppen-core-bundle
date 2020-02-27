@@ -1,0 +1,49 @@
+{% macro printRevenueEntryRow(revenueEntry) %}
+    <tr class="revenue-entry">
+        <td class="service">{{ form_widget(revenueEntry.service) }}</td>
+        <td class="type"><span style="display: none">{{ form_widget(revenueEntry.type) }}</span><span class="text"></span></td>
+        <td class="amount">{{ form_widget(revenueEntry.amount) }}</td>
+        <td class="future-savings"><span class="future-savings-select">{{ form_widget(revenueEntry.futureSavingsType) }}</span></td>
+        <td>
+        </td>
+    </tr>
+{% endmacro %}
+{% import _self as formMacros %}
+
+<div class="table-responsive mt-3">
+    {{ form_start(revenueForm) }}
+    {% for service in services %}
+        <div id="service-{{ service.id }}" class="d-flex align-items-center flex-row">
+            <strong class="float-left mr-auto">{{ service.name }}</strong>
+            {% if canEdit %}
+                <div class="float-right">
+                    <button data-service-id="{{ service.id }}" class="js-add-repayment btn btn-sm btn-outline-info m-2">{{ 'economy.revenue.add_revenue_repayment'|trans }}</button>
+                    <button data-service-id="{{ service.id }}" class="js-add-future-savings btn btn-sm btn-outline-success mt-2 mb-2">{{ 'economy.revenue.add_future_savings'|trans }}</button>
+                </div>
+            {% endif %}
+        </div>
+
+        <table id="revenue-calculation-table-{{ service.id }}" class="table table-striped table-hover table-borderless thead-light">
+            <tbody id="service-elements-{{ service.id }}">
+            </tbody>
+        </table>
+    {% endfor %}
+
+    {# Default table where new entries are created. The javascript moves the elements to the correct service tables #}
+    <div id="revenue-lost-entries" style="display: none;">
+        <strong>{{ 'economy.revenue.lost_entries'|trans }}</strong>
+        <table id="revenue-calculation-table" class="table table-striped table-hover table-borderless thead-light">
+            <tbody class="revenue_entries" data-prototype="{{ formMacros.printRevenueEntryRow(revenueForm.revenueEntries.vars.prototype)|e('html_attr') }}">
+                {% for revenueEntryForm in revenueForm.revenueEntries %}
+                    {{ formMacros.printRevenueEntryRow(revenueEntryForm) }}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if canEdit %}
+        {{ form_widget(revenueForm.save, { 'label': 'economy.revenue.save'|trans, 'class': 'btn btn-primary float-right' }) }}
+    {% endif %}
+
+    {{ form_end(revenueForm) }}
+</div>
