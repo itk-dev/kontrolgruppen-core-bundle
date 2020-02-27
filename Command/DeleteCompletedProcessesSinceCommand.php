@@ -80,7 +80,6 @@ class DeleteCompletedProcessesSinceCommand extends Command
         $processes = $this->processRepository->findCompletedSince($sinceDate);
 
         if (!empty($processes)) {
-
             if (!empty($input->getOption('dry-run'))) {
                 $this->performDryRun($output, $processes);
             } else {
@@ -106,7 +105,7 @@ class DeleteCompletedProcessesSinceCommand extends Command
      * Perform dry run.
      *
      * @param OutputInterface $output
-     * @param array $processes
+     * @param array           $processes
      */
     private function performDryRun(OutputInterface $output, array $processes)
     {
