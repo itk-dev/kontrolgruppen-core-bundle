@@ -52,16 +52,6 @@ class Export extends AbstractExport
                         'empty_data' => null,
                     ],
                 ],
-                'is_completed' => [
-                    'type' => ChoiceType::class,
-                    'type_options' => [
-                        'label' => 'process.is_completed',
-                        'choices' => [
-                            'common.boolean.Yes' => true,
-                            'common.boolean.No' => false,
-                        ],
-                    ],
-                ],
             ];
     }
 
@@ -124,9 +114,7 @@ class Export extends AbstractExport
         $queryBuilder = $this->entityManager->getRepository(Process::class)
             ->createQueryBuilder('p');
 
-        if ($this->parameters['is_completed']) {
-            $queryBuilder->andWhere($this->parameters['is_completed'] ? 'p.completedAt IS NOT NULL' : 'p.completedAt IS NULL');
-        }
+        $queryBuilder->andWhere('p.completedAt IS NOT NULL');
 
         if (!empty($this->parameters['processtatus'])) {
             $queryBuilder
@@ -138,7 +126,7 @@ class Export extends AbstractExport
         $endDate = $this->parameters['enddate'] ?? new \DateTime('2100-01-01');
 
         $queryBuilder
-            ->andWhere('p.createdAt BETWEEN :startdate AND :enddate')
+            ->andWhere('p.completedAt BETWEEN :startdate AND :enddate')
             ->setParameter('startdate', $startDate)
             ->setParameter('enddate', $endDate);
 

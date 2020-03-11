@@ -68,7 +68,7 @@ class RevenueExport extends AbstractExport
         }
 
         foreach ($revenue as $key => $value) {
-            $value['revenueAverage'] = $value['collectiveRevenueSum'] / $value['processes'];
+            $value['revenueAverage'] = round($value['collectiveRevenueSum'] / $value['processes'], 2);
 
             $this->writeRow([
                 $key,
@@ -93,7 +93,7 @@ class RevenueExport extends AbstractExport
         $endDate = $this->parameters['enddate'] ?? new \DateTime('2100-01-01');
 
         $queryBuilder
-            ->andWhere('p.createdAt BETWEEN :startdate AND :enddate')
+            ->andWhere('p.completedAt BETWEEN :startdate AND :enddate')
             ->setParameter('startdate', $startDate)
             ->setParameter('enddate', $endDate);
 
