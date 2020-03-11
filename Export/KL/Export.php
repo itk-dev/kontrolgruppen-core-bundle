@@ -87,22 +87,71 @@ class Export extends AbstractExport
         ]);
 
         foreach ($processes as $process) {
-            $revenue = $this->economyService->calculateRevenue($process);
+            $rows = $this->createRowsArray($process);
 
-            $this->writeRow([
-                $process->getCaseNumber(),
-                $process->getChannel() ? $process->getChannel()->getName() : null,
-                $process->getProcessType() ? $process->getProcessType()->getName() : null,
-                $process->getService() ? $process->getService()->getName() : null,
-                $this->formatBoolean($process->getClient() && $process->getClient()->getHasOwnCompany()),
-                $this->formatAmount($revenue['repaymentSum'] ?? 0),
-                $this->formatAmount($revenue['futureSavingsSum'] ?? 0),
-                $this->formatBoolean($process->getProcessStatus() && $process->getProcessStatus()->getIsForwardToAnotherAuthority()),
-                $this->formatBoolean((bool) $process->getPoliceReport()),
-                $process->getProcessStatus() ? $process->getProcessStatus()->getName() : null,
-                null,
-            ]);
+            foreach ($rows as $row) {
+                $row['futureSavingsSum'] = $this->formatNumber($row['futureSavingsSum'], 2);
+                $row['repaymentSum'] = $this->formatNumber($row['repaymentSum'], 2);
+
+                $this->writeRow(array_values($row));
+            }
         }
+    }
+
+    /**
+     * Create rows for a process.
+     *
+     * @param Process $process
+     *
+     * @return array
+     */
+    private function createRowsArray(Process $process) {
+        $processRevenue = $this->economyService->calculateRevenue($process);
+
+        $revenue = [];
+
+        foreach ($processRevenue['repaymentSums'] as $serviceName => $repaymentSum) {
+            if (!isset($revenue[$serviceName])) {
+                $revenue[$serviceName] = $this->getNewRow($process, $serviceName);
+            }
+
+            $revenue[$serviceName]['repaymentSum'] += $repaymentSum['sum'];
+        }
+
+        foreach ($processRevenue['futureSavingsSums'] as $serviceName => $futureSavingsSum) {
+            if (!isset($revenue[$serviceName])) {
+                $revenue[$serviceName] = $this->getNewRow($process, $serviceName);
+            }
+
+            $revenue[$serviceName]['futureSavingsSum'] += $futureSavingsSum['sum'];
+        }
+
+        return $revenue;
+    }
+
+    /**
+     * Create a new row.
+     *
+     * @param Process $process
+     * @param         $serviceName
+     *
+     * @return array
+     */
+    private function getNewRow(Process $process, $serviceName)
+    {
+        return [
+            'caseNumber' => $process->getCaseNumber(),
+            'channel' => $process->getChannel() ? $process->getChannel()->getName() : null,
+            'processType' => $process->getProcessType() ? $process->getProcessType()->getName() : null,
+            'service' => $serviceName,
+            'clientHasOwnCompany' => $this->formatBoolean($process->getClient() && $process->getClient()->getHasOwnCompany()),
+            'repaymentSum' => 0.0,
+            'futureSavingsSum' => 0.0,
+            'isForwardedToAnotherAuthority' => $this->formatBoolean($process->getProcessStatus() && $process->getProcessStatus()->getIsForwardToAnotherAuthority()),
+            'policeReport' => $this->formatBoolean((bool) $process->getPoliceReport()),
+            'status' => $process->getProcessStatus() ? $process->getProcessStatus()->getName() : null,
+            'misc' => null,
+        ];
     }
 
     /**
