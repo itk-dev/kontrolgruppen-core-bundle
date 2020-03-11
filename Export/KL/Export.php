@@ -17,7 +17,6 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class Export extends AbstractExport
 {
