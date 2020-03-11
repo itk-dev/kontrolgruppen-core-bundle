@@ -41,10 +41,10 @@ class RevenueExport extends AbstractExport
         $this->writeHeader([
             'Ydelse',
             'Antal afsluttede sager',
-            'Samlet tilbagebetalingskrav',
-            'Samlet fremadrettet besparelse',
-            'Samlet provenu',
-            'Provenu pr. sag',
+            'Samlet tilbagebetalingskrav (Brutto)',
+            'Samlet fremadrettet besparelse (Brutto)',
+            'Samlet provenu (Brutto)',
+            'Provenu pr. sag (Brutto)',
         ]);
 
         $revenue = [];
