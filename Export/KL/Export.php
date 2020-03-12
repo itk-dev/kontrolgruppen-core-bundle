@@ -105,7 +105,8 @@ class Export extends AbstractExport
      *
      * @return array
      */
-    private function createRowsArray(Process $process) {
+    private function createRowsArray(Process $process)
+    {
         $processRevenue = $this->economyService->calculateRevenue($process);
 
         $revenue = [];
