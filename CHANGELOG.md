@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - This CHANGELOG file.
 - [KON-23](https://jira.itkdev.dk/browse/KON-23): Delete old processes
 
+## [1.6.1] - 2020-03-13
+### Changed
+- [KON-352](https://jira.itkdev.dk/browse/KON-352): Adjustments to report
+
+## [1.6.0] - 2020-03-09
+### Added
+- [KON-350](https://jira.itkdev.dk/browse/KON-350): Client postal code added in BI export
+
 ## [1.5.0] - 2020-02-27
 ### Changed
 - [KON-332](https://jira.itkdev.dk/browse/KON-332): New revenue form and calculation.
