@@ -24,7 +24,7 @@ class ProcessGroupRepository extends ServiceEntityRepository
 {
     /**
      * ProcessGroupRepository constructor
-     * .
+     *
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
