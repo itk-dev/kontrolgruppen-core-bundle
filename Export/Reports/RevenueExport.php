@@ -107,6 +107,11 @@ class RevenueExport extends AbstractExport
         }
     }
 
+    /**
+     * Create a new array entry.
+     *
+     * @return array
+     */
     private function newEntry()
     {
         return [
