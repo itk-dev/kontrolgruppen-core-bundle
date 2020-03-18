@@ -190,6 +190,16 @@ class MenuService
                 ['process' => $process]
             );
 
+            $items[] = $this->createMenuItem(
+                'relation',
+                1 === preg_match(
+                    '/^\/process\/[0-9]+\/relation.*$/',
+                    $path
+                ),
+                'process_relation_index',
+                ['process' => $process]
+            );
+
             if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
                 $items[] = $this->createMenuItem(
                     'log',

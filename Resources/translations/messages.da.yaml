@@ -427,6 +427,7 @@ menu:
         account: Konti
         income_type: Indkomsttype
         forwarded_to_authority: Videresendes til anden myndighed
+        relation: Relationer
 
 navigation:
     main:
@@ -766,6 +767,13 @@ process_report:
             registration_number: Registreringsnummer
             shared_owner_ship: Fællesejet
             notes: Noter
+
+process_relation:
+    primary: Primær
+    index:
+        title: Relationer
+
+
 quick_link:
     edit:
         title: Rediger genvej

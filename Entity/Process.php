@@ -147,6 +147,11 @@ class Process extends AbstractEntity
      */
     private $revenueEntries;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessGroup", mappedBy="processes")
+     */
+    private $processGroups;
+
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
@@ -156,6 +161,7 @@ class Process extends AbstractEntity
         $this->lockedNetValues = new ArrayCollection();
         $this->forwardedToAuthorities = new ArrayCollection();
         $this->revenueEntries = new ArrayCollection();
+        $this->processGroups = new ArrayCollection();
     }
 
     public function getCompletedAt(): ?\DateTime
@@ -588,6 +594,34 @@ class Process extends AbstractEntity
             if ($revenueEntry->getProcess() === $this) {
                 $revenueEntry->setProcess(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProcessGroup[]
+     */
+    public function getProcessGroups(): Collection
+    {
+        return $this->processGroups;
+    }
+
+    public function addProcessGroup(ProcessGroup $processGroup): self
+    {
+        if (!$this->processGroups->contains($processGroup)) {
+            $this->processGroups[] = $processGroup;
+            $processGroup->addProcess($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProcessGroup(ProcessGroup $processGroup): self
+    {
+        if ($this->processGroups->contains($processGroup)) {
+            $this->processGroups->removeElement($processGroup);
+            $processGroup->removeProcess($this);
         }
 
         return $this;
