@@ -23,7 +23,7 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessGroup;
 class ProcessGroupRepository extends ServiceEntityRepository
 {
     /**
-     * ProcessGroupRepository constructor
+     * ProcessGroupRepository constructor.
      *
      * @param ManagerRegistry $registry
      */
