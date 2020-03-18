@@ -13,9 +13,11 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Export\Manager;
 use Kontrolgruppen\CoreBundle\Service\MenuService;
+use Kontrolgruppen\CoreBundle\Service\PhpSpreadsheetExportService;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -52,7 +54,7 @@ class ExportController extends BaseController
      *
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -86,14 +88,15 @@ class ExportController extends BaseController
      *   }
      * )
      *
-     * @param Request $request
-     * @param         $_format
+     * @param Request                     $request
+     * @param                             $_format
+     * @param PhpSpreadsheetExportService $exportService
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response|StreamedResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response|StreamedResponse
      *
      * @throws \Exception
      */
-    public function run(Request $request, $_format)
+    public function run(Request $request, $_format, PhpSpreadsheetExportService $exportService)
     {
         $exportKey = $request->get('export');
         $exportClass = null;
@@ -109,7 +112,7 @@ class ExportController extends BaseController
             return $this->redirectToRoute('export_index');
         }
 
-        /** @var Export $export */
+        /** @var AbstractExport $export */
         $export = $this->exportManager->getExport($exportClass);
         $form = $this->buildParameterForm($export);
         // Use namespaced form values (cf. $this->buildParameterForm).
@@ -119,6 +122,7 @@ class ExportController extends BaseController
 
         try {
             $writer = $this->exportManager->run($export, $parameters, $_format);
+            $output = $exportService->getOutputAsString($writer);
 
             switch ($_format) {
                 case 'csv':
@@ -135,14 +139,10 @@ class ExportController extends BaseController
                     break;
                 case 'html':
                 default:
-                    ob_start();
-                    $writer->save('php://output');
-                    $html = ob_get_clean();
-
                     // Extract body content.
                     $d = new \DOMDocument();
                     $mock = new \DOMDocument();
-                    $d->loadHTML($html);
+                    $d->loadHTML($output);
                     $body = $d->getElementsByTagName('body')->item(0);
                     foreach ($body->childNodes as $child) {
                         if ('style' === $child->tagName) {
@@ -162,11 +162,7 @@ class ExportController extends BaseController
                     ]);
             }
 
-            $response = new StreamedResponse(
-                function () use ($writer) {
-                    $writer->save('php://output');
-                }
-            );
+            $response = new Response($output);
 
             $response->headers->set('Content-Type', $contentType);
             $response->headers->set('Content-Disposition', 'attachment; filename="'.$filename.'"');

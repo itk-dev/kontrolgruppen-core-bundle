@@ -81,9 +81,9 @@ class HitRateExport extends AbstractExport
 
             $this->writeRow([
                 $key,
-                $value['processes'],
-                $value['won'],
-                ($value['hitRate'] * 100).' %',
+                $this->formatNumber($value['processes']),
+                $this->formatNumber($value['won']),
+                $this->formatNumber($value['hitRate'] * 100).' %',
             ]);
         }
     }
@@ -102,7 +102,7 @@ class HitRateExport extends AbstractExport
         $endDate = $this->parameters['enddate'] ?? new \DateTime('2100-01-01');
 
         $queryBuilder
-            ->andWhere('p.createdAt BETWEEN :startdate AND :enddate')
+            ->andWhere('p.completedAt BETWEEN :startdate AND :enddate')
             ->setParameter('startdate', $startDate)
             ->setParameter('enddate', $endDate);
 

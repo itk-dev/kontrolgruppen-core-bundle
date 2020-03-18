@@ -58,30 +58,53 @@ class RevenueExport extends AbstractExport
         $this->writeHeader([
             'Ydelse',
             'Antal afsluttede sager',
-            'Samlet tilbagebetalingskrav',
-            'Samlet fremadrettet besparelse',
-            'Samlet provenu',
-            'Provenu pr. sag',
+            'Samlet tilbagebetalingskrav (Brutto)',
+            'Samlet fremadrettet besparelse (Brutto)',
+            'Samlet provenu (Brutto)',
+            'Provenu pr. sag (Brutto)',
         ]);
 
         $revenue = [];
 
         foreach ($processes as $process) {
+            $countedForService = [];
             $processRevenue = $this->economyService->calculateRevenue($process);
 
-            if (!isset($revenue[$process->getService()->getName()])) {
-                $revenue[$process->getService()->getName()] = [
-                    'processes' => 0,
-                    'collectiveRepaymentSum' => 0.0,
-                    'collectiveFutureSavingsSum' => 0.0,
-                    'collectiveRevenueSum' => 0.0,
-                ];
+            foreach ($processRevenue['repaymentSums'] as $serviceName => $repaymentSum) {
+                if (!isset($revenue[$serviceName])) {
+                    $revenue[$serviceName] = [
+                        'processes' => 0,
+                        'collectiveRepaymentSum' => 0.0,
+                        'collectiveFutureSavingsSum' => 0.0,
+                        'collectiveRevenueSum' => 0.0,
+                    ];
+                }
+
+                if (!isset($countedForService[$serviceName])) {
+                    ++$revenue[$serviceName]['processes'];
+                    $countedForService[$serviceName] = $serviceName;
+                }
+                $revenue[$serviceName]['collectiveRepaymentSum'] += $repaymentSum['sum'];
+                $revenue[$serviceName]['collectiveRevenueSum'] += $repaymentSum['sum'];
             }
 
-            ++$revenue[$process->getService()->getName()]['processes'];
-            $revenue[$process->getService()->getName()]['collectiveRepaymentSum'] += $processRevenue['repaymentSum'];
-            $revenue[$process->getService()->getName()]['collectiveFutureSavingsSum'] += $processRevenue['futureSavingsSum'];
-            $revenue[$process->getService()->getName()]['collectiveRevenueSum'] = $processRevenue['repaymentSum'] + $processRevenue['futureSavingsSum'];
+            foreach ($processRevenue['futureSavingsSums'] as $serviceName => $futureSavingsSum) {
+                if (!isset($revenue[$serviceName])) {
+                    $revenue[$serviceName] = [
+                        'processes' => 0,
+                        'collectiveRepaymentSum' => 0.0,
+                        'collectiveFutureSavingsSum' => 0.0,
+                        'collectiveRevenueSum' => 0.0,
+                    ];
+                }
+
+                if (!isset($countedForService[$serviceName])) {
+                    ++$revenue[$serviceName]['processes'];
+                    $countedForService[$serviceName] = $serviceName;
+                }
+                $revenue[$serviceName]['collectiveFutureSavingsSum'] += $futureSavingsSum['sum'];
+                $revenue[$serviceName]['collectiveRevenueSum'] += $futureSavingsSum['sum'];
+            }
         }
 
         foreach ($revenue as $key => $value) {
@@ -89,11 +112,11 @@ class RevenueExport extends AbstractExport
 
             $this->writeRow([
                 $key,
-                $value['processes'],
-                $value['collectiveRepaymentSum'],
-                $value['collectiveFutureSavingsSum'],
-                $value['collectiveRevenueSum'],
-                $value['revenueAverage'],
+                $this->formatNumber($value['processes'], 0),
+                $this->formatNumber($value['collectiveRepaymentSum']),
+                $this->formatNumber($value['collectiveFutureSavingsSum']),
+                $this->formatNumber($value['collectiveRevenueSum']),
+                $this->formatNumber($value['revenueAverage']),
             ]);
         }
     }
@@ -112,7 +135,7 @@ class RevenueExport extends AbstractExport
         $endDate = $this->parameters['enddate'] ?? new \DateTime('2100-01-01');
 
         $queryBuilder
-            ->andWhere('p.createdAt BETWEEN :startdate AND :enddate')
+            ->andWhere('p.completedAt BETWEEN :startdate AND :enddate')
             ->setParameter('startdate', $startDate)
             ->setParameter('enddate', $endDate);
 

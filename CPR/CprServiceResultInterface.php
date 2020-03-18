@@ -21,6 +21,15 @@ interface CprServiceResultInterface
     public function getFirstName(): string;
 
     /**
+     * Get middle name.
+     *
+     * @return string|null
+     */
+    public function getMiddleName(): ?string;
+
+    /**
+     * Get last name.
+     *
      * @return string
      */
     public function getLastName(): string;
@@ -31,9 +40,11 @@ interface CprServiceResultInterface
     public function getStreetName(): string;
 
     /**
-     * @return string
+     * Get house number.
+     *
+     * @return string|null
      */
-    public function getHouseNumber(): string;
+    public function getHouseNumber(): ?string;
 
     /**
      * @return string|null

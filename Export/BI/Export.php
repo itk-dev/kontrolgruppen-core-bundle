@@ -70,6 +70,7 @@ class Export extends AbstractExport
             'Sagsnummer',
             'Oprettet dato',
             'Sagsbehandler',
+            'Postnummer',
             'CPR-nummer',
             'Antal børn',
             'Antal biler',
@@ -112,6 +113,7 @@ class Export extends AbstractExport
                 $process->getCaseNumber(), // 'Sagsnummer'
                 $this->formatDate($process->getCreatedAt(), 'long'), // 'Oprettet dato'
                 $process->getCaseWorker() ? $process->getCaseWorker()->getUsername() : null, // 'Sagsbehandler'
+                $process->getClient() ? $process->getClient()->getPostalCode() : null, // 'Postnummer'
                 $process->getClientCPR(), // 'CPR-nummer'
                 $process->getClient() ? $process->getClient()->getNumberOfChildren() : null, // 'Antal børn'
                 $process->getClient() ? $process->getClient()->getCars()->count() : null, // 'Antal biler'

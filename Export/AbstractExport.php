@@ -72,7 +72,9 @@ abstract class AbstractExport implements \JsonSerializable
                     'data' => new \DateTime('first day of January'),
                     'label' => 'Start date',
                     'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy',
+                    'format' => 'dd-MM-yyyy HH:mm',
+                    'html5' => false,
+                    'attr' => ['class' => 'js-datepicker'],
                 ],
             ],
             'enddate' => [
@@ -81,7 +83,9 @@ abstract class AbstractExport implements \JsonSerializable
                     'data' => new \DateTime('last day of December'),
                     'label' => 'End date',
                     'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy',
+                    'format' => 'dd-MM-yyyy HH:mm',
+                    'html5' => false,
+                    'attr' => ['class' => 'js-datepicker'],
                 ],
             ],
         ];

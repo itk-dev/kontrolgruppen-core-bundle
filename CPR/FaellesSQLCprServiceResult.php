@@ -60,7 +60,7 @@ class FaellesSQLCprServiceResult implements CprServiceResultInterface
         $optionsResolver->setAllowedTypes('Fornavn', 'string');
         $optionsResolver->setAllowedTypes('Efternavn', 'string');
         $optionsResolver->setAllowedTypes('Vejnavn', 'string');
-        $optionsResolver->setAllowedTypes('HusNr', 'string');
+        $optionsResolver->setAllowedTypes('HusNr', ['null', 'string']);
         $optionsResolver->setAllowedTypes('Etage', ['null', 'string']);
         $optionsResolver->setAllowedTypes('Side', ['null', 'string']);
         $optionsResolver->setAllowedTypes('Postnummer', 'string');
@@ -76,7 +76,15 @@ class FaellesSQLCprServiceResult implements CprServiceResultInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
+     */
+    public function getMiddleName(): ?string
+    {
+        return $this->serviceResult['Mellemnavn'];
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function getLastName(): string
     {
@@ -92,9 +100,9 @@ class FaellesSQLCprServiceResult implements CprServiceResultInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
-    public function getHouseNumber(): string
+    public function getHouseNumber(): ?string
     {
         return $this->serviceResult['HusNr'];
     }

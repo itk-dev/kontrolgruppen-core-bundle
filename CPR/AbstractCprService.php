@@ -28,7 +28,12 @@ abstract class AbstractCprService implements CprServiceInterface
             return $client;
         }
 
-        $client->setFirstName($result->getFirstName());
+        $firstName = $result->getFirstName();
+        if (null !== $result->getMiddleName()) {
+            $firstName .= ' '.$result->getMiddleName();
+        }
+
+        $client->setFirstName($firstName);
         $client->setLastName($result->getLastName());
         $client->setAddress($this->generateAddressString($result));
         $client->setPostalCode($result->getPostalCode());
@@ -48,8 +53,13 @@ abstract class AbstractCprService implements CprServiceInterface
             return false;
         }
 
+        $firstName = $result->getFirstName();
+        if (null !== $result->getMiddleName()) {
+            $firstName .= ' '.$result->getMiddleName();
+        }
+
         $comparisons = [
-            $client->getFirstName() => $result->getFirstName(),
+            $client->getFirstName() => $firstName,
             $client->getLastName() => $result->getLastName(),
             $client->getAddress() => $this->generateAddressString($result),
             $client->getPostalCode() => $result->getPostalCode(),
@@ -66,6 +76,8 @@ abstract class AbstractCprService implements CprServiceInterface
     }
 
     /**
+     * Generate address string.
+     *
      * @param CprServiceResultInterface $result
      *
      * @return string
@@ -73,10 +85,21 @@ abstract class AbstractCprService implements CprServiceInterface
     private function generateAddressString(CprServiceResultInterface $result): string
     {
         $address = $result->getStreetName();
-        $address .= ' '.$result->getHouseNumber();
 
-        $address .= (!empty($result->getFloor())) ? ' '.$result->getFloor() : '';
-        $address .= (!empty($result->getSide())) ? ' '.$result->getSide() : '';
+        $address .= null !== $result->getHouseNumber()
+            ? ' '.$result->getHouseNumber()
+            : ''
+        ;
+
+        $address .= null !== $result->getFloor()
+            ? ' '.$result->getFloor()
+            : ''
+        ;
+
+        $address .= null !== $result->getSide()
+            ? ' '.$result->getSide()
+            : ''
+        ;
 
         return $address;
     }

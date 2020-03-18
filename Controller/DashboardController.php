@@ -10,14 +10,18 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Doctrine\ORM\NonUniqueResultException;
 use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\DBAL\Types\DateIntervalType;
+use Kontrolgruppen\CoreBundle\Entity\User;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ReminderRepository;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
+use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -28,19 +32,20 @@ class DashboardController extends BaseController
     /**
      * @Route("", name="dashboard_index")
      *
-     * @param Request            $request
-     * @param ReminderRepository $reminderRepository
-     * @param ProcessRepository  $processRepository
-     * @param PaginatorInterface $paginator
-     * @param SessionInterface   $session
-     * @param ProcessManager     $processManager
+     * @param Request             $request
+     * @param ReminderRepository  $reminderRepository
+     * @param ProcessRepository   $processRepository
+     * @param PaginatorInterface  $paginator
+     * @param ProcessManager      $processManager
+     * @param UserSettingsService $userSettingsService
+     *   The user settings service
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      *
+     * @throws NonUniqueResultException
      * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function index(Request $request, ReminderRepository $reminderRepository, ProcessRepository $processRepository, PaginatorInterface $paginator, SessionInterface $session, ProcessManager $processManager)
+    public function index(Request $request, ReminderRepository $reminderRepository, ProcessRepository $processRepository, PaginatorInterface $paginator, ProcessManager $processManager, UserSettingsService $userSettingsService)
     {
         // Redirect if global menu contains only a single item.
         $menu = $this->getGlobalNavMenu();
@@ -68,47 +73,62 @@ class DashboardController extends BaseController
         ]);
         $filterForm = $filterFormBuilder->getForm();
 
-        $qb = $processRepository->createQueryBuilder('e');
+        $queryBuilder = $processRepository->createQueryBuilder('e');
 
         $filterForm->handleRequest($request);
+
+        $formKey = 'dashboard_index.'.$filterForm->getName();
+        /* @var User $user */
+        $user = $this->getUser();
+
+        // Default result limit.
+        $limit = 5;
 
         if ($filterForm->isSubmitted() && $filterForm->isValid()) {
             $filterFormData = $filterForm->getData();
             $limit = $filterFormData['limit'];
 
-            $session->set('dashboard_my_processes_limit', $limit);
+            $userSettingsService->setSettings($user, $formKey, [
+                'limit' => $limit,
+            ]);
         } else {
-            $limit = $session->get('dashboard_my_processes_limit') ?: 10;
+            $userSettings = $userSettingsService->getSettings($user, $formKey);
+            $userSettingsValue = null !== $userSettings ? $userSettings->getSettingsValue() : null;
+
+            if (null !== $userSettingsValue) {
+                $limit = $userSettings->getSettingsValue()['limit'] ?? 5;
+            }
 
             $filterForm->get('limit')->setData($limit);
         }
 
         // Only find current user's processes.
-        $qb->where('e.caseWorker = :caseWorker');
-        $qb->setParameter(':caseWorker', $this->getUser());
-        $qb->orderBy('e.id', 'DESC');
+        $queryBuilder->where('e.caseWorker = :caseWorker');
+        $queryBuilder->setParameter(':caseWorker', $this->getUser());
+        $queryBuilder->orderBy('e.id', 'DESC');
 
         // Only find processes where the processType.hideInDashboard is not true.
-        $qb->leftJoin('e.processType', 'processType');
-        $qb->addSelect('partial processType.{id,name,hideInDashboard}');
-        $qb->andWhere(
-            $qb->expr()->orX(
-                $qb->expr()->isNull('processType.hideInDashboard'),
-                $qb->expr()->eq('processType.hideInDashboard', 'false')
+        $queryBuilder->leftJoin('e.processType', 'processType');
+        $queryBuilder->addSelect('partial processType.{id,name,hideInDashboard}');
+        $queryBuilder->andWhere(
+            $queryBuilder->expr()->orX(
+                $queryBuilder->expr()->isNull('processType.hideInDashboard'),
+                $queryBuilder->expr()->eq('processType.hideInDashboard', 'false')
             )
         );
 
-        $qb->andWhere('e.completedAt is null');
+        $queryBuilder->andWhere('e.completedAt is null');
 
-        $query = $qb->getQuery();
+        $query = $queryBuilder->getQuery();
 
-        $notVisitedProcesses = $processManager->getUsersUnvisitedProcesses($this->getUser());
+        $notVisitedProcesses = $processManager->getUsersUnvisitedProcesses($user);
 
         $myProcesses = $processManager->markProcessesAsUnvisited(
             $notVisitedProcesses,
             $query->getResult()
         );
 
+        // Get my processes result.
         $pagination = $paginator->paginate(
             $myProcesses,
             $request->query->get('page', 1),

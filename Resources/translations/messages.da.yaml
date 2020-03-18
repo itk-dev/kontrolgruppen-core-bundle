@@ -154,6 +154,14 @@ common:
             pr_3_month: pr. 3. måned
             pr_6_month: pr. halvår
             pr_year: pr. år
+        revenue_type:
+            future_savings: Fremtidig besparelse
+            repayment: Tilbagebetalingskrav
+        revenue_future_type:
+            fixed_value: Fast beløb
+            sanction: Sanktion
+            pr_mnd_x_12: Pr. mnd. * 12
+            self_support: Selvforsørgelse
     no_records_found: Ingen forekomster endnu
     no_sensitive_information_warning: KUN DEMO - Indtast ingen personfølsomme data
     table:
@@ -219,7 +227,7 @@ economy:
         economy_entries_account: R75 oplysninger
         economy_entries_income: Indkomst
         economy_entries_service: Ydelse
-        revenue_calculation: Provenu beregning
+        revenue_calculation: Provenuberegning
     show:
         title: Økonomi
     table:
@@ -244,16 +252,18 @@ economy:
             period_from: Fra
             period_to: Til
             income_type: Indkomsttype
-        revenue:
+        revenue_entry:
             service: Ydelse
-            future_savings_amount: Fremtidig besparelse (pr. md)
-            repayment_amount: Tilbagebetalingskrav (pr. md)
-            amount: Beløb
-            period: Periode
-            save: Gem tabel
-            missing_period: Ugyldig periode
-            success: Ændringerne blev gemt
-            error: Ændringerne kunne ikke gemmes
+            future_savings_type: Beløbstype
+            amount: Beløb (kr.)
+            type: Provenutype
+    revenue:
+        add_revenue_repayment: + Tilbagebetalingskrav
+        add_future_savings: + Fremtidig besparelse
+        save: Gem provenuberegning
+        remove: Fjern
+        lost_entries: Provenuindgange fra slettede ydelser (inkluderes ikke i provenuberegning!)
+
 economy_entry:
     edit:
         title: Rediger registrering
@@ -370,11 +380,11 @@ journal_entry:
     headline_list:
         show_more: Vis mere
         show_less: Vis mindre
+
 journal_quickview:
     title: Seneste indlæg i journal
     actions:
         show_all: Vis hele journalen
-
 
 global_nav:
     menu_title:

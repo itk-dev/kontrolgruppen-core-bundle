@@ -7,7 +7,6 @@
         <div class="row">
             <div class="col">
                 <h1>{{ 'revenue.title'|trans }}</h1>
-                <p>{{ 'revenue.subtitle'|trans }}</p>
             </div>
         </div>
         <div class="table-responsive">
@@ -24,7 +23,7 @@
                     </tr>
                     {% for key,data in revenue.repaymentSums %}
                         <tr>
-                            <td>{{ key }} ({{ data.netMultiplier }}%)</td>
+                            <td>{{ key }} ({{ data.netPercentage }}%)</td>
                             <td class="text-right">{{ data.sum|localizedcurrency('DKK') }}</td>
                         </tr>
                     {% endfor %}
@@ -51,7 +50,7 @@
                     </tr>
                     {% for key,data in revenue.futureSavingsSums %}
                         <tr>
-                            <td>{{ key }} ({{ data.netMultiplier }}%)</td>
+                            <td>{{ key }} ({{ data.netPercentage }}%)</td>
                             <td class="text-right">{{ data.sum|localizedcurrency('DKK') }}</td>
                         </tr>
                     {% endfor %}

@@ -20,9 +20,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  *
  * @Gedmo\Loggable()
- *
- * This is an empty conclusion type, which should be inherited from for different
- * conclusion types. For example, see BaseConclusion.
  */
 class EconomyEntry extends AbstractEntity implements ProcessLoggableInterface
 {
