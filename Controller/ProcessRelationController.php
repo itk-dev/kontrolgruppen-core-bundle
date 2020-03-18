@@ -22,6 +22,13 @@ class ProcessRelationController extends BaseController
 {
     /**
      * @Route("/", name="process_relation_index", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param Process $process
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(Request $request, Process $process): Response
     {

@@ -22,6 +22,11 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessGroup;
  */
 class ProcessGroupRepository extends ServiceEntityRepository
 {
+    /**
+     * ProcessGroupRepository constructor
+     * .
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ProcessGroup::class);
