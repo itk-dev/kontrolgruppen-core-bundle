@@ -26,8 +26,6 @@ class SearchController extends BaseController
      * @Route("/", name="search_index")
      *
      * @param Request              $request
-     * @param ProcessRepository    $processRepository
-     * @param PaginatorInterface   $paginator
      * @param ProcessSearchService $processSearchService
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -67,8 +65,6 @@ class SearchController extends BaseController
      * @Route("/external", name="search_external")
      *
      * @param Request              $request
-     * @param ProcessRepository    $processRepository
-     * @param PaginatorInterface   $paginator
      * @param ProcessSearchService $processSearchService
      *
      * @return \Symfony\Component\HttpFoundation\Response
