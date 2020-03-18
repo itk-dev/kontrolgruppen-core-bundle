@@ -141,7 +141,7 @@ class Export extends AbstractExport
     private function getNewRow(Process $process, $serviceName)
     {
         $forwardedTo = $process->getForwardedToAuthorities();
-        $notEmpty = count($forwardedTo) > 0 ? true : false;
+        $notEmpty = \count($forwardedTo) > 0 ? true : false;
         $isForwarded = $notEmpty || $process->getProcessStatus()->getIsForwardToAnotherAuthority();
 
         return [

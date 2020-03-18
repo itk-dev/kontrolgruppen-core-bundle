@@ -150,7 +150,7 @@ class ExportController extends BaseController
                         $mock->appendChild($mock->importNode($child, true));
                     }
 
-                    if (get_class($export) === RevenueExport::class) {
+                    if (RevenueExport::class === \get_class($export)) {
                         $extra = $this->twig->render('@KontrolgruppenCore/export/revenue_export.show.html.twig');
                     }
 
