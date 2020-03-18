@@ -140,6 +140,10 @@ class Export extends AbstractExport
      */
     private function getNewRow(Process $process, $serviceName)
     {
+        $forwardedTo = $process->getForwardedToAuthorities();
+        $notEmpty = \count($forwardedTo) > 0 ? true : false;
+        $isForwarded = $notEmpty || $process->getProcessStatus()->getIsForwardToAnotherAuthority();
+
         return [
             'caseNumber' => $process->getCaseNumber(),
             'channel' => $process->getChannel() ? $process->getChannel()->getName() : null,
@@ -148,7 +152,7 @@ class Export extends AbstractExport
             'clientHasOwnCompany' => $this->formatBoolean($process->getClient() && $process->getClient()->getHasOwnCompany()),
             'repaymentSum' => 0.0,
             'futureSavingsSum' => 0.0,
-            'isForwardedToAnotherAuthority' => $this->formatBoolean($process->getProcessStatus() && $process->getProcessStatus()->getIsForwardToAnotherAuthority()),
+            'isForwardedToAnotherAuthority' => $this->formatBoolean($isForwarded),
             'policeReport' => $this->formatBoolean((bool) $process->getPoliceReport()),
             'status' => $process->getProcessStatus() ? $process->getProcessStatus()->getName() : null,
             'misc' => null,
