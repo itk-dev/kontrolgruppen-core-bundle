@@ -12,6 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Export\Manager;
+use Kontrolgruppen\CoreBundle\Export\Reports\RevenueExport;
 use Kontrolgruppen\CoreBundle\Service\MenuService;
 use Kontrolgruppen\CoreBundle\Service\PhpSpreadsheetExportService;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -20,6 +21,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 /**
  * Class ExportController.
@@ -33,16 +35,19 @@ class ExportController extends BaseController
 
     /** @var \Symfony\Component\Form\FormFactoryInterface */
     private $formFactory;
+    private $twig;
 
     public function __construct(
         RequestStack $requestStack,
         MenuService $menuService,
         Manager $exportManager,
-        FormFactoryInterface $formFactory
+        FormFactoryInterface $formFactory,
+        Environment $twig
     ) {
         parent::__construct($requestStack, $menuService);
         $this->exportManager = $exportManager;
         $this->formFactory = $formFactory;
+        $this->twig = $twig;
     }
 
     /**
@@ -101,7 +106,7 @@ class ExportController extends BaseController
             return $this->redirectToRoute('export_index');
         }
 
-        /** @var Export $export */
+        /** @var AbstractExport $export */
         $export = $this->exportManager->getExport($exportClass);
         $form = $this->buildParameterForm($export);
         // Use namespaced form values (cf. $this->buildParameterForm).
@@ -145,9 +150,14 @@ class ExportController extends BaseController
                         $mock->appendChild($mock->importNode($child, true));
                     }
 
+                    if (get_class($export) === RevenueExport::class) {
+                        $extra = $this->twig->render('@KontrolgruppenCore/export/revenue_export.show.html.twig');
+                    }
+
                     return $this->render('@KontrolgruppenCore/export/show.html.twig', [
                         'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
                         'table' => $mock->saveHTML(),
+                        'extra' => $extra ?? null,
                     ]);
             }
 
