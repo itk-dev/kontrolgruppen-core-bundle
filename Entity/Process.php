@@ -165,7 +165,7 @@ class Process extends AbstractEntity
      */
     private $processGroups;
 
-    /*
+    /**
      * Process constructor.
      */
     public function __construct()
@@ -838,7 +838,6 @@ class Process extends AbstractEntity
         $relatedProcesses = [];
         foreach ($this->getProcessGroups() as $processGroup) {
             foreach ($processGroup->getProcesses() as $process) {
-
                 // We don't want to show the lookup process amongst the list of related processes.
                 if ($this->getId() === $process->getId()) {
                     continue;
