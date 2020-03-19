@@ -19,11 +19,21 @@ class ProcessLogTranslatorService
 {
     private $translator;
 
+    /**
+     * ProcessLogTranslatorService constructor.
+     *
+     * @param TranslatorInterface $translator
+     */
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
 
+    /**
+     * @param string $namespacedObjectClass
+     *
+     * @return string
+     */
     public function translateObjectClass(string $namespacedObjectClass): string
     {
         $objectClass = strtolower(
@@ -37,6 +47,11 @@ class ProcessLogTranslatorService
         );
     }
 
+    /**
+     * @param string $action
+     *
+     * @return string
+     */
     public function translateAction(string $action): string
     {
         return $this->translator->trans(
@@ -44,6 +59,12 @@ class ProcessLogTranslatorService
         );
     }
 
+    /**
+     * @param string $key
+     * @param string $namespacedObjectClass
+     *
+     * @return string
+     */
     public function translateDataKey(string $key, string $namespacedObjectClass): string
     {
         $objectClass = strtolower(
@@ -60,6 +81,11 @@ class ProcessLogTranslatorService
         return $this->translator->trans($keyTransKey);
     }
 
+    /**
+     * @param $namespacedObjectClass
+     *
+     * @return string
+     */
     protected function extractObjectClassFromNamespace($namespacedObjectClass): string
     {
         $explodedObjectClass = explode('\\', $namespacedObjectClass);
@@ -67,6 +93,11 @@ class ProcessLogTranslatorService
         return end($explodedObjectClass);
     }
 
+    /**
+     * @param string $camelCaseString
+     *
+     * @return string
+     */
     protected function camelCaseToUnderscore(string $camelCaseString): string
     {
         $result = strtolower(

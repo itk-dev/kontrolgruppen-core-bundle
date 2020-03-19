@@ -20,6 +20,9 @@ use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLoggableInterface;
 
+/**
+ * Class LoggableListener.
+ */
 class LoggableListener extends BaseLoggableListener
 {
     private $actionLevelMapping = [
@@ -40,6 +43,9 @@ class LoggableListener extends BaseLoggableListener
         ]);
     }
 
+    /**
+     * @param EventArgs $eventArgs
+     */
     public function onRead(EventArgs $eventArgs)
     {
         $ea = $this->getEventAdapter($eventArgs);
@@ -52,6 +58,10 @@ class LoggableListener extends BaseLoggableListener
         $om->flush();
     }
 
+    /**
+     * @param object $logEntry
+     * @param object $object
+     */
     protected function prePersistLogEntry($logEntry, $object)
     {
         $data = $logEntry->getData();
@@ -142,6 +152,12 @@ class LoggableListener extends BaseLoggableListener
         return $logEntry;
     }
 
+    /**
+     * @param LogEntry        $logEntry
+     * @param Process         $process
+     * @param string          $level
+     * @param LoggableAdapter $ea
+     */
     private function createProcessLogEntry(LogEntry $logEntry, Process $process, string $level, LoggableAdapter $ea)
     {
         $processLogEntry = new ProcessLogEntry();
@@ -159,6 +175,11 @@ class LoggableListener extends BaseLoggableListener
         );
     }
 
+    /**
+     * @param string $action
+     *
+     * @return string
+     */
     private function getLevel(string $action): string
     {
         if (\array_key_exists($action, $this->actionLevelMapping)) {

@@ -10,7 +10,13 @@
 
 namespace Kontrolgruppen\CoreBundle\Entity;
 
+/**
+ * Interface ProcessLoggableInterface.
+ */
 interface ProcessLoggableInterface
 {
+    /**
+     * @return Process|null
+     */
     public function getProcess(): ?Process;
 }

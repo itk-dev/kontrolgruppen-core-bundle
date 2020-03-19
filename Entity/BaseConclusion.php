@@ -15,21 +15,31 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
+ *
  * @Gedmo\Loggable()
  */
 class BaseConclusion extends Conclusion
 {
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $conclusion;
 
+    /**
+     * @return string|null
+     */
     public function getConclusion(): ?string
     {
         return $this->conclusion;
     }
 
+    /**
+     * @param string|null $conclusion
+     *
+     * @return BaseConclusion
+     */
     public function setConclusion(?string $conclusion): self
     {
         $this->conclusion = $conclusion;

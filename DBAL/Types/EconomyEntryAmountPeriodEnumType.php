@@ -12,6 +12,9 @@ namespace Kontrolgruppen\CoreBundle\DBAL\Types;
 
 use Fresh\DoctrineEnumBundle\DBAL\Types\AbstractEnumType;
 
+/**
+ * Class EconomyEntryAmountPeriodEnumType.
+ */
 final class EconomyEntryAmountPeriodEnumType extends AbstractEnumType
 {
     public const PR_MONTH = 1;

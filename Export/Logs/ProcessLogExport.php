@@ -27,17 +27,26 @@ class ProcessLogExport extends AbstractExport
     private $processLogTranslatorService;
     private $translator;
 
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        TranslatorInterface $translator,
-        ProcessLogTranslatorService $processLogTranslatorService
-    ) {
+    /**
+     * ProcessLogExport constructor.
+     *
+     * @param EntityManagerInterface      $entityManager
+     * @param TranslatorInterface         $translator
+     * @param ProcessLogTranslatorService $processLogTranslatorService
+     *
+     * @throws \Exception
+     */
+    public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator, ProcessLogTranslatorService $processLogTranslatorService)
+    {
         parent::__construct();
         $this->entityManager = $entityManager;
         $this->processLogTranslatorService = $processLogTranslatorService;
         $this->translator = $translator;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function writeData()
     {
         $this->writeRow([

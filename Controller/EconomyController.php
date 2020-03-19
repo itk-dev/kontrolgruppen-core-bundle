@@ -43,6 +43,7 @@ class EconomyController extends BaseController
      * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
      */
     public function show(Request $request, Process $process, EconomyEntryRepository $economyEntryRepository)
     {
@@ -113,8 +114,10 @@ class EconomyController extends BaseController
     }
 
     /**
-     * @param $chosenType
-     * @param $parameters
+     * @param Request $request
+     * @param Process $process
+     * @param         $chosenType
+     * @param         $parameters
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -162,6 +165,9 @@ class EconomyController extends BaseController
 
     /**
      * Handles the economy entry form.
+     *
+     * @param Request $request
+     * @param Process $process
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse parameters for the form, or redirects on success
      */

@@ -17,6 +17,9 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+/**
+ * Class FaellesSQLCprService.
+ */
 class FaellesSQLCprService extends AbstractCprService implements CprServiceInterface
 {
     private const CITIZEN_ENDPOINT = 'citizen';
@@ -24,6 +27,12 @@ class FaellesSQLCprService extends AbstractCprService implements CprServiceInter
     private $serviceUrl;
     private $httpClient;
 
+    /**
+     * FaellesSQLCprService constructor.
+     *
+     * @param HttpClientInterface $httpClient
+     * @param                     $cprServiceUrl
+     */
     public function __construct(HttpClientInterface $httpClient, $cprServiceUrl)
     {
         $this->serviceUrl = $cprServiceUrl;
@@ -33,7 +42,7 @@ class FaellesSQLCprService extends AbstractCprService implements CprServiceInter
     /**
      * {@inheritdoc}
      */
-    public function find(Cpr $cpr): CprServiceResult
+    public function find(Cpr $cpr): CprServiceResultInterface
     {
         $url = sprintf('%s/%s/%s', $this->serviceUrl, self::CITIZEN_ENDPOINT, $cpr);
 

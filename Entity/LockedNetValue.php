@@ -41,16 +41,27 @@ class LockedNetValue
      */
     private $value;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return Service|null
+     */
     public function getService(): ?Service
     {
         return $this->service;
     }
 
+    /**
+     * @param Service|null $service
+     *
+     * @return LockedNetValue
+     */
     public function setService(?Service $service): self
     {
         $this->service = $service;
@@ -58,11 +69,19 @@ class LockedNetValue
         return $this;
     }
 
+    /**
+     * @return Process|null
+     */
     public function getProcess(): ?Process
     {
         return $this->process;
     }
 
+    /**
+     * @param Process|null $process
+     *
+     * @return LockedNetValue
+     */
     public function setProcess(?Process $process): self
     {
         $this->process = $process;
@@ -70,11 +89,19 @@ class LockedNetValue
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getValue(): ?float
     {
         return $this->value;
     }
 
+    /**
+     * @param float $value
+     *
+     * @return LockedNetValue
+     */
     public function setValue(float $value): self
     {
         $this->value = $value;

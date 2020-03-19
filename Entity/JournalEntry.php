@@ -16,18 +16,21 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository")
+ *
  * @Gedmo\Loggable()
  */
 class JournalEntry extends AbstractEntity implements ProcessLoggableInterface
 {
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @Gedmo\Versioned()
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $body;
@@ -40,21 +43,34 @@ class JournalEntry extends AbstractEntity implements ProcessLoggableInterface
 
     /**
      * @ORM\Column(name="type", type="JournalEntryEnumType", nullable=false)
+     *
      * @DoctrineAssert\Enum(entity="Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType")
+     *
      * @Gedmo\Versioned()
      */
     protected $type;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     *
+     * @return JournalEntry
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -62,11 +78,19 @@ class JournalEntry extends AbstractEntity implements ProcessLoggableInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getBody(): ?string
     {
         return $this->body;
     }
 
+    /**
+     * @param string|null $body
+     *
+     * @return JournalEntry
+     */
     public function setBody(?string $body): self
     {
         $this->body = $body;
@@ -74,11 +98,19 @@ class JournalEntry extends AbstractEntity implements ProcessLoggableInterface
         return $this;
     }
 
+    /**
+     * @return Process|null
+     */
     public function getProcess(): ?Process
     {
         return $this->process;
     }
 
+    /**
+     * @param Process|null $process
+     *
+     * @return JournalEntry
+     */
     public function setProcess(?Process $process): self
     {
         $this->process = $process;
@@ -86,11 +118,17 @@ class JournalEntry extends AbstractEntity implements ProcessLoggableInterface
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getType()
     {
         return $this->type;
     }
 
+    /**
+     * @param $type
+     */
     public function setType($type): void
     {
         $this->type = $type;

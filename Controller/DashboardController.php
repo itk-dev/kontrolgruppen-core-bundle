@@ -43,6 +43,7 @@ class DashboardController extends BaseController
      * @return RedirectResponse|Response
      *
      * @throws NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
      */
     public function index(Request $request, ReminderRepository $reminderRepository, ProcessRepository $processRepository, PaginatorInterface $paginator, ProcessManager $processManager, UserSettingsService $userSettingsService)
     {

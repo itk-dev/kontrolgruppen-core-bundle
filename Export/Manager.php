@@ -45,6 +45,11 @@ class Manager
 
     /**
      * Constructor.
+     *
+     * @param ContainerInterface     $container
+     * @param EntityManagerInterface $entityManager
+     * @param Filesystem             $filesystem
+     * @param array                  $configuration
      */
     public function __construct(ContainerInterface $container, EntityManagerInterface $entityManager, Filesystem $filesystem, array $configuration = [])
     {
@@ -56,6 +61,8 @@ class Manager
 
     /**
      * @return \Kontrolgruppen\CoreBundle\Export\AbstractExport[]
+     *
+     * @throws \Exception
      */
     public function getExports()
     {
@@ -93,7 +100,9 @@ class Manager
     /**
      * Run export.
      *
-     * @param string|array $parameters
+     * @param AbstractExport $export
+     * @param string|array   $parameters
+     * @param string         $format
      *
      * @return \PhpOffice\PhpSpreadsheet\Writer\IWriter
      *
@@ -125,14 +134,16 @@ class Manager
     /**
      * Run export and save result to file or dump to stdout.
      *
-     * @param $parameters
-     * @param string|null $filename
+     * @param AbstractExport $export
+     * @param array          $parameters
+     * @param string         $format
+     * @param string|null    $filename
      *                              Filename to save report to. If null, a filename will be generated.
      *
      * @return BIExport|null
      *
-     *@throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
     public function save(AbstractExport $export, array $parameters, string $format, string $filename = null)
     {
@@ -166,35 +177,11 @@ class Manager
     }
 
     /**
-     * Get writer type form format string.
-     *
-     * @return string
-     */
-    private function getWriterType(string $format)
-    {
-        $format = ucfirst($format);
-
-        switch ($format) {
-            case 'Pdf':
-                return 'Mpdf';
-            case 'Xls':
-            case 'Xlsx':
-            case 'Ods':
-            case 'Csv':
-            case 'Html':
-            case 'Tcpdf':
-            case 'Dompdf':
-            case 'Mpdf':
-                return $format;
-        }
-
-        throw new \RuntimeException('Invalid format: '.$format);
-    }
-
-    /**
      * Parse a string into export parameters.
      *
      * The input must be a space-separated list of name=value pairs, e.g. "start=now end=+1 day"
+     *
+     * @param string $spec
      *
      * @return array
      */
@@ -214,7 +201,8 @@ class Manager
     /**
      * Get typed export parameters based on the parameters defined by the export.
      *
-     * @param string|array $parameters
+     * @param AbstractExport $export
+     * @param string|array   $parameters
      *
      * @return array
      *
@@ -234,6 +222,11 @@ class Manager
         return $exportParameters;
     }
 
+    /**
+     * @param BIExport $export
+     *
+     * @return bool
+     */
     public function deleteBIExport(BIExport $export)
     {
         try {
@@ -269,5 +262,33 @@ class Manager
         }
 
         return $value;
+    }
+
+    /**
+     * Get writer type form format string.
+     *
+     * @param string $format
+     *
+     * @return string
+     */
+    private function getWriterType(string $format)
+    {
+        $format = ucfirst($format);
+
+        switch ($format) {
+            case 'Pdf':
+                return 'Mpdf';
+            case 'Xls':
+            case 'Xlsx':
+            case 'Ods':
+            case 'Csv':
+            case 'Html':
+            case 'Tcpdf':
+            case 'Dompdf':
+            case 'Mpdf':
+                return $format;
+        }
+
+        throw new \RuntimeException(sprintf('Invalid format: %s', $format));
     }
 }

@@ -28,18 +28,22 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ExportController extends BaseController
 {
-    /** @var \Kontrolgruppen\CoreBundle\Export\Manager */
+    /** @var Manager */
     private $exportManager;
 
-    /** @var \Symfony\Component\Form\FormFactoryInterface */
+    /** @var FormFactoryInterface */
     private $formFactory;
 
-    public function __construct(
-        RequestStack $requestStack,
-        MenuService $menuService,
-        Manager $exportManager,
-        FormFactoryInterface $formFactory
-    ) {
+    /**
+     * ExportController constructor.
+     *
+     * @param RequestStack         $requestStack
+     * @param MenuService          $menuService
+     * @param Manager              $exportManager
+     * @param FormFactoryInterface $formFactory
+     */
+    public function __construct(RequestStack $requestStack, MenuService $menuService, Manager $exportManager, FormFactoryInterface $formFactory)
+    {
         parent::__construct($requestStack, $menuService);
         $this->exportManager = $exportManager;
         $this->formFactory = $formFactory;
@@ -47,6 +51,13 @@ class ExportController extends BaseController
 
     /**
      * @Route("/", name="index")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(Request $request)
     {
@@ -81,7 +92,7 @@ class ExportController extends BaseController
      * @param                             $_format
      * @param PhpSpreadsheetExportService $exportService
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response|StreamedResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response|StreamedResponse
      *
      * @throws \Exception
      */
@@ -101,7 +112,7 @@ class ExportController extends BaseController
             return $this->redirectToRoute('export_index');
         }
 
-        /** @var Export $export */
+        /** @var AbstractExport $export */
         $export = $this->exportManager->getExport($exportClass);
         $form = $this->buildParameterForm($export);
         // Use namespaced form values (cf. $this->buildParameterForm).
@@ -179,11 +190,21 @@ class ExportController extends BaseController
         return $exports;
     }
 
+    /**
+     * @param AbstractExport $export
+     *
+     * @return string
+     */
     private function getExportKey(AbstractExport $export)
     {
         return md5(\get_class($export));
     }
 
+    /**
+     * @param AbstractExport $export
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
     private function buildParameterForm(AbstractExport $export)
     {
         $parameters = $export->getParameters();

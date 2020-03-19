@@ -14,8 +14,15 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
+/**
+ * Class FutureSavingsValidator.
+ */
 class FutureSavingsValidator extends ConstraintValidator
 {
+    /**
+     * @param mixed      $serviceEconomyEntry
+     * @param Constraint $constraint
+     */
     public function validate($serviceEconomyEntry, Constraint $constraint)
     {
         if (!$constraint instanceof FutureSavings) {

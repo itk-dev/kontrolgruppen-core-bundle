@@ -24,9 +24,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class SAMLController extends AbstractController
 {
-    /** @var \Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator */
+    /** @var SAMLAuthenticator */
     private $saml;
 
+    /**
+     * SAMLController constructor.
+     *
+     * @param SAMLAuthenticator $saml
+     */
     public function __construct(SAMLAuthenticator $saml)
     {
         $this->saml = $saml;
@@ -34,6 +39,10 @@ class SAMLController extends AbstractController
 
     /**
      * @Route("/login", name="saml_login")
+     *
+     * @param Request $request
+     *
+     * @throws Error
      */
     public function login(Request $request)
     {
@@ -45,6 +54,8 @@ class SAMLController extends AbstractController
 
     /**
      * @Route("/acs", name="saml_acs")
+     *
+     * @param Request $request
      */
     public function acs(Request $request)
     {
@@ -53,6 +64,10 @@ class SAMLController extends AbstractController
 
     /**
      * @Route("/metadata", name="saml_metadata")
+     *
+     * @return Response
+     *
+     * @throws Error
      */
     public function metadata()
     {
@@ -62,8 +77,8 @@ class SAMLController extends AbstractController
         $errors = $settings->validateMetadata($metadata);
         if (empty($errors)) {
             return new Response($metadata, 200, ['content-type' => 'text/xml']);
-        } else {
-            throw new Error('Invalid SP metadata: '.implode(', ', $errors), Error::METADATA_SP_INVALID);
         }
+
+        throw new Error(sprintf('Invalid SP metadata: %s', implode(', ', $errors)), Error::METADATA_SP_INVALID);
     }
 }

@@ -24,6 +24,14 @@ class ProcessStatusController extends BaseController
 {
     /**
      * @Route("/", name="process_status_index", methods={"GET"})
+     *
+     * @param Request                 $request
+     * @param ProcessStatusRepository $processStatusRepository
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(Request $request, ProcessStatusRepository $processStatusRepository): Response
     {
@@ -35,6 +43,13 @@ class ProcessStatusController extends BaseController
 
     /**
      * @Route("/new", name="process_status_new", methods={"GET","POST"})
+     *
+     * @param Request $request
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function new(Request $request): Response
     {
@@ -59,6 +74,14 @@ class ProcessStatusController extends BaseController
 
     /**
      * @Route("/{id}", name="process_status_show", methods={"GET"})
+     *
+     * @param Request       $request
+     * @param ProcessStatus $processStatus
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function show(Request $request, ProcessStatus $processStatus): Response
     {
@@ -70,6 +93,14 @@ class ProcessStatusController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="process_status_edit", methods={"GET","POST"})
+     *
+     * @param Request       $request
+     * @param ProcessStatus $processStatus
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function edit(Request $request, ProcessStatus $processStatus): Response
     {
@@ -93,6 +124,11 @@ class ProcessStatusController extends BaseController
 
     /**
      * @Route("/{id}", name="process_status_delete", methods={"DELETE"})
+     *
+     * @param Request       $request
+     * @param ProcessStatus $processStatus
+     *
+     * @return Response
      */
     public function delete(Request $request, ProcessStatus $processStatus): Response
     {

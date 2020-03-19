@@ -28,11 +28,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
+/**
+ * Class ProcessControllerListener.
+ */
 class ProcessControllerListener implements EventSubscriberInterface
 {
     private $doctrine;
     private $processRepository;
 
+    /**
+     * ProcessControllerListener constructor.
+     *
+     * @param ManagerRegistry   $doctrine
+     * @param ProcessRepository $processRepository
+     */
     public function __construct(ManagerRegistry $doctrine, ProcessRepository $processRepository)
     {
         $this->doctrine = $doctrine;
@@ -64,6 +73,9 @@ class ProcessControllerListener implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param FilterControllerEvent $event
+     */
     public function onKernelController(FilterControllerEvent $event)
     {
         $controller = $event->getController();
@@ -112,6 +124,11 @@ class ProcessControllerListener implements EventSubscriberInterface
 
     /**
      * Checks if a given request originates from a route in the given Process route group.
+     *
+     * @param Request $request
+     * @param int     $processId
+     *
+     * @return bool
      */
     private function isRequestOriginatingFromProcessRouteGroup(Request $request, int $processId): bool
     {

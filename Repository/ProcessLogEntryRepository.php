@@ -35,10 +35,8 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
      * @param \Knp\Component\Pager\PaginatorInterface $paginator
      *   The paginator
      */
-    public function __construct(
-        ManagerRegistry $registry,
-        PaginatorInterface $paginator
-    ) {
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
+    {
         parent::__construct($registry, ProcessLogEntry::class);
         $this->paginator = $paginator;
     }
@@ -56,11 +54,8 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
      * @return \Knp\Component\Pager\Pagination\PaginationInterface
      *   The pagination result
      */
-    public function getLatestEntriesPaginated(
-        Process $process,
-        int $page = 1,
-        int $limit = 20
-    ) {
+    public function getLatestEntriesPaginated(Process $process, int $page = 1, int $limit = 20)
+    {
         return $this->paginator->paginate(
             $this->getLatestEntriesQuery($process),
             $page,
@@ -81,11 +76,8 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
      * @return array
      *   The latest log entries
      */
-    public function getLatestEntriesByLevel(
-        $level = ProcessLogEntryLevelEnumType::NOTICE,
-        $limit = 5,
-        Process $process = null
-    ) {
+    public function getLatestEntriesByLevel($level = ProcessLogEntryLevelEnumType::NOTICE, $limit = 5, Process $process = null)
+    {
         $qb = $this->createQueryBuilder(
             'processLogEntry',
             'processLogEntry.id'
@@ -141,6 +133,20 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
     }
 
     /**
+     * Get all log entries.
+     *
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     *   The process the logs belong to
+     *
+     * @return mixed
+     *   The result
+     */
+    public function getAllLogEntries(Process $process)
+    {
+        return $this->getLatestEntriesQuery($process)->getResult();
+    }
+
+    /**
      * Get the latest entries, as query.
      *
      * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
@@ -163,19 +169,5 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
             ->orderBy('logEntry.loggedAt', 'DESC');
 
         return $qb->getQuery();
-    }
-
-    /**
-     * Get all log entries.
-     *
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
-     *   The process the logs belong to
-     *
-     * @return mixed
-     *   The result
-     */
-    public function getAllLogEntries(Process $process)
-    {
-        return $this->getLatestEntriesQuery($process)->getResult();
     }
 }
