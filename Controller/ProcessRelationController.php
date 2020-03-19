@@ -39,34 +39,6 @@ class ProcessRelationController extends BaseController
                 $process
             ),
             'process' => $process,
-            'relations' => $this->getRelatedProcesses($process),
         ]);
-    }
-
-    /**
-     * Get related processes for a process.
-     *
-     * @param Process $process
-     *
-     * @return array
-     */
-    private function getRelatedProcesses(Process $process): array
-    {
-        $relations = [];
-        foreach ($process->getProcessGroups() as $processGroup) {
-            foreach ($processGroup->getProcesses() as $relatedProcess) {
-                // We don't want to show the lookup process amongst the list of related processes.
-                if ($process->getId() === $relatedProcess->getId()) {
-                    continue;
-                }
-
-                $relations[] = [
-                    'isPrimary' => $relatedProcess->getId() === $processGroup->getPrimaryProcess()->getId(),
-                    'process' => $relatedProcess,
-                ];
-            }
-        }
-
-        return $relations;
     }
 }

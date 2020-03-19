@@ -6,10 +6,10 @@
     <h1>{{ 'process_relation.index.title'|trans }}</h1>
 
     <ul>
-    {% for relation in relations %}
+    {% for relatedProcess in process.relatedProcesses %}
         <li>
-            {{ relation.process.caseNumber }}
-            {% if relation.isPrimary %}
+            {{ relatedProcess.process.caseNumber }}
+            {% if relatedProcess.isPrimary %}
                 <span class="badge badge-primary">{{ 'process_relation.primary'|trans }}</span>
             {% endif %}
         </li>

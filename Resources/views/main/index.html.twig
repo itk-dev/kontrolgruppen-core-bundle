@@ -122,8 +122,8 @@
                                                 {% if process is defined and menuItem.name == 'reminder.index.title'|trans %}
                                                     <span class="badge badge-secondary">{{ process.reminders|length }}</span>
                                                 {% endif %}
-                                                {% if relations is defined and menuItem.name == 'process_relation.index.title'|trans %}
-                                                    <span class="badge badge-secondary">{{ relations|length }}</span>
+                                                {% if process is defined and menuItem.name == 'process_relation.index.title'|trans %}
+                                                    <span class="badge badge-secondary">{{ process.relatedProcesses|length }}</span>
                                                 {% endif %}
                                             </a>
                                         </li>

@@ -827,4 +827,31 @@ class Process extends AbstractEntity
 
         return $this;
     }
+
+    /**
+     * Get related processes.
+     *
+     * @return RelatedProcess[]
+     */
+    public function getRelatedProcesses(): array
+    {
+        $relatedProcesses = [];
+        foreach ($this->getProcessGroups() as $processGroup) {
+            foreach ($processGroup->getProcesses() as $process) {
+
+                // We don't want to show the lookup process amongst the list of related processes.
+                if ($this->getId() === $process->getId()) {
+                    continue;
+                }
+
+                $relatedProcesses[] = new RelatedProcess(
+                    $processGroup,
+                    $process,
+                    $process->getId() === $processGroup->getPrimaryProcess()->getId()
+                );
+            }
+        }
+
+        return $relatedProcesses;
+    }
 }
