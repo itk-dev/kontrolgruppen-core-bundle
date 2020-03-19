@@ -143,7 +143,7 @@ class Export extends AbstractExport
         $forwardedTo = $process->getForwardedToAuthorities();
         $forwardedTo = \count($forwardedTo) > 0 ? $forwardedTo[0] : null;
 
-        $policeReport = $process->getPoliceReport() === true ? 'Ja' : ($process->getPoliceReport() === false ? 'Nej' : null);
+        $policeReport = true === $process->getPoliceReport() ? 'Ja' : (false === $process->getPoliceReport() ? 'Nej' : null);
 
         return [
             'caseNumber' => $process->getCaseNumber(),
