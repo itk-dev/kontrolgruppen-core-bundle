@@ -29,6 +29,7 @@ class ProcessRelationController extends BaseController
      * @return Response
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
      */
     public function index(Request $request, Process $process): Response
     {
