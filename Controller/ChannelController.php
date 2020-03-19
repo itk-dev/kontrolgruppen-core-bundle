@@ -24,6 +24,14 @@ class ChannelController extends BaseController
 {
     /**
      * @Route("/", name="channel_index", methods={"GET"})
+     *
+     * @param Request           $request
+     * @param ChannelRepository $channelRepository
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(Request $request, ChannelRepository $channelRepository): Response
     {
@@ -35,6 +43,13 @@ class ChannelController extends BaseController
 
     /**
      * @Route("/new", name="channel_new", methods={"GET","POST"})
+     *
+     * @param Request $request
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function new(Request $request): Response
     {
@@ -59,6 +74,14 @@ class ChannelController extends BaseController
 
     /**
      * @Route("/{id}", name="channel_show", methods={"GET"})
+     *
+     * @param Request $request
+     * @param Channel $channel
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function show(Request $request, Channel $channel): Response
     {
@@ -70,6 +93,14 @@ class ChannelController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="channel_edit", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param Channel $channel
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function edit(Request $request, Channel $channel): Response
     {
@@ -93,6 +124,11 @@ class ChannelController extends BaseController
 
     /**
      * @Route("/{id}", name="channel_delete", methods={"DELETE"})
+     *
+     * @param Request $request
+     * @param Channel $channel
+     *
+     * @return Response
      */
     public function delete(Request $request, Channel $channel): Response
     {

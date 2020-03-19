@@ -20,50 +20,60 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ProcessRepository")
+ *
  * @Gedmo\Loggable()
  */
 class Process extends AbstractEntity
 {
     /**
      * @var \DateTime|null
+     *
      * @ORM\Column(type="datetime", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $completedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\User", inversedBy="processes")
+     *
      * @Gedmo\Versioned()
      */
     private $caseWorker;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     *
      * @Gedmo\Versioned()
      */
     private $caseNumber;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @KontrolgruppenAssert\CPR
+     *
      * @Gedmo\Versioned()
      */
     private $clientCPR;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Channel", inversedBy="processes")
+     *
      * @Gedmo\Versioned()
      */
     private $channel;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Reason", inversedBy="processes")
+     *
      * @Gedmo\Versioned()
      */
     private $reason;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="processes")
+     *
      * @Gedmo\Versioned()
      */
     private $service;
@@ -71,12 +81,14 @@ class Process extends AbstractEntity
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessType", inversedBy="processes")
      * @ORM\JoinColumn(name="process_type_id", referencedColumnName="id", nullable=false)
+     *
      * @Gedmo\Versioned()
      */
     private $processType;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessStatus", inversedBy="processes")
+     *
      * @Gedmo\Versioned()
      */
     private $processStatus;
@@ -113,6 +125,7 @@ class Process extends AbstractEntity
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $policeReport;
@@ -152,6 +165,9 @@ class Process extends AbstractEntity
      */
     private $processGroups;
 
+    /*
+     * Process constructor.
+     */
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
@@ -164,11 +180,19 @@ class Process extends AbstractEntity
         $this->processGroups = new ArrayCollection();
     }
 
+    /**
+     * @return \DateTime|null
+     */
     public function getCompletedAt(): ?\DateTime
     {
         return $this->completedAt;
     }
 
+    /**
+     * @param \DateTime|null $completedAt
+     *
+     * @return Process
+     */
     public function setCompletedAt(?\DateTime $completedAt): self
     {
         $this->completedAt = $completedAt;
@@ -176,11 +200,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return User|null
+     */
     public function getCaseWorker(): ?User
     {
         return $this->caseWorker;
     }
 
+    /**
+     * @param User|null $caseWorker
+     *
+     * @return Process
+     */
     public function setCaseWorker(?User $caseWorker): self
     {
         $this->caseWorker = $caseWorker;
@@ -188,11 +220,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getCaseNumber(): ?string
     {
         return $this->caseNumber;
     }
 
+    /**
+     * @param string $caseNumber
+     *
+     * @return Process
+     */
     public function setCaseNumber(string $caseNumber): self
     {
         $this->caseNumber = $caseNumber;
@@ -200,11 +240,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getClientCPR(): ?string
     {
         return $this->clientCPR;
     }
 
+    /**
+     * @param string $clientCPR
+     *
+     * @return Process
+     */
     public function setClientCPR(string $clientCPR): self
     {
         $this->clientCPR = $clientCPR;
@@ -212,11 +260,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return Channel|null
+     */
     public function getChannel(): ?Channel
     {
         return $this->channel;
     }
 
+    /**
+     * @param Channel|null $channel
+     *
+     * @return Process
+     */
     public function setChannel(?Channel $channel): self
     {
         $this->channel = $channel;
@@ -224,11 +280,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return Reason|null
+     */
     public function getReason(): ?Reason
     {
         return $this->reason;
     }
 
+    /**
+     * @param Reason|null $reason
+     *
+     * @return Process
+     */
     public function setReason(?Reason $reason): self
     {
         $this->reason = $reason;
@@ -236,11 +300,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return Service|null
+     */
     public function getService(): ?Service
     {
         return $this->service;
     }
 
+    /**
+     * @param Service|null $service
+     *
+     * @return Process
+     */
     public function setService(?Service $service): self
     {
         $this->service = $service;
@@ -248,11 +320,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return ProcessType|null
+     */
     public function getProcessType(): ?ProcessType
     {
         return $this->processType;
     }
 
+    /**
+     * @param ProcessType|null $processType
+     *
+     * @return Process
+     */
     public function setProcessType(?ProcessType $processType): self
     {
         $this->processType = $processType;
@@ -260,11 +340,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return ProcessStatus|null
+     */
     public function getProcessStatus(): ?ProcessStatus
     {
         return $this->processStatus;
     }
 
+    /**
+     * @param ProcessStatus|null $processStatus
+     *
+     * @return Process
+     */
     public function setProcessStatus(?ProcessStatus $processStatus): self
     {
         $this->processStatus = $processStatus;
@@ -280,6 +368,11 @@ class Process extends AbstractEntity
         return $this->reminders;
     }
 
+    /**
+     * @param Reminder $reminder
+     *
+     * @return Process
+     */
     public function addReminder(Reminder $reminder): self
     {
         if (!$this->reminders->contains($reminder)) {
@@ -290,6 +383,11 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @param Reminder $reminder
+     *
+     * @return Process
+     */
     public function removeReminder(Reminder $reminder): self
     {
         if ($this->reminders->contains($reminder)) {
@@ -311,6 +409,11 @@ class Process extends AbstractEntity
         return $this->journalEntries;
     }
 
+    /**
+     * @param JournalEntry $journalEntry
+     *
+     * @return Process
+     */
     public function addJournalEntry(JournalEntry $journalEntry): self
     {
         if (!$this->journalEntries->contains($journalEntry)) {
@@ -321,6 +424,11 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @param JournalEntry $journalEntry
+     *
+     * @return Process
+     */
     public function removeJournalEntry(JournalEntry $journalEntry): self
     {
         if ($this->journalEntries->contains($journalEntry)) {
@@ -334,11 +442,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return Client|null
+     */
     public function getClient(): ?Client
     {
         return $this->client;
     }
 
+    /**
+     * @param Client $client
+     *
+     * @return Process
+     */
     public function setClient(Client $client): self
     {
         $this->client = $client;
@@ -351,11 +467,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return Conclusion|null
+     */
     public function getConclusion(): ?Conclusion
     {
         return $this->conclusion;
     }
 
+    /**
+     * @param Conclusion|null $conclusion
+     *
+     * @return Process
+     */
     public function setConclusion(?Conclusion $conclusion): self
     {
         $this->conclusion = $conclusion;
@@ -377,6 +501,11 @@ class Process extends AbstractEntity
         return $this->economyEntries;
     }
 
+    /**
+     * @param EconomyEntry $economyEntry
+     *
+     * @return Process
+     */
     public function addEconomyEntry(EconomyEntry $economyEntry): self
     {
         if (!$this->economyEntries->contains($economyEntry)) {
@@ -387,6 +516,11 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @param EconomyEntry $economyEntry
+     *
+     * @return Process
+     */
     public function removeEconomyEntry(EconomyEntry $economyEntry): self
     {
         if ($this->economyEntries->contains($economyEntry)) {
@@ -408,6 +542,11 @@ class Process extends AbstractEntity
         return $this->logEntries;
     }
 
+    /**
+     * @param ProcessLogEntry $logEntry
+     *
+     * @return Process
+     */
     public function addLogEntry(ProcessLogEntry $logEntry): self
     {
         if (!$this->logEntries->contains($logEntry)) {
@@ -418,6 +557,11 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @param ProcessLogEntry $logEntry
+     *
+     * @return Process
+     */
     public function removeLogEntry(ProcessLogEntry $logEntry): self
     {
         if ($this->logEntries->contains($logEntry)) {
@@ -431,11 +575,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getPoliceReport(): ?bool
     {
         return $this->policeReport;
     }
 
+    /**
+     * @param bool|null $policeReport
+     *
+     * @return Process
+     */
     public function setPoliceReport(?bool $policeReport): self
     {
         $this->policeReport = $policeReport;
@@ -443,11 +595,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getCourtDecision(): ?bool
     {
         return $this->courtDecision;
     }
 
+    /**
+     * @param bool|null $courtDecision
+     *
+     * @return Process
+     */
     public function setCourtDecision(?bool $courtDecision): self
     {
         $this->courtDecision = $courtDecision;
@@ -455,11 +615,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getLockedNetValue(): ?float
     {
         return $this->lockedNetValue;
     }
 
+    /**
+     * @param float|null $lockedNetValue
+     *
+     * @return Process
+     */
     public function setLockedNetValue(?float $lockedNetValue): self
     {
         $this->lockedNetValue = $lockedNetValue;
@@ -467,11 +635,17 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function getVisitedByCaseWorker(): bool
     {
         return $this->visitedByCaseWorker;
     }
 
+    /**
+     * @param bool $visited
+     */
     public function setVisitedByCaseWorker(bool $visited)
     {
         $this->visitedByCaseWorker = $visited;
@@ -485,6 +659,11 @@ class Process extends AbstractEntity
         return $this->lockedNetValues;
     }
 
+    /**
+     * @param LockedNetValue $lockedNetValue
+     *
+     * @return Process
+     */
     public function addLockedNetValue(LockedNetValue $lockedNetValue): self
     {
         if (!$this->lockedNetValues->contains($lockedNetValue)) {
@@ -495,6 +674,11 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @param LockedNetValue $lockedNetValue
+     *
+     * @return Process
+     */
     public function removeLockedNetValue(LockedNetValue $lockedNetValue): self
     {
         if ($this->lockedNetValues->contains($lockedNetValue)) {
@@ -510,6 +694,9 @@ class Process extends AbstractEntity
 
     /**
      * @Assert\Callback
+     *
+     * @param ExecutionContextInterface $context
+     * @param                           $payload
      */
     public function validateCourtDecision(ExecutionContextInterface $context, $payload)
     {

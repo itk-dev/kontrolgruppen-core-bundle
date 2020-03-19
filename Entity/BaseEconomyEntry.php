@@ -15,18 +15,21 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
+ *
  * @Gedmo\Loggable()
  */
 class BaseEconomyEntry extends EconomyEntry
 {
     /**
      * @ORM\Column(type="integer")
+     *
      * @Gedmo\Versioned()
      */
     private $accountNumber;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @Gedmo\Versioned()
      */
     private $date;
@@ -36,16 +39,27 @@ class BaseEconomyEntry extends EconomyEntry
      */
     private $account;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return int|null
+     */
     public function getAccountNumber(): ?int
     {
         return $this->accountNumber;
     }
 
+    /**
+     * @param int $accountNumber
+     *
+     * @return BaseEconomyEntry
+     */
     public function setAccountNumber(int $accountNumber): self
     {
         $this->accountNumber = $accountNumber;
@@ -53,11 +67,19 @@ class BaseEconomyEntry extends EconomyEntry
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
+    /**
+     * @param \DateTimeInterface $date
+     *
+     * @return BaseEconomyEntry
+     */
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
@@ -65,11 +87,19 @@ class BaseEconomyEntry extends EconomyEntry
         return $this;
     }
 
+    /**
+     * @return Account|null
+     */
     public function getAccount(): ?Account
     {
         return $this->account;
     }
 
+    /**
+     * @param Account|null $account
+     *
+     * @return BaseEconomyEntry
+     */
     public function setAccount(?Account $account): self
     {
         $this->account = $account;

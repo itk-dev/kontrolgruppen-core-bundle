@@ -15,6 +15,9 @@ use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
 
+/**
+ * Class RevenueExport.
+ */
 class RevenueExport extends AbstractExport
 {
     protected $title = 'Samlet provenue opdelt på ydelser';
@@ -22,6 +25,14 @@ class RevenueExport extends AbstractExport
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
+    /**
+     * RevenueExport constructor.
+     *
+     * @param EntityManagerInterface $entityManager
+     * @param EconomyService         $economyService
+     *
+     * @throws \Exception
+     */
     public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService)
     {
         parent::__construct();
@@ -29,11 +40,17 @@ class RevenueExport extends AbstractExport
         $this->economyService = $economyService;
     }
 
+    /**
+     * @return array
+     */
     public function getParameters()
     {
         return parent::getParameters();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function writeData()
     {
         $processes = $this->getProcesses();
@@ -106,6 +123,8 @@ class RevenueExport extends AbstractExport
 
     /**
      * @return Process[]
+     *
+     * @throws \Exception
      */
     private function getProcesses()
     {

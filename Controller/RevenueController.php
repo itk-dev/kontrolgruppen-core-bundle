@@ -24,6 +24,15 @@ class RevenueController extends BaseController
 {
     /**
      * @Route("/", name="economy_revenue")
+     *
+     * @param Request        $request
+     * @param Process        $process
+     * @param EconomyService $economyService
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function revenue(Request $request, Process $process, EconomyService $economyService)
     {

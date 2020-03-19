@@ -17,6 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\AccountRepository")
+ *
  * @Gedmo\Loggable()
  */
 class Account extends AbstractTaxonomy
@@ -26,6 +27,9 @@ class Account extends AbstractTaxonomy
      */
     private $baseEconomyEntries;
 
+    /**
+     * Account constructor.
+     */
     public function __construct()
     {
         $this->baseEconomyEntries = new ArrayCollection();
@@ -39,6 +43,11 @@ class Account extends AbstractTaxonomy
         return $this->baseEconomyEntries;
     }
 
+    /**
+     * @param BaseEconomyEntry $baseEconomyEntry
+     *
+     * @return Account
+     */
     public function addBaseEconomyEntry(BaseEconomyEntry $baseEconomyEntry): self
     {
         if (!$this->baseEconomyEntries->contains($baseEconomyEntry)) {
@@ -49,6 +58,11 @@ class Account extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param BaseEconomyEntry $baseEconomyEntry
+     *
+     * @return Account
+     */
     public function removeBaseEconomyEntry(BaseEconomyEntry $baseEconomyEntry): self
     {
         if ($this->baseEconomyEntries->contains($baseEconomyEntry)) {

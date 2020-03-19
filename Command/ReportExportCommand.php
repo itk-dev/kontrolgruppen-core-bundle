@@ -23,8 +23,14 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
+/**
+ * Class ReportExportCommand.
+ */
 class ReportExportCommand extends Command
 {
+    /**
+     * @var string
+     */
     protected static $defaultName = 'kontrolgruppen:report:export';
 
     /** @var \Kontrolgruppen\CoreBundle\Export\Manager */
@@ -42,13 +48,17 @@ class ReportExportCommand extends Command
     /** @var ParameterBagInterface */
     private $parameters;
 
-    public function __construct(
-        Manager $exportManager,
-        UserRepository $userRepository,
-        EntityManagerInterface $entityManager,
-        Filesystem $filesystem,
-        ParameterBagInterface $parameters
-    ) {
+    /**
+     * ReportExportCommand constructor.
+     *
+     * @param Manager                $exportManager
+     * @param UserRepository         $userRepository
+     * @param EntityManagerInterface $entityManager
+     * @param Filesystem             $filesystem
+     * @param ParameterBagInterface  $parameters
+     */
+    public function __construct(Manager $exportManager, UserRepository $userRepository, EntityManagerInterface $entityManager, Filesystem $filesystem, ParameterBagInterface $parameters)
+    {
         parent::__construct();
         $this->exportManager = $exportManager;
         $this->userRepository = $userRepository;
@@ -57,6 +67,9 @@ class ReportExportCommand extends Command
         $this->parameters = $parameters;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function configure()
     {
         $this
@@ -73,6 +86,9 @@ class ReportExportCommand extends Command
             ->addOption('output-filename', null, InputOption::VALUE_REQUIRED, 'Filename to save export result to (implies --save).');
     }
 
+    /**
+     * @return string
+     */
     public function getHelp()
     {
         $help[] = parent::getHelp();
@@ -95,6 +111,9 @@ class ReportExportCommand extends Command
         return implode(PHP_EOL, $help);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // @TODO: Run as authenticated user.
@@ -103,7 +122,7 @@ class ReportExportCommand extends Command
         $exportClass = $input->getArgument('export');
         $export = $this->exportManager->getExport($exportClass);
         if (null === $export) {
-            throw new RuntimeException('Invalid export: '.$exportClass);
+            throw new RuntimeException(sprintf('Invalid export: %s', $exportClass));
         }
         $parameters = $input->getArgument('parameters');
         $parameters = $this->exportManager->getExportParameters($export, $parameters ?? '');
@@ -121,7 +140,7 @@ class ReportExportCommand extends Command
         if (!$save) {
             // Dump to stdout.
             $this->exportManager
-                ->run($export, $parameters, $format, $save)
+                ->run($export, $parameters, $format)
                 ->save('php://output');
         } else {
             $result = $this->exportManager->save($export, $parameters, $format, $outputFilename);

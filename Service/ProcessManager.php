@@ -23,6 +23,9 @@ use Kontrolgruppen\CoreBundle\Entity\User;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Class ProcessManager.
+ */
 class ProcessManager
 {
     private $processRepository;
@@ -34,15 +37,14 @@ class ProcessManager
     /**
      * ProcessManager constructor.
      *
-     * @param $processRepository
+     * @param ProcessRepository      $processRepository
+     * @param EntityManagerInterface $entityManager
+     * @param LockService            $lockService
+     * @param CprServiceInterface    $cprService
+     * @param LoggerInterface        $logger
      */
-    public function __construct(
-        ProcessRepository $processRepository,
-        EntityManagerInterface $entityManager,
-        LockService $lockService,
-        CprServiceInterface $cprService,
-        LoggerInterface $logger
-    ) {
+    public function __construct(ProcessRepository $processRepository, EntityManagerInterface $entityManager, LockService $lockService, CprServiceInterface $cprService, LoggerInterface $logger)
+    {
         $this->processRepository = $processRepository;
         $this->entityManager = $entityManager;
         $this->lockService = $lockService;
@@ -87,6 +89,8 @@ class ProcessManager
     /**
      * Find open processes assigned to user that has not been visited by the user.
      *
+     * @param User $user
+     *
      * @return mixed
      */
     public function getUsersUnvisitedProcesses(User $user)
@@ -111,6 +115,12 @@ class ProcessManager
         return $query->execute();
     }
 
+    /**
+     * @param array $unvisitedProcesses
+     * @param array $processes
+     *
+     * @return array|ArrayCollection
+     */
     public function markProcessesAsUnvisited(array $unvisitedProcesses, array $processes)
     {
         $unvisitedProcesses = new ArrayCollection($unvisitedProcesses);
@@ -128,12 +138,15 @@ class ProcessManager
     /**
      * Create new process.
      *
+     * @param Process|null     $process
+     * @param ProcessType|null $processType
+     *
      * @return \Kontrolgruppen\CoreBundle\Entity\Process
+     *
+     * @throws \Exception
      */
-    public function newProcess(
-        Process $process = null,
-        ProcessType $processType = null
-    ) {
+    public function newProcess(Process $process = null, ProcessType $processType = null)
+    {
         if (null === $process) {
             $process = new Process();
             $process->setProcessType($processType);
@@ -162,19 +175,12 @@ class ProcessManager
         return $process;
     }
 
-    private function decideStatusForProcess(Process $process)
-    {
-        if (empty($process->getCaseWorker())) {
-            return $process->getProcessType()->getDefaultProcessStatusOnEmptyCaseWorker();
-        }
-
-        return $process->getProcessType()->getDefaultProcessStatus();
-    }
-
     /**
      * Generate a new case number.
      *
      * @return string case number of format YY-XXXX where YY is the year and XXXX an increasing counter
+     *
+     * @throws \Exception
      */
     public function getNewCaseNumber()
     {
@@ -195,6 +201,25 @@ class ProcessManager
         return date('y').'-'.$caseNumber;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return \Kontrolgruppen\CoreBundle\Entity\ProcessStatus|null
+     */
+    private function decideStatusForProcess(Process $process)
+    {
+        if (empty($process->getCaseWorker())) {
+            return $process->getProcessType()->getDefaultProcessStatusOnEmptyCaseWorker();
+        }
+
+        return $process->getProcessType()->getDefaultProcessStatus();
+    }
+
+    /**
+     * @param Process $process
+     *
+     * @return int
+     */
     private function getCaseNumberCounterFromProcess(Process $process)
     {
         $positionOfDash = strpos($process->getCaseNumber(), '-');
@@ -203,6 +228,11 @@ class ProcessManager
         return $processCounter;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return Conclusion
+     */
     private function createConclusionForProcess(Process $process): Conclusion
     {
         $conclusionClass = $process->getProcessType()->getConclusionClass();
@@ -210,6 +240,11 @@ class ProcessManager
         return new $conclusionClass();
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return Client
+     */
     private function createClientForProcess(Process $process): Client
     {
         $client = new Client();

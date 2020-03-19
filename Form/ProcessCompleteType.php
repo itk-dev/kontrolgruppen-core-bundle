@@ -17,18 +17,27 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class ProcessCompleteType.
+ */
 class ProcessCompleteType extends AbstractType
 {
     protected $serviceRepository;
 
     /**
      * ProcessCompleteType constructor.
+     *
+     * @param ServiceRepository $serviceRepository
      */
     public function __construct(ServiceRepository $serviceRepository)
     {
         $this->serviceRepository = $serviceRepository;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -62,6 +71,9 @@ class ProcessCompleteType extends AbstractType
         ;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

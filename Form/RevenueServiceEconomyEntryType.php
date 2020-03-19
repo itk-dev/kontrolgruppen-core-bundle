@@ -17,15 +17,27 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
+/**
+ * Class RevenueServiceEconomyEntryType.
+ */
 class RevenueServiceEconomyEntryType extends AbstractType
 {
     private $authorizationChecker;
 
+    /**
+     * RevenueServiceEconomyEntryType constructor.
+     *
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     */
     public function __construct(AuthorizationCheckerInterface $authorizationChecker)
     {
         $this->authorizationChecker = $authorizationChecker;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         /** @var ServiceEconomyEntry $serviceEconomyEntry */
@@ -105,6 +117,9 @@ class RevenueServiceEconomyEntryType extends AbstractType
         ;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

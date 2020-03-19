@@ -22,6 +22,13 @@ class ReminderController extends BaseController
 {
     /**
      * @Route("/", name="user_reminder_index", methods={"GET"})
+     *
+     * @param ReminderRepository $reminderRepository
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(ReminderRepository $reminderRepository): Response
     {
@@ -32,6 +39,13 @@ class ReminderController extends BaseController
 
     /**
      * @Route("/all", name="user_reminder_all", methods={"GET"})
+     *
+     * @param ReminderRepository $reminderRepository
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function all(ReminderRepository $reminderRepository): Response
     {
@@ -42,6 +56,14 @@ class ReminderController extends BaseController
 
     /**
      * @Route("/latest/{interval}", name="user_reminder_get_latest", methods={"GET"})
+     *
+     * @param string             $interval
+     * @param ReminderRepository $reminderRepository
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getLatestReminders(string $interval, ReminderRepository $reminderRepository)
     {

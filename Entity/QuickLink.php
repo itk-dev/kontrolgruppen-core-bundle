@@ -15,6 +15,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\QuickLinkRepository")
+ *
  * @Gedmo\Loggable()
  */
 class QuickLink extends AbstractTaxonomy
@@ -29,11 +30,19 @@ class QuickLink extends AbstractTaxonomy
      */
     private $weight;
 
+    /**
+     * @return string|null
+     */
     public function getHref(): ?string
     {
         return $this->href;
     }
 
+    /**
+     * @param string $href
+     *
+     * @return QuickLink
+     */
     public function setHref(string $href): self
     {
         $this->href = $href;
@@ -41,11 +50,19 @@ class QuickLink extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getWeight(): ?int
     {
         return $this->weight;
     }
 
+    /**
+     * @param int|null $weight
+     *
+     * @return QuickLink
+     */
     public function setWeight(?int $weight): self
     {
         $this->weight = $weight;

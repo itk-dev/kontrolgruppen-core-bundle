@@ -29,13 +29,14 @@ class MenuService
 
     /**
      * MenuService constructor.
+     *
+     * @param TranslatorInterface           $translator
+     * @param RouterInterface               $router
+     * @param TwigExtension                 $twigExtension
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(
-        TranslatorInterface $translator,
-        RouterInterface $router,
-        TwigExtension $twigExtension,
-        AuthorizationCheckerInterface $authorizationChecker
-    ) {
+    public function __construct(TranslatorInterface $translator, RouterInterface $router, TwigExtension $twigExtension, AuthorizationCheckerInterface $authorizationChecker)
+    {
         $this->translator = $translator;
         $this->router = $router;
         $this->twigExtension = $twigExtension;
@@ -100,6 +101,7 @@ class MenuService
     /**
      * Get the process menu.
      *
+     * @param string  $path
      * @param Process $process
      *
      * @return array
@@ -338,10 +340,11 @@ class MenuService
     /**
      * Create menu item.
      *
-     * @param $itemName
-     * @param $active
-     * @param $pathName
-     * @param $disabled
+     * @param       $itemName
+     * @param bool  $active
+     * @param       $pathName
+     * @param array $pathParameters
+     * @param bool  $disabled
      *
      * @return array
      */

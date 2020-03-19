@@ -25,6 +25,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
+/**
+ * Class SAMLAuthenticator.
+ */
 class SAMLAuthenticator extends AbstractGuardAuthenticator
 {
     /** @var \Symfony\Component\Routing\RouterInterface */
@@ -33,27 +36,47 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
     /** @var array */
     private $settings;
 
+    /**
+     * SAMLAuthenticator constructor.
+     *
+     * @param RouterInterface $router
+     * @param array           $settings
+     */
     public function __construct(RouterInterface $router, array $settings)
     {
         $this->router = $router;
         $this->settings = $settings;
     }
 
-    public function start(
-        Request $request,
-        AuthenticationException $authException = null
-    ) {
+    /**
+     * @param Request                      $request
+     * @param AuthenticationException|null $authException
+     *
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function start(Request $request, AuthenticationException $authException = null)
+    {
         $url = $this->router->generate('saml_login');
 
         return new RedirectResponse($url);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return bool
+     */
     public function supports(Request $request)
     {
         return '/saml/acs' === $request->getPathInfo()
             && !empty($request->get('SAMLResponse'));
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array|mixed
+     */
     public function getCredentials(Request $request)
     {
         return [
@@ -62,6 +85,15 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         ];
     }
 
+    /**
+     * @param mixed                 $credentials
+     * @param UserProviderInterface $userProvider
+     *
+     * @return UserInterface|null
+     *
+     * @throws Error
+     * @throws \OneLogin\Saml2\ValidationError
+     */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         $auth = $this->getAuth();
@@ -93,64 +125,78 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
     }
 
     /**
-     * Get username.
+     * @param mixed         $credentials
+     * @param UserInterface $user
      *
-     * @return string
+     * @return bool
      */
-    private function getUsername(Auth $auth)
-    {
-        if (isset($this->settings['username_attribute_name'])) {
-            $attribute = $auth->getAttribute($this->settings['username_attribute_name']);
-            if (!empty($attribute)) {
-                $username = reset($attribute);
-                if (!empty($username)) {
-                    return $username;
-                }
-            }
-        }
-
-        // Fallback.
-        return $auth->getNameId();
-    }
-
     public function checkCredentials($credentials, UserInterface $user)
     {
         return true;
     }
 
-    public function onAuthenticationFailure(
-        Request $request,
-        AuthenticationException $exception
-    ) {
+    /**
+     * @param Request                 $request
+     * @param AuthenticationException $exception
+     *
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response|null
+     */
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    {
         $request->attributes->set(Security::AUTHENTICATION_ERROR, $exception);
 
         return new RedirectResponse('/');
     }
 
-    public function onAuthenticationSuccess(
-        Request $request,
-        TokenInterface $token,
-        $providerKey
-    ) {
+    /**
+     * @param Request        $request
+     * @param TokenInterface $token
+     * @param string         $providerKey
+     *
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response|null
+     */
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    {
         // @TODO: Redirect to originally requested url.
         return new RedirectResponse('/');
     }
 
+    /**
+     * @return bool
+     */
     public function supportsRememberMe()
     {
         return false;
     }
 
+    /**
+     * @return Auth
+     *
+     * @throws Error
+     */
     public function getAuth()
     {
         return new Auth($this->getSettings());
     }
 
+    /**
+     * @param string $payload
+     *
+     * @return Response
+     *
+     * @throws Error
+     * @throws \OneLogin\Saml2\ValidationError
+     */
     public function getResponse(string $payload)
     {
         return new Response(new Settings($this->getSettings()), $payload);
     }
 
+    /**
+     * @return array
+     *
+     * @throws \Exception
+     */
     public function getSettings()
     {
         if (isset($this->settings['idp']) && \is_string($this->settings['idp'])) {
@@ -165,11 +211,22 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         return $this->settings;
     }
 
+    /**
+     * @return bool
+     */
     public function supportsSingleLogout()
     {
         return false;
     }
 
+    /**
+     * @param $samlResponse
+     *
+     * @return array
+     *
+     * @throws Error
+     * @throws \OneLogin\Saml2\ValidationError
+     */
     public function getRoles($samlResponse)
     {
         $roles = [];
@@ -204,11 +261,22 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         return $roles;
     }
 
+    /**
+     * @param array  $attributes
+     * @param string $attributeName
+     *
+     * @return array|mixed
+     */
     private function getSAMLRoles(array $attributes, string $attributeName)
     {
         return $attributes[$attributeName] ?? [];
     }
 
+    /**
+     * @param $settings
+     *
+     * @return array
+     */
     private function getRolesMap($settings)
     {
         $map = [];
@@ -220,5 +288,28 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         }
 
         return $map;
+    }
+
+    /**
+     * Get username.
+     *
+     * @param Auth $auth
+     *
+     * @return string
+     */
+    private function getUsername(Auth $auth)
+    {
+        if (isset($this->settings['username_attribute_name'])) {
+            $attribute = $auth->getAttribute($this->settings['username_attribute_name']);
+            if (!empty($attribute)) {
+                $username = reset($attribute);
+                if (!empty($username)) {
+                    return $username;
+                }
+            }
+        }
+
+        // Fallback.
+        return $auth->getNameId();
     }
 }

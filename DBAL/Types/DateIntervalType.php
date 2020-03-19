@@ -12,6 +12,9 @@ namespace Kontrolgruppen\CoreBundle\DBAL\Types;
 
 use Fresh\DoctrineEnumBundle\DBAL\Types\AbstractEnumType;
 
+/**
+ * Class DateIntervalType.
+ */
 final class DateIntervalType extends AbstractEnumType
 {
     public const THIS_WEEK = 'THIS_WEEK';

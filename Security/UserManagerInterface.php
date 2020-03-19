@@ -12,6 +12,9 @@ namespace Kontrolgruppen\CoreBundle\Security;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Interface UserManagerInterface.
+ */
 interface UserManagerInterface
 {
     /**
@@ -23,11 +26,15 @@ interface UserManagerInterface
 
     /**
      * Deletes a user.
+     *
+     * @param UserInterface $user
      */
     public function deleteUser(UserInterface $user);
 
     /**
      * Finds one user by the given criteria.
+     *
+     * @param array $criteria
      *
      * @return UserInterface|null
      */
@@ -58,11 +65,16 @@ interface UserManagerInterface
 
     /**
      * Reloads a user.
+     *
+     * @param UserInterface $user
      */
     public function reloadUser(UserInterface $user);
 
     /**
      * Updates a user.
+     *
+     * @param UserInterface $user
+     * @param bool          $andFlush
      */
     public function updateUser(UserInterface $user, bool $andFlush = true);
 }

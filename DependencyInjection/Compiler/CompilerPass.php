@@ -13,8 +13,14 @@ namespace Kontrolgruppen\CoreBundle\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
+/**
+ * Class CompilerPass.
+ */
 class CompilerPass implements CompilerPassInterface
 {
+    /**
+     * @param ContainerBuilder $container
+     */
     public function process(ContainerBuilder $container)
     {
         $loader = $this->getTwigLoader($container);
@@ -40,6 +46,11 @@ class CompilerPass implements CompilerPassInterface
         }
     }
 
+    /**
+     * @param ContainerBuilder $container
+     *
+     * @return \Symfony\Component\DependencyInjection\Definition|null
+     */
     private function getTwigLoader(ContainerBuilder $container)
     {
         foreach ([

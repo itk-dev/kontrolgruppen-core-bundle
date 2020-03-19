@@ -14,6 +14,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 
+/**
+ * Class HitRateExport.
+ */
 class HitRateExport extends AbstractExport
 {
     protected $title = 'Hitrate';
@@ -21,17 +24,30 @@ class HitRateExport extends AbstractExport
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
+    /**
+     * HitRateExport constructor.
+     *
+     * @param EntityManagerInterface $entityManager
+     *
+     * @throws \Exception
+     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         parent::__construct();
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @return array
+     */
     public function getParameters()
     {
         return parent::getParameters();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function writeData()
     {
         $processes = $this->getProcesses();
@@ -74,6 +90,8 @@ class HitRateExport extends AbstractExport
 
     /**
      * @return Process[]
+     *
+     * @throws \Exception
      */
     private function getProcesses()
     {

@@ -10,6 +10,9 @@
 
 namespace Kontrolgruppen\CoreBundle\CPR;
 
+/**
+ * Class CprException.
+ */
 class CprException extends \Exception
 {
 }

@@ -17,12 +17,17 @@ use Kontrolgruppen\CoreBundle\Event\GetConclusionTypesEvent;
 use Kontrolgruppen\CoreBundle\Service\ConclusionService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+/**
+ * Class ConclusionListener.
+ */
 class ConclusionListener implements EventSubscriberInterface
 {
     private $conclusionService;
 
     /**
      * ConclusionListener constructor.
+     *
+     * @param ConclusionService $conclusionService
      */
     public function __construct(ConclusionService $conclusionService)
     {
@@ -44,6 +49,8 @@ class ConclusionListener implements EventSubscriberInterface
 
     /**
      * Supply conclusion types.
+     *
+     * @param GetConclusionTypesEvent $event
      */
     public function onGetConclusionTypes(GetConclusionTypesEvent $event)
     {
@@ -54,6 +61,9 @@ class ConclusionListener implements EventSubscriberInterface
         $event->setTypes($types);
     }
 
+    /**
+     * @param GetConclusionTemplateEvent $event
+     */
     public function onGetConclusionTemplate(GetConclusionTemplateEvent $event)
     {
         // Only react to locally based conclusion templates.

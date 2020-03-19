@@ -14,6 +14,9 @@ use Doctrine\Common\EventArgs;
 use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 
+/**
+ * Class OnReadEventArgs.
+ */
 class OnReadEventArgs extends EventArgs
 {
     /**
@@ -25,6 +28,9 @@ class OnReadEventArgs extends EventArgs
 
     /**
      * Constructor.
+     *
+     * @param EntityManagerInterface $em
+     * @param Process                $process
      */
     public function __construct(EntityManagerInterface $em, Process $process)
     {
@@ -42,6 +48,9 @@ class OnReadEventArgs extends EventArgs
         return $this->em;
     }
 
+    /**
+     * @return Process
+     */
     public function getProcess()
     {
         return $this->process;

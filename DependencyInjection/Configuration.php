@@ -14,44 +14,11 @@ use Kontrolgruppen\CoreBundle\Entity\User;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+/**
+ * Class Configuration.
+ */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfigTreeBuilder()
-    {
-        $treeBuilder = new TreeBuilder('kontrolgruppen_core');
-
-        $treeBuilder->getRootNode()
-            ->children()
-                ->floatNode('net_default_value')->defaultValue(.7)->end()
-            ->end()
-        ;
-
-        $treeBuilder->getRootNode()
-            ->children()
-            ->variableNode('exports')->info('List of export services')->end()
-            ->scalarNode('export_directory')->info('Where to save export results')->isRequired()->end()
-            ->end()
-            ;
-
-        $treeBuilder->getRootNode()
-            ->children()
-            ->scalarNode('user_class')->defaultValue(User::class)->end()
-            ->arrayNode('saml')
-            ->children()
-            ->variableNode('php_saml_settings')
-            ->info('https://github.com/onelogin/php-saml#settings')
-            ->defaultValue($this->oneloginSaml['settings'] + $this->oneloginSaml['advanced'])
-            ->end()
-            ->end()
-            ->end()
-            ->end();
-
-        return $treeBuilder;
-    }
-
     private $oneloginSaml = [
         'settings' => [
             // If 'strict' is True, then the PHP Toolkit will reject unsigned
@@ -306,4 +273,40 @@ class Configuration implements ConfigurationInterface
             ],
         ],
     ];
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfigTreeBuilder()
+    {
+        $treeBuilder = new TreeBuilder('kontrolgruppen_core');
+
+        $treeBuilder->getRootNode()
+            ->children()
+                ->floatNode('net_default_value')->defaultValue(.7)->end()
+            ->end()
+        ;
+
+        $treeBuilder->getRootNode()
+            ->children()
+            ->variableNode('exports')->info('List of export services')->end()
+            ->scalarNode('export_directory')->info('Where to save export results')->isRequired()->end()
+            ->end()
+            ;
+
+        $treeBuilder->getRootNode()
+            ->children()
+            ->scalarNode('user_class')->defaultValue(User::class)->end()
+            ->arrayNode('saml')
+            ->children()
+            ->variableNode('php_saml_settings')
+            ->info('https://github.com/onelogin/php-saml#settings')
+            ->defaultValue($this->oneloginSaml['settings'] + $this->oneloginSaml['advanced'])
+            ->end()
+            ->end()
+            ->end()
+            ->end();
+
+        return $treeBuilder;
+    }
 }

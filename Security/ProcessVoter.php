@@ -16,6 +16,9 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 
+/**
+ * Class ProcessVoter.
+ */
 class ProcessVoter extends Voter
 {
     // these strings are just invented: you can use anything
@@ -25,6 +28,11 @@ class ProcessVoter extends Voter
 
     private $security;
 
+    /**
+     * ProcessVoter constructor.
+     *
+     * @param Security $security
+     */
     public function __construct(Security $security)
     {
         $this->security = $security;
@@ -81,6 +89,12 @@ class ProcessVoter extends Voter
         throw new \LogicException('This code should not be reached!');
     }
 
+    /**
+     * @param Process $process
+     * @param User    $user
+     *
+     * @return bool
+     */
     private function canView(Process $process, User $user)
     {
         // if they can edit, they can view
@@ -95,6 +109,12 @@ class ProcessVoter extends Voter
         return false;
     }
 
+    /**
+     * @param Process $post
+     * @param User    $user
+     *
+     * @return bool
+     */
     private function canEdit(Process $post, User $user)
     {
         return $this->security->isGranted('ROLE_SAGSBEHANDLER');

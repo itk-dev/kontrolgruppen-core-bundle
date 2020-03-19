@@ -17,6 +17,9 @@ use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Repository\ProcessLogEntryRepository;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
 
+/**
+ * Class Export.
+ */
 class Export extends AbstractExport
 {
     protected $title = 'BI';
@@ -30,6 +33,15 @@ class Export extends AbstractExport
     /** @var ProcessLogEntryRepository */
     private $processLogEntryRepository;
 
+    /**
+     * Export constructor.
+     *
+     * @param EntityManagerInterface    $entityManager
+     * @param EconomyService            $economyService
+     * @param ProcessLogEntryRepository $processLogEntryRepository
+     *
+     * @throws \Exception
+     */
     public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService, ProcessLogEntryRepository $processLogEntryRepository)
     {
         parent::__construct();
@@ -38,11 +50,17 @@ class Export extends AbstractExport
         $this->processLogEntryRepository = $processLogEntryRepository;
     }
 
+    /**
+     * @return array
+     */
     public function getParameters()
     {
         return [];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function writeData()
     {
         $processes = $this->getProcesses();

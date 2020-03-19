@@ -12,10 +12,18 @@ namespace Kontrolgruppen\CoreBundle\CPR;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FaellesSQLCprServiceResult implements CprServiceResult
+/**
+ * Class FaellesSQLCprServiceResult.
+ */
+class FaellesSQLCprServiceResult implements CprServiceResultInterface
 {
     private $serviceResult;
 
+    /**
+     * FaellesSQLCprServiceResult constructor.
+     *
+     * @param array $serviceResult
+     */
     public function __construct(array $serviceResult)
     {
         $optionsResolver = new OptionsResolver();
@@ -24,6 +32,9 @@ class FaellesSQLCprServiceResult implements CprServiceResult
         $this->serviceResult = $optionsResolver->resolve($serviceResult);
     }
 
+    /**
+     * @param OptionsResolver $optionsResolver
+     */
     public function configureOptions(OptionsResolver $optionsResolver)
     {
         $optionsResolver->setDefined([
@@ -56,6 +67,9 @@ class FaellesSQLCprServiceResult implements CprServiceResult
         $optionsResolver->setAllowedTypes('Postdistrikt', 'string');
     }
 
+    /**
+     * @return string
+     */
     public function getFirstName(): string
     {
         return $this->serviceResult['Fornavn'];
@@ -69,11 +83,17 @@ class FaellesSQLCprServiceResult implements CprServiceResult
         return $this->serviceResult['Mellemnavn'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getLastName(): string
     {
         return $this->serviceResult['Efternavn'];
     }
 
+    /**
+     * @return string
+     */
     public function getStreetName(): string
     {
         return $this->serviceResult['Vejnavn'];
@@ -87,21 +107,33 @@ class FaellesSQLCprServiceResult implements CprServiceResult
         return $this->serviceResult['HusNr'];
     }
 
+    /**
+     * @return string|null
+     */
     public function getFloor(): ?string
     {
         return $this->serviceResult['Etage'];
     }
 
+    /**
+     * @return string|null
+     */
     public function getSide(): ?string
     {
         return $this->serviceResult['Side'];
     }
 
+    /**
+     * @return string
+     */
     public function getPostalCode(): string
     {
         return $this->serviceResult['Postnummer'];
     }
 
+    /**
+     * @return string
+     */
     public function getCity(): string
     {
         return $this->serviceResult['Postdistrikt'];

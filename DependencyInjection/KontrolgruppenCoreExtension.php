@@ -19,6 +19,9 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
+/**
+ * Class KontrolgruppenCoreExtension.
+ */
 class KontrolgruppenCoreExtension extends Extension implements PrependExtensionInterface
 {
     /**
@@ -54,6 +57,9 @@ class KontrolgruppenCoreExtension extends Extension implements PrependExtensionI
         }
     }
 
+    /**
+     * @param ContainerBuilder $container
+     */
     public function prepend(ContainerBuilder $container)
     {
         $container->setParameter('site_name', '%env(SITE_NAME)%');

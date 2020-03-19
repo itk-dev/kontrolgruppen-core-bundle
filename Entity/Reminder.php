@@ -15,18 +15,21 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ReminderRepository")
+ *
  * @Gedmo\Loggable()
  */
 class Reminder extends AbstractEntity implements ProcessLoggableInterface
 {
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @Gedmo\Versioned()
      */
     private $message;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @Gedmo\Versioned()
      */
     private $date;
@@ -39,15 +42,24 @@ class Reminder extends AbstractEntity implements ProcessLoggableInterface
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     *
      * @Gedmo\Versioned()
      */
     private $finished;
 
+    /**
+     * @return string|null
+     */
     public function getMessage(): ?string
     {
         return $this->message;
     }
 
+    /**
+     * @param string $message
+     *
+     * @return $this
+     */
     public function setMessage(string $message): self
     {
         $this->message = $message;
@@ -55,11 +67,19 @@ class Reminder extends AbstractEntity implements ProcessLoggableInterface
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
+    /**
+     * @param \DateTimeInterface $date
+     *
+     * @return $this
+     */
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
@@ -67,11 +87,19 @@ class Reminder extends AbstractEntity implements ProcessLoggableInterface
         return $this;
     }
 
+    /**
+     * @return Process|null
+     */
     public function getProcess(): ?Process
     {
         return $this->process;
     }
 
+    /**
+     * @param Process|null $process
+     *
+     * @return $this
+     */
     public function setProcess(?Process $process): self
     {
         $this->process = $process;
@@ -79,11 +107,19 @@ class Reminder extends AbstractEntity implements ProcessLoggableInterface
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getFinished(): ?bool
     {
         return $this->finished;
     }
 
+    /**
+     * @param bool|null $finished
+     *
+     * @return $this
+     */
     public function setFinished(?bool $finished): self
     {
         $this->finished = $finished;
