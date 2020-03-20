@@ -57,6 +57,7 @@ class ProcessCompleteType extends AbstractType
             ->add('forwardedToAuthorities', null, [
                 'label' => 'service.form.forwarded_to_authorities',
                 'by_reference' => false,
+                'multiple' => null,
                 'attr' => ['class' => 'select2'],
             ])
         ;
