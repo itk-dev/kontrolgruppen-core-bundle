@@ -598,11 +598,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getPerformedCompanyCheck(): ?bool
     {
         return $this->performedCompanyCheck;
     }
 
+    /**
+     * @param bool|null $performedCompanyCheck
+     *
+     * @return $this
+     */
     public function setPerformedCompanyCheck(?bool $performedCompanyCheck): self
     {
         $this->performedCompanyCheck = $performedCompanyCheck;

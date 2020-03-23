@@ -50,7 +50,7 @@ class ProcessCompleteType extends AbstractType
                 'choices' => [
                     'court_decision.true' => true,
                     'court_decision.false' => false,
-                ]
+                ],
             ])
             ->add('performedCompanyCheck', ChoiceType::class, [
                 'label' => 'process.form.perforned_company_check',
