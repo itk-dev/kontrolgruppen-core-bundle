@@ -199,6 +199,18 @@ abstract class AbstractExport implements \JsonSerializable
     }
 
     /**
+     * Formats a boolean|null as Ja/Nej/null.
+     *
+     * @param bool|null $value
+     *
+     * @return string|null
+     */
+    protected function formatBooleanYesNoNull(?bool $value)
+    {
+        return true === $value ? 'Ja' : (false === $value ? 'Nej' : null);
+    }
+
+    /**
      * Format a date.
      */
     protected function formatDate(\DateTime $date, $format = 'short')

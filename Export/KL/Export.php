@@ -68,6 +68,7 @@ class Export extends AbstractExport
             'Overføres til KL',
             'Overføres til KL',
             'Overføres til KL',
+            'Overføres til KL',
             'Kun afsluttede sager overføres til KL',
             'Overføres ikke til KL',
         ]);
@@ -78,6 +79,7 @@ class Export extends AbstractExport
             'Sagstype',
             'Ydelsestype',
             'Er borgeren selvstændig erhvervsdrivende?',
+            'Har der været udført virksomhedskontrol?',
             'Samlet tilbagebetalingskrav i kr.',
             'Samlet fremadrettet besparelse ved ydelsesstop i kr.',
             'Videresendes til anden myndighed',
@@ -143,18 +145,17 @@ class Export extends AbstractExport
         $forwardedTo = $process->getForwardedToAuthorities();
         $forwardedTo = \count($forwardedTo) > 0 ? $forwardedTo[0] : null;
 
-        $policeReport = true === $process->getPoliceReport() ? 'Ja' : (false === $process->getPoliceReport() ? 'Nej' : null);
-
         return [
             'caseNumber' => $process->getCaseNumber(),
             'channel' => $process->getChannel() ? $process->getChannel()->getName() : null,
             'processType' => $process->getProcessType() ? $process->getProcessType()->getName() : null,
             'service' => $serviceName,
-            'clientHasOwnCompany' => $this->formatBoolean($process->getClient() && $process->getClient()->getHasOwnCompany()),
+            'clientHasOwnCompany' => $this->formatBooleanYesNoNull($process->getClient()->getHasOwnCompany()),
+            'performedCompanyCheck' => $this->formatBooleanYesNoNull($process->getPerformedCompanyCheck()),
             'repaymentSum' => 0.0,
             'futureSavingsSum' => 0.0,
             'isForwardedToAnotherAuthority' => $forwardedTo,
-            'policeReport' => $policeReport,
+            'policeReport' => $this->formatBooleanYesNoNull($process->getPoliceReport()),
             'status' => $process->getProcessStatus() ? $process->getProcessStatus()->getName() : null,
             'misc' => null,
         ];
