@@ -104,23 +104,22 @@ $(function () {
 
         // Transforms dom to match required by datetimepicker.
         let dateInputs = $('.js-datepicker');
-        dateInputs.each(function (i, val) {
-            let parent = val.closest('.form-group');
+        dateInputs.each(function (i) {
+            // Add target to input element.
+            let self = $(this);
+            self.attr('data-target', '#datetimepicker' + i);
+
+            // Setup containing element.
             let inputGroup = $('<div class="input-group date" id="datetimepicker' + i + '" data-target-input="nearest"></div>');
-            let input = $(parent).find('input');
-
-            $(input).attr('data-target', '#datetimepicker' + i);
-            $(parent).find('input').remove();
-            inputGroup.html(input);
-
+            inputGroup.html(self.clone());
             let el = $(
                 '<div class="input-group-append" data-target="#datetimepicker' + i + '" data-toggle="datetimepicker">\n' +
                 '<div class="input-group-text"><i class="fa fa-calendar"></i></div>\n' +
                 '</div>');
-
             $(inputGroup).append(el);
 
-            $(parent).find('label').after(inputGroup);
+            // Replace existing element with new containing element.
+            self.replaceWith(inputGroup);
         });
 
         // Use preventCPR script for all text and textarea elements not marked with class .no-cpr-scanning

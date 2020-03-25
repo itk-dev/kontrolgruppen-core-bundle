@@ -12,12 +12,16 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Export\Manager;
+use Kontrolgruppen\CoreBundle\Export\Reports\RevenueExport;
 use Kontrolgruppen\CoreBundle\Service\MenuService;
+use Kontrolgruppen\CoreBundle\Service\PhpSpreadsheetExportService;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 /**
  * Class ExportController.
@@ -31,16 +35,19 @@ class ExportController extends BaseController
 
     /** @var \Symfony\Component\Form\FormFactoryInterface */
     private $formFactory;
+    private $twig;
 
     public function __construct(
         RequestStack $requestStack,
         MenuService $menuService,
         Manager $exportManager,
-        FormFactoryInterface $formFactory
+        FormFactoryInterface $formFactory,
+        Environment $twig
     ) {
         parent::__construct($requestStack, $menuService);
         $this->exportManager = $exportManager;
         $this->formFactory = $formFactory;
+        $this->twig = $twig;
     }
 
     /**
@@ -74,8 +81,16 @@ class ExportController extends BaseController
      *     "_format": "xlsx|csv|html|pdf",
      *   }
      * )
+     *
+     * @param Request                     $request
+     * @param                             $_format
+     * @param PhpSpreadsheetExportService $exportService
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response|StreamedResponse
+     *
+     * @throws \Exception
      */
-    public function run(Request $request, $_format)
+    public function run(Request $request, $_format, PhpSpreadsheetExportService $exportService)
     {
         $exportKey = $request->get('export');
         $exportClass = null;
@@ -91,7 +106,7 @@ class ExportController extends BaseController
             return $this->redirectToRoute('export_index');
         }
 
-        /** @var Export $export */
+        /** @var AbstractExport $export */
         $export = $this->exportManager->getExport($exportClass);
         $form = $this->buildParameterForm($export);
         // Use namespaced form values (cf. $this->buildParameterForm).
@@ -101,6 +116,7 @@ class ExportController extends BaseController
 
         try {
             $writer = $this->exportManager->run($export, $parameters, $_format);
+            $output = $exportService->getOutputAsString($writer);
 
             switch ($_format) {
                 case 'csv':
@@ -117,14 +133,10 @@ class ExportController extends BaseController
                     break;
                 case 'html':
                 default:
-                    ob_start();
-                    $writer->save('php://output');
-                    $html = ob_get_clean();
-
                     // Extract body content.
                     $d = new \DOMDocument();
                     $mock = new \DOMDocument();
-                    $d->loadHTML($html);
+                    $d->loadHTML($output);
                     $body = $d->getElementsByTagName('body')->item(0);
                     foreach ($body->childNodes as $child) {
                         if ('style' === $child->tagName) {
@@ -138,17 +150,18 @@ class ExportController extends BaseController
                         $mock->appendChild($mock->importNode($child, true));
                     }
 
+                    if (RevenueExport::class === \get_class($export)) {
+                        $extra = $this->twig->render('@KontrolgruppenCore/export/revenue_export.show.html.twig');
+                    }
+
                     return $this->render('@KontrolgruppenCore/export/show.html.twig', [
-                       'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
-                       'table' => $mock->saveHTML(),
+                        'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
+                        'table' => $mock->saveHTML(),
+                        'extra' => $extra ?? null,
                     ]);
             }
 
-            $response = new StreamedResponse(
-                function () use ($writer) {
-                    $writer->save('php://output');
-                }
-            );
+            $response = new Response($output);
 
             $response->headers->set('Content-Type', $contentType);
             $response->headers->set('Content-Disposition', 'attachment; filename="'.$filename.'"');

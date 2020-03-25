@@ -58,7 +58,9 @@ abstract class AbstractExport implements \JsonSerializable
                     'data' => new \DateTime('first day of January'),
                     'label' => 'Start date',
                     'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy',
+                    'format' => 'dd-MM-yyyy HH:mm',
+                    'html5' => false,
+                    'attr' => ['class' => 'js-datepicker'],
                 ],
             ],
             'enddate' => [
@@ -67,7 +69,9 @@ abstract class AbstractExport implements \JsonSerializable
                     'data' => new \DateTime('last day of December'),
                     'label' => 'End date',
                     'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy',
+                    'format' => 'dd-MM-yyyy HH:mm',
+                    'html5' => false,
+                    'attr' => ['class' => 'js-datepicker'],
                 ],
             ],
         ];
@@ -192,6 +196,18 @@ abstract class AbstractExport implements \JsonSerializable
     protected function formatBoolean(bool $value)
     {
         return $value ? 'x' : '';
+    }
+
+    /**
+     * Formats a boolean|null as Ja/Nej/null.
+     *
+     * @param bool|null $value
+     *
+     * @return string|null
+     */
+    protected function formatBooleanYesNoNull(?bool $value)
+    {
+        return true === $value ? 'Ja' : (false === $value ? 'Nej' : null);
     }
 
     /**

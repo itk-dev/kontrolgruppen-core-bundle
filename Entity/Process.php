@@ -147,6 +147,11 @@ class Process extends AbstractEntity
      */
     private $revenueEntries;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $performedCompanyCheck;
+
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
@@ -589,6 +594,26 @@ class Process extends AbstractEntity
                 $revenueEntry->setProcess(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getPerformedCompanyCheck(): ?bool
+    {
+        return $this->performedCompanyCheck;
+    }
+
+    /**
+     * @param bool|null $performedCompanyCheck
+     *
+     * @return $this
+     */
+    public function setPerformedCompanyCheck(?bool $performedCompanyCheck): self
+    {
+        $this->performedCompanyCheck = $performedCompanyCheck;
 
         return $this;
     }
