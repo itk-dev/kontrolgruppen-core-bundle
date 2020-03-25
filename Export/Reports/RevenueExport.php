@@ -62,6 +62,10 @@ class RevenueExport extends AbstractExport
             'Samlet fremadrettet besparelse (Brutto)',
             'Samlet provenu (Brutto)',
             'Provenu pr. sag (Brutto)',
+            'Samlet tilbagebetalingskrav (Netto)',
+            'Samlet fremadrettet besparelse (Netto)',
+            'Samlet provenu (Netto)',
+            'Provenu pr. sag (Netto)',
         ]);
 
         $revenue = [];
@@ -72,12 +76,7 @@ class RevenueExport extends AbstractExport
 
             foreach ($processRevenue['repaymentSums'] as $serviceName => $repaymentSum) {
                 if (!isset($revenue[$serviceName])) {
-                    $revenue[$serviceName] = [
-                        'processes' => 0,
-                        'collectiveRepaymentSum' => 0.0,
-                        'collectiveFutureSavingsSum' => 0.0,
-                        'collectiveRevenueSum' => 0.0,
-                    ];
+                    $revenue[$serviceName] = $this->newEntry();
                 }
 
                 if (!isset($countedForService[$serviceName])) {
@@ -86,16 +85,13 @@ class RevenueExport extends AbstractExport
                 }
                 $revenue[$serviceName]['collectiveRepaymentSum'] += $repaymentSum['sum'];
                 $revenue[$serviceName]['collectiveRevenueSum'] += $repaymentSum['sum'];
+                $revenue[$serviceName]['netCollectiveRepaymentSum'] += $repaymentSum['sum'] * $repaymentSum['netPercentage'] / 100.0;
+                $revenue[$serviceName]['netCollectiveRevenueSum'] += $repaymentSum['sum'] * $repaymentSum['netPercentage'] / 100.0;
             }
 
             foreach ($processRevenue['futureSavingsSums'] as $serviceName => $futureSavingsSum) {
                 if (!isset($revenue[$serviceName])) {
-                    $revenue[$serviceName] = [
-                        'processes' => 0,
-                        'collectiveRepaymentSum' => 0.0,
-                        'collectiveFutureSavingsSum' => 0.0,
-                        'collectiveRevenueSum' => 0.0,
-                    ];
+                    $revenue[$serviceName] = $this->newEntry();
                 }
 
                 if (!isset($countedForService[$serviceName])) {
@@ -104,11 +100,14 @@ class RevenueExport extends AbstractExport
                 }
                 $revenue[$serviceName]['collectiveFutureSavingsSum'] += $futureSavingsSum['sum'];
                 $revenue[$serviceName]['collectiveRevenueSum'] += $futureSavingsSum['sum'];
+                $revenue[$serviceName]['netCollectiveFutureSavingsSum'] += $futureSavingsSum['sum'] * $futureSavingsSum['netPercentage'] / 100.0;
+                $revenue[$serviceName]['netCollectiveRevenueSum'] += $futureSavingsSum['sum'] * $futureSavingsSum['netPercentage'] / 100.0;
             }
         }
 
         foreach ($revenue as $key => $value) {
             $value['revenueAverage'] = $value['collectiveRevenueSum'] / $value['processes'];
+            $value['netRevenueAverage'] = $value['netCollectiveRevenueSum'] / $value['processes'];
 
             $this->writeRow([
                 $key,
@@ -117,8 +116,30 @@ class RevenueExport extends AbstractExport
                 $this->formatNumber($value['collectiveFutureSavingsSum']),
                 $this->formatNumber($value['collectiveRevenueSum']),
                 $this->formatNumber($value['revenueAverage']),
+                $this->formatNumber($value['netCollectiveRepaymentSum']),
+                $this->formatNumber($value['netCollectiveFutureSavingsSum']),
+                $this->formatNumber($value['netCollectiveRevenueSum']),
+                $this->formatNumber($value['netRevenueAverage']),
             ]);
         }
+    }
+
+    /**
+     * Create a new array entry.
+     *
+     * @return array
+     */
+    private function newEntry()
+    {
+        return [
+            'processes' => 0,
+            'collectiveRepaymentSum' => 0.0,
+            'collectiveFutureSavingsSum' => 0.0,
+            'collectiveRevenueSum' => 0.0,
+            'netCollectiveRepaymentSum' => 0.0,
+            'netCollectiveFutureSavingsSum' => 0.0,
+            'netCollectiveRevenueSum' => 0.0,
+        ];
     }
 
     /**
