@@ -39,6 +39,7 @@ class ServiceEconomyEntryType extends AbstractType
             ->add('service', null, [
                 'label' => 'economy_entry.form.service.service',
                 'help' => 'economy_entry.form.service.service_help',
+                'required' => true,
             ])
             ->add('periodFrom', null, [
                 'label' => false,
