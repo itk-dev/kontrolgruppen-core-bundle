@@ -76,7 +76,7 @@ class EconomyController extends BaseController
         $parameters['economyEntriesAccount'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::ACCOUNT]);
 
         $services = array_reduce($parameters['economyEntriesService'], function ($carry, ServiceEconomyEntry $element) {
-            if ($element->getService() !== null) {
+            if (null !== $element->getService()) {
                 $carry[$element->getService()->getId()] = $element->getService();
             }
 
