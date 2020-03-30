@@ -85,7 +85,9 @@ class EconomyService
         ]);
 
         $services = array_reduce($serviceEconomyEntries, function ($carry, ServiceEconomyEntry $entry) {
-            $carry[$entry->getService()->getId()] = $entry->getService();
+            if ($entry->getService() !== null) {
+                $carry[$entry->getService()->getId()] = $entry->getService();
+            }
 
             return $carry;
         }, []);
