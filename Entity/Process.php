@@ -160,6 +160,7 @@ class Process extends AbstractEntity
      */
     private $revenueEntries;
 
+    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $performedCompanyCheck;
