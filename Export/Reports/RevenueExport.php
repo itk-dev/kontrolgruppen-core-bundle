@@ -55,6 +55,8 @@ class RevenueExport extends AbstractExport
     {
         $processes = $this->getProcesses();
 
+        $processesLength = count($processes);
+
         $this->writeHeader([
             'Ydelse',
             'Antal afsluttede sager',
@@ -103,7 +105,24 @@ class RevenueExport extends AbstractExport
                 $revenue[$serviceName]['netCollectiveFutureSavingsSum'] += $futureSavingsSum['sum'] * $futureSavingsSum['netPercentage'] / 100.0;
                 $revenue[$serviceName]['netCollectiveRevenueSum'] += $futureSavingsSum['sum'] * $futureSavingsSum['netPercentage'] / 100.0;
             }
+
+            if (empty($processRevenue['repaymentSums']) && empty($processRevenue['futureSavingsSums'])) {
+                $serviceName = $process->getService()->getName() ?? '-- Ikke sat --';
+                if (!isset($revenue[$serviceName])) {
+                    $revenue[$serviceName] = $this->newEntry();
+                }
+                ++$revenue[$serviceName]['processes'];
+            }
         }
+
+        $sums = [
+            'collectiveRepaymentSum' => 0,
+            'collectiveFutureSavingsSum' => 0,
+            'collectiveRevenueSum' => 0,
+            'netCollectiveRepaymentSum' => 0,
+            'netCollectiveFutureSavingsSum' => 0,
+            'netCollectiveRevenueSum' => 0,
+        ];
 
         foreach ($revenue as $key => $value) {
             $value['revenueAverage'] = $value['collectiveRevenueSum'] / $value['processes'];
@@ -112,16 +131,36 @@ class RevenueExport extends AbstractExport
             $this->writeRow([
                 $key,
                 $this->formatNumber($value['processes'], 0),
-                $this->formatNumber($value['collectiveRepaymentSum']),
-                $this->formatNumber($value['collectiveFutureSavingsSum']),
-                $this->formatNumber($value['collectiveRevenueSum']),
-                $this->formatNumber($value['revenueAverage']),
-                $this->formatNumber($value['netCollectiveRepaymentSum']),
-                $this->formatNumber($value['netCollectiveFutureSavingsSum']),
-                $this->formatNumber($value['netCollectiveRevenueSum']),
-                $this->formatNumber($value['netRevenueAverage']),
+                $this->formatNumberWithThousandSeparators($value['collectiveRepaymentSum']),
+                $this->formatNumberWithThousandSeparators($value['collectiveFutureSavingsSum']),
+                $this->formatNumberWithThousandSeparators($value['collectiveRevenueSum']),
+                $this->formatNumberWithThousandSeparators($value['revenueAverage']),
+                $this->formatNumberWithThousandSeparators($value['netCollectiveRepaymentSum']),
+                $this->formatNumberWithThousandSeparators($value['netCollectiveFutureSavingsSum']),
+                $this->formatNumberWithThousandSeparators($value['netCollectiveRevenueSum']),
+                $this->formatNumberWithThousandSeparators($value['netRevenueAverage']),
             ]);
+
+            $sums['collectiveRepaymentSum'] += $value['collectiveRepaymentSum'];
+            $sums['collectiveFutureSavingsSum'] += $value['collectiveFutureSavingsSum'];
+            $sums['collectiveRevenueSum'] += $value['collectiveRevenueSum'];
+            $sums['netCollectiveRepaymentSum'] += $value['netCollectiveRepaymentSum'];
+            $sums['netCollectiveFutureSavingsSum'] += $value['netCollectiveFutureSavingsSum'];
+            $sums['netCollectiveRevenueSum'] += $value['netCollectiveRevenueSum'];
         }
+
+        $this->writeRow([
+            'I alt',
+            $processesLength,
+            $this->formatNumberWithThousandSeparators($sums['collectiveRepaymentSum']),
+            $this->formatNumberWithThousandSeparators($sums['collectiveFutureSavingsSum']),
+            $this->formatNumberWithThousandSeparators($sums['collectiveRevenueSum']),
+            $processesLength > 0 ? $this->formatNumberWithThousandSeparators($sums['collectiveRevenueSum'] / $processesLength) : '',
+            $this->formatNumberWithThousandSeparators($sums['netCollectiveRepaymentSum']),
+            $this->formatNumberWithThousandSeparators($sums['netCollectiveFutureSavingsSum']),
+            $this->formatNumberWithThousandSeparators($sums['netCollectiveRevenueSum']),
+            $processesLength > 0 ? $this->formatNumberWithThousandSeparators($sums['netCollectiveRevenueSum'] / $processesLength) : '',
+        ]);
     }
 
     /**

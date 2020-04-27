@@ -297,6 +297,19 @@ abstract class AbstractExport implements \JsonSerializable
     }
 
     /**
+     * Format a decimal number with thousand separators.
+     *
+     * @param     $number
+     * @param int $decimals
+     *
+     * @return string
+     */
+    protected function formatNumberWithThousandSeparators($number, $decimals = 2)
+    {
+        return number_format($number, $decimals, ',', '.');
+    }
+
+    /**
      * Format an amount.
      *
      * @param     $number
