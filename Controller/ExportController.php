@@ -37,13 +37,17 @@ class ExportController extends BaseController
     private $formFactory;
     private $twig;
 
-    public function __construct(
-        RequestStack $requestStack,
-        MenuService $menuService,
-        Manager $exportManager,
-        FormFactoryInterface $formFactory,
-        Environment $twig
-    ) {
+    /**
+     * ExportController constructor.
+     *
+     * @param RequestStack         $requestStack
+     * @param MenuService          $menuService
+     * @param Manager              $exportManager
+     * @param FormFactoryInterface $formFactory
+     * @param Environment          $twig
+     */
+    public function __construct(RequestStack $requestStack, MenuService $menuService, Manager $exportManager, FormFactoryInterface $formFactory, Environment $twig)
+    {
         parent::__construct($requestStack, $menuService);
         $this->exportManager = $exportManager;
         $this->formFactory = $formFactory;
