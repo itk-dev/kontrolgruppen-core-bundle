@@ -146,6 +146,13 @@ class Export extends AbstractExport
             $revenue[$serviceName]['futureSavingsSum'] += $futureSavingsSum['sum'];
         }
 
+        // Include the process, even if it has no revenue set,
+        // with the name of the service set for the process.
+        if (empty($processRevenue['repaymentSums']) && empty($processRevenue['futureSavingsSums'])) {
+            $serviceName = $process->getService()->getName() ?? '-- Ikke sat --';
+            $revenue[$serviceName] = $this->getNewRow($process, $serviceName);
+        }
+
         return $revenue;
     }
 
