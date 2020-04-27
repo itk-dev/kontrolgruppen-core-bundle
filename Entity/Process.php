@@ -160,13 +160,14 @@ class Process extends AbstractEntity
      */
     private $revenueEntries;
 
+    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $performedCompanyCheck;
 
     /**
      * Process constructor.
-    */
+     */
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
