@@ -167,7 +167,7 @@ class Process extends AbstractEntity
 
     /**
      * Process constructor.
-    */
+     */
     public function __construct()
     {
         $this->reminders = new ArrayCollection();
