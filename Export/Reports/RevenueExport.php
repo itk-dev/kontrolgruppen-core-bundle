@@ -55,7 +55,7 @@ class RevenueExport extends AbstractExport
     {
         $processes = $this->getProcesses();
 
-        $processesLength = count($processes);
+        $processesLength = \count($processes);
 
         $this->writeHeader([
             'Ydelse',
