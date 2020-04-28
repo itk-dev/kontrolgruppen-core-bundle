@@ -44,12 +44,6 @@ global.$ = global.jQuery = $;
 require('bootstrap');
 require('select2');
 
-// Add Moment.js.
-const moment = require('moment');
-// Set moment locale to danish.
-moment.locale('da');
-global.moment = moment;
-
 library.add(
     faTachometerAlt, faTasks, faIdCard, faUsersCog, faCog, faClock,
     faUserPlus, faArchive, faEye, faPencilAlt, faHouseDamage, faFileDownload,
@@ -62,13 +56,13 @@ dom.watch();
 
 require('jquery-confirm');
 
-// https://tempusdominus.github.io/bootstrap-4
-require('tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4');
-require('tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css');
-
 require('../css/core.scss');
 
 require('./preventCPR/preventCPR');
+
+require("flatpickr");
+import { Danish as flatpickrDanish } from "flatpickr/dist/l10n/da.js"
+import 'flatpickr/dist/flatpickr.css';
 
 let translate = (text) => {
     return (typeof (kontrolgruppenMessages) !== 'undefined' && typeof (kontrolgruppenMessages[text]) !== 'undefined')
@@ -87,39 +81,15 @@ $(function () {
     $(document).ready(function () {
         $('.select2').select2();
 
-        // Setup datetimepicker defaults.
-        $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
-            format: 'DD-MM-YYYY HH:mm',
-            icons: {
-                time: 'fas fa-clock',
-                date: 'fas fa-calendar',
-                up: 'fas fa-arrow-up',
-                down: 'fas fa-arrow-down',
-                previous: 'fas fa-chevron-left',
-                next: 'fas fa-chevron-right',
-                today: 'fas fa-calendar-check',
-                clear: 'fas fa-trash',
-                close: 'fas fa-times'
-            } });
+        $('.js-datepicker').flatpickr({
+            dateFormat: "d-m-Y",
+            locale: flatpickrDanish
+        });
 
-        // Transforms dom to match required by datetimepicker.
-        let dateInputs = $('.js-datepicker');
-        dateInputs.each(function (i) {
-            // Add target to input element.
-            let self = $(this);
-            self.attr('data-target', '#datetimepicker' + i);
-
-            // Setup containing element.
-            let inputGroup = $('<div class="input-group date" id="datetimepicker' + i + '" data-target-input="nearest"></div>');
-            inputGroup.html(self.clone());
-            let el = $(
-                '<div class="input-group-append" data-target="#datetimepicker' + i + '" data-toggle="datetimepicker">\n' +
-                '<div class="input-group-text"><i class="fa fa-calendar"></i></div>\n' +
-                '</div>');
-            $(inputGroup).append(el);
-
-            // Replace existing element with new containing element.
-            self.replaceWith(inputGroup);
+        $('.js-datetimepicker').flatpickr({
+            enableTime: true,
+            dateFormat: "d-m-Y H:i",
+            locale: flatpickrDanish
         });
 
         // Use preventCPR script for all text and textarea elements not marked with class .no-cpr-scanning
