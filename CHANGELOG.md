@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Unreleased]
 ### Added
-- This CHANGELOG file.
+- [KON-362](https://github.com/aakb/kontrolgruppen-core-bundle/pull/184): Include non-revenue cases in KL report
+- [KON-362](https://github.com/aakb/kontrolgruppen-core-bundle/pull/183): Fixed annotation
+- [Changelog](https://github.com/aakb/kontrolgruppen-core-bundle/pull/177): Added CHANGELOG file
 - [KON-23](https://jira.itkdev.dk/browse/KON-23): Delete old processes
 
 ## [1.6.1] - 2020-03-13
