@@ -64,16 +64,18 @@ class HitRateExport extends AbstractExport
         $hitRate = [];
 
         foreach ($processes as $process) {
-            if (!isset($hitRate[$process->getChannel()->getName()])) {
-                $hitRate[$process->getChannel()->getName()] = [
-                    'processes' => 0,
-                    'won' => 0,
-                ];
-            }
+            if (null !== $process->getChannel()) {
+                $channelName = $process->getChannel()->getName();
+                if (!isset($hitRate[$channelName])) {
+                    $hitRate[$channelName] = [
+                        'processes' => 0,
+                        'won' => 0,
+                    ];
+                }
 
-            ++$hitRate[$process->getChannel()->getName()]['processes'];
-            $hitRate[$process->getChannel()->getName()]['won'] +=
-                $process->getCourtDecision() ? 1 : 0;
+                ++$hitRate[$channelName]['processes'];
+                $hitRate[$channelName]['won'] += $process->getCourtDecision() ? 1 : 0;
+            }
         }
 
         foreach ($hitRate as $key => $value) {
