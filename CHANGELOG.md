@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - [KON-362](https://github.com/aakb/kontrolgruppen-core-bundle/pull/183): Fixed annotation
+- [KON-359](https://github.com/aakb/kontrolgruppen-core-bundle/pull/186): Added null check
 
 ## [1.6.1] - 2020-03-13
 ### Changed
