@@ -157,3 +157,13 @@ bin/console kontrolgruppen:report:export admin@example.com \
 	'Kontrolgruppen\CoreBundle\Export\KL\Export' \
 	--parameters='startdate=-1 month enddate=now' --debug-parameters
 ```
+
+## Contributing
+
+### Pull Request Process
+
+Before creating a pull request make sure you have considered the following:
+- Updating the README.md with details of changes that are relevant.
+- Updating the CHANGELOG.md with new features/changes/bug fixes etc.
+
+You may merge the Pull Request once you have the sign-off of one other developer, or if you do not have permission to do that, you may request the reviewer to merge it for you.
