@@ -37,6 +37,8 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons/faUserCircle';
 import { faSave } from '@fortawesome/free-solid-svg-icons/faSave';
 import { faChartPie } from '@fortawesome/free-solid-svg-icons/faChartPie';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
+import { Danish as flatpickrDanish } from 'flatpickr/dist/l10n/da.js';
+import 'flatpickr/dist/flatpickr.css';
 
 const $ = require('jquery');
 global.$ = global.jQuery = $;
@@ -60,9 +62,7 @@ require('../css/core.scss');
 
 require('./preventCPR/preventCPR');
 
-require("flatpickr");
-import { Danish as flatpickrDanish } from "flatpickr/dist/l10n/da.js"
-import 'flatpickr/dist/flatpickr.css';
+require('flatpickr');
 
 let translate = (text) => {
     return (typeof (kontrolgruppenMessages) !== 'undefined' && typeof (kontrolgruppenMessages[text]) !== 'undefined')
@@ -82,13 +82,13 @@ $(function () {
         $('.select2').select2();
 
         $('.js-datepicker').flatpickr({
-            dateFormat: "d-m-Y",
+            dateFormat: 'd-m-Y',
             locale: flatpickrDanish
         });
 
         $('.js-datetimepicker').flatpickr({
             enableTime: true,
-            dateFormat: "d-m-Y H:i",
+            dateFormat: 'd-m-Y H:i',
             locale: flatpickrDanish
         });
 
