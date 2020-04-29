@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [KON-362](https://github.com/aakb/kontrolgruppen-core-bundle/pull/184): Include non-revenue cases in KL report
 - [KON-354](https://github.com/aakb/kontrolgruppen-core-bundle/pull/187): Changed BI fields
 - [KON-360](https://github.com/aakb/kontrolgruppen-core-bundle/pull/185): Adjusted report
+- [KON-361](https://github.com/aakb/kontrolgruppen-core-bundle/pull/188): Changed datetime picker
 
 ### Fixed
 - [KON-362](https://github.com/aakb/kontrolgruppen-core-bundle/pull/183): Fixed annotation
