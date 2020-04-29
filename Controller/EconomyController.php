@@ -162,8 +162,7 @@ class EconomyController extends BaseController
                     $entityManager->flush();
 
                     return $this->redirectToRoute('economy_show', ['process' => $process]);
-                }
-                else {
+                } else {
                     $parameters['collapse_economy_entry_form'] = false;
                 }
             }
