@@ -257,6 +257,7 @@ economy:
             future_savings_type: Beløbstype
             amount: Beløb (kr.)
             type: Provenutype
+        income_type_not_chosen: '- Ingen -'
     revenue:
         add_revenue_repayment: + Tilbagebetalingskrav
         add_future_savings: + Fremtidig besparelse
@@ -977,3 +978,4 @@ bi:
 'export.show.revenue_export.info_text': Kolonnen "Antal afsluttede sager" stemmer ikke nødvendigvis overens med antal afsluttede sager i perioden, da en sag der har provenu på mere end én ydelsestype vil tælle med i hver ydelsestyperække.
 'process.form.complete.forwarded_to_authorities_help': Kun ét valg kommer med i KL- og BI-udtræk.
 'economy.table.service_not_chosen': '- Ingen -'
+'economy.table.account_not_chosen': '- Ingen -'
