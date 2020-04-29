@@ -258,6 +258,18 @@ abstract class AbstractExport implements \JsonSerializable
     }
 
     /**
+     * Formats a boolean|null as Medhold/Afvist/null.
+     *
+     * @param bool|null $value
+     *
+     * @return string|null
+     */
+    protected function formatBooleanDecision(?bool $value)
+    {
+        return true === $value ? 'Medhold' : (false === $value ? 'Afvist' : null);
+    }
+
+    /**
      * Format a date.
      *
      * @param \DateTime $date
