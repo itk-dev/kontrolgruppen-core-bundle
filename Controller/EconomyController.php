@@ -154,17 +154,17 @@ class EconomyController extends BaseController
 
             $form->handleRequest($request);
 
-            if ($form->isSubmitted()) {
-                if ($form->isValid()) {
-                    $entityManager = $this->getDoctrine()->getManager();
-                    $economyEntry->setProcess($process);
-                    $entityManager->persist($economyEntry);
-                    $entityManager->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $economyEntry->setProcess($process);
+                $entityManager->persist($economyEntry);
+                $entityManager->flush();
 
-                    return $this->redirectToRoute('economy_show', ['process' => $process]);
-                } else {
-                    $parameters['collapse_economy_entry_form'] = false;
-                }
+                return $this->redirectToRoute('economy_show', ['process' => $process]);
+            }
+
+            if ($form->isSubmitted() && !$form->isValid()) {
+                $parameters['collapse_economy_entry_form'] = false;
             }
 
             $parameters['form'] = $form->createView();
