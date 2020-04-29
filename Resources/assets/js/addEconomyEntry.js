@@ -1,4 +1,4 @@
-import {Danish as flatpickrDanish} from "flatpickr/dist/l10n/da";
+import { Danish as flatpickrDanish } from 'flatpickr/dist/l10n/da';
 
 $(document).ready(function () {
     $('#economy_entry_type').change(function () {
@@ -14,23 +14,23 @@ $(document).ready(function () {
 
     $('.js-economy-entry-period-from').flatpickr({
         inline: true,
-        dateFormat: "d-m-Y",
+        dateFormat: 'd-m-Y',
         locale: flatpickrDanish,
-        onChange: function(selectedDates, dateStr, instance) {
+        onChange: function (selectedDates, dateStr, instance) {
             $('.js-economy-entry-period-to').each(function () {
                 this._flatpickr.set('minDate', selectedDates[0]);
-            })
+            });
         }
     });
 
     $('.js-economy-entry-period-to').flatpickr({
         inline: true,
-        dateFormat: "d-m-Y",
+        dateFormat: 'd-m-Y',
         locale: flatpickrDanish,
-        onChange: function(selectedDates, dateStr, instance) {
+        onChange: function (selectedDates, dateStr, instance) {
             $('.js-economy-entry-period-from').each(function () {
                 this._flatpickr.set('maxDate', selectedDates[0]);
-            })
+            });
         }
     });
 
