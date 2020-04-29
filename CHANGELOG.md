@@ -4,11 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-[Unreleased]
+## [Unreleased]
 ### Added
-- [KON-362](https://github.com/aakb/kontrolgruppen-core-bundle/pull/184): Include non-revenue cases in KL report
 - [Changelog](https://github.com/aakb/kontrolgruppen-core-bundle/pull/177): Added CHANGELOG file
 - [KON-23](https://jira.itkdev.dk/browse/KON-23): Delete old processes
+
+### Changed
+- [KON-362](https://github.com/aakb/kontrolgruppen-core-bundle/pull/184): Include non-revenue cases in KL report
+- [KON-354](https://github.com/aakb/kontrolgruppen-core-bundle/pull/187): Changed BI fields
 - [KON-360](https://github.com/aakb/kontrolgruppen-core-bundle/pull/185): Adjusted report
 
 ### Fixed
