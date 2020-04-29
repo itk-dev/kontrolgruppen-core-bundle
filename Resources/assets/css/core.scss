@@ -199,3 +199,7 @@ div.form-control.disabled {
 .sidebar-right {
     flex-basis: 30%;
 }
+
+.form-control[readonly].js-datepicker, .form-control[readonly].js-datetimepicker {
+    background-color: white;
+}

@@ -47,7 +47,7 @@ class BaseEconomyEntryType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => false,
                 'format' => 'dd-MM-yyyy HH:mm',
-                'attr' => ['class' => 'js-datepicker'],
+                'attr' => ['class' => 'js-datetimepicker'],
                 'help' => 'economy_entry.form.base.date_help',
             ])
             ->add('amount', MoneyType::class, [

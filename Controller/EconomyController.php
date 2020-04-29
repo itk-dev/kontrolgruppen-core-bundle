@@ -66,7 +66,9 @@ class EconomyController extends BaseController
                 return $entityFormResult;
             }
 
-            $parameters['collapse_economy_entry_form'] = !isset($formResult['submitted']) || !$formResult['submitted'];
+            if (!isset($parameters['collapse_economy_entry_form'])) {
+                $parameters['collapse_economy_entry_form'] = !isset($formResult['submitted']) || !$formResult['submitted'];
+            }
         }
 
         $parameters['menuItems'] = $this->menuService->getProcessMenu($request->getPathInfo(), $process);
@@ -159,6 +161,10 @@ class EconomyController extends BaseController
                 $entityManager->flush();
 
                 return $this->redirectToRoute('economy_show', ['process' => $process]);
+            }
+
+            if ($form->isSubmitted() && !$form->isValid()) {
+                $parameters['collapse_economy_entry_form'] = false;
             }
 
             $parameters['form'] = $form->createView();

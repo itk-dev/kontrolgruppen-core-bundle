@@ -42,21 +42,21 @@ class ServiceEconomyEntryType extends AbstractType
                 'required' => true,
             ])
             ->add('periodFrom', null, [
-                'label' => false,
+                'label' => 'economy_entry.form.service.period_from',
                 'widget' => 'single_text',
                 'html5' => false,
                 'format' => 'dd-MM-yyyy',
                 'attr' => [
-                    'class' => 'd-none',
+                    'class' => 'js-economy-entry-period-from d-none',
                 ],
             ])
             ->add('periodTo', null, [
-                'label' => false,
+                'label' => 'economy_entry.form.service.period_to',
                 'widget' => 'single_text',
                 'html5' => false,
                 'format' => 'dd-MM-yyyy',
                 'attr' => [
-                    'class' => 'd-none',
+                    'class' => 'js-economy-entry-period-to d-none',
                 ],
             ])
             ->add('amountPeriod', ChoiceType::class, [

@@ -14,7 +14,7 @@
                 <tr>
                     <td>
                         {% if is_granted('edit', process) %}
-                            <a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.incomeType }}</a>
+                            <a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.incomeType ?: 'economy.table.income_type_not_chosen'|trans }}</a>
                         {% else %}
                             {{ economyEntry.incomeType }}
                         {% endif %}
