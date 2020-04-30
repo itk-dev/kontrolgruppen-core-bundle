@@ -124,6 +124,10 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         return $userProvider->getUser($username, $displayName, $credentials);
     }
 
+    /**
+     * @param Auth $auth
+     * @return mixed|string
+     */
     private function getUsername(Auth $auth)
     {
         if (isset($this->settings['username_attribute_name'])) {
