@@ -10,7 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\EventListener;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -23,22 +22,22 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 class LoggerListener implements EventSubscriberInterface
 {
-    private $entityManager;
     private $authorizationChecker;
     private $tokenStorage;
+    private $loggableListener;
 
     /**
      * LoggerListener constructor.
      *
-     * @param EntityManagerInterface             $entityManager
+     * @param LoggableListener                   $loggableListener
      * @param AuthorizationCheckerInterface|null $authorizationChecker
      * @param TokenStorageInterface|null         $tokenStorage
      */
-    public function __construct(EntityManagerInterface $entityManager, AuthorizationCheckerInterface $authorizationChecker = null, TokenStorageInterface $tokenStorage = null)
+    public function __construct(LoggableListener $loggableListener, AuthorizationCheckerInterface $authorizationChecker = null, TokenStorageInterface $tokenStorage = null)
     {
-        $this->entityManager = $entityManager;
         $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
+        $this->loggableListener = $loggableListener;
     }
 
     /**
@@ -58,18 +57,8 @@ class LoggerListener implements EventSubscriberInterface
 
         $token = $this->tokenStorage->getToken();
 
-        // It would be better to hook into the LoggableListener via the service container, but the LoggableListener is
-        // a custom listener configured via the Stof Doctrine Extension bundle. This means that the LoggableListener is
-        // created outside the service container and we need to get it directly from doctrine.
-        $listeners = $this->entityManager->getEventManager()->getListeners();
         if (null !== $token && $this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            foreach ($listeners as $listenersByEvent) {
-                foreach ($listenersByEvent as $listener) {
-                    if ($listener instanceof LoggableListener) {
-                        $listener->setCreatorName($token);
-                    }
-                }
-            }
+            $this->loggableListener->setCreatorName($token);
         }
     }
 
