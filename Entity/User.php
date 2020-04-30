@@ -56,17 +56,17 @@ class User implements UserInterface
     private $userSettings;
 
     /**
+     * @ORM\Column(type="string", length=180)
+     */
+    private $name;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         $this->userSettings = new ArrayCollection();
     }
-
-    /**
-     * @ORM\Column(type="string", length=180)
-     */
-    private $name;
 
     /**
      * @return int|null
