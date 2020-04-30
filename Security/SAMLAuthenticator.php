@@ -126,6 +126,7 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
 
     /**
      * @param Auth $auth
+     *
      * @return mixed|string
      */
     private function getUsername(Auth $auth)
