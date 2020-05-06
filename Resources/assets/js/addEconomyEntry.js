@@ -1,3 +1,5 @@
+import { Danish as flatpickrDanish } from 'flatpickr/dist/l10n/da';
+
 $(document).ready(function () {
     $('#economy_entry_type').change(function () {
         $(this).closest('form').submit();
@@ -6,49 +8,35 @@ $(document).ready(function () {
         $('#js-economy-form-spinner').show();
     });
 
-    // Apply datetimepicker to all js-datepicker elements.
-    $('.js-datepicker').datetimepicker();
-
-    $('#service_economy_entry_datepicker').click(function () {
-        $('#service_economy_entry_datepicker_modal').modal();
+    $('#economy_entry_datepicker').click(function () {
+        $('#period_datepicker_modal').modal();
     });
 
-    $('#income_economy_entry_datepicker').click(function () {
-        $('#income_economy_entry_datepicker_modal').modal();
-    });
-
-    $('.datepicker-period').datetimepicker({
+    $('.js-economy-entry-period-from').flatpickr({
         inline: true,
-        format: 'DD-MM-YYYY',
-        useCurrent: false,
-        defaultDate: false
+        dateFormat: 'd-m-Y',
+        locale: flatpickrDanish,
+        onChange: function (selectedDates, dateStr, instance) {
+            $('.js-economy-entry-period-to').each(function () {
+                this._flatpickr.set('minDate', selectedDates[0]);
+            });
+        }
     });
 
-    $('#datepicker_from').on('change.datetimepicker', function (e) {
-        $('#datepicker_to').datetimepicker('minDate', e.date);
-    });
-
-    $('#datepicker_to').on('change.datetimepicker', function (e) {
-        $('#datepicker_from').datetimepicker('maxDate', e.date);
+    $('.js-economy-entry-period-to').flatpickr({
+        inline: true,
+        dateFormat: 'd-m-Y',
+        locale: flatpickrDanish,
+        onChange: function (selectedDates, dateStr, instance) {
+            $('.js-economy-entry-period-from').each(function () {
+                this._flatpickr.set('maxDate', selectedDates[0]);
+            });
+        }
     });
 
     $('#datepicker_period_save').click(function () {
-        let serviceEconomyPeriodFrom = $('#service_economy_entry_periodFrom');
-        let serviceEconomyPeriodTo = $('#service_economy_entry_periodTo');
+        $('#economy_entry_datepicker').text($('.js-economy-entry-period-from').val() + ' - ' + $('.js-economy-entry-period-to').val());
 
-        if (serviceEconomyPeriodFrom.val() && serviceEconomyPeriodTo.val()) {
-            $('#service_economy_entry_datepicker').text(serviceEconomyPeriodFrom.val() + ' - ' + serviceEconomyPeriodTo.val());
-
-            $('#service_economy_entry_datepicker_modal').modal('toggle');
-        }
-
-        let incomeEconomyPeriodFrom = $('#income_economy_entry_periodFrom');
-        let incomeEconomyPeriodTo = $('#income_economy_entry_periodTo');
-
-        if (incomeEconomyPeriodFrom.val() && incomeEconomyPeriodTo.val()) {
-            $('#income_economy_entry_datepicker').text(incomeEconomyPeriodFrom.val() + ' - ' + incomeEconomyPeriodTo.val());
-
-            $('#income_economy_entry_datepicker_modal').modal('toggle');
-        }
+        $('#period_datepicker_modal').modal('toggle');
     });
 });

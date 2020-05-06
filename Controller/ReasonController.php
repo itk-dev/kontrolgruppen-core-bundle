@@ -24,6 +24,14 @@ class ReasonController extends BaseController
 {
     /**
      * @Route("/", name="reason_index", methods={"GET"})
+     *
+     * @param Request          $request
+     * @param ReasonRepository $reasonRepository
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(Request $request, ReasonRepository $reasonRepository): Response
     {
@@ -35,6 +43,13 @@ class ReasonController extends BaseController
 
     /**
      * @Route("/new", name="reason_new", methods={"GET","POST"})
+     *
+     * @param Request $request
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function new(Request $request): Response
     {
@@ -59,6 +74,14 @@ class ReasonController extends BaseController
 
     /**
      * @Route("/{id}", name="reason_show", methods={"GET"})
+     *
+     * @param Request $request
+     * @param Reason  $reason
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function show(Request $request, Reason $reason): Response
     {
@@ -70,6 +93,14 @@ class ReasonController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="reason_edit", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param Reason  $reason
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function edit(Request $request, Reason $reason): Response
     {
@@ -93,6 +124,11 @@ class ReasonController extends BaseController
 
     /**
      * @Route("/{id}", name="reason_delete", methods={"DELETE"})
+     *
+     * @param Request $request
+     * @param Reason  $reason
+     *
+     * @return Response
      */
     public function delete(Request $request, Reason $reason): Response
     {

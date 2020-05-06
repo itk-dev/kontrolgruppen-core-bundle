@@ -25,6 +25,15 @@ class ConclusionController extends BaseController
 {
     /**
      * @Route("/", name="conclusion_show", methods={"GET","POST"})
+     *
+     * @param Request                  $request
+     * @param Process                  $process
+     * @param EventDispatcherInterface $dispatcher
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function show(Request $request, Process $process, EventDispatcherInterface $dispatcher): Response
     {
@@ -56,6 +65,16 @@ class ConclusionController extends BaseController
 
     /**
      * @Route("/edit", name="conclusion_edit", methods={"GET","POST"})
+     *
+     * @param Request                  $request
+     * @param Process                  $process
+     * @param ConclusionService        $conclusionService
+     * @param EventDispatcherInterface $dispatcher
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function edit(Request $request, Process $process, ConclusionService $conclusionService, EventDispatcherInterface $dispatcher): Response
     {

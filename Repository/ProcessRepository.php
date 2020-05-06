@@ -54,4 +54,18 @@ class ProcessRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @param \DateTime $since
+     *
+     * @return Process[]
+     */
+    public function findCompletedSince(\DateTime $since): array
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
+        $queryBuilder->where('p.completedAt <= :since')
+            ->setParameter('since', $since);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

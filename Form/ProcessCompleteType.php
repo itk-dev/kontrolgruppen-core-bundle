@@ -17,18 +17,27 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class ProcessCompleteType.
+ */
 class ProcessCompleteType extends AbstractType
 {
     protected $serviceRepository;
 
     /**
      * ProcessCompleteType constructor.
+     *
+     * @param ServiceRepository $serviceRepository
      */
     public function __construct(ServiceRepository $serviceRepository)
     {
         $this->serviceRepository = $serviceRepository;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -38,9 +47,8 @@ class ProcessCompleteType extends AbstractType
             ])
             ->add('policeReport', ChoiceType::class, [
                 'label' => 'process.form.police_report',
-                'required' => true,
+                'required' => false,
                 'choices' => [
-                    null => null,
                     'common.boolean.yes' => true,
                     'common.boolean.no' => false,
                 ],
@@ -49,19 +57,30 @@ class ProcessCompleteType extends AbstractType
                 'label' => 'process.form.court_decision',
                 'required' => false,
                 'choices' => [
-                    null => null,
                     'court_decision.true' => true,
                     'court_decision.false' => false,
+                ],
+            ])
+            ->add('performedCompanyCheck', ChoiceType::class, [
+                'label' => 'process.form.perforned_company_check',
+                'required' => false,
+                'choices' => [
+                    'common.boolean.yes' => true,
+                    'common.boolean.no' => false,
                 ],
             ])
             ->add('forwardedToAuthorities', null, [
                 'label' => 'service.form.forwarded_to_authorities',
                 'by_reference' => false,
                 'attr' => ['class' => 'select2'],
+                'help' => 'process.form.complete.forwarded_to_authorities_help',
             ])
         ;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

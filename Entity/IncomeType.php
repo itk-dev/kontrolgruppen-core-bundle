@@ -17,6 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\IncomeTypeRepository")
+ *
  * @Gedmo\Loggable()
  */
 class IncomeType extends AbstractTaxonomy
@@ -26,6 +27,9 @@ class IncomeType extends AbstractTaxonomy
      */
     private $incomeEconomyEntries;
 
+    /**
+     * IncomeType constructor.
+     */
     public function __construct()
     {
         $this->incomeEconomyEntries = new ArrayCollection();
@@ -39,6 +43,11 @@ class IncomeType extends AbstractTaxonomy
         return $this->incomeEconomyEntries;
     }
 
+    /**
+     * @param IncomeEconomyEntry $incomeEconomyEntry
+     *
+     * @return IncomeType
+     */
     public function addIncomeEconomyEntry(IncomeEconomyEntry $incomeEconomyEntry): self
     {
         if (!$this->incomeEconomyEntries->contains($incomeEconomyEntry)) {
@@ -49,6 +58,11 @@ class IncomeType extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param IncomeEconomyEntry $incomeEconomyEntry
+     *
+     * @return IncomeType
+     */
     public function removeIncomeEconomyEntry(IncomeEconomyEntry $incomeEconomyEntry): self
     {
         if ($this->incomeEconomyEntries->contains($incomeEconomyEntry)) {

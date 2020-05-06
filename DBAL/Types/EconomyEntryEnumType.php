@@ -12,6 +12,9 @@ namespace Kontrolgruppen\CoreBundle\DBAL\Types;
 
 use Fresh\DoctrineEnumBundle\DBAL\Types\AbstractEnumType;
 
+/**
+ * Class EconomyEntryEnumType.
+ */
 final class EconomyEntryEnumType extends AbstractEnumType
 {
     public const SERVICE = 'SERVICE';

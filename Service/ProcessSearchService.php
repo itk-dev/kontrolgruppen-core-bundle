@@ -15,11 +15,20 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 
+/**
+ * Class ProcessSearchService.
+ */
 class ProcessSearchService
 {
     private $paginator;
     private $processRepository;
 
+    /**
+     * ProcessSearchService constructor.
+     *
+     * @param PaginatorInterface $paginator
+     * @param ProcessRepository  $processRepository
+     */
     public function __construct(PaginatorInterface $paginator, ProcessRepository $processRepository)
     {
         $this->paginator = $paginator;

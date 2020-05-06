@@ -35,6 +35,8 @@ class ReminderRepository extends ServiceEntityRepository
     /**
      * Find all reminders for user.
      *
+     * @param User $user
+     *
      * @return mixed
      *   The reminders
      */
@@ -51,6 +53,8 @@ class ReminderRepository extends ServiceEntityRepository
 
     /**
      * Find active reminders for user.
+     *
+     * @param User $user
      *
      * @return mixed
      *   The active reminders
@@ -82,11 +86,13 @@ class ReminderRepository extends ServiceEntityRepository
     /**
      * Count the number of active reminders for user.
      *
+     * @param User $user
+     *
      * @return mixed
      *   Number of active reminders
      *
-     * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function findNumberOfActiveUserReminders(User $user)
     {

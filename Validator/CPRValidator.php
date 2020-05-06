@@ -13,11 +13,18 @@ namespace Kontrolgruppen\CoreBundle\Validator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
+/**
+ * Class CPRValidator.
+ */
 class CPRValidator extends ConstraintValidator
 {
+    /**
+     * @param mixed      $value
+     * @param Constraint $constraint
+     */
     public function validate($value, Constraint $constraint)
     {
-        /* @var $constraint \Kontrolgruppen\CoreBundle\Validator\CPR */
+        /* @var \Kontrolgruppen\CoreBundle\Validator\CPR $constraint */
 
         if (null === $value || '' === $value) {
             return;

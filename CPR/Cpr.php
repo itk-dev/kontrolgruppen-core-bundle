@@ -10,15 +10,34 @@
 
 namespace Kontrolgruppen\CoreBundle\CPR;
 
+/**
+ * Class Cpr.
+ */
 class Cpr
 {
     private $cpr;
 
+    /**
+     * Cpr constructor.
+     *
+     * @param string $cpr
+     */
     public function __construct(string $cpr)
     {
         $this->setCpr($cpr);
     }
 
+    /**
+     * @return mixed
+     */
+    public function __toString()
+    {
+        return $this->cpr;
+    }
+
+    /**
+     * @param string $cpr
+     */
     private function setCpr(string $cpr)
     {
         if (strpos($cpr, '-')) {
@@ -38,10 +57,5 @@ class Cpr
         }
 
         $this->cpr = $cpr;
-    }
-
-    public function __toString()
-    {
-        return $this->cpr;
     }
 }

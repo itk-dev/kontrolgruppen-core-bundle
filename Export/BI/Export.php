@@ -17,6 +17,9 @@ use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Repository\ProcessLogEntryRepository;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
 
+/**
+ * Class Export.
+ */
 class Export extends AbstractExport
 {
     protected $title = 'BI';
@@ -30,6 +33,15 @@ class Export extends AbstractExport
     /** @var ProcessLogEntryRepository */
     private $processLogEntryRepository;
 
+    /**
+     * Export constructor.
+     *
+     * @param EntityManagerInterface    $entityManager
+     * @param EconomyService            $economyService
+     * @param ProcessLogEntryRepository $processLogEntryRepository
+     *
+     * @throws \Exception
+     */
     public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService, ProcessLogEntryRepository $processLogEntryRepository)
     {
         parent::__construct();
@@ -38,11 +50,17 @@ class Export extends AbstractExport
         $this->processLogEntryRepository = $processLogEntryRepository;
     }
 
+    /**
+     * @return array
+     */
     public function getParameters()
     {
         return [];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function writeData()
     {
         $processes = $this->getProcesses();
@@ -52,6 +70,7 @@ class Export extends AbstractExport
             'Sagsnummer',
             'Oprettet dato',
             'Sagsbehandler',
+            'Postnummer',
             'CPR-nummer',
             'Antal børn',
             'Antal biler',
@@ -89,11 +108,15 @@ class Export extends AbstractExport
             );
             $latestLogEntry = reset($logEntries);
 
+            $forwardedTo = $process->getForwardedToAuthorities();
+            $forwardedTo = \count($forwardedTo) > 0 ? $forwardedTo[0] : null;
+
             $this->writeRow([
                 $this->formatDate(new \DateTime()), // 'Udtræksdato'
                 $process->getCaseNumber(), // 'Sagsnummer'
                 $this->formatDate($process->getCreatedAt(), 'long'), // 'Oprettet dato'
                 $process->getCaseWorker() ? $process->getCaseWorker()->getUsername() : null, // 'Sagsbehandler'
+                $process->getClient() ? $process->getClient()->getPostalCode() : null, // 'Postnummer'
                 $process->getClientCPR(), // 'CPR-nummer'
                 $process->getClient() ? $process->getClient()->getNumberOfChildren() : null, // 'Antal børn'
                 $process->getClient() ? $process->getClient()->getCars()->count() : null, // 'Antal biler'
@@ -103,12 +126,12 @@ class Export extends AbstractExport
                 $process->getReason() ? $process->getReason()->getName() : null, // 'Årsager'
                 $process->getChannel() ? $process->getChannel()->getName() : null, // 'Kanaler'
                 $process->getService() ? $process->getService()->getName() : null, // 'Ydelser'
-                $this->formatBoolean($process->getClient() && $process->getClient()->getReceivesPublicAid()), // 'Offentlig forsørgelse'
-                $this->formatBoolean($process->getClient() && $process->getClient()->getEmployed()), // 'Ansat'
-                $this->formatBoolean($process->getClient() && $process->getClient()->getHasOwnCompany()), // 'Er borgeren selvstændig erhvervsdrivende?'
-                $this->formatBoolean($process->getProcessStatus() && $process->getProcessStatus()->getIsForwardToAnotherAuthority()), // 'Videresendes til anden myndighed'
-                $this->formatBoolean((bool) $process->getPoliceReport()), // 'Er sagen politianmeldt?'
-                $this->formatBoolean((bool) $process->getCourtDecision()), // 'Rettens afgørelse'
+                $this->formatBooleanYesNoNull($process->getClient() && $process->getClient()->getReceivesPublicAid()), // 'Offentlig forsørgelse'
+                $this->formatBooleanYesNoNull($process->getClient() && $process->getClient()->getEmployed()), // 'Ansat'
+                $this->formatBooleanYesNoNull($process->getClient() && $process->getClient()->getHasOwnCompany()), // 'Er borgeren selvstændig erhvervsdrivende?'
+                $forwardedTo, // 'Videresendes til anden myndighed'
+                $this->formatBooleanDecision($process->getPoliceReport()), // 'Er sagen politianmeldt?'
+                $this->formatBooleanYesNoNull($process->getCourtDecision()), // 'Rettens afgørelse'
                 $this->formatAmount($revenue['repaymentSum'] ?? 0), // 'Samlet tilbagebetalingskrav i kr.'
                 $this->formatAmount($revenue['netRepaymentSum'] ?? 0), // 'Netto samlet tilbagebetalingskrav i kr.'
                 $this->formatAmount($revenue['futureSavingsSum'] ?? 0), // 'Samlet fremadrettet besparelse ved ydelsesstop i kr.'

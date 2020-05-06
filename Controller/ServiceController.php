@@ -24,6 +24,14 @@ class ServiceController extends BaseController
 {
     /**
      * @Route("/", name="service_index", methods={"GET"})
+     *
+     * @param \Symfony\Component\HttpFoundation\Request               $request
+     * @param \Kontrolgruppen\CoreBundle\Repository\ServiceRepository $serviceRepository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(Request $request, ServiceRepository $serviceRepository): Response
     {
@@ -35,6 +43,13 @@ class ServiceController extends BaseController
 
     /**
      * @Route("/new", name="service_new", methods={"GET","POST"})
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function new(Request $request): Response
     {
@@ -59,6 +74,14 @@ class ServiceController extends BaseController
 
     /**
      * @Route("/{id}", name="service_show", methods={"GET"})
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Kontrolgruppen\CoreBundle\Entity\Service $service
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function show(Request $request, Service $service): Response
     {
@@ -70,6 +93,14 @@ class ServiceController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="service_edit", methods={"GET","POST"})
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Kontrolgruppen\CoreBundle\Entity\Service $service
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function edit(Request $request, Service $service): Response
     {
@@ -93,6 +124,11 @@ class ServiceController extends BaseController
 
     /**
      * @Route("/{id}", name="service_delete", methods={"DELETE"})
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Kontrolgruppen\CoreBundle\Entity\Service $service
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function delete(Request $request, Service $service): Response
     {

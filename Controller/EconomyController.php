@@ -43,6 +43,7 @@ class EconomyController extends BaseController
      * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
      */
     public function show(Request $request, Process $process, EconomyEntryRepository $economyEntryRepository)
     {
@@ -65,7 +66,9 @@ class EconomyController extends BaseController
                 return $entityFormResult;
             }
 
-            $parameters['collapse_economy_entry_form'] = !isset($formResult['submitted']) || !$formResult['submitted'];
+            if (!isset($parameters['collapse_economy_entry_form'])) {
+                $parameters['collapse_economy_entry_form'] = !isset($formResult['submitted']) || !$formResult['submitted'];
+            }
         }
 
         $parameters['menuItems'] = $this->menuService->getProcessMenu($request->getPathInfo(), $process);
@@ -76,7 +79,9 @@ class EconomyController extends BaseController
         $parameters['economyEntriesAccount'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::ACCOUNT]);
 
         $services = array_reduce($parameters['economyEntriesService'], function ($carry, ServiceEconomyEntry $element) {
-            $carry[$element->getService()->getId()] = $element->getService();
+            if (null !== $element->getService()) {
+                $carry[$element->getService()->getId()] = $element->getService();
+            }
 
             return $carry;
         }, []);
@@ -113,8 +118,10 @@ class EconomyController extends BaseController
     }
 
     /**
-     * @param $chosenType
-     * @param $parameters
+     * @param Request $request
+     * @param Process $process
+     * @param         $chosenType
+     * @param         $parameters
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -156,12 +163,19 @@ class EconomyController extends BaseController
                 return $this->redirectToRoute('economy_show', ['process' => $process]);
             }
 
+            if ($form->isSubmitted() && !$form->isValid()) {
+                $parameters['collapse_economy_entry_form'] = false;
+            }
+
             $parameters['form'] = $form->createView();
         }
     }
 
     /**
      * Handles the economy entry form.
+     *
+     * @param Request $request
+     * @param Process $process
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse parameters for the form, or redirects on success
      */

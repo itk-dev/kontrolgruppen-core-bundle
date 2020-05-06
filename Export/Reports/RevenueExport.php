@@ -15,6 +15,9 @@ use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
 
+/**
+ * Class RevenueExport.
+ */
 class RevenueExport extends AbstractExport
 {
     protected $title = 'Samlet provenue opdelt på ydelser';
@@ -22,6 +25,14 @@ class RevenueExport extends AbstractExport
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
+    /**
+     * RevenueExport constructor.
+     *
+     * @param EntityManagerInterface $entityManager
+     * @param EconomyService         $economyService
+     *
+     * @throws \Exception
+     */
     public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService)
     {
         parent::__construct();
@@ -29,60 +40,151 @@ class RevenueExport extends AbstractExport
         $this->economyService = $economyService;
     }
 
+    /**
+     * @return array
+     */
     public function getParameters()
     {
         return parent::getParameters();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function writeData()
     {
         $processes = $this->getProcesses();
 
+        $processesLength = \count($processes);
+
         $this->writeHeader([
             'Ydelse',
             'Antal afsluttede sager',
-            'Samlet tilbagebetalingskrav',
-            'Samlet fremadrettet besparelse',
-            'Samlet provenu',
-            'Provenu pr. sag',
+            'Samlet tilbagebetalingskrav (Brutto)',
+            'Samlet fremadrettet besparelse (Brutto)',
+            'Samlet provenu (Brutto)',
+            'Provenu pr. sag (Brutto)',
+            'Samlet tilbagebetalingskrav (Netto)',
+            'Samlet fremadrettet besparelse (Netto)',
+            'Samlet provenu (Netto)',
+            'Provenu pr. sag (Netto)',
         ]);
 
         $revenue = [];
 
         foreach ($processes as $process) {
+            $countedForService = [];
             $processRevenue = $this->economyService->calculateRevenue($process);
 
-            if (!isset($revenue[$process->getService()->getName()])) {
-                $revenue[$process->getService()->getName()] = [
-                    'processes' => 0,
-                    'collectiveRepaymentSum' => 0.0,
-                    'collectiveFutureSavingsSum' => 0.0,
-                    'collectiveRevenueSum' => 0.0,
-                ];
+            foreach ($processRevenue['repaymentSums'] as $serviceName => $repaymentSum) {
+                if (!isset($revenue[$serviceName])) {
+                    $revenue[$serviceName] = $this->newEntry();
+                }
+
+                if (!isset($countedForService[$serviceName])) {
+                    ++$revenue[$serviceName]['processes'];
+                    $countedForService[$serviceName] = $serviceName;
+                }
+                $revenue[$serviceName]['collectiveRepaymentSum'] += $repaymentSum['sum'];
+                $revenue[$serviceName]['collectiveRevenueSum'] += $repaymentSum['sum'];
+                $revenue[$serviceName]['netCollectiveRepaymentSum'] += $repaymentSum['sum'] * $repaymentSum['netPercentage'] / 100.0;
+                $revenue[$serviceName]['netCollectiveRevenueSum'] += $repaymentSum['sum'] * $repaymentSum['netPercentage'] / 100.0;
             }
 
-            ++$revenue[$process->getService()->getName()]['processes'];
-            $revenue[$process->getService()->getName()]['collectiveRepaymentSum'] += $processRevenue['repaymentSum'];
-            $revenue[$process->getService()->getName()]['collectiveFutureSavingsSum'] += $processRevenue['futureSavingsSum'];
-            $revenue[$process->getService()->getName()]['collectiveRevenueSum'] = $processRevenue['repaymentSum'] + $processRevenue['futureSavingsSum'];
+            foreach ($processRevenue['futureSavingsSums'] as $serviceName => $futureSavingsSum) {
+                if (!isset($revenue[$serviceName])) {
+                    $revenue[$serviceName] = $this->newEntry();
+                }
+
+                if (!isset($countedForService[$serviceName])) {
+                    ++$revenue[$serviceName]['processes'];
+                    $countedForService[$serviceName] = $serviceName;
+                }
+                $revenue[$serviceName]['collectiveFutureSavingsSum'] += $futureSavingsSum['sum'];
+                $revenue[$serviceName]['collectiveRevenueSum'] += $futureSavingsSum['sum'];
+                $revenue[$serviceName]['netCollectiveFutureSavingsSum'] += $futureSavingsSum['sum'] * $futureSavingsSum['netPercentage'] / 100.0;
+                $revenue[$serviceName]['netCollectiveRevenueSum'] += $futureSavingsSum['sum'] * $futureSavingsSum['netPercentage'] / 100.0;
+            }
+
+            if (empty($processRevenue['repaymentSums']) && empty($processRevenue['futureSavingsSums'])) {
+                $serviceName = $process->getService()->getName() ?? '-- Ikke sat --';
+                if (!isset($revenue[$serviceName])) {
+                    $revenue[$serviceName] = $this->newEntry();
+                }
+                ++$revenue[$serviceName]['processes'];
+            }
         }
+
+        $sums = [
+            'collectiveRepaymentSum' => 0,
+            'collectiveFutureSavingsSum' => 0,
+            'collectiveRevenueSum' => 0,
+            'netCollectiveRepaymentSum' => 0,
+            'netCollectiveFutureSavingsSum' => 0,
+            'netCollectiveRevenueSum' => 0,
+        ];
 
         foreach ($revenue as $key => $value) {
             $value['revenueAverage'] = $value['collectiveRevenueSum'] / $value['processes'];
+            $value['netRevenueAverage'] = $value['netCollectiveRevenueSum'] / $value['processes'];
 
             $this->writeRow([
                 $key,
-                $value['processes'],
-                $value['collectiveRepaymentSum'],
-                $value['collectiveFutureSavingsSum'],
-                $value['collectiveRevenueSum'],
-                $value['revenueAverage'],
+                $this->formatNumber($value['processes'], 0),
+                $this->formatNumberWithThousandSeparators($value['collectiveRepaymentSum']),
+                $this->formatNumberWithThousandSeparators($value['collectiveFutureSavingsSum']),
+                $this->formatNumberWithThousandSeparators($value['collectiveRevenueSum']),
+                $this->formatNumberWithThousandSeparators($value['revenueAverage']),
+                $this->formatNumberWithThousandSeparators($value['netCollectiveRepaymentSum']),
+                $this->formatNumberWithThousandSeparators($value['netCollectiveFutureSavingsSum']),
+                $this->formatNumberWithThousandSeparators($value['netCollectiveRevenueSum']),
+                $this->formatNumberWithThousandSeparators($value['netRevenueAverage']),
             ]);
+
+            $sums['collectiveRepaymentSum'] += $value['collectiveRepaymentSum'];
+            $sums['collectiveFutureSavingsSum'] += $value['collectiveFutureSavingsSum'];
+            $sums['collectiveRevenueSum'] += $value['collectiveRevenueSum'];
+            $sums['netCollectiveRepaymentSum'] += $value['netCollectiveRepaymentSum'];
+            $sums['netCollectiveFutureSavingsSum'] += $value['netCollectiveFutureSavingsSum'];
+            $sums['netCollectiveRevenueSum'] += $value['netCollectiveRevenueSum'];
         }
+
+        $this->writeRow([
+            'I alt',
+            $processesLength,
+            $this->formatNumberWithThousandSeparators($sums['collectiveRepaymentSum']),
+            $this->formatNumberWithThousandSeparators($sums['collectiveFutureSavingsSum']),
+            $this->formatNumberWithThousandSeparators($sums['collectiveRevenueSum']),
+            $processesLength > 0 ? $this->formatNumberWithThousandSeparators($sums['collectiveRevenueSum'] / $processesLength) : '',
+            $this->formatNumberWithThousandSeparators($sums['netCollectiveRepaymentSum']),
+            $this->formatNumberWithThousandSeparators($sums['netCollectiveFutureSavingsSum']),
+            $this->formatNumberWithThousandSeparators($sums['netCollectiveRevenueSum']),
+            $processesLength > 0 ? $this->formatNumberWithThousandSeparators($sums['netCollectiveRevenueSum'] / $processesLength) : '',
+        ]);
+    }
+
+    /**
+     * Create a new array entry.
+     *
+     * @return array
+     */
+    private function newEntry()
+    {
+        return [
+            'processes' => 0,
+            'collectiveRepaymentSum' => 0.0,
+            'collectiveFutureSavingsSum' => 0.0,
+            'collectiveRevenueSum' => 0.0,
+            'netCollectiveRepaymentSum' => 0.0,
+            'netCollectiveFutureSavingsSum' => 0.0,
+            'netCollectiveRevenueSum' => 0.0,
+        ];
     }
 
     /**
      * @return Process[]
+     *
+     * @throws \Exception
      */
     private function getProcesses()
     {
@@ -93,7 +195,7 @@ class RevenueExport extends AbstractExport
         $endDate = $this->parameters['enddate'] ?? new \DateTime('2100-01-01');
 
         $queryBuilder
-            ->andWhere('p.createdAt BETWEEN :startdate AND :enddate')
+            ->andWhere('p.completedAt BETWEEN :startdate AND :enddate')
             ->setParameter('startdate', $startDate)
             ->setParameter('enddate', $endDate);
 

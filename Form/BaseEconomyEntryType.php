@@ -17,8 +17,15 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class BaseEconomyEntryType.
+ */
 class BaseEconomyEntryType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -40,7 +47,7 @@ class BaseEconomyEntryType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => false,
                 'format' => 'dd-MM-yyyy HH:mm',
-                'attr' => ['class' => 'js-datepicker'],
+                'attr' => ['class' => 'js-datetimepicker'],
                 'help' => 'economy_entry.form.base.date_help',
             ])
             ->add('amount', MoneyType::class, [
@@ -52,6 +59,9 @@ class BaseEconomyEntryType extends AbstractType
         ;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

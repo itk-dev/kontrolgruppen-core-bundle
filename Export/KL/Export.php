@@ -17,8 +17,10 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
+/**
+ * Class Export.
+ */
 class Export extends AbstractExport
 {
     protected $title = 'KL';
@@ -29,6 +31,14 @@ class Export extends AbstractExport
     /** @var EconomyService */
     private $economyService;
 
+    /**
+     * Export constructor.
+     *
+     * @param EntityManagerInterface $entityManager
+     * @param EconomyService         $economyService
+     *
+     * @throws \Exception
+     */
     public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService)
     {
         parent::__construct();
@@ -36,6 +46,9 @@ class Export extends AbstractExport
         $this->economyService = $economyService;
     }
 
+    /**
+     * @return array
+     */
     public function getParameters()
     {
         return parent::getParameters() + [
@@ -52,25 +65,19 @@ class Export extends AbstractExport
                         'empty_data' => null,
                     ],
                 ],
-                'is_completed' => [
-                    'type' => ChoiceType::class,
-                    'type_options' => [
-                        'label' => 'process.is_completed',
-                        'choices' => [
-                            'common.boolean.Yes' => true,
-                            'common.boolean.No' => false,
-                        ],
-                    ],
-                ],
             ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function writeData()
     {
         $processes = $this->getProcesses();
 
         $this->writeRow([
             'Overføres ikke til KL',
+            'Overføres til KL',
             'Overføres til KL',
             'Overføres til KL',
             'Overføres til KL',
@@ -89,6 +96,7 @@ class Export extends AbstractExport
             'Sagstype',
             'Ydelsestype',
             'Er borgeren selvstændig erhvervsdrivende?',
+            'Har der været udført virksomhedskontrol?',
             'Samlet tilbagebetalingskrav i kr.',
             'Samlet fremadrettet besparelse ved ydelsesstop i kr.',
             'Videresendes til anden myndighed',
@@ -98,35 +106,96 @@ class Export extends AbstractExport
         ]);
 
         foreach ($processes as $process) {
-            $revenue = $this->economyService->calculateRevenue($process);
+            $rows = $this->createRowsArray($process);
 
-            $this->writeRow([
-                $process->getCaseNumber(),
-                $process->getChannel() ? $process->getChannel()->getName() : null,
-                $process->getProcessType() ? $process->getProcessType()->getName() : null,
-                $process->getService() ? $process->getService()->getName() : null,
-                $this->formatBoolean($process->getClient() && $process->getClient()->getHasOwnCompany()),
-                $this->formatAmount($revenue['repaymentSum'] ?? 0),
-                $this->formatAmount($revenue['futureSavingsSum'] ?? 0),
-                $this->formatBoolean($process->getProcessStatus() && $process->getProcessStatus()->getIsForwardToAnotherAuthority()),
-                $this->formatBoolean((bool) $process->getPoliceReport()),
-                $process->getProcessStatus() ? $process->getProcessStatus()->getName() : null,
-                null,
-            ]);
+            foreach ($rows as $row) {
+                $row['futureSavingsSum'] = $this->formatNumber($row['futureSavingsSum'], 2);
+                $row['repaymentSum'] = $this->formatNumber($row['repaymentSum'], 2);
+
+                $this->writeRow(array_values($row));
+            }
         }
     }
 
     /**
+     * Create rows for a process.
+     *
+     * @param Process $process
+     *
+     * @return array
+     */
+    private function createRowsArray(Process $process)
+    {
+        $processRevenue = $this->economyService->calculateRevenue($process);
+
+        $revenue = [];
+
+        foreach ($processRevenue['repaymentSums'] as $serviceName => $repaymentSum) {
+            if (!isset($revenue[$serviceName])) {
+                $revenue[$serviceName] = $this->getNewRow($process, $serviceName);
+            }
+
+            $revenue[$serviceName]['repaymentSum'] += $repaymentSum['sum'];
+        }
+
+        foreach ($processRevenue['futureSavingsSums'] as $serviceName => $futureSavingsSum) {
+            if (!isset($revenue[$serviceName])) {
+                $revenue[$serviceName] = $this->getNewRow($process, $serviceName);
+            }
+
+            $revenue[$serviceName]['futureSavingsSum'] += $futureSavingsSum['sum'];
+        }
+
+        // Include the process, even if it has no revenue set,
+        // with the name of the service set for the process.
+        if (empty($processRevenue['repaymentSums']) && empty($processRevenue['futureSavingsSums'])) {
+            $serviceName = $process->getService()->getName() ?? '-- Ikke sat --';
+            $revenue[$serviceName] = $this->getNewRow($process, $serviceName);
+        }
+
+        return $revenue;
+    }
+
+    /**
+     * Create a new row.
+     *
+     * @param Process $process
+     * @param         $serviceName
+     *
+     * @return array
+     */
+    private function getNewRow(Process $process, $serviceName)
+    {
+        $forwardedTo = $process->getForwardedToAuthorities();
+        $forwardedTo = \count($forwardedTo) > 0 ? $forwardedTo[0] : null;
+
+        return [
+            'caseNumber' => $process->getCaseNumber(),
+            'channel' => $process->getChannel() ? $process->getChannel()->getName() : null,
+            'processType' => $process->getProcessType() ? $process->getProcessType()->getName() : null,
+            'service' => $serviceName,
+            'clientHasOwnCompany' => $this->formatBooleanYesNoNull($process->getClient()->getHasOwnCompany()),
+            'performedCompanyCheck' => $this->formatBooleanYesNoNull($process->getPerformedCompanyCheck()),
+            'repaymentSum' => 0.0,
+            'futureSavingsSum' => 0.0,
+            'isForwardedToAnotherAuthority' => $forwardedTo,
+            'policeReport' => $this->formatBooleanYesNoNull($process->getPoliceReport()),
+            'status' => $process->getProcessStatus() ? $process->getProcessStatus()->getName() : null,
+            'misc' => null,
+        ];
+    }
+
+    /**
      * @return Process[]
+     *
+     * @throws \Exception
      */
     private function getProcesses()
     {
         $queryBuilder = $this->entityManager->getRepository(Process::class)
             ->createQueryBuilder('p');
 
-        if ($this->parameters['is_completed']) {
-            $queryBuilder->andWhere($this->parameters['is_completed'] ? 'p.completedAt IS NOT NULL' : 'p.completedAt IS NULL');
-        }
+        $queryBuilder->andWhere('p.completedAt IS NOT NULL');
 
         if (!empty($this->parameters['processtatus'])) {
             $queryBuilder
@@ -138,7 +207,7 @@ class Export extends AbstractExport
         $endDate = $this->parameters['enddate'] ?? new \DateTime('2100-01-01');
 
         $queryBuilder
-            ->andWhere('p.createdAt BETWEEN :startdate AND :enddate')
+            ->andWhere('p.completedAt BETWEEN :startdate AND :enddate')
             ->setParameter('startdate', $startDate)
             ->setParameter('enddate', $endDate);
 

@@ -18,6 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\UserRepository")
+ *
  * @Gedmo\Loggable()
  */
 class User implements UserInterface
@@ -44,6 +45,32 @@ class User implements UserInterface
      */
     private $processes;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $cliLoginToken;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\UserSettings", mappedBy="user", orphanRemoval=true)
+     */
+    private $userSettings;
+
+    /**
+     * @ORM\Column(type="string", length=180)
+     */
+    private $name;
+
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->userSettings = new ArrayCollection();
+    }
+
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
@@ -53,12 +80,19 @@ class User implements UserInterface
      * A visual identifier that represents this user.
      *
      * @see UserInterface
+     *
+     * @return string
      */
     public function getUsername(): string
     {
         return (string) $this->username;
     }
 
+    /**
+     * @param string $username
+     *
+     * @return User
+     */
     public function setUsername(string $username): self
     {
         $this->username = $username;
@@ -68,6 +102,8 @@ class User implements UserInterface
 
     /**
      * @see UserInterface
+     *
+     * @return array
      */
     public function getRoles(): array
     {
@@ -78,6 +114,11 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param array $roles
+     *
+     * @return User
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -118,6 +159,11 @@ class User implements UserInterface
         return $this->processes ?? new ArrayCollection();
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return User
+     */
     public function addProcess(Process $process): self
     {
         if (!$this->processes->contains($process)) {
@@ -128,6 +174,11 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return User
+     */
     public function removeProcess(Process $process): self
     {
         if ($this->processes->contains($process)) {
@@ -142,21 +193,27 @@ class User implements UserInterface
     }
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * Set name.
+     *
+     * @param string $name
+     *
+     * @return $this
      */
-    private $cliLoginToken;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\UserSettings", mappedBy="user", orphanRemoval=true)
-     */
-    private $userSettings;
-
-    /**
-     * User constructor.
-     */
-    public function __construct()
+    public function setName(string $name): self
     {
-        $this->userSettings = new ArrayCollection();
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name.
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**

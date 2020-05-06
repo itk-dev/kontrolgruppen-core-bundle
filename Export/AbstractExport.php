@@ -13,6 +13,9 @@ namespace Kontrolgruppen\CoreBundle\Export;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
+/**
+ * Class AbstractExport.
+ */
 abstract class AbstractExport implements \JsonSerializable
 {
     /** @var string */
@@ -26,6 +29,10 @@ abstract class AbstractExport implements \JsonSerializable
 
     /** @var \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet */
     protected $sheet;
+
+    protected $titleStyle;
+    protected $headerStyle;
+    protected $footerStyle;
 
     protected $latestRow = 0;
 
@@ -41,6 +48,9 @@ abstract class AbstractExport implements \JsonSerializable
         }
     }
 
+    /**
+     * @return string
+     */
     public function getTitle()
     {
         return $this->title;
@@ -48,6 +58,10 @@ abstract class AbstractExport implements \JsonSerializable
 
     /**
      * Get parameters.
+     *
+     * @return array
+     *
+     * @throws \Exception
      */
     public function getParameters()
     {
@@ -59,6 +73,8 @@ abstract class AbstractExport implements \JsonSerializable
                     'label' => 'Start date',
                     'widget' => 'single_text',
                     'format' => 'dd-MM-yyyy',
+                    'html5' => false,
+                    'attr' => ['class' => 'js-datepicker'],
                 ],
             ],
             'enddate' => [
@@ -68,6 +84,8 @@ abstract class AbstractExport implements \JsonSerializable
                     'label' => 'End date',
                     'widget' => 'single_text',
                     'format' => 'dd-MM-yyyy',
+                    'html5' => false,
+                    'attr' => ['class' => 'js-datepicker'],
                 ],
             ],
         ];
@@ -75,6 +93,10 @@ abstract class AbstractExport implements \JsonSerializable
 
     /**
      * Get value of a single parameter.
+     *
+     * @param $name
+     *
+     * @return mixed|null
      */
     public function getParameterValue($name)
     {
@@ -83,6 +105,8 @@ abstract class AbstractExport implements \JsonSerializable
 
     /**
      * Get export filename without extension.
+     *
+     * @param array $parameters
      *
      * @return string
      */
@@ -102,6 +126,11 @@ abstract class AbstractExport implements \JsonSerializable
 
     /**
      * Write report data to a writer.
+     *
+     * @param array       $parameters
+     * @param Spreadsheet $spreadsheet
+     *
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function write(array $parameters, Spreadsheet $spreadsheet)
     {
@@ -112,14 +141,25 @@ abstract class AbstractExport implements \JsonSerializable
     }
 
     /**
+     * @return array|mixed
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'title' => $this->getTitle(),
+        ];
+    }
+
+    /**
      * Write actual data.
      */
     abstract public function writeData();
 
-    protected $titleStyle;
-
     /**
      * Write report title using title format.
+     *
+     * @param     $title
+     * @param int $colSpan
      */
     protected function writeTitle($title, $colSpan = 1)
     {
@@ -135,10 +175,10 @@ abstract class AbstractExport implements \JsonSerializable
         $this->writeRow([$title], $this->titleStyle);
     }
 
-    protected $headerStyle;
-
     /**
      * Write header using header format.
+     *
+     * @param array $data
      */
     protected function writeHeader(array $data)
     {
@@ -153,8 +193,9 @@ abstract class AbstractExport implements \JsonSerializable
         $this->writeRow($data, $this->headerStyle);
     }
 
-    protected $footerStyle;
-
+    /**
+     * @param array $data
+     */
     protected function writeFooter(array $data)
     {
         if (null === $this->footerStyle) {
@@ -174,6 +215,11 @@ abstract class AbstractExport implements \JsonSerializable
         $this->writeRow($data, $this->footerStyle);
     }
 
+    /**
+     * @param array      $row
+     * @param array|null $style
+     * @param int        $indent
+     */
     protected function writeRow(array $row, array $style = null, int $indent = 0)
     {
         ++$this->latestRow;
@@ -189,13 +235,49 @@ abstract class AbstractExport implements \JsonSerializable
         }
     }
 
+    /**
+     * @param bool $value
+     *
+     * @return string
+     */
     protected function formatBoolean(bool $value)
     {
         return $value ? 'x' : '';
     }
 
     /**
+     * Formats a boolean|null as Ja/Nej/null.
+     *
+     * @param bool|null $value
+     *
+     * @return string|null
+     */
+    protected function formatBooleanYesNoNull(?bool $value)
+    {
+        return true === $value ? 'Ja' : (false === $value ? 'Nej' : null);
+    }
+
+    /**
+     * Formats a boolean|null as Medhold/Afvist/null.
+     *
+     * @param bool|null $value
+     *
+     * @return string|null
+     */
+    protected function formatBooleanDecision(?bool $value)
+    {
+        return true === $value ? 'Medhold' : (false === $value ? 'Afvist' : null);
+    }
+
+    /**
      * Format a date.
+     *
+     * @param \DateTime $date
+     * @param string    $format
+     *
+     * @return string
+     *
+     * @throws \Exception
      */
     protected function formatDate(\DateTime $date, $format = 'short')
     {
@@ -206,10 +288,8 @@ abstract class AbstractExport implements \JsonSerializable
         switch ($format) {
             case 'short':
                 return $date->format('d-m-Y');
-                break;
             case 'long':
                 return $date->format('d-m-Y H:i');
-                break;
             default:
                 return $this->formatDate($date, 'short');
         }
@@ -217,6 +297,11 @@ abstract class AbstractExport implements \JsonSerializable
 
     /**
      * Format a decimal number.
+     *
+     * @param     $number
+     * @param int $decimals
+     *
+     * @return string
      */
     protected function formatNumber($number, $decimals = 2)
     {
@@ -224,17 +309,28 @@ abstract class AbstractExport implements \JsonSerializable
     }
 
     /**
+     * Format a decimal number with thousand separators.
+     *
+     * @param     $number
+     * @param int $decimals
+     *
+     * @return string
+     */
+    protected function formatNumberWithThousandSeparators($number, $decimals = 2)
+    {
+        return number_format($number, $decimals, ',', '.');
+    }
+
+    /**
      * Format an amount.
+     *
+     * @param     $number
+     * @param int $decimals
+     *
+     * @return string
      */
     protected function formatAmount($number, $decimals = 2)
     {
         return $this->formatNumber($number, $decimals);
-    }
-
-    public function jsonSerialize()
-    {
-        return [
-            'title' => $this->getTitle(),
-        ];
     }
 }

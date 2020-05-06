@@ -24,6 +24,14 @@ class AccountController extends BaseController
 {
     /**
      * @Route("/", name="account_index", methods={"GET"})
+     *
+     * @param Request           $request
+     * @param AccountRepository $accounts
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(Request $request, AccountRepository $accounts): Response
     {
@@ -35,6 +43,13 @@ class AccountController extends BaseController
 
     /**
      * @Route("/new", name="account_new", methods={"GET","POST"})
+     *
+     * @param Request $request
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function new(Request $request): Response
     {
@@ -59,6 +74,14 @@ class AccountController extends BaseController
 
     /**
      * @Route("/{id}", name="account_show", methods={"GET"})
+     *
+     * @param Request $request
+     * @param Account $account
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function show(Request $request, Account $account): Response
     {
@@ -70,6 +93,14 @@ class AccountController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="account_edit", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param Account $account
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function edit(Request $request, Account $account): Response
     {
@@ -93,6 +124,11 @@ class AccountController extends BaseController
 
     /**
      * @Route("/{id}", name="account_delete", methods={"DELETE"})
+     *
+     * @param Request $request
+     * @param Account $account
+     *
+     * @return Response
      */
     public function delete(Request $request, Account $account): Response
     {

@@ -24,6 +24,14 @@ class QuickLinkController extends BaseController
 {
     /**
      * @Route("/", name="quick_link_index", methods={"GET"})
+     *
+     * @param Request             $request
+     * @param QuickLinkRepository $quickLinkRepository
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function index(Request $request, QuickLinkRepository $quickLinkRepository): Response
     {
@@ -35,6 +43,13 @@ class QuickLinkController extends BaseController
 
     /**
      * @Route("/new", name="quick_link_new", methods={"GET","POST"})
+     *
+     * @param Request $request
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function new(Request $request): Response
     {
@@ -59,6 +74,14 @@ class QuickLinkController extends BaseController
 
     /**
      * @Route("/{id}", name="quick_link_show", methods={"GET"})
+     *
+     * @param Request   $request
+     * @param QuickLink $quickLink
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function show(Request $request, QuickLink $quickLink): Response
     {
@@ -70,6 +93,14 @@ class QuickLinkController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="quick_link_edit", methods={"GET","POST"})
+     *
+     * @param Request   $request
+     * @param QuickLink $quickLink
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function edit(Request $request, QuickLink $quickLink): Response
     {
@@ -93,6 +124,11 @@ class QuickLinkController extends BaseController
 
     /**
      * @Route("/{id}", name="quick_link_delete", methods={"DELETE"})
+     *
+     * @param Request   $request
+     * @param QuickLink $quickLink
+     *
+     * @return Response
      */
     public function delete(Request $request, QuickLink $quickLink): Response
     {

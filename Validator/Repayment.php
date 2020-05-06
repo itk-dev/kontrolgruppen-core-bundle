@@ -19,11 +19,17 @@ class Repayment extends Constraint
 {
     public $message = '';
 
+    /**
+     * @return array|string
+     */
     public function getTargets()
     {
         return self::CLASS_CONSTRAINT;
     }
 
+    /**
+     * @return string
+     */
     public function validatedBy()
     {
         return RepaymentValidator::class;

@@ -257,6 +257,7 @@ economy:
             future_savings_type: Beløbstype
             amount: Beløb (kr.)
             type: Provenutype
+        income_type_not_chosen: '- Ingen -'
     revenue:
         add_revenue_repayment: + Tilbagebetalingskrav
         add_future_savings: + Fremtidig besparelse
@@ -450,6 +451,7 @@ process:
         confirm: Er du sikker på at du vil afslutte sagen?
         court_decision: Rettens afgørelse
         forwarded_to_authority: Videresendes til anden myndighed
+        performed_company_check: Har der været udført virksomhedskontrol?
         police_report: Sagen er politianmeldt
         processing_time: Sagens behandlingstid
         processing_time_value: 'En dag|%days% dage'
@@ -971,3 +973,9 @@ bi:
     delete_export: Slet
     delete_export_confirm: Bekræft sletning af rapport.
     no_exports: Ingen eksporter fundet
+
+'export.show.revenue_export.info_title': Bemærk!
+'export.show.revenue_export.info_text': Kolonnen "Antal afsluttede sager" stemmer ikke nødvendigvis overens med "i alt" i bunden, da en sag der har provenu på mere end én ydelsestype vil tælle med i hver ydelsestyperække. "I alt" "Antal afsluttede sager" er det samlede antal af afsluttede sager i perioden, medregnet sager uden provenu.
+'process.form.complete.forwarded_to_authorities_help': Kun ét valg kommer med i KL- og BI-udtræk.
+'economy.table.service_not_chosen': '- Ingen -'
+'economy.table.account_not_chosen': '- Ingen -'

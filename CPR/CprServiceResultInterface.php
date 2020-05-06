@@ -10,8 +10,14 @@
 
 namespace Kontrolgruppen\CoreBundle\CPR;
 
-interface CprServiceResult
+/**
+ * Interface CprServiceResult.
+ */
+interface CprServiceResultInterface
 {
+    /**
+     * @return string
+     */
     public function getFirstName(): string;
 
     /**
@@ -21,8 +27,16 @@ interface CprServiceResult
      */
     public function getMiddleName(): ?string;
 
+    /**
+     * Get last name.
+     *
+     * @return string
+     */
     public function getLastName(): string;
 
+    /**
+     * @return string
+     */
     public function getStreetName(): string;
 
     /**
@@ -32,11 +46,23 @@ interface CprServiceResult
      */
     public function getHouseNumber(): ?string;
 
+    /**
+     * @return string|null
+     */
     public function getFloor(): ?string;
 
+    /**
+     * @return string|null
+     */
     public function getSide(): ?string;
 
+    /**
+     * @return string
+     */
     public function getPostalCode(): string;
 
+    /**
+     * @return string
+     */
     public function getCity(): string;
 }

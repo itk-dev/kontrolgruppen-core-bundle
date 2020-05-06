@@ -22,31 +22,41 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class BaseController.
+ */
 class BaseController extends AbstractController
 {
     protected $requestStack;
     protected $menuService;
 
-    public function __construct(
-        RequestStack $requestStack,
-        MenuService $menuService
-    ) {
+    /**
+     * BaseController constructor.
+     *
+     * @param RequestStack $requestStack
+     * @param MenuService  $menuService
+     */
+    public function __construct(RequestStack $requestStack, MenuService $menuService)
+    {
         $this->requestStack = $requestStack;
         $this->menuService = $menuService;
     }
 
     /**
      * Render view.
-     *
      * Attaches menu and quick links.
      *
+     * @param string        $view
+     * @param array         $parameters
+     * @param Response|null $response
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function render(
-        string $view,
-        array $parameters = [],
-        Response $response = null
-    ): Response {
+    public function render(string $view, array $parameters = [], Response $response = null): Response
+    {
         // Set reminders
         $numberOfReminders = $this->getDoctrine()->getRepository(
             Reminder::class
@@ -91,11 +101,11 @@ class BaseController extends AbstractController
         return parent::render($view, $parameters, $response);
     }
 
-    protected function getGlobalNavMenu(string $path = '/')
-    {
-        return $this->menuService->getGlobalNavMenu($path);
-    }
-
+    /**
+     * @param $process
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function createChangeProcessStatusForm($process)
     {
         return $this->createFormBuilder($process)
@@ -126,14 +136,14 @@ class BaseController extends AbstractController
     /**
      * Redirect to route if the process is not editable.
      *
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     * @param Process $process
      *   The process
-     * @param string                                    $route
+     * @param string  $route
      *   The route to redirect to
-     * @param array                                     $routeParams
+     * @param array   $routeParams
      *   The parameters to the redirect
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     public function redirectOnProcessComplete(Process $process, string $route, array $routeParams = [])
     {
@@ -145,6 +155,10 @@ class BaseController extends AbstractController
         }
     }
 
+    /**
+     * @param $request
+     * @param $changeProcessStatusForm
+     */
     public function handleChangeProcessStatusForm($request, $changeProcessStatusForm)
     {
         $changeProcessStatusForm->handleRequest($request);
@@ -153,6 +167,13 @@ class BaseController extends AbstractController
         }
     }
 
+    /**
+     * @param string $route
+     * @param array  $parameters
+     * @param int    $status
+     *
+     * @return RedirectResponse
+     */
     protected function redirectToReferer(string $route, array $parameters = [], int $status = 302): RedirectResponse
     {
         // Check for referer in query string.
@@ -164,5 +185,15 @@ class BaseController extends AbstractController
         }
 
         return $this->redirectToRoute($route, $parameters, $status);
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return array
+     */
+    protected function getGlobalNavMenu(string $path = '/')
+    {
+        return $this->menuService->getGlobalNavMenu($path);
     }
 }

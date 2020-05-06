@@ -17,6 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ReasonRepository")
+ *
  * @Gedmo\Loggable()
  */
 class Reason extends AbstractTaxonomy
@@ -26,6 +27,9 @@ class Reason extends AbstractTaxonomy
      */
     private $processes;
 
+    /**
+     * Reason constructor.
+     */
     public function __construct()
     {
         $this->processes = new ArrayCollection();
@@ -39,6 +43,11 @@ class Reason extends AbstractTaxonomy
         return $this->processes;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return $this
+     */
     public function addProcess(Process $process): self
     {
         if (!$this->processes->contains($process)) {
@@ -49,6 +58,11 @@ class Reason extends AbstractTaxonomy
         return $this;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return $this
+     */
     public function removeProcess(Process $process): self
     {
         if ($this->processes->contains($process)) {

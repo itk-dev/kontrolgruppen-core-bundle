@@ -43,3 +43,9 @@ services:
 
     Kontrolgruppen\CoreBundle\Service\LockService:
         arguments: ['@lock.store.semaphore']
+
+    Kontrolgruppen\CoreBundle\EventListener\LoggerListener:
+        arguments:
+            $loggableListener: '@stof_doctrine_extensions.listener.loggable'
+            $authorizationChecker: '@?security.authorization_checker'
+            $tokenStorage: '@?security.token_storage'

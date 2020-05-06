@@ -15,8 +15,15 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class ReminderType.
+ */
 class ReminderType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -28,12 +35,15 @@ class ReminderType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => false,
                 'format' => 'dd-MM-yyyy HH:mm',
-                'attr' => ['class' => 'js-datepicker'],
+                'attr' => ['class' => 'js-datetimepicker'],
                 'help' => 'reminder.form.date_help',
             ])
         ;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

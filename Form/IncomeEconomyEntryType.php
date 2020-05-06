@@ -19,8 +19,15 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class IncomeEconomyEntryType.
+ */
 class IncomeEconomyEntryType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -34,21 +41,21 @@ class IncomeEconomyEntryType extends AbstractType
                 'help' => 'economy_entry.form.income.income_type_help',
             ])
             ->add('periodFrom', null, [
-                'label' => false,
+                'label' => 'economy_entry.form.service.period_from',
                 'widget' => 'single_text',
                 'html5' => false,
                 'format' => 'dd-MM-yyyy',
                 'attr' => [
-                    'class' => 'd-none',
+                    'class' => 'js-economy-entry-period-from d-none',
                 ],
             ])
             ->add('periodTo', null, [
-                'label' => false,
+                'label' => 'economy_entry.form.service.period_to',
                 'widget' => 'single_text',
                 'html5' => false,
                 'format' => 'dd-MM-yyyy',
                 'attr' => [
-                    'class' => 'd-none',
+                    'class' => 'js-economy-entry-period-to d-none',
                 ],
             ])
             ->add('amountPeriod', ChoiceType::class, [
@@ -65,6 +72,9 @@ class IncomeEconomyEntryType extends AbstractType
         ;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

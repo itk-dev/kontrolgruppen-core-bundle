@@ -14,6 +14,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 
+/**
+ * Class HitRateExport.
+ */
 class HitRateExport extends AbstractExport
 {
     protected $title = 'Hitrate';
@@ -21,17 +24,30 @@ class HitRateExport extends AbstractExport
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
+    /**
+     * HitRateExport constructor.
+     *
+     * @param EntityManagerInterface $entityManager
+     *
+     * @throws \Exception
+     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         parent::__construct();
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @return array
+     */
     public function getParameters()
     {
         return parent::getParameters();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function writeData()
     {
         $processes = $this->getProcesses();
@@ -48,16 +64,18 @@ class HitRateExport extends AbstractExport
         $hitRate = [];
 
         foreach ($processes as $process) {
-            if (!isset($hitRate[$process->getChannel()->getName()])) {
-                $hitRate[$process->getChannel()->getName()] = [
-                    'processes' => 0,
-                    'won' => 0,
-                ];
-            }
+            if (null !== $process->getChannel()) {
+                $channelName = $process->getChannel()->getName();
+                if (!isset($hitRate[$channelName])) {
+                    $hitRate[$channelName] = [
+                        'processes' => 0,
+                        'won' => 0,
+                    ];
+                }
 
-            ++$hitRate[$process->getChannel()->getName()]['processes'];
-            $hitRate[$process->getChannel()->getName()]['won'] +=
-                $process->getCourtDecision() ? 1 : 0;
+                ++$hitRate[$channelName]['processes'];
+                $hitRate[$channelName]['won'] += $process->getCourtDecision() ? 1 : 0;
+            }
         }
 
         foreach ($hitRate as $key => $value) {
@@ -65,15 +83,17 @@ class HitRateExport extends AbstractExport
 
             $this->writeRow([
                 $key,
-                $value['processes'],
-                $value['won'],
-                ($value['hitRate'] * 100).' %',
+                $this->formatNumber($value['processes']),
+                $this->formatNumber($value['won']),
+                $this->formatNumber($value['hitRate'] * 100).' %',
             ]);
         }
     }
 
     /**
      * @return Process[]
+     *
+     * @throws \Exception
      */
     private function getProcesses()
     {
@@ -84,7 +104,7 @@ class HitRateExport extends AbstractExport
         $endDate = $this->parameters['enddate'] ?? new \DateTime('2100-01-01');
 
         $queryBuilder
-            ->andWhere('p.createdAt BETWEEN :startdate AND :enddate')
+            ->andWhere('p.completedAt BETWEEN :startdate AND :enddate')
             ->setParameter('startdate', $startDate)
             ->setParameter('enddate', $endDate);
 

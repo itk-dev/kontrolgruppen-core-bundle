@@ -12,16 +12,19 @@ namespace Kontrolgruppen\CoreBundle\CPR;
 
 use Kontrolgruppen\CoreBundle\Entity\Client;
 
+/**
+ * Interface CprServiceInterface.
+ */
 interface CprServiceInterface
 {
     /**
      * @param Cpr $cpr
      *
-     * @return CprServiceResult
+     * @return CprServiceResultInterface
      *
      * @throws CprException
      */
-    public function find(Cpr $cpr): CprServiceResult;
+    public function find(Cpr $cpr): CprServiceResultInterface;
 
     /**
      * Populates client with information from the CPR service. If no data is found via the service the client

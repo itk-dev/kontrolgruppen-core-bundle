@@ -29,6 +29,9 @@ abstract class AbstractEntity
      */
     protected $id;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;

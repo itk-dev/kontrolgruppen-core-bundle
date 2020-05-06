@@ -27,11 +27,19 @@ class Conclusion extends AbstractEntity implements ProcessLoggableInterface
      */
     private $process;
 
+    /**
+     * @return Process|null
+     */
     public function getProcess(): ?Process
     {
         return $this->process;
     }
 
+    /**
+     * @param Process|null $process
+     *
+     * @return $this
+     */
     public function setProcess(?Process $process): self
     {
         $this->process = $process;

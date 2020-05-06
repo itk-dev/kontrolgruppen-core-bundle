@@ -29,6 +29,16 @@ class ClientController extends BaseController
 {
     /**
      * @Route("/", name="client_show", methods={"GET","POST"})
+     *
+     * @param Request             $request
+     * @param Process             $process
+     * @param CprServiceInterface $cprService
+     * @param LoggerInterface     $logger
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function show(Request $request, Process $process, CprServiceInterface $cprService, LoggerInterface $logger): Response
     {
@@ -76,6 +86,14 @@ class ClientController extends BaseController
 
     /**
      * @Route("/edit", name="client_edit", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param Process $process
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function edit(Request $request, Process $process): Response
     {
@@ -112,6 +130,14 @@ class ClientController extends BaseController
 
     /**
      * @Route("/update", name="client_update", methods={"GET"})
+     *
+     * @param Request             $request
+     * @param Process             $process
+     * @param CprServiceInterface $cprService
+     * @param LoggerInterface     $logger
+     * @param TranslatorInterface $translator
+     *
+     * @return Response
      */
     public function update(Request $request, Process $process, CprServiceInterface $cprService, LoggerInterface $logger, TranslatorInterface $translator): Response
     {
