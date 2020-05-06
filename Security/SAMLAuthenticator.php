@@ -119,9 +119,52 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         }
 
         $username = $this->getUsername($auth);
-        $user = $userProvider->getUser($username, $credentials);
+        $displayName = $this->getDisplayName($auth);
 
-        return $user;
+        return $userProvider->getUser($username, $displayName, $credentials);
+    }
+
+    /**
+     * @param Auth $auth
+     *
+     * @return mixed|string
+     */
+    private function getUsername(Auth $auth)
+    {
+        if (isset($this->settings['username_attribute_name'])) {
+            $attribute = $auth->getAttribute($this->settings['username_attribute_name']);
+            if (!empty($attribute)) {
+                $username = reset($attribute);
+                if (!empty($username)) {
+                    return $username;
+                }
+            }
+        }
+
+        // Fallback.
+        return $auth->getNameId();
+    }
+
+    /**
+     * Returns the name of the user for displaying purposes.
+     *
+     * @param Auth $auth
+     *
+     * @return string
+     */
+    private function getDisplayName(Auth $auth): string
+    {
+        if (isset($this->settings['display_name_attribute_name'])) {
+            $attribute = $auth->getAttribute($this->settings['display_name_attribute_name']);
+            if (!empty($attribute)) {
+                $displayName = reset($attribute);
+                if (!empty($displayName)) {
+                    return $displayName;
+                }
+            }
+        }
+
+        return '';
     }
 
     /**
@@ -288,28 +331,5 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         }
 
         return $map;
-    }
-
-    /**
-     * Get username.
-     *
-     * @param Auth $auth
-     *
-     * @return string
-     */
-    private function getUsername(Auth $auth)
-    {
-        if (isset($this->settings['username_attribute_name'])) {
-            $attribute = $auth->getAttribute($this->settings['username_attribute_name']);
-            if (!empty($attribute)) {
-                $username = reset($attribute);
-                if (!empty($username)) {
-                    return $username;
-                }
-            }
-        }
-
-        // Fallback.
-        return $auth->getNameId();
     }
 }

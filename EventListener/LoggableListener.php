@@ -19,12 +19,15 @@ use Kontrolgruppen\CoreBundle\Entity\Conclusion;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLoggableInterface;
+use Kontrolgruppen\CoreBundle\Entity\User;
 
 /**
  * Class LoggableListener.
  */
 class LoggableListener extends BaseLoggableListener
 {
+    private $creatorName;
+
     private $actionLevelMapping = [
         'read' => ProcessLogEntryLevelEnumType::INFO,
         'create' => ProcessLogEntryLevelEnumType::NOTICE,
@@ -56,6 +59,22 @@ class LoggableListener extends BaseLoggableListener
         $this->createLogEntry('read', $object, $ea);
 
         $om->flush();
+    }
+
+    /**
+     * Set creator name.
+     *
+     * @param $creatorName
+     */
+    public function setCreatorName($creatorName)
+    {
+        if (\is_string($creatorName)) {
+            $this->creatorName = $creatorName;
+        } elseif (\is_object($creatorName) && method_exists($creatorName, 'getUser')) {
+            /** @var User $user */
+            $user = $creatorName->getUser();
+            $this->creatorName = $user->getName();
+        }
     }
 
     /**
@@ -164,6 +183,7 @@ class LoggableListener extends BaseLoggableListener
         $processLogEntry->setLogEntry($logEntry);
         $processLogEntry->setProcess($process);
         $processLogEntry->setLevel($level);
+        $processLogEntry->setCreatorName($this->creatorName);
 
         $objectManager = $ea->getObjectManager();
         $objectManager->persist($processLogEntry);

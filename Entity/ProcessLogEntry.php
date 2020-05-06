@@ -39,6 +39,11 @@ class ProcessLogEntry extends AbstractEntity
     private $level;
 
     /**
+     * @ORM\Column(type="string", length=180, nullable=true)
+     */
+    private $creatorName;
+
+    /**
      * @return string|null
      */
     public function getLevel(): ?string
@@ -96,5 +101,29 @@ class ProcessLogEntry extends AbstractEntity
         $this->logEntry = $logEntry;
 
         return $this;
+    }
+
+    /**
+     * Set creator name.
+     *
+     * @param string|null $name
+     *
+     * @return $this
+     */
+    public function setCreatorName(?string $name): self
+    {
+        $this->creatorName = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get creator name.
+     *
+     * @return string|null
+     */
+    public function getCreatorName(): ?string
+    {
+        return $this->creatorName;
     }
 }
