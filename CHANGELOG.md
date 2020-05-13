@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.4] - 2020-05-13
+### Fixed
+- [KON-289](https://jira.itkdev.dk/browse/KON-289): Fixed missing name on existing users
+
 ## [1.6.3] - 2020-05-06
 ### Added
 - [Changelog](https://github.com/aakb/kontrolgruppen-core-bundle/pull/177): Added CHANGELOG file
