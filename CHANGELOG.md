@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.5] - 2020-05-20
+### Fixed
+- [KON-368](https://jira.itkdev.dk/browse/KON-368): Fixed error on missing case worker
+
 ## [1.6.4] - 2020-05-13
 ### Fixed
 - [KON-289](https://jira.itkdev.dk/browse/KON-289): Fixed missing name on existing users
@@ -20,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [KON-362](https://github.com/aakb/kontrolgruppen-core-bundle/pull/184): Include non-revenue cases in KL report
 - [KON-354](https://github.com/aakb/kontrolgruppen-core-bundle/pull/187): Changed BI fields
 - [KON-360](https://github.com/aakb/kontrolgruppen-core-bundle/pull/185): Adjusted report
-- [KON-361](https://github.com/aakb/kontrolgruppen-core-bundle/pull/188): Changed datetime picker (sammen med https://github.com/aakb/kontrolgruppen-core-bundle/pull/189)
+- [KON-361](https://github.com/aakb/kontrolgruppen-core-bundle/pull/188): Changed datetime picker (connected with https://github.com/aakb/kontrolgruppen-core-bundle/pull/189)
 
 ### Fixed
 - [KON-362](https://github.com/aakb/kontrolgruppen-core-bundle/pull/183): Fixed annotation
