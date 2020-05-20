@@ -25,7 +25,7 @@
                     <td>{{ process.client.lastName }}</td>
                     <td>{{ process.client.address }}</td>
                     <td>{{ process.client.telephone }}</td>
-                    <td><span data-toggle="tooltip" data-placement="top" title="{{ process.caseWorker.name }}">{{ process.caseWorker }}</span></td>
+                    <td>{% if process.caseWorker %}<span data-toggle="tooltip" data-placement="top" title="{{ process.caseWorker.name }}">{{ process.caseWorker }}</span>{% endif %}</td>
                 </tr>
             {% else %}
                 <tr>
