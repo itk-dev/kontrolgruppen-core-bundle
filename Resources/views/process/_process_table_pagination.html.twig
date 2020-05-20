@@ -29,7 +29,7 @@
                     </td>
                     <td>{{ process.processStatus }}</td>
                     <td>{{ process.clientCPR }}</td>
-                    <td class="d-none d-lg-table-cell"><span data-toggle="tooltip" data-placement="top" title="{{ process.caseWorker.name }}">{{ process.caseWorker }}</span></td>
+                    <td class="d-none d-lg-table-cell">{% if process.caseWorker %}<span data-toggle="tooltip" data-placement="top" title="{{ process.caseWorker.name }}">{{ process.caseWorker }}</span>{% endif %}</td>
                     <td class="d-none d-lg-table-cell">{{ process.channel }}</td>
                     <td class="d-none d-md-table-cell">{{ process.reason }}</td>
                     <td class="d-none d-sm-table-cell">{{ process.processType }}</td>
