@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.6] - 2020-05-20
+### Fixed
+- [KON-368](https://jira.itkdev.dk/browse/KON-368): Fixed error on search
+
 ## [1.6.5] - 2020-05-20
 ### Fixed
 - [KON-368](https://jira.itkdev.dk/browse/KON-368): Fixed error on missing case worker
