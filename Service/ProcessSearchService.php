@@ -193,7 +193,7 @@ class ProcessSearchService
         $qb->leftJoin('e.client', 'client');
         $qb->addSelect('client');
         $qb->leftJoin('e.caseWorker', 'caseWorker');
-        $qb->addSelect('partial caseWorker.{id,username}');
+        $qb->addSelect('partial caseWorker.{id,username,name}');
 
         // Add sortable fields.
         $qb->leftJoin('e.channel', 'channel');
