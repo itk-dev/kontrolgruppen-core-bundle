@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.7] - 2020-05-25
 ### Fixed
 - [DEVSUPP-241](https://jira.itkdev.dk/browse/DEVSUPP-241): Fixed null pointer exception
 
