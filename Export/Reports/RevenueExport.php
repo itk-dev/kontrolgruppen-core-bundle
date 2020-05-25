@@ -107,7 +107,7 @@ class RevenueExport extends AbstractExport
             }
 
             if (empty($processRevenue['repaymentSums']) && empty($processRevenue['futureSavingsSums'])) {
-                $serviceName = $process->getService()->getName() ?? '-- Ikke sat --';
+                $serviceName = $process->getService() ? $process->getService()->getName() : '-- Ikke sat --';
                 if (!isset($revenue[$serviceName])) {
                     $revenue[$serviceName] = $this->newEntry();
                 }
