@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- [DEVSUPP-241](https://jira.itkdev.dk/browse/DEVSUPP-241): Fixed null pointer exception
+
 ## [1.6.6] - 2020-05-20
 ### Fixed
 - [KON-368](https://jira.itkdev.dk/browse/KON-368): Fixed error on search
