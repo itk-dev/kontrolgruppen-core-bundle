@@ -13,9 +13,11 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
+use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Kontrolgruppen\CoreBundle\Entity\QuickLink;
 use Kontrolgruppen\CoreBundle\Entity\Reminder;
 use Kontrolgruppen\CoreBundle\Service\MenuService;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -102,23 +104,21 @@ class BaseController extends AbstractController
     }
 
     /**
-     * @param $process
+     * @param Process $process
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createChangeProcessStatusForm($process)
+    public function createChangeProcessStatusForm(Process $process)
     {
         return $this->createFormBuilder($process)
-            ->add(
-                'processStatus',
-                null,
-                [
-                    'label' => 'process.form.process_status',
-                    'label_attr' => ['class' => 'sr-only'],
-                    'placeholder' => 'process.form.change_process_status.placeholder',
-                    'attr' => ['class' => 'form-control-lg process-type-select'],
-                ]
-            )
+            ->add('processStatus', EntityType::class, [
+                'class' => ProcessStatus::class,
+                'choices' => $process->getProcessType()->getProcessStatuses(),
+                'label' => 'process.form.process_status',
+                'label_attr' => ['class' => 'sr-only'],
+                'placeholder' => 'process.form.change_process_status.placeholder',
+                'attr' => ['class' => 'form-control-lg process-type-select'],
+            ])
             ->add(
                 'save',
                 SubmitType::class,
