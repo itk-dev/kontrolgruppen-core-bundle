@@ -20,6 +20,7 @@ use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessCompleteType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
+use Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
@@ -327,7 +328,7 @@ class ProcessController extends BaseController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function complete(Request $request, Process $process, ServiceRepository $serviceRepository): Response
+    public function complete(Request $request, Process $process, ServiceRepository $serviceRepository, ProcessStatusRepository $processStatusRepository): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -338,7 +339,11 @@ class ProcessController extends BaseController
             );
         }
 
-        $form = $this->createForm(ProcessCompleteType::class, $process);
+        $availableStatuses = $processStatusRepository->getAvailableCompletingStatusForProcessType($process->getProcessType());
+
+        $form = $this->createForm(ProcessCompleteType::class, $process, [
+            'available_statuses' => $availableStatuses,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

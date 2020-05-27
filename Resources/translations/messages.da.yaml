@@ -633,6 +633,8 @@ process_status:
         name: Navn
         is_forward_to_another_authority: Videresendes til anden myndighed
         is_forward_to_another_authority_help: Marker om denne status gør at sagen videresendes til anden myndighed
+        is_completing_status: Afsluttet status
+        is_completing_status_help: Marker om denne status kan benyttes som status når sager afsluttes
         process_types: Sagstyper
         update: Gem
         label: Vælg sagsstatus
