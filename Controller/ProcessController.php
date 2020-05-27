@@ -319,9 +319,10 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}/complete", name="process_complete", methods={"GET","POST"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request               $request
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process               $process
-     * @param \Kontrolgruppen\CoreBundle\Repository\ServiceRepository $serviceRepository
+     * @param \Symfony\Component\HttpFoundation\Request                     $request
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process                     $process
+     * @param \Kontrolgruppen\CoreBundle\Repository\ServiceRepository       $serviceRepository
+     * @param \Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository $processStatusRepository
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *

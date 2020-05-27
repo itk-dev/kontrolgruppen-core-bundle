@@ -51,6 +51,13 @@ class ProcessStatusRepository extends ServiceEntityRepository
         return $qb->execute();
     }
 
+    /**
+     * Get process statuses that are available for completing processes.
+     *
+     * @param ProcessType $processType
+     *
+     * @return mixed
+     */
     public function getAvailableCompletingStatusForProcessType(ProcessType $processType)
     {
         $qb = $this->createQueryBuilder('p')
@@ -60,7 +67,7 @@ class ProcessStatusRepository extends ServiceEntityRepository
 
         return $qb
             ->getQuery()
-            ->execute();
+            ->execute()
+        ;
     }
-
 }
