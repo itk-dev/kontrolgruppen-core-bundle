@@ -18,10 +18,18 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * Class ChangeNetDefaultValueType
+ */
 class ChangeNetDefaultValueType extends AbstractType
 {
     private $serviceRepository;
 
+    /**
+     * ChangeNetDefaultValueType constructor.
+     *
+     * @param ServiceRepository $serviceRepository
+     */
     public function __construct(ServiceRepository $serviceRepository)
     {
         $this->serviceRepository = $serviceRepository;
