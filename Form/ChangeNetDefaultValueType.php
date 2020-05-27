@@ -19,7 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Class ChangeNetDefaultValueType
+ * Class ChangeNetDefaultValueType.
  */
 class ChangeNetDefaultValueType extends AbstractType
 {
