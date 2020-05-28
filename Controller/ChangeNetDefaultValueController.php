@@ -25,9 +25,9 @@ class ChangeNetDefaultValueController extends BaseController
     /**
      * @Route("/", name="change_net_default_value_index", methods={"GET", "POST"})
      *
-     * @param Request                   $request
-     * @param LockedNetValueRepository  $lockedNetValueRepository
-     * @param TranslatorInterface       $translator
+     * @param Request                  $request
+     * @param LockedNetValueRepository $lockedNetValueRepository
+     * @param TranslatorInterface      $translator
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
@@ -52,13 +52,12 @@ class ChangeNetDefaultValueController extends BaseController
             $entityManager = $this->getDoctrine()->getManager();
 
             $existingLockedNetValues = $lockedNetValueRepository->findBy([
-               'service' => $service,
+                'service' => $service,
             ]);
 
             $affectedProcesses = [];
             foreach ($existingLockedNetValues as $lockedNetValue) {
-
-                if ($lockedNetValue->getValue() != $newNetValue) {
+                if ($lockedNetValue->getValue() !== $newNetValue) {
                     $lockedNetValue->setValue($newNetValue);
                     $entityManager->persist($lockedNetValue);
 
