@@ -986,8 +986,8 @@ change_net_default_value:
         title: Ret netto standard værdi
         alert: OBS! Dette vil rette netto standard værdi for ALLE afsluttet sager med den valgte ydelse!
         confirm: Er du sikker på at du vil rette netto værdien for ALLE afsluttet sager med den valgte ydelse?
-        flash: '%affected_processes% antal sager fik rettet netto standard værdi'
+        flash: 'Antal sager fik rettet netto standard værdi: %affected_processes% '
     form:
         service_label: Ydelse
         value_label: Ny netto standard værdi
-        submit_label: Send
+        submit_label: Gem
