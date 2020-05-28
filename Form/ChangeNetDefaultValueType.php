@@ -51,7 +51,6 @@ class ChangeNetDefaultValueType extends AbstractType
             ->add('value', PercentType::class, [
                 'label' => 'change_net_default_value.form.value_label',
                 'required' => 'true',
-                'type' => 'integer',
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'change_net_default_value.form.submit_label',
