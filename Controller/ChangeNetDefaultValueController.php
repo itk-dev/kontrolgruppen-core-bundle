@@ -12,7 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Service;
 use Kontrolgruppen\CoreBundle\Form\ChangeNetDefaultValueType;
-use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
+use Kontrolgruppen\CoreBundle\Repository\LockedNetValueRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -25,16 +25,16 @@ class ChangeNetDefaultValueController extends BaseController
     /**
      * @Route("/", name="change_net_default_value_index", methods={"GET", "POST"})
      *
-     * @param Request             $request
-     * @param ProcessRepository   $processRepository
-     * @param TranslatorInterface $translator
+     * @param Request                   $request
+     * @param LockedNetValueRepository  $lockedNetValueRepository
+     * @param TranslatorInterface       $translator
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function index(Request $request, ProcessRepository $processRepository, TranslatorInterface $translator)
+    public function index(Request $request, LockedNetValueRepository $lockedNetValueRepository, TranslatorInterface $translator)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -51,21 +51,27 @@ class ChangeNetDefaultValueController extends BaseController
 
             $entityManager = $this->getDoctrine()->getManager();
 
-            $processes = $processRepository->findCompletedByService($service);
-            $numberOfAffectedProcesses = 0;
-            foreach ($processes as $process) {
-                if ($newNetValue !== $process->getLockedNetValue()) {
-                    $process->setLockedNetValue($newNetValue);
+            $existingLockedNetValues = $lockedNetValueRepository->findBy([
+               'service' => $service,
+            ]);
 
-                    $entityManager->persist($process);
-                    ++$numberOfAffectedProcesses;
+            $affectedProcesses = [];
+            foreach ($existingLockedNetValues as $lockedNetValue) {
+
+                if ($lockedNetValue->getValue() != $newNetValue) {
+                    $lockedNetValue->setValue($newNetValue);
+                    $entityManager->persist($lockedNetValue);
+
+                    if (!\in_array($lockedNetValue->getProcess(), $affectedProcesses)) {
+                        $affectedProcesses[] = $lockedNetValue->getProcess();
+                    }
                 }
             }
 
             $entityManager->flush();
             $this->addFlash('info', $translator->trans(
                 'change_net_default_value.index.flash',
-                ['%affected_processes%' => $numberOfAffectedProcesses]
+                ['%affected_processes%' => \count($affectedProcesses)]
             ));
 
             return $this->redirectToRoute('change_net_default_value_index');
