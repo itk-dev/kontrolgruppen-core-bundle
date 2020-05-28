@@ -14,8 +14,8 @@ use Kontrolgruppen\CoreBundle\Entity\Service;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -48,9 +48,10 @@ class ChangeNetDefaultValueType extends AbstractType
                 'choices' => $this->serviceRepository->findAll(),
                 'required' => true,
             ])
-            ->add('value', TextType::class, [
+            ->add('value', PercentType::class, [
                 'label' => 'change_net_default_value.form.value_label',
                 'required' => 'true',
+                'type' => 'integer',
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'change_net_default_value.form.submit_label',
