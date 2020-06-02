@@ -298,6 +298,14 @@ class MenuService
                 ),
                 'forwarded_to_authority_index'
             ),
+            $this->createMenuItem(
+                'change_net_default_value',
+                1 === preg_match(
+                    '/^\/admin\/change_net_default_value\/.*$/',
+                    $path
+                ),
+                'change_net_default_value_index'
+            ),
         ];
     }
 

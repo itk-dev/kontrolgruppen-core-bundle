@@ -428,6 +428,7 @@ menu:
         account: Konti
         income_type: Indkomsttype
         forwarded_to_authority: Videresendes til anden myndighed
+        change_net_default_value: Ret netto standard værdi
 
 navigation:
     main:
@@ -981,3 +982,14 @@ bi:
 'process.form.complete.forwarded_to_authorities_help': Kun ét valg kommer med i KL- og BI-udtræk.
 'economy.table.service_not_chosen': '- Ingen -'
 'economy.table.account_not_chosen': '- Ingen -'
+
+change_net_default_value:
+    index:
+        title: Ret netto standard værdi
+        alert: OBS! Dette vil rette netto standard værdi for ALLE afsluttede sager med den valgte ydelse!
+        confirm: Er du sikker på at du vil rette netto værdien for ALLE afsluttede sager med den valgte ydelse?
+        flash: '%affected_processes% sager fik rettet netto standard værdi'
+    form:
+        service_label: Ydelse
+        value_label: Ny netto standard værdi
+        submit_label: Gem

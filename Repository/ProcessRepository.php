@@ -13,6 +13,7 @@ namespace Kontrolgruppen\CoreBundle\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\Service;
 
 /**
  * @method Process|null find($id, $lockMode = null, $lockVersion = null)
@@ -67,5 +68,25 @@ class ProcessRepository extends ServiceEntityRepository
             ->setParameter('since', $since);
 
         return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param Service $service
+     *
+     * @return Process[]
+     */
+    public function findCompletedByService(Service $service)
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
+        $queryBuilder
+            ->where('p.service = :service')
+            ->setParameter(':service', $service)
+            ->andWhere('p.completedAt IS NOT NULL')
+        ;
+
+        return $queryBuilder
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }

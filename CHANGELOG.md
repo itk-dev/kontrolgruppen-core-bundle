@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- [KON-317](https://jira.itkdev.dk/browse/KON-317): Added possibility for changing net value for completed processes by service
 - [KON-330](https://jira.itkdev.dk/browse/KON-330): Mark statuses for use when completing processes
 
 ### Fixed
