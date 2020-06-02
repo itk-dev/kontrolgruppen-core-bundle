@@ -39,6 +39,10 @@ class ProcessStatusType extends AbstractType
                 'label' => 'process_status.form.is_forward_to_another_authority',
                 'help' => 'process_status.form.is_forward_to_another_authority_help',
             ])
+            ->add('isCompletingStatus', null, [
+                'label' => 'process_status.form.is_completing_status',
+                'help' => 'process_status.form.is_completing_status_help',
+            ])
         ;
     }
 
