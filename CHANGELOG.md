@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - [KON-330](https://jira.itkdev.dk/browse/KON-330): Mark statuses for use when completing processes
 
+### Fixed
+- [KON-371](https://jira.itkdev.dk/browse/KON-371): Show available statuses on process based on process type
+
 ## [1.6.7] - 2020-05-25
 ### Fixed
 - [DEVSUPP-241](https://jira.itkdev.dk/browse/DEVSUPP-241): Fixed null pointer exception
