@@ -150,6 +150,7 @@ common:
             arrear: Restance
             income: Indkomst
         economy_entry_amount_period:
+            pr_week: pr. uge
             pr_month: pr. måned
             pr_3_month: pr. 3. måned
             pr_6_month: pr. halvår
