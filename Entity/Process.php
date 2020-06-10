@@ -166,6 +166,11 @@ class Process extends AbstractEntity
     private $performedCompanyCheck;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessGroup", mappedBy="processes")
+     */
+    private $processGroups;
+
+    /**
      * Process constructor.
      */
     public function __construct()
@@ -177,6 +182,7 @@ class Process extends AbstractEntity
         $this->lockedNetValues = new ArrayCollection();
         $this->forwardedToAuthorities = new ArrayCollection();
         $this->revenueEntries = new ArrayCollection();
+        $this->processGroups = new ArrayCollection();
     }
 
     /**
@@ -801,6 +807,34 @@ class Process extends AbstractEntity
     public function setPerformedCompanyCheck(?bool $performedCompanyCheck): self
     {
         $this->performedCompanyCheck = $performedCompanyCheck;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProcessGroup[]
+     */
+    public function getProcessGroups(): Collection
+    {
+        return $this->processGroups;
+    }
+
+    public function addProcessGroup(ProcessGroup $processGroup): self
+    {
+        if (!$this->processGroups->contains($processGroup)) {
+            $this->processGroups[] = $processGroup;
+            $processGroup->addProcess($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProcessGroup(ProcessGroup $processGroup): self
+    {
+        if ($this->processGroups->contains($processGroup)) {
+            $this->processGroups->removeElement($processGroup);
+            $processGroup->removeProcess($this);
+        }
 
         return $this;
     }
