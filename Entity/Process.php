@@ -819,6 +819,11 @@ class Process extends AbstractEntity
         return $this->processGroups;
     }
 
+    /**
+     * @param ProcessGroup $processGroup
+     *
+     * @return $this
+     */
     public function addProcessGroup(ProcessGroup $processGroup): self
     {
         if (!$this->processGroups->contains($processGroup)) {
@@ -829,6 +834,11 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @param ProcessGroup $processGroup
+     *
+     * @return $this
+     */
     public function removeProcessGroup(ProcessGroup $processGroup): self
     {
         if ($this->processGroups->contains($processGroup)) {

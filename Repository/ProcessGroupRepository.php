@@ -1,10 +1,18 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Repository;
 
-use Kontrolgruppen\CoreBundle\Entity\ProcessGroup;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Kontrolgruppen\CoreBundle\Entity\ProcessGroup;
 
 /**
  * @method ProcessGroup|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,37 +22,13 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class ProcessGroupRepository extends ServiceEntityRepository
 {
+    /**
+     * ProcessGroupRepository constructor.
+     *
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ProcessGroup::class);
     }
-
-    // /**
-    //  * @return ProcessGroup[] Returns an array of ProcessGroup objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ProcessGroup
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

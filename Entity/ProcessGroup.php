@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -29,21 +37,35 @@ class ProcessGroup
      */
     private $processes;
 
+    /**
+     * ProcessGroup constructor.
+     */
     public function __construct()
     {
         $this->processes = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return Process|null
+     */
     public function getPrimaryProcess(): ?Process
     {
         return $this->primaryProcess;
     }
 
+    /**
+     * @param Process|null $primaryProcess
+     *
+     * @return $this
+     */
     public function setPrimaryProcess(?Process $primaryProcess): self
     {
         $this->primaryProcess = $primaryProcess;
@@ -59,6 +81,11 @@ class ProcessGroup
         return $this->processes;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return $this
+     */
     public function addProcess(Process $process): self
     {
         if (!$this->processes->contains($process)) {
@@ -68,6 +95,11 @@ class ProcessGroup
         return $this;
     }
 
+    /**
+     * @param Process $process
+     *
+     * @return $this
+     */
     public function removeProcess(Process $process): self
     {
         if ($this->processes->contains($process)) {
