@@ -1,7 +1,17 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessGroup;
 use Kontrolgruppen\CoreBundle\Form\ProcessGroupType;
@@ -16,6 +26,14 @@ class ProcessGroupController extends BaseController
 {
     /**
      * @Route("/", name="process_group_index", methods={"GET"})
+     *
+     * @param Request $request
+     * @param Process $process
+     *
+     * @return Response
+     *
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function index(Request $request, Process $process): Response
     {
@@ -30,6 +48,14 @@ class ProcessGroupController extends BaseController
 
     /**
      * @Route("/new", name="process_group_new", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param Process $process
+     *
+     * @return Response
+     *
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function new(Request $request, Process $process): Response
     {
@@ -61,6 +87,15 @@ class ProcessGroupController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="process_group_edit", methods={"GET","POST"})
+     *
+     * @param Request      $request
+     * @param ProcessGroup $processGroup
+     * @param Process      $process
+     *
+     * @return Response
+     *
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function edit(Request $request, ProcessGroup $processGroup, Process $process): Response
     {
@@ -86,6 +121,12 @@ class ProcessGroupController extends BaseController
 
     /**
      * @Route("/{id}", name="process_group_delete", methods={"DELETE"})
+     *
+     * @param Request      $request
+     * @param ProcessGroup $processGroup
+     * @param Process      $process
+     *
+     * @return Response
      */
     public function delete(Request $request, ProcessGroup $processGroup, Process $process): Response
     {
