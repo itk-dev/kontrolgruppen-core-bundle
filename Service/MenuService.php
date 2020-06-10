@@ -192,6 +192,16 @@ class MenuService
                 ['process' => $process]
             );
 
+            $items[] = $this->createMenuItem(
+                'group',
+                1 === preg_match(
+                    '/^\/process\/[0-9]+\/group.*$/',
+                    $path
+                ),
+                'process_group_index',
+                ['process' => $process]
+            );
+
             if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
                 $items[] = $this->createMenuItem(
                     'log',

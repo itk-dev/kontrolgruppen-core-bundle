@@ -430,6 +430,7 @@ menu:
         income_type: Indkomsttype
         forwarded_to_authority: Videresendes til anden myndighed
         change_net_default_value: Ret netto standard værdi
+        group: Relationer
 
 navigation:
     main:
@@ -994,3 +995,21 @@ change_net_default_value:
         service_label: Ydelse
         value_label: Ny netto standard værdi
         submit_label: Gem
+
+process_group:
+    primary_process: Primær
+    processes: Sager
+    index:
+        title: Relationer
+        edit: Rediger gruppe
+        new: Opret ny gruppe
+        number_of_relations: 'Antal relationer: %count%'
+    edit:
+        title: Rediger gruppe
+        update: Gem
+        back_to_list: Tilbage til oversigt
+    new:
+        title: Ny gruppe
+        back_to_list: Tilbage til oversigt
+    form:
+        save: Gem
