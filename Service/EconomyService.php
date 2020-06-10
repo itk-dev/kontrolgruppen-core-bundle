@@ -122,7 +122,16 @@ class EconomyService
                         'sum' => ($carry['repaymentSums'][$serviceName]['sum'] ?? 0.0) + $amount,
                     ];
                 } elseif (RevenueTypeEnumType::FUTURE_SAVINGS === $entry->getType()) {
-                    $calculatedAmount = $amount * (RevenueFutureTypeEnumType::PR_MND_X_12 === $entry->getFutureSavingsType() ? 12.0 : 1.0);
+                    $futureSavingsMultiplier = 1.0;
+
+                    if (RevenueFutureTypeEnumType::PR_MND_X_12 === $entry->getFutureSavingsType()) {
+                        $futureSavingsMultiplier = 12.0;
+                    } elseif (RevenueFutureTypeEnumType::PR_WEEK_X_52 === $entry->getFutureSavingsType()) {
+                        $futureSavingsMultiplier = 52.0;
+                    }
+
+                    $calculatedAmount = $amount * $futureSavingsMultiplier;
+
                     $carry['futureSavingsSum'] = $carry['futureSavingsSum'] + $calculatedAmount;
                     $carry['netFutureSavingsSum'] = $carry['netFutureSavingsSum'] + ($calculatedAmount * $netMultiplier);
 
