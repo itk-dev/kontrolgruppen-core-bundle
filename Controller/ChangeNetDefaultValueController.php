@@ -68,15 +68,20 @@ class ChangeNetDefaultValueController extends BaseController
             }
 
             $entityManager->flush();
-            $this->addFlash('info', $translator->trans(
-                'change_net_default_value.index.flash',
-                ['%affected_processes%' => \count($affectedProcesses)]
-            ));
+
+            if (\empty($affectedProcesses)) {
+                $this->addFlash('raw-info', $this->renderView(
+                    '@KontrolgruppenCore/change_net_default_value/affected_processes_message.html.twig',
+                    ['affectedProcesses' => $affectedProcesses]
+                ));
+            } else {
+                $this->addFlash('info', $translator->trans('change_net_default_value.index.none_flash'));
+            }
 
             return $this->redirectToRoute('change_net_default_value_index');
         }
 
-        return $this->render('change_net_default_value/index.html.twig', [
+        return $this->render('@KontrolgruppenCore/change_net_default_value/index.html.twig', [
             'menuItems' => $this->menuService->getAdminMenu($request->getPathInfo()),
             'form' => $form->createView(),
         ]);
