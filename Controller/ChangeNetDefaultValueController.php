@@ -69,7 +69,7 @@ class ChangeNetDefaultValueController extends BaseController
 
             $entityManager->flush();
 
-            if (\empty($affectedProcesses)) {
+            if (!empty($affectedProcesses)) {
                 $this->addFlash('raw-info', $this->renderView(
                     '@KontrolgruppenCore/change_net_default_value/affected_processes_message.html.twig',
                     ['affectedProcesses' => $affectedProcesses]
