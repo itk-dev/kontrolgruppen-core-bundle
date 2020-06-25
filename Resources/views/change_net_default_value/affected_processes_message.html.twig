@@ -1,0 +1,6 @@
+<h3>{{ 'change_net_default_value.index.flash'|trans({'%affected_processes%': affectedProcesses|length}) }}</h3>
+<ul>
+    {% for process in affectedProcesses %}
+        <li><a href="{{ path('process_show', {'id': process.id }) }}">{{ process.caseNumber }}</a></li>
+    {% endfor %}
+</ul>
