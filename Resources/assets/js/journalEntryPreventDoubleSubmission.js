@@ -1,11 +1,11 @@
 $(() => {
-    let journalEntryForm = $('#journal-entry-form')
+    let journalEntryForm = $('#journal-entry-form');
 
-    journalEntryForm.on('submit', function(e) {
+    journalEntryForm.on('submit', function (e) {
         if (journalEntryForm.data('submitted')) {
-            e.preventDefault()
+            e.preventDefault();
         } else {
-            journalEntryForm.data('submitted', true)
+            journalEntryForm.data('submitted', true);
         }
-    })
-})
+    });
+});
