@@ -14,6 +14,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
+use Kontrolgruppen\CoreBundle\Entity\ProcessType;
 
 /**
  * @method ProcessStatus|null find($id, $lockMode = null, $lockVersion = null)
@@ -48,5 +49,25 @@ class ProcessStatusRepository extends ServiceEntityRepository
             ->getQuery();
 
         return $qb->execute();
+    }
+
+    /**
+     * Get process statuses that are available for completing processes.
+     *
+     * @param ProcessType $processType
+     *
+     * @return mixed
+     */
+    public function getAvailableCompletingStatusForProcessType(ProcessType $processType)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->where(':processType MEMBER OF p.processTypes')
+            ->setParameter(':processType', $processType)
+            ->andWhere('p.isCompletingStatus = true');
+
+        return $qb
+            ->getQuery()
+            ->execute()
+        ;
     }
 }

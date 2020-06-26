@@ -40,6 +40,13 @@ class ProcessStatus extends AbstractTaxonomy
     private $isForwardToAnotherAuthority = false;
 
     /**
+     * @ORM\Column(type="boolean")
+     *
+     * @Gedmo\Versioned
+     */
+    private $isCompletingStatus = false;
+
+    /**
      * ProcessStatus constructor.
      */
     public function __construct()
@@ -143,6 +150,26 @@ class ProcessStatus extends AbstractTaxonomy
     public function setIsForwardToAnotherAuthority(bool $isForwardToAnotherAuthority): self
     {
         $this->isForwardToAnotherAuthority = $isForwardToAnotherAuthority;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsCompletingStatus(): bool
+    {
+        return $this->isCompletingStatus;
+    }
+
+    /**
+     * @param bool $isCompletingStatus
+     *
+     * @return $this
+     */
+    public function setIsCompletingStatus(bool $isCompletingStatus): self
+    {
+        $this->isCompletingStatus = $isCompletingStatus;
 
         return $this;
     }

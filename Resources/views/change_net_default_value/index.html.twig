@@ -1,0 +1,15 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'change_net_default_value.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1 class="">{{ 'change_net_default_value.index.title'|trans }}</h1>
+
+    <div class="alert alert-danger">{{ 'change_net_default_value.index.alert'|trans }}</div>
+
+    {{ form(form, {
+        attr: {
+            'data-yes-no-message': 'change_net_default_value.index.confirm'|trans,
+        }
+    }) }}
+{% endblock %}

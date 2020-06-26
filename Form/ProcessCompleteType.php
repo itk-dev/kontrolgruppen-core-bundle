@@ -11,7 +11,9 @@
 namespace Kontrolgruppen\CoreBundle\Form;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -41,9 +43,9 @@ class ProcessCompleteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('processStatus', null, [
-                'label' => 'process.complete.status',
-                'required' => true,
+            ->add('processStatus', EntityType::class, [
+                'class' => ProcessStatus::class,
+                'choices' => $options['available_statuses'],
             ])
             ->add('policeReport', ChoiceType::class, [
                 'label' => 'process.form.police_report',
@@ -85,6 +87,7 @@ class ProcessCompleteType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Process::class,
+            'available_statuses' => [],
         ]);
     }
 }

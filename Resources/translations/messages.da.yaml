@@ -150,6 +150,7 @@ common:
             arrear: Restance
             income: Indkomst
         economy_entry_amount_period:
+            pr_week: pr. uge
             pr_month: pr. måned
             pr_3_month: pr. 3. måned
             pr_6_month: pr. halvår
@@ -428,6 +429,7 @@ menu:
         account: Konti
         income_type: Indkomsttype
         forwarded_to_authority: Videresendes til anden myndighed
+        change_net_default_value: Ret netto standard værdi
 
 navigation:
     main:
@@ -633,6 +635,8 @@ process_status:
         name: Navn
         is_forward_to_another_authority: Videresendes til anden myndighed
         is_forward_to_another_authority_help: Marker om denne status gør at sagen videresendes til anden myndighed
+        is_completing_status: Afsluttet status
+        is_completing_status_help: Marker om denne status kan benyttes som status når sager afsluttes
         process_types: Sagstyper
         update: Gem
         label: Vælg sagsstatus
@@ -979,3 +983,15 @@ bi:
 'process.form.complete.forwarded_to_authorities_help': Kun ét valg kommer med i KL- og BI-udtræk.
 'economy.table.service_not_chosen': '- Ingen -'
 'economy.table.account_not_chosen': '- Ingen -'
+
+change_net_default_value:
+    index:
+        title: Ret netto standard værdi
+        alert: OBS! Dette vil rette netto standard værdi for ALLE afsluttede sager med den valgte ydelse!
+        confirm: Er du sikker på at du vil rette netto værdien for ALLE afsluttede sager med den valgte ydelse?
+        flash: 'Følgende %affected_processes% sag(er) fik rettet netto standard værdi:'
+        none_flash: 'Ingen sager fundet med den valgte ydelse'
+    form:
+        service_label: Ydelse
+        value_label: Ny netto standard værdi
+        submit_label: Gem

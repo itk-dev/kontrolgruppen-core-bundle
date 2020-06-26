@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.8] - 2020-06-26
+### Added
+- [KON-317](https://jira.itkdev.dk/browse/KON-317): Added possibility for changing net value for completed processes by service
+- [KON-330](https://jira.itkdev.dk/browse/KON-330): Mark statuses for use when completing processes
+- [KON-355](https://jira.itkdev.dk/browse/KON-355): Add pr. week as possibility when registering services on case economy
+- [KON-364](https://jira.itkdev.dk/browse/KON-364): Preventing double submissions when creating new journal entry
+
+### Fixed
+- [KON-371](https://jira.itkdev.dk/browse/KON-371): Show available statuses on process based on process type
+
 ## [1.6.7] - 2020-05-25
 ### Fixed
 - [DEVSUPP-241](https://jira.itkdev.dk/browse/DEVSUPP-241): Fixed null pointer exception
