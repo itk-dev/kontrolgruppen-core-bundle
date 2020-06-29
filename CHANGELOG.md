@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [KON-356](https://jira.itkdev.dk/browse/KON-356): Added weekly choice when entering future savings revenue entries
 
 ### Added
+- [KON-288](https://jira.itkdev.dk/browse/KON-288): Added links between processes
+
+### Added
 - [KON-317](https://jira.itkdev.dk/browse/KON-317): Added possibility for changing net value for completed processes by service
 - [KON-330](https://jira.itkdev.dk/browse/KON-330): Mark statuses for use when completing processes
 - [KON-355](https://jira.itkdev.dk/browse/KON-355): Add pr. week as possibility when registering services on case economy

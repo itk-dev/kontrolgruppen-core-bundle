@@ -1,0 +1,33 @@
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+
+{% block title %}{{ 'process_group.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'process_group.index.title'|trans }}</h1>
+
+    <div class="card-deck">
+
+    {% for process_group in process.processGroups %}
+        <div class="card">
+            <div class="card-header">
+                {{ 'process_group.index.number_of_relations'|trans({'%count%': process_group.processes|length}) }}
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for relatedProcess in process_group.processes %}
+                    <li class="list-group-item">{{ relatedProcess.caseNumber }} {% if relatedProcess.caseNumber == process_group.primaryProcess.caseNumber %}<span class="badge badge-primary">{{ 'process_group.primary_process'|trans }}</span>{% endif %}</li>
+                {% endfor %}
+            </ul>
+            <div class="card-body">
+                <a class="btn btn-primary" href="{{ path('process_group_edit', {'id': process_group.id, 'process': process}) }}">{{ 'process_group.index.edit'|trans }}</a>
+            </div>
+        </div>
+    {% endfor %}
+
+        <div class="card text-center">
+            <div class="card-body">
+                <a class="btn btn-success" href="{{ path('process_group_new', {'process': process}) }}">{{ 'process_group.index.new'|trans }}</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
