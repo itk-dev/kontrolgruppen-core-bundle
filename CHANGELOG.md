@@ -6,16 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.6.8] - 2020-06-26
+## [1.6.9] - 2020-06-29
 ### Added
 - [KON-333](https://jira.itkdev.dk/browse/KON-333): Possible to show completed processes on dashboard
-
-### Added
+- [KON-288](https://jira.itkdev.dk/browse/KON-288): Added links between processes
 - [KON-356](https://jira.itkdev.dk/browse/KON-356): Added weekly choice when entering future savings revenue entries
 
-### Added
-- [KON-288](https://jira.itkdev.dk/browse/KON-288): Added links between processes
-
+## [1.6.8] - 2020-06-26
 ### Added
 - [KON-317](https://jira.itkdev.dk/browse/KON-317): Added possibility for changing net value for completed processes by service
 - [KON-330](https://jira.itkdev.dk/browse/KON-330): Mark statuses for use when completing processes
