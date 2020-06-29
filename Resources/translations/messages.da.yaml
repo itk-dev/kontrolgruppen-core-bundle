@@ -163,6 +163,7 @@ common:
             sanction: Sanktion
             pr_mnd_x_12: Pr. mnd. * 12
             self_support: Selvforsørgelse
+            pr_week_x_52: Pr. uge * 52
     no_records_found: Ingen forekomster endnu
     no_sensitive_information_warning: KUN DEMO - Indtast ingen personfølsomme data
     table:
