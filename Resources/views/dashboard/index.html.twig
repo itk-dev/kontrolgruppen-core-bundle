@@ -19,8 +19,14 @@
                     <h2 class="mb-3"><i class="fas {{ iconClass('process') }} mr-3"></i>{{ 'dashboard.my_processes.title'|trans }}</h2>
                 </div>
                 <div class="col-2">
-                    <div class="form form-inline float-right m-2">
-                        {{ form(myProcessesFilterForm) }}
+                    <div class="float-right">
+                        {{ form_start(myProcessesFilterForm, {'attr': {'class': 'form form-inline'}}) }}
+
+                            {{ form_widget(myProcessesFilterForm.showCompleted) }}
+
+                            {{ form_widget(myProcessesFilterForm.limit) }}
+
+                        {{ form_end(myProcessesFilterForm) }}
                     </div>
                 </div>
             </div>

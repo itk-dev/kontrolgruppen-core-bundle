@@ -208,6 +208,7 @@ dashboard:
     tooltip: 'Din oversigt'
     my_processes:
         limit: Antal synlige sager
+        show_completed: Vis afsluttede sager
         title: Mine sager
     not_assigned:
         title: Ikke tildelte sager

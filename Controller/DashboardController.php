@@ -18,6 +18,7 @@ use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ReminderRepository;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,6 +61,12 @@ class DashboardController extends BaseController
                 'id' => 'dashboard_process_limit',
             ],
         ]);
+
+        $filterFormBuilder->add('showCompleted', CheckboxType::class, [
+            'label' => 'dashboard.my_processes.show_completed',
+            'required' => false,
+        ]);
+
         $filterFormBuilder->add('limit', ChoiceType::class, [
             'choices' => [
                 '2' => 2,
@@ -84,9 +91,14 @@ class DashboardController extends BaseController
         // Default result limit.
         $limit = 5;
 
+        // Default do not show completed processes
+        $showCompleted = false;
+
         if ($filterForm->isSubmitted() && $filterForm->isValid()) {
             $filterFormData = $filterForm->getData();
+
             $limit = $filterFormData['limit'];
+            $showCompleted = $filterFormData['showCompleted'];
 
             $userSettingsService->setSettings($user, $formKey, [
                 'limit' => $limit,
@@ -117,7 +129,9 @@ class DashboardController extends BaseController
             )
         );
 
-        $queryBuilder->andWhere('e.completedAt is null');
+        if (!$showCompleted) {
+            $queryBuilder->andWhere('e.completedAt is null');
+        }
 
         $query = $queryBuilder->getQuery();
 
