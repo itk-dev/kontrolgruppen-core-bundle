@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.6.9] - 2020-06-29
+## [1.7.0] - 2020-06-29
 ### Added
 - [KON-333](https://jira.itkdev.dk/browse/KON-333): Possible to show completed processes on dashboard
 - [KON-288](https://jira.itkdev.dk/browse/KON-288): Added links between processes
