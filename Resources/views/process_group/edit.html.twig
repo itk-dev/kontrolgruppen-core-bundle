@@ -11,3 +11,8 @@
 
     <a href="{{ path('process_group_index', {'process': process}) }}">{{ 'process_group.edit.back_to_list'|trans }}</a>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('processGroupForm') }}
+{% endblock %}

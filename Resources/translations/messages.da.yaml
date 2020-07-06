@@ -1016,3 +1016,4 @@ process_group:
         back_to_list: Tilbage til oversigt
     form:
         save: Gem
+        loading_results: Indlæser sager

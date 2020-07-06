@@ -67,6 +67,8 @@ class ProcessGroupController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // We filter out the primary process from the select, so we have to add it manually.
+            $processGroup->addProcess($processGroup->getPrimaryProcess());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($processGroup);
             $entityManager->flush();
@@ -103,6 +105,8 @@ class ProcessGroupController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // We filter out the primary process from the select, so we have to add it manually.
+            $processGroup->addProcess($processGroup->getPrimaryProcess());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('process_group_index', ['process' => $process]);
