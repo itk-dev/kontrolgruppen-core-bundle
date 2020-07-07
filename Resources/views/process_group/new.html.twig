@@ -7,5 +7,10 @@
 
     {{ include('@KontrolgruppenCore/process_group/_form.html.twig') }}
 
-    <a href="{{ path('process_group_index', {'process': process}) }}">{{ 'process_group.new.back_to_list'|trans }}</a>
+    <a href="{{ path('process_group_index', {'process': process}) }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('processGroupForm') }}
 {% endblock %}
