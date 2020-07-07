@@ -34,7 +34,7 @@ $(document).ready(function () {
                 );
                 // Position field now displays the appropriate positions.
 
-                $('#process_group_processes').find('option[value='+$oldPrimaryProcessValue+']').attr('selected', 'selected');
+                $('#process_group_processes').find('option[value=' + $oldPrimaryProcessValue + ']').attr('selected', 'selected');
 
                 $('#process_group_processes').attr('disabled', false);
                 $spinner.hide();
