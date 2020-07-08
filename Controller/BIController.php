@@ -13,6 +13,8 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Kontrolgruppen\CoreBundle\Entity\BIExport;
 use Kontrolgruppen\CoreBundle\Export\Manager;
 use Kontrolgruppen\CoreBundle\Repository\BIExportRepository;
+use PhpOffice\PhpSpreadsheet\Reader\Csv;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -64,15 +66,31 @@ class BIController extends BaseController
     }
 
     /**
-     * @Route("/download/{export}", name="download")
+     * @Route(
+     *     "/download/{export}.{_format}",
+     *     name="download",
+     *     format="csv",
+     *     requirements={
+     *         "_format": "csv|xlsx",
+     *     }
+     * )
      *
      * @param BIExport $export
+     * @param string   $_format
      *
      * @return BinaryFileResponse
      */
-    public function download(BIExport $export)
+    public function download(BIExport $export, $_format)
     {
         $filename = $export->getFilename();
+
+        if ('xlsx' === $_format) {
+            // Read export and save as xlsx.
+            $spreadsheet = $this->readExport($filename);
+            $writer = new Xlsx($spreadsheet);
+            $filename .= '.'.$_format;
+            $writer->save($filename);
+        }
 
         $name = basename($filename);
         $headers = [
@@ -120,8 +138,32 @@ class BIController extends BaseController
                 return 'text/csv';
             case 'json':
                 return 'application/json';
+            case 'xlsx':
+                return 'application/vnd.openxmlformats';
         }
 
         return 'text/plain';
+    }
+
+    /**
+     * Read BI csv export from disk.
+     *
+     * @param string $filename
+     *
+     * @return \PhpOffice\PhpSpreadsheet\Spreadsheet
+     *
+     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
+     */
+    private function readExport($filename)
+    {
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+
+        if ('csv' === $ext) {
+            $reader = new Csv();
+
+            return $reader->load($filename);
+        }
+
+        throw new \RuntimeException(sprintf('Cannot read file %s', $filename));
     }
 }

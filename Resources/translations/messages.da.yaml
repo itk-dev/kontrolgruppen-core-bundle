@@ -1001,6 +1001,8 @@ bi:
         createdAt: Oprettet
         report: Rapport
     download_export: Hent
+    download_export_csv: CSV
+    download_export_xlsx: Excel
     delete_export: Slet
     delete_export_confirm: Bekræft sletning af rapport.
     no_exports: Ingen eksporter fundet
