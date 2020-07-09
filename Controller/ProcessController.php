@@ -30,6 +30,7 @@ use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -207,6 +208,30 @@ class ProcessController extends BaseController
                 'form' => $form->createView(),
                 'recentActivity' => $recentActivity,
             ]
+        );
+    }
+
+    /**
+     * @Route("/search-process-by-cpr", name="process_search_by_cpr", methods={"POST"})
+     *
+     * @param Request           $request
+     * @param ProcessRepository $processRepository
+     *
+     * @return Response
+     */
+    public function searchProcessesByCpr(Request $request, ProcessRepository $processRepository): Response
+    {
+        if (!$request->request->has('cpr')) {
+            throw new NotFoundHttpException('No CPR found!');
+        }
+
+        $processes = $processRepository->findBy(
+            ['clientCPR' => $request->request->get('cpr')]
+        );
+
+        return $this->render(
+            '@KontrolgruppenCore/process/_process_search_cpr_result.html.twig',
+            ['processes' => $processes]
         );
     }
 
