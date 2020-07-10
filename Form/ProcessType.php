@@ -15,12 +15,16 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessType as ProcessTypeEntity;
 use Kontrolgruppen\CoreBundle\Repository\ChannelRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class ProcessType.
@@ -29,17 +33,23 @@ class ProcessType extends AbstractType
 {
     protected $serviceRepository;
     protected $channelRepository;
+    protected $router;
+    protected $translator;
 
     /**
      * ProcessType constructor.
      *
-     * @param ServiceRepository $serviceRepository
-     * @param ChannelRepository $channelRepository
+     * @param ServiceRepository   $serviceRepository
+     * @param ChannelRepository   $channelRepository
+     * @param RouterInterface     $router
+     * @param TranslatorInterface $translator
      */
-    public function __construct(ServiceRepository $serviceRepository, ChannelRepository $channelRepository)
+    public function __construct(ServiceRepository $serviceRepository, ChannelRepository $channelRepository, RouterInterface $router, TranslatorInterface $translator)
     {
         $this->serviceRepository = $serviceRepository;
         $this->channelRepository = $channelRepository;
+        $this->router = $router;
+        $this->translator = $translator;
     }
 
     /**
@@ -56,6 +66,19 @@ class ProcessType extends AbstractType
                 'label' => 'process.form.client_cpr',
                 'attr' => [
                     'class' => 'js-input-cpr no-cpr-scanning',
+                ],
+            ])
+            ->add('searchCpr', ButtonType::class, [
+                'label' => 'process.form.search_client_cpr.search',
+                'attr' => [
+                    'class' => 'btn-primary',
+                    'data-search-action' => $this->router->generate(
+                        'process_search_by_cpr',
+                        [],
+                        UrlGeneratorInterface::ABSOLUTE_URL
+                    ),
+                    'data-search-text' => $this->translator->trans('process.form.search_client_cpr.search'),
+                    'data-loading-text' => $this->translator->trans('process.form.search_client_cpr.loading'),
                 ],
             ])
             ->add('caseWorker', null, [
