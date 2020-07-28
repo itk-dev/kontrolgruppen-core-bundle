@@ -1,26 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ 'process_report.report.title'|trans }}</title>
 
     {{ encore_entry_link_tags('processReport') }}
 </head>
 <body>
-    <h1>{{ 'process_report.report.title'|trans }}</h1>
-
-    {% include('@KontrolgruppenCoreBundle/process_report/_summary.html.twig') %}
-    <br />
-    {% include('@KontrolgruppenCoreBundle/process_report/_client.html.twig') %}
-    <br />
-    {% include('@KontrolgruppenCoreBundle/process_report/_car.html.twig') %}
-    <br />
-    {% include('@KontrolgruppenCoreBundle/process_report/_journal.html.twig') %}
-    {% if choice != 'only_summary' %}
-        <br/>
-        {% include('@KontrolgruppenCoreBundle/process_report/_economy.html.twig') %}
-        <br/>
-        {% include('@KontrolgruppenCoreBundle/process_report/_conclusion.html.twig') %}
-    {% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>{{ 'process_report.report.title'|trans }}</h1>
+            </div>
+        </div>
+        <div class="row">
+            {% include('@KontrolgruppenCoreBundle/process_report/_summary.html.twig') %}
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {% include('@KontrolgruppenCoreBundle/process_report/_client.html.twig') %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {% include('@KontrolgruppenCoreBundle/process_report/_car.html.twig') %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {% include('@KontrolgruppenCoreBundle/process_report/_journal.html.twig') %}
+            </div>
+        </div>
+        {% if choice != 'only_summary' %}
+            <div class="row">
+                <div class="col-12">
+                    {% include('@KontrolgruppenCoreBundle/process_report/_economy.html.twig') %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {% include('@KontrolgruppenCoreBundle/process_report/_conclusion.html.twig') %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
 </body>
 </html>
