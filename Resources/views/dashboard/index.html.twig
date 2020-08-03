@@ -34,13 +34,6 @@
         </div>
     {% endif %}
 
-    {% if notVisitedProcesses|length > 0 %}
-    <div>
-        <h2 class="mb-3"><i class="fas {{ iconClass('not-visited') }} mr-3"></i>{{ 'dashboard.not_visited.title'|trans }}</h2>
-        {% include '@KontrolgruppenCore/process/_process_list.html.twig' with {processes: notVisitedProcesses} %}
-    </div>
-    {% endif %}
-
     {% if unassignedProcesses|length > 0 %}
         <div class="mb-3">
             <h2 class="mb-3"><i
