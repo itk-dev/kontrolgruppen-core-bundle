@@ -1,0 +1,9 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-success float-right pr-5 pl-5">{{ 'common.actions.save'|trans }}</button>
+
+    <div id="process-group-form-spinner" class="spinner-border spinner-border-sm" style="display: none" role="status">
+        <span class="sr-only">{{ 'process_group.form.loading_results'|trans }}</span>
+    </div>
+{{ form_end(form) }}
+

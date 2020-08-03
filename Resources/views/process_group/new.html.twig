@@ -1,0 +1,16 @@
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+
+{% block title %}{{ 'process_group.new.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'process_group.new.title'|trans }}</h1>
+
+    {{ include('@KontrolgruppenCore/process_group/_form.html.twig') }}
+
+    <a href="{{ path('process_group_index', {'process': process}) }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('processGroupForm') }}
+{% endblock %}
