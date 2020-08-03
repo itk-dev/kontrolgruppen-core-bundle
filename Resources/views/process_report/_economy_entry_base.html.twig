@@ -1,10 +1,10 @@
-<table>
+<table class="border striped">
     <thead>
         <tr>
-            <th>{{ 'process_report.report.economy.base.account'|trans }}</th>
-            <th>{{ 'process_report.report.economy.base.account_number'|trans }}</th>
-            <th>{{ 'process_report.report.economy.base.date'|trans }}</th>
-            <th>{{ 'process_report.report.economy.base.amount'|trans }}</th>
+            <th class="w-20">{{ 'process_report.report.economy.base.account'|trans }}</th>
+            <th class="w-15">{{ 'process_report.report.economy.base.account_number'|trans }}</th>
+            <th class="w-15">{{ 'process_report.report.economy.base.date'|trans }}</th>
+            <th style="text-align: right;">{{ 'process_report.report.economy.base.amount'|trans }}</th>
         </tr>
     </thead>
     <tbody>
@@ -13,11 +13,11 @@
             <td>{{ economyEntry.account.name }}</td>
             <td>{{ economyEntry.accountNumber }}</td>
             <td>{{ economyEntry.date|localizeddate('short', 'none') }}</td>
-            <td>{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
+            <td class="text-right">{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
         </tr>
         {% else %}
             <tr>
-                <td colspan="3">{{ 'common.no_records_found'|trans }}</td>
+                <td colspan="4">{{ 'common.no_records_found'|trans }}</td>
             </tr>
         {% endfor %}
     </tbody>

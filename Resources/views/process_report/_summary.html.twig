@@ -1,43 +1,43 @@
 <table>
     <tbody>
         <tr>
-            <td>{{ 'process_report.report.summary.process_case_number'|trans }}:</td>
+            <th class="w-30">{{ 'process_report.report.summary.process_case_number'|trans }}:</th>
             <td>{{ process.caseNumber }}</td>
         </tr>
         <tr>
-            <td>{{ 'process_report.report.summary.process_created_at'|trans }}:</td>
+            <th>{{ 'process_report.report.summary.process_created_at'|trans }}:</th>
             <td>{{ process.createdAt|localizeddate('short', 'none') }}</td>
         </tr>
         <tr>
-            <td>{{ 'process_report.report.summary.process_updated_at'|trans }}:</td>
+            <th>{{ 'process_report.report.summary.process_updated_at'|trans }}:</th>
             <td>{{ process.updatedAt|localizeddate('short', 'none') }}</td>
         </tr>
         <tr>
-            <td>{{ 'process_report.report.summary.process_completed_at'|trans }}:</td>
+            <th>{{ 'process_report.report.summary.process_completed_at'|trans }}:</th>
             <td>{% if process.completedAt is not empty %}{{ process.completedAt|localizeddate('short', 'none') }}{% else %}{{ 'process_report.report.summary.process_not_completed'|trans }}{% endif %}</td>
         </tr>
         <tr>
-            <td>{{ 'process_report.report.summary.process_created_by'|trans }}:</td>
+            <th>{{ 'process_report.report.summary.process_created_by'|trans }}:</th>
             <td>{{ process.createdBy }}</td>
         </tr>
         <tr>
-            <td>{{ 'process_report.report.summary.process_case_worker'|trans }}:</td>
+            <th>{{ 'process_report.report.summary.process_case_worker'|trans }}:</th>
             <td>{{ (process.caseWorker is not empty) ? process.caseWorker : '-' }}</td>
         </tr>
         <tr>
-            <td>{{ 'process_report.report.summary.process_status'|trans }}:</td>
+            <th>{{ 'process_report.report.summary.process_status'|trans }}:</th>
             <td>{{ (process.processStatus is not empty) ? process.processStatus.name : '-' }}</td>
         </tr>
         <tr>
-            <td>{{ 'process_report.report.summary.process_type'|trans }}:</td>
+            <th>{{ 'process_report.report.summary.process_type'|trans }}:</th>
             <td>{{ (process.processType is not empty) ? process.processType.name : '-' }}</td>
         </tr>%}
         <tr>
-            <td>{{ 'process_report.report.summary.service'|trans }}:</td>
+            <th>{{ 'process_report.report.summary.service'|trans }}:</th>
             <td>{{ (process.service is not empty) ? process.service.name : '-' }}</td>
         </tr>
-        <tr>
-            <td>{{ 'process_report.report.summary.channel'|trans }}:</td>
+        <tr class="last">
+            <th>{{ 'process_report.report.summary.channel'|trans }}:</th>
             <td>{{ (process.channel is not empty) ? process.channel.name : '-' }}</td>
         </tr>
     </tbody>

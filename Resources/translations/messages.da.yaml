@@ -490,6 +490,10 @@ process:
         service: Ydelse
         update: Gem
         status: Status
+        search_client_cpr:
+            search: Søg efter eksisterende sager
+            loading: Søger...
+            results: Eksisterende sag(er) fundet
     index:
         title: Sager
     menu_title: Sager

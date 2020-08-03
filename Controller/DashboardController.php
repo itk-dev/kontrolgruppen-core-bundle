@@ -135,16 +135,9 @@ class DashboardController extends BaseController
 
         $query = $queryBuilder->getQuery();
 
-        $notVisitedProcesses = $processManager->getUsersUnvisitedProcesses($user);
-
-        $myProcesses = $processManager->markProcessesAsUnvisited(
-            $notVisitedProcesses,
-            $query->getResult()
-        );
-
         // Get my processes result.
         $pagination = $paginator->paginate(
-            $myProcesses,
+            $query->getResult(),
             $request->query->get('page', 1),
             $limit
         );
@@ -161,7 +154,6 @@ class DashboardController extends BaseController
             'myProcesses' => $pagination,
             'comingReminderForm' => $comingReminderForm->createView(),
             'myProcessesFilterForm' => $filterForm->createView(),
-            'notVisitedProcesses' => $notVisitedProcesses,
         ]);
     }
 }

@@ -5,8 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- [KON-375](https://jira.itkdev.dk/browse/KON-375): Search for existing processes on process creation page
 
-## [1.7.0] - 2020-06-29
+### Changed
+- [KON-385](https://jira.itkdev.dk/browse/KON-385): Changing markup and styling for reports
+
+### Removed
+- [KON-379](https://jira.itkdev.dk/browse/KON-379): Removing not visited processes from dashboard
+
+## [1.7.0] - 2020-08-03
 ### Added
 - [KON-333](https://jira.itkdev.dk/browse/KON-333): Possible to show completed processes on dashboard
 - [KON-288](https://jira.itkdev.dk/browse/KON-288): Added links between processes
