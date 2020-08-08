@@ -287,9 +287,9 @@ abstract class AbstractExport implements \JsonSerializable
 
         switch ($format) {
             case 'short':
-                return $date->format('Y-m-d');
+                return $date->format('d-m-Y');
             case 'long':
-                return $date->format('Y-m-d H:i:s');
+                return $date->format('d-m-Y H:i');
             default:
                 return $this->formatDate($date, 'short');
         }
