@@ -14,7 +14,7 @@
             </div>
             <ul class="list-group list-group-flush">
                 {% for relatedProcess in process_group.processes %}
-                    <li class="list-group-item">{{ relatedProcess.caseNumber }} {% if relatedProcess.caseNumber == process_group.primaryProcess.caseNumber %}<span class="badge badge-primary">{{ 'process_group.primary_process'|trans }}</span>{% endif %}</li>
+                    <li class="list-group-item"><a href="{{ path('process_show', {'id': relatedProcess.id}) }}">{{ relatedProcess.caseNumber }}</a> {% if relatedProcess.caseNumber == process_group.primaryProcess.caseNumber %}<span class="badge badge-primary">{{ 'process_group.primary_process'|trans }}</span>{% endif %}</li>
                 {% endfor %}
             </ul>
             <div class="card-body">
