@@ -351,6 +351,8 @@ journal_entry:
         title: Opret nyt journalindlæg
     new_process_status: Ny status
     process_status_changed: Sagsstatus ændret
+    new_process_group: Nye relationer
+    process_group_changed: Relationer ændret
     revision:
         action: Hændelse
         actions:
@@ -575,6 +577,7 @@ process_log:
                 service_economy_entry: Ydelse registrering
                 base_economy_entry: Konto registrering
                 income_economy_entry: Indkomst registrering
+                process_group: Relationer
             log_entry:
                 type: Type
                 process:
@@ -635,6 +638,9 @@ process_log:
                     income: Indkomst
                 income_economy_entry:
                     income: Indkomst
+                process_group:
+                    name: Navn
+                    primary_process: Primær
 
 process_status:
     edit:
