@@ -74,6 +74,13 @@ class LogManager
         return $result;
     }
 
+    /**
+     * @param $result
+     * @param $process
+     * @param $sortDirection
+     *
+     * @return mixed
+     */
     public function attachProcessGroupChangesToJournalEntries($result, $process, $sortDirection)
     {
         // Merged log entries into result.
@@ -83,7 +90,7 @@ class LogManager
         )->getArrayResult();
 
         foreach ($processLogEntries as $logEntry) {
-            if ($logEntry['logEntry']['objectClass'] === ProcessGroup::class ) {
+            if (ProcessGroup::class === $logEntry['logEntry']['objectClass']) {
                 $result[] = $logEntry;
             }
         }
