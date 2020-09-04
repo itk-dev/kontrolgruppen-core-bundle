@@ -1006,6 +1006,7 @@ change_net_default_value:
 process_group:
     primary_process: Primær
     processes: Sager
+    name: Navn
     index:
         title: Relationer
         edit: Rediger gruppe

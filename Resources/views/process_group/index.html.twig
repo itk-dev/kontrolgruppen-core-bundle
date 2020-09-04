@@ -10,7 +10,8 @@
     {% for process_group in process.processGroups %}
         <div class="card">
             <div class="card-header">
-                {{ 'process_group.index.number_of_relations'|trans({'%count%': process_group.processes|length}) }}
+                <h5 class="card-title">{{ process_group.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ 'process_group.index.number_of_relations'|trans({'%count%': process_group.processes|length}) }}</h6>
             </div>
             <ul class="list-group list-group-flush">
                 {% for relatedProcess in process_group.processes %}
