@@ -4,7 +4,7 @@
     <h3>{{ journalEntry.title }}</h3>
     <table>
         <tr>
-            <td class="w-15">{{ journalEntry.createdAt|localizeddate('short', 'none') }}</td>
+            <td class="w-15" valign="top">{{ journalEntry.createdAt|localizeddate('short', 'none') }}</td>
             <td>{{ journalEntry.body|raw }}</td>
         </tr>
     </table>
