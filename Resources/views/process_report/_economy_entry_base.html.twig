@@ -12,7 +12,13 @@
         <tr>
             <td>{{ economyEntry.account.name }}</td>
             <td>{{ economyEntry.accountNumber }}</td>
-            <td>{{ economyEntry.date|localizeddate('short', 'none') }}</td>
+            <td>
+                {% if economyEntry.date is not null %}
+                    {{ economyEntry.date|localizeddate('short', 'none') }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
             <td class="text-right">{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
         </tr>
         {% else %}
