@@ -14,7 +14,7 @@
             <tr>
                 <td>{{ car.registrationNumber }}</td>
                 <td>{{ car.sharedOwnerShip|yes_no }}</td>
-                <td>{{ car.notes }}</td>
+                <td>{{ car.notes|raw }}</td>
             </tr>
             {% endfor %}
         </tbody>
