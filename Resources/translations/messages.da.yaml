@@ -527,6 +527,7 @@ process:
         reminders: Påmindelser
         reminders_open: Vis påmindelser
         service: Ydelse
+        relations: Relationer
         filter:
             show_all_types: Alle sagstyper
             show_all_status: Alle sagsstatusser
