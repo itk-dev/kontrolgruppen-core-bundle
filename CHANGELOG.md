@@ -6,12 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.7.1] - 2020-08-25
+## [1.7.1] - 2020-09-09
 ### Added
 - [KON-375](https://jira.itkdev.dk/browse/KON-375): Search for existing processes on process creation page
 
 ### Changed
 - [KON-385](https://jira.itkdev.dk/browse/KON-385): Changing markup and styling for reports
+- [KON-396](https://jira.itkdev.dk/browse/KON-396): Feedback changes
 
 ### Removed
 - [KON-379](https://jira.itkdev.dk/browse/KON-379): Removing not visited processes from dashboard
