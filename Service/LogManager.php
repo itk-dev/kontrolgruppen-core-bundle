@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Loggable\Entity\LogEntry;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
+use Kontrolgruppen\CoreBundle\Entity\ProcessGroup;
 use Kontrolgruppen\CoreBundle\Repository\ProcessLogEntryRepository;
 
 /**
@@ -53,6 +54,43 @@ class LogManager
 
         foreach ($processLogEntries as $logEntry) {
             if (isset($logEntry['logEntry']['data']['processStatus'])) {
+                $result[] = $logEntry;
+            }
+        }
+
+        // Sort the results.
+        usort($result, function ($a, $b) use ($sortDirection) {
+            if ($a['updatedAt'] > $b['updatedAt']) {
+                return 'desc' === $sortDirection ? -1 : 1;
+            }
+
+            if ($a['updatedAt'] < $b['updatedAt']) {
+                return 'desc' !== $sortDirection ? -1 : 1;
+            }
+
+            return 0;
+        });
+
+        return $result;
+    }
+
+    /**
+     * @param $result
+     * @param $process
+     * @param $sortDirection
+     *
+     * @return mixed
+     */
+    public function attachProcessGroupChangesToJournalEntries($result, $process, $sortDirection)
+    {
+        // Merged log entries into result.
+        $processLogEntries = $this->processLogEntryRepository->getLatestLogEntries(
+            $process,
+            ProcessLogEntryLevelEnumType::NOTICE
+        )->getArrayResult();
+
+        foreach ($processLogEntries as $logEntry) {
+            if (ProcessGroup::class === $logEntry['logEntry']['objectClass']) {
                 $result[] = $logEntry;
             }
         }

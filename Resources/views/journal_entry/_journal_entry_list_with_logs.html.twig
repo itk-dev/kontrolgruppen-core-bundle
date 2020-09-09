@@ -6,12 +6,20 @@
             <div class="row border-left border-width-2 pl-2">
                 <div class="col">
                     <div class="row">
+                        {% if entry.logEntry.data.processStatus is defined %}
                         <span class="mr-4 small text-muted">{{ 'journal_entry.process_status_changed'|trans }}</span>
+                        {% elseif entry.logEntry.data.primaryProcess is defined %}
+                        <span class="mr-4 small text-muted">{{ 'journal_entry.process_group_changed'|trans }}</span>
+                        {% endif %}
                         <span class="mr-4 small text-muted">{{ entry.createdAt|simple_date('long') }}</span>
                         <span class="small text-muted">{{ entry.createdBy }}</span>
                     </div>
                     <div class="row">
+                        {% if entry.logEntry.data.processStatus is defined %}
                         <p class="mb-0">{{ 'journal_entry.new_process_status'|trans }}: {{ entry.logEntry.data.processStatus.name }}</p>
+                        {% elseif entry.logEntry.data.primaryProcess is defined %}
+                        <p class="mb-0">{{ 'journal_entry.new_process_group'|trans }}: {{ entry.logEntry.data.name }}</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>

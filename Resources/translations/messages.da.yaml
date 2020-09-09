@@ -351,6 +351,8 @@ journal_entry:
         title: Opret nyt journalindlæg
     new_process_status: Ny status
     process_status_changed: Sagsstatus ændret
+    new_process_group: Nye relationer
+    process_group_changed: Relationer ændret
     revision:
         action: Hændelse
         actions:
@@ -527,6 +529,7 @@ process:
         reminders: Påmindelser
         reminders_open: Vis påmindelser
         service: Ydelse
+        relations: Relationer
         filter:
             show_all_types: Alle sagstyper
             show_all_status: Alle sagsstatusser
@@ -574,6 +577,7 @@ process_log:
                 service_economy_entry: Ydelse registrering
                 base_economy_entry: Konto registrering
                 income_economy_entry: Indkomst registrering
+                process_group: Relationer
             log_entry:
                 type: Type
                 process:
@@ -634,6 +638,9 @@ process_log:
                     income: Indkomst
                 income_economy_entry:
                     income: Indkomst
+                process_group:
+                    name: Navn
+                    primary_process: Primær
 
 process_status:
     edit:
@@ -1006,6 +1013,7 @@ change_net_default_value:
 process_group:
     primary_process: Primær
     processes: Sager
+    name: Navn
     index:
         title: Relationer
         edit: Rediger gruppe

@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Form;
 
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Kontrolgruppen\CoreBundle\Entity\Car;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -33,8 +34,9 @@ class CarType extends AbstractType
             ->add('sharedOwnership', null, [
                 'label' => 'client.form.car.shared_ownership',
             ])
-            ->add('notes', null, [
+            ->add('notes', CKEditorType::class, [
                 'label' => 'client.form.car.notes',
+                'config' => ['toolbar' => 'editor'],
             ])
         ;
     }
