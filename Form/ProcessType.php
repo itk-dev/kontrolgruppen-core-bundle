@@ -84,17 +84,17 @@ class ProcessType extends AbstractType
             ->add('caseWorker', null, [
                 'label' => 'process.form.case_worker',
             ])
-            ->add('channel', null, [
-                'label' => 'process.form.channel',
-                'attr' => [
-                    'disabled' => 'disabled',
-                ],
-            ])
             ->add('reason', null, [
                 'label' => 'process.form.reason',
             ])
             ->add('service', null, [
                 'label' => 'process.form.service',
+                'attr' => [
+                    'disabled' => 'disabled',
+                ],
+            ])
+            ->add('channel', null, [
+                'label' => 'process.form.channel',
                 'attr' => [
                     'disabled' => 'disabled',
                 ],
