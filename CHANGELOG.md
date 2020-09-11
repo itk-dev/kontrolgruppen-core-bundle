@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - [KON-385](https://jira.itkdev.dk/browse/KON-385): Changing markup and styling for reports
+- [KON-377](https://jira.itkdev.dk/browse/KON-377): Moving field in form so the edit and new form looks the same
 
 ### Removed
 - [KON-379](https://jira.itkdev.dk/browse/KON-379): Removing not visited processes from dashboard
