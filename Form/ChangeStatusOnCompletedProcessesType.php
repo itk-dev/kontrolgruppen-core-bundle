@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
 
 namespace Kontrolgruppen\CoreBundle\Form;
 
@@ -10,10 +17,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * Class ChangeStatusOnCompletedProcessesType
+ */
 class ChangeStatusOnCompletedProcessesType extends AbstractType
 {
     private $processStatusRepository;
 
+    /**
+     * ChangeStatusOnCompletedProcessesType constructor.
+     * 
+     * @param ProcessStatusRepository $processStatusRepository
+     */
     public function __construct(ProcessStatusRepository $processStatusRepository)
     {
         $this->processStatusRepository = $processStatusRepository;
