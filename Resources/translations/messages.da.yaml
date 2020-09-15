@@ -435,6 +435,7 @@ menu:
         forwarded_to_authority: Videresendes til anden myndighed
         change_net_default_value: Ret netto standard værdi
         group: Relationer
+        change_status_on_completed_processes: Sæt status på afsluttet sager
 
 navigation:
     main:
@@ -1027,3 +1028,16 @@ process_group:
         title: Ny gruppe
     form:
         loading_results: Indlæser sager
+
+change_status_on_completed_processes:
+    index:
+        title: Sæt status på afsluttet sager med manglende status
+        alert: OBS! Dette vil sætte den valgte status på alle afsluttet sager, der ikke allerede har en status
+        affected: 'Antal afsluttet sager uden status: %number_of_affected%'
+        empty_process_status_flash: Ingen afsluttet sager uden sagsstatus fundet
+        status_changed_flash: 'Antal sager der fik sat ny status: %number_of_affected%'
+        none_flash: Ingen afsluttet sager fik sat nyt status
+        confirm: Er du sikker på at du vil sætte den valgte status på de berørte sager?
+    form:
+        status_label: Ny sagsstatus
+        submit_label: Sæt status
