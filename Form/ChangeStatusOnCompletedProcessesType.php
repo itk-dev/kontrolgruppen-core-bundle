@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Class ChangeStatusOnCompletedProcessesType
+ * Class ChangeStatusOnCompletedProcessesType.
  */
 class ChangeStatusOnCompletedProcessesType extends AbstractType
 {
@@ -26,7 +26,7 @@ class ChangeStatusOnCompletedProcessesType extends AbstractType
 
     /**
      * ChangeStatusOnCompletedProcessesType constructor.
-     * 
+     *
      * @param ProcessStatusRepository $processStatusRepository
      */
     public function __construct(ProcessStatusRepository $processStatusRepository)
