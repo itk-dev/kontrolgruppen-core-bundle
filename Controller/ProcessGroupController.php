@@ -178,10 +178,7 @@ class ProcessGroupController extends BaseController
             $firstCaseNumber = (int) str_replace('-', '', $first->getCaseNumber());
             $secondCaseNumber = (int) str_replace('-', '', $second->getCaseNumber());
 
-            return $firstCaseNumber > $secondCaseNumber
-                ? 1
-                : -1
-            ;
+            return $firstCaseNumber <=> $secondCaseNumber;
         });
 
         return $processIterator;
