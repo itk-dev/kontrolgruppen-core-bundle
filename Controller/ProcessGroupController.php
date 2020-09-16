@@ -42,7 +42,6 @@ class ProcessGroupController extends BaseController
         $processGroups = [];
 
         foreach ($process->getProcessGroups() as $processGroup) {
-
             $processGroups[] = [
                 'processGroup' => $processGroup,
                 'processIterator' => $this->getSortedByPrimaryIterator(
@@ -162,12 +161,12 @@ class ProcessGroupController extends BaseController
     /**
      * @param Process $primaryProcess
      * @param $processIterator
-     * 
+     *
      * @return mixed
      */
-    private function getSortedByPrimaryIterator(Process $primaryProcess, $processIterator) {
-        $processIterator->uasort(function(Process $first, Process $second) use ($primaryProcess) {
-
+    private function getSortedByPrimaryIterator(Process $primaryProcess, $processIterator)
+    {
+        $processIterator->uasort(function (Process $first, Process $second) use ($primaryProcess) {
             if ($first->getId() === $primaryProcess->getId()) {
                 return -1;
             }
