@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.7.1] - 2020-09-09
 ### Added
 - [KON-375](https://jira.itkdev.dk/browse/KON-375): Search for existing processes on process creation page
+- [KON-401](https://jira.itkdev.dk/browse/KON-375): Adding colum in process status table that shows if status is completing status
 
 ### Changed
 - [KON-385](https://jira.itkdev.dk/browse/KON-385): Changing markup and styling for reports
