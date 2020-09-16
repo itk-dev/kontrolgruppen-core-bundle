@@ -668,6 +668,7 @@ process_status:
         id: ID
         name: Navn
         is_forward_to_another_authority: Videresendes til anden myndighed
+        is_completing_status: Afsluttet status
         process_types: Tilkoblede sagstyper
     select:
         label: Sagsstatus

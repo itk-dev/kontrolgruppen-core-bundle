@@ -18,6 +18,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class ProcessCompleteType.
@@ -45,6 +46,8 @@ class ProcessCompleteType extends AbstractType
         $builder
             ->add('processStatus', EntityType::class, [
                 'class' => ProcessStatus::class,
+                'constraints' => [new NotBlank()],
+                'required' => true,
                 'choices' => $options['available_statuses'],
             ])
             ->add('policeReport', ChoiceType::class, [
