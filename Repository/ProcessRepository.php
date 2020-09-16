@@ -89,4 +89,21 @@ class ProcessRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * @return Process[]
+     */
+    public function findCompletedWithNoStatus(): array
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
+        $queryBuilder
+            ->where('p.completedAt IS NOT NULL')
+            ->andWhere('p.processStatus IS NULL')
+        ;
+
+        return $queryBuilder
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

@@ -316,6 +316,14 @@ class MenuService
                 ),
                 'change_net_default_value_index'
             ),
+            $this->createMenuItem(
+                'change_status_on_completed_processes',
+                1 === preg_match(
+                    '/^\/admin\/change_status_on_completed_processes\/.*$/',
+                    $path
+                ),
+                'change_status_on_completed_processes'
+            ),
         ];
     }
 
