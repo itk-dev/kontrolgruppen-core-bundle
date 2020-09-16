@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - [KON-385](https://jira.itkdev.dk/browse/KON-385): Changing markup and styling for reports
 - [KON-396](https://jira.itkdev.dk/browse/KON-396): Feedback changes
+- [KON-403](https://jira.itkdev.dk/browse/KON-403): Making status required when completing process
 
 ### Removed
 - [KON-379](https://jira.itkdev.dk/browse/KON-379): Removing not visited processes from dashboard
