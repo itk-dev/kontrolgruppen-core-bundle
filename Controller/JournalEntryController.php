@@ -143,6 +143,12 @@ class JournalEntryController extends BaseController
             $sortDirection
         );
 
+        $result = $logManager->attachProcessGroupChangesToJournalEntries(
+            $result,
+            $process,
+            $sortDirection
+        );
+
         return $this->render(
             '@KontrolgruppenCore/journal_entry/index.html.twig',
             [

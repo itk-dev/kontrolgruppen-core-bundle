@@ -1,0 +1,18 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'change_status_on_completed_processes.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <h1 class="">{{ 'change_status_on_completed_processes.index.title'|trans }}</h1>
+
+    <div class="alert alert-danger">{{ 'change_status_on_completed_processes.index.alert'|trans }}</div>
+
+    {{ 'change_status_on_completed_processes.index.affected'|trans({'%number_of_affected%': number_of_affected_processes}) }}
+
+    {{ form(form, {
+        attr: {
+            'data-yes-no-message': 'change_status_on_completed_processes.index.confirm'|trans,
+        }
+    }) }}
+
+{% endblock %}

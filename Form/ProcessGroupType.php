@@ -33,6 +33,9 @@ class ProcessGroupType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('name', null, [
+                'label' => 'process_group.name',
+            ])
             ->add('primaryProcess', EntityType::class, [
                 'class' => Process::class,
                 'choice_label' => 'caseNumber',

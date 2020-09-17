@@ -17,6 +17,7 @@ use Gedmo\Loggable\Mapping\Event\LoggableAdapter;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Conclusion;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessGroup;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLoggableInterface;
 use Kontrolgruppen\CoreBundle\Entity\User;
@@ -127,6 +128,11 @@ class LoggableListener extends BaseLoggableListener
                         ? $object->getCaseWorker()->getUsername()
                         : null;
                     break;
+                case 'primaryProcess':
+                    $newData[$key]['caseNumber'] = null !== $object->getPrimaryProcess()
+                        ? $object->getPrimaryProcess()->getCaseNumber()
+                        : null;
+                    break;
 
                 default:
                     break;
@@ -165,6 +171,15 @@ class LoggableListener extends BaseLoggableListener
                     $this->getLevel($action),
                     $ea
                 );
+            } elseif ($object instanceof ProcessGroup) {
+                foreach ($object->getProcesses() as $process) {
+                    $this->createProcessLogEntry(
+                        $logEntry,
+                        $process,
+                        $this->getLevel($action),
+                        $ea
+                    );
+                }
             }
         }
 

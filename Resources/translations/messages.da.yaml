@@ -351,6 +351,8 @@ journal_entry:
         title: Opret nyt journalindlæg
     new_process_status: Ny status
     process_status_changed: Sagsstatus ændret
+    new_process_group: Nye relationer
+    process_group_changed: Relationer ændret
     revision:
         action: Hændelse
         actions:
@@ -433,6 +435,7 @@ menu:
         forwarded_to_authority: Videresendes til anden myndighed
         change_net_default_value: Ret netto standard værdi
         group: Relationer
+        change_status_on_completed_processes: Sæt status på afsluttet sager
 
 navigation:
     main:
@@ -527,6 +530,7 @@ process:
         reminders: Påmindelser
         reminders_open: Vis påmindelser
         service: Ydelse
+        relations: Relationer
         filter:
             show_all_types: Alle sagstyper
             show_all_status: Alle sagsstatusser
@@ -574,6 +578,7 @@ process_log:
                 service_economy_entry: Ydelse registrering
                 base_economy_entry: Konto registrering
                 income_economy_entry: Indkomst registrering
+                process_group: Relationer
             log_entry:
                 type: Type
                 process:
@@ -634,6 +639,9 @@ process_log:
                     income: Indkomst
                 income_economy_entry:
                     income: Indkomst
+                process_group:
+                    name: Navn
+                    primary_process: Primær
 
 process_status:
     edit:
@@ -660,6 +668,7 @@ process_status:
         id: ID
         name: Navn
         is_forward_to_another_authority: Videresendes til anden myndighed
+        is_completing_status: Afsluttet status
         process_types: Tilkoblede sagstyper
     select:
         label: Sagsstatus
@@ -1006,6 +1015,7 @@ change_net_default_value:
 process_group:
     primary_process: Primær
     processes: Sager
+    name: Navn
     index:
         title: Relationer
         edit: Rediger gruppe
@@ -1019,3 +1029,16 @@ process_group:
         title: Ny gruppe
     form:
         loading_results: Indlæser sager
+
+change_status_on_completed_processes:
+    index:
+        title: Sæt status på afsluttet sager med manglende status
+        alert: OBS! Dette vil sætte den valgte status på alle afsluttet sager, der ikke allerede har en status
+        affected: 'Antal afsluttet sager uden status: %number_of_affected%'
+        empty_process_status_flash: Ingen afsluttet sager uden sagsstatus fundet
+        status_changed_flash: 'Antal sager der fik sat ny status: %number_of_affected%'
+        none_flash: Ingen afsluttet sager fik sat nyt status
+        confirm: Er du sikker på at du vil sætte den valgte status på de berørte sager?
+    form:
+        status_label: Ny sagsstatus
+        submit_label: Sæt status

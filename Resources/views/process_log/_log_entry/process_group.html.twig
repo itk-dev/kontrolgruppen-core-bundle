@@ -1,0 +1,12 @@
+<ul class="list-group">
+    {% if name is defined %}
+        <li class="list-group-item">
+            {{ 'process_log.revision.table.log_entry.process_group.name'|trans }}: {{ name ?: '-' }}
+        </li>
+    {% endif %}
+    {% if primaryProcess is defined %}
+        <li class="list-group-item">
+            {{ 'process_log.revision.table.log_entry.process_group.primary_process'|trans }}: {{ primaryProcess.caseNumber ?: '-' }}
+        </li>
+    {% endif %}
+</ul>

@@ -5,12 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- [KON-377](https://jira.itkdev.dk/browse/KON-377): Moving field in form so the edit and new form looks the same
+
+## [1.7.1] - 2020-09-17
 ### Added
 - [KON-375](https://jira.itkdev.dk/browse/KON-375): Search for existing processes on process creation page
+- [KON-400](https://jira.itkdev.dk/browse/KON-400): Adding page for setting missing completing status on completed processes
+- [KON-401](https://jira.itkdev.dk/browse/KON-375): Adding column in process status table that shows if status is completing status
 
 ### Changed
 - [KON-385](https://jira.itkdev.dk/browse/KON-385): Changing markup and styling for reports
-- [KON-377](https://jira.itkdev.dk/browse/KON-377): Moving field in form so the edit and new form looks the same
+- [KON-396](https://jira.itkdev.dk/browse/KON-396): Feedback changes
+- [KON-403](https://jira.itkdev.dk/browse/KON-403): Making status required when completing process
 
 ### Removed
 - [KON-379](https://jira.itkdev.dk/browse/KON-379): Removing not visited processes from dashboard
