@@ -1,25 +1,31 @@
-<table>
+<table class="border striped text-small">
     <thead>
     <tr>
-        <th>{{ 'process_report.report.economy.service.service'|trans }}</th>
-        <th>{{ 'process_report.report.economy.service.period'|trans }}</th>
+        <th class="w-20">{{ 'process_report.report.economy.service.service'|trans }}</th>
+        <th class="w-15">{{ 'process_report.report.economy.service.period'|trans }}</th>
         <th>{{ 'process_report.report.economy.service.amount'|trans }}</th>
         <th>{{ 'process_report.report.economy.service.amount_period'|trans }}</th>
-        <th>{{ 'process_report.report.economy.service.repayment_amount'|trans }}</th>
+        <th  style="text-align: right;">{{ 'process_report.report.economy.service.repayment_amount'|trans }}</th>
     </tr>
     </thead>
     <tbody>
     {% for economyEntry in economyEntries %}
         <tr>
             <td>{{ economyEntry.service }}</td>
-            <td>{{ economyEntry.periodFrom|localizeddate('short', 'none') }} - {{ economyEntry.periodTo|localizeddate('short', 'none') }}</td>
+            <td>
+                {% if economyEntry.periodFrom is not null %}
+                    {{ economyEntry.periodFrom|localizeddate('short', 'none') }} - {{ economyEntry.periodTo|localizeddate('short', 'none') }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
             <td>{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
             <td>{{ enumTranslation(economyEntry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>
-            <td>{{ economyEntry.repaymentAmount|localizedcurrency('DKK') }}</td>
+            <td  style="text-align: right;">{{ economyEntry.repaymentAmount|localizedcurrency('DKK') }}</td>
         </tr>
     {% else %}
         <tr>
-            <td colspan="3">{{ 'common.no_records_found'|trans }}</td>
+            <td colspan="5">{{ 'common.no_records_found'|trans }}</td>
         </tr>
     {% endfor %}
     </tbody>

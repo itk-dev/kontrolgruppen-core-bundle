@@ -1,5 +1,4 @@
 {% if process.client.cars is not empty %}
-<div class="border">
     <h2>{{ 'process_report.report.car.title'|trans }}</h2>
 
     <table>
@@ -15,10 +14,9 @@
             <tr>
                 <td>{{ car.registrationNumber }}</td>
                 <td>{{ car.sharedOwnerShip|yes_no }}</td>
-                <td>{{ car.notes }}</td>
+                <td>{{ car.notes|raw }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-</div>
 {% endif %}

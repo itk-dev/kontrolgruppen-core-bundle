@@ -12,6 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessGroup;
 use Kontrolgruppen\CoreBundle\Form\ProcessGroupType;
@@ -34,15 +35,29 @@ class ProcessGroupController extends BaseController
      *
      * @throws NoResultException
      * @throws NonUniqueResultException
+     * @throws Exception
      */
     public function index(Request $request, Process $process): Response
     {
+        $processGroups = [];
+
+        foreach ($process->getProcessGroups() as $processGroup) {
+            $processGroups[] = [
+                'processGroup' => $processGroup,
+                'processIterator' => $this->getSortedByPrimaryIterator(
+                    $processGroup->getPrimaryProcess(),
+                    $processGroup->getProcesses()->getIterator()
+                ),
+            ];
+        }
+
         return $this->render('@KontrolgruppenCore/process_group/index.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu(
                 $request->getPathInfo(),
                 $process
             ),
             'process' => $process,
+            'process_groups' => $processGroups,
         ]);
     }
 
@@ -141,5 +156,31 @@ class ProcessGroupController extends BaseController
         }
 
         return $this->redirectToRoute('process_group_index', ['process' => $process]);
+    }
+
+    /**
+     * @param Process $primaryProcess
+     * @param $processIterator
+     *
+     * @return mixed
+     */
+    private function getSortedByPrimaryIterator(Process $primaryProcess, $processIterator)
+    {
+        $processIterator->uasort(function (Process $first, Process $second) use ($primaryProcess) {
+            if ($first->getId() === $primaryProcess->getId()) {
+                return -1;
+            }
+
+            if ($second->getId() === $primaryProcess->getId()) {
+                return 1;
+            }
+
+            $firstCaseNumber = (int) str_replace('-', '', $first->getCaseNumber());
+            $secondCaseNumber = (int) str_replace('-', '', $second->getCaseNumber());
+
+            return $firstCaseNumber <=> $secondCaseNumber;
+        });
+
+        return $processIterator;
     }
 }

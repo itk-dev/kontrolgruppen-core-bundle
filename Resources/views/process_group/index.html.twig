@@ -7,14 +7,17 @@
 
     <div class="card-deck">
 
-    {% for process_group in process.processGroups %}
+      {% for process_group_array in process_groups %}
+        {% set process_group = process_group_array.processGroup %}
+        {% set related_processes = process_group_array.processIterator %}
         <div class="card">
             <div class="card-header">
-                {{ 'process_group.index.number_of_relations'|trans({'%count%': process_group.processes|length}) }}
+                <h5 class="card-title">{{ process_group.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ 'process_group.index.number_of_relations'|trans({'%count%': process_group.processes|length}) }}</h6>
             </div>
             <ul class="list-group list-group-flush">
-                {% for relatedProcess in process_group.processes %}
-                    <li class="list-group-item">{{ relatedProcess.caseNumber }} {% if relatedProcess.caseNumber == process_group.primaryProcess.caseNumber %}<span class="badge badge-primary">{{ 'process_group.primary_process'|trans }}</span>{% endif %}</li>
+                {% for relatedProcess in related_processes %}
+                    <li class="list-group-item"><a href="{{ path('process_show', {'id': relatedProcess.id}) }}">{{ relatedProcess.caseNumber }}</a> {% if relatedProcess.caseNumber == process_group.primaryProcess.caseNumber %}<span class="badge badge-primary">{{ 'process_group.primary_process'|trans }}</span>{% endif %}</li>
                 {% endfor %}
             </ul>
             <div class="card-body">

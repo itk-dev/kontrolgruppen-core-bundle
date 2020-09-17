@@ -1,14 +1,10 @@
-<div class="border">
-    <h2>{{ 'process_report.report.journal.title'|trans }}</h2>
+<h2>{{ 'process_report.report.journal.title'|trans }}</h2>
+
+{% for journalEntry in journalEntries %}
+    <h3>{{ journalEntry.createdAt|localizeddate('short', 'none') }} - {{ journalEntry.title }}</h3>
     <table>
-        {% for journalEntry in journalEntries %}
         <tr>
-            <td>{{ journalEntry.createdAt|localizeddate('short', 'none') }}</td>
-            <td>{{ journalEntry.title }}</td>
+            <td>{{ journalEntry.body|raw }}</td>
         </tr>
-        <tr>
-            <td colspan="2">{{ journalEntry.body|raw }}</td>
-        </tr>
-        {% endfor %}
     </table>
-</div>
+{% endfor %}
