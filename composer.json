@@ -47,16 +47,6 @@
         "phpmd/phpmd": "^2.8",
         "squizlabs/php_codesniffer": "^3.4"
     },
-    "repositories": {
-        "itk-dev/serviceplatformen": {
-            "type": "vcs",
-            "url": "https://github.com/itk-dev/serviceplatformen.git"
-        },
-        "itk-dev/azure-key-vault-php": {
-            "type": "vcs",
-            "url": "https://github.com/itk-dev/AzureKeyVaultPhp"
-        }
-    },
     "config": {
         "sort-packages": true
     },
