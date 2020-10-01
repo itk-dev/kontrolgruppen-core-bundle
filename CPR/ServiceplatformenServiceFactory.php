@@ -21,7 +21,6 @@ use ItkDev\Serviceplatformen\Service\PersonBaseDataExtendedService;
  */
 class ServiceplatformenServiceFactory
 {
-
     /**
      * Factory for CPR service.
      *
