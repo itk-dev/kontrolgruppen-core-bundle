@@ -158,6 +158,25 @@ bin/console kontrolgruppen:report:export admin@example.com \
 	--parameters='startdate=-1 month enddate=now' --debug-parameters
 ```
 
+## CPR service
+
+Make sure to set the following parameters in the .env file:
+
+```ini
+AZURE_TENANT_ID='xyz'
+AZURE_APPLICATION_ID='xyz'
+AZURE_CLIENT_SECRET='xyz'
+AZURE_KEY_VAULT_SECRET='xyz'
+AZURE_KEY_VAULT_SECRET_VERSION='xyz'
+
+SERVICEPLATFORMEN_SERVICE_AGREEMENT_UUID='xyz'
+SERVICEPLATFORMEN_USER_SYSTEM_UUID='xyz'
+SERVICEPLATFORMEN_USER_UUID='xyz'
+
+PERSON_BASE_DATA_EXTENDED_SERVICE_ENDPOINT='https://xyz.com'
+PERSON_BASE_DATA_EXTENDED_SERVICE_UUID='xyz'
+```
+
 ## Contributing
 
 ### Pull Request Process
