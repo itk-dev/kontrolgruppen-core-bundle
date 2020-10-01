@@ -10,12 +10,15 @@
 
 namespace Kontrolgruppen\CoreBundle\CPR;
 
+use Symfony\Component\PropertyAccess\PropertyAccess;
+
 /**
  * Class ServiceplatformenCprServiceResult.
  */
 class ServiceplatformenCprServiceResult implements CprServiceResultInterface
 {
     private $response;
+    private $propertyAccessor;
 
     /**
      * ServiceplatformenCprServiceResult constructor.
@@ -25,6 +28,8 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
     public function __construct($response)
     {
         $this->response = $response;
+
+        $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
     }
 
     /**
@@ -34,10 +39,7 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
      */
     public function getFirstName(): string
     {
-        return $this->response
-            ->persondata
-            ->navn
-            ->fornavn;
+        return $this->getProperty('persondata.navn.fornavn');
     }
 
     /**
@@ -47,13 +49,10 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
      */
     public function getMiddleName(): ?string
     {
-        $navn = $this->response->persondata->navn;
-
-        if (property_exists($navn, 'mellemnavn')) {
-            return $navn->mellemnavn;
-        }
-
-        return null;
+        return $this->propertyAccessor->isReadable($this->response, 'persondata.navn.mellemnavn')
+            ? $this->propertyAccessor->getValue($this->response, 'persondata.navn.mellemnavn')
+            : null
+        ;
     }
 
     /**
@@ -63,10 +62,7 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
      */
     public function getLastName(): string
     {
-        return $this->response
-            ->persondata
-            ->navn
-            ->efternavn;
+        return $this->getProperty('persondata.navn.efternavn');
     }
 
     /**
@@ -76,10 +72,7 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
      */
     public function getStreetName(): string
     {
-        return $this->response
-            ->adresse
-            ->aktuelAdresse
-            ->vejnavn;
+        return $this->getProperty('adresse.aktuelAdresse.vejnavn');
     }
 
     /**
@@ -89,10 +82,7 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
      */
     public function getHouseNumber(): ?string
     {
-        return $this->response
-            ->adresse
-            ->aktuelAdresse
-            ->husnummer;
+        return $this->getProperty('adresse.aktuelAdresse.husnummer');
     }
 
     /**
@@ -102,13 +92,10 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
      */
     public function getFloor(): ?string
     {
-        $aktuelAdresse = $this->response->adresse->aktuelAdresse;
-
-        if (property_exists($aktuelAdresse, 'etage')) {
-            return $aktuelAdresse->etage;
-        }
-
-        return null;
+        return $this->propertyAccessor->isReadable($this->response, 'adresse.aktuelAdresse.etage')
+            ? $this->propertyAccessor->getValue($this->response, 'adresse.aktuelAdresse.etage')
+            : null
+        ;
     }
 
     /**
@@ -118,13 +105,10 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
      */
     public function getSide(): ?string
     {
-        $aktuelAdresse = $this->response->adresse->aktuelAdresse;
-
-        if (property_exists($aktuelAdresse, 'sidedoer')) {
-            return $aktuelAdresse->sidedoer;
-        }
-
-        return null;
+        return $this->propertyAccessor->isReadable($this->response, 'adresse.aktuelAdresse.sidedoer')
+            ? $this->propertyAccessor->getValue($this->response, 'adresse.aktuelAdresse.sidedoer')
+            : null
+        ;
     }
 
     /**
@@ -134,10 +118,7 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
      */
     public function getPostalCode(): string
     {
-        return $this->response
-            ->adresse
-            ->aktuelAdresse
-            ->postnummer;
+        return $this->getProperty('adresse.aktuelAdresse.postnummer');
     }
 
     /**
@@ -147,9 +128,21 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
      */
     public function getCity(): string
     {
-        return $this->response
-            ->adresse
-            ->aktuelAdresse
-            ->postdistrikt;
+        return $this->getProperty('adresse.aktuelAdresse.postdistrikt');
+    }
+
+    /**
+     * Returns the value of the property if it exists otherwise it returns an empty string.
+     *
+     * @param string $property name of property
+     *
+     * @return string
+     */
+    private function getProperty(string $property): string
+    {
+        return $this->propertyAccessor->isReadable($this->response, $property)
+            ? $this->propertyAccessor->getValue($this->response, $property)
+            : ''
+        ;
     }
 }
