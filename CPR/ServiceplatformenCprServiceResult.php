@@ -29,6 +29,8 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
 
     /**
      * Get first name.
+     *
+     * @return string
      */
     public function getFirstName(): string
     {
@@ -40,6 +42,8 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
 
     /**
      * Get middle name.
+     *
+     * @return string|null
      */
     public function getMiddleName(): ?string
     {
@@ -54,6 +58,8 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
 
     /**
      * Get last name.
+     *
+     * @return string
      */
     public function getLastName(): string
     {
@@ -65,6 +71,8 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
 
     /**
      * Get street name.
+     *
+     * @return string
      */
     public function getStreetName(): string
     {
@@ -89,6 +97,8 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
 
     /**
      * Get floor.
+     *
+     * @return string|null
      */
     public function getFloor(): ?string
     {
@@ -103,6 +113,8 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
 
     /**
      * Get side.
+     *
+     * @return string|null
      */
     public function getSide(): ?string
     {
@@ -118,7 +130,7 @@ class ServiceplatformenCprServiceResult implements CprServiceResultInterface
     /**
      * Get postal code.
      *
-     * @return string|null
+     * @return string
      */
     public function getPostalCode(): string
     {
