@@ -21,8 +21,20 @@ use ItkDev\Serviceplatformen\Service\PersonBaseDataExtendedService;
  */
 class ServiceplatformenServiceFactory
 {
+
     /**
      * Factory for CPR service.
+     *
+     * @param string $azureTenantId
+     * @param string $azureApplicationId
+     * @param string $azureClientSecret
+     * @param string $azureKeyVaultSecret
+     * @param string $azureKeyVaultSecretVersion
+     * @param string $serviceplatformenServiceAgreementUuid
+     * @param string $serviceplatformenUserSystemUuid
+     * @param string $serviceplatformenUserUuid
+     * @param string $personBaseDataExtendedServiceEndpoint
+     * @param string $personBaseDataExtendedServiceUuid
      *
      * @return PersonBaseDataExtendedService
      *
