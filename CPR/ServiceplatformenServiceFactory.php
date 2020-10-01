@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of aakb/kontrolgruppen.
+ * This file is part of aakb/kontrolgruppen-core-bundle.
  *
  * (c) 2019 ITK Development
  *
