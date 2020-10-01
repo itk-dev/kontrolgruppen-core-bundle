@@ -177,6 +177,23 @@ PERSON_BASE_DATA_EXTENDED_SERVICE_ENDPOINT='https://xyz.com'
 PERSON_BASE_DATA_EXTENDED_SERVICE_UUID='xyz'
 ```
 
+And add the following to the parent bundles config/services.yaml:
+
+```yaml
+parameters:
+    ...
+    azure_tenant_id: '%env(AZURE_TENANT_ID)%'
+    azure_application_id: '%env(AZURE_APPLICATION_ID)%'
+    azure_client_secret: '%env(AZURE_CLIENT_SECRET)%'
+    azure_key_vault_secret: '%env(AZURE_KEY_VAULT_SECRET)%'
+    azure_key_vault_secret_version: '%env(AZURE_KEY_VAULT_SECRET_VERSION)%'
+    serviceplatformen_service_agreement_uuid: '%env(SERVICEPLATFORMEN_SERVICE_AGREEMENT_UUID)%'
+    serviceplatformen_user_system_uuid: '%env(SERVICEPLATFORMEN_USER_SYSTEM_UUID)%'
+    serviceplatformen_user_uuid: '%env(SERVICEPLATFORMEN_USER_UUID)%'
+    person_base_data_extended_service_endpoint: '%env(PERSON_BASE_DATA_EXTENDED_SERVICE_ENDPOINT)%'
+    person_base_data_extended_service_uuid: '%env(PERSON_BASE_DATA_EXTENDED_SERVICE_UUID)%'
+```
+
 ## Contributing
 
 ### Pull Request Process
