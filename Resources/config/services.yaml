@@ -56,11 +56,13 @@ services:
                 '%azure_tenant_id%',
                 '%azure_application_id%',
                 '%azure_client_secret%',
+                '%azure_key_vault_name%',
                 '%azure_key_vault_secret%',
                 '%azure_key_vault_secret_version%',
                 '%serviceplatformen_service_agreement_uuid%',
                 '%serviceplatformen_user_system_uuid%',
                 '%serviceplatformen_user_uuid%',
+                '%person_base_data_extended_service_contract%',
                 '%person_base_data_extended_service_endpoint%',
                 '%person_base_data_extended_service_uuid%'
         ]

@@ -11,8 +11,10 @@
 namespace Kontrolgruppen\CoreBundle\CPR;
 
 use ItkDev\AzureKeyVault\Authorisation\VaultToken;
+use ItkDev\AzureKeyVault\Exception\TokenException;
 use ItkDev\AzureKeyVault\KeyVault\VaultSecret;
 use ItkDev\Serviceplatformen\Certificate\AzureKeyVaultCertificateLocator;
+use ItkDev\Serviceplatformen\Certificate\Exception\CertificateLocatorException;
 use ItkDev\Serviceplatformen\Request\InvocationContextRequestGenerator;
 use ItkDev\Serviceplatformen\Service\PersonBaseDataExtendedService;
 
@@ -27,35 +29,36 @@ class ServiceplatformenServiceFactory
      * @param string $azureTenantId
      * @param string $azureApplicationId
      * @param string $azureClientSecret
+     * @param string $azureKeyVaultName
      * @param string $azureKeyVaultSecret
      * @param string $azureKeyVaultSecretVersion
      * @param string $serviceplatformenServiceAgreementUuid
      * @param string $serviceplatformenUserSystemUuid
      * @param string $serviceplatformenUserUuid
+     * @param string $personBaseDataExtendedServiceContract
      * @param string $personBaseDataExtendedServiceEndpoint
      * @param string $personBaseDataExtendedServiceUuid
      *
      * @return PersonBaseDataExtendedService
      *
-     * @throws \ItkDev\AzureKeyVault\Exception\TokenException
-     * @throws \ItkDev\Serviceplatformen\Certificate\Exception\CertificateLocatorException
-     * @throws \SoapFault
+     * @throws CprException
      */
-    public static function createPersonBaseDataExtendedService(string $azureTenantId, string $azureApplicationId, string $azureClientSecret, string $azureKeyVaultSecret, string $azureKeyVaultSecretVersion, string $serviceplatformenServiceAgreementUuid, string $serviceplatformenUserSystemUuid, string $serviceplatformenUserUuid, string $personBaseDataExtendedServiceEndpoint, string $personBaseDataExtendedServiceUuid)
+    public static function createPersonBaseDataExtendedService(string $azureTenantId, string $azureApplicationId, string $azureClientSecret, string $azureKeyVaultName, string $azureKeyVaultSecret, string $azureKeyVaultSecretVersion, string $serviceplatformenServiceAgreementUuid, string $serviceplatformenUserSystemUuid, string $serviceplatformenUserUuid, string $personBaseDataExtendedServiceContract, string $personBaseDataExtendedServiceEndpoint, string $personBaseDataExtendedServiceUuid)
     {
-        $token = VaultToken::getToken(
-            $azureTenantId,
-            $azureApplicationId,
-            $azureClientSecret
-        );
+        try {
+            $token = VaultToken::getToken(
+                $azureTenantId,
+                $azureApplicationId,
+                $azureClientSecret
+            );
+        } catch (TokenException $e) {
+            throw new CprException($e->getMessage(), $e->getCode());
+        }
 
         $vault = new VaultSecret(
-            'kontrolgruppen',
+            $azureKeyVaultName,
             $token->getAccessToken()
         );
-
-        // Contract is included in bundle, but you can change it if you have to.
-        $pathToWsdl = __DIR__.'/../../../vendor/itk-dev/serviceplatformen/resources/person-base-data-extended-service-contract/wsdl/context/PersonBaseDataExtendedService.wsdl';
 
         $certificateLocator = new AzureKeyVaultCertificateLocator(
             $vault,
@@ -63,13 +66,27 @@ class ServiceplatformenServiceFactory
             $azureKeyVaultSecretVersion
         );
 
+        try {
+            $pathToCertificate = $certificateLocator->getAbsolutePathToCertificate();
+        } catch (CertificateLocatorException $e) {
+            throw new CprException($e->getMessage(), $e->getCode());
+        }
+
         $options = [
-            'local_cert' => $certificateLocator->getAbsolutePathToCertificate(),
+            'local_cert' => $pathToCertificate,
             'passphrase' => $certificateLocator->getPassphrase(),
             'location' => $personBaseDataExtendedServiceEndpoint,
         ];
 
-        $soapClient = new \SoapClient($pathToWsdl, $options);
+        if (!realpath($personBaseDataExtendedServiceContract)) {
+            throw new CprException('The path to the service contract is invalid.');
+        }
+
+        try {
+            $soapClient = new \SoapClient($personBaseDataExtendedServiceContract, $options);
+        } catch (\SoapFault $e) {
+            throw new CprException($e->getMessage(), $e->getCode());
+        }
 
         $requestGenerator = new InvocationContextRequestGenerator(
             $serviceplatformenServiceAgreementUuid,
