@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "894931be3ca536ac4283199b168a60fb",
+    "content-hash": "60d80a5fe3aa1d8b8ab8bc070f63bf3d",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1851,16 +1851,16 @@
         },
         {
             "name": "itk-dev/serviceplatformen",
-            "version": "0.0.3",
+            "version": "0.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/itk-dev/serviceplatformen.git",
-                "reference": "344ca988ffce86f7d41cd34c661ec91691b807b4"
+                "reference": "8b4a9568d498401c457c85e3ef4c21ec25806375"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/itk-dev/serviceplatformen/zipball/344ca988ffce86f7d41cd34c661ec91691b807b4",
-                "reference": "344ca988ffce86f7d41cd34c661ec91691b807b4",
+                "url": "https://api.github.com/repos/itk-dev/serviceplatformen/zipball/8b4a9568d498401c457c85e3ef4c21ec25806375",
+                "reference": "8b4a9568d498401c457c85e3ef4c21ec25806375",
                 "shasum": ""
             },
             "require": {
@@ -1881,49 +1881,7 @@
                     "ItkDev\\Serviceplatformen\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "ItkDev\\Serviceplatformen\\Tests\\": "tests/"
-                }
-            },
-            "scripts": {
-                "tests/unit": [
-                    "phpunit --configuration phpunit.xml.dist --testsuite Unit"
-                ],
-                "tests/end-to-end": [
-                    "phpunit --configuration phpunit.xml.dist --testsuite EndToEnd"
-                ],
-                "tests": [
-                    "@tests/unit",
-                    "@tests/end-to-end"
-                ],
-                "check-coding-standards/php-cs-fixer": [
-                    "php-cs-fixer --config=.php_cs.dist fix --dry-run"
-                ],
-                "check-coding-standards/phpcs": [
-                    "phpcs --standard=phpcs.xml.dist"
-                ],
-                "check-coding-standards": [
-                    "@check-coding-standards/php-cs-fixer",
-                    "@check-coding-standards/phpcs"
-                ],
-                "apply-coding-standards/php-cs-fixer": [
-                    "php-cs-fixer --config=.php_cs.dist fix"
-                ],
-                "apply-coding-standards/phpcs": [
-                    "phpcbf --standard=phpcs.xml.dist"
-                ],
-                "apply-coding-standards": [
-                    "@apply-coding-standards/php-cs-fixer",
-                    "@apply-coding-standards/phpcs"
-                ],
-                "static-code-analysis/phan": [
-                    "phan --allow-polyfill-parser"
-                ],
-                "static-code-analysis": [
-                    "@static-code-analysis/phan"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1933,11 +1891,7 @@
                     "email": "lats@aarhus.dk"
                 }
             ],
-            "support": {
-                "source": "https://github.com/itk-dev/serviceplatformen/tree/0.0.3",
-                "issues": "https://github.com/itk-dev/serviceplatformen/issues"
-            },
-            "time": "2020-09-22T12:49:45+00:00"
+            "time": "2020-10-20T11:33:15+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -7571,6 +7525,7 @@
                 "i18n",
                 "text"
             ],
+            "abandoned": true,
             "time": "2018-12-05T18:34:18+00:00"
         },
         {
