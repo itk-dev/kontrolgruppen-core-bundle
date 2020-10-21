@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\CPR;
 
+use ItkDev\Serviceplatformen\Service\Exception\ServiceException;
 use ItkDev\Serviceplatformen\Service\PersonBaseDataExtendedService;
 
 /**
@@ -30,15 +31,15 @@ class ServiceplatformenCprService extends AbstractCprService implements CprServi
     }
 
     /**
-     * Fetches the person data associated with the CPR.
-     *
-     * @param Cpr $cpr
-     *
-     * @return CprServiceResultInterface
+     * {@inheritdoc}
      */
     public function find(Cpr $cpr): CprServiceResultInterface
     {
-        $response = $this->service->personLookup($cpr);
+        try {
+            $response = $this->service->personLookup($cpr);
+        } catch (ServiceException $e) {
+            throw new CprException($e->getMessage(), $e->getCode(), $e);
+        }
 
         return new ServiceplatformenCprServiceResult($response);
     }

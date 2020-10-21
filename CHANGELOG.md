@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.7.2] - 2020-10-01
+### Added
+- [KON-407](https://jira.itkdev.dk/browse/KON-407): Adding CPR service from Serviceplatformen
+
 ### Changed
 - [KON-377](https://jira.itkdev.dk/browse/KON-377): Moving field in form so the edit and new form looks the same
 - [KON-402](https://jira.itkdev.dk/browse/KON-402): Adding column names to dashboard
