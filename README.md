@@ -158,6 +158,46 @@ bin/console kontrolgruppen:report:export admin@example.com \
 	--parameters='startdate=-1 month enddate=now' --debug-parameters
 ```
 
+## CPR service
+
+Make sure to set the following parameters in the .env file:
+
+```ini
+AZURE_TENANT_ID='xyz'
+AZURE_APPLICATION_ID='xyz'
+AZURE_CLIENT_SECRET='xyz'
+AZURE_KEY_VAULT_SECRET='xyz'
+AZURE_KEY_VAULT_SECRET_VERSION='xyz'
+
+SERVICEPLATFORMEN_SERVICE_AGREEMENT_UUID='xyz'
+SERVICEPLATFORMEN_USER_SYSTEM_UUID='xyz'
+SERVICEPLATFORMEN_USER_UUID='xyz'
+
+# The path to the wsdl most be relative to the project where this .env file is located
+PERSON_BASE_DATA_EXTENDED_SERVICE_CONTRACT='path.to.wsdl'
+PERSON_BASE_DATA_EXTENDED_SERVICE_ENDPOINT='https://xyz.com'
+PERSON_BASE_DATA_EXTENDED_SERVICE_UUID='xyz'
+```
+
+And add the following to the parent bundles config/services.yaml:
+
+```yaml
+parameters:
+    ...
+    azure_tenant_id: '%env(AZURE_TENANT_ID)%'
+    azure_application_id: '%env(AZURE_APPLICATION_ID)%'
+    azure_client_secret: '%env(AZURE_CLIENT_SECRET)%'
+    azure_key_vault_name: '%env(AZURE_KEY_VAULT_NAME)%'
+    azure_key_vault_secret: '%env(AZURE_KEY_VAULT_SECRET)%'
+    azure_key_vault_secret_version: '%env(AZURE_KEY_VAULT_SECRET_VERSION)%'
+    serviceplatformen_service_agreement_uuid: '%env(SERVICEPLATFORMEN_SERVICE_AGREEMENT_UUID)%'
+    serviceplatformen_user_system_uuid: '%env(SERVICEPLATFORMEN_USER_SYSTEM_UUID)%'
+    serviceplatformen_user_uuid: '%env(SERVICEPLATFORMEN_USER_UUID)%'
+    person_base_data_extended_service_contract: '%kernel.project_dir%/%env(PERSON_BASE_DATA_EXTENDED_SERVICE_CONTRACT)%'
+    person_base_data_extended_service_endpoint: '%env(PERSON_BASE_DATA_EXTENDED_SERVICE_ENDPOINT)%'
+    person_base_data_extended_service_uuid: '%env(PERSON_BASE_DATA_EXTENDED_SERVICE_UUID)%'
+```
+
 ## Contributing
 
 ### Pull Request Process

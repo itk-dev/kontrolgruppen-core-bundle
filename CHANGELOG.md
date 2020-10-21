@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.2] - 2020-10-01
+### Added
+- [KON-407](https://jira.itkdev.dk/browse/KON-407): Adding CPR service from Serviceplatformen
+
+### Changed
+- [KON-377](https://jira.itkdev.dk/browse/KON-377): Moving field in form so the edit and new form looks the same
+
 ## [1.7.1] - 2020-09-17
 ### Added
 - [KON-375](https://jira.itkdev.dk/browse/KON-375): Search for existing processes on process creation page
