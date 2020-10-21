@@ -84,6 +84,12 @@ client:
         telephone: Telefon
         update: Gem
         has_own_company: Egen virksomhed
+        companies: Virksomheder
+        company:
+            add: Tilføj virksomhed
+            remove: Fjern virksomhed
+            cvr: CVR
+            highlighted: Fremhævet
     show:
         title: Klient
         client_updated: Klient blev opdateret
@@ -94,6 +100,9 @@ client:
         address: Adresse
         car:
             shared_ownership: Fællesejet
+        company:
+            highlighted: Fremhævet
+            cvr: CVR
         cars: Biler
         city: By
         cpr: CPR nummer
@@ -110,6 +119,7 @@ client:
         generel_info: Generel information
         employment: Ansættelsesforhold
         transportation: Transport
+        companies: Virksomheder
 common:
     actions:
         back: Gå tilbage

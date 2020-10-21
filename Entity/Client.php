@@ -114,7 +114,7 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
     private $cars;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Company", mappedBy="client", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Company", mappedBy="client", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $companies;
 
