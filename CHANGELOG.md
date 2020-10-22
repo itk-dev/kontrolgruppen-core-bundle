@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.4] - 2020-10-22
+### Changed
+- [KON-414](https://jira.itkdev.dk/browse/KON-414): Added errors where appropriate.
+
 ## [1.7.3] - 2020-10-22
 ### Changed
 - Disabled Serviceplatformen CPR service. Enabled internal CPR service.
