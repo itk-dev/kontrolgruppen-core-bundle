@@ -39,7 +39,6 @@ services:
             $class: ~
 
     Kontrolgruppen\CoreBundle\CPR\CprServiceInterface:
-        #class: 'Kontrolgruppen\CoreBundle\CPR\ServiceplatformenCprService'
         class: 'Kontrolgruppen\CoreBundle\CPR\FaellesSQLCprService'
 
     Kontrolgruppen\CoreBundle\Service\LockService:
@@ -50,20 +49,3 @@ services:
             $loggableListener: '@stof_doctrine_extensions.listener.loggable'
             $authorizationChecker: '@?security.authorization_checker'
             $tokenStorage: '@?security.token_storage'
-
-#    ItkDev\Serviceplatformen\Service\PersonBaseDataExtendedService:
-#        factory: ['Kontrolgruppen\CoreBundle\CPR\ServiceplatformenServiceFactory', createPersonBaseDataExtendedService]
-#        arguments: [
-#                '%azure_tenant_id%',
-#                '%azure_application_id%',
-#                '%azure_client_secret%',
-#                '%azure_key_vault_name%',
-#                '%azure_key_vault_secret%',
-#                '%azure_key_vault_secret_version%',
-#                '%serviceplatformen_service_agreement_uuid%',
-#                '%serviceplatformen_user_system_uuid%',
-#                '%serviceplatformen_user_uuid%',
-#                '%person_base_data_extended_service_contract%',
-#                '%person_base_data_extended_service_endpoint%',
-#                '%person_base_data_extended_service_uuid%'
-#        ]
