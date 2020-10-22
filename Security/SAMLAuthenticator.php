@@ -111,7 +111,7 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         }
 
         if (!$auth->isAuthenticated()) {
-            throw new AuthenticationException('Not authenticated');
+            throw new Error('Not authenticated');
         }
 
         if (!$userProvider instanceof SAMLUserProvider) {
@@ -141,8 +141,7 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
             }
         }
 
-        // Fallback.
-        return $auth->getNameId();
+        throw new Error('Cannot get username');
     }
 
     /**
@@ -299,6 +298,10 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         // Flatten the roles and make unique.
         if (!empty($roles)) {
             $roles = array_values(array_unique(array_merge(...$roles)));
+        }
+
+        if (empty($roles)) {
+            throw new Error('Cannot get user roles');
         }
 
         return $roles;
