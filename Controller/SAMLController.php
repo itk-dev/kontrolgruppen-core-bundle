@@ -15,7 +15,9 @@ use OneLogin\Saml2\Error;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Class SAMLController.
@@ -60,6 +62,22 @@ class SAMLController extends AbstractController
     public function acs(Request $request)
     {
         throw new \RuntimeException(sprintf('The route %s should be handled by %s', $request->getPathInfo(), SAMLAuthenticator::class));
+    }
+
+    /**
+     * @Route("/failure", name="saml_failure")
+     *
+     * @param Request          $request
+     * @param SessionInterface $session
+     *
+     * @return Response
+     */
+    public function failure(Request $request, SessionInterface $session)
+    {
+        return $this->render('saml/failure.html.twig', [
+            'access_denied_error' => $session->get(Security::ACCESS_DENIED_ERROR),
+            'authentication_error' => $session->get(Security::AUTHENTICATION_ERROR),
+        ]);
     }
 
     /**
