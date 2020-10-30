@@ -103,6 +103,14 @@ class ClientType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
             ])
+            ->add('companies', CollectionType::class, [
+                'entry_type' => CompanyType::class,
+                'entry_options' => ['label' => false],
+                'label' => 'client.form.companies',
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+            ])
         ;
     }
 
