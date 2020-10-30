@@ -148,5 +148,4 @@ $(function () {
             preventDoubleSubmissionForm.data('submitted', true);
         }
     });
-
 });
