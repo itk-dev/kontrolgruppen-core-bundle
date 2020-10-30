@@ -444,6 +444,11 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
         return $this->companies;
     }
 
+    /**
+     * @param Company $company
+     *
+     * @return $this
+     */
     public function addCompany(Company $company): self
     {
         if (!$this->companies->contains($company)) {
@@ -454,6 +459,11 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
         return $this;
     }
 
+    /**
+     * @param Company $company
+     *
+     * @return $this
+     */
     public function removeCompany(Company $company): self
     {
         if ($this->companies->contains($company)) {
