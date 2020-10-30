@@ -17,6 +17,7 @@ use OneLogin\Saml2\Response;
 use OneLogin\Saml2\Settings;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -33,18 +34,23 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
     /** @var \Symfony\Component\Routing\RouterInterface */
     private $router;
 
+    /** @var SessionInterface */
+    private $session;
+
     /** @var array */
     private $settings;
 
     /**
      * SAMLAuthenticator constructor.
      *
-     * @param RouterInterface $router
-     * @param array           $settings
+     * @param RouterInterface  $router
+     * @param SessionInterface $session
+     * @param array            $settings
      */
-    public function __construct(RouterInterface $router, array $settings)
+    public function __construct(RouterInterface $router, SessionInterface $session, array $settings)
     {
         $this->router = $router;
+        $this->session = $session;
         $this->settings = $settings;
     }
 
@@ -68,7 +74,7 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
      */
     public function supports(Request $request)
     {
-        return '/saml/acs' === $request->getPathInfo()
+        return $this->router->generate('saml_acs') === $request->getPathInfo()
             && !empty($request->get('SAMLResponse'));
     }
 
@@ -107,7 +113,7 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         $errors = $auth->getErrors();
 
         if (!empty($errors)) {
-            throw new Error(implode(PHP_EOL, $errors));
+            throw new AuthenticationException(implode(PHP_EOL, $errors));
         }
 
         if (!$auth->isAuthenticated()) {
@@ -122,49 +128,6 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         $displayName = $this->getDisplayName($auth);
 
         return $userProvider->getUser($username, $displayName, $credentials);
-    }
-
-    /**
-     * @param Auth $auth
-     *
-     * @return mixed|string
-     */
-    private function getUsername(Auth $auth)
-    {
-        if (isset($this->settings['username_attribute_name'])) {
-            $attribute = $auth->getAttribute($this->settings['username_attribute_name']);
-            if (!empty($attribute)) {
-                $username = reset($attribute);
-                if (!empty($username)) {
-                    return $username;
-                }
-            }
-        }
-
-        // Fallback.
-        return $auth->getNameId();
-    }
-
-    /**
-     * Returns the name of the user for displaying purposes.
-     *
-     * @param Auth $auth
-     *
-     * @return string
-     */
-    private function getDisplayName(Auth $auth): string
-    {
-        if (isset($this->settings['display_name_attribute_name'])) {
-            $attribute = $auth->getAttribute($this->settings['display_name_attribute_name']);
-            if (!empty($attribute)) {
-                $displayName = reset($attribute);
-                if (!empty($displayName)) {
-                    return $displayName;
-                }
-            }
-        }
-
-        return '';
     }
 
     /**
@@ -186,9 +149,11 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        $request->attributes->set(Security::AUTHENTICATION_ERROR, $exception);
+        // Pass on the exception.
+        $this->session->set(Security::AUTHENTICATION_ERROR, $exception);
+        $url = $this->router->generate('saml_failure');
 
-        return new RedirectResponse('/');
+        return new RedirectResponse($url);
     }
 
     /**
@@ -301,7 +266,53 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
             $roles = array_values(array_unique(array_merge(...$roles)));
         }
 
+        if (empty($roles)) {
+            throw new AuthenticationException('Cannot get user roles');
+        }
+
         return $roles;
+    }
+
+    /**
+     * @param Auth $auth
+     *
+     * @return mixed|string
+     */
+    private function getUsername(Auth $auth)
+    {
+        if (isset($this->settings['username_attribute_name'])) {
+            $attribute = $auth->getAttribute($this->settings['username_attribute_name']);
+            if (!empty($attribute)) {
+                $username = reset($attribute);
+                if (!empty($username)) {
+                    return $username;
+                }
+            }
+        }
+
+        throw new AuthenticationException('Cannot get username');
+    }
+
+    /**
+     * Returns the name of the user for displaying purposes.
+     *
+     * @param Auth $auth
+     *
+     * @return string
+     */
+    private function getDisplayName(Auth $auth): string
+    {
+        if (isset($this->settings['display_name_attribute_name'])) {
+            $attribute = $auth->getAttribute($this->settings['display_name_attribute_name']);
+            if (!empty($attribute)) {
+                $displayName = reset($attribute);
+                if (!empty($displayName)) {
+                    return $displayName;
+                }
+            }
+        }
+
+        return '';
     }
 
     /**

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'SAML failure'|trans %}
+
+{% block body %}
+    <div class="container-fluid main-container">
+        <h1>{{ block('title') }}</h1>
+
+        {% if access_denied_error|default(false) %}
+            <div class="alert alert-danger access-denied-error">
+                <h2>{{ 'Access denied'|trans }}</h2>
+
+                <div class="error-message">{{ access_denied_error.message }}</div>
+            </div>
+        {% endif %}
+
+        {% if authentication_error|default(false) %}
+            <div class="alert alert-danger authentication-error">
+                <h2>{{ 'Authentication error'|trans }}</h2>
+
+                <div class="error-message">{{ authentication_error.message }}</div>
+            </div>
+        {% endif %}
+
+        <a class="btn btn-primary" href="{{ path('saml_login') }}">{{ 'Try signing in again'|trans }}</a>
+    </div>
+{% endblock %}
