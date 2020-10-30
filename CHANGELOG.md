@@ -22,6 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [KON-377](https://jira.itkdev.dk/browse/KON-377): Moving field in form so the edit and new form looks the same
 - [KON-402](https://jira.itkdev.dk/browse/KON-402): Adding column names to dashboard
 
+### Fixed
+- [KON-391](https://jira.itkdev.dk/browse/KON-391): Journal entries sorted by update date instead of create date
+
 ## [1.7.1] - 2020-09-17
 ### Added
 - [KON-375](https://jira.itkdev.dk/browse/KON-375): Search for existing processes on process creation page
