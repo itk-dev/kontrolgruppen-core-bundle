@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.5] - 2020-10-30
+### Changed
+- [KON-393](https://jira.itkdev.dk/browse/KON-393): Preventing double submission on economy form
+
+### Fixed
+- [KON-391](https://jira.itkdev.dk/browse/KON-391): Journal entries sorted by update date instead of create date
+
 ## [1.7.4] - 2020-10-29
 ### Changed
 - [KON-414](https://jira.itkdev.dk/browse/KON-414): Added errors where appropriate.
@@ -20,11 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - [KON-377](https://jira.itkdev.dk/browse/KON-377): Moving field in form so the edit and new form looks the same
-- [KON-393](https://jira.itkdev.dk/browse/KON-393): Preventing double submission on economy form
 - [KON-402](https://jira.itkdev.dk/browse/KON-402): Adding column names to dashboard
-
-### Fixed
-- [KON-391](https://jira.itkdev.dk/browse/KON-391): Journal entries sorted by update date instead of create date
 
 ## [1.7.1] - 2020-09-17
 ### Added
