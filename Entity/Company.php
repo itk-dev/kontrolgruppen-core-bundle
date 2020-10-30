@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -34,8 +42,6 @@ class Company
 
     /**
      * Get Id.
-     *
-     * @return int|null
      */
     public function getId(): ?int
     {
@@ -44,8 +50,6 @@ class Company
 
     /**
      * Get CVR.
-     *
-     * @return string|null
      */
     public function getCVR(): ?string
     {
@@ -54,8 +58,6 @@ class Company
 
     /**
      * Set CVR.
-     *
-     * @param string $cvr
      *
      * @return $this
      */
@@ -68,8 +70,6 @@ class Company
 
     /**
      * Get Client.
-     *
-     * @return Client|null
      */
     public function getClient(): ?Client
     {
@@ -78,8 +78,6 @@ class Company
 
     /**
      * Set Client.
-     *
-     * @param Client|null $client
      *
      * @return $this
      */
@@ -92,8 +90,6 @@ class Company
 
     /**
      * Is highlighted.
-     *
-     * @return bool|null
      */
     public function isHighlighted(): ?bool
     {
@@ -102,8 +98,6 @@ class Company
 
     /**
      * Set highlighted.
-     *
-     * @param bool $highlighted
      *
      * @return $this
      */

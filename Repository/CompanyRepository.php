@@ -1,11 +1,18 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Repository;
 
-use Kontrolgruppen\CoreBundle\Entity\Company;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\Company;
 
 /**
  * @method Company|null find($id, $lockMode = null, $lockVersion = null)
@@ -16,7 +23,7 @@ use Kontrolgruppen\CoreBundle\Entity\Process;
 class CompanyRepository extends ServiceEntityRepository
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(ManagerRegistry $registry)
     {
