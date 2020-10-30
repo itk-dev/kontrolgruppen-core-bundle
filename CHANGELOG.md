@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [1.7.5] - 2020-10-30
+### Added
+- [KON-299](https://jira.itkdev.dk/browse/KON-299): Adding companies to clients
+
 ### Changed
 - [KON-393](https://jira.itkdev.dk/browse/KON-393): Preventing double submission on economy form
 
