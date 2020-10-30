@@ -40,16 +40,18 @@ class Company
      */
     private $highlighted;
 
+
     /**
-     * Get Id.
+     * @return int|null
      */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+
     /**
-     * Get CVR.
+     * @return string|null
      */
     public function getCVR(): ?string
     {
@@ -57,7 +59,7 @@ class Company
     }
 
     /**
-     * Set CVR.
+     * @param string $cvr
      *
      * @return $this
      */
@@ -68,8 +70,9 @@ class Company
         return $this;
     }
 
+
     /**
-     * Get Client.
+     * @return Client|null
      */
     public function getClient(): ?Client
     {
@@ -77,7 +80,7 @@ class Company
     }
 
     /**
-     * Set Client.
+     * @param Client|null $client
      *
      * @return $this
      */
@@ -89,7 +92,7 @@ class Company
     }
 
     /**
-     * Is highlighted.
+     * @return bool|null
      */
     public function isHighlighted(): ?bool
     {
@@ -97,7 +100,7 @@ class Company
     }
 
     /**
-     * Set highlighted.
+     * @param bool $highlighted
      *
      * @return $this
      */
