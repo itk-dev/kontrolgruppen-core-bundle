@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - [KON-377](https://jira.itkdev.dk/browse/KON-377): Moving field in form so the edit and new form looks the same
+- [KON-393](https://jira.itkdev.dk/browse/KON-393): Preventing double submission on economy form
 - [KON-402](https://jira.itkdev.dk/browse/KON-402): Adding column names to dashboard
 
 ### Fixed
