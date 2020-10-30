@@ -40,7 +40,6 @@ class Company
      */
     private $highlighted;
 
-
     /**
      * @return int|null
      */
@@ -48,7 +47,6 @@ class Company
     {
         return $this->id;
     }
-
 
     /**
      * @return string|null
@@ -69,7 +67,6 @@ class Company
 
         return $this;
     }
-
 
     /**
      * @return Client|null
