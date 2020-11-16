@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.5] - 2020-11-16
+### Changed
+- [KON-407](https://jira.itkdev.dk/browse/KON-407): Re-enabling CPR service from Serviceplatformen
+- Using composer version 1 in github actions.
+
 ## [1.7.4] - 2020-10-29
 ### Changed
 - [KON-414](https://jira.itkdev.dk/browse/KON-414): Added errors where appropriate.
