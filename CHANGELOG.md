@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.7.5] - 2020-10-30
+## [1.8.0] - 2020-10-30
 ### Added
 - [KON-299](https://jira.itkdev.dk/browse/KON-299): Adding companies to clients
 
@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - [KON-391](https://jira.itkdev.dk/browse/KON-391): Journal entries sorted by update date instead of create date
+
+## [1.7.5] - 2020-11-16
+### Changed
+- [KON-407](https://jira.itkdev.dk/browse/KON-407): Re-enabling CPR service from Serviceplatformen
+- Using composer version 1 in github actions.
 
 ## [1.7.4] - 2020-10-29
 ### Changed
