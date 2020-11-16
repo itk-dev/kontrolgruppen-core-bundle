@@ -12,6 +12,7 @@ jobs:
                     php-version: 7.3
                     extension-csv: ctype, iconv, json
                     coverage: none
+                    tools: composer:v1
             -   name: Validate composer files
                 run: |
                     composer validate composer.json
@@ -27,6 +28,7 @@ jobs:
                   php-version: 7.3
                   extension-csv: ctype, iconv, json
                   coverage: none
+                  tools: composer:v1
             - name: Install Reviewdog
               run: |
                   wget -O - -q https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b $PWD/ v0.9.14
@@ -50,6 +52,7 @@ jobs:
                   php-version: 7.3
                   extension-csv: ctype, iconv, json
                   coverage: none
+                  tools: composer:v1
             - name: Install Dependencies
               run: |
                   composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
@@ -68,6 +71,7 @@ jobs:
                   php-version: 7.3
                   extension-csv: ctype, iconv, json
                   coverage: none
+                  tools: composer:v1
             - name: Install Dependencies
               run: |
                   composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
