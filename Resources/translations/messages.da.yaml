@@ -396,6 +396,7 @@ journal_entry:
     headline_list:
         show_more: Vis mere
         show_less: Vis mindre
+    updated: Opdateret
 
 journal_quickview:
     title: Seneste indlæg i journal
