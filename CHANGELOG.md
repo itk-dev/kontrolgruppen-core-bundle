@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.8.0] - 2020-10-30
+## [1.8.0] - 2020-11-19
 ### Added
 - [KON-299](https://jira.itkdev.dk/browse/KON-299): Adding companies to clients
 
