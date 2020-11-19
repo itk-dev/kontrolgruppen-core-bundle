@@ -60,11 +60,11 @@ class LogManager
 
         // Sort the results.
         usort($result, function ($a, $b) use ($sortDirection) {
-            if ($a['updatedAt'] > $b['updatedAt']) {
+            if ($a['createdAt'] > $b['createdAt']) {
                 return 'desc' === $sortDirection ? -1 : 1;
             }
 
-            if ($a['updatedAt'] < $b['updatedAt']) {
+            if ($a['createdAt'] < $b['createdAt']) {
                 return 'desc' !== $sortDirection ? -1 : 1;
             }
 
@@ -97,11 +97,11 @@ class LogManager
 
         // Sort the results.
         usort($result, function ($a, $b) use ($sortDirection) {
-            if ($a['updatedAt'] > $b['updatedAt']) {
+            if ($a['createdAt'] > $b['createdAt']) {
                 return 'desc' === $sortDirection ? -1 : 1;
             }
 
-            if ($a['updatedAt'] < $b['updatedAt']) {
+            if ($a['createdAt'] < $b['createdAt']) {
                 return 'desc' !== $sortDirection ? -1 : 1;
             }
 

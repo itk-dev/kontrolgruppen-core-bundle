@@ -124,7 +124,7 @@ class JournalEntryController extends BaseController
             $qb->andWhere('e.process = :process');
             $qb->setParameter('process', $process);
 
-            $qb->orderBy('e.updatedAt', $sortDirection);
+            $qb->orderBy('e.createdAt', $sortDirection);
 
             $result = $qb->getQuery()->getArrayResult();
 
