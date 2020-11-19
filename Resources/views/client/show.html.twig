@@ -98,6 +98,19 @@
             </ul>
         </div>
     </div>
+    <h2>{{ 'client.sections.companies'|trans }}</h2>
+    <div class="row mb-3">
+        <div class="col-12 col-sm-6">
+            <ul class="list-group">
+                {% for company in client.companies %}
+                    <li class="list-group-item">
+                        <div>{{ 'client.table.company.cvr'|trans }}: {{ company.cvr }}</div>
+                        <div>{{ 'client.table.company.highlighted'|trans }}: {{ company.highlighted|yes_no }}</div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 
     {% if canEdit %}
         <a href="{{ path('client_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
