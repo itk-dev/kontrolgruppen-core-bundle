@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,7 +22,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ClientUpdateCommand
+ * Class ClientUpdateCommand.
  */
 class ClientUpdateCommand extends Command
 {
