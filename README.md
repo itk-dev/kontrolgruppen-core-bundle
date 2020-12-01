@@ -213,6 +213,14 @@ bin/console kontrolgruppen:client:update --dry-run
 bin/console kontrolgruppen:client:update -vvv
 ```
 
+#### Automatically update the client addresses
+With cron you could for example run the console command every night at 02:00.
+Add this to your crontab:
+
+```cron
+0 2 * * * /usr/bin/env php path/to/kontrolgruppen/bin/console kontrolgruppen:client:update
+```
+
 ## Contributing
 
 ### Pull Request Process
