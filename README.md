@@ -198,7 +198,7 @@ parameters:
     person_base_data_extended_service_uuid: '%env(PERSON_BASE_DATA_EXTENDED_SERVICE_UUID)%'
 ```
 
-### Updating addresses on clients from the command lind
+### Updating addresses on clients from the command line
 There is a console command available for updating client addresses based on
 information from the CPR service:
 
