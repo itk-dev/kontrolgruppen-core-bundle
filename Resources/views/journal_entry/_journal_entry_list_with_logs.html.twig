@@ -11,7 +11,11 @@
                         {% elseif entry.logEntry.data.primaryProcess is defined %}
                         <span class="mr-4 small text-muted">{{ 'journal_entry.process_group_changed'|trans }}</span>
                         {% endif %}
-                        <span class="mr-4 small text-muted">{{ entry.createdAt|simple_date('long') }}</span>
+                        <span class="mr-4 small text-muted">{{ entry.createdAt|simple_date('long') }}
+                            {% if entry.updatedAt != entry.createdAt %}
+                            ({{ 'journal_entry.updated'|trans }} {{ entry.updatedAt|simple_date('long') }})
+                            {% endif %}
+                        </span>
                         <span class="small text-muted">{{ entry.createdBy }}</span>
                     </div>
                     <div class="row">
@@ -26,7 +30,11 @@
             {% else %}
             <div class="row bg-light">
                 <div class="col-sm-3 pt-2">
-                    <span class="text-muted d-block small">{{ entry.createdAt|simple_date('short') }}</span>
+                    <span class="text-muted d-block small">{{ entry.createdAt|simple_date('short') }}
+                    {% if entry.updatedAt != entry.createdAt %}
+                        ({{ 'journal_entry.updated'|trans }} {{ entry.updatedAt|simple_date('short') }})
+                    {% endif %}
+                    </span>
                 </div>
                 <div class="col-sm-6 pt-2">
                     <p class="mb-0"><strong><a

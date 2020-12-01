@@ -137,4 +137,15 @@ $(function () {
             return 'You have unsaved changes which will not be saved.'; // This will not be shown, but Chrome requires a return value.
         }
     });
+
+    // Prevent double submission on forms with the prevent-double-submission class
+    let preventDoubleSubmissionForm = $('.prevent-double-submission');
+
+    preventDoubleSubmissionForm.on('submit', function (e) {
+        if (preventDoubleSubmissionForm.data('submitted')) {
+            e.preventDefault();
+        } else {
+            preventDoubleSubmissionForm.data('submitted', true);
+        }
+    });
 });

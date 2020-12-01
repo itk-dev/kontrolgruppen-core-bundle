@@ -9,7 +9,7 @@
         "beberlei/doctrineextensions": "^1.2",
         "fresh/doctrine-enum-bundle": "^6.3",
         "friendsofsymfony/ckeditor-bundle": "^2.0",
-        "itk-dev/serviceplatformen": "^0.0.3",
+        "itk-dev/serviceplatformen": "^0.0.4",
         "knplabs/knp-paginator-bundle": "^3.0",
         "lexik/form-filter-bundle": "^5.0",
         "mpdf/mpdf": "^8.0.2",

@@ -114,11 +114,17 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
     private $cars;
 
     /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Company", mappedBy="client", orphanRemoval=true, cascade={"persist", "remove"})
+     */
+    private $companies;
+
+    /**
      * Client constructor.
      */
     public function __construct()
     {
         $this->cars = new ArrayCollection();
+        $this->companies = new ArrayCollection();
     }
 
     /**
@@ -424,6 +430,47 @@ class Client extends AbstractEntity implements ProcessLoggableInterface
             // set the owning side to null (unless already changed)
             if ($car->getClient() === $this) {
                 $car->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Company[]
+     */
+    public function getCompanies(): Collection
+    {
+        return $this->companies;
+    }
+
+    /**
+     * @param Company $company
+     *
+     * @return $this
+     */
+    public function addCompany(Company $company): self
+    {
+        if (!$this->companies->contains($company)) {
+            $this->companies[] = $company;
+            $company->setClient($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Company $company
+     *
+     * @return $this
+     */
+    public function removeCompany(Company $company): self
+    {
+        if ($this->companies->contains($company)) {
+            $this->companies->removeElement($company);
+            // set the owning side to null (unless already changed)
+            if ($company->getClient() === $this) {
+                $company->setClient(null);
             }
         }
 
