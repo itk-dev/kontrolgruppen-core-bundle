@@ -198,6 +198,29 @@ parameters:
     person_base_data_extended_service_uuid: '%env(PERSON_BASE_DATA_EXTENDED_SERVICE_UUID)%'
 ```
 
+### Updating addresses on clients from the command line
+There is a console command available for updating client addresses based on
+information from the CPR service:
+
+```bash
+bin/console kontrolgruppen:client:update
+
+# To perform a dry-run (without updating the client) append the --dry-run flag
+bin/console kontrolgruppen:client:update --dry-run
+
+# Show info about how many clients and which clients that are updated:
+# This can be used with the --dry-run flag as well.
+bin/console kontrolgruppen:client:update -vvv
+```
+
+#### Automatically update the client addresses
+With cron you could for example run the console command every night at 02:00.
+Add this to your crontab:
+
+```cron
+0 2 * * * /usr/bin/env php path/to/kontrolgruppen/bin/console kontrolgruppen:client:update
+```
+
 ## Contributing
 
 ### Pull Request Process
