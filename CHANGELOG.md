@@ -4,9 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.9.0] - 2020-12-18
 ### Added
 - [KON-412](https://jira.itkdev.dk/browse/KON-299): Cli command for updating addresses on clients.
+- [KON-394](https://jira.itkdev.dk/browse/KON-394): Adding draft functionality for conclusions.
 
 ## [1.8.0] - 2020-11-19
 ### Added
