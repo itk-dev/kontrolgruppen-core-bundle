@@ -83,8 +83,8 @@ class HitRateExport extends AbstractExport
 
             $this->writeRow([
                 $key,
-                $this->formatNumber($value['processes']),
-                $this->formatNumber($value['won']),
+                $this->formatNumber($value['processes'], 0),
+                $this->formatNumber($value['won'], 0),
                 $this->formatNumber($value['hitRate'] * 100).' %',
             ]);
         }
