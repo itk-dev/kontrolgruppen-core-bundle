@@ -13,6 +13,7 @@ namespace Kontrolgruppen\CoreBundle\Export\Reports;
 use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
+use Kontrolgruppen\CoreBundle\Service\EconomyService;
 
 /**
  * Class HitRateExport.
@@ -24,17 +25,22 @@ class HitRateExport extends AbstractExport
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
+    /** @var \Kontrolgruppen\CoreBundle\Service\EconomyService */
+    private $economyService;
+
     /**
      * HitRateExport constructor.
      *
      * @param EntityManagerInterface $entityManager
+     * @param EconomyService         $economyService
      *
      * @throws \Exception
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService)
     {
         parent::__construct();
         $this->entityManager = $entityManager;
+        $this->economyService = $economyService;
     }
 
     /**
@@ -74,7 +80,7 @@ class HitRateExport extends AbstractExport
                 }
 
                 ++$hitRate[$channelName]['processes'];
-                $hitRate[$channelName]['won'] += $process->getCourtDecision() ? 1 : 0;
+                $hitRate[$channelName]['won'] += $this->isProcessWon($process) ? 1 : 0;
             }
         }
 
@@ -109,5 +115,19 @@ class HitRateExport extends AbstractExport
             ->setParameter('enddate', $endDate);
 
         return $queryBuilder->getQuery()->execute();
+    }
+
+    /**
+     * Decide if a process is won.
+     *
+     * @param Process $process
+     *
+     * @return bool
+     */
+    private function isProcessWon(Process $process)
+    {
+        $processRevenue = $this->economyService->calculateRevenue($process);
+
+        return ($processRevenue['collectiveSum'] ?? 0) > 0;
     }
 }
