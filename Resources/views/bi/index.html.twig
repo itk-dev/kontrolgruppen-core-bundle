@@ -20,7 +20,16 @@
                         <td>{{ export.createdAt|localizeddate }}</td>
                         <td>{{ export.report.title|default('–') }}</td>
                         <td>
-                            <a href="{{ path('bi_download', {export: export.id}) }}" class="btn btn-primary btn-sm">{{ 'bi.download_export'|trans }}</a>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ 'bi.download_export'|trans }}
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a href="{{ path('bi_download', {export: export.id, _format: 'csv'}) }}" class="dropdown-item">{{ 'bi.download_export_csv'|trans }}</a>
+                                    <a href="{{ path('bi_download', {export: export.id, _format: 'xlsx'}) }}" class="dropdown-item">{{ 'bi.download_export_xlsx'|trans }}</a>
+                                </div>
+                            </div>
+
                             {% if delete_form|default(false) %}
                                 {# @TODO: Fix this styling hack! #}
                                 <div style="display: inline-block">
