@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Fixed
+- [SUPP0RT-62](https://jira.itkdev.dk/browse/SUPP0RT-62): Fixed check for when a case is considered as won.
 - [DEVSUPP-384](https://jira.itkdev.dk/browse/DEVSUPP-384): Preventing double submissions on the new reminder form.
 
 ## [1.9.0] - 2021-01-04
