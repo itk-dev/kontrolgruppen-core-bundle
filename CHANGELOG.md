@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.10.0] - 2021-02-08
+## [1.10.0] - 2021-02-15
 ### Added
 - [KON-388-](https://jira.itkdev.dk/browse/KON-388): Added format to BI exports.
 ### Fixed
