@@ -150,12 +150,14 @@ class ExportController extends BaseController
                     $d->loadHTML($output);
                     $body = $d->getElementsByTagName('body')->item(0);
                     foreach ($body->childNodes as $child) {
-                        if ('style' === $child->tagName) {
-                            continue;
-                        }
+                        if (XML_ELEMENT_NODE === $child->nodeType) {
+                            if ('style' === $child->tagName ?? null) {
+                                continue;
+                            }
 
-                        if ('table' === $child->tagName) {
-                            $child->setAttribute('class', 'table table-responsive');
+                            if ('table' === $child->tagName ?? null) {
+                                $child->setAttribute('class', 'table table-responsive');
+                            }
                         }
 
                         $mock->appendChild($mock->importNode($child, true));

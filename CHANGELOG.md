@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [1.10.0] - 2021-02-15
+### Added
+- [KON-388-](https://jira.itkdev.dk/browse/KON-388): Added format to BI exports.
+### Fixed
+- [SUPP0RT-62](https://jira.itkdev.dk/browse/SUPP0RT-62): Fixed check for when a case is considered as won.
+- [DEVSUPP-384](https://jira.itkdev.dk/browse/DEVSUPP-384): Preventing double submissions on the new reminder form.
+- [SUPPORT-93](https://jira.itkdev.dk/browse/SUPP0RT-93): Preventing multiple form submissions when creating new processes.
+
 ## [1.9.0] - 2021-01-04
 ### Added
 - [KON-412](https://jira.itkdev.dk/browse/KON-299): Cli command for updating addresses on clients.
