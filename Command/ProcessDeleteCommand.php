@@ -21,7 +21,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * Class ProcessDeleteCommand
+ * Class ProcessDeleteCommand.
  */
 class ProcessDeleteCommand extends Command
 {
