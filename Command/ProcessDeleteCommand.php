@@ -3,7 +3,7 @@
 /*
  * This file is part of aakb/kontrolgruppen-core-bundle.
  *
- * (c) 2021 ITK Development
+ * (c) 2019 ITK Development
  *
  * This source file is subject to the MIT license.
  */
