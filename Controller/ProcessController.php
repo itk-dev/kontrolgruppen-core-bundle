@@ -349,6 +349,7 @@ class ProcessController extends BaseController
      * @param \Kontrolgruppen\CoreBundle\Entity\Process                     $process
      * @param \Kontrolgruppen\CoreBundle\Repository\ServiceRepository       $serviceRepository
      * @param \Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository $processStatusRepository
+     * @param \Kontrolgruppen\CoreBundle\Service\EconomyService             $economyService
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *

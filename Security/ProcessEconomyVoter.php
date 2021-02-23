@@ -9,6 +9,9 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Class ProcessEconomyVoter.
+ */
 class ProcessEconomyVoter extends Voter
 {
     // these strings are just invented: you can use anything
@@ -26,6 +29,9 @@ class ProcessEconomyVoter extends Voter
         $this->security = $security;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
@@ -44,6 +50,9 @@ class ProcessEconomyVoter extends Voter
         return null !== $subject->getLastNetCollectiveSum();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
         $user = $token->getUser();

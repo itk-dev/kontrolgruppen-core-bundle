@@ -869,11 +869,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getLastCompletedAt(): ?\DateTimeInterface
     {
         return $this->lastCompletedAt;
     }
 
+    /**
+     * @param \DateTimeInterface|null $lastCompletedAt
+     *
+     * @return $this
+     */
     public function setLastCompletedAt(?\DateTimeInterface $lastCompletedAt): self
     {
         $this->lastCompletedAt = $lastCompletedAt;
@@ -881,11 +889,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getLastReopened(): ?\DateTimeInterface
     {
         return $this->lastReopened;
     }
 
+    /**
+     * @param \DateTimeInterface|null $lastReopened
+     *
+     * @return $this
+     */
     public function setLastReopened(?\DateTimeInterface $lastReopened): self
     {
         $this->lastReopened = $lastReopened;
@@ -893,11 +909,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getLastNetCollectiveSum(): ?float
     {
         return $this->lastNetCollectiveSum;
     }
 
+    /**
+     * @param float|null $lastNetCollectiveSum
+     *
+     * @return $this
+     */
     public function setLastNetCollectiveSum(?float $lastNetCollectiveSum): self
     {
         $this->lastNetCollectiveSum = $lastNetCollectiveSum;
@@ -905,11 +929,19 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return float|null
+     */
     public function getNetCollectiveSumDifference(): ?float
     {
         return $this->netCollectiveSumDifference;
     }
 
+    /**
+     * @param float|null $netCollectiveSumDifference
+     *
+     * @return $this
+     */
     public function setNetCollectiveSumDifference(?float $netCollectiveSumDifference): self
     {
         $this->netCollectiveSumDifference = $netCollectiveSumDifference;
