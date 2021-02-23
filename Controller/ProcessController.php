@@ -385,7 +385,10 @@ class ProcessController extends BaseController
                 $em->persist($lockedNetValue);
             }
 
-            $process->setCompletedAt(new \DateTime());
+            $completedAt = new \DateTime();
+
+            $process->setCompletedAt($completedAt);
+            $process->setLastCompletedAt($completedAt);
             $em = $this->getDoctrine()->getManager();
             $em->persist($process);
             $em->flush();
@@ -425,6 +428,7 @@ class ProcessController extends BaseController
 
         $process->setCompletedAt(null);
         $process->setLockedNetValue(null);
+        $process->setLastReopened(new \DateTime());
         $em = $this->getDoctrine()->getManager();
         $em->persist($process);
         $em->flush();

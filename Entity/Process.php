@@ -171,6 +171,16 @@ class Process extends AbstractEntity
     private $processGroups;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastCompletedAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastReopened;
+
+    /**
      * Process constructor.
      */
     public function __construct()
@@ -845,6 +855,30 @@ class Process extends AbstractEntity
             $this->processGroups->removeElement($processGroup);
             $processGroup->removeProcess($this);
         }
+
+        return $this;
+    }
+
+    public function getLastCompletedAt(): ?\DateTimeInterface
+    {
+        return $this->lastCompletedAt;
+    }
+
+    public function setLastCompletedAt(?\DateTimeInterface $lastCompletedAt): self
+    {
+        $this->lastCompletedAt = $lastCompletedAt;
+
+        return $this;
+    }
+
+    public function getLastReopened(): ?\DateTimeInterface
+    {
+        return $this->lastReopened;
+    }
+
+    public function setLastReopened(?\DateTimeInterface $lastReopened): self
+    {
+        $this->lastReopened = $lastReopened;
 
         return $this;
     }
