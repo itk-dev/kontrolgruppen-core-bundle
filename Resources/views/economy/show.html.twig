@@ -17,6 +17,11 @@
                 </span>
             {% endif %}
         </div>
+        {% if showOnlyAdminCanEditWarning %}
+            <div class="alert alert-danger col-12">
+                {{ 'economy.only_admin_can_edit_warning'|trans }}
+            </div>
+        {% endif %}
     </div>
     <div class="row">
         <div class="col-12">

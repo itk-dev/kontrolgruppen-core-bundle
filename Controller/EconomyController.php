@@ -52,6 +52,8 @@ class EconomyController extends BaseController
         $canEdit = $this->isGranted('edit', $process) && null === $process->getCompletedAt();
         $parameters['canEdit'] = $canEdit;
 
+        $parameters['showOnlyAdminCanEditWarning'] = null !== $process->getLastNetCollectiveSum() && null === $process->getCompletedAt();
+
         // If the user can edit, handle forms.
         if ($canEdit) {
             // Check for result of type form.

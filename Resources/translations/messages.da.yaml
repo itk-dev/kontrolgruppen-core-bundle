@@ -277,6 +277,7 @@ economy:
         save: Gem provenuberegning
         remove: Fjern
         lost_entries: Provenuindgange fra slettede ydelser (inkluderes ikke i provenuberegning!)
+    only_admin_can_edit_warning: Kun administratorer kan ændre økonomi på sager, der allerede har været afsluttet med økonomi
 
 economy_entry:
     edit:
