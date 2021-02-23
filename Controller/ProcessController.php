@@ -23,6 +23,7 @@ use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
+use Kontrolgruppen\CoreBundle\Service\EconomyService;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
@@ -348,13 +349,14 @@ class ProcessController extends BaseController
      * @param \Kontrolgruppen\CoreBundle\Entity\Process                     $process
      * @param \Kontrolgruppen\CoreBundle\Repository\ServiceRepository       $serviceRepository
      * @param \Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository $processStatusRepository
+     * @param \Kontrolgruppen\CoreBundle\Service\EconomyService             $economyService
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function complete(Request $request, Process $process, ServiceRepository $serviceRepository, ProcessStatusRepository $processStatusRepository): Response
+    public function complete(Request $request, Process $process, ServiceRepository $serviceRepository, ProcessStatusRepository $processStatusRepository, EconomyService $economyService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -385,7 +387,21 @@ class ProcessController extends BaseController
                 $em->persist($lockedNetValue);
             }
 
-            $process->setCompletedAt(new \DateTime());
+            $completedAt = new \DateTime();
+
+            $process->setCompletedAt($completedAt);
+            $process->setLastCompletedAt($completedAt);
+
+            $calculatedRevenue = $economyService->calculateRevenue($process);
+            $netCollectiveSum = $calculatedRevenue['netCollectiveSum'] ?: null;
+
+            if (!empty($process->getLastNetCollectiveSum())) {
+                $netCollectiveSumDifference = $netCollectiveSum - $process->getLastNetCollectiveSum();
+                $process->setNetCollectiveSumDifference($netCollectiveSumDifference);
+            }
+
+            $process->setLastNetCollectiveSum($netCollectiveSum);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($process);
             $em->flush();
@@ -425,6 +441,7 @@ class ProcessController extends BaseController
 
         $process->setCompletedAt(null);
         $process->setLockedNetValue(null);
+        $process->setLastReopened(new \DateTime());
         $em = $this->getDoctrine()->getManager();
         $em->persist($process);
         $em->flush();
