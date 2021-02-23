@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen-core-bundle.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Security;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
@@ -7,7 +15,6 @@ use Kontrolgruppen\CoreBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class ProcessEconomyVoter.
@@ -30,7 +37,7 @@ class ProcessEconomyVoter extends Voter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function supports($attribute, $subject)
     {
@@ -51,7 +58,7 @@ class ProcessEconomyVoter extends Voter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
