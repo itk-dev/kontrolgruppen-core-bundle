@@ -181,6 +181,16 @@ class Process extends AbstractEntity
     private $lastReopened;
 
     /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $lastNetCollectiveSum;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $netCollectiveSumDifference;
+
+    /**
      * Process constructor.
      */
     public function __construct()
@@ -879,6 +889,30 @@ class Process extends AbstractEntity
     public function setLastReopened(?\DateTimeInterface $lastReopened): self
     {
         $this->lastReopened = $lastReopened;
+
+        return $this;
+    }
+
+    public function getLastNetCollectiveSum(): ?float
+    {
+        return $this->lastNetCollectiveSum;
+    }
+
+    public function setLastNetCollectiveSum(?float $lastNetCollectiveSum): self
+    {
+        $this->lastNetCollectiveSum = $lastNetCollectiveSum;
+
+        return $this;
+    }
+
+    public function getNetCollectiveSumDifference(): ?float
+    {
+        return $this->netCollectiveSumDifference;
+    }
+
+    public function setNetCollectiveSumDifference(?float $netCollectiveSumDifference): self
+    {
+        $this->netCollectiveSumDifference = $netCollectiveSumDifference;
 
         return $this;
     }

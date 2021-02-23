@@ -94,6 +94,7 @@ class Export extends AbstractExport
             'Samlet nettoopgørelse',
             'Senest afsluttet',
             'Senest genoptaget',
+            'Samlet nettoopgørelse difference',
         ]);
 
         foreach ($processes as $process) {
@@ -142,6 +143,7 @@ class Export extends AbstractExport
                 $this->formatAmount($revenue['netCollectiveSum'] ?? 0), // 'Samlet nettoopgørelse'
                 $process->getLastCompletedAt() ? $this->formatDate($process->getLastCompletedAt(), 'long') : null,
                 $process->getLastReopened() ? $this->formatDate($process->getLastReopened(), 'long') : null,
+                $this->formatAmount($process->getNetCollectiveSumDifference() ?? 0),
             ]);
         }
     }
