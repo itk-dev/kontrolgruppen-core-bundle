@@ -70,10 +70,6 @@ class ProcessEconomyVoter extends Voter
         }
 
         // ADMIN can do anything! The power!
-        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
-            return true;
-        }
-
         if ($this->security->isGranted('ROLE_ADMIN')) {
             return true;
         }
