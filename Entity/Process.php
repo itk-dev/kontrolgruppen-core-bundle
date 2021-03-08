@@ -193,7 +193,7 @@ class Process extends AbstractEntity
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $OriginallyCompletedAt;
+    private $originallyCompletedAt;
 
     /**
      * Process constructor.
@@ -954,14 +954,22 @@ class Process extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getOriginallyCompletedAt(): ?\DateTimeInterface
     {
-        return $this->OriginallyCompletedAt;
+        return $this->originallyCompletedAt;
     }
 
-    public function setOriginallyCompletedAt(?\DateTimeInterface $OriginallyCompletedAt): self
+    /**
+     * @param \DateTimeInterface|null $originallyCompletedAt
+     *
+     * @return $this
+     */
+    public function setOriginallyCompletedAt(?\DateTimeInterface $originallyCompletedAt): self
     {
-        $this->OriginallyCompletedAt = $OriginallyCompletedAt;
+        $this->originallyCompletedAt = $originallyCompletedAt;
 
         return $this;
     }

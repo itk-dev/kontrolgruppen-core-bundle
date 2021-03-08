@@ -28,6 +28,7 @@ class ProcessResumeType extends AbstractType
 
     /**
      * ProcessResumeType constructor.
+     *
      * @param TranslatorInterface $translator
      */
     public function __construct(TranslatorInterface $translator)
