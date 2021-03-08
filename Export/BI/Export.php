@@ -92,6 +92,7 @@ class Export extends AbstractExport
             'Netto fremadrettet besparelse ved ydelsesstop i kr.',
             'Samlet opgørelse',
             'Samlet nettoopgørelse',
+            'Oprindeligt afsluttet',
             'Senest afsluttet',
             'Senest genoptaget',
             'Samlet nettoopgørelse difference',
@@ -141,6 +142,7 @@ class Export extends AbstractExport
                 $this->formatAmount($revenue['netFutureSavingsSum'] ?? 0), // 'Netto fremadrettet besparelse ved ydelsesstop i kr.'
                 $this->formatAmount($revenue['collectiveSum'] ?? 0), // 'Samlet opgørelse'
                 $this->formatAmount($revenue['netCollectiveSum'] ?? 0), // 'Samlet nettoopgørelse'
+                $process->getOriginallyCompletedAt() ? $this->formatDate($process->getOriginallyCompletedAt(), 'long') : null,
                 $process->getLastCompletedAt() ? $this->formatDate($process->getLastCompletedAt(), 'long') : null,
                 $process->getLastReopened() ? $this->formatDate($process->getLastReopened(), 'long') : null,
                 $this->formatAmount($process->getNetCollectiveSumDifference() ?? 0),
