@@ -357,7 +357,7 @@ class ProcessController extends BaseController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function complete(Request $request, Process $process, ServiceRepository $serviceRepository, ProcessStatusRepository $processStatusRepository, EconomyService $economyService): Response
+    public function complete(Request $request, Process $process, ServiceRepository $serviceRepository, ProcessStatusRepository $processStatusRepository, ProcessManager $processManager): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -388,30 +388,9 @@ class ProcessController extends BaseController
                 $em->persist($lockedNetValue);
             }
 
-            $completedAt = new \DateTime();
-
-            // If it's the first time the process is completed,
-            // we set the originally completed date.
-            if (null === $process->getLastReopened()) {
-                $process->setOriginallyCompletedAt($completedAt);
-            }
-
-            $process->setCompletedAt($completedAt);
-            $process->setLastCompletedAt($completedAt);
-
-            $calculatedRevenue = $economyService->calculateRevenue($process);
-            $netCollectiveSum = $calculatedRevenue['netCollectiveSum'] ?: null;
-
-            if (!empty($process->getLastNetCollectiveSum())) {
-                $netCollectiveSumDifference = $netCollectiveSum - $process->getLastNetCollectiveSum();
-                $process->setNetCollectiveSumDifference($netCollectiveSumDifference);
-            }
-
-            $process->setLastNetCollectiveSum($netCollectiveSum);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($process);
             $em->flush();
+
+            $processManager->completeProcess($process);
 
             return $this->redirectToRoute(
                 'process_show',
