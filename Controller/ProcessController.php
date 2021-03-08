@@ -390,14 +390,14 @@ class ProcessController extends BaseController
 
             $completedAt = new \DateTime();
 
-            $process->setCompletedAt($completedAt);
-            $process->setLastCompletedAt($completedAt);
-
             // If it's the first time the process is completed,
             // we set the originally completed date.
             if (null === $process->getLastReopened()) {
                 $process->setOriginallyCompletedAt($completedAt);
             }
+
+            $process->setCompletedAt($completedAt);
+            $process->setLastCompletedAt($completedAt);
 
             $calculatedRevenue = $economyService->calculateRevenue($process);
             $netCollectiveSum = $calculatedRevenue['netCollectiveSum'] ?: null;
