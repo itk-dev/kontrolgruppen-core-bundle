@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - [SUPPORT-93](https://jira.itkdev.dk/browse/SUPP0RT-93): Added process delete console command.
 - [SUPPORT-101](https://jira.itkdev.dk/browse/SUPP0RT-101): Adding page for resuming processes
+- Enabling cache for PHPSpreadsheet
 
 ## [1.10.0] - 2021-02-15
 ### Added
