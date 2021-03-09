@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Service\ProcessLogTranslatorService;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -27,18 +28,20 @@ class ProcessLogExport extends AbstractExport
     private $processLogTranslatorService;
     private $translator;
 
+
     /**
      * ProcessLogExport constructor.
      *
      * @param EntityManagerInterface      $entityManager
      * @param TranslatorInterface         $translator
      * @param ProcessLogTranslatorService $processLogTranslatorService
+     * @param CacheItemPoolInterface      $cachePhpspreadsheet
      *
      * @throws \Exception
      */
-    public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator, ProcessLogTranslatorService $processLogTranslatorService)
+    public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator, ProcessLogTranslatorService $processLogTranslatorService, CacheItemPoolInterface $cachePhpspreadsheet)
     {
-        parent::__construct();
+        parent::__construct($cachePhpspreadsheet);
         $this->entityManager = $entityManager;
         $this->processLogTranslatorService = $processLogTranslatorService;
         $this->translator = $translator;

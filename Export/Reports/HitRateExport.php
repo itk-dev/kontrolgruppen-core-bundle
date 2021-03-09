@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Class HitRateExport.
@@ -28,17 +29,19 @@ class HitRateExport extends AbstractExport
     /** @var \Kontrolgruppen\CoreBundle\Service\EconomyService */
     private $economyService;
 
+
     /**
      * HitRateExport constructor.
      *
      * @param EntityManagerInterface $entityManager
      * @param EconomyService         $economyService
+     * @param CacheItemPoolInterface $cachePhpspreadsheet
      *
      * @throws \Exception
      */
-    public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService)
+    public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService, CacheItemPoolInterface $cachePhpspreadsheet)
     {
-        parent::__construct();
+        parent::__construct($cachePhpspreadsheet);
         $this->entityManager = $entityManager;
         $this->economyService = $economyService;
     }

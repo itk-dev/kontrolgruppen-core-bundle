@@ -11,6 +11,8 @@
 namespace Kontrolgruppen\CoreBundle\Export;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Psr16Cache;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 /**
@@ -37,15 +39,19 @@ abstract class AbstractExport implements \JsonSerializable
     protected $latestRow = 0;
 
     /**
-     * Constructor.
+     * AbstractExport constructor.
+     *
+     * @param CacheItemPoolInterface $cachePhpspreadsheet
      *
      * @throws \Exception
      */
-    public function __construct()
+    public function __construct(CacheItemPoolInterface $cachePhpspreadsheet)
     {
         if (empty($this->title)) {
             throw new \Exception('Export title not defined.');
         }
+
+        \PhpOffice\PhpSpreadsheet\Settings::setCache(new Psr16Cache($cachePhpspreadsheet));
     }
 
     /**

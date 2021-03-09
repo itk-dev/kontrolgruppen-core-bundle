@@ -16,6 +16,7 @@ use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
@@ -31,17 +32,19 @@ class Export extends AbstractExport
     /** @var EconomyService */
     private $economyService;
 
+
     /**
      * Export constructor.
      *
      * @param EntityManagerInterface $entityManager
      * @param EconomyService         $economyService
+     * @param CacheItemPoolInterface $cachePhpspreadsheet
      *
      * @throws \Exception
      */
-    public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService)
+    public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService, CacheItemPoolInterface $cachePhpspreadsheet)
     {
-        parent::__construct();
+        parent::__construct($cachePhpspreadsheet);
         $this->entityManager = $entityManager;
         $this->economyService = $economyService;
     }
