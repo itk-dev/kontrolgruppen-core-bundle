@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Class RevenueExport.
@@ -30,12 +31,13 @@ class RevenueExport extends AbstractExport
      *
      * @param EntityManagerInterface $entityManager
      * @param EconomyService         $economyService
+     * @param CacheItemPoolInterface $cachePhpspreadsheet
      *
      * @throws \Exception
      */
-    public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService)
+    public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService, CacheItemPoolInterface $cachePhpspreadsheet)
     {
-        parent::__construct();
+        parent::__construct($cachePhpspreadsheet);
         $this->entityManager = $entityManager;
         $this->economyService = $economyService;
     }

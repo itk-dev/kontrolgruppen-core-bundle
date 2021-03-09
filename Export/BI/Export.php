@@ -16,6 +16,7 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Repository\ProcessLogEntryRepository;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Class Export.
@@ -39,12 +40,13 @@ class Export extends AbstractExport
      * @param EntityManagerInterface    $entityManager
      * @param EconomyService            $economyService
      * @param ProcessLogEntryRepository $processLogEntryRepository
+     * @param CacheItemPoolInterface    $cachePhpspreadsheet
      *
      * @throws \Exception
      */
-    public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService, ProcessLogEntryRepository $processLogEntryRepository)
+    public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService, ProcessLogEntryRepository $processLogEntryRepository, CacheItemPoolInterface $cachePhpspreadsheet)
     {
-        parent::__construct();
+        parent::__construct($cachePhpspreadsheet);
         $this->entityManager = $entityManager;
         $this->economyService = $economyService;
         $this->processLogEntryRepository = $processLogEntryRepository;
