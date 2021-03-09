@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Export;
 
+use PhpOffice\PhpSpreadsheet\Settings;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Psr16Cache;
@@ -51,7 +52,8 @@ abstract class AbstractExport implements \JsonSerializable
             throw new \Exception('Export title not defined.');
         }
 
-        \PhpOffice\PhpSpreadsheet\Settings::setCache(new Psr16Cache($cachePhpspreadsheet));
+        // Enable PHPSpreadsheet caching
+        Settings::setCache(new Psr16Cache($cachePhpspreadsheet));
     }
 
     /**
