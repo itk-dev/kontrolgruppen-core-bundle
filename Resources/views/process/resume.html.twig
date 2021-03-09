@@ -1,0 +1,26 @@
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+
+{% block title %}{{ 'process.resume.title'|trans({'%case_number%': process.caseNumber}) }}{% endblock %}
+
+{% block content %}
+    <h1>{{ 'process.resume.title'|trans({'%case_number%': process.caseNumber}) }}</h1>
+
+    {{ form_start(form, {
+        attr: {
+            'data-yes-no-message': 'process.resume.confirm'|trans,
+        }
+    }) }}
+
+    {{ form_row(form.processStatus) }}
+
+    <a href="{{ path('process_show', {id: process.id}) }}" class="btn btn-light float-left">{{ 'process.resume.cancel'|trans }}</a>
+    <button
+        class="btn btn-success float-right pr-5 pl-5">{{ 'process.resume.submit'|trans }}</button>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('inputCPR') }}
+{% endblock %}

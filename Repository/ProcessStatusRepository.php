@@ -44,8 +44,8 @@ class ProcessStatusRepository extends ServiceEntityRepository
     public function getAvailableForProcess(Process $process)
     {
         $qb = $this->createQueryBuilder('p')
-            ->where(':process MEMBER OF p.processes')
-            ->setParameter('process', $process)
+            ->where(':processType MEMBER OF p.processTypes')
+            ->setParameter('processType', $process->getProcessType())
             ->getQuery();
 
         return $qb->execute();
