@@ -34,7 +34,6 @@ class Export extends AbstractExport
     /** @var ProcessLogEntryRepository */
     private $processLogEntryRepository;
 
-
     /**
      * Export constructor.
      *

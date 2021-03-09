@@ -32,7 +32,6 @@ class Export extends AbstractExport
     /** @var EconomyService */
     private $economyService;
 
-
     /**
      * Export constructor.
      *

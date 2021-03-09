@@ -28,7 +28,6 @@ class ProcessLogExport extends AbstractExport
     private $processLogTranslatorService;
     private $translator;
 
-
     /**
      * ProcessLogExport constructor.
      *

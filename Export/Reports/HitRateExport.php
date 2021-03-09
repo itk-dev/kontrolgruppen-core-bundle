@@ -29,7 +29,6 @@ class HitRateExport extends AbstractExport
     /** @var \Kontrolgruppen\CoreBundle\Service\EconomyService */
     private $economyService;
 
-
     /**
      * HitRateExport constructor.
      *

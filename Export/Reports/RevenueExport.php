@@ -26,7 +26,6 @@ class RevenueExport extends AbstractExport
     /** @var \Doctrine\ORM\EntityManagerInterface */
     private $entityManager;
 
-
     /**
      * RevenueExport constructor.
      *
