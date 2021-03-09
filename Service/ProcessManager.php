@@ -215,7 +215,7 @@ class ProcessManager
 
         // If it's the first time the process is completed,
         // we set the originally completed date.
-        if (null === $process->getLastReopened()) {
+        if (null === $process->getOriginallyCompletedAt()) {
             $process->setOriginallyCompletedAt($completedAt);
         }
 
