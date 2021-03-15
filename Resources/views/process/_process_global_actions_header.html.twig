@@ -15,11 +15,8 @@
                     <a href="{{ path('process_complete', {'id': process.id}) }}" class="btn btn-sm btn-outline-danger text-truncate"><i
                             class="fas {{ iconClass('process-complete') }} mr-2"></i>{{ 'process.btns.complete'|trans }}</a>
                 {% else %}
-                    <form method="post" action="{{ path('process_resume', {'id': process.id}) }}" data-yes-no-message="{{ 'process.resume.confirm'|trans }}">
-                        <button class="btn btn-sm btn-outline-danger">
-                            <i class="fas {{ iconClass('process-resume') }} mr-2"></i>{{ 'process.btns.resume'|trans }}
-                        </button>
-                    </form>
+                    <a href="{{ path('process_resume', {'id': process.id}) }}" class="btn btn-sm btn-outline-danger text-truncate"><i
+                            class="fas {{ iconClass('process-resume') }} mr-2"></i>{{ 'process.btns.resume'|trans }}</a>
                 {% endif %}
             {% endif %}
         </div>

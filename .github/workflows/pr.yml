@@ -10,7 +10,7 @@ jobs:
                 uses: shivammathur/setup-php@master
                 with:
                     php-version: 7.3
-                    extension-csv: ctype, iconv, json
+                    extensions: ctype, iconv, json, zip, soap, gd
                     coverage: none
                     tools: composer:v1
             -   name: Validate composer files
@@ -26,7 +26,7 @@ jobs:
               uses: shivammathur/setup-php@master
               with:
                   php-version: 7.3
-                  extension-csv: ctype, iconv, json
+                  extensions: ctype, iconv, json, zip, soap, gd
                   coverage: none
                   tools: composer:v1
             - name: Install Reviewdog
@@ -50,7 +50,7 @@ jobs:
               uses: shivammathur/setup-php@master
               with:
                   php-version: 7.3
-                  extension-csv: ctype, iconv, json
+                  extensions: ctype, iconv, json, zip, soap, gd
                   coverage: none
                   tools: composer:v1
             - name: Install Dependencies
@@ -69,7 +69,7 @@ jobs:
               uses: shivammathur/setup-php@master
               with:
                   php-version: 7.3
-                  extension-csv: ctype, iconv, json
+                  extensions: ctype, iconv, json, zip, soap, gd
                   coverage: none
                   tools: composer:v1
             - name: Install Dependencies

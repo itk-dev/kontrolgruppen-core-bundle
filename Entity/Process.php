@@ -191,6 +191,11 @@ class Process extends AbstractEntity
     private $netCollectiveSumDifference;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $originallyCompletedAt;
+
+    /**
      * Process constructor.
      */
     public function __construct()
@@ -945,6 +950,26 @@ class Process extends AbstractEntity
     public function setNetCollectiveSumDifference(?float $netCollectiveSumDifference): self
     {
         $this->netCollectiveSumDifference = $netCollectiveSumDifference;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getOriginallyCompletedAt(): ?\DateTimeInterface
+    {
+        return $this->originallyCompletedAt;
+    }
+
+    /**
+     * @param \DateTimeInterface|null $originallyCompletedAt
+     *
+     * @return $this
+     */
+    public function setOriginallyCompletedAt(?\DateTimeInterface $originallyCompletedAt): self
+    {
+        $this->originallyCompletedAt = $originallyCompletedAt;
 
         return $this;
     }

@@ -16,6 +16,7 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Repository\ProcessLogEntryRepository;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Class Export.
@@ -39,12 +40,13 @@ class Export extends AbstractExport
      * @param EntityManagerInterface    $entityManager
      * @param EconomyService            $economyService
      * @param ProcessLogEntryRepository $processLogEntryRepository
+     * @param CacheItemPoolInterface    $cachePhpspreadsheet
      *
      * @throws \Exception
      */
-    public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService, ProcessLogEntryRepository $processLogEntryRepository)
+    public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService, ProcessLogEntryRepository $processLogEntryRepository, CacheItemPoolInterface $cachePhpspreadsheet)
     {
-        parent::__construct();
+        parent::__construct($cachePhpspreadsheet);
         $this->entityManager = $entityManager;
         $this->economyService = $economyService;
         $this->processLogEntryRepository = $processLogEntryRepository;
@@ -92,6 +94,7 @@ class Export extends AbstractExport
             'Netto fremadrettet besparelse ved ydelsesstop i kr.',
             'Samlet opgørelse',
             'Samlet nettoopgørelse',
+            'Oprindeligt afsluttet',
             'Senest afsluttet',
             'Senest genoptaget',
             'Samlet nettoopgørelse difference',
@@ -141,6 +144,7 @@ class Export extends AbstractExport
                 $this->formatAmount($revenue['netFutureSavingsSum'] ?? 0), // 'Netto fremadrettet besparelse ved ydelsesstop i kr.'
                 $this->formatAmount($revenue['collectiveSum'] ?? 0), // 'Samlet opgørelse'
                 $this->formatAmount($revenue['netCollectiveSum'] ?? 0), // 'Samlet nettoopgørelse'
+                $process->getOriginallyCompletedAt() ? $this->formatDate($process->getOriginallyCompletedAt(), 'long') : null,
                 $process->getLastCompletedAt() ? $this->formatDate($process->getLastCompletedAt(), 'long') : null,
                 $process->getLastReopened() ? $this->formatDate($process->getLastReopened(), 'long') : null,
                 $this->formatAmount($process->getNetCollectiveSumDifference() ?? 0),

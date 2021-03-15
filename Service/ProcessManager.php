@@ -33,6 +33,7 @@ class ProcessManager
     private $lockService;
     private $cprService;
     private $logger;
+    private $economyService;
 
     /**
      * ProcessManager constructor.
@@ -42,14 +43,16 @@ class ProcessManager
      * @param LockService            $lockService
      * @param CprServiceInterface    $cprService
      * @param LoggerInterface        $logger
+     * @param EconomyService         $economyService
      */
-    public function __construct(ProcessRepository $processRepository, EntityManagerInterface $entityManager, LockService $lockService, CprServiceInterface $cprService, LoggerInterface $logger)
+    public function __construct(ProcessRepository $processRepository, EntityManagerInterface $entityManager, LockService $lockService, CprServiceInterface $cprService, LoggerInterface $logger, EconomyService $economyService)
     {
         $this->processRepository = $processRepository;
         $this->entityManager = $entityManager;
         $this->lockService = $lockService;
         $this->cprService = $cprService;
         $this->logger = $logger;
+        $this->economyService = $economyService;
     }
 
     /**
@@ -199,6 +202,38 @@ class ProcessManager
         $caseNumber = str_pad($highestCaseCounter + 1, 5, '0', STR_PAD_LEFT);
 
         return date('y').'-'.$caseNumber;
+    }
+
+    /**
+     * Completes a Process.
+     *
+     * @param Process $process
+     */
+    public function completeProcess(Process $process)
+    {
+        $completedAt = new \DateTime();
+
+        // If it's the first time the process is completed,
+        // we set the originally completed date.
+        if (null === $process->getOriginallyCompletedAt()) {
+            $process->setOriginallyCompletedAt($completedAt);
+        }
+
+        $process->setCompletedAt($completedAt);
+        $process->setLastCompletedAt($completedAt);
+
+        $calculatedRevenue = $this->economyService->calculateRevenue($process);
+        $netCollectiveSum = $calculatedRevenue['netCollectiveSum'] ?: null;
+
+        if (!empty($process->getLastNetCollectiveSum())) {
+            $netCollectiveSumDifference = $netCollectiveSum - $process->getLastNetCollectiveSum();
+            $process->setNetCollectiveSumDifference($netCollectiveSumDifference);
+        }
+
+        $process->setLastNetCollectiveSum($netCollectiveSum);
+
+        $this->entityManager->persist($process);
+        $this->entityManager->flush();
     }
 
     /**

@@ -487,7 +487,12 @@ process:
         title: Afslut sag %case_number%
         process_completed: Sag afsluttet
     resume:
+        title: Genoptag sag %case_number%
         confirm: Er du sikker på at du vil genoptage sagen?
+        submit: Genoptag
+        cancel: Fortryd
+        process_status:
+            label: Vælg ny status
     edit:
         title: Rediger sag
     form:
