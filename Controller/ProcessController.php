@@ -18,11 +18,13 @@ use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessCompleteType;
+use Kontrolgruppen\CoreBundle\Form\ProcessResumeType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
+use Kontrolgruppen\CoreBundle\Service\EconomyService;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
@@ -348,13 +350,14 @@ class ProcessController extends BaseController
      * @param \Kontrolgruppen\CoreBundle\Entity\Process                     $process
      * @param \Kontrolgruppen\CoreBundle\Repository\ServiceRepository       $serviceRepository
      * @param \Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository $processStatusRepository
+     * @param \Kontrolgruppen\CoreBundle\Service\EconomyService             $economyService
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function complete(Request $request, Process $process, ServiceRepository $serviceRepository, ProcessStatusRepository $processStatusRepository): Response
+    public function complete(Request $request, Process $process, ServiceRepository $serviceRepository, ProcessStatusRepository $processStatusRepository, ProcessManager $processManager): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -385,10 +388,9 @@ class ProcessController extends BaseController
                 $em->persist($lockedNetValue);
             }
 
-            $process->setCompletedAt(new \DateTime());
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($process);
             $em->flush();
+
+            $processManager->completeProcess($process);
 
             return $this->redirectToRoute(
                 'process_show',
@@ -412,23 +414,44 @@ class ProcessController extends BaseController
     }
 
     /**
-     * @Route("/{id}/resume", name="process_resume", methods={"POST"})
+     * @Route("/{id}/resume", name="process_resume", methods={"POST", "GET"})
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function resume(Request $request, Process $process): Response
+    public function resume(Request $request, Process $process, ProcessStatusRepository $processStatusRepository): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
-        $process->setCompletedAt(null);
-        $process->setLockedNetValue(null);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($process);
-        $em->flush();
+        $form = $this->createForm(ProcessResumeType::class, $process, [
+            'available_statuses' => $processStatusRepository->getAvailableForProcess($process),
+        ]);
 
-        return $this->redirectToRoute('process_show', ['id' => $process->getId()]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $process->setCompletedAt(null);
+            $process->setLockedNetValue(null);
+            $process->setLastReopened(new \DateTime());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($process);
+            $em->flush();
+
+            return $this->redirectToRoute('process_show', ['id' => $process->getId()]);
+        }
+
+        return $this->render(
+            '@KontrolgruppenCore/process/resume.html.twig',
+            [
+                'menuItems' => $this->menuService->getProcessMenu(
+                    $request->getPathInfo(),
+                    $process
+                ),
+                'process' => $process,
+                'form' => $form->createView(),
+            ]
+        );
     }
 }

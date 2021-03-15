@@ -171,6 +171,31 @@ class Process extends AbstractEntity
     private $processGroups;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastCompletedAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastReopened;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $lastNetCollectiveSum;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $netCollectiveSumDifference;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $originallyCompletedAt;
+
+    /**
      * Process constructor.
      */
     public function __construct()
@@ -845,6 +870,106 @@ class Process extends AbstractEntity
             $this->processGroups->removeElement($processGroup);
             $processGroup->removeProcess($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getLastCompletedAt(): ?\DateTimeInterface
+    {
+        return $this->lastCompletedAt;
+    }
+
+    /**
+     * @param \DateTimeInterface|null $lastCompletedAt
+     *
+     * @return $this
+     */
+    public function setLastCompletedAt(?\DateTimeInterface $lastCompletedAt): self
+    {
+        $this->lastCompletedAt = $lastCompletedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getLastReopened(): ?\DateTimeInterface
+    {
+        return $this->lastReopened;
+    }
+
+    /**
+     * @param \DateTimeInterface|null $lastReopened
+     *
+     * @return $this
+     */
+    public function setLastReopened(?\DateTimeInterface $lastReopened): self
+    {
+        $this->lastReopened = $lastReopened;
+
+        return $this;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getLastNetCollectiveSum(): ?float
+    {
+        return $this->lastNetCollectiveSum;
+    }
+
+    /**
+     * @param float|null $lastNetCollectiveSum
+     *
+     * @return $this
+     */
+    public function setLastNetCollectiveSum(?float $lastNetCollectiveSum): self
+    {
+        $this->lastNetCollectiveSum = $lastNetCollectiveSum;
+
+        return $this;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getNetCollectiveSumDifference(): ?float
+    {
+        return $this->netCollectiveSumDifference;
+    }
+
+    /**
+     * @param float|null $netCollectiveSumDifference
+     *
+     * @return $this
+     */
+    public function setNetCollectiveSumDifference(?float $netCollectiveSumDifference): self
+    {
+        $this->netCollectiveSumDifference = $netCollectiveSumDifference;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getOriginallyCompletedAt(): ?\DateTimeInterface
+    {
+        return $this->originallyCompletedAt;
+    }
+
+    /**
+     * @param \DateTimeInterface|null $originallyCompletedAt
+     *
+     * @return $this
+     */
+    public function setOriginallyCompletedAt(?\DateTimeInterface $originallyCompletedAt): self
+    {
+        $this->originallyCompletedAt = $originallyCompletedAt;
 
         return $this;
     }

@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.11.0] - 2021-02-23
+### Fixed
+- [KON-404](https://jira.itkdev.dk/browse/KON-404): Provenu duplicates.
+
+### Added
+- [SUPPORT-93](https://jira.itkdev.dk/browse/SUPP0RT-93): Added process delete console command.
+- [SUPPORT-101](https://jira.itkdev.dk/browse/SUPP0RT-101): Adding page for resuming processes
+- [SUPPORT-118](https://jira.itkdev.dk/browse/SUPP0RT-118): Enabling cache for PHPSpreadsheet
+
 ## [1.10.0] - 2021-02-15
 ### Added
 - [KON-388-](https://jira.itkdev.dk/browse/KON-388): Added format to BI exports.
