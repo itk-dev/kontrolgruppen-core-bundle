@@ -10,7 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\Export\BI;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
@@ -27,9 +26,6 @@ class Export extends AbstractExport
 {
     protected $title = 'BI';
 
-    /** @var \Doctrine\ORM\EntityManagerInterface */
-    private $entityManager;
-
     /** @var EconomyService */
     private $economyService;
 
@@ -42,7 +38,6 @@ class Export extends AbstractExport
     /**
      * Export constructor.
      *
-     * @param EntityManagerInterface    $entityManager
      * @param EconomyService            $economyService
      * @param ProcessLogEntryRepository $processLogEntryRepository
      * @param ProcessRepository         $processRepository
@@ -50,10 +45,9 @@ class Export extends AbstractExport
      *
      * @throws Exception
      */
-    public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService, ProcessLogEntryRepository $processLogEntryRepository, ProcessRepository $processRepository, CacheItemPoolInterface $cachePhpspreadsheet)
+    public function __construct(EconomyService $economyService, ProcessLogEntryRepository $processLogEntryRepository, ProcessRepository $processRepository, CacheItemPoolInterface $cachePhpspreadsheet)
     {
         parent::__construct($cachePhpspreadsheet);
-        $this->entityManager = $entityManager;
         $this->economyService = $economyService;
         $this->processLogEntryRepository = $processLogEntryRepository;
         $this->processRepository = $processRepository;
