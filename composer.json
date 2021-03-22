@@ -9,7 +9,7 @@
         "beberlei/doctrineextensions": "^1.2",
         "fresh/doctrine-enum-bundle": "^6.3",
         "friendsofsymfony/ckeditor-bundle": "^2.0",
-        "itk-dev/serviceplatformen": "^0.0.4",
+        "itk-dev/serviceplatformen": "0.0.4",
         "knplabs/knp-paginator-bundle": "^3.0",
         "lexik/form-filter-bundle": "^5.0",
         "mpdf/mpdf": "^8.0.2",
@@ -35,7 +35,8 @@
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
         "symfony/webpack-encore-bundle": "^1.6",
-        "twig/extensions": "^1.5"
+        "twig/extensions": "^1.5",
+        "ocramius/doctrine-batch-utils": "^2.0"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.1",
