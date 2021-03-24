@@ -10,11 +10,12 @@
 
 namespace Kontrolgruppen\CoreBundle\Export\BI;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Repository\ProcessLogEntryRepository;
+use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
 use Psr\Cache\CacheItemPoolInterface;
 
@@ -25,31 +26,31 @@ class Export extends AbstractExport
 {
     protected $title = 'BI';
 
-    /** @var \Doctrine\ORM\EntityManagerInterface */
-    private $entityManager;
-
     /** @var EconomyService */
     private $economyService;
 
     /** @var ProcessLogEntryRepository */
     private $processLogEntryRepository;
 
+    /** @var ProcessRepository */
+    private $processRepository;
+
     /**
      * Export constructor.
      *
-     * @param EntityManagerInterface    $entityManager
      * @param EconomyService            $economyService
      * @param ProcessLogEntryRepository $processLogEntryRepository
+     * @param ProcessRepository         $processRepository
      * @param CacheItemPoolInterface    $cachePhpspreadsheet
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService, ProcessLogEntryRepository $processLogEntryRepository, CacheItemPoolInterface $cachePhpspreadsheet)
+    public function __construct(EconomyService $economyService, ProcessLogEntryRepository $processLogEntryRepository, ProcessRepository $processRepository, CacheItemPoolInterface $cachePhpspreadsheet)
     {
         parent::__construct($cachePhpspreadsheet);
-        $this->entityManager = $entityManager;
         $this->economyService = $economyService;
         $this->processLogEntryRepository = $processLogEntryRepository;
+        $this->processRepository = $processRepository;
     }
 
     /**
@@ -65,7 +66,7 @@ class Export extends AbstractExport
      */
     public function writeData()
     {
-        $processes = $this->getProcesses();
+        $processes = $this->processRepository->findAllBatchProcessed();
 
         $this->writeHeader([
             'Udtræksdato',
@@ -150,16 +151,5 @@ class Export extends AbstractExport
                 $this->formatAmount($process->getNetCollectiveSumDifference() ?? 0),
             ]);
         }
-    }
-
-    /**
-     * @return Process[]
-     */
-    private function getProcesses()
-    {
-        $queryBuilder = $this->entityManager->getRepository(Process::class)
-            ->createQueryBuilder('p');
-
-        return $queryBuilder->getQuery()->execute();
     }
 }

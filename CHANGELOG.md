@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.11.1] - 2021-03-22
+### Added
+- [SUPPORT-131](https://jira.itkdev.dk/browse/SUPP0RT-131): Added possibility for fetching all processes in a more memory effecient way.
+
+### Removed
+- [SUPPORT-131](https://jira.itkdev.dk/browse/SUPP0RT-131): Removed composer.lock file.
+
 ## [1.11.0] - 2021-02-23
 ### Fixed
 - [KON-404](https://jira.itkdev.dk/browse/KON-404): Provenu duplicates.

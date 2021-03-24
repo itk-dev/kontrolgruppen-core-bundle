@@ -12,8 +12,10 @@ namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use DoctrineBatchUtils\BatchProcessing\SimpleBatchIteratorAggregate;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\Service;
+use Traversable;
 
 /**
  * @method Process|null find($id, $lockMode = null, $lockVersion = null)
@@ -105,5 +107,20 @@ class ProcessRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    /**
+     * Find all processes utilizing batch processing.
+     *
+     * @param int $batchSize
+     *
+     * @return Traversable
+     */
+    public function findAllBatchProcessed(int $batchSize = 100): Traversable
+    {
+        return SimpleBatchIteratorAggregate::fromQuery(
+            $this->createQueryBuilder('p')->getQuery(),
+            $batchSize
+        );
     }
 }
