@@ -12,10 +12,12 @@ namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use DoctrineBatchUtils\BatchProcessing\SimpleBatchIteratorAggregate;
 use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
+use Traversable;
 
 /**
  * @method ProcessLogEntry|null find($id, $lockMode = null, $lockVersion = null)
@@ -144,6 +146,22 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
     public function getAllLogEntries(Process $process)
     {
         return $this->getLatestEntriesQuery($process)->getResult();
+    }
+
+    /**
+     * Get all log entries utilizing batch processing.
+     *
+     * @param Process $process
+     * @param int     $batchSize
+     *
+     * @return Traversable
+     */
+    public function getAllLogEntriesBatchProcessed(Process $process, $batchSize = 100): Traversable
+    {
+        return SimpleBatchIteratorAggregate::fromQuery(
+            $this->getLatestEntriesQuery($process),
+            $batchSize
+        );
     }
 
     /**

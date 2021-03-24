@@ -12,6 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Service;
 
 use PhpOffice\PhpSpreadsheet\Writer\IWriter;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * Class PhpSpreadsheetExportService.
@@ -41,5 +42,19 @@ class PhpSpreadsheetExportService
         $filesystem->remove($tempFilename);
 
         return $output;
+    }
+
+    /**
+     * Get output wrapped in a StreamedResponse.
+     *
+     * @param IWriter $writer
+     *
+     * @return StreamedResponse
+     */
+    public function getOutputInStreamedResponse(IWriter $writer): StreamedResponse
+    {
+        return new StreamedResponse(function () use ($writer) {
+            $writer->save('php://output');
+        });
     }
 }

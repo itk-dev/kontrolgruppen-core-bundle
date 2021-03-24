@@ -11,10 +11,13 @@
 namespace Kontrolgruppen\CoreBundle\Export\Reports;
 
 use Doctrine\ORM\EntityManagerInterface;
+use DoctrineBatchUtils\BatchProcessing\SimpleBatchIteratorAggregate;
+use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
 use Psr\Cache\CacheItemPoolInterface;
+use Traversable;
 
 /**
  * Class HitRateExport.
@@ -36,7 +39,7 @@ class HitRateExport extends AbstractExport
      * @param EconomyService         $economyService
      * @param CacheItemPoolInterface $cachePhpspreadsheet
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService, CacheItemPoolInterface $cachePhpspreadsheet)
     {
@@ -99,9 +102,9 @@ class HitRateExport extends AbstractExport
     }
 
     /**
-     * @return Process[]
+     * @return Traversable
      *
-     * @throws \Exception
+     * @throws Exception
      */
     private function getProcesses()
     {
@@ -116,7 +119,10 @@ class HitRateExport extends AbstractExport
             ->setParameter('startdate', $startDate)
             ->setParameter('enddate', $endDate);
 
-        return $queryBuilder->getQuery()->execute();
+        return SimpleBatchIteratorAggregate::fromQuery(
+            $queryBuilder->getQuery(),
+            100
+        );
     }
 
     /**
