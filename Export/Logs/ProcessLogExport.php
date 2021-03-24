@@ -61,7 +61,7 @@ class ProcessLogExport extends AbstractExport
 
         $processLogEntries = $this->entityManager
                         ->getRepository(ProcessLogEntry::class)
-                        ->getAllLogEntries($process);
+                        ->getAllLogEntriesBatchProcessed($process);
 
         foreach ($processLogEntries as $processLogEntry) {
             /** @var LogEntry $logEntry */

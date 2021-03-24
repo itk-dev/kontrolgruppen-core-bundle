@@ -11,10 +11,13 @@
 namespace Kontrolgruppen\CoreBundle\Export\Reports;
 
 use Doctrine\ORM\EntityManagerInterface;
+use DoctrineBatchUtils\BatchProcessing\SimpleBatchIteratorAggregate;
+use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
 use Psr\Cache\CacheItemPoolInterface;
+use Traversable;
 
 /**
  * Class RevenueExport.
@@ -33,7 +36,7 @@ class RevenueExport extends AbstractExport
      * @param EconomyService         $economyService
      * @param CacheItemPoolInterface $cachePhpspreadsheet
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService, CacheItemPoolInterface $cachePhpspreadsheet)
     {
@@ -57,8 +60,6 @@ class RevenueExport extends AbstractExport
     {
         $processes = $this->getProcesses();
 
-        $processesLength = \count($processes);
-
         $this->writeHeader([
             'Ydelse',
             'Antal afsluttede sager',
@@ -74,6 +75,7 @@ class RevenueExport extends AbstractExport
 
         $revenue = [];
 
+        $processesLength = 0;
         foreach ($processes as $process) {
             $countedForService = [];
             $processRevenue = $this->economyService->calculateRevenue($process);
@@ -115,6 +117,8 @@ class RevenueExport extends AbstractExport
                 }
                 ++$revenue[$serviceName]['processes'];
             }
+
+            ++$processesLength;
         }
 
         $sums = [
@@ -184,11 +188,11 @@ class RevenueExport extends AbstractExport
     }
 
     /**
-     * @return Process[]
+     * @return Traversable
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    private function getProcesses()
+    private function getProcesses(): Traversable
     {
         $queryBuilder = $this->entityManager->getRepository(Process::class)->createQueryBuilder('p')
             ->andWhere('p.completedAt IS NOT NULL');
@@ -201,6 +205,9 @@ class RevenueExport extends AbstractExport
             ->setParameter('startdate', $startDate)
             ->setParameter('enddate', $endDate);
 
-        return $queryBuilder->getQuery()->execute();
+        return SimpleBatchIteratorAggregate::fromQuery(
+            $queryBuilder->getQuery(),
+            100
+        );
     }
 }
