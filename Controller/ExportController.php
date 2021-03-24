@@ -127,7 +127,6 @@ class ExportController extends BaseController
 
         try {
             $writer = $this->exportManager->run($export, $parameters, $_format);
-            $output = $exportService->getOutputAsString($writer);
 
             switch ($_format) {
                 case 'csv':
@@ -147,6 +146,7 @@ class ExportController extends BaseController
                     // Extract body content.
                     $d = new \DOMDocument();
                     $mock = new \DOMDocument();
+                    $output = $exportService->getOutputAsString($writer);
                     $d->loadHTML($output);
                     $body = $d->getElementsByTagName('body')->item(0);
                     foreach ($body->childNodes as $child) {
@@ -174,7 +174,7 @@ class ExportController extends BaseController
                     ]);
             }
 
-            $response = new Response($output);
+            $response = $exportService->getOutputInStreamedResponse($writer);
 
             $response->headers->set('Content-Type', $contentType);
             $response->headers->set('Content-Disposition', 'attachment; filename="'.$filename.'"');
