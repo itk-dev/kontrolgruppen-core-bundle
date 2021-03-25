@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- [SUPPORT-131](https://jira.itkdev.dk/browse/SUPP0RT-131): Disabling max execution time when creating exports.
+
 ## [1.11.2] - 2021-03-24
 ### Changed
 - [SUPPORT-131](https://jira.itkdev.dk/browse/SUPP0RT-131): Streams exports to the browser.
