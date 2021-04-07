@@ -120,7 +120,7 @@ class ProcessDeleteCommand extends Command
         $helper = $this->getHelper('question');
 
         $questionTemplate = 'The following processes were found: %s'
-            .PHP_EOL
+            .\PHP_EOL
             .'Are you sure you want do delete them? ';
 
         $questionText = sprintf($questionTemplate, $caseNumbers);

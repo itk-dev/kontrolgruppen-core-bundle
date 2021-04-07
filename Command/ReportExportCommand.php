@@ -99,7 +99,7 @@ class ReportExportCommand extends Command
         foreach ($exports as $export) {
             $help[] = sprintf('  Title: %s', $export->getTitle());
             $help[] = sprintf('  Class name: %s', \get_class($export));
-            $help[] = sprintf('  Parameters:');
+            $help[] = '  Parameters:';
             foreach ($export->getParameters() as $name => $info) {
                 $type = $info['type'] ?? TextType::class;
                 $type = preg_replace('@^([a-z]+\\\\)+@i', '', $type);
@@ -108,7 +108,7 @@ class ReportExportCommand extends Command
             $help[] = '';
         }
 
-        return implode(PHP_EOL, $help);
+        return implode(\PHP_EOL, $help);
     }
 
     /**
@@ -128,7 +128,7 @@ class ReportExportCommand extends Command
         $parameters = $this->exportManager->getExportParameters($export, $parameters ?? '');
 
         if ($input->getOption('debug-parameters')) {
-            $output->writeln(json_encode($parameters, JSON_PRETTY_PRINT));
+            $output->writeln(json_encode($parameters, \JSON_PRETTY_PRINT));
 
             return;
         }

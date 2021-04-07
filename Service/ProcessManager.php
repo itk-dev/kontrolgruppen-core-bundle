@@ -199,7 +199,7 @@ class ProcessManager
             }
         }
 
-        $caseNumber = str_pad($highestCaseCounter + 1, 5, '0', STR_PAD_LEFT);
+        $caseNumber = str_pad($highestCaseCounter + 1, 5, '0', \STR_PAD_LEFT);
 
         return date('y').'-'.$caseNumber;
     }

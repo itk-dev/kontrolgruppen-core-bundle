@@ -103,6 +103,13 @@ class ExportController extends BaseController
      */
     public function run(Request $request, $_format, PhpSpreadsheetExportService $exportService)
     {
+        // The exports created in this controller could be very large,
+        // so to prevent the server from crashing due to exceeding the
+        // maximum allowed execution time, we disable it.
+        // @todo We should find a better way to handle this.
+        // @todo Maybe in the batch processing part of the specific Export classes.
+        set_time_limit(0);
+
         $exportKey = $request->get('export');
         $exportClass = null;
         foreach ($this->getExports() as $r) {
@@ -150,7 +157,7 @@ class ExportController extends BaseController
                     $d->loadHTML($output);
                     $body = $d->getElementsByTagName('body')->item(0);
                     foreach ($body->childNodes as $child) {
-                        if (XML_ELEMENT_NODE === $child->nodeType) {
+                        if (\XML_ELEMENT_NODE === $child->nodeType) {
                             if ('style' === $child->tagName ?? null) {
                                 continue;
                             }

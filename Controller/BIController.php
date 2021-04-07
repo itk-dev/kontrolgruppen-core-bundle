@@ -131,7 +131,7 @@ class BIController extends BaseController
      */
     private function getContentType($filename)
     {
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $ext = pathinfo($filename, \PATHINFO_EXTENSION);
 
         switch ($ext) {
             case 'csv':
@@ -156,7 +156,7 @@ class BIController extends BaseController
      */
     private function readExport($filename)
     {
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $ext = pathinfo($filename, \PATHINFO_EXTENSION);
 
         if ('csv' === $ext) {
             $reader = new Csv();
