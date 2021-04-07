@@ -73,6 +73,8 @@ class DashboardController extends BaseController
                 '5' => 5,
                 '10' => 10,
                 '50' => 50,
+                '75' => 75,
+                '100' => 100,
             ],
             'choice_translation_domain' => false,
             'label_attr' => ['class' => 'sr-only'],
@@ -137,7 +139,7 @@ class DashboardController extends BaseController
 
         // Get my processes result.
         $pagination = $paginator->paginate(
-            $query->getResult(),
+            $query,
             $request->query->get('page', 1),
             $limit
         );
