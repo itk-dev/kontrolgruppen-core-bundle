@@ -113,7 +113,7 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         $errors = $auth->getErrors();
 
         if (!empty($errors)) {
-            throw new AuthenticationException(implode(PHP_EOL, $errors));
+            throw new AuthenticationException(implode(\PHP_EOL, $errors));
         }
 
         if (!$auth->isAuthenticated()) {

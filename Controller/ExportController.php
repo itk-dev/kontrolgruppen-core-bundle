@@ -157,7 +157,7 @@ class ExportController extends BaseController
                     $d->loadHTML($output);
                     $body = $d->getElementsByTagName('body')->item(0);
                     foreach ($body->childNodes as $child) {
-                        if (XML_ELEMENT_NODE === $child->nodeType) {
+                        if (\XML_ELEMENT_NODE === $child->nodeType) {
                             if ('style' === $child->tagName ?? null) {
                                 continue;
                             }
