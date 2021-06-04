@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- [KON-438](https://jira.itkdev.dk/browse/KON-436): Selecting processes in revenue export based on the originally closed date.
 
 ## [1.11.3] - 2021-04-07
 ### Changed
