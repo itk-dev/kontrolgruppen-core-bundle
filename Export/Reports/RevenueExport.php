@@ -195,13 +195,13 @@ class RevenueExport extends AbstractExport
     private function getProcesses(): Traversable
     {
         $queryBuilder = $this->entityManager->getRepository(Process::class)->createQueryBuilder('p')
-            ->andWhere('p.completedAt IS NOT NULL');
+            ->andWhere('p.originallyCompletedAt IS NOT NULL');
 
         $startDate = $this->parameters['startdate'] ?? new \DateTime('2001-01-01');
         $endDate = $this->parameters['enddate'] ?? new \DateTime('2100-01-01');
 
         $queryBuilder
-            ->andWhere('p.completedAt BETWEEN :startdate AND :enddate')
+            ->andWhere('p.originallyCompletedAt BETWEEN :startdate AND :enddate')
             ->setParameter('startdate', $startDate)
             ->setParameter('enddate', $endDate);
 

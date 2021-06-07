@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.11.4] - 2021-06-04
+### Changed
+- [KON-438](https://jira.itkdev.dk/browse/KON-436): Selecting processes in revenue export based on the originally closed date.
+
 ## [1.11.3] - 2021-04-07
 ### Changed
 - [SUPPORT-132](https://jira.itkdev.dk/browse/SUPP0RT-132): Adding more limits for processes shown on the dashboard.
