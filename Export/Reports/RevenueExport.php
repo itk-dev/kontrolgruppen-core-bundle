@@ -198,7 +198,9 @@ class RevenueExport extends AbstractExport
             ->andWhere('p.originallyCompletedAt IS NOT NULL');
 
         $startDate = $this->parameters['startdate'] ?? new \DateTime('2001-01-01');
+        $startDate->setTime(00, 00, 00);
         $endDate = $this->parameters['enddate'] ?? new \DateTime('2100-01-01');
+        $endDate->setTime(23, 59, 59);
 
         $queryBuilder
             ->andWhere('p.originallyCompletedAt BETWEEN :startdate AND :enddate')
