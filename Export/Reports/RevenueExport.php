@@ -198,12 +198,14 @@ class RevenueExport extends AbstractExport
             ->andWhere('p.originallyCompletedAt IS NOT NULL');
 
         $startDate = $this->parameters['startdate'] ?? new \DateTime('2001-01-01');
-        $startDate->setTime(00, 00, 00);
         $endDate = $this->parameters['enddate'] ?? new \DateTime('2100-01-01');
-        $endDate->setTime(23, 59, 59);
+
+        // We add one day to the endDate to make sure that processes
+        // completed on the last day of a month is accounted for.
+        $endDate->add(new \DateInterval('P1D'));
 
         $queryBuilder
-            ->andWhere('p.originallyCompletedAt BETWEEN :startdate AND :enddate')
+            ->andWhere('p.originallyCompletedAt >= :startdate AND p.originallyCompletedAt < :enddate')
             ->setParameter('startdate', $startDate)
             ->setParameter('enddate', $endDate);
 
