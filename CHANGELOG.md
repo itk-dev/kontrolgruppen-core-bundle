@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.11.5] - 2021-06-11
+### Changed
+- [KON-442](https://jira.itkdev.dk/browse/KON-442): Setting end time for a date in export revenue to be last possible time on day.
+
 ## [1.11.4] - 2021-06-04
 ### Changed
 - [KON-438](https://jira.itkdev.dk/browse/KON-436): Selecting processes in revenue export based on the originally closed date.
