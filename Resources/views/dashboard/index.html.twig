@@ -21,10 +21,10 @@
                         {{ 'dashboard.my_processes.title'|trans }}
                         {% set paginationData = myProcesses.paginationData|default(null) %}
                         {% if paginationData and paginationData.totalCount > 0 %}
-                            ({{ '%count% of %total%'|trans({
-                                '%count%': myProcesses|length,
-                                '%total%': paginationData.totalCount
-                                }) }})
+                            ({{ 'dashboard.my_processes.pagination_info'|trans({
+                                 '%count%': myProcesses|length,
+                                 '%total%': paginationData.totalCount
+                                 }) }})
                         {% endif %}
                     </h2>
                 </div>

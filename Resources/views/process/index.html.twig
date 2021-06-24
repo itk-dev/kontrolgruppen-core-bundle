@@ -21,7 +21,7 @@
             <div class="float-right js-process-table-results">
                 {% set paginationData = pagination.paginationData|default(null) %}
                 {% if paginationData and paginationData.totalCount > 0 %}
-                    {{ 'Showing %start%–%end% of %total%'|trans({
+                    {{ 'process.index.pagination_info'|trans({
                         '%start%': (paginationData.current - 1) * paginationData.numItemsPerPage + 1,
                         '%end%': min(paginationData.current * paginationData.numItemsPerPage, pagination.getTotalItemCount),
                         '%total%': paginationData.totalCount
