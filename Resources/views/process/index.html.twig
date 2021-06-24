@@ -19,12 +19,12 @@
             </div>
             {# Add js-process-table-results class to hide the count when leading data #}
             <div class="float-right js-process-table-results">
-                {% set paginationData = pagination.paginationData|default(null) %}
-                {% if paginationData and paginationData.totalCount > 0 %}
+                {% set pagination_data = pagination.paginationData|default(null) %}
+                {% if pagination_data and pagination_data.totalCount > 0 %}
                     {{ 'process.index.pagination_info'|trans({
-                        '%start%': (paginationData.current - 1) * paginationData.numItemsPerPage + 1,
-                        '%end%': min(paginationData.current * paginationData.numItemsPerPage, pagination.getTotalItemCount),
-                        '%total%': paginationData.totalCount
+                        '%start%': (pagination_data.current - 1) * pagination_data.numItemsPerPage + 1,
+                        '%end%': min(pagination_data.current * pagination_data.numItemsPerPage, pagination.getTotalItemCount),
+                        '%total%': pagination_data.totalCount
                         }) }}
                 {% endif %}
             </div>

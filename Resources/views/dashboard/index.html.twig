@@ -19,11 +19,11 @@
                     <h2 class="mb-3">
                         <i class="fas {{ iconClass('process') }} mr-3"></i>
                         {{ 'dashboard.my_processes.title'|trans }}
-                        {% set paginationData = myProcesses.paginationData|default(null) %}
-                        {% if paginationData and paginationData.totalCount > 0 %}
+                        {% set pagination_data = myProcesses.paginationData|default(null) %}
+                        {% if pagination_data and pagination_data.totalCount > 0 %}
                             ({{ 'dashboard.my_processes.pagination_info'|trans({
                                  '%count%': myProcesses|length,
-                                 '%total%': paginationData.totalCount
+                                 '%total%': pagination_data.totalCount
                                  }) }})
                         {% endif %}
                     </h2>
