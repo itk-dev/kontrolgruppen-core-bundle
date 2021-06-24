@@ -10,9 +10,26 @@
         </div>
     </div>
 
-    <form method="get" action="." class="form form-inline">
-        {{ form_rest(form) }}
-    </form>
+    <div class="row">
+        <div class="col-12">
+            <div class="float-left">
+                <form method="get" action="." class="form form-inline">
+                    {{ form_rest(form) }}
+                </form>
+            </div>
+            {# Add js-process-table-results class to hide the count when leading data #}
+            <div class="float-right js-process-table-results">
+                {% set paginationData = pagination.paginationData|default(null) %}
+                {% if paginationData and paginationData.totalCount > 0 %}
+                    {{ 'Showing %start%–%end% of %total%'|trans({
+                        '%start%': (paginationData.current - 1) * paginationData.numItemsPerPage + 1,
+                        '%end%': min(paginationData.current * paginationData.numItemsPerPage, pagination.getTotalItemCount),
+                        '%total%': paginationData.totalCount
+                        }) }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
 
     {% include '@KontrolgruppenCore/process/_process_table_pagination.html.twig' %}
 
