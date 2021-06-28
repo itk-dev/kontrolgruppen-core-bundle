@@ -10,7 +10,9 @@
 
 namespace Kontrolgruppen\CoreBundle\CPR;
 
+use Kontrolgruppen\CoreBundle\Entity\AbstractProcessClient;
 use Kontrolgruppen\CoreBundle\Entity\Client;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 
 /**
  * Interface CprServiceInterface.
@@ -37,15 +39,15 @@ interface CprServiceInterface
      *
      * @throws CprException
      */
-    public function populateClient(Cpr $cpr, Client $client): Client;
+    public function populateClient(Cpr $cpr, ProcessClientPerson $client): Client;
 
     /**
-     * @param Cpr    $cpr
-     * @param Client $client
+     * @param Cpr                   $cpr
+     * @param AbstractProcessClient $client
      *
      * @return bool
      *
      * @throws CprException
      */
-    public function isNewClientInfoAvailable(Cpr $cpr, Client $client): bool;
+    public function isNewClientInfoAvailable(Cpr $cpr, ProcessClientPerson $client): bool;
 }

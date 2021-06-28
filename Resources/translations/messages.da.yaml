@@ -72,12 +72,14 @@ client:
         cars: Biler
         city: By
         cpr: CPR nummer
+        cvr: CVR-nummer
         first_name: Fornavn
         has_drivers_license: Har kørekort
         has_car: Har bil
         id: ID
         last_name: Efternavn
         employed: Ansat
+        name: Navn
         number_of_children: Antal børn
         postal_code: Postnummer
         receives_public_aid: Offentlig forsørgelse
@@ -106,10 +108,12 @@ client:
         cars: Biler
         city: By
         cpr: CPR nummer
+        cvr: CVR-nummer
         first_name: Fornavn
         id: ID
         last_name: Efternavn
         employed: Ansat
+        name: Navn
         number_of_children: Antal børn
         postal_code: Postnummer
         receives_public_aid: Offentlig forsørgelse
@@ -503,6 +507,11 @@ process:
             save: Gem ny status
         channel: Kanal
         client_cpr: Klient CPR
+        client_cvr: CVR-nummer
+        client_type: Klienttype
+        client_type.empty: '(Vælg klienttype)'
+        client_type.company: Virksomhed
+        client_type.person: Person
         court_decision: Rettens afgørelse
         police_report: Er sagen politianmeldt?
         process_status: Sagsstatus
@@ -511,6 +520,10 @@ process:
         update: Gem
         status: Status
         search_client_cpr:
+            search: Søg efter eksisterende sager
+            loading: Søger...
+            results: Eksisterende sag(er) fundet
+        search_client_cvr:
             search: Søg efter eksisterende sager
             loading: Søger...
             results: Eksisterende sag(er) fundet
@@ -530,6 +543,7 @@ process:
         channel: Kanal
         reason: Årsag
         client_adress: Klient adresse
+        client: Klient
         client_cpr: Klient CPR
         client_first_name: Fornavn
         client_last_name: Efternavn

@@ -20,11 +20,14 @@ use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessCompleteType;
 use Kontrolgruppen\CoreBundle\Form\ProcessResumeType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
+use Kontrolgruppen\CoreBundle\Repository\ProcessClientCompanyRepository;
+use Kontrolgruppen\CoreBundle\Repository\ProcessClientPersonRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
+use Kontrolgruppen\CoreBundle\Service\ProcessClientManager;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
@@ -42,16 +45,16 @@ class ProcessController extends BaseController
     /**
      * @Route("/", name="process_index", methods={"GET"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request                           $request
-     * @param \Kontrolgruppen\CoreBundle\Repository\ProcessRepository             $processRepository
-     * @param \Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface $lexikBuilderUpdater
-     * @param \Knp\Component\Pager\PaginatorInterface                             $paginator
-     * @param \Symfony\Component\Form\FormFactoryInterface                        $formFactory
-     * @param \Kontrolgruppen\CoreBundle\Service\ProcessManager                   $processManager
-     * @param \Kontrolgruppen\CoreBundle\Repository\UserRepository                $userRepository
-     * @param \Kontrolgruppen\CoreBundle\Service\UserSettingsService              $userSettingsService
+     * @param Request                       $request
+     * @param ProcessRepository             $processRepository
+     * @param FilterBuilderUpdaterInterface $lexikBuilderUpdater
+     * @param PaginatorInterface            $paginator
+     * @param FormFactoryInterface          $formFactory
+     * @param ProcessManager                $processManager
+     * @param UserRepository                $userRepository
+     * @param UserSettingsService           $userSettingsService
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -170,15 +173,17 @@ class ProcessController extends BaseController
     /**
      * @Route("/new", name="process_new", methods={"GET","POST"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request         $request
-     * @param \Kontrolgruppen\CoreBundle\Service\ProcessManager $processManager
+     * @param Request              $request
+     * @param ProcessManager       $processManager
+     * @param ProcessClientManager $clientManager
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Kontrolgruppen\CoreBundle\CPR\CprException
      */
-    public function new(Request $request, ProcessManager $processManager): Response
+    public function new(Request $request, ProcessManager $processManager, ProcessClientManager $clientManager): Response
     {
         $process = new Process();
 
@@ -188,7 +193,14 @@ class ProcessController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $process = $processManager->newProcess($process);
+            $data = $request->request->get('process');
+            $clientType = $data['clientType'] ?? null;
+            $clientData = array_filter([
+                'cpr' => $data[$clientType]['cpr'] ?? null,
+                'cvr' => $data[$clientType]['cvr'] ?? null,
+            ]);
+            $client = $clientManager->createClient($clientType, $clientData);
+            $process = $processManager->newProcess($process, $client);
 
             return $this->redirectToRoute('client_show', ['process' => $process]);
         }
@@ -213,22 +225,28 @@ class ProcessController extends BaseController
     }
 
     /**
-     * @Route("/search-process-by-cpr", name="process_search_by_cpr", methods={"POST"})
+     * @Route("/search-process-by-cpr", name="process_search_by_cpr", methods={"GET"})
      *
-     * @param Request           $request
-     * @param ProcessRepository $processRepository
+     * @param Request                       $request
+     * @param ProcessClientPersonRepository $clientRepository
      *
      * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function searchProcessesByCpr(Request $request, ProcessRepository $processRepository): Response
+    public function searchProcessesByCpr(Request $request, ProcessClientPersonRepository $clientRepository): Response
     {
-        if (!$request->request->has('cpr')) {
+        $cpr = $request->get('cpr');
+        if (!$cpr) {
             throw new NotFoundHttpException('No CPR found!');
         }
 
-        $processes = $processRepository->findBy(
-            ['clientCPR' => $request->request->get('cpr')]
-        );
+        $processes = [];
+        $clients = $clientRepository->findBy(['cpr' => $cpr]);
+        foreach ($clients as $client) {
+            $processes[] = $client->getProcess();
+        }
 
         return $this->render(
             '@KontrolgruppenCore/process/_process_search_cpr_result.html.twig',
@@ -237,13 +255,43 @@ class ProcessController extends BaseController
     }
 
     /**
+     * @Route("/search-process-by-cvr", name="process_search_by_cvr", methods={"GET"})
+     *
+     * @param Request                        $request
+     * @param ProcessClientCompanyRepository $clientRepository
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function searchProcessesByCvr(Request $request, ProcessClientCompanyRepository $clientRepository): Response
+    {
+        $cvr = $request->get('cvr');
+        if (!$cvr) {
+            throw new NotFoundHttpException('No CVR found!');
+        }
+
+        $processes = [];
+        $clients = $clientRepository->findBy(['cvr' => $cvr]);
+        foreach ($clients as $client) {
+            $processes[] = $client->getProcess();
+        }
+
+        return $this->render(
+            '@KontrolgruppenCore/process/_process_search_cvr_result.html.twig',
+            ['processes' => $processes]
+        );
+    }
+
+    /**
      * @Route("/{id}", name="process_show", methods={"GET", "POST"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request     $request
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process     $process
-     * @param \Kontrolgruppen\CoreBundle\Service\LogManager $logManager
+     * @param Request    $request
+     * @param Process    $process
+     * @param LogManager $logManager
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -275,10 +323,10 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}/edit", name="process_edit", methods={"GET","POST"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     * @param Request $request
+     * @param Process $process
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -321,10 +369,10 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}", name="process_delete", methods={"DELETE"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     * @param Request $request
+     * @param Process $process
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function delete(Request $request, Process $process): Response
     {
@@ -345,13 +393,13 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}/complete", name="process_complete", methods={"GET","POST"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request                     $request
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process                     $process
-     * @param \Kontrolgruppen\CoreBundle\Repository\ServiceRepository       $serviceRepository
-     * @param \Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository $processStatusRepository
-     * @param \Kontrolgruppen\CoreBundle\Service\EconomyService             $economyService
+     * @param Request                 $request
+     * @param Process                 $process
+     * @param ServiceRepository       $serviceRepository
+     * @param ProcessStatusRepository $processStatusRepository
+     * @param ProcessManager          $processManager
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -415,10 +463,11 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}/resume", name="process_resume", methods={"POST", "GET"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     * @param Request                 $request
+     * @param Process                 $process
+     * @param ProcessStatusRepository $processStatusRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function resume(Request $request, Process $process, ProcessStatusRepository $processStatusRepository): Response
     {

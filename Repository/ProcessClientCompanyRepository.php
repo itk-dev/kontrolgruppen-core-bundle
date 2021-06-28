@@ -22,6 +22,9 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
  */
 class ProcessClientCompanyRepository extends ServiceEntityRepository
 {
+    /**
+     * {@inheritdoc}
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ProcessClientCompany::class);

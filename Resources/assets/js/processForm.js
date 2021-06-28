@@ -38,4 +38,13 @@ $(document).ready(function () {
     processTypeInput.change(function () {
         loadChoices($(this));
     });
+
+    const clientTypeUpdate = () => {
+        const type = $('#process_clientType').val();
+        $('[data-client-type]').parent().toggle(false);
+        $(`[data-client-type="${type}"]`).parent().toggle(true);
+    };
+
+    $('#process_clientType').on('change', clientTypeUpdate);
+    clientTypeUpdate();
 });

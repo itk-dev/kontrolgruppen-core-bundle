@@ -49,7 +49,7 @@ class Process extends AbstractEntity
     private $caseNumber;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @KontrolgruppenAssert\CPR
      *
@@ -109,7 +109,7 @@ class Process extends AbstractEntity
     private $client;
 
     /**
-     * @ORM\OneToOne(targetEntity="AbstractProcessClient", mappedBy="process", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\AbstractProcessClient", mappedBy="process", cascade={"persist", "remove"})
      */
     private $processClient;
 
@@ -511,7 +511,7 @@ class Process extends AbstractEntity
     }
 
     /**
-     * @param AbstractProcessClient $client
+     * @param AbstractProcessClient $processClient
      *
      * @return Process
      */

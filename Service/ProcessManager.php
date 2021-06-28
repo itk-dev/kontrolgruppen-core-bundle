@@ -15,10 +15,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\CPR\Cpr;
 use Kontrolgruppen\CoreBundle\CPR\CprException;
 use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
+use Kontrolgruppen\CoreBundle\Entity\AbstractProcessClient;
 use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\Conclusion;
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Entity\ProcessType;
 use Kontrolgruppen\CoreBundle\Entity\User;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Psr\Log\LoggerInterface;
@@ -141,20 +141,15 @@ class ProcessManager
     /**
      * Create new process.
      *
-     * @param Process|null     $process
-     * @param ProcessType|null $processType
+     * @param Process               $process
+     * @param AbstractProcessClient $client
      *
      * @return \Kontrolgruppen\CoreBundle\Entity\Process
      *
      * @throws \Exception
      */
-    public function newProcess(Process $process = null, ProcessType $processType = null)
+    public function newProcess(Process $process, AbstractProcessClient $client = null)
     {
-        if (null === $process) {
-            $process = new Process();
-            $process->setProcessType($processType);
-        }
-
         $resourceToLock = 'case-number';
 
         $this->lockService->createLock($resourceToLock);
@@ -168,7 +163,7 @@ class ProcessManager
         $process->setCaseNumber($this->getNewCaseNumber());
         $process->setProcessStatus($this->decideStatusForProcess($process));
         $process->setConclusion($this->createConclusionForProcess($process));
-        $process->setClient($this->createClientForProcess($process));
+        $process->setProcessClient($client);
 
         $this->entityManager->persist($process);
         $this->entityManager->flush();
