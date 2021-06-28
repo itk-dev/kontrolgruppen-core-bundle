@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @Route("/process/{process}/client")
+ * @Route("/process/{process}/legacy_client")
  */
 class ClientController extends BaseController
 {

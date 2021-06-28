@@ -12,17 +12,17 @@ namespace Kontrolgruppen\CoreBundle\Form;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType as ProcessTypeEntity;
+use Kontrolgruppen\CoreBundle\Form\Process\ClientCompanyType;
+use Kontrolgruppen\CoreBundle\Form\Process\ClientPersonType;
 use Kontrolgruppen\CoreBundle\Repository\ChannelRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -62,24 +62,34 @@ class ProcessType extends AbstractType
             ->add('processType', null, [
                 'label' => 'process.form.process_type',
             ])
-            ->add('clientCPR', null, [
-                'label' => 'process.form.client_cpr',
+            ->add('clientType', ChoiceType::class, [
+                'label' => 'process.form.client_type',
                 'attr' => [
-                    'class' => 'js-input-cpr no-cpr-scanning',
+                    'class' => 'js-input-client-type',
                 ],
+                'choices' => [
+                    $this->translator->trans('process.form.client_type.empty') => '',
+                    $this->translator->trans('process.form.client_type.company') => 'company',
+                    $this->translator->trans('process.form.client_type.person') => 'person',
+                ],
+                'required' => true,
+                'mapped' => false,
             ])
-            ->add('searchCpr', ButtonType::class, [
-                'label' => 'process.form.search_client_cpr.search',
+            ->add('company', ClientCompanyType::class, [
+                'label' => false,
                 'attr' => [
-                    'class' => 'btn-primary',
-                    'data-search-action' => $this->router->generate(
-                        'process_search_by_cpr',
-                        [],
-                        UrlGeneratorInterface::ABSOLUTE_URL
-                    ),
-                    'data-search-text' => $this->translator->trans('process.form.search_client_cpr.search'),
-                    'data-loading-text' => $this->translator->trans('process.form.search_client_cpr.loading'),
+                    'class' => 'client-company',
+                    'data-client-type' => 'company',
                 ],
+                'mapped' => false,
+            ])
+            ->add('person', ClientPersonType::class, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'client-person',
+                    'data-client-type' => 'person',
+                ],
+                'mapped' => false,
             ])
             ->add('caseWorker', null, [
                 'label' => 'process.form.case_worker',

@@ -10,6 +10,8 @@
 
 namespace Kontrolgruppen\CoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -17,13 +19,20 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Base class for clients on a process.
  *
  * @ORM\Entity()
+ * @ORM\Table(name="process_client")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({
+ *     "person"="Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson",
+ *     "company"="Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany"
+ * })
+ *
+ * @Gedmo\Loggable()
  */
-abstract class AbstractProcessClient extends AbstractEntity
+abstract class AbstractProcessClient extends AbstractEntity implements ProcessLoggableInterface
 {
     /**
-     * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="client", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="processClient", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $process;
@@ -57,6 +66,60 @@ abstract class AbstractProcessClient extends AbstractEntity
     private $telephone;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $hasCar;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Car", mappedBy="processClient", orphanRemoval=true, cascade={"persist", "remove"})
+     */
+    private $cars;
+
+    /**
+     * AbstractProcessClient constructor.
+     */
+    public function __construct()
+    {
+        $this->cars = new ArrayCollection();
+    }
+
+    /**
+     * Get client type.
+     *
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this instanceof ProcessClientCompany ? 'company' : 'person';
+    }
+
+    /**
+     * Get process.
+     *
+     * @return Process|null
+     */
+    public function getProcess(): ?Process
+    {
+        return $this->process;
+    }
+
+    /**
+     * Sset process.
+     *
+     * @param Process $process
+     *
+     * @return $this
+     */
+    public function setProcess(Process $process): self
+    {
+        $this->process = $process;
+
+        return $this;
+    }
+
+    /**
+     * Get address.
+     *
      * @return string|null
      */
     public function getAddress(): ?string
@@ -65,9 +128,11 @@ abstract class AbstractProcessClient extends AbstractEntity
     }
 
     /**
+     * Set address.
+     *
      * @param string|null $address
      *
-     * @return Client
+     * @return $this
      */
     public function setAddress(?string $address): self
     {
@@ -77,6 +142,8 @@ abstract class AbstractProcessClient extends AbstractEntity
     }
 
     /**
+     * Get postal code.
+     *
      * @return string|null
      */
     public function getPostalCode(): ?string
@@ -85,9 +152,11 @@ abstract class AbstractProcessClient extends AbstractEntity
     }
 
     /**
+     * Set postal code.
+     *
      * @param string|null $postalCode
      *
-     * @return AbstractProcessClient
+     * @return $this
      */
     public function setPostalCode(?string $postalCode): self
     {
@@ -97,6 +166,8 @@ abstract class AbstractProcessClient extends AbstractEntity
     }
 
     /**
+     * Get city.
+     *
      * @return string|null
      */
     public function getCity(): ?string
@@ -105,9 +176,11 @@ abstract class AbstractProcessClient extends AbstractEntity
     }
 
     /**
+     * Set city.
+     *
      * @param string $city
      *
-     * @return AbstractProcessClient
+     * @return $this
      */
     public function setCity(string $city): self
     {
@@ -117,6 +190,8 @@ abstract class AbstractProcessClient extends AbstractEntity
     }
 
     /**
+     * Get telephone.
+     *
      * @return string|null
      */
     public function getTelephone(): ?string
@@ -125,13 +200,86 @@ abstract class AbstractProcessClient extends AbstractEntity
     }
 
     /**
+     * Set telephone.
+     *
      * @param string|null $telephone
      *
-     * @return AbstractProcessClient
+     * @return $this
      */
     public function setTelephone(?string $telephone): self
     {
         $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    /**
+     * Get has car.
+     *
+     * @return bool|null
+     */
+    public function getHasCar(): ?bool
+    {
+        return $this->hasCar;
+    }
+
+    /**
+     * Set has car.
+     *
+     * @param bool|null $hasCar
+     *
+     * @return $this
+     */
+    public function setHasCar(?bool $hasCar): self
+    {
+        $this->hasCar = $hasCar;
+
+        return $this;
+    }
+
+    /**
+     * Get cars.
+     *
+     * @return Collection|Car[]
+     */
+    public function getCars(): Collection
+    {
+        return $this->cars;
+    }
+
+    /**
+     * Add car.
+     *
+     * @param Car $car
+     *
+     * @return $this
+     */
+    public function addCar(Car $car): self
+    {
+        if (!$this->cars->contains($car)) {
+            $this->cars[] = $car;
+            $car->setProcessClient($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove car.
+     *
+     * @param Car $car
+     *
+     * @return $this
+     */
+    public function removeCar(Car $car): self
+    {
+        if ($this->cars->contains($car)) {
+            $this->cars->removeElement($car);
+            // set the owning side to null (unless already changed)
+            if ($car->getClient() === $this) {
+                $car->setClient(null);
+            }
+        }
 
         return $this;
     }

@@ -11,6 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\CPR;
 
 use Kontrolgruppen\CoreBundle\Entity\Client;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 
 /**
  * Class AbstractCprService.
@@ -20,7 +21,7 @@ abstract class AbstractCprService implements CprServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function populateClient(Cpr $cpr, Client $client): Client
+    public function populateClient(Cpr $cpr, ProcessClientPerson $client): Client
     {
         $result = $this->find($cpr);
 
@@ -45,7 +46,7 @@ abstract class AbstractCprService implements CprServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function isNewClientInfoAvailable(Cpr $cpr, Client $client): bool
+    public function isNewClientInfoAvailable(Cpr $cpr, ProcessClientPerson $client): bool
     {
         $result = $this->find($cpr);
 
