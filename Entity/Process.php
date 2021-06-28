@@ -109,6 +109,11 @@ class Process extends AbstractEntity
     private $client;
 
     /**
+     * @ORM\OneToOne(targetEntity="AbstractProcessClient", mappedBy="process", cascade={"persist", "remove"})
+     */
+    private $processClient;
+
+    /**
      * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Conclusion", mappedBy="process", cascade={"persist", "remove"})
      */
     private $conclusion;
@@ -492,6 +497,31 @@ class Process extends AbstractEntity
         // set the owning side of the relation if necessary
         if ($this !== $client->getProcess()) {
             $client->setProcess($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return AbstractProcessClient|null
+     */
+    public function getProcessClient(): ?AbstractProcessClient
+    {
+        return $this->processClient;
+    }
+
+    /**
+     * @param AbstractProcessClient $client
+     *
+     * @return Process
+     */
+    public function setProcessClient(AbstractProcessClient $processClient): self
+    {
+        $this->processClient = $processClient;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $processClient->getProcess()) {
+            $processClient->setProcess($this);
         }
 
         return $this;
