@@ -31,6 +31,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 abstract class AbstractProcessClient extends AbstractEntity implements ProcessLoggableInterface
 {
+    private static $clientTypes = [
+        'company' => ProcessClientCompany::class,
+        'person' => ProcessClientPerson::class,
+    ];
+
     /**
      * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="processClient", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
@@ -81,6 +86,14 @@ abstract class AbstractProcessClient extends AbstractEntity implements ProcessLo
     public function __construct()
     {
         $this->cars = new ArrayCollection();
+    }
+
+    /**
+     * Get client types as a map from (short) name to class name.
+     */
+    public static function getClientTypes(): array
+    {
+        return static::$clientTypes;
     }
 
     /**

@@ -34,6 +34,7 @@ channel:
     show:
         title: Kanal
     table:
+        client_type: Klienttype
         id: ID
         name: Navn
     btns:
@@ -53,6 +54,7 @@ reason:
     show:
         title: Årsag
     table:
+        client_type: Klienttype
         id: ID
         name: Navn
     btns:
@@ -696,6 +698,7 @@ process_status:
     show:
         title: Sagsstatus
     table:
+        client_type: Klienttype
         id: ID
         name: Navn
         is_forward_to_another_authority: Videresendes til anden myndighed
@@ -732,6 +735,7 @@ process_type:
     table:
         conclusion_class: Konklusionstype
         channels: Tilkoblede kanaler
+        client_type: Klienttype
         hide_in_dashboard: Skjul på dashboard
         id: ID
         name: Navn
@@ -1075,3 +1079,8 @@ change_status_on_completed_processes:
     form:
         status_label: Ny sagsstatus
         submit_label: Sæt status
+
+process_client_type:
+    none: '–'
+    company: Virksomhed
+    person: Person
