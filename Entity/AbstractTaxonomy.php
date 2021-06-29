@@ -20,11 +20,40 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 abstract class AbstractTaxonomy extends AbstractEntity
 {
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $clientType;
+
+    /**
      * @ORM\Column(type="string", length=255)
      *
      * @Gedmo\Versioned
      */
     protected $name;
+
+    /**
+     * @return string|null
+     */
+    public function getClientType(): ?string
+    {
+        return $this->clientType;
+    }
+
+    /**
+     * @param mixed $clientType
+     *
+     * @return AbstractTaxonomy
+     */
+    public function setClientType(string $clientType): self
+    {
+        if (null !== $this->clientType && $clientType !== $this->clientType) {
+            throw new \RuntimeException('Cannot change client type');
+        }
+
+        $this->clientType = $clientType;
+
+        return $this;
+    }
 
     /**
      * @return string|null

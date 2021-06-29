@@ -53,6 +53,7 @@ class TwigExtension extends AbstractExtension
             new TwigFilter('yes_no', [$this, 'booleanYesNoFilter']),
             new TwigFilter('true_false', [$this, 'booleanTrueFalseFilter']),
             new TwigFilter('simple_date', [$this, 'simpleDateFilter'], ['needs_environment' => true]),
+            new TwigFilter('process_client_type', [$this, 'processClientTypeFilter']),
         ];
     }
 
@@ -128,6 +129,23 @@ class TwigExtension extends AbstractExtension
         }
 
         return $this->translator->trans('common.boolean.no');
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    public function processClientTypeFilter(string $value)
+    {
+        switch ($value) {
+            case 'company':
+                return $this->translator->trans('process_client_type.company');
+            case 'person':
+                return $this->translator->trans('process_client_type.person');
+            default:
+                return $this->translator->trans('process_client_type.none');
+        }
     }
 
     /**
