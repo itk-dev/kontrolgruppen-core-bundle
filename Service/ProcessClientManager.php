@@ -81,4 +81,17 @@ class ProcessClientManager
 
         return $client;
     }
+
+    /**
+     * Get client types as a map from (short) name to class name.
+     *
+     * @return array
+     */
+    public static function getClientTypes(): array
+    {
+        return [
+            'person' => ProcessClientPerson::class,
+            'company' => ProcessClientCompany::class,
+        ];
+    }
 }
