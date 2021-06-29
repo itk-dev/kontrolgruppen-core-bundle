@@ -132,11 +132,11 @@ class TwigExtension extends AbstractExtension
     }
 
     /**
-     * @param string $value
+     * @param string|null $value
      *
      * @return string
      */
-    public function processClientTypeFilter(string $value)
+    public function processClientTypeFilter(string $value = null)
     {
         switch ($value) {
             case 'company':
