@@ -16,6 +16,7 @@ use Kontrolgruppen\CoreBundle\Form\Process\ClientCompanyType;
 use Kontrolgruppen\CoreBundle\Form\Process\ClientPersonType;
 use Kontrolgruppen\CoreBundle\Repository\ChannelRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
+use Kontrolgruppen\CoreBundle\Service\ProcessClientManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -44,7 +45,7 @@ class ProcessType extends AbstractType
      * @param RouterInterface     $router
      * @param TranslatorInterface $translator
      */
-    public function __construct(ServiceRepository $serviceRepository, ChannelRepository $channelRepository, RouterInterface $router, TranslatorInterface $translator)
+    public function __construct(ServiceRepository $serviceRepository, ChannelRepository $channelRepository, RouterInterface $router, TranslatorInterface $translator, ProcessClientManager $processClientManager)
     {
         $this->serviceRepository = $serviceRepository;
         $this->channelRepository = $channelRepository;
@@ -58,22 +59,27 @@ class ProcessType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $data = $builder->getData();
+        if (null === $data || null === $data->getId()) {
+            $builder
+                ->add('clientType', ChoiceType::class, [
+                    'label' => 'process.form.client_type',
+                    'attr' => [
+                        'class' => 'js-input-client-type',
+                    ],
+                    'choices' => [
+                        $this->translator->trans('process.form.client_type.empty') => '',
+                        $this->translator->trans('process.form.client_type.company') => 'company',
+                        $this->translator->trans('process.form.client_type.person') => 'person',
+                    ],
+                    'required' => true,
+                    'mapped' => false,
+                ]);
+        }
+
         $builder
             ->add('processType', null, [
                 'label' => 'process.form.process_type',
-            ])
-            ->add('clientType', ChoiceType::class, [
-                'label' => 'process.form.client_type',
-                'attr' => [
-                    'class' => 'js-input-client-type',
-                ],
-                'choices' => [
-                    $this->translator->trans('process.form.client_type.empty') => '',
-                    $this->translator->trans('process.form.client_type.company') => 'company',
-                    $this->translator->trans('process.form.client_type.person') => 'person',
-                ],
-                'required' => true,
-                'mapped' => false,
             ])
             ->add('company', ClientCompanyType::class, [
                 'label' => false,

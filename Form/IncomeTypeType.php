@@ -11,6 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\Form;
 
 use Kontrolgruppen\CoreBundle\Entity\IncomeType;
+use Kontrolgruppen\CoreBundle\Form\Process\ClientTypesType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,6 +27,13 @@ class IncomeTypeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $data = $builder->getData();
+        $builder
+            ->add('clientTypes', ClientTypesType::class, [
+                'label' => 'process_type.form.client_types',
+                //'disabled' => null !== $data && null !== $data->getClientType(),
+            ]);
+
         $builder
             ->add('name', null, [
                 'label' => 'income_type.form.name',

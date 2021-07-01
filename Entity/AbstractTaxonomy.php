@@ -13,6 +13,7 @@ namespace Kontrolgruppen\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @UniqueEntity("name")
@@ -20,37 +21,37 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 abstract class AbstractTaxonomy extends AbstractEntity
 {
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="json", nullable=true)
+     *
+     * @Groups("taxonomy_read")
      */
-    protected $clientType;
+    protected $clientTypes;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Groups("taxonomy_read")
      *
      * @Gedmo\Versioned
      */
     protected $name;
 
     /**
-     * @return string|null
+     * @return array|null
      */
-    public function getClientType(): ?string
+    public function getClientTypes(): ?array
     {
-        return $this->clientType;
+        return $this->clientTypes;
     }
 
     /**
-     * @param mixed $clientType
+     * @param array|null $clientTypes
      *
      * @return AbstractTaxonomy
      */
-    public function setClientType(string $clientType): self
+    public function setClientTypes(array $clientTypes = null): self
     {
-        if (null !== $this->clientType && $clientType !== $this->clientType) {
-            throw new \RuntimeException('Cannot change client type');
-        }
-
-        $this->clientType = $clientType;
+        $this->clientTypes = $clientTypes;
 
         return $this;
     }
@@ -80,6 +81,6 @@ abstract class AbstractTaxonomy extends AbstractEntity
      */
     public function __toString()
     {
-        return $this->getName();
+        return $this->getName() ?? self::class;
     }
 }

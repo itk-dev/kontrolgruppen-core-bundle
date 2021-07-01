@@ -19,7 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Class ClientTypeType.
  */
-class ClientTypeType extends ChoiceType
+class ClientTypesType extends ChoiceType
 {
     /**
      * @var ProcessClientManager
@@ -60,7 +60,9 @@ class ClientTypeType extends ChoiceType
 
         $resolver->setDefaults([
             'choices' => $choices,
-            'placeholder' => $this->translator->trans('process_client_type.empty_option'),
+            'multiple' => true,
+            'expanded' => true,
+            'help' => $this->translator->trans('client_types.help'),
         ]);
     }
 }

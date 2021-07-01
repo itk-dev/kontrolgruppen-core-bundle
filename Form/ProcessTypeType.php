@@ -13,7 +13,7 @@ namespace Kontrolgruppen\CoreBundle\Form;
 use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType;
 use Kontrolgruppen\CoreBundle\Event\GetConclusionTypesEvent;
-use Kontrolgruppen\CoreBundle\Form\Process\ClientTypeType;
+use Kontrolgruppen\CoreBundle\Form\Process\ClientTypesType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\AbstractType;
@@ -57,9 +57,9 @@ class ProcessTypeType extends AbstractType
 
         $data = $builder->getData();
         $builder
-            ->add('clientType', ClientTypeType::class, [
-                'label' => 'process_type.form.client_type',
-                'disabled' => null !== $data && null !== $data->getClientType(),
+            ->add('clientTypes', ClientTypesType::class, [
+                'label' => 'process_type.form.client_types',
+                //'disabled' => null !== $data && null !== $data->getClientTypes(),
             ]);
 
         $builder
