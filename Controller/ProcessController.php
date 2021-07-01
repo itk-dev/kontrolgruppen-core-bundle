@@ -10,16 +10,19 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\LockedNetValue;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
+use Kontrolgruppen\CoreBundle\Entity\ProcessType as ProcessTypeEntity;
 use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessCompleteType;
 use Kontrolgruppen\CoreBundle\Form\ProcessResumeType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
+use Kontrolgruppen\CoreBundle\Repository\AbstractTaxonomyRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessClientCompanyRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessClientPersonRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
@@ -32,10 +35,13 @@ use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/process")
@@ -501,5 +507,38 @@ class ProcessController extends BaseController
                 'form' => $form->createView(),
             ]
         );
+    }
+
+    /**
+     * @Route("/search-taxonomy/{taxonomy}", name="process_search_taxonomy", methods={"GET"})
+     *
+     * @param ProcessClientPersonRepository $clientRepository
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function searchTaxonomy(Request $request, string $taxonomy, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
+    {
+        $taxonomyClassName = [
+            'processType' => ProcessTypeEntity::class,
+        ][$taxonomy] ?? null;
+
+        if (null === $taxonomyClassName) {
+            throw new BadRequestHttpException(sprintf('Invalid taxonomy: %s', $taxonomy));
+        }
+
+        $clientType = $request->get('clientType');
+
+        $repository = $entityManager->getRepository($taxonomyClassName);
+        if (!$repository instanceof AbstractTaxonomyRepository) {
+            throw new BadRequestHttpException(sprintf('Invalid taxonomy: %s', $taxonomy));
+        }
+
+        $items = $repository->findByClientType($clientType);
+        $items = array_values($items);
+
+        $json = $serializer->serialize($items, 'json', ['groups' => 'taxonomy_read']);
+
+        return new JsonResponse($json, Response::HTTP_OK, [], true);
     }
 }

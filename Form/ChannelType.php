@@ -11,7 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\Form;
 
 use Kontrolgruppen\CoreBundle\Entity\Channel;
-use Kontrolgruppen\CoreBundle\Form\Process\ClientTypeType;
+use Kontrolgruppen\CoreBundle\Form\Process\ClientTypesType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,9 +29,9 @@ class ChannelType extends AbstractType
     {
         $data = $builder->getData();
         $builder
-            ->add('clientType', ClientTypeType::class, [
-                'label' => 'process_type.form.client_type',
-                'disabled' => null !== $data && null !== $data->getClientType(),
+            ->add('clientTypes', ClientTypesType::class, [
+                'label' => 'process_type.form.client_types',
+                //'disabled' => null !== $data && null !== $data->getClientType(),
             ]);
 
         $builder

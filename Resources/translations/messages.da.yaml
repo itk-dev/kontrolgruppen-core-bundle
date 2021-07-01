@@ -24,7 +24,7 @@ channel:
     edit:
         title: Rediger kanal
     form:
-        client_type: Klienttype
+        client_types: Klienttyper
         name: Navn
         update: Gem
     index:
@@ -35,7 +35,7 @@ channel:
     show:
         title: Kanal
     table:
-        client_type: Klienttype
+        client_types: Klienttyper
         id: ID
         name: Navn
     btns:
@@ -45,7 +45,7 @@ reason:
     edit:
         title: Rediger årsag
     form:
-        client_type: Klienttype
+        client_types: Klienttyper
         name: Navn
         update: Gem
     index:
@@ -56,7 +56,7 @@ reason:
     show:
         title: Årsag
     table:
-        client_type: Klienttype
+        client_types: Klienttyper
         id: ID
         name: Navn
     btns:
@@ -345,6 +345,7 @@ forwarded_to_authority:
     show:
         title: Videresendes til anden myndighed
     table:
+        client_types: Klienttyper
         id: ID
         name: Navn
         process_types: Tilkoblede sagstyper
@@ -682,7 +683,7 @@ process_status:
     edit:
         title: Rediger sagsstatus
     form:
-        client_type: Klienttype
+        client_types: Klienttyper
         name: Navn
         is_forward_to_another_authority: Videresendes til anden myndighed
         is_forward_to_another_authority_help: Marker om denne status gør at sagen videresendes til anden myndighed
@@ -701,7 +702,7 @@ process_status:
     show:
         title: Sagsstatus
     table:
-        client_type: Klienttype
+        client_types: Klienttyper
         id: ID
         name: Navn
         is_forward_to_another_authority: Videresendes til anden myndighed
@@ -717,7 +718,7 @@ process_type:
     edit:
         title: Rediger sagstype
     form:
-        client_type: Klienttype
+        client_types: Klienttyper
         conclusion_class: Konklusionstype
         channels: Tilkoblede kanaler
         hide_in_dashboard: Skjul på dashboard
@@ -739,7 +740,7 @@ process_type:
     table:
         conclusion_class: Konklusionstype
         channels: Tilkoblede kanaler
-        client_type: Klienttype
+        client_types: Klienttyper
         hide_in_dashboard: Skjul på dashboard
         id: ID
         name: Navn
@@ -935,6 +936,7 @@ service:
     show:
         title: Ydelse
     table:
+        client_types: Klienttyper
         id: ID
         name: Navn
         process_types: Tilkoblede sagstyper
@@ -999,6 +1001,7 @@ account:
     show:
         title: Konto
     table:
+        client_types: Klienttyper
         id: ID
         name: Navn
     btns:
@@ -1018,6 +1021,7 @@ income_type:
     show:
         title: Indkomsttype
     table:
+        client_types: Klienttyper
         id: ID
         name: Navn
     btns:
@@ -1089,3 +1093,6 @@ process_client_type:
     none: '–'
     company: Virksomhed
     person: Person
+
+client_types:
+    help: Vælg klienttyper som “denne” skal gælde for. Hvis ingen er valgt gælder “den” for alle sager.
