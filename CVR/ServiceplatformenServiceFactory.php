@@ -16,7 +16,9 @@ use ItkDev\AzureKeyVault\KeyVault\VaultSecret;
 use ItkDev\Serviceplatformen\Certificate\AzureKeyVaultCertificateLocator;
 use ItkDev\Serviceplatformen\Certificate\Exception\CertificateLocatorException;
 use ItkDev\Serviceplatformen\Request\InvocationContextRequestGenerator;
-use ItkDev\Serviceplatformen\Service\PersonBaseDataExtendedService;
+use ItkDev\Serviceplatformen\Service\OnlineService;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 
 /**
  * Class ServiceplatformenServiceFactory.
@@ -39,15 +41,15 @@ class ServiceplatformenServiceFactory
      * @param string $personBaseDataExtendedServiceEndpoint
      * @param string $personBaseDataExtendedServiceUuid
      *
-     * @return PersonBaseDataExtendedService
+     * @return OnlineService
      *
      * @throws CvrException
      */
-    public static function createPersonBaseDataExtendedService(string $azureTenantId, string $azureApplicationId, string $azureClientSecret, string $azureKeyVaultName, string $azureKeyVaultSecret, string $azureKeyVaultSecretVersion, string $serviceplatformenServiceAgreementUuid, string $serviceplatformenUserSystemUuid, string $serviceplatformenUserUuid, string $personBaseDataExtendedServiceContract, string $personBaseDataExtendedServiceEndpoint, string $personBaseDataExtendedServiceUuid)
+    public static function createOnlineService(ClientInterface $httpClient, RequestFactoryInterface $requestFactory, string $azureTenantId, string $azureApplicationId, string $azureClientSecret, string $azureKeyVaultName, string $azureKeyVaultSecret, string $azureKeyVaultSecretVersion, string $serviceplatformenServiceAgreementUuid, string $serviceplatformenUserSystemUuid, string $serviceplatformenUserUuid, string $personBaseDataExtendedServiceContract, string $personBaseDataExtendedServiceEndpoint, string $personBaseDataExtendedServiceUuid)
     {
-        header('content-type: text/plain'); echo var_export(null, true); die(__FILE__.':'.__LINE__.':'.__METHOD__);
         try {
-            $token = VaultToken::getToken(
+            $vaultToken = new VaultToken($httpClient, $requestFactory);
+            $token = $vaultToken->getToken(
                 $azureTenantId,
                 $azureApplicationId,
                 $azureClientSecret
@@ -57,6 +59,8 @@ class ServiceplatformenServiceFactory
         }
 
         $vault = new VaultSecret(
+            $httpClient,
+            $requestFactory,
             $azureKeyVaultName,
             $token->getAccessToken()
         );
@@ -96,6 +100,6 @@ class ServiceplatformenServiceFactory
             $serviceplatformenUserUuid
         );
 
-        return new PersonBaseDataExtendedService($soapClient, $requestGenerator);
+        return new OnlineService($soapClient, $requestGenerator);
     }
 }

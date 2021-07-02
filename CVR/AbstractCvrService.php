@@ -33,14 +33,8 @@ abstract class AbstractCvrService implements CvrServiceInterface
             return $client;
         }
 
-        $firstName = $result->getFirstName();
-        if (null !== $result->getMiddleName()) {
-            $firstName .= ' '.$result->getMiddleName();
-        }
-
-        $client->setFirstName($firstName);
-        $client->setLastName($result->getLastName());
-        $client->setAddress($this->generateAddressString($result));
+        $client->setName($result->getName());
+        $client->setAddress($result->getAddress());
         $client->setPostalCode($result->getPostalCode());
         $client->setCity($result->getCity());
 
@@ -58,15 +52,9 @@ abstract class AbstractCvrService implements CvrServiceInterface
             return false;
         }
 
-        $firstName = $result->getFirstName();
-        if (null !== $result->getMiddleName()) {
-            $firstName .= ' '.$result->getMiddleName();
-        }
-
         $comparisons = [
-            $client->getFirstName() => $firstName,
-            $client->getLastName() => $result->getLastName(),
-            $client->getAddress() => $this->generateAddressString($result),
+            $client->getName() => $result->getName(),
+            $client->getAddress() => $result->getAddress(),
             $client->getPostalCode() => $result->getPostalCode(),
             $client->getCity() => $result->getCity(),
         ];
@@ -78,34 +66,5 @@ abstract class AbstractCvrService implements CvrServiceInterface
         }
 
         return false;
-    }
-
-    /**
-     * Generate address string.
-     *
-     * @param CvrServiceResultInterface $result
-     *
-     * @return string
-     */
-    private function generateAddressString(CvrServiceResultInterface $result): string
-    {
-        $address = $result->getStreetName();
-
-        $address .= null !== $result->getHouseNumber()
-            ? ' '.$result->getHouseNumber()
-            : ''
-        ;
-
-        $address .= null !== $result->getFloor()
-            ? ' '.$result->getFloor()
-            : ''
-        ;
-
-        $address .= null !== $result->getSide()
-            ? ' '.$result->getSide()
-            : ''
-        ;
-
-        return $address;
     }
 }
