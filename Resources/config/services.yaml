@@ -54,6 +54,23 @@ services:
     # For some reason we have to alias ChoiceListFactoryInterface to be able to inject it.
     Symfony\Component\Form\ChoiceList\Factory\ChoiceListFactoryInterface: '@form.choice_list_factory.default'
 
+    ItkDev\Serviceplatformen\Service\CompanyBaseDataExtendedService:
+        factory: ['Kontrolgruppen\CoreBundle\CVR\ServiceplatformenServiceFactory', createCompanyBaseDataExtendedService]
+        arguments: [
+                '%azure_tenant_id%',
+                '%azure_application_id%',
+                '%azure_client_secret%',
+                '%azure_key_vault_name%',
+                '%azure_key_vault_secret%',
+                '%azure_key_vault_secret_version%',
+                '%serviceplatformen_service_agreement_uuid%',
+                '%serviceplatformen_user_system_uuid%',
+                '%serviceplatformen_user_uuid%',
+                '%company_base_data_extended_service_contract%',
+                '%company_base_data_extended_service_endpoint%',
+                '%company_base_data_extended_service_uuid%'
+        ]
+
     ItkDev\Serviceplatformen\Service\PersonBaseDataExtendedService:
         factory: ['Kontrolgruppen\CoreBundle\CPR\ServiceplatformenServiceFactory', createPersonBaseDataExtendedService]
         arguments: [

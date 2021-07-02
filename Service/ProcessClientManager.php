@@ -12,6 +12,8 @@ namespace Kontrolgruppen\CoreBundle\Service;
 
 use Kontrolgruppen\CoreBundle\CPR\Cpr;
 use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
+use Kontrolgruppen\CoreBundle\CVR\Cvr;
+use Kontrolgruppen\CoreBundle\CVR\CvrServiceInterface;
 use Kontrolgruppen\CoreBundle\Entity\AbstractProcessClient;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
@@ -24,19 +26,26 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 class ProcessClientManager
 {
     private $cprService;
+    private $cvrService;
     private $propertyAccessor;
     private $logger;
 
     /**
      * Constructor.
      *
-     * @param CprServiceInterface       $cprService
+     * @param CprServiceInterface $cprService
+     * @param CvrServiceInterface $cvrService
      * @param PropertyAccessorInterface $propertyAccessor
-     * @param LoggerInterface           $logger
+     * @param LoggerInterface $logger
      */
-    public function __construct(CprServiceInterface $cprService, PropertyAccessorInterface $propertyAccessor, LoggerInterface $logger)
-    {
+    public function __construct(
+        CprServiceInterface $cprService,
+        CvrServiceInterface $cvrService,
+        PropertyAccessorInterface $propertyAccessor,
+        LoggerInterface $logger
+    ) {
         $this->cprService = $cprService;
+        $this->cvrService = $cvrService;
         $this->propertyAccessor = $propertyAccessor;
         $this->logger = $logger;
     }
@@ -44,13 +53,10 @@ class ProcessClientManager
     /**
      * Create a process client.
      *
-     * @param string $type
-     *                           The client type ("company" or "person")
-     * @param array  $properties
-     *                           The client properties
+     * @param string $type The client type ("company" or "person")
+     * @param array $properties The client properties
      *
-     * @return abstractProcessClient
-     *                               The client
+     * @return abstractProcessClient The client
      *
      * @throws \Kontrolgruppen\CoreBundle\CPR\CprException
      */
@@ -59,15 +65,15 @@ class ProcessClientManager
         switch ($type) {
             case 'company':
                 $client = new ProcessClientCompany();
-                if (isset($properties['cvr'])) {
-//                    $this->cvrService->populateClient(new Cvr($properties['cvr']), $client);
+                if ($cvr = $properties['cvr'] ?? null) {
+                    $this->cvrService->populateClient(new Cvr($cvr), $client);
                 }
                 break;
 
             case 'person':
                 $client = new ProcessClientPerson();
-                if (isset($properties['cpr'])) {
-                    $this->cprService->populateClient(new Cpr($properties['cpr']), $client);
+                if ($cpr = $properties['cpr'] ?? null) {
+                    $this->cprService->populateClient(new Cpr($cpr), $client);
                 }
                 break;
 
@@ -80,6 +86,26 @@ class ProcessClientManager
         }
 
         return $client;
+    }
+
+    public function populateClient(AbstractProcessClient $client): AbstractProcessClient
+    {
+        if ($client instanceof ProcessClientCompany) {
+            return $this->cvrService->populateClient(new Cvr($client->getCvr()), $client);
+        }
+        if ($client instanceof ProcessClientPerson) {
+            return $this->cprService->populateClient(new Cpr($client->getCpr()), $client);
+        }
+    }
+
+    public function isNewClientInfoAvailable(AbstractProcessClient $client): bool
+    {
+        if ($client instanceof ProcessClientCompany) {
+            return $this->cvrService->isNewClientInfoAvailable(new Cvr($client->getCvr()), $client);
+        }
+        if ($client instanceof ProcessClientPerson) {
+            return $this->cprService->isNewClientInfoAvailable(new Cpr($client->getCpr()), $client);
+        }
     }
 
     /**
