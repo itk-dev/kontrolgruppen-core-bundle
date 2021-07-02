@@ -42,6 +42,13 @@ abstract class AbstractProcessClient extends AbstractEntity implements ProcessLo
      *
      * @Gedmo\Versioned()
      */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Gedmo\Versioned()
+     */
     private $address;
 
     /**
@@ -113,6 +120,30 @@ abstract class AbstractProcessClient extends AbstractEntity implements ProcessLo
     public function setProcess(Process $process): self
     {
         $this->process = $process;
+
+        return $this;
+    }
+
+    /**
+     * Get name.
+     *
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set name.
+     *
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

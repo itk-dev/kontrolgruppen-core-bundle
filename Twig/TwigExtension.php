@@ -146,12 +146,12 @@ class TwigExtension extends AbstractExtension
             ', ',
             array_map(function (string $type) {
                 switch ($type) {
-                case 'company':
-                    return $this->translator->trans('process_client_type.company');
-                case 'person':
-                    return $this->translator->trans('process_client_type.person');
-                default:
-                    return $this->translator->trans('process_client_type.none');
+                    case 'company':
+                        return $this->translator->trans('process_client_type.company');
+                    case 'person':
+                        return $this->translator->trans('process_client_type.person');
+                    default:
+                        return $this->translator->trans('process_client_type.none');
                 }
             }, $types)
         );

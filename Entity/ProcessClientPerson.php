@@ -101,6 +101,11 @@ class ProcessClientPerson extends AbstractProcessClient
         return $this->cpr ?? parent::__toString();
     }
 
+    public function getName(): ?string
+    {
+        return parent::getName() ?: $this->getFirstName().' '.$this->getLastName();
+    }
+
     /**
      * Get cpr.
      *

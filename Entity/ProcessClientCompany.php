@@ -26,13 +26,6 @@ class ProcessClientCompany extends AbstractProcessClient
     private $cvr;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     * @Gedmo\Versioned()
-     */
-    private $name;
-
-    /**
      * {@inheritdoc}
      */
     public function __toString()
@@ -60,30 +53,6 @@ class ProcessClientCompany extends AbstractProcessClient
     public function setCvr(string $cvr): self
     {
         $this->cvr = $cvr;
-
-        return $this;
-    }
-
-    /**
-     * Get name.
-     *
-     * @return string|null
-     */
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setName(string $name): self
-    {
-        $this->name = $name;
 
         return $this;
     }
