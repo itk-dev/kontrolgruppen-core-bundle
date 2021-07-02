@@ -33,113 +33,68 @@ class ServiceplatformenCvrServiceResult implements CvrServiceResultInterface
     }
 
     /**
-     * Get first name.
-     *
-     * @return string
+     * Get name.
      */
-    public function getFirstName(): string
+    public function getName(): string
     {
-        return $this->getProperty('persondata.navn.fornavn');
+        return $this->getProperty('GetLegalUnitResponse.LegalUnit.LegalUnitName.name');
     }
 
     /**
-     * Get middle name.
-     *
-     * @return string|null
-     */
-    public function getMiddleName(): ?string
-    {
-        return $this->propertyAccessor->isReadable($this->response, 'persondata.navn.mellemnavn')
-            ? $this->propertyAccessor->getValue($this->response, 'persondata.navn.mellemnavn')
-            : null
-        ;
-    }
-
-    /**
-     * Get last name.
-     *
-     * @return string
-     */
-    public function getLastName(): string
-    {
-        return $this->getProperty('persondata.navn.efternavn');
-    }
-
-    /**
-     * Get street name.
-     *
-     * @return string
+     * Get Street Name.
      */
     public function getStreetName(): string
     {
-        return $this->getProperty('adresse.aktuelAdresse.vejnavn');
+        return $this->getProperty('GetLegalUnitResponse.LegalUnit.AddressOfficial.AddressPostalExtended.StreetName');
     }
 
     /**
-     * Get house number.
-     *
-     * @return string
+     * Get House Number.
      */
-    public function getHouseNumber(): ?string
+    public function getHouseNumber(): string
     {
-        return $this->getProperty('adresse.aktuelAdresse.husnummer');
+        return $this->getProperty('GetLegalUnitResponse.LegalUnit.AddressOfficial.AddressPostalExtended.StreetBuildingIdentifier');
     }
 
     /**
-     * Get floor.
-     *
-     * @return string|null
-     */
-    public function getFloor(): ?string
-    {
-        return $this->propertyAccessor->isReadable($this->response, 'adresse.aktuelAdresse.etage')
-            ? $this->propertyAccessor->getValue($this->response, 'adresse.aktuelAdresse.etage')
-            : null
-        ;
-    }
-
-    /**
-     * Get side.
-     *
-     * @return string|null
-     */
-    public function getSide(): ?string
-    {
-        return $this->propertyAccessor->isReadable($this->response, 'adresse.aktuelAdresse.sidedoer')
-            ? $this->propertyAccessor->getValue($this->response, 'adresse.aktuelAdresse.sidedoer')
-            : null
-        ;
-    }
-
-    /**
-     * Get postal code.
-     *
-     * @return string
+     * Get Postal Code.
      */
     public function getPostalCode(): string
     {
-        return $this->getProperty('adresse.aktuelAdresse.postnummer');
+        return $this->getProperty('GetLegalUnitResponse.LegalUnit.AddressOfficial.AddressPostalExtended.PostCodeIdentifier');
     }
 
     /**
-     * Get city.
-     *
-     * @return string|null
+     * Get City.
      */
     public function getCity(): string
     {
-        return $this->getProperty('adresse.aktuelAdresse.postdistrikt');
+        return $this->getProperty('GetLegalUnitResponse.LegalUnit.AddressOfficial.AddressPostalExtended.DistrictName');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAddress(): string
+    {
+        $address = $this->getStreetName();
+
+        $address .= null !== $this->getHouseNumber()
+            ? ' '.$this->getHouseNumber()
+            : ''
+        ;
+
+        return $address;
     }
 
     /**
      * Returns the value of the property if it exists otherwise it returns an empty string.
      *
      * @param string $property name of property
-     *
-     * @return string
      */
     private function getProperty(string $property): string
     {
+        return $this->propertyAccessor->getValue($this->response, $property);
         return $this->propertyAccessor->isReadable($this->response, $property)
             ? $this->propertyAccessor->getValue($this->response, $property)
             : ''

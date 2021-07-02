@@ -16,25 +16,15 @@ namespace Kontrolgruppen\CoreBundle\CVR;
 interface CvrServiceResultInterface
 {
     /**
-     * @return string
-     */
-    public function getFirstName(): string;
-
-    /**
-     * Get middle name.
-     *
-     * @return string|null
-     */
-    public function getMiddleName(): ?string;
-
-    /**
-     * Get last name.
+     * Get name.
      *
      * @return string
      */
-    public function getLastName(): string;
+    public function getName(): string;
 
     /**
+     * Get street name.
+     *
      * @return string
      */
     public function getStreetName(): string;
@@ -47,16 +37,6 @@ interface CvrServiceResultInterface
     public function getHouseNumber(): ?string;
 
     /**
-     * @return string|null
-     */
-    public function getFloor(): ?string;
-
-    /**
-     * @return string|null
-     */
-    public function getSide(): ?string;
-
-    /**
      * @return string
      */
     public function getPostalCode(): string;
@@ -65,4 +45,11 @@ interface CvrServiceResultInterface
      * @return string
      */
     public function getCity(): string;
+
+    /**
+     * Get formatted address.
+     *
+     * @return string
+     */
+    public function getAddress(): string;
 }

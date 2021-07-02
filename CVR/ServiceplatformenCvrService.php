@@ -36,7 +36,7 @@ class ServiceplatformenCvrService extends AbstractCvrService implements CvrServi
     public function find(Cvr $cvr): CvrServiceResultInterface
     {
         try {
-            $response = $this->service->personLookup($cvr);
+            $response = $this->service->getLegalUnit($cvr);
         } catch (ServiceException $e) {
             throw new CvrException($e->getMessage(), $e->getCode(), $e);
         }

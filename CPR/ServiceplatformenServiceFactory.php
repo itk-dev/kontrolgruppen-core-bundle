@@ -17,6 +17,9 @@ use ItkDev\Serviceplatformen\Certificate\AzureKeyVaultCertificateLocator;
 use ItkDev\Serviceplatformen\Certificate\Exception\CertificateLocatorException;
 use ItkDev\Serviceplatformen\Request\InvocationContextRequestGenerator;
 use ItkDev\Serviceplatformen\Service\PersonBaseDataExtendedService;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class ServiceplatformenServiceFactory.
@@ -43,10 +46,11 @@ class ServiceplatformenServiceFactory
      *
      * @throws CprException
      */
-    public static function createPersonBaseDataExtendedService(string $azureTenantId, string $azureApplicationId, string $azureClientSecret, string $azureKeyVaultName, string $azureKeyVaultSecret, string $azureKeyVaultSecretVersion, string $serviceplatformenServiceAgreementUuid, string $serviceplatformenUserSystemUuid, string $serviceplatformenUserUuid, string $personBaseDataExtendedServiceContract, string $personBaseDataExtendedServiceEndpoint, string $personBaseDataExtendedServiceUuid)
+    public static function createPersonBaseDataExtendedService(ClientInterface $httpClient, RequestFactoryInterface $requestFactory, string $azureTenantId, string $azureApplicationId, string $azureClientSecret, string $azureKeyVaultName, string $azureKeyVaultSecret, string $azureKeyVaultSecretVersion, string $serviceplatformenServiceAgreementUuid, string $serviceplatformenUserSystemUuid, string $serviceplatformenUserUuid, string $personBaseDataExtendedServiceContract, string $personBaseDataExtendedServiceEndpoint, string $personBaseDataExtendedServiceUuid)
     {
         try {
-            $token = VaultToken::getToken(
+            $vaultToken = new VaultToken($httpClient, $requestFactory);
+            $token = $vaultToken->getToken(
                 $azureTenantId,
                 $azureApplicationId,
                 $azureClientSecret
@@ -56,6 +60,8 @@ class ServiceplatformenServiceFactory
         }
 
         $vault = new VaultSecret(
+            $httpClient,
+            $requestFactory,
             $azureKeyVaultName,
             $token->getAccessToken()
         );
