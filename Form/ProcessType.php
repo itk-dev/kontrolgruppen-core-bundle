@@ -59,63 +59,53 @@ class ProcessType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $data = $builder->getData();
-        if (null === $data || null === $data->getId()) {
-            $builder
-                ->add('clientType', ChoiceType::class, [
-                    'label' => 'process.form.client_type',
-                    'attr' => [
-                        'class' => 'js-input-client-type',
-                    ],
-                    'choices' => [
-                        $this->translator->trans('process.form.client_type.empty') => '',
-                        $this->translator->trans('process.form.client_type.company') => 'company',
-                        $this->translator->trans('process.form.client_type.person') => 'person',
-                    ],
-                    'required' => true,
-                    'mapped' => false,
-                ]);
+        /** @var Process $process */
+        $process = $builder->getData();
+        if (null !== $process && null === $process->getId()) {
+            $client = $process->getProcessClient();
+            if (null !== $client && null === $client->getId()) {
+                switch ($client->getType()) {
+                    case 'company':
+                        $builder
+                            ->add('company', ClientCompanyType::class, [
+                                'label' => false,
+                                'mapped' => false,
+                            ]);
+                        break;
+
+                    case 'person':
+                        $builder
+                            ->add('person', ClientPersonType::class, [
+                                'label' => false,
+                                'mapped' => false,
+                            ]);
+                        break;
+                }
+            }
         }
 
         $builder
-            ->add('processType', null, [
-                'label' => 'process.form.process_type',
-            ])
-            ->add('company', ClientCompanyType::class, [
-                'label' => false,
-                'attr' => [
-                    'class' => 'client-company',
-                    'data-client-type' => 'company',
-                ],
-                'mapped' => false,
-            ])
-            ->add('person', ClientPersonType::class, [
-                'label' => false,
-                'attr' => [
-                    'class' => 'client-person',
-                    'data-client-type' => 'person',
-                ],
-                'mapped' => false,
-            ])
             ->add('caseWorker', null, [
                 'label' => 'process.form.case_worker',
             ])
-            ->add('reason', null, [
-                'label' => 'process.form.reason',
-            ])
-            ->add('service', null, [
-                'label' => 'process.form.service',
-                'attr' => [
-                    'disabled' => 'disabled',
-                ],
-            ])
-            ->add('channel', null, [
-                'label' => 'process.form.channel',
-                'attr' => [
-                    'disabled' => 'disabled',
-                ],
-            ])
-        ;
+                ->add('processType', null, [
+                    'label' => 'process.form.process_type',
+                ])
+                ->add('reason', null, [
+                    'label' => 'process.form.reason',
+                ])
+                ->add('service', null, [
+                    'label' => 'process.form.service',
+                    'attr' => [
+                        'disabled' => 'disabled',
+                    ],
+                ])
+                ->add('channel', null, [
+                    'label' => 'process.form.channel',
+                    'attr' => [
+                        'disabled' => 'disabled',
+                    ],
+                ]);
 
         $formModifier = function (FormInterface $form, ProcessTypeEntity $processType = null) {
             if (null !== $processType) {
@@ -123,22 +113,22 @@ class ProcessType extends AbstractType
 
                 $form->remove('service');
                 $form->add('service', ChoiceType::class, [
-                    'label' => 'process.form.service',
-                    'choices' => $choices,
-                    'choice_label' => function ($choice, $key, $value) {
-                        return $choice->getName();
-                    },
+                        'label' => 'process.form.service',
+                        'choices' => $choices,
+                        'choice_label' => function ($choice, $key, $value) {
+                            return $choice->getName();
+                        },
                 ]);
 
                 $choices = $this->getChannelChoices($processType);
 
                 $form->remove('channel');
                 $form->add('channel', ChoiceType::class, [
-                    'label' => 'process.form.channel',
-                    'choices' => $choices,
-                    'choice_label' => function ($choice, $key, $value) {
-                        return $choice->getName();
-                    },
+                        'label' => 'process.form.channel',
+                        'choices' => $choices,
+                        'choice_label' => function ($choice, $key, $value) {
+                            return $choice->getName();
+                        },
                 ]);
             }
         };

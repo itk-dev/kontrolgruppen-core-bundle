@@ -537,6 +537,7 @@ process:
     menu_title: Sager
     new:
         title: Opret sag
+        select_client_type: Vælg klienttype
         unique_error: Noget gik galt. Prøv venligst igen.
     show:
         title: Sag

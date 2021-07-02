@@ -21,6 +21,7 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Form\ProcessClientCompanyType;
 use Kontrolgruppen\CoreBundle\Form\ProcessClientPersonType;
 use Kontrolgruppen\CoreBundle\Service\MenuService;
+use Kontrolgruppen\CoreBundle\Service\ProcessClientManager;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,9 +36,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ProcessClientController extends BaseController
 {
     /**
-     * @var CprServiceInterface
+     * @var ProcessClientManager
      */
-    private $cprService;
+    private $processClientManager;
 
     /**
      * @var LoggerInterface
@@ -49,13 +50,13 @@ class ProcessClientController extends BaseController
      *
      * @param RequestStack        $requestStack
      * @param MenuService         $menuService
-     * @param CprServiceInterface $cprService
+     * @param CprServiceInterface $processClientManager
      * @param LoggerInterface     $logger
      */
-    public function __construct(RequestStack $requestStack, MenuService $menuService, CprServiceInterface $cprService, LoggerInterface $logger)
+    public function __construct(RequestStack $requestStack, MenuService $menuService, ProcessClientManager $processClientManager, LoggerInterface $logger)
     {
         parent::__construct($requestStack, $menuService);
-        $this->cprService = $cprService;
+        $this->processClientManager = $processClientManager;
         $this->logger = $logger;
     }
 
@@ -157,7 +158,7 @@ class ProcessClientController extends BaseController
         $client = $process->getProcessClient();
 
         try {
-            $client = $this->cprService->populateClient(new Cpr($process->getClientCPR()), $client);
+            $client = $this->processClientManager->populateClient($client);
             $this->addFlash('success', $translator->trans('client.show.client_updated'));
         } catch (CprException $e) {
             $this->addFlash('danger', $translator->trans('client.show.client_not_updated'));
@@ -180,12 +181,7 @@ class ProcessClientController extends BaseController
     private function isNewClientInfoAvailable(AbstractProcessClient $client): bool
     {
         try {
-            if ($client instanceof ProcessClientCompany) {
-                // @todo return $this->cvrService->isNewClientInfoAvailable(new Cvr($client->getCvr()), $client);
-            }
-            if ($client instanceof ProcessClientPerson) {
-                return $this->cprService->isNewClientInfoAvailable(new Cpr($client->getCpr()), $client);
-            }
+            return $this->processClientManager->isNewClientInfoAvailable($client);
         } catch (CprException $e) {
             $this->logger->error($e);
         }

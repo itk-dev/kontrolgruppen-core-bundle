@@ -21,8 +21,12 @@ abstract class AbstractCprService implements CprServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function populateClient(Cpr $cpr, ProcessClientPerson $client): Client
+    public function populateClient(Cpr $cpr, ProcessClientPerson $client): ProcessClientPerson
     {
+        if (null === $client->getCpr()) {
+            $client->setCpr((string) $cpr);
+        }
+
         $result = $this->find($cpr);
 
         if (empty($result)) {

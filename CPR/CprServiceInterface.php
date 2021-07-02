@@ -39,7 +39,7 @@ interface CprServiceInterface
      *
      * @throws CprException
      */
-    public function populateClient(Cpr $cpr, ProcessClientPerson $client): Client;
+    public function populateClient(Cpr $cpr, ProcessClientPerson $client): ProcessClientPerson;
 
     /**
      * @param Cpr                   $cpr

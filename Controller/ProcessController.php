@@ -51,17 +51,6 @@ class ProcessController extends BaseController
     /**
      * @Route("/", name="process_index", methods={"GET"})
      *
-     * @param Request                       $request
-     * @param ProcessRepository             $processRepository
-     * @param FilterBuilderUpdaterInterface $lexikBuilderUpdater
-     * @param PaginatorInterface            $paginator
-     * @param FormFactoryInterface          $formFactory
-     * @param ProcessManager                $processManager
-     * @param UserRepository                $userRepository
-     * @param UserSettingsService           $userSettingsService
-     *
-     * @return Response
-     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -179,19 +168,21 @@ class ProcessController extends BaseController
     /**
      * @Route("/new", name="process_new", methods={"GET","POST"})
      *
-     * @param Request              $request
-     * @param ProcessManager       $processManager
-     * @param ProcessClientManager $clientManager
-     *
-     * @return Response
-     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Kontrolgruppen\CoreBundle\CPR\CprException
      */
     public function new(Request $request, ProcessManager $processManager, ProcessClientManager $clientManager): Response
     {
+        // Force user to select process client type before anything else.
+        $clientType = $request->get('clientType');
+        if (null === $clientType) {
+            return $this->render('process/select-client-type.html.twig');
+        }
+
         $process = new Process();
+        $client = $clientManager->createClient($clientType);
+        $process->setProcessClient($client);
 
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -199,16 +190,20 @@ class ProcessController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Get unmapped client data from request.
             $data = $request->request->get('process');
-            $clientType = $data['clientType'] ?? null;
-            $clientData = array_filter([
-                'cpr' => $data[$clientType]['cpr'] ?? null,
-                'cvr' => $data[$clientType]['cvr'] ?? null,
-            ]);
-            $client = $clientManager->createClient($clientType, $clientData);
-            $process = $processManager->newProcess($process, $client);
+            $clientType = $process->getProcessClient()->getType();
+            $clientData = $data[$clientType] ?? [];
+            try {
+                $client = $clientManager->createClient($clientType, $clientData);
+                $process = $processManager->newProcess($process, $client);
+            } catch (\Exception $exception) {
+                $this->addFlash('danger', $exception->getMessage());
 
-            return $this->redirectToRoute('client_show', ['process' => $process]);
+                return $this->redirect($request->getRequestUri());
+            }
+
+            return $this->redirectToRoute('process_edit', ['id' => $process]);
         }
 
         // Get latest log entries
@@ -232,11 +227,6 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/search-process-by-cpr", name="process_search_by_cpr", methods={"GET"})
-     *
-     * @param Request                       $request
-     * @param ProcessClientPersonRepository $clientRepository
-     *
-     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -263,11 +253,6 @@ class ProcessController extends BaseController
     /**
      * @Route("/search-process-by-cvr", name="process_search_by_cvr", methods={"GET"})
      *
-     * @param Request                        $request
-     * @param ProcessClientCompanyRepository $clientRepository
-     *
-     * @return Response
-     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -292,12 +277,6 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}", name="process_show", methods={"GET", "POST"})
-     *
-     * @param Request    $request
-     * @param Process    $process
-     * @param LogManager $logManager
-     *
-     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -328,11 +307,6 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="process_edit", methods={"GET","POST"})
-     *
-     * @param Request $request
-     * @param Process $process
-     *
-     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -374,11 +348,6 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}", name="process_delete", methods={"DELETE"})
-     *
-     * @param Request $request
-     * @param Process $process
-     *
-     * @return Response
      */
     public function delete(Request $request, Process $process): Response
     {
@@ -398,14 +367,6 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}/complete", name="process_complete", methods={"GET","POST"})
-     *
-     * @param Request                 $request
-     * @param Process                 $process
-     * @param ServiceRepository       $serviceRepository
-     * @param ProcessStatusRepository $processStatusRepository
-     * @param ProcessManager          $processManager
-     *
-     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -468,12 +429,6 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}/resume", name="process_resume", methods={"POST", "GET"})
-     *
-     * @param Request                 $request
-     * @param Process                 $process
-     * @param ProcessStatusRepository $processStatusRepository
-     *
-     * @return Response
      */
     public function resume(Request $request, Process $process, ProcessStatusRepository $processStatusRepository): Response
     {

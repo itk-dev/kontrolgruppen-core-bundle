@@ -1,0 +1,22 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'process.new.title'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h1>{{ 'process.new.title'|trans }}</h1>
+
+            <p>{{ 'process.new.select_client_type'|trans }}</p>
+
+            <div class="row">
+                <div class="col">
+                    <a href="{{ path('process_new', {clientType: 'company'}) }}" class="btn btn-primary btn-block">{{ 'process_client_type.company'|trans }}</a>
+                </div>
+                <div class="col">
+                    <a href="{{ path('process_new', {clientType: 'person'}) }}" class="btn btn-primary btn-block">{{ 'process_client_type.person'|trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
