@@ -14,7 +14,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Kontrolgruppen\CoreBundle\Validator as KontrolgruppenAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -47,15 +46,6 @@ class Process extends AbstractEntity
      * @Gedmo\Versioned()
      */
     private $caseNumber;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     * @KontrolgruppenAssert\CPR
-     *
-     * @Gedmo\Versioned()
-     */
-    private $clientCPR;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Channel", inversedBy="processes")
@@ -102,11 +92,6 @@ class Process extends AbstractEntity
      * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\JournalEntry", mappedBy="process", orphanRemoval=true)
      */
     private $journalEntries;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Client", mappedBy="process", cascade={"persist", "remove"})
-     */
-    private $client;
 
     /**
      * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\AbstractProcessClient", mappedBy="process", cascade={"persist", "remove"})
@@ -271,26 +256,6 @@ class Process extends AbstractEntity
     public function setCaseNumber(string $caseNumber): self
     {
         $this->caseNumber = $caseNumber;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getClientCPR(): ?string
-    {
-        return $this->clientCPR;
-    }
-
-    /**
-     * @param string $clientCPR
-     *
-     * @return Process
-     */
-    public function setClientCPR(string $clientCPR): self
-    {
-        $this->clientCPR = $clientCPR;
 
         return $this;
     }
@@ -472,31 +437,6 @@ class Process extends AbstractEntity
             if ($journalEntry->getProcess() === $this) {
                 $journalEntry->setProcess(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Client|null
-     */
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
-
-    /**
-     * @param Client $client
-     *
-     * @return Process
-     */
-    public function setClient(Client $client): self
-    {
-        $this->client = $client;
-
-        // set the owning side of the relation if necessary
-        if ($this !== $client->getProcess()) {
-            $client->setProcess($this);
         }
 
         return $this;

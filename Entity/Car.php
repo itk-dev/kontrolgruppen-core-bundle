@@ -42,12 +42,6 @@ class Car extends AbstractEntity
     private $notes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Client", inversedBy="cars")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $client;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\AbstractProcessClient", inversedBy="cars")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -117,26 +111,6 @@ class Car extends AbstractEntity
     public function setNotes(?string $notes): self
     {
         $this->notes = $notes;
-
-        return $this;
-    }
-
-    /**
-     * @return Client|null
-     */
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
-
-    /**
-     * @param Client|null $client
-     *
-     * @return Car
-     */
-    public function setClient(?Client $client): self
-    {
-        $this->client = $client;
 
         return $this;
     }
