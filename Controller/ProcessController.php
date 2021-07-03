@@ -51,6 +51,17 @@ class ProcessController extends BaseController
     /**
      * @Route("/", name="process_index", methods={"GET"})
      *
+     * @param Request                       $request
+     * @param ProcessRepository             $processRepository
+     * @param FilterBuilderUpdaterInterface $lexikBuilderUpdater
+     * @param PaginatorInterface            $paginator
+     * @param FormFactoryInterface          $formFactory
+     * @param ProcessManager                $processManager
+     * @param UserRepository                $userRepository
+     * @param UserSettingsService           $userSettingsService
+     *
+     * @return Response
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -168,6 +179,12 @@ class ProcessController extends BaseController
     /**
      * @Route("/new", name="process_new", methods={"GET","POST"})
      *
+     * @param Request              $request
+     * @param ProcessManager       $processManager
+     * @param ProcessClientManager $clientManager
+     *
+     * @return Response
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Kontrolgruppen\CoreBundle\CPR\CprException
@@ -228,6 +245,11 @@ class ProcessController extends BaseController
     /**
      * @Route("/search-process-by-cpr", name="process_search_by_cpr", methods={"GET"})
      *
+     * @param Request                       $request
+     * @param ProcessClientPersonRepository $clientRepository
+     *
+     * @return Response
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -253,6 +275,11 @@ class ProcessController extends BaseController
     /**
      * @Route("/search-process-by-cvr", name="process_search_by_cvr", methods={"GET"})
      *
+     * @param Request                        $request
+     * @param ProcessClientCompanyRepository $clientRepository
+     *
+     * @return Response
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -277,6 +304,12 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}", name="process_show", methods={"GET", "POST"})
+     *
+     * @param Request    $request
+     * @param Process    $process
+     * @param LogManager $logManager
+     *
+     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -307,6 +340,11 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="process_edit", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param Process $process
+     *
+     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -348,6 +386,11 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}", name="process_delete", methods={"DELETE"})
+     *
+     * @param Request $request
+     * @param Process $process
+     *
+     * @return Response
      */
     public function delete(Request $request, Process $process): Response
     {
@@ -367,6 +410,14 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}/complete", name="process_complete", methods={"GET","POST"})
+     *
+     * @param Request                 $request
+     * @param Process                 $process
+     * @param ServiceRepository       $serviceRepository
+     * @param ProcessStatusRepository $processStatusRepository
+     * @param ProcessManager          $processManager
+     *
+     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -429,6 +480,15 @@ class ProcessController extends BaseController
 
     /**
      * @Route("/{id}/resume", name="process_resume", methods={"POST", "GET"})
+     *
+     * @param Request                 $request
+     * @param Process                 $process
+     * @param ProcessStatusRepository $processStatusRepository
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function resume(Request $request, Process $process, ProcessStatusRepository $processStatusRepository): Response
     {
@@ -467,10 +527,14 @@ class ProcessController extends BaseController
     /**
      * @Route("/search-taxonomy/{taxonomy}", name="process_search_taxonomy", methods={"GET"})
      *
-     * @param ProcessClientPersonRepository $clientRepository
+     * @param Request                $request
+     * @param string                 $taxonomy
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface    $serializer
      *
-     * @throws \Doctrine\ORM\NoResultException
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return Response
+     *
+     * @throws \JsonException
      */
     public function searchTaxonomy(Request $request, string $taxonomy, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
     {
