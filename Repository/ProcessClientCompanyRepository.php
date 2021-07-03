@@ -10,8 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\Repository;
 
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
 
 /**
@@ -20,13 +18,7 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
  * @method ProcessClientCompany[]    findAll()
  * @method ProcessClientCompany[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProcessClientCompanyRepository extends ServiceEntityRepository
+class ProcessClientCompanyRepository extends AbstractProcessClientRepository
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, ProcessClientCompany::class);
-    }
+    protected static $class = ProcessClientCompany::class;
 }

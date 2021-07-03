@@ -10,7 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\CPR;
 
-use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 
 /**
@@ -40,7 +39,7 @@ abstract class AbstractCprService implements CprServiceInterface
 
         $client->setFirstName($firstName);
         $client->setLastName($result->getLastName());
-        $client->setAddress($this->generateAddressString($result));
+        $client->setAddress($result->getAddress());
         $client->setPostalCode($result->getPostalCode());
         $client->setCity($result->getCity());
 
@@ -66,7 +65,7 @@ abstract class AbstractCprService implements CprServiceInterface
         $comparisons = [
             $client->getFirstName() => $firstName,
             $client->getLastName() => $result->getLastName(),
-            $client->getAddress() => $this->generateAddressString($result),
+            $client->getAddress() => $result->getAddress(),
             $client->getPostalCode() => $result->getPostalCode(),
             $client->getCity() => $result->getCity(),
         ];
@@ -78,34 +77,5 @@ abstract class AbstractCprService implements CprServiceInterface
         }
 
         return false;
-    }
-
-    /**
-     * Generate address string.
-     *
-     * @param CprServiceResultInterface $result
-     *
-     * @return string
-     */
-    private function generateAddressString(CprServiceResultInterface $result): string
-    {
-        $address = $result->getStreetName();
-
-        $address .= null !== $result->getHouseNumber()
-            ? ' '.$result->getHouseNumber()
-            : ''
-        ;
-
-        $address .= null !== $result->getFloor()
-            ? ' '.$result->getFloor()
-            : ''
-        ;
-
-        $address .= null !== $result->getSide()
-            ? ' '.$result->getSide()
-            : ''
-        ;
-
-        return $address;
     }
 }

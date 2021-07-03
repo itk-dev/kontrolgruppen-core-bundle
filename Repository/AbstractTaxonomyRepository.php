@@ -14,7 +14,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * Base class for all taxonomy repositories.
+ * Base class for taxonomy repositories.
  */
 abstract class AbstractTaxonomyRepository extends ServiceEntityRepository
 {

@@ -19,7 +19,6 @@ use ItkDev\Serviceplatformen\Request\InvocationContextRequestGenerator;
 use ItkDev\Serviceplatformen\Service\PersonBaseDataExtendedService;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class ServiceplatformenServiceFactory.

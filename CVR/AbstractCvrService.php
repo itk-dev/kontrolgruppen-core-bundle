@@ -10,7 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\CVR;
 
-use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
 
 /**
