@@ -53,6 +53,7 @@ class TwigExtension extends AbstractExtension
             new TwigFilter('yes_no', [$this, 'booleanYesNoFilter']),
             new TwigFilter('true_false', [$this, 'booleanTrueFalseFilter']),
             new TwigFilter('simple_date', [$this, 'simpleDateFilter'], ['needs_environment' => true]),
+            new TwigFilter('process_client_type', [$this, 'processClientTypesFilter']),
             new TwigFilter('process_client_types', [$this, 'processClientTypesFilter']),
         ];
     }
@@ -136,11 +137,13 @@ class TwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function processClientTypesFilter(array $types = null)
+    public function processClientTypesFilter($types = null)
     {
         if (null === $types) {
             return '–';
         }
+
+        $types = (array) $types;
 
         return implode(
             ', ',
