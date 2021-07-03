@@ -10,8 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\Repository;
 
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 
 /**
@@ -20,13 +18,7 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
  * @method ProcessClientPerson[]    findAll()
  * @method ProcessClientPerson[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProcessClientPersonRepository extends ServiceEntityRepository
+class ProcessClientPersonRepository extends AbstractProcessClientRepository
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, ProcessClientPerson::class);
-    }
+    protected static $class = ProcessClientPerson::class;
 }

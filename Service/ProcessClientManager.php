@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Service;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\CPR\Cpr;
 use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
 use Kontrolgruppen\CoreBundle\CVR\Cvr;
@@ -25,6 +26,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  */
 class ProcessClientManager
 {
+    private $entityManager;
     private $cprService;
     private $cvrService;
     private $propertyAccessor;
@@ -33,17 +35,15 @@ class ProcessClientManager
     /**
      * Constructor.
      *
-     * @param CprServiceInterface $cprService
-     * @param CvrServiceInterface $cvrService
+     * @param EntityManagerInterface    $entityManager
+     * @param CprServiceInterface       $cprService
+     * @param CvrServiceInterface       $cvrService
      * @param PropertyAccessorInterface $propertyAccessor
-     * @param LoggerInterface $logger
+     * @param LoggerInterface           $logger
      */
-    public function __construct(
-        CprServiceInterface $cprService,
-        CvrServiceInterface $cvrService,
-        PropertyAccessorInterface $propertyAccessor,
-        LoggerInterface $logger
-    ) {
+    public function __construct(EntityManagerInterface $entityManager, CprServiceInterface $cprService, CvrServiceInterface $cvrService, PropertyAccessorInterface $propertyAccessor, LoggerInterface $logger)
+    {
+        $this->entityManager = $entityManager;
         $this->cprService = $cprService;
         $this->cvrService = $cvrService;
         $this->propertyAccessor = $propertyAccessor;
@@ -53,8 +53,8 @@ class ProcessClientManager
     /**
      * Create a process client.
      *
-     * @param string $type The client type ("company" or "person")
-     * @param array $properties The client properties
+     * @param string $type       The client type ("company" or "person")
+     * @param array  $properties The client properties
      *
      * @return abstractProcessClient The client
      *
@@ -88,6 +88,13 @@ class ProcessClientManager
         return $client;
     }
 
+    /**
+     * Populate client with data from lookup service.
+     *
+     * @param AbstractProcessClient $client
+     *
+     * @return AbstractProcessClient
+     */
     public function populateClient(AbstractProcessClient $client): AbstractProcessClient
     {
         if ($client instanceof ProcessClientCompany) {
@@ -98,13 +105,20 @@ class ProcessClientManager
         }
     }
 
+    /**
+     * Check if new client data is available in lookup service.
+     *
+     * @param AbstractProcessClient $client
+     *
+     * @return bool
+     */
     public function isNewClientInfoAvailable(AbstractProcessClient $client): bool
     {
         if ($client instanceof ProcessClientCompany) {
-            return $this->cvrService->isNewClientInfoAvailable(new Cvr($client->getCvr()), $client);
+            return $client->getCvr() && $this->cvrService->isNewClientInfoAvailable(new Cvr($client->getCvr()), $client);
         }
         if ($client instanceof ProcessClientPerson) {
-            return $this->cprService->isNewClientInfoAvailable(new Cpr($client->getCpr()), $client);
+            return $client->getCpr() && $this->cprService->isNewClientInfoAvailable(new Cpr($client->getCpr()), $client);
         }
     }
 
@@ -119,5 +133,22 @@ class ProcessClientManager
             'person' => ProcessClientPerson::class,
             'company' => ProcessClientCompany::class,
         ];
+    }
+
+    /**
+     * Find all process clients.
+     *
+     * @return array
+     */
+    public function findAll(): array
+    {
+        $clients = [];
+
+        foreach (static::getClientTypes() as $class) {
+            $repository = $this->entityManager->getRepository($class);
+            $clients[] = $repository->findAll();
+        }
+
+        return array_merge(...$clients);
     }
 }

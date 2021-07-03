@@ -12,11 +12,8 @@ namespace Kontrolgruppen\CoreBundle\Service;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use Kontrolgruppen\CoreBundle\CPR\Cpr;
-use Kontrolgruppen\CoreBundle\CPR\CprException;
 use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
 use Kontrolgruppen\CoreBundle\Entity\AbstractProcessClient;
-use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\Conclusion;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\User;
@@ -268,23 +265,5 @@ class ProcessManager
         $conclusionClass = $process->getProcessType()->getConclusionClass();
 
         return new $conclusionClass();
-    }
-
-    /**
-     * @param Process $process
-     *
-     * @return Client
-     */
-    private function createClientForProcess(Process $process): Client
-    {
-        $client = new Client();
-
-        try {
-            $client = $this->cprService->populateClient(new Cpr($process->getClientCPR()), $client);
-        } catch (CprException $e) {
-            $this->logger->error($e);
-        }
-
-        return $client;
     }
 }

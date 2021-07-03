@@ -47,7 +47,7 @@ interface CvrServiceResultInterface
     public function getCity(): string;
 
     /**
-     * Get formatted address.
+     * Get formatted street address.
      *
      * @return string
      */

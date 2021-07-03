@@ -11,7 +11,6 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use http\Exception\RuntimeException;
-use Kontrolgruppen\CoreBundle\CPR\Cpr;
 use Kontrolgruppen\CoreBundle\CPR\CprException;
 use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
 use Kontrolgruppen\CoreBundle\Entity\AbstractProcessClient;

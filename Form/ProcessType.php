@@ -16,7 +16,6 @@ use Kontrolgruppen\CoreBundle\Form\Process\ClientCompanyType;
 use Kontrolgruppen\CoreBundle\Form\Process\ClientPersonType;
 use Kontrolgruppen\CoreBundle\Repository\ChannelRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
-use Kontrolgruppen\CoreBundle\Service\ProcessClientManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -45,7 +44,7 @@ class ProcessType extends AbstractType
      * @param RouterInterface     $router
      * @param TranslatorInterface $translator
      */
-    public function __construct(ServiceRepository $serviceRepository, ChannelRepository $channelRepository, RouterInterface $router, TranslatorInterface $translator, ProcessClientManager $processClientManager)
+    public function __construct(ServiceRepository $serviceRepository, ChannelRepository $channelRepository, RouterInterface $router, TranslatorInterface $translator)
     {
         $this->serviceRepository = $serviceRepository;
         $this->channelRepository = $channelRepository;

@@ -94,7 +94,6 @@ class ServiceplatformenCvrServiceResult implements CvrServiceResultInterface
      */
     private function getProperty(string $property): string
     {
-        return $this->propertyAccessor->getValue($this->response, $property);
         return $this->propertyAccessor->isReadable($this->response, $property)
             ? $this->propertyAccessor->getValue($this->response, $property)
             : ''
