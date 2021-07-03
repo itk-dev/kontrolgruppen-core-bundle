@@ -11,7 +11,6 @@
 namespace Kontrolgruppen\CoreBundle\CVR;
 
 use Kontrolgruppen\CoreBundle\Entity\AbstractProcessClient;
-use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
 
 /**
@@ -32,10 +31,10 @@ interface CvrServiceInterface
      * Populates client with information from the CVR service. If no data is found via the service the client
      * object is returned without being changed.
      *
-     * @param Cvr    $cvr
-     * @param Client $client
+     * @param Cvr                  $cvr
+     * @param ProcessClientCompany $client
      *
-     * @return Client
+     * @return ProcessClientCompany
      *
      * @throws CvrException
      */

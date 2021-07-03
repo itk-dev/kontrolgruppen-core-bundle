@@ -101,6 +101,9 @@ class ProcessClientPerson extends AbstractProcessClient
         return $this->cpr ?? parent::__toString();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName(): ?string
     {
         return parent::getName() ?: $this->getFirstName().' '.$this->getLastName();
@@ -267,7 +270,7 @@ class ProcessClientPerson extends AbstractProcessClient
     {
         if (!$this->companies->contains($company)) {
             $this->companies[] = $company;
-            $company->setClient($this);
+            $company->setProcessClient($this);
         }
 
         return $this;
@@ -283,8 +286,8 @@ class ProcessClientPerson extends AbstractProcessClient
         if ($this->companies->contains($company)) {
             $this->companies->removeElement($company);
             // set the owning side to null (unless already changed)
-            if ($company->getClient() === $this) {
-                $company->setClient(null);
+            if ($company->getProcessClient() === $this) {
+                $company->setProcessClient(null);
             }
         }
 

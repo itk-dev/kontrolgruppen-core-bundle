@@ -11,7 +11,6 @@
 namespace Kontrolgruppen\CoreBundle\CPR;
 
 use Kontrolgruppen\CoreBundle\Entity\AbstractProcessClient;
-use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 
 /**
@@ -32,10 +31,10 @@ interface CprServiceInterface
      * Populates client with information from the CPR service. If no data is found via the service the client
      * object is returned without being changed.
      *
-     * @param Cpr    $cpr
-     * @param Client $client
+     * @param Cpr                 $cpr
+     * @param ProcessClientPerson $client
      *
-     * @return Client
+     * @return ProcessClientPerson
      *
      * @throws CprException
      */
