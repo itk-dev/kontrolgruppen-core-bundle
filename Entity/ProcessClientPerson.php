@@ -14,7 +14,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Kontrolgruppen\CoreBundle\Validator as KontrolgruppenAssert;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\ProcessClientPersonRepository")
@@ -23,14 +22,7 @@ use Kontrolgruppen\CoreBundle\Validator as KontrolgruppenAssert;
  */
 class ProcessClientPerson extends AbstractProcessClient
 {
-    /**
-     * @ORM\Column(type="string", length=255)
-     *
-     * @KontrolgruppenAssert\CPR
-     *
-     * @Gedmo\Versioned()
-     */
-    private $cpr;
+    protected static $type = 'person';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -75,7 +67,7 @@ class ProcessClientPerson extends AbstractProcessClient
     private $hasOwnCompany;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Company", mappedBy="client", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Company", mappedBy="processClient", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $companies;
 
@@ -98,15 +90,7 @@ class ProcessClientPerson extends AbstractProcessClient
      */
     public function __toString()
     {
-        return $this->cpr ?? parent::__toString();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName(): ?string
-    {
-        return parent::getName() ?: $this->getFirstName().' '.$this->getLastName();
+        return $this->getCpr() ?? parent::__toString();
     }
 
     /**
@@ -116,7 +100,7 @@ class ProcessClientPerson extends AbstractProcessClient
      */
     public function getCpr(): ?string
     {
-        return $this->cpr;
+        return $this->getIdentifier();
     }
 
     /**
@@ -128,9 +112,7 @@ class ProcessClientPerson extends AbstractProcessClient
      */
     public function setCpr(string $cpr): self
     {
-        $this->cpr = $cpr;
-
-        return $this;
+        return $this->setIdentifier($cpr);
     }
 
     /**
@@ -150,7 +132,7 @@ class ProcessClientPerson extends AbstractProcessClient
     {
         $this->firstName = $firstName;
 
-        return $this;
+        return $this->updateName();
     }
 
     /**
@@ -170,7 +152,7 @@ class ProcessClientPerson extends AbstractProcessClient
     {
         $this->lastName = $lastName;
 
-        return $this;
+        return $this->updateName();
     }
 
     /**
@@ -310,6 +292,18 @@ class ProcessClientPerson extends AbstractProcessClient
     public function setHasDriversLicense(bool $hasDriversLicense): self
     {
         $this->hasDriversLicense = $hasDriversLicense;
+
+        return $this;
+    }
+
+    /**
+     * Build and update name from first and last name.
+     *
+     * @return $this
+     */
+    private function updateName(): self
+    {
+        $this->setName(trim($this->getFirstName().' '.$this->getLastName()));
 
         return $this;
     }

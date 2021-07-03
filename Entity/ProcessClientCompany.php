@@ -20,17 +20,14 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class ProcessClientCompany extends AbstractProcessClient
 {
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $cvr;
+    protected static $type = 'company';
 
     /**
      * {@inheritdoc}
      */
     public function __toString()
     {
-        return $this->cvr ?? parent::__toString();
+        return $this->getCvr() ?? parent::__toString();
     }
 
     /**
@@ -40,7 +37,7 @@ class ProcessClientCompany extends AbstractProcessClient
      */
     public function getCvr(): ?string
     {
-        return $this->cvr;
+        return $this->getIdentifier();
     }
 
     /**
@@ -52,8 +49,6 @@ class ProcessClientCompany extends AbstractProcessClient
      */
     public function setCvr(string $cvr): self
     {
-        $this->cvr = $cvr;
-
-        return $this;
+        return $this->setIdentifier($cvr);
     }
 }

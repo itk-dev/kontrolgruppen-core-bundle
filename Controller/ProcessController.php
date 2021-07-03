@@ -100,6 +100,9 @@ class ProcessController extends BaseController
         }
 
         // Add sortable fields.
+        $queryBuilder->leftJoin('e.processClient', 'client');
+        $queryBuilder->addSelect('partial client.{id,identifier,name,type}');
+
         $queryBuilder->leftJoin('e.caseWorker', 'caseWorker');
         $queryBuilder->addSelect('partial caseWorker.{id}');
 

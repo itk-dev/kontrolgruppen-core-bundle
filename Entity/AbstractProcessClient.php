@@ -38,6 +38,18 @@ abstract class AbstractProcessClient extends AbstractEntity implements ProcessLo
     private $process;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected static $type;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @Gedmo\Versioned()
+     */
+    private $identifier;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @Gedmo\Versioned()
@@ -97,7 +109,7 @@ abstract class AbstractProcessClient extends AbstractEntity implements ProcessLo
      */
     public function getType(): string
     {
-        return $this instanceof ProcessClientCompany ? 'company' : 'person';
+        return static::$type;
     }
 
     /**
@@ -111,7 +123,7 @@ abstract class AbstractProcessClient extends AbstractEntity implements ProcessLo
     }
 
     /**
-     * Sset process.
+     * Set process.
      *
      * @param Process $process
      *
@@ -120,6 +132,26 @@ abstract class AbstractProcessClient extends AbstractEntity implements ProcessLo
     public function setProcess(Process $process): self
     {
         $this->process = $process;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIdentifier(): ?string
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @return AbstractProcessClient
+     */
+    public function setIdentifier(string $identifier): self
+    {
+        $this->identifier = $identifier;
 
         return $this;
     }

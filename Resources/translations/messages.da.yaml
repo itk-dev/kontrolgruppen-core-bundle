@@ -552,9 +552,11 @@ process:
         client: Klient
         client_cpr: Klient CPR
         client_first_name: Fornavn
+        client_identifier: Klient
         client_last_name: Efternavn
         client_name: Klient navn
         client_telephone: Klient telefonnummer
+        client_type: Klienttype
         court_decision: Rettens afgørelse
         id: ID
         internal_note: Seneste interne notater
@@ -910,11 +912,12 @@ search:
         case_number: Sagsnummer
         case_worker: Sagsbehandler
         channel: Kanal
+        client: Klient
         client_adress: Adresse
-        client_cpr: CPR
-        client_first_name: Fornavn
-        client_last_name: Efternavn
+        client_identifier: Klient
+        client_name: Navn
         client_telephone: Telefon
+        client_type: Klienttype
         process_status: Status
         process_type: Type
         reminders: Påmindelser
