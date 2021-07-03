@@ -33,7 +33,7 @@ class ServiceplatformenCvrServiceResult implements CvrServiceResultInterface
     }
 
     /**
-     * Get name.
+     * {@inheritdoc}
      */
     public function getName(): string
     {
@@ -41,7 +41,7 @@ class ServiceplatformenCvrServiceResult implements CvrServiceResultInterface
     }
 
     /**
-     * Get Street Name.
+     * {@inheritdoc}
      */
     public function getStreetName(): string
     {
@@ -49,7 +49,7 @@ class ServiceplatformenCvrServiceResult implements CvrServiceResultInterface
     }
 
     /**
-     * Get House Number.
+     * {@inheritdoc}
      */
     public function getHouseNumber(): string
     {
@@ -57,7 +57,7 @@ class ServiceplatformenCvrServiceResult implements CvrServiceResultInterface
     }
 
     /**
-     * Get Postal Code.
+     * {@inheritdoc}
      */
     public function getPostalCode(): string
     {
@@ -65,7 +65,7 @@ class ServiceplatformenCvrServiceResult implements CvrServiceResultInterface
     }
 
     /**
-     * Get City.
+     * {@inheritdoc}
      */
     public function getCity(): string
     {
@@ -91,6 +91,8 @@ class ServiceplatformenCvrServiceResult implements CvrServiceResultInterface
      * Returns the value of the property if it exists otherwise it returns an empty string.
      *
      * @param string $property name of property
+     *
+     * @return string
      */
     private function getProperty(string $property): string
     {
