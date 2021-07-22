@@ -11,12 +11,6 @@
         </li>
     {% endif %}
 
-    {% if clientCPR is defined %}
-    <li class="list-group-item">
-        {{ 'process_log.revision.table.log_entry.process.client_cpr'|trans }}: {{ clientCPR }}
-    </li>
-    {% endif %}
-
     {% if channel is defined %}
     <li class="list-group-item">
         {{ 'process_log.revision.table.log_entry.process.channel'|trans }}: {{ channel.name ?: '-' }}

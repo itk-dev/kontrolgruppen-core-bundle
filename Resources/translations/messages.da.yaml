@@ -632,11 +632,12 @@ process_log:
                 base_conclusion: Konklusion
                 weighted_conclusion: Konklusion
                 reminder: Påmindelse
-                client: Klient
                 service_economy_entry: Ydelse registrering
                 base_economy_entry: Konto registrering
                 income_economy_entry: Indkomst registrering
                 process_group: Relationer
+                process_client_company: Klient
+                process_client_person: Klient
             log_entry:
                 type: Type
                 process:
@@ -650,7 +651,14 @@ process_log:
                     police_report: Politianmeldt
                     case_worker: Sagsbehandler
                     completed_at: Afsluttet
-                client:
+                process_client_company:
+                    identifier: CVR-nr.
+                    name: Navn
+                    address: Adresse
+                    postal_code: Postnummer
+                    city: By
+                    telephone: Telefon
+                process_client_person:
                     first_name: Fornavn
                     last_name: Efternavn
                     address: Adresse
