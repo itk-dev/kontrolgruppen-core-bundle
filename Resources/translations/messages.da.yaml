@@ -529,7 +529,7 @@ process:
             placeholder: Vælg sagsstatus
             save: Gem ny status
         channel: Kanal
-        client_cpr: Klient CPR
+        client_cpr: CPR-nummer
         client_cvr: CVR-nummer
         client_type: Klienttype
         client_type.empty: '(Vælg klienttype)'
@@ -568,7 +568,7 @@ process:
         reason: Årsag
         client_adress: Klient adresse
         client: Klient
-        client_cpr: Klient CPR
+        client_cpr: CPR-nummer
         client_first_name: Fornavn
         client_identifier: Klient
         client_last_name: Efternavn
@@ -642,7 +642,7 @@ process_log:
                 type: Type
                 process:
                     case_number: Sagsnummer
-                    client_cpr: Klient CPR
+                    client_cpr: CPR-nummer
                     channel: Kanal
                     service: Ydelse
                     process_type: Type
