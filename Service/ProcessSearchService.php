@@ -116,8 +116,12 @@ class ProcessSearchService
             $queryBuilder->setParameter(':search_case_number_alternative', $matches['caseNumber']);
         }
         if (isset($matches['cpr'])) {
-            $queryBuilder->orWhere('e.clientCPR = :search_cpr_alternative');
+            $queryBuilder->orWhere('client.identifier = :search_cpr_alternative');
             $queryBuilder->setParameter(':search_cpr_alternative', $matches['cpr']);
+        }
+        if (isset($matches['cvr'])) {
+            $queryBuilder->orWhere('client.identifier = :search_cvr_alternative');
+            $queryBuilder->setParameter(':search_cvr_alternative', $matches['cvr']);
         }
         if (isset($matches['telephone'])) {
             $queryBuilder->orWhere('client.telephone = :search_telephone_alternative');
@@ -139,6 +143,7 @@ class ProcessSearchService
     {
         preg_match('/^\d{2}-?\d{5}$/', $search, $possibleCaseNumberMatches);
         preg_match('/^\d{6}-?\d{4}$/', $search, $possibleCPRMatches);
+        preg_match('/^\d{8}$/', $search, $possibleCVRMatches);
         preg_match('/^\d{8}$/', $search, $possiblePhoneNumberMatches);
 
         $result = [];
@@ -161,6 +166,9 @@ class ProcessSearchService
             }
 
             $result['cpr'] = $match;
+        }
+        if (1 === \count($possibleCVRMatches)) {
+            $result['cvr'] = $possibleCVRMatches[0];
         }
         if (1 === \count($possiblePhoneNumberMatches)) {
             $result['telephone'] = $possiblePhoneNumberMatches[0];
