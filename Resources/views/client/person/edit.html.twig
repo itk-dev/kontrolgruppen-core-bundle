@@ -6,8 +6,8 @@
     <h1>{{ 'client.edit.title'|trans }}</h1>
 
     <div class="form-group">
-        <label for="client_process_clientCPR">{{ 'client.form.cpr'|trans }}</label>
-        <input type="text" id="client_process_clientCPR" disabled="disabled" value="{{ process.clientCPR }}" class="form-control">
+        <label for="client_process_client_cpr">{{ 'client.form.cpr'|trans }}</label>
+        <input type="text" id="client_process_client_cpr" disabled="disabled" value="{{ client.cpr }}" class="form-control">
     </div>
 
     {% if canEdit %}
