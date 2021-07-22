@@ -54,6 +54,15 @@ class ProcessClientCompanyType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
             ])
+            ->add('people', CollectionType::class, [
+                'entry_type' => PersonType::class,
+                'entry_options' => ['label' => false],
+                'label' => 'client.form.people',
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'error_bubbling' => false,
+            ])
         ;
     }
 

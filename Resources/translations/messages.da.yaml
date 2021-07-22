@@ -96,6 +96,13 @@ client:
             remove: Fjern virksomhed
             cvr: CVR
             highlighted: Fremhævet
+        people: Personer
+        person:
+            add: Tilføj person
+            remove: Fjern person
+            cpr: CPR
+            highlighted: Fremhævet
+            name: Navn
     show:
         title: Klient
         client_updated: Klient blev opdateret
@@ -119,6 +126,10 @@ client:
         employed: Ansat
         name: Navn
         number_of_children: Antal børn
+        person:
+            cpr: CPR-nr.
+            highlighted: Fremhævet
+            name: Navn
         postal_code: Postnummer
         receives_public_aid: Offentlig forsørgelse
         telephone: Telefon
@@ -129,6 +140,7 @@ client:
         transportation: Transport
         companies: Virksomheder
         contact_person: Kontaktperson
+        people: Personer
 
 common:
     actions:

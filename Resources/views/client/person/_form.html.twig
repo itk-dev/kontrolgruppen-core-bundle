@@ -77,9 +77,9 @@
         </div>
     </div>
 
-
-    {#% do form_row(form.cars) %#}
-    {#% do form_row(form.companies) %#}
+    {# These form fields are rendered (manually). #}
+    {% do form_row(form.cars) %}
+    {% do form_row(form.companies) %}
 
     <button
         class="btn btn-success float-right pl-5 pr-5">{{ (button_label is defined ? ('client.form.' ~ button_label|lower) : 'common.actions.save')|trans }}</button>

@@ -39,9 +39,20 @@
                 {% endfor %}
             </ul>
         </div>
+
+        <div class="col-12">
+            <h3>{{ form_label(form.people) }}</h3>
+            <ul class="people list-group mb-3" data-prototype="{{ form_widget(form.people.vars.prototype)|e('html_attr') }}">
+                {% for person in form.people %}
+                    <li class="list-group-item">{{ form_row(person) }}</li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 
+    {# These form fields are rendered (manually). #}
     {% do form_row(form.cars) %}
+    {% do form_row(form.people) %}
 
     <button class="btn btn-success float-right pl-5 pr-5">{{ (button_label is defined ? ('client.form.' ~ button_label|lower) : 'common.actions.save')|trans }}</button>
 {{ form_end(form) }}
