@@ -114,7 +114,7 @@ class ProcessRepository extends ServiceEntityRepository
      *
      * @param int $batchSize
      *
-     * @return Traversable
+     * @return Traversable|Process[]
      */
     public function findAllBatchProcessed(int $batchSize = 100): Traversable
     {
