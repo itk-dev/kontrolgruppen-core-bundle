@@ -808,7 +808,11 @@ process_report:
             title: Klientoplysninger
             first_name: Fornavn
             last_name: Efternavn
+            contact_person_name: 'Kontaktperson (navn)'
+            contact_person_telephone: 'Kontaktperson (telefon)'
             cpr: CPR
+            cvr: CVR
+            name: Navn
             address: Adresse
             postal_code: Postnummer
             telephone: Telefon
