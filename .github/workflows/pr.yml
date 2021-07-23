@@ -9,7 +9,7 @@ jobs:
             -   name: Setup PHP, with composer and extensions
                 uses: shivammathur/setup-php@master
                 with:
-                    php-version: 7.3
+                    php-version: 7.4
                     extensions: ctype, iconv, json, zip, soap, gd
                     coverage: none
                     tools: composer:v1
@@ -25,7 +25,7 @@ jobs:
             - name: Setup PHP, with composer and extensions
               uses: shivammathur/setup-php@master
               with:
-                  php-version: 7.3
+                  php-version: 7.4
                   extensions: ctype, iconv, json, zip, soap, gd
                   coverage: none
                   tools: composer:v1
@@ -49,7 +49,7 @@ jobs:
             - name: Setup PHP, with composer and extensions
               uses: shivammathur/setup-php@master
               with:
-                  php-version: 7.3
+                  php-version: 7.4
                   extensions: ctype, iconv, json, zip, soap, gd
                   coverage: none
                   tools: composer:v1
@@ -68,7 +68,7 @@ jobs:
             - name: Setup PHP, with composer and extensions
               uses: shivammathur/setup-php@master
               with:
-                  php-version: 7.3
+                  php-version: 7.4
                   extensions: ctype, iconv, json, zip, soap, gd
                   coverage: none
                   tools: composer:v1
