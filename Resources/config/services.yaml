@@ -52,6 +52,7 @@ services:
             $tokenStorage: '@?security.token_storage'
 
     ItkDev\Serviceplatformen\Service\PersonBaseDataExtendedService:
+        lazy: true
         factory: ['Kontrolgruppen\CoreBundle\CPR\ServiceplatformenServiceFactory', createPersonBaseDataExtendedService]
         arguments: [
                 '%azure_tenant_id%',
