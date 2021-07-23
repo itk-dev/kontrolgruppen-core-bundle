@@ -69,6 +69,13 @@ class ProcessType extends AbstractType
     {
         /** @var Process $process */
         $process = $builder->getData();
+        $builder
+            ->add('processType', null, [
+                'choices' => $this->processTypeRepository->findByProcess($process),
+                'label' => 'process.form.process_type',
+                'choice_label' => 'name',
+            ]);
+
         // Add client controls on new processes.
         if (null !== $process && null === $process->getId()) {
             $client = $process->getProcessClient();
@@ -98,13 +105,6 @@ class ProcessType extends AbstractType
                 'label' => 'process.form.case_worker',
             ])
             // Add placeholders which are replaced and filled in form events.
-            ->add('processType', null, [
-                'choices' => [],
-                'label' => 'process.form.process_type',
-                'attr' => [
-                    'disabled' => 'disabled',
-                ],
-            ])
             ->add('reason', null, [
                 'choices' => [],
                 'label' => 'process.form.reason',
@@ -128,20 +128,6 @@ class ProcessType extends AbstractType
             ]);
 
         $formModifier = function (FormInterface $form, Process $process, ProcessTypeEntity $processType = null) {
-            if (null === $processType) {
-                $processType = $process->getProcessType();
-            }
-
-            $choices = $this->processTypeRepository->findByProcess($process);
-
-            if (!empty($choices)) {
-                $form->add('processType', ChoiceType::class, [
-                    'label' => 'process.form.process_type',
-                    'choices' => $choices,
-                    'choice_label' => 'name',
-                ]);
-            }
-
             $choices = $this->reasonRepository->findByProcess($process);
 
             if (!empty($choices)) {
@@ -150,6 +136,10 @@ class ProcessType extends AbstractType
                     'choices' => $choices,
                     'choice_label' => 'name',
                 ]);
+            }
+
+            if (null === $processType) {
+                $processType = $process->getProcessType();
             }
 
             if (null !== $processType) {
@@ -180,7 +170,7 @@ class ProcessType extends AbstractType
             function (FormEvent $event) use ($formModifier) {
                 /** @var Process $process */
                 $process = $event->getData();
-                $formModifier($event->getForm(), $process, $process->getProcessType());
+                $formModifier($event->getForm(), $process);
             }
         );
 

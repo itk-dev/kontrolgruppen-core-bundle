@@ -49,7 +49,6 @@ class ClientCompanyType extends AbstractType
                 'attr' => [
                     'class' => 'js-input-cvr no-cvr-scanning',
                 ],
-                'required' => false,
             ])
             ->add('search', ButtonType::class, [
                 'label' => 'process.form.search_client_cvr.search',

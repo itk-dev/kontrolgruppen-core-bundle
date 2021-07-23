@@ -16,6 +16,7 @@ use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\LockedNetValue;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType as ProcessTypeEntity;
 use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
@@ -34,7 +35,9 @@ use Kontrolgruppen\CoreBundle\Service\ProcessClientManager;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -195,18 +198,23 @@ class ProcessController extends BaseController
     public function new(Request $request, ProcessManager $processManager, ProcessClientManager $clientManager): Response
     {
         // Force user to select process client type before anything else.
-        $clientType = $request->get('clientType');
-        if (null === $clientType) {
+        try {
+            $client = $clientManager->createClient($request->get('clientType') ?? '');
+        } catch (\Exception $exception) {
+            $this->addFlash('danger', $exception->getMessage());
+
             return $this->render('process/select-client-type.html.twig');
         }
 
         $process = new Process();
-        $client = $clientManager->createClient($clientType);
         $process->setProcessClient($client);
 
         $this->denyAccessUnlessGranted('edit', $process);
 
         $form = $this->createForm(ProcessType::class, $process);
+
+        $this->handleTaxonomyCallback($form, $request, $process);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -214,16 +222,25 @@ class ProcessController extends BaseController
             $data = $request->request->get('process');
             $clientType = $process->getProcessClient()->getType();
             $clientData = $data[$clientType] ?? [];
+            $processCreated = false;
             try {
                 $client = $clientManager->createClient($clientType, $clientData);
+                // Populate the client to catch errors in (or missing) client data.
+                $clientManager->populateClient($client);
                 $process = $processManager->newProcess($process, $client);
+                $processCreated = true;
             } catch (\Exception $exception) {
-                $this->addFlash('danger', $exception->getMessage());
-
-                return $this->redirect($request->getRequestUri());
+                $identifierName = ProcessClientPerson::TYPE === $clientType ? 'cpr' : 'cvr';
+                if ($form->has($clientType) && $form->get($clientType)->has($identifierName)) {
+                    $form->get($clientType)->get($identifierName)->addError(new FormError($exception->getMessage()));
+                } else {
+                    $this->addFlash('danger', $exception->getMessage());
+                }
             }
 
-            return $this->redirectToRoute('process_edit', ['id' => $process]);
+            if ($processCreated) {
+                return $this->redirectToRoute('process_edit', ['id' => $process]);
+            }
         }
 
         // Get latest log entries
@@ -264,7 +281,7 @@ class ProcessController extends BaseController
         }
 
         $processes = [];
-        $clients = $clientRepository->findBy(['cpr' => $cpr]);
+        $clients = $clientRepository->findBy(['identifier' => $cpr]);
         foreach ($clients as $client) {
             $processes[] = $client->getProcess();
         }
@@ -294,7 +311,7 @@ class ProcessController extends BaseController
         }
 
         $processes = [];
-        $clients = $clientRepository->findBy(['cvr' => $cvr]);
+        $clients = $clientRepository->findBy(['identifier' => $cvr]);
         foreach ($clients as $client) {
             $processes[] = $client->getProcess();
         }
@@ -361,6 +378,7 @@ class ProcessController extends BaseController
         }
 
         $form = $this->createForm(ProcessType::class, $process);
+        $this->handleTaxonomyCallback($form, $request, $process);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -562,5 +580,23 @@ class ProcessController extends BaseController
         $json = $serializer->serialize($items, 'json', ['groups' => 'taxonomy_read']);
 
         return new JsonResponse($json, Response::HTTP_OK, [], true);
+    }
+
+    /**
+     * Handle taxonomy callback.
+     *
+     * This will submit the form, but validation will fail due to missing csfr token and hence a new process will no be created on each callback.
+     *
+     * @param FormInterface $form
+     * @param Request       $request
+     * @param Process       $process
+     */
+    private function handleTaxonomyCallback(FormInterface $form, Request $request, Process $process)
+    {
+        if ('GET' === $request->getMethod() &&
+            null !== ($processData = $request->query->get('process'))
+            && isset($processData['processType'])) {
+            $form->submit($processData);
+        }
     }
 }

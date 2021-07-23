@@ -49,7 +49,6 @@ class ClientPersonType extends AbstractType
                 'attr' => [
                     'class' => 'js-input-cpr no-cpr-scanning',
                 ],
-                'required' => false,
             ])
             ->add('search', ButtonType::class, [
                 'label' => 'process.form.search_client_cpr.search',

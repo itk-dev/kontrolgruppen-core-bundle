@@ -44,7 +44,7 @@ class Cvr
         $cvr = preg_replace('/[^\d]+/', '', $cvr);
 
         if (!preg_match('/^\d{8}$/', $cvr)) {
-            throw new \InvalidArgumentException('$cvr must contain exactly 8 digits');
+            throw new \InvalidArgumentException('CVR must contain exactly 8 digits');
         }
 
         $this->cvr = $cvr;
