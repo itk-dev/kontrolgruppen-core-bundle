@@ -30,6 +30,10 @@
                 <div class="col"><span class="text-muted">{{ 'client.table.name'|trans }}</span></div>
                 <div class="col">{{ client.name }}</div>
             </div>
+            <div class="row">
+                <div class="col"><span class="text-muted">{{ 'client.table.p_number'|trans }}</span></div>
+                <div class="col">{{ client.pNumber }}</div>
+            </div>
         </div>
         <div class="col-12 col-sm-6">
             <div class="row">
@@ -42,6 +46,11 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-12 col-sm-3"><span class="text-muted">{{ 'client.table.notes'|trans }}</span></div>
+        <div class="col textarea">{{ client.notes }}</div>
     </div>
 
     <h2>{{ 'client.sections.contact_person'|trans }}</h2>

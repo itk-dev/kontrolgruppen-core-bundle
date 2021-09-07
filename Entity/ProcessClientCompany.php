@@ -39,6 +39,18 @@ class ProcessClientCompany extends AbstractProcessClient
     private $people;
 
     /**
+     * @see https://www.billy.dk/billypedia/p-nummer/
+     *
+     * @ORM\Column(type="string", length=10)
+     */
+    private $pNumber;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $notes;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -135,6 +147,54 @@ class ProcessClientCompany extends AbstractProcessClient
                 $person->setProcessClient(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * Get p-number.
+     *
+     * @return string|null
+     */
+    public function getPNumber(): ?string
+    {
+        return $this->pNumber;
+    }
+
+    /**
+     * Set p-number.
+     *
+     * @param string $pNumber
+     *
+     * @return $this
+     */
+    public function setPNumber(string $pNumber): self
+    {
+        $this->pNumber = $pNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get notes.
+     *
+     * @return string|null
+     */
+    public function getNotes(): ?string
+    {
+        return $this->notes;
+    }
+
+    /**
+     * Set notes.
+     *
+     * @param string|null $notes
+     *
+     * @return $this
+     */
+    public function setNotes(?string $notes): self
+    {
+        $this->notes = $notes;
 
         return $this;
     }

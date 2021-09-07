@@ -203,3 +203,7 @@ div.form-control.disabled {
 .form-control[readonly].js-datepicker, .form-control[readonly].js-datetimepicker {
     background-color: white;
 }
+
+.textarea {
+    white-space: pre;
+}

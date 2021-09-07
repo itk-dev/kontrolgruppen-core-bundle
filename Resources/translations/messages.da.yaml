@@ -84,7 +84,10 @@ client:
         last_name: Efternavn
         employed: Ansat
         name: Navn
+        notes: Noter
+        notes.help: 'Skriv fx hvilken adresse p-nummeret er knyttet til'
         number_of_children: Antal børn
+        p_number: P-nummer
         postal_code: Postnummer
         receives_public_aid: Offentlig forsørgelse
         telephone: Telefon
@@ -125,11 +128,13 @@ client:
         last_name: Efternavn
         employed: Ansat
         name: Navn
+        notes: Noter
         number_of_children: Antal børn
         person:
             cpr: CPR-nr.
             highlighted: Fremhævet
             name: Navn
+        p_number: P-nummer
         postal_code: Postnummer
         receives_public_aid: Offentlig forsørgelse
         telephone: Telefon

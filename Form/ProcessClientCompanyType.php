@@ -46,6 +46,13 @@ class ProcessClientCompanyType extends AbstractType
             ->add('contactPerson', ContactPersonType::class, [
                 'label' => 'client.form.contact_person',
             ])
+            ->add('pNumber', null, [
+                'label' => 'client.form.p_number',
+            ])
+            ->add('notes', null, [
+                'label' => 'client.form.notes',
+                'help' => 'client.form.notes.help',
+            ])
             ->add('cars', CollectionType::class, [
                 'entry_type' => CarType::class,
                 'entry_options' => ['label' => false],
