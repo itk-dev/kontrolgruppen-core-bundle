@@ -585,7 +585,11 @@ class ProcessController extends BaseController
     /**
      * Handle taxonomy callback.
      *
-     * This will submit the form, but validation will fail due to missing csfr token and hence a new process will no be created on each callback.
+     * We need this callback to rebuild the process form when changing taxonomy
+     * values (cf. ProcessType::buildForm).
+     *
+     * This will submit the form, but validation will fail due to missing csfr
+     * token and hence a new process will not be created on each callback.
      *
      * @param FormInterface $form
      * @param Request       $request
