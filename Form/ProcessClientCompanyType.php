@@ -48,6 +48,10 @@ class ProcessClientCompanyType extends AbstractType
             ])
             ->add('pNumber', null, [
                 'label' => 'client.form.p_number',
+                // A P-number looks like a CPR-number (10 digits).
+                'attr' => [
+                    'class' => 'js-input-cpr no-cpr-scanning',
+                ],
             ])
             ->add('notes', null, [
                 'label' => 'client.form.notes',
