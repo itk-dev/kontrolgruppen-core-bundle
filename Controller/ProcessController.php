@@ -197,6 +197,9 @@ class ProcessController extends BaseController
      */
     public function new(Request $request, ProcessManager $processManager, ProcessClientManager $clientManager): Response
     {
+        $process = new Process();
+        $this->denyAccessUnlessGranted('edit', $process);
+
         // Force user to select process client type before anything else.
         try {
             $client = $clientManager->createClient($request->get('clientType') ?? '');
@@ -206,10 +209,7 @@ class ProcessController extends BaseController
             return $this->render('process/select-client-type.html.twig');
         }
 
-        $process = new Process();
         $process->setProcessClient($client);
-
-        $this->denyAccessUnlessGranted('edit', $process);
 
         $form = $this->createForm(ProcessType::class, $process);
 

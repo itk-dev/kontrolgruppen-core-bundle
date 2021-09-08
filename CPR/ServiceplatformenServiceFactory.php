@@ -90,7 +90,6 @@ class ServiceplatformenServiceFactory
         }
 
         try {
-            $options['trace'] = true;
             $soapClient = new \SoapClient($serviceContractFilename, $options);
         } catch (\SoapFault $e) {
             throw new CprException($e->getMessage(), $e->getCode());

@@ -59,6 +59,8 @@ class ProcessClientManager
      * @return abstractProcessClient The client
      *
      * @throws \Kontrolgruppen\CoreBundle\CPR\CprException
+     * @throws \Kontrolgruppen\CoreBundle\CVR\CprException
+     * @throws \RuntimeException
      */
     public function createClient(string $type, array $properties = []): AbstractProcessClient
     {
