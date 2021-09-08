@@ -16,6 +16,7 @@ use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\LockedNetValue;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType as ProcessTypeEntity;
@@ -24,8 +25,6 @@ use Kontrolgruppen\CoreBundle\Form\ProcessCompleteType;
 use Kontrolgruppen\CoreBundle\Form\ProcessResumeType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
 use Kontrolgruppen\CoreBundle\Repository\AbstractTaxonomyRepository;
-use Kontrolgruppen\CoreBundle\Repository\ProcessClientCompanyRepository;
-use Kontrolgruppen\CoreBundle\Repository\ProcessClientPersonRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
@@ -265,26 +264,22 @@ class ProcessController extends BaseController
     /**
      * @Route("/search-process-by-cpr", name="process_search_by_cpr", methods={"GET"})
      *
-     * @param Request                       $request
-     * @param ProcessClientPersonRepository $clientRepository
+     * @param Request           $request
+     * @param ProcessRepository $processRepository
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function searchProcessesByCpr(Request $request, ProcessClientPersonRepository $clientRepository): Response
+    public function searchProcessesByCpr(Request $request, ProcessRepository $processRepository): Response
     {
         $cpr = $request->get('cpr');
         if (!$cpr) {
             throw new NotFoundHttpException('No CPR found!');
         }
 
-        $processes = [];
-        $clients = $clientRepository->findBy(['identifier' => $cpr]);
-        foreach ($clients as $client) {
-            $processes[] = $client->getProcess();
-        }
+        $processes = $processRepository->findByClientIdentifier(ProcessClientPerson::TYPE, $cpr);
 
         return $this->render(
             '@KontrolgruppenCore/process/_process_search_cpr_result.html.twig',
@@ -295,26 +290,22 @@ class ProcessController extends BaseController
     /**
      * @Route("/search-process-by-cvr", name="process_search_by_cvr", methods={"GET"})
      *
-     * @param Request                        $request
-     * @param ProcessClientCompanyRepository $clientRepository
+     * @param Request           $request
+     * @param ProcessRepository $processRepository
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function searchProcessesByCvr(Request $request, ProcessClientCompanyRepository $clientRepository): Response
+    public function searchProcessesByCvr(Request $request, ProcessRepository $processRepository): Response
     {
         $cvr = $request->get('cvr');
         if (!$cvr) {
             throw new NotFoundHttpException('No CVR found!');
         }
 
-        $processes = [];
-        $clients = $clientRepository->findBy(['identifier' => $cvr]);
-        foreach ($clients as $client) {
-            $processes[] = $client->getProcess();
-        }
+        $processes = $processRepository->findByClientIdentifier(ProcessClientCompany::TYPE, $cvr);
 
         return $this->render(
             '@KontrolgruppenCore/process/_process_search_cvr_result.html.twig',
