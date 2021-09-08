@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- [DEVSUPP-606](https://jira.itkdev.dk/browse/SUPP0RT-302): Using correct attribute when filtering processes on KL export.
+
 ## [1.11.5] - 2021-06-11
 ### Changed
 - [KON-442](https://jira.itkdev.dk/browse/KON-442): Setting end time for a date in export revenue to be last possible time on day.
