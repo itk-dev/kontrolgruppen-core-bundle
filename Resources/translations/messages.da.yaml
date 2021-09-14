@@ -24,6 +24,7 @@ channel:
     edit:
         title: Rediger kanal
     form:
+        client_types: Klienttyper
         name: Navn
         update: Gem
     index:
@@ -34,6 +35,7 @@ channel:
     show:
         title: Kanal
     table:
+        client_types: Klienttyper
         id: ID
         name: Navn
     btns:
@@ -43,6 +45,7 @@ reason:
     edit:
         title: Rediger årsag
     form:
+        client_types: Klienttyper
         name: Navn
         update: Gem
     index:
@@ -53,6 +56,7 @@ reason:
     show:
         title: Årsag
     table:
+        client_types: Klienttyper
         id: ID
         name: Navn
     btns:
@@ -72,13 +76,18 @@ client:
         cars: Biler
         city: By
         cpr: CPR nummer
+        cvr: CVR-nummer
         first_name: Fornavn
         has_drivers_license: Har kørekort
         has_car: Har bil
         id: ID
         last_name: Efternavn
         employed: Ansat
+        name: Navn
+        notes: Noter
+        notes.help: 'Skriv fx hvilken adresse p-nummeret er knyttet til'
         number_of_children: Antal børn
+        p_number: P-nummer
         postal_code: Postnummer
         receives_public_aid: Offentlig forsørgelse
         telephone: Telefon
@@ -90,6 +99,13 @@ client:
             remove: Fjern virksomhed
             cvr: CVR
             highlighted: Fremhævet
+        people: Personer
+        person:
+            add: Tilføj person
+            remove: Fjern person
+            cpr: CPR
+            highlighted: Fremhævet
+            name: Navn
     show:
         title: Klient
         client_updated: Klient blev opdateret
@@ -106,11 +122,19 @@ client:
         cars: Biler
         city: By
         cpr: CPR nummer
+        cvr: CVR-nummer
         first_name: Fornavn
         id: ID
         last_name: Efternavn
         employed: Ansat
+        name: Navn
+        notes: Noter
         number_of_children: Antal børn
+        person:
+            cpr: CPR-nr.
+            highlighted: Fremhævet
+            name: Navn
+        p_number: P-nummer
         postal_code: Postnummer
         receives_public_aid: Offentlig forsørgelse
         telephone: Telefon
@@ -120,6 +144,9 @@ client:
         employment: Ansættelsesforhold
         transportation: Transport
         companies: Virksomheder
+        contact_person: Kontaktperson
+        people: Personer
+
 common:
     actions:
         back: Gå tilbage
@@ -208,6 +235,10 @@ conclusion:
         base: Basal
         weighted: Argumenter for/imod
 
+contact_person:
+    name: Navn
+    telephone: Telefon
+
 court_decision:
     'true': Medhold
     'false': Afvist
@@ -221,6 +252,7 @@ dashboard:
         limit: Antal synlige sager
         show_completed: Vis afsluttede sager
         title: Mine sager
+        pagination_info: '%count% af %total%'
     not_assigned:
         title: Ikke tildelte sager
     not_visited:
@@ -337,6 +369,7 @@ forwarded_to_authority:
     show:
         title: Videresendes til anden myndighed
     table:
+        client_types: Klienttyper
         id: ID
         name: Navn
         process_types: Tilkoblede sagstyper
@@ -502,7 +535,12 @@ process:
             placeholder: Vælg sagsstatus
             save: Gem ny status
         channel: Kanal
-        client_cpr: Klient CPR
+        client_cpr: CPR-nummer
+        client_cvr: CVR-nummer
+        client_type: Klienttype
+        client_type.empty: '(Vælg klienttype)'
+        client_type.company: Virksomhed
+        client_type.person: Person
         court_decision: Rettens afgørelse
         police_report: Er sagen politianmeldt?
         process_status: Sagsstatus
@@ -514,11 +552,17 @@ process:
             search: Søg efter eksisterende sager
             loading: Søger...
             results: Eksisterende sag(er) fundet
+        search_client_cvr:
+            search: Søg efter eksisterende sager
+            loading: Søger...
+            results: Eksisterende sag(er) fundet
     index:
         title: Sager
+        pagination_info: '%start%–%end% af %total%'
     menu_title: Sager
     new:
         title: Opret sag
+        select_client_type: Vælg klienttype
         unique_error: Noget gik galt. Prøv venligst igen.
     show:
         title: Sag
@@ -530,11 +574,14 @@ process:
         channel: Kanal
         reason: Årsag
         client_adress: Klient adresse
-        client_cpr: Klient CPR
+        client: Klient
+        client_cpr: CPR-nummer
         client_first_name: Fornavn
+        client_identifier: Klient
         client_last_name: Efternavn
         client_name: Klient navn
         client_telephone: Klient telefonnummer
+        client_type: Klienttype
         court_decision: Rettens afgørelse
         id: ID
         internal_note: Seneste interne notater
@@ -549,6 +596,7 @@ process:
         service: Ydelse
         relations: Relationer
         filter:
+            show_all_client_types: Alle klienttyper
             show_all_types: Alle sagstyper
             show_all_status: Alle sagsstatusser
             show_all_case_worker: Alle sagsbehandlere
@@ -591,16 +639,17 @@ process_log:
                 base_conclusion: Konklusion
                 weighted_conclusion: Konklusion
                 reminder: Påmindelse
-                client: Klient
                 service_economy_entry: Ydelse registrering
                 base_economy_entry: Konto registrering
                 income_economy_entry: Indkomst registrering
                 process_group: Relationer
+                process_client_company: Klient
+                process_client_person: Klient
             log_entry:
                 type: Type
                 process:
                     case_number: Sagsnummer
-                    client_cpr: Klient CPR
+                    client_cpr: CPR-nummer
                     channel: Kanal
                     service: Ydelse
                     process_type: Type
@@ -609,7 +658,14 @@ process_log:
                     police_report: Politianmeldt
                     case_worker: Sagsbehandler
                     completed_at: Afsluttet
-                client:
+                process_client_company:
+                    identifier: CVR-nr.
+                    name: Navn
+                    address: Adresse
+                    postal_code: Postnummer
+                    city: By
+                    telephone: Telefon
+                process_client_person:
                     first_name: Fornavn
                     last_name: Efternavn
                     address: Adresse
@@ -664,6 +720,7 @@ process_status:
     edit:
         title: Rediger sagsstatus
     form:
+        client_types: Klienttyper
         name: Navn
         is_forward_to_another_authority: Videresendes til anden myndighed
         is_forward_to_another_authority_help: Marker om denne status gør at sagen videresendes til anden myndighed
@@ -682,6 +739,7 @@ process_status:
     show:
         title: Sagsstatus
     table:
+        client_types: Klienttyper
         id: ID
         name: Navn
         is_forward_to_another_authority: Videresendes til anden myndighed
@@ -697,6 +755,7 @@ process_type:
     edit:
         title: Rediger sagstype
     form:
+        client_types: Klienttyper
         conclusion_class: Konklusionstype
         channels: Tilkoblede kanaler
         hide_in_dashboard: Skjul på dashboard
@@ -718,6 +777,7 @@ process_type:
     table:
         conclusion_class: Konklusionstype
         channels: Tilkoblede kanaler
+        client_types: Klienttyper
         hide_in_dashboard: Skjul på dashboard
         id: ID
         name: Navn
@@ -755,7 +815,11 @@ process_report:
             title: Klientoplysninger
             first_name: Fornavn
             last_name: Efternavn
+            contact_person_name: 'Kontaktperson (navn)'
+            contact_person_telephone: 'Kontaktperson (telefon)'
             cpr: CPR
+            cvr: CVR
+            name: Navn
             address: Adresse
             postal_code: Postnummer
             telephone: Telefon
@@ -886,11 +950,12 @@ search:
         case_number: Sagsnummer
         case_worker: Sagsbehandler
         channel: Kanal
+        client: Klient
         client_adress: Adresse
-        client_cpr: CPR
-        client_first_name: Fornavn
-        client_last_name: Efternavn
+        client_identifier: Klient
+        client_name: Navn
         client_telephone: Telefon
+        client_type: Klienttype
         process_status: Status
         process_type: Type
         reminders: Påmindelser
@@ -913,6 +978,7 @@ service:
     show:
         title: Ydelse
     table:
+        client_types: Klienttyper
         id: ID
         name: Navn
         process_types: Tilkoblede sagstyper
@@ -977,6 +1043,7 @@ account:
     show:
         title: Konto
     table:
+        client_types: Klienttyper
         id: ID
         name: Navn
     btns:
@@ -996,6 +1063,7 @@ income_type:
     show:
         title: Indkomsttype
     table:
+        client_types: Klienttyper
         id: ID
         name: Navn
     btns:
@@ -1061,3 +1129,17 @@ change_status_on_completed_processes:
     form:
         status_label: Ny sagsstatus
         submit_label: Sæt status
+
+process_client_type:
+    empty_option: '(Vælg klienttype)'
+    none: '–'
+    company: Virksomhed
+    person: Person
+
+client_types:
+    help: Vælg klienttyper. Gælder for alt hvis ingen klienttyper er valgt.
+
+Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany: Virksomhed
+Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson: Person
+
+'%value% is not valid for the selected client types (%client_types%).': '"{{ value }}" er ikke gyldig for de valgte klienttyper ({{ client_types }}).'

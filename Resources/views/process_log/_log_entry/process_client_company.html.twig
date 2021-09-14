@@ -1,0 +1,39 @@
+<ul class="list-group">
+    {% if identifier is defined %}
+        <li class="list-group-item">
+            {{ 'process_log.revision.table.log_entry.process_client_company.identifier'|trans }}: {{ identifier ?: '-' }}
+        </li>
+    {% endif %}
+
+    {% if name is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.process_client_company.name'|trans }}: {{ name ?: '-' }}
+    </li>
+    {% endif %}
+
+    {% if address is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.process_client_company.address'|trans }}: {{ address ?: '-' }}
+    </li>
+    {% endif %}
+
+    {% if postalCode is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.process_client_company.postal_code'|trans }}: {{ postalCode ?: '-' }}
+    </li>
+    {% endif %}
+
+    {% if city is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.process_client_company.city'|trans }}: {{ city ?: '-' }}
+    </li>
+    {% endif %}
+
+    {% if telephone is defined %}
+    <li class="list-group-item">
+        {{ 'process_log.revision.table.log_entry.process_client_company.telephone'|trans }}: {{ telephone ?: '-' }}
+    </li>
+    {% endif %}
+
+    {# @todo Add more useful info here? #}
+</ul>

@@ -45,15 +45,15 @@ class Cpr
         }
 
         if (!preg_match('/^\d{10}$/', $cpr)) {
-            throw new \InvalidArgumentException('$cpr can only contain numbers');
+            throw new \InvalidArgumentException('CPR can only contain numbers');
         }
 
         if ((int) $cpr < 0) {
-            throw new \InvalidArgumentException('$cpr cannot be negative');
+            throw new \InvalidArgumentException('CPR cannot be negative');
         }
 
         if (10 !== \strlen($cpr)) {
-            throw new \InvalidArgumentException('$cpr must contain exactly 10 digits');
+            throw new \InvalidArgumentException('CPR must contain exactly 10 digits');
         }
 
         $this->cpr = $cpr;
