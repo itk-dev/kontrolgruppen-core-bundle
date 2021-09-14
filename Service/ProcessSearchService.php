@@ -55,14 +55,9 @@ class ProcessSearchService
         }
 
         $qb->orWhere('e.caseNumber LIKE :search');
-        $qb->orWhere('e.clientCPR LIKE :search');
         $qb->orWhere('client.telephone LIKE :search');
-        $qb->orWhere(
-            $qb->expr()->concat(
-                $qb->expr()->concat('client.firstName', $qb->expr()->literal(' ')),
-                'client.lastName'
-            ).'LIKE :search'
-        );
+        $qb->orWhere('client.name LIKE :search');
+        $qb->orWhere('client.identifier LIKE :search');
         $qb->orWhere('client.address LIKE :search');
         $qb->orWhere('caseWorker.username LIKE :search');
         $qb->setParameter(':search', '%'.$search.'%');
@@ -93,15 +88,7 @@ class ProcessSearchService
             $qb = $this->applyFieldSearch($qb, $fieldMatches);
         } else {
             $qb->orWhere('client.address = :search');
-            $qb->orWhere(
-                $qb->expr()->concat(
-                    $qb->expr()->concat(
-                        'client.firstName',
-                        $qb->expr()->literal(' ')
-                    ),
-                    'client.lastName'
-                ).'= :search'
-            );
+            $qb->orWhere('client.name = :search');
             $qb->setParameter(':search', $search);
         }
 
@@ -129,8 +116,12 @@ class ProcessSearchService
             $queryBuilder->setParameter(':search_case_number_alternative', $matches['caseNumber']);
         }
         if (isset($matches['cpr'])) {
-            $queryBuilder->orWhere('e.clientCPR = :search_cpr_alternative');
+            $queryBuilder->orWhere('client.identifier = :search_cpr_alternative');
             $queryBuilder->setParameter(':search_cpr_alternative', $matches['cpr']);
+        }
+        if (isset($matches['cvr'])) {
+            $queryBuilder->orWhere('client.identifier = :search_cvr_alternative');
+            $queryBuilder->setParameter(':search_cvr_alternative', $matches['cvr']);
         }
         if (isset($matches['telephone'])) {
             $queryBuilder->orWhere('client.telephone = :search_telephone_alternative');
@@ -152,6 +143,7 @@ class ProcessSearchService
     {
         preg_match('/^\d{2}-?\d{5}$/', $search, $possibleCaseNumberMatches);
         preg_match('/^\d{6}-?\d{4}$/', $search, $possibleCPRMatches);
+        preg_match('/^\d{8}$/', $search, $possibleCVRMatches);
         preg_match('/^\d{8}$/', $search, $possiblePhoneNumberMatches);
 
         $result = [];
@@ -175,6 +167,9 @@ class ProcessSearchService
 
             $result['cpr'] = $match;
         }
+        if (1 === \count($possibleCVRMatches)) {
+            $result['cvr'] = $possibleCVRMatches[0];
+        }
         if (1 === \count($possiblePhoneNumberMatches)) {
             $result['telephone'] = $possiblePhoneNumberMatches[0];
         }
@@ -190,7 +185,7 @@ class ProcessSearchService
     private function getQueryBuilder(): QueryBuilder
     {
         $qb = $this->processRepository->createQueryBuilder('e');
-        $qb->leftJoin('e.client', 'client');
+        $qb->leftJoin('e.processClient', 'client');
         $qb->addSelect('client');
         $qb->leftJoin('e.caseWorker', 'caseWorker');
         $qb->addSelect('partial caseWorker.{id,username,name}');

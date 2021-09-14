@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- [KON-428](https://jira.itkdev.dk/browse/KON-428): Company or person as client on process
+- [KON-428](https://jira.itkdev.dk/browse/KON-428): Disabled revenue on non-person processes
+- [KON-428](https://jira.itkdev.dk/browse/KON-428): Added process client type filter
+- [KON-428](https://jira.itkdev.dk/browse/KON-428): Added people on company client
+
 ### Fixed
 - [DEVSUPP-606](https://jira.itkdev.dk/browse/SUPP0RT-302): Using correct attribute when filtering processes on KL export.
 

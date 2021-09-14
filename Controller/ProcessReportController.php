@@ -57,6 +57,7 @@ class ProcessReportController extends BaseController
             ->add('generate', SubmitType::class, [
                 'label' => $translator->trans('process_report.form.submit'),
             ])
+            ->setMethod('GET')
             ->getForm();
 
         $form->handleRequest($request);

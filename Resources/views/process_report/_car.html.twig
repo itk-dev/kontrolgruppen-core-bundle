@@ -1,4 +1,4 @@
-{% if process.client.cars is not empty %}
+{% if process.processClient.cars is not empty %}
     <h2>{{ 'process_report.report.car.title'|trans }}</h2>
 
     <table>
@@ -10,7 +10,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for car in process.client.cars %}
+            {% for car in process.processClient.cars %}
             <tr>
                 <td>{{ car.registrationNumber }}</td>
                 <td>{{ car.sharedOwnerShip|yes_no }}</td>
