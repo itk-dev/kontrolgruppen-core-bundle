@@ -10,29 +10,40 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\LockedNetValue;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
+use Kontrolgruppen\CoreBundle\Entity\ProcessType as ProcessTypeEntity;
 use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessCompleteType;
 use Kontrolgruppen\CoreBundle\Form\ProcessResumeType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
+use Kontrolgruppen\CoreBundle\Repository\AbstractTaxonomyRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
+use Kontrolgruppen\CoreBundle\Service\ProcessClientManager;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/process")
@@ -42,16 +53,16 @@ class ProcessController extends BaseController
     /**
      * @Route("/", name="process_index", methods={"GET"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request                           $request
-     * @param \Kontrolgruppen\CoreBundle\Repository\ProcessRepository             $processRepository
-     * @param \Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface $lexikBuilderUpdater
-     * @param \Knp\Component\Pager\PaginatorInterface                             $paginator
-     * @param \Symfony\Component\Form\FormFactoryInterface                        $formFactory
-     * @param \Kontrolgruppen\CoreBundle\Service\ProcessManager                   $processManager
-     * @param \Kontrolgruppen\CoreBundle\Repository\UserRepository                $userRepository
-     * @param \Kontrolgruppen\CoreBundle\Service\UserSettingsService              $userSettingsService
+     * @param Request                       $request
+     * @param ProcessRepository             $processRepository
+     * @param FilterBuilderUpdaterInterface $lexikBuilderUpdater
+     * @param PaginatorInterface            $paginator
+     * @param FormFactoryInterface          $formFactory
+     * @param ProcessManager                $processManager
+     * @param UserRepository                $userRepository
+     * @param UserSettingsService           $userSettingsService
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -91,6 +102,9 @@ class ProcessController extends BaseController
         }
 
         // Add sortable fields.
+        $queryBuilder->leftJoin('e.processClient', 'client');
+        $queryBuilder->addSelect('partial client.{id,identifier,name,type}');
+
         $queryBuilder->leftJoin('e.caseWorker', 'caseWorker');
         $queryBuilder->addSelect('partial caseWorker.{id}');
 
@@ -170,27 +184,62 @@ class ProcessController extends BaseController
     /**
      * @Route("/new", name="process_new", methods={"GET","POST"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request         $request
-     * @param \Kontrolgruppen\CoreBundle\Service\ProcessManager $processManager
+     * @param Request              $request
+     * @param ProcessManager       $processManager
+     * @param ProcessClientManager $clientManager
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Kontrolgruppen\CoreBundle\CPR\CprException
      */
-    public function new(Request $request, ProcessManager $processManager): Response
+    public function new(Request $request, ProcessManager $processManager, ProcessClientManager $clientManager): Response
     {
         $process = new Process();
-
         $this->denyAccessUnlessGranted('edit', $process);
 
+        // Force user to select process client type before anything else.
+        try {
+            $client = $clientManager->createClient($request->get('clientType') ?? '');
+        } catch (\Exception $exception) {
+            $this->addFlash('danger', $exception->getMessage());
+
+            return $this->render('process/select-client-type.html.twig');
+        }
+
+        $process->setProcessClient($client);
+
         $form = $this->createForm(ProcessType::class, $process);
+
+        $this->handleTaxonomyCallback($form, $request, $process);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $process = $processManager->newProcess($process);
+            // Get unmapped client data from request.
+            $data = $request->request->get('process');
+            $clientType = $process->getProcessClient()->getType();
+            $clientData = $data[$clientType] ?? [];
+            $processCreated = false;
+            try {
+                $client = $clientManager->createClient($clientType, $clientData);
+                // Populate the client to catch errors in (or missing) client data.
+                $clientManager->populateClient($client);
+                $process = $processManager->newProcess($process, $client);
+                $processCreated = true;
+            } catch (\Exception $exception) {
+                $identifierName = ProcessClientPerson::TYPE === $clientType ? 'cpr' : 'cvr';
+                if ($form->has($clientType) && $form->get($clientType)->has($identifierName)) {
+                    $form->get($clientType)->get($identifierName)->addError(new FormError($exception->getMessage()));
+                } else {
+                    $this->addFlash('danger', $exception->getMessage());
+                }
+            }
 
-            return $this->redirectToRoute('client_show', ['process' => $process]);
+            if ($processCreated) {
+                return $this->redirectToRoute('process_edit', ['id' => $process]);
+            }
         }
 
         // Get latest log entries
@@ -213,22 +262,24 @@ class ProcessController extends BaseController
     }
 
     /**
-     * @Route("/search-process-by-cpr", name="process_search_by_cpr", methods={"POST"})
+     * @Route("/search-process-by-cpr", name="process_search_by_cpr", methods={"GET"})
      *
      * @param Request           $request
      * @param ProcessRepository $processRepository
      *
      * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function searchProcessesByCpr(Request $request, ProcessRepository $processRepository): Response
     {
-        if (!$request->request->has('cpr')) {
+        $cpr = $request->get('cpr');
+        if (!$cpr) {
             throw new NotFoundHttpException('No CPR found!');
         }
 
-        $processes = $processRepository->findBy(
-            ['clientCPR' => $request->request->get('cpr')]
-        );
+        $processes = $processRepository->findByClientIdentifier(ProcessClientPerson::TYPE, $cpr);
 
         return $this->render(
             '@KontrolgruppenCore/process/_process_search_cpr_result.html.twig',
@@ -237,13 +288,39 @@ class ProcessController extends BaseController
     }
 
     /**
+     * @Route("/search-process-by-cvr", name="process_search_by_cvr", methods={"GET"})
+     *
+     * @param Request           $request
+     * @param ProcessRepository $processRepository
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function searchProcessesByCvr(Request $request, ProcessRepository $processRepository): Response
+    {
+        $cvr = $request->get('cvr');
+        if (!$cvr) {
+            throw new NotFoundHttpException('No CVR found!');
+        }
+
+        $processes = $processRepository->findByClientIdentifier(ProcessClientCompany::TYPE, $cvr);
+
+        return $this->render(
+            '@KontrolgruppenCore/process/_process_search_cvr_result.html.twig',
+            ['processes' => $processes]
+        );
+    }
+
+    /**
      * @Route("/{id}", name="process_show", methods={"GET", "POST"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request     $request
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process     $process
-     * @param \Kontrolgruppen\CoreBundle\Service\LogManager $logManager
+     * @param Request    $request
+     * @param Process    $process
+     * @param LogManager $logManager
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -275,10 +352,10 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}/edit", name="process_edit", methods={"GET","POST"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     * @param Request $request
+     * @param Process $process
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -292,6 +369,7 @@ class ProcessController extends BaseController
         }
 
         $form = $this->createForm(ProcessType::class, $process);
+        $this->handleTaxonomyCallback($form, $request, $process);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -321,10 +399,10 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}", name="process_delete", methods={"DELETE"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     * @param Request $request
+     * @param Process $process
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function delete(Request $request, Process $process): Response
     {
@@ -345,13 +423,13 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}/complete", name="process_complete", methods={"GET","POST"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request                     $request
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process                     $process
-     * @param \Kontrolgruppen\CoreBundle\Repository\ServiceRepository       $serviceRepository
-     * @param \Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository $processStatusRepository
-     * @param \Kontrolgruppen\CoreBundle\Service\EconomyService             $economyService
+     * @param Request                 $request
+     * @param Process                 $process
+     * @param ServiceRepository       $serviceRepository
+     * @param ProcessStatusRepository $processStatusRepository
+     * @param ProcessManager          $processManager
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -415,10 +493,14 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}/resume", name="process_resume", methods={"POST", "GET"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     * @param Request                 $request
+     * @param Process                 $process
+     * @param ProcessStatusRepository $processStatusRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function resume(Request $request, Process $process, ProcessStatusRepository $processStatusRepository): Response
     {
@@ -452,5 +534,64 @@ class ProcessController extends BaseController
                 'form' => $form->createView(),
             ]
         );
+    }
+
+    /**
+     * @Route("/search-taxonomy/{taxonomy}", name="process_search_taxonomy", methods={"GET"})
+     *
+     * @param Request                $request
+     * @param string                 $taxonomy
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface    $serializer
+     *
+     * @return Response
+     *
+     * @throws \JsonException
+     */
+    public function searchTaxonomy(Request $request, string $taxonomy, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
+    {
+        $taxonomyClassName = [
+            'processType' => ProcessTypeEntity::class,
+        ][$taxonomy] ?? null;
+
+        if (null === $taxonomyClassName) {
+            throw new BadRequestHttpException(sprintf('Invalid taxonomy: %s', $taxonomy));
+        }
+
+        $clientType = $request->get('clientType');
+
+        $repository = $entityManager->getRepository($taxonomyClassName);
+        if (!$repository instanceof AbstractTaxonomyRepository) {
+            throw new BadRequestHttpException(sprintf('Invalid taxonomy: %s', $taxonomy));
+        }
+
+        $items = $repository->findByClientType($clientType);
+        $items = array_values($items);
+
+        $json = $serializer->serialize($items, 'json', ['groups' => 'taxonomy_read']);
+
+        return new JsonResponse($json, Response::HTTP_OK, [], true);
+    }
+
+    /**
+     * Handle taxonomy callback.
+     *
+     * We need this callback to rebuild the process form when changing taxonomy
+     * values (cf. ProcessType::buildForm).
+     *
+     * This will submit the form, but validation will fail due to missing csfr
+     * token and hence a new process will not be created on each callback.
+     *
+     * @param FormInterface $form
+     * @param Request       $request
+     * @param Process       $process
+     */
+    private function handleTaxonomyCallback(FormInterface $form, Request $request, Process $process)
+    {
+        if ('GET' === $request->getMethod() &&
+            null !== ($processData = $request->query->get('process'))
+            && isset($processData['processType'])) {
+            $form->submit($processData);
+        }
     }
 }

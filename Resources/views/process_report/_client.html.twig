@@ -2,53 +2,75 @@
 
 <table>
     <tbody>
-        <tr>
-            <th class="w-30">{{ 'process_report.report.client.first_name'|trans }}:</th>
-            <td>{{ process.client.firstName ?: '-' }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'process_report.report.client.last_name'|trans }}:</th>
-            <td>{{ process.client.lastName ?: '-' }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'process_report.report.client.cpr'|trans }}:</th>
-            <td>{{ process.clientCPR }}</td>
-        </tr>
+        {% if 'person' == process.processClient.type %}
+            <tr>
+                <th class="w-30">{{ 'process_report.report.client.first_name'|trans }}:</th>
+                <td>{{ process.processClient.firstName ?: '-' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'process_report.report.client.last_name'|trans }}:</th>
+                <td>{{ process.processClient.lastName ?: '-' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'process_report.report.client.cpr'|trans }}:</th>
+                <td>{{ process.processClient.cpr }}</td>
+            </tr>
+        {% elseif 'company' == process.processClient.type %}
+            <tr>
+                <th>{{ 'process_report.report.client.name'|trans }}:</th>
+                <td>{{ process.processClient.name ?: '-' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'process_report.report.client.cvr'|trans }}:</th>
+                <td>{{ process.processClient.cvr }}</td>
+            </tr>
+        {% endif %}
         <tr>
             <th>{{ 'process_report.report.client.address'|trans }}:</th>
-            <td>{{ process.client.address ?: '-' }}</td>
+            <td>{{ process.processClient.address ?: '-' }}</td>
         </tr>
         <tr>
             <th>{{ 'process_report.report.client.postal_code'|trans }}:</th>
-            <td>{{ process.client.postalCode ?: '-' }}</td>
+            <td>{{ process.processClient.postalCode ?: '-' }}</td>
         </tr>
         <tr>
             <th>{{ 'process_report.report.client.telephone'|trans }}:</th>
-            <td>{{ process.client.telephone ?: '-' }}</td>
+            <td>{{ process.processClient.telephone ?: '-' }}</td>
         </tr>
+        {% if 'person' == process.processClient.type %}
         <tr>
             <th>{{ 'process_report.report.client.number_of_children'|trans }}:</th>
-            <td>{{ process.client.numberOfChildren ?: '-' }}</td>
+            <td>{{ process.processClient.numberOfChildren ?: '-' }}</td>
         </tr>
         <tr>
             <th>{{ 'process_report.report.client.receives_public_aid'|trans }}:</th>
-            <td>{{ process.client.receivesPublicAid|yes_no }}</td>
+            <td>{{ process.processClient.receivesPublicAid|yes_no }}</td>
         </tr>
         <tr>
             <th>{{ 'process_report.report.client.employed'|trans }}:</th>
-            <td>{{ process.client.employed|yes_no }}</td>
+            <td>{{ process.processClient.employed|yes_no }}</td>
         </tr>
         <tr>
             <th>{{ 'process_report.report.client.has_own_company'|trans }}:</th>
-            <td>{{ process.client.hasOwnCompany|yes_no }}</td>
+            <td>{{ process.processClient.hasOwnCompany|yes_no }}</td>
         </tr>
         <tr>
             <th>{{ 'process_report.report.client.has_drivers_license'|trans }}:</th>
-            <td>{{ process.client.hasDriversLicense|yes_no }}</td>
+            <td>{{ process.processClient.hasDriversLicense|yes_no }}</td>
         </tr>
         <tr class="last">
             <th>{{ 'process_report.report.client.has_car'|trans }}:</th>
-            <td>{{ process.client.hasCar|yes_no }}</td>
+            <td>{{ process.processClient.hasCar|yes_no }}</td>
         </tr>
+        {% elseif 'company' == process.processClient.type %}
+        <tr>
+            <th>{{ 'process_report.report.client.contact_person_name'|trans }}:</th>
+            <td>{{ process.processClient.contactPerson.name ?: '-' }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'process_report.report.client.contact_person_telephone'|trans }}:</th>
+            <td>{{ process.processClient.contactPerson.telephone ?: '-' }}</td>
+        </tr>
+        {% endif %}
     </tbody>
 </table>

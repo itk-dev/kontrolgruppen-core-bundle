@@ -27,8 +27,12 @@ class CompanyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('CVR')
-            ->add('highlighted')
+            ->add('CVR', null, [
+                'label' => 'client.form.company.cvr',
+            ])
+            ->add('highlighted', null, [
+                'label' => 'client.form.company.highlighted',
+            ])
         ;
     }
 

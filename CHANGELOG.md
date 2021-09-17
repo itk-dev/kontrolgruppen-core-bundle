@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.12.0] - 2021-09-14
+### Added
+- [KON-428](https://jira.itkdev.dk/browse/KON-428): Company or person as client on process
+- [KON-428](https://jira.itkdev.dk/browse/KON-428): Disabled revenue on non-person processes
+- [KON-428](https://jira.itkdev.dk/browse/KON-428): Added process client type filter
+- [KON-428](https://jira.itkdev.dk/browse/KON-428): Added people on company client
+
+### Fixed
+- [DEVSUPP-606](https://jira.itkdev.dk/browse/SUPP0RT-302): Using correct attribute when filtering processes on KL export.
+
 ## [1.11.5] - 2021-06-11
 ### Changed
 - [KON-442](https://jira.itkdev.dk/browse/KON-442): Setting end time for a date in export revenue to be last possible time on day.

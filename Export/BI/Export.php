@@ -12,6 +12,8 @@ namespace Kontrolgruppen\CoreBundle\Export\BI;
 
 use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Repository\ProcessLogEntryRepository;
@@ -66,6 +68,7 @@ class Export extends AbstractExport
      */
     public function writeData()
     {
+        $now = $this->formatDate(new \DateTimeImmutable());
         $processes = $this->processRepository->findAllBatchProcessed();
 
         $this->writeHeader([
@@ -118,38 +121,51 @@ class Export extends AbstractExport
             $forwardedTo = $process->getForwardedToAuthorities();
             $forwardedTo = \count($forwardedTo) > 0 ? $forwardedTo[0] : null;
 
-            $this->writeRow([
-                $this->formatDate(new \DateTime()), // 'Udtræksdato'
-                $process->getCaseNumber(), // 'Sagsnummer'
-                $this->formatDate($process->getCreatedAt(), 'long'), // 'Oprettet dato'
-                $process->getCaseWorker() ? $process->getCaseWorker()->getUsername() : null, // 'Sagsbehandler'
-                $process->getClient() ? $process->getClient()->getPostalCode() : null, // 'Postnummer'
-                $process->getClientCPR(), // 'CPR-nummer'
-                $process->getClient() ? $process->getClient()->getNumberOfChildren() : null, // 'Antal børn'
-                $process->getClient() ? $process->getClient()->getCars()->count() : null, // 'Antal biler'
-                $process->getProcessType() ? $process->getProcessType()->getName() : null, // 'Sagstype'
-                $process->getProcessStatus() ? $process->getProcessStatus()->getName() : null, // 'Sagsstatus'
-                $latestLogEntry ? $this->formatDate($latestLogEntry->getLogEntry()->getLoggedAt(), 'long') : null, // 'Dato for sagsstatus'
-                $process->getReason() ? $process->getReason()->getName() : null, // 'Årsager'
-                $process->getChannel() ? $process->getChannel()->getName() : null, // 'Kanaler'
-                $process->getService() ? $process->getService()->getName() : null, // 'Ydelser'
-                $this->formatBooleanYesNoNull($process->getClient() && $process->getClient()->getReceivesPublicAid()), // 'Offentlig forsørgelse'
-                $this->formatBooleanYesNoNull($process->getClient() && $process->getClient()->getEmployed()), // 'Ansat'
-                $this->formatBooleanYesNoNull($process->getClient() && $process->getClient()->getHasOwnCompany()), // 'Er borgeren selvstændig erhvervsdrivende?'
-                $forwardedTo, // 'Videresendes til anden myndighed'
-                $this->formatBooleanDecision($process->getPoliceReport()), // 'Er sagen politianmeldt?'
-                $this->formatBooleanYesNoNull($process->getCourtDecision()), // 'Rettens afgørelse'
-                $this->formatAmount($revenue['repaymentSum'] ?? 0), // 'Samlet tilbagebetalingskrav i kr.'
-                $this->formatAmount($revenue['netRepaymentSum'] ?? 0), // 'Netto samlet tilbagebetalingskrav i kr.'
-                $this->formatAmount($revenue['futureSavingsSum'] ?? 0), // 'Samlet fremadrettet besparelse ved ydelsesstop i kr.'
-                $this->formatAmount($revenue['netFutureSavingsSum'] ?? 0), // 'Netto fremadrettet besparelse ved ydelsesstop i kr.'
-                $this->formatAmount($revenue['collectiveSum'] ?? 0), // 'Samlet opgørelse'
-                $this->formatAmount($revenue['netCollectiveSum'] ?? 0), // 'Samlet nettoopgørelse'
-                $process->getOriginallyCompletedAt() ? $this->formatDate($process->getOriginallyCompletedAt(), 'long') : null,
-                $process->getLastCompletedAt() ? $this->formatDate($process->getLastCompletedAt(), 'long') : null,
-                $process->getLastReopened() ? $this->formatDate($process->getLastReopened(), 'long') : null,
-                $this->formatAmount($process->getNetCollectiveSumDifference() ?? 0),
-            ]);
+            $client = $process->getProcessClient();
+            if (null === $client) {
+                // This should never happen.
+                continue;
+            }
+
+            switch ($client->getType()) {
+                case ProcessClientCompany::TYPE:
+                    // @todo What to do here?
+                    break;
+                case ProcessClientPerson::TYPE:
+                    $this->writeRow([
+                        $now, // 'Udtræksdato'
+                        $process->getCaseNumber(), // 'Sagsnummer'
+                        $this->formatDate($process->getCreatedAt(), 'long'), // 'Oprettet dato'
+                        $process->getCaseWorker() ? $process->getCaseWorker()->getUsername() : null, // 'Sagsbehandler'
+                        $client->getPostalCode(), // 'Postnummer'
+                        $client->getCPR(), // 'CPR-nummer'
+                        $client->getNumberOfChildren(), // 'Antal børn'
+                        $client->getCars()->count(), // 'Antal biler'
+                        $process->getProcessType() ? $process->getProcessType()->getName() : null, // 'Sagstype'
+                        $process->getProcessStatus() ? $process->getProcessStatus()->getName() : null, // 'Sagsstatus'
+                        $latestLogEntry ? $this->formatDate($latestLogEntry->getLogEntry()->getLoggedAt(), 'long') : null, // 'Dato for sagsstatus'
+                        $process->getReason() ? $process->getReason()->getName() : null, // 'Årsager'
+                        $process->getChannel() ? $process->getChannel()->getName() : null, // 'Kanaler'
+                        $process->getService() ? $process->getService()->getName() : null, // 'Ydelser'
+                        $this->formatBooleanYesNoNull($client->getReceivesPublicAid()), // 'Offentlig forsørgelse'
+                        $this->formatBooleanYesNoNull($client->getEmployed()), // 'Ansat'
+                        $this->formatBooleanYesNoNull($client->getHasOwnCompany()), // 'Er borgeren selvstændig erhvervsdrivende?'
+                        $forwardedTo, // 'Videresendes til anden myndighed'
+                        $this->formatBooleanDecision($process->getPoliceReport()), // 'Er sagen politianmeldt?'
+                        $this->formatBooleanYesNoNull($process->getCourtDecision()), // 'Rettens afgørelse'
+                        $this->formatAmount($revenue['repaymentSum'] ?? 0), // 'Samlet tilbagebetalingskrav i kr.'
+                        $this->formatAmount($revenue['netRepaymentSum'] ?? 0), // 'Netto samlet tilbagebetalingskrav i kr.'
+                        $this->formatAmount($revenue['futureSavingsSum'] ?? 0), // 'Samlet fremadrettet besparelse ved ydelsesstop i kr.'
+                        $this->formatAmount($revenue['netFutureSavingsSum'] ?? 0), // 'Netto fremadrettet besparelse ved ydelsesstop i kr.'
+                        $this->formatAmount($revenue['collectiveSum'] ?? 0), // 'Samlet opgørelse'
+                        $this->formatAmount($revenue['netCollectiveSum'] ?? 0), // 'Samlet nettoopgørelse'
+                        $process->getOriginallyCompletedAt() ? $this->formatDate($process->getOriginallyCompletedAt(), 'long') : null,
+                        $process->getLastCompletedAt() ? $this->formatDate($process->getLastCompletedAt(), 'long') : null,
+                        $process->getLastReopened() ? $this->formatDate($process->getLastReopened(), 'long') : null,
+                        $this->formatAmount($process->getNetCollectiveSumDifference() ?? 0),
+                    ]);
+                    break;
+            }
         }
     }
 }

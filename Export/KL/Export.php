@@ -200,7 +200,7 @@ class Export extends AbstractExport
         $queryBuilder = $this->entityManager->getRepository(Process::class)
             ->createQueryBuilder('p');
 
-        $queryBuilder->andWhere('p.completedAt IS NOT NULL');
+        $queryBuilder->andWhere('p.originallyCompletedAt IS NOT NULL');
 
         if (!empty($this->parameters['processtatus'])) {
             $queryBuilder
@@ -211,8 +211,12 @@ class Export extends AbstractExport
         $startDate = $this->parameters['startdate'] ?? new \DateTime('2001-01-01');
         $endDate = $this->parameters['enddate'] ?? new \DateTime('2100-01-01');
 
+        // We add one day to the endDate to make sure that processes
+        // completed on the last day of a month is accounted for.
+        $endDate->add(new \DateInterval('P1D'));
+
         $queryBuilder
-            ->andWhere('p.completedAt BETWEEN :startdate AND :enddate')
+            ->andWhere('p.originallyCompletedAt >= :startdate AND p.originallyCompletedAt < :enddate')
             ->setParameter('startdate', $startDate)
             ->setParameter('enddate', $endDate);
 
