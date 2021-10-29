@@ -645,6 +645,7 @@ process_log:
                 process_group: Relationer
                 process_client_company: Klient
                 process_client_person: Klient
+                client: Klient
             log_entry:
                 type: Type
                 process:
@@ -715,6 +716,18 @@ process_log:
                 process_group:
                     name: Navn
                     primary_process: Primær
+                client:
+                    first_name: Fornavn
+                    last_name: Efternavn
+                    address: Adresse
+                    postal_code: Postnummer
+                    city: By
+                    telephone: Telefon
+                    number_of_children: Antal børn
+                    car_registration_number: Bil registeringsnummer
+                    has_own_company: Egen virksomhed
+                    employed: Ansat
+                    receives_public_aid: Offentlig forsørgelse
 
 process_status:
     edit:
