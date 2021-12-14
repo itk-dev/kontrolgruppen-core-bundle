@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+[1.12.2] - 2021-12-14
 ### Fixed
 - [SUPPORT-336](https://jira.itkdev.dk/browse/SUPP0RT-336): Restored log entry views for legacy client entities
 - [KON-454](https://jira.itkdev.dk/browse/SUPP0RT-336): Making sure correct proccess client type is fetchen when genering KL-report
