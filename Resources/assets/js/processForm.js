@@ -1,30 +1,26 @@
 $(document).ready(function () {
-    var processTypeInput = $('#process_processType');
-    var clientCPRInput = $('#process_clientCPR');
+    const processTypeInput = $('#process_processType');
+    // Ids of the elements we want to replace.
+    const replacementIds = ['process_service', 'process_channel'];
 
     // Load choices. Replaces form element with ajax loaded element.
     function loadChoices (element) {
-        $('#process_service').attr('disabled', 'disabled').val(null);
-        $('#process_channel').attr('disabled', 'disabled').val(null);
+        // Disable and clear elements.
+        replacementIds.forEach(id => $('#' + id).attr('disabled', 'disabled').val(null));
 
-        var $form = element.closest('form');
+        const $form = element.closest('form');
 
-        var data = {};
-        data[processTypeInput.attr('name')] = processTypeInput.val();
-        // Fake the Client CPR data to avoid validation error.
-        data[clientCPRInput.attr('name')] = '111111-1111';
+        const data = {
+            [processTypeInput.attr('name')]: processTypeInput.val()
+        };
 
+        // Submit the form.
         $.ajax({
             url: $form.attr('action'),
-            type: $form.attr('method'),
             data: data,
             success: function (html) {
-                $('#process_service').replaceWith(
-                    $(html).find('#process_service')
-                );
-                $('#process_channel').replaceWith(
-                    $(html).find('#process_channel')
-                );
+                // Replace each element with same element from response.
+                replacementIds.forEach(id => $('#' + id).replaceWith($(html).find('#' + id)));
             }
         });
     }

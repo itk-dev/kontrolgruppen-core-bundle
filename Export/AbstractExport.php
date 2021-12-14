@@ -280,19 +280,15 @@ abstract class AbstractExport implements \JsonSerializable
     /**
      * Format a date.
      *
-     * @param \DateTime $date
-     * @param string    $format
+     * @param \DateTimeInterface $date
+     * @param string             $format
      *
      * @return string
      *
      * @throws \Exception
      */
-    protected function formatDate(\DateTime $date, $format = 'short')
+    protected function formatDate(\DateTimeInterface $date, $format = 'short')
     {
-        $date = (is_a($date, \DateTime::class))
-                ? $date
-                : new \DateTime(strtotime($date));
-
         switch ($format) {
             case 'short':
                 return $date->format('d-m-Y');

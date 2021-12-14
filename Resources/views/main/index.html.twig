@@ -63,8 +63,26 @@
                         {% endblock %}
 
                         {% if is_granted(['ROLE_SAGSBEHANDLER']) %}
+                            {#
                             <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
                                 <a class="btn btn-sm btn-success btn-block" role="button" href="{{ path('process_new') }}">{{ 'navigation.main.new_process'|trans }}</a>
+                            </li>
+                            #}
+                            <li class="nav-item dropdown mr-0 mr-sm-3 mb-3 mb-lg-0">
+                                <a class="dropdown-toggle btn btn-sm btn-success btn-block" href="#" id="navbarScrollingDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+                                    {{ 'navigation.main.new_process'|trans }}
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarScrollingDropdown">
+                                    {% set client_types = [
+                                        constant('Kontrolgruppen\\CoreBundle\\Entity\\ProcessClientPerson::TYPE'),
+                                        constant('Kontrolgruppen\\CoreBundle\\Entity\\ProcessClientCompany::TYPE'),
+                                        ] %}
+                                    {% for client_type in client_types %}
+                                        <div class="col">
+                                            <a href="{{ path('process_new', {clientType: client_type}) }}" class="dropdown-item">{{ ('process_client_type.' ~ client_type)|trans }}</a>
+                                        </div>
+                                    {% endfor %}
+                                </ul>
                             </li>
 
                             <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">

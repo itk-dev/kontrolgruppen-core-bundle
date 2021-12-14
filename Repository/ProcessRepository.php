@@ -114,7 +114,7 @@ class ProcessRepository extends ServiceEntityRepository
      *
      * @param int $batchSize
      *
-     * @return Traversable
+     * @return Traversable|Process[]
      */
     public function findAllBatchProcessed(int $batchSize = 100): Traversable
     {
@@ -122,5 +122,25 @@ class ProcessRepository extends ServiceEntityRepository
             $this->createQueryBuilder('p')->getQuery(),
             $batchSize
         );
+    }
+
+    /**
+     * Find processes by client type and identifier.
+     *
+     * @param string $clientType
+     * @param string $identifier
+     *
+     * @return Process[]
+     */
+    public function findByClientIdentifier(string $clientType, string $identifier)
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.processClient', 'c')
+            ->where('c.type = :client_type')
+            ->setParameter('client_type', $clientType)
+            ->andWhere('c.identifier = :identifier')
+            ->setParameter('identifier', $identifier)
+            ->getQuery()
+            ->getResult();
     }
 }

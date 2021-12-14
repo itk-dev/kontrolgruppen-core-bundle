@@ -6,12 +6,12 @@
     <h1>{{ 'client.edit.title'|trans }}</h1>
 
     <div class="form-group">
-        <label for="client_process_clientCPR">{{ 'client.form.cpr'|trans }}</label>
-        <input type="text" id="client_process_clientCPR" disabled="disabled" value="{{ process.clientCPR }}" class="form-control">
+        <label for="client_process_client_cvr">{{ 'client.form.cvr'|trans }}</label>
+        <input type="text" id="client_process_client_cvr" disabled="disabled" value="{{ client.cvr }}" class="form-control">
     </div>
 
     {% if canEdit %}
-        {{ include('@KontrolgruppenCore/client/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('@KontrolgruppenCore/client/company/_form.html.twig', {'button_label': 'Update'}) }}
     {% endif %}
 {% endblock %}
 
@@ -19,5 +19,5 @@
     {{ parent() }}
 
     {{ encore_entry_script_tags('cars') }}
-    {{ encore_entry_script_tags('companies') }}
+    {{ encore_entry_script_tags('people') }}
 {% endblock %}
