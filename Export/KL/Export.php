@@ -15,7 +15,6 @@ use Doctrine\ORM\EntityRepository;
 use DoctrineBatchUtils\BatchProcessing\SimpleBatchIteratorAggregate;
 use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
