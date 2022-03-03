@@ -15,6 +15,7 @@ use OneLogin\Saml2\Error;
 use OneLogin\Saml2\IdPMetadataParser;
 use OneLogin\Saml2\Response;
 use OneLogin\Saml2\Settings;
+use OneLogin\Saml2\Utils;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -52,6 +53,7 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         $this->router = $router;
         $this->session = $session;
         $this->settings = $settings;
+        Utils::setProxyVars(true);
     }
 
     /**
